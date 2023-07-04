@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<player>
+    <notificationIcon />
+    <stopWithApp>true</stopWithApp>
+    <compactNotification>
+        <title>App Name</title>
+        <message>Playing</message>
+    </compactNotification>
+    <playbackControls>
+        <stopButton enabled="true" />
+        <nextButton enabled="true" />
+        <previousButton enabled="true" />
+    </playbackControls>
+    <color />
+    <customActionButtons />
+    <channel />
+</player>

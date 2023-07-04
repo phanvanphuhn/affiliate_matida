@@ -1,0 +1,196 @@
+diff --git a/node_modules/react-native-gifted-chat/lib/GiftedChat.js b/node_modules/react-native-gifted-chat/lib/GiftedChat.js
+index a91d004..0e3cfa1 100644
+--- a/node_modules/react-native-gifted-chat/lib/GiftedChat.js
++++ b/node_modules/react-native-gifted-chat/lib/GiftedChat.js
+@@ -1,6 +1,6 @@
+ import PropTypes from 'prop-types';
+ import React from 'react';
+-import { Platform, StyleSheet, View, KeyboardAvoidingView, } from 'react-native';
++import { Platform, StyleSheet, View, KeyboardAvoidingView, Keyboard } from 'react-native';
+ import { ActionSheetProvider, } from '@expo/react-native-action-sheet';
+ import uuid from 'uuid';
+ import dayjs from 'dayjs';
+@@ -287,7 +287,7 @@ class GiftedChat extends React.Component {
+     }
+     getMinInputToolbarHeight() {
+         return this.props.renderAccessory
+-            ? this.props.minInputToolbarHeight * 2
++            ? this.props.minInputToolbarHeight
+             : this.props.minInputToolbarHeight;
+     }
+     calculateInputToolbarHeight(composerHeight) {
+@@ -350,14 +350,16 @@ class GiftedChat extends React.Component {
+     renderMessages() {
+         const { messagesContainerStyle, ...messagesContainerProps } = this.props;
+         const fragment = (<View style={[
+-                {
+-                    height: this.state.messagesContainerHeight,
+-                },
+-                messagesContainerStyle,
+-            ]}>
+-        <MessageContainer {...messagesContainerProps} invertibleScrollViewProps={this.invertibleScrollViewProps} messages={this.getMessages()} forwardRef={this._messageContainerRef} isTyping={this.props.isTyping}/>
+-        {this.renderChatFooter()}
+-      </View>);
++            {
++                height: this.state.messagesContainerHeight,
++            },
++            messagesContainerStyle,
++        ]}
++            onStartShouldSetResponder={() => { Platform.OS === 'android' ? Keyboard.dismiss() : null }}
++        >
++            <MessageContainer {...messagesContainerProps} invertibleScrollViewProps={this.invertibleScrollViewProps} messages={this.getMessages()} forwardRef={this._messageContainerRef} isTyping={this.props.isTyping} />
++            {this.renderChatFooter()}
++        </View>);
+         return this.props.isKeyboardInternallyHandled ? (<KeyboardAvoidingView enabled>{fragment}</KeyboardAvoidingView>) : (fragment);
+     }
+     resetInputToolbar() {
+@@ -400,7 +402,7 @@ class GiftedChat extends React.Component {
+         if (this.props.renderInputToolbar) {
+             return this.props.renderInputToolbar(inputToolbarProps);
+         }
+-        return <InputToolbar {...inputToolbarProps}/>;
++        return <InputToolbar {...inputToolbarProps} />;
+     }
+     renderChatFooter() {
+         if (this.props.renderChatFooter) {
+@@ -420,22 +422,22 @@ class GiftedChat extends React.Component {
+                 (() => { var _a; return (_a = this._actionSheetRef.current) === null || _a === void 0 ? void 0 : _a.getContext(); });
+             const { getLocale } = this;
+             return (<GiftedChatContext.Provider value={{
+-                    actionSheet,
+-                    getLocale,
+-                }}>
+-          <View testID={TEST_ID.WRAPPER} style={styles.wrapper}>
+-            <ActionSheetProvider ref={this._actionSheetRef}>
+-              <View style={styles.container} onLayout={this.onMainViewLayout}>
+-                {this.renderMessages()}
+-                {this.renderInputToolbar()}
+-              </View>
+-            </ActionSheetProvider>
+-          </View>
+-        </GiftedChatContext.Provider>);
++                actionSheet,
++                getLocale,
++            }}>
++                <View testID={TEST_ID.WRAPPER} style={styles.wrapper}>
++                    <ActionSheetProvider ref={this._actionSheetRef}>
++                        <View style={styles.container} onLayout={this.onMainViewLayout}>
++                            {this.renderMessages()}
++                            {this.renderInputToolbar()}
++                        </View>
++                    </ActionSheetProvider>
++                </View>
++            </GiftedChatContext.Provider>);
+         }
+         return (<View testID={TEST_ID.LOADING_WRAPPER} style={styles.container} onLayout={this.onInitialLayoutViewLayout}>
+-        {this.renderLoading()}
+-      </View>);
++            {this.renderLoading()}
++        </View>);
+     }
+ }
+ GiftedChat.defaultProps = {
+diff --git a/node_modules/react-native-gifted-chat/lib/InputToolbar.js b/node_modules/react-native-gifted-chat/lib/InputToolbar.js
+index 2ff651d..0270bf6 100644
+--- a/node_modules/react-native-gifted-chat/lib/InputToolbar.js
++++ b/node_modules/react-native-gifted-chat/lib/InputToolbar.js
+@@ -1,11 +1,12 @@
+ import PropTypes from 'prop-types';
+ import React, { useEffect, useState } from 'react';
+-import { StyleSheet, View, Keyboard } from 'react-native';
++import { StyleSheet, View, Keyboard, Dimensions } from 'react-native';
+ import { Composer } from './Composer';
+ import { Send } from './Send';
+ import { Actions } from './Actions';
+ import Color from './Color';
+ import { StylePropType } from './utils';
++const heigth = Dimensions.get('window').height
+ const styles = StyleSheet.create({
+     container: {
+         borderTopWidth: StyleSheet.hairlineWidth,
+@@ -20,14 +21,19 @@ const styles = StyleSheet.create({
+         alignItems: 'flex-end',
+     },
+     accessory: {
+-        height: 44,
++        // height: 44,
+     },
+ });
+ export function InputToolbar(props) {
+     const [position, setPosition] = useState('absolute');
++    const [heightInput, setHeightInput] = useState(0);
++
+     useEffect(() => {
+         const keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', () => setPosition('relative'));
+         const keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', () => setPosition('absolute'));
++
++
++
+         return () => {
+             keyboardWillShowListener === null || keyboardWillShowListener === void 0 ? void 0 : keyboardWillShowListener.remove();
+             keyboardWillHideListener === null || keyboardWillHideListener === void 0 ? void 0 : keyboardWillHideListener.remove();
+@@ -35,17 +41,36 @@ export function InputToolbar(props) {
+     }, []);
+     const { containerStyle, ...rest } = props;
+     const { renderActions, onPressActionButton, renderComposer, renderSend, renderAccessory, } = rest;
+-    return (<View style={[styles.container, { position }, containerStyle]}>
+-      <View style={[styles.primary, props.primaryStyle]}>
+-        {(renderActions === null || renderActions === void 0 ? void 0 : renderActions(rest)) ||
+-            (onPressActionButton && <Actions {...rest}/>)}
+-        {(renderComposer === null || renderComposer === void 0 ? void 0 : renderComposer(props)) || <Composer {...props}/>}
+-        {(renderSend === null || renderSend === void 0 ? void 0 : renderSend(props)) || <Send {...props}/>}
+-      </View>
+-      {renderAccessory && (<View style={[styles.accessory, props.accessoryStyle]}>
+-          {renderAccessory(props)}
+-        </View>)}
+-    </View>);
++
++
++
++    return (
++        <>
++            <View style={[
++                styles.container,
++                containerStyle,
++                { position: position },
++                { bottom: 
++                    (position === 'relative' && heigth >= 812) ? heightInput - 80 : 
++                        position === 'relative' ? heightInput - 40 : 
++                            (position === 'relative' && heigth >= 812) ? 20 : 15 },
++            ]}>
++                {renderAccessory && (<View style={[styles.accessory, props.accessoryStyle, { position: 'absolute' }, { bottom: heightInput }]}>
++                    {renderAccessory(props)}
++                </View>)}
++                <View style={[styles.primary, props.primaryStyle]}
++                    onLayout={(event) => {
++                        setHeightInput(event?.nativeEvent?.layout?.height)
++                    }}
++                >
++                    {(renderActions === null || renderActions === void 0 ? void 0 : renderActions(rest)) ||
++                        (onPressActionButton && <Actions {...rest} />)}
++                    {(renderComposer === null || renderComposer === void 0 ? void 0 : renderComposer(props)) || <Composer {...props} />}
++                    {(renderSend === null || renderSend === void 0 ? void 0 : renderSend(props)) || <Send {...props} />}
++                </View>
++            </View>
++        </>
++    );
+ }
+ InputToolbar.propTypes = {
+     renderAccessory: PropTypes.func,
+diff --git a/node_modules/react-native-gifted-chat/lib/Send.js b/node_modules/react-native-gifted-chat/lib/Send.js
+index c97e44e..a7d446c 100644
+--- a/node_modules/react-native-gifted-chat/lib/Send.js
++++ b/node_modules/react-native-gifted-chat/lib/Send.js
+@@ -22,10 +22,10 @@ const styles = StyleSheet.create({
+ });
+ export const Send = ({ text = '', containerStyle, children, textStyle, label = 'Send', alwaysShowSend = false, disabled = false, sendButtonProps, onSend = () => { }, }) => {
+     const handleOnPress = useCallbackOne(() => {
+-        if (text && onSend) {
++        if (onSend) {
+             onSend({ text: text.trim() }, true);
+         }
+-    }, [text, onSend]);
++    }, [onSend]);
+     const showSend = useMemoOne(() => alwaysShowSend || (text && text.trim().length > 0), [alwaysShowSend, text]);
+     if (!showSend) {
+         return null;

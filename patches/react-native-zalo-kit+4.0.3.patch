@@ -1,0 +1,131 @@
+diff --git a/node_modules/react-native-zalo-kit/android/build.gradle b/node_modules/react-native-zalo-kit/android/build.gradle
+index d5c37b6..46e2dca 100644
+--- a/node_modules/react-native-zalo-kit/android/build.gradle
++++ b/node_modules/react-native-zalo-kit/android/build.gradle
+@@ -7,7 +7,7 @@ buildscript {
+         }
+ 
+         dependencies {
+-            classpath 'com.android.tools.build:gradle:3.5.3'
++            classpath 'com.android.tools.build:gradle:7.2.1'
+         }
+     }
+ }
+@@ -19,10 +19,10 @@ def safeExtGet(prop, fallback) {
+ }
+ 
+ android {
+-    compileSdkVersion safeExtGet('ZaloKit_compileSdkVersion', 29)
++    compileSdkVersion safeExtGet('ZaloKit_compileSdkVersion', 31)
+     defaultConfig {
+-        minSdkVersion safeExtGet('ZaloKit_minSdkVersion', 16)
+-        targetSdkVersion safeExtGet('ZaloKit_targetSdkVersion', 29)
++        minSdkVersion safeExtGet('ZaloKit_minSdkVersion', 21)
++        targetSdkVersion safeExtGet('ZaloKit_targetSdkVersion', 31)
+ 
+     }
+ 
+diff --git a/node_modules/react-native-zalo-kit/android/gradle/wrapper/gradle-wrapper.properties b/node_modules/react-native-zalo-kit/android/gradle/wrapper/gradle-wrapper.properties
+index da9702f..8fad3f5 100644
+--- a/node_modules/react-native-zalo-kit/android/gradle/wrapper/gradle-wrapper.properties
++++ b/node_modules/react-native-zalo-kit/android/gradle/wrapper/gradle-wrapper.properties
+@@ -1,5 +1,5 @@
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.8-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-7.5.1-all.zip
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+diff --git a/node_modules/react-native-zalo-kit/android/src/main/java/com/reactnativezalokit/ZaloKitModule.java b/node_modules/react-native-zalo-kit/android/src/main/java/com/reactnativezalokit/ZaloKitModule.java
+index fc82f4e..085c5f2 100644
+--- a/node_modules/react-native-zalo-kit/android/src/main/java/com/reactnativezalokit/ZaloKitModule.java
++++ b/node_modules/react-native-zalo-kit/android/src/main/java/com/reactnativezalokit/ZaloKitModule.java
+@@ -57,7 +57,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+   private static final String AUTH_VIA_APP_OR_WEB = "app_or_web";
+   private static final String ZaloKitAccessToken = "__RN_ZALO_KIT_ACCESS_TOKEN__";
+   private static final String ZaloKitRefreshToken = "__RN_ZALO_KIT_REFRESH_TOKEN__";
+-
++  private ZaloSDK instance = ZaloSDK.Instance;
+   public ZaloKitModule(ReactApplicationContext reactContext) {
+     super(reactContext);
+     this.reactContext = reactContext;
+@@ -112,7 +112,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+   private void getAccessToken(String oauthCode, String codeVerifier, OAuthAccessTokenCompleteListener listener) {
+     Thread thread = new Thread(() -> {
+       try  {
+-        ZaloSDK.Instance.getAccessTokenByOAuthCode(reactContext.getCurrentActivity(),oauthCode, codeVerifier, data -> {
++        instance.getAccessTokenByOAuthCode(reactContext.getCurrentActivity(),oauthCode, codeVerifier, data -> {
+           int err = data.optInt("error");
+           if (err == 0) {
+             WritableMap map = Arguments.createMap();
+@@ -145,7 +145,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+       e.printStackTrace();
+     }
+ 
+-    ZaloSDK.Instance.authenticateZaloWithAuthenType(reactContext.getCurrentActivity(), type, codeChallenge, new OAuthCompleteListener() {
++    instance.authenticateZaloWithAuthenType(reactContext.getCurrentActivity(), type, codeChallenge, new OAuthCompleteListener() {
+       @Override
+       public void onAuthenError(ErrorResponse errorResponse) {
+         promise.reject(errorResponse.getErrorCode() + "", errorResponse.getErrorMsg());
+@@ -166,14 +166,14 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+ 
+   @ReactMethod
+   public void logout() {
+-    ZaloSDK.Instance.unauthenticate();
++    instance.unauthenticate();
+     ZaloKitModule.this.clearTokenFromCache();
+   }
+ 
+   @ReactMethod
+   public void isAuthenticated(final Promise promise) {
+     TokenData tokenData = this.getTokenFromCache();
+-    ZaloSDK.Instance.isAuthenticate(tokenData.refreshToken, (validated, errorCode, oauthResponse) -> {
++    instance.isAuthenticate(tokenData.refreshToken, (validated, errorCode, oauthResponse) -> {
+       if (validated) {
+         promise.resolve(true);
+       } else {
+@@ -187,7 +187,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+     TokenData tokenData = this.getTokenFromCache();
+ 
+     final String[] fields = {"id", "birthday", "gender", "picture", "name"};
+-    ZaloSDK.Instance.getProfile(reactContext.getCurrentActivity(), tokenData.accessToken, response -> {
++    instance.getProfile(reactContext.getCurrentActivity(), tokenData.accessToken, response -> {
+       try {
+         final WritableMap data = Util.convertJsonToMap(response);
+         System.out.println(data);
+@@ -205,7 +205,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+     TokenData tokenData = this.getTokenFromCache();
+ 
+     final String[] fields = {"id", "birthday", "gender", "picture", "name"};
+-    ZaloSDK.Instance.getFriendListUsedApp(reactContext.getCurrentActivity(), tokenData.accessToken, position, count, response -> {
++    instance.getFriendListUsedApp(reactContext.getCurrentActivity(), tokenData.accessToken, position, count, response -> {
+       try {
+         final WritableMap data = Util.convertJsonToMap(response);
+         if (data.hasKey("error") && data.getInt("error") != 0) {
+@@ -222,7 +222,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+     TokenData tokenData = this.getTokenFromCache();
+ 
+     final String[] fields = {"id", "birthday", "gender", "picture", "name"};
+-    ZaloSDK.Instance.getFriendListInvitable(reactContext.getCurrentActivity(), tokenData.accessToken, offset, count, response -> {
++    instance.getFriendListInvitable(reactContext.getCurrentActivity(), tokenData.accessToken, offset, count, response -> {
+       try {
+         final WritableMap data = Util.convertJsonToMap(response);
+         if (data.hasKey("error") && data.getInt("error") != 0) {
+@@ -352,7 +352,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+       Ids[i] = friendIds.getString(i);
+     }
+ 
+-    ZaloSDK.Instance.inviteFriendUseApp(reactContext.getCurrentActivity(), tokenData.accessToken, Ids, message, response -> {
++    instance.inviteFriendUseApp(reactContext.getCurrentActivity(), tokenData.accessToken, Ids, message, response -> {
+       try {
+         final WritableMap data = Util.convertJsonToMap(response);
+         if (data.hasKey("error") && data.getInt("error") != 0) {
+@@ -366,7 +366,7 @@ public class ZaloKitModule extends ReactContextBaseJavaModule {
+ 
+   @ReactMethod
+   public void register(final Promise promise) {
+-    ZaloSDK.Instance.registerZalo(reactContext.getCurrentActivity(), new OAuthCompleteListener() {
++    instance.registerZalo(reactContext.getCurrentActivity(), new OAuthCompleteListener() {
+       @Override
+       public void onAuthenError(ErrorResponse errorResponse) {
+         promise.reject(errorResponse.getErrorCode() + "", errorResponse.getErrorMsg());

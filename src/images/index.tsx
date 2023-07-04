@@ -1,0 +1,11 @@
+export * from './icon';
+export * from './image';
+export * from './tab';
+export * from './svg';
+const ForWard = require('./forward.png');
+const Rewind = require('./rewind.png');
+const liveGif = require('./live.gif');
+const liveWave = require('./live-wave.gif');
+const fireworkOne = require('./firework_1.gif');
+const fireworkTwo = require('./firework_2.gif');
+export {ForWard, Rewind, liveGif, liveWave, fireworkOne, fireworkTwo};

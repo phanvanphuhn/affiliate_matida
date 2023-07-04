@@ -1,0 +1,246 @@
+import {stylesCommon, scaler, colors} from '@stylesCommon';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
+import {AppImage} from '@component';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  iconClose,
+  imageSettingUser,
+  imageLogOut,
+  imageSettingLang,
+  avatarDefault,
+  iconListPost,
+  imagePrivacy,
+  imageBlock,
+} from '@images';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
+import {ModalConfirm} from '@component';
+import {logOut} from '@redux';
+import {useTranslation} from 'react-i18next';
+import {deleteUserDevice} from '@services';
+import {showMessage} from 'react-native-flash-message';
+import {getBottomSpace} from 'react-native-iphone-x-helper';
+import {ETypeUser} from '@constant';
+import {trackingAppEvent, event, useUXCam, VERSION_APP} from '@util';
+
+const Setting = () => {
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  const navigation = useNavigation<any>();
+  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const {t} = useTranslation();
+
+  useEffect(() => {
+    trackingAppEvent(event.SCREEN.SETTING_SCREEN, {});
+  }, []);
+
+  useUXCam(ROUTE_NAME.SETTING_SCREEN);
+
+  const onLogOut = async () => {
+    try {
+      await deleteUserDevice();
+    } catch (e) {
+      console.log('error: ', e);
+      showMessage({
+        message: '',
+        type: 'default',
+        backgroundColor: 'transparent',
+      });
+    } finally {
+      dispatch(logOut());
+    }
+  };
+
+  const data = [
+    {
+      id: 1,
+      title: t('setting.profile'),
+      uri: imageSettingUser,
+    },
+    {
+      id: 2,
+      title: t('setting.lang'),
+      uri: imageSettingLang,
+    },
+    {
+      id: 3,
+      title: t('setting.my_post'),
+      uri: iconListPost,
+    },
+    {
+      id: 4,
+      title: t('setting.privacyPolicy'),
+      uri: imagePrivacy,
+    },
+    {
+      id: 6,
+      title: t('setting.block'),
+      uri: imageBlock,
+    },
+    {
+      id: 5,
+      title: t('setting.logOut'),
+      uri: imageLogOut,
+    },
+  ];
+
+  const onSelect = (id: any) => {
+    switch (id) {
+      case 1:
+        navigation.navigate(ROUTE_NAME.PROFILE_SETTINGS);
+        break;
+      case 2:
+        navigation.navigate(ROUTE_NAME.CHANGE_LANG_AUTH);
+        break;
+      case 3:
+        navigation.navigate(ROUTE_NAME.MY_NEWFEED_SETTING);
+        break;
+      case 4:
+        navigation.navigate(ROUTE_NAME.PRIVACY_POLICY);
+        break;
+      case 5:
+        setShowModal(true);
+        break;
+      case 6:
+        navigation.navigate(ROUTE_NAME.LIST_BLOCKED_USER);
+        break;
+      default:
+        return;
+    }
+  };
+
+  const getTypeUser = () => {
+    switch (+user?.role) {
+      case ETypeUser.USER:
+        return t('profileSettings.typeUser.0');
+      case ETypeUser.EXPERT:
+        return t('profileSettings.typeUser.1');
+      case ETypeUser.ADMIN:
+        return t('profileSettings.typeUser.2');
+
+      default:
+        return '';
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.viewImageProfile}>
+        <View style={styles.viewRow}>
+          {user?.avatar !== null ? (
+            <AppImage user style={styles.image} uri={user?.avatar} />
+          ) : (
+            <Image source={avatarDefault} style={styles.image} />
+          )}
+          <View style={styles.viewTxtName}>
+            <Text style={styles.txtName} numberOfLines={2}>
+              {user?.name}
+            </Text>
+            <Text style={styles.typeUser} numberOfLines={1}>
+              {getTypeUser()}
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image source={iconClose} />
+        </TouchableOpacity>
+      </View>
+      {data?.map((item: any) => {
+        return (
+          <TouchableOpacity
+            style={styles.viewItem}
+            key={item?.id}
+            onPress={() => onSelect(item?.id)}>
+            <Image source={item?.uri} style={styles.imageIcon} />
+            <Text style={styles.txtTitle}>{item?.title}</Text>
+          </TouchableOpacity>
+        );
+      })}
+      <View style={styles.viewBottom}>
+        <Text style={styles.txtBottom}>
+          {t('setting.version')}
+          {VERSION_APP}
+        </Text>
+      </View>
+      <ModalConfirm
+        visible={showModal}
+        titleHeader={t('setting.titleLogout')}
+        onCancel={() => setShowModal(false)}
+        onConfirm={onLogOut}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    ...stylesCommon.viewContainer,
+    paddingHorizontal: scaler(20),
+  },
+  viewImageProfile: {
+    flexDirection: 'row',
+    marginTop: scaler(60),
+    borderBottomWidth: 1,
+    justifyContent: 'space-between',
+    paddingVertical: scaler(20),
+    borderColor: '#EAEAEA',
+  },
+  viewRow: {
+    flexDirection: 'row',
+  },
+  image: {
+    width: scaler(52),
+    height: scaler(52),
+    borderRadius: scaler(8),
+  },
+  viewTxtName: {
+    marginLeft: scaler(12),
+    width: '75%',
+    justifyContent: 'center',
+  },
+  txtName: {
+    color: colors.textColor,
+    fontSize: scaler(14),
+    ...stylesCommon.fontWeight700,
+    marginBottom: scaler(2),
+
+    // flex: 1,
+  },
+  viewItem: {
+    flexDirection: 'row',
+    paddingHorizontal: scaler(10),
+    paddingVertical: scaler(12),
+    marginVertical: scaler(10),
+    alignItems: 'center',
+  },
+  imageIcon: {
+    width: scaler(24),
+    height: scaler(24),
+    tintColor: colors.primary,
+  },
+  txtTitle: {
+    ...stylesCommon.fontWeight400,
+    fontSize: scaler(14),
+    color: colors.textColor,
+    marginLeft: scaler(10),
+  },
+  viewBottom: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: getBottomSpace() + scaler(20),
+  },
+  txtBottom: {
+    color: colors.gray300,
+    fontSize: scaler(12),
+    ...stylesCommon.fontWeight400,
+  },
+  typeUser: {
+    color: colors.borderColor,
+    fontSize: scaler(14),
+    ...stylesCommon.fontWeight500,
+  },
+});
+
+export {Setting};

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "391777811229",
+    "project_id": "matida2-e5ca4",
+    "storage_bucket": "matida2-e5ca4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391777811229:android:3c695bd2a7b3efb85bbff4",
+        "android_client_info": {
+          "package_name": "com.growth.levers.matida"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391777811229-86vg0786pegn997ejh60hkqu34qn7r5e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.growth.levers.matida",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "391777811229-d8mpanmpju1bgr4lhkv66ngpa8agn7st.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.growth.levers.matida",
+            "certificate_hash": "ae00692714bdc194bee45ffb6acdf8094e727fbe"
+          }
+        },
+        {
+          "client_id": "391777811229-tnrf2adj3a3m7bdsn1tik6s4fcb75ukq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC97bqy22ssFYx7piwjAB5yFhaqoXfTEX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391777811229-tnrf2adj3a3m7bdsn1tik6s4fcb75ukq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "391777811229-kq5m4hkodfdcsgom9jnl9i2mcdsq50ik.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.growth.levers.matida",
+                "app_store_id": "1671957732"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
