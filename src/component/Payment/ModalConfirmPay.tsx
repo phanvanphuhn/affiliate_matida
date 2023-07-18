@@ -1,4 +1,5 @@
 import {EPaymentType} from '@constant';
+import {SvgGoogle} from '@images';
 import {
   getCheckingPayment,
   GlobalService,
@@ -26,7 +27,14 @@ import React, {
   useState,
 } from 'react';
 import {useTranslation} from 'react-i18next';
-import {Alert, Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  Alert,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {useSelector} from 'react-redux';
 import {AppButton} from '../AppButton';
@@ -52,13 +60,14 @@ export const ModalConfirmPay = forwardRef<
   ModalConfirmPayProps
 >((props, ref) => {
   const {price, type, id, onCallBack = () => {}, isPay = false} = props;
-
-  const {t} = useTranslation();
-  const lang = useSelector((state: any) => state?.auth?.lang);
-  const user = useSelector((state: any) => state?.auth?.userInfo);
-
   const {initPaymentSheet, presentPaymentSheet, confirmPaymentSheetPayment} =
     useStripe();
+
+  const {t} = useTranslation();
+
+  const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  const showStripe = useSelector((state: any) => state?.check?.showStripe);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [isPaySupported, setIsPaySupported] = useState<boolean>(true);
@@ -134,13 +143,8 @@ export const ModalConfirmPay = forwardRef<
       });
       if (!error) {
         setLoading(true);
-        console.log('init done: ', error);
-      } else {
-        console.log('init error: ', error);
       }
     } catch (e) {
-      console.log({e});
-      // Alert.alert(`Error`, e?.message);
     } finally {
       GlobalService.hideLoading();
     }
@@ -219,7 +223,6 @@ export const ModalConfirmPay = forwardRef<
         }
       }
     } catch (e) {
-      console.log(e);
     } finally {
       GlobalService.hideLoading();
     }
@@ -248,7 +251,11 @@ export const ModalConfirmPay = forwardRef<
       modalBorderRadius={scaler(16)}
       ref={refPay}
       modalSize={{
-        height: scaler(340),
+        height: showStripe
+          ? scaler(340)
+          : step === StepPayment.CONFIRM
+          ? scaler(450)
+          : scaler(340),
         width:
           step === StepPayment.CONFIRM ? widthScreen - scaler(32) : widthScreen,
       }}>
@@ -281,6 +288,7 @@ const ViewConfirmPay = ({
   type,
   isPay,
 }: ViewConfirmPayProps) => {
+  const showStripe = useSelector((state: any) => state?.check?.showStripe);
   const {t} = useTranslation();
 
   const getTypeUnlock = () => {
@@ -311,6 +319,11 @@ const ViewConfirmPay = ({
               cart: getTypeUnlock(),
             })}
           </Text>
+          {showStripe ? null : (
+            <Text style={[styles.txtBodyModal, {marginTop: scaler(12)}]}>
+              {t('payment.tooltip')}
+            </Text>
+          )}
         </View>
       </View>
       <View>
@@ -344,26 +357,8 @@ const ViewChooseMethodPayment = (props: ChooseMethodProps) => {
   const {isPaySupported, onCancel, onPressPayPlatform, onPressPayStripe} =
     props;
   const {t} = useTranslation();
-  const [showStripe, setShowStripe] = useState<boolean>(false);
 
-  useEffect(() => {
-    getChecking();
-  }, []);
-
-  const getChecking = async () => {
-    try {
-      const res = await getCheckingPayment();
-      setShowStripe(res?.data);
-    } catch (e) {
-      showMessage({
-        message: '',
-        type: 'default',
-        backgroundColor: colors.transparent,
-        color: '#FFFFFF',
-      });
-    }
-  };
-
+  const showStripe = useSelector((state: any) => state?.check?.showStripe);
   const handlePressPayButton = async () => {
     if (!isPaySupported && Platform.OS === 'ios') {
       await openPlatformPaySetup();
@@ -394,25 +389,43 @@ const ViewChooseMethodPayment = (props: ChooseMethodProps) => {
           ]}>
           {t('payment.method')}
         </Text>
-        <PlatformPayButton
-          onPress={handlePressPayButton}
-          type={
-            isPaySupported
-              ? PlatformPay.ButtonType.Pay
-              : PlatformPay.ButtonType.SetUp
-          }
-          borderRadius={scaler(8)}
-          style={{
-            width: '100%',
-            height: Platform.OS === 'ios' ? scaler(54) : scaler(63),
-            marginBottom: scaler(16),
-          }}
-        />
+        {Platform.OS == 'ios' ? (
+          <PlatformPayButton
+            onPress={handlePressPayButton}
+            appearance={PlatformPay.ButtonStyle.WhiteOutline}
+            type={
+              isPaySupported
+                ? PlatformPay.ButtonType.Pay
+                : PlatformPay.ButtonType.SetUp
+            }
+            borderRadius={scaler(8)}
+            style={[
+              {
+                width: '100%',
+                height: Platform.OS === 'ios' ? scaler(54) : scaler(63),
+                marginBottom: scaler(16),
+              },
+            ]}
+          />
+        ) : (
+          <TouchableOpacity
+            activeOpacity={1}
+            style={styles.btnGoogle}
+            onPress={handlePressPayButton}>
+            <Text style={styles.textGoogle}>Pay with</Text>
+            <SvgGoogle style={{marginHorizontal: scaler(8)}} />
+            <Text style={[styles.textGoogle, {...stylesCommon.fontWeight500}]}>
+              Pay
+            </Text>
+          </TouchableOpacity>
+        )}
         {showStripe ? (
           <AppButton
             onClick={onPressPayStripe}
             titleButton={t('payment.other')}
-            customStyleButton={{marginBottom: scaler(16)}}
+            customStyleButton={{
+              marginBottom: Platform.OS === 'ios' ? scaler(16) : scaler(24),
+            }}
           />
         ) : null}
         <AppButton
@@ -469,5 +482,22 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: scaler(14),
     ...stylesCommon.fontWeight400,
+  },
+  textGoogle: {
+    fontSize: scaler(24),
+    ...stylesCommon.fontWeight600,
+    color: colors.white,
+  },
+  btnGoogle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#202020',
+    minWidth: scaler(152),
+    borderRadius: scaler(8),
+    marginBottom: scaler(24),
+    // height: scaler(54),
+    paddingVertical: scaler(16),
+    width: '100%',
   },
 });

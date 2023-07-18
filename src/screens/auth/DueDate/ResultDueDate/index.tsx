@@ -2,48 +2,33 @@ import React, {useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
 
 import {AppButton, Header} from '@component';
+import {useNavigation} from '@react-navigation/native';
 import {styles} from '../styles';
 import {stylesScreen} from './styles';
-import {useNavigation} from '@react-navigation/native';
 
-import {Lemon} from '@images';
-import {navigate} from '@navigation';
-import {ROUTE_NAME} from '@routeName';
-import {useDispatch} from 'react-redux';
 import {changeStatusLogin} from '@redux';
+import {ROUTE_NAME} from '@routeName';
+import {event, trackingAppEvent, useUXCam} from '@util';
 import {useTranslation} from 'react-i18next';
-import {trackingAppEvent, event, useUXCam} from '@util';
-import {getDueDate, GlobalService} from '@services';
+import {useDispatch} from 'react-redux';
 
 const ResultDueDateScreen = (props: any) => {
   const {t} = useTranslation();
   const {route} = props;
   const {data} = route?.params;
   const navigation = useNavigation<any>();
-  const [detail, setDetail] = useState<any>(null);
 
   const dispatch = useDispatch();
 
-  // const getDataConfig = async () => {
-  //   try {
-  //     GlobalService.showLoading();
-  //     const res = await getDueDate();
-  //     setDetail(res?.data);
-  //     GlobalService.hideLoading();
-  //   } catch (error) {
-  //     GlobalService.hideLoading();
-  //   }
-  // };
-
   useEffect(() => {
-    // getDataConfig();
     trackingAppEvent(event.SCREEN.RESULT_DUE_DATE, {});
   }, []);
 
   useUXCam(ROUTE_NAME.RESULT_DUE_DATE);
 
   const handlePressButton = () => {
-    dispatch(changeStatusLogin(true));
+    // dispatch(changeStatusLogin(true));
+    navigation.navigate(ROUTE_NAME.ON_BOARDING);
   };
 
   return (

@@ -19,6 +19,8 @@ import {changeWeekUser, updateTotalUnread, uploadListChat} from '@redux';
 import notifee, {EventType} from '@notifee/react-native';
 import appsFlyer from 'react-native-appsflyer';
 import DeviceInfo from 'react-native-device-info';
+import {ETypeRedirectBroadcast, EVideoType} from '@constant';
+import {VERSION_APP} from './String';
 
 export enum NOTIFICATION {
   BROAD_CAST = 1,
@@ -66,46 +68,18 @@ function createAppNotification() {
       }
     });
 
-    // messaging().onNotificationOpenedApp(async notification => {
-    //   notifee.displayNotification({
-    //     title: 'Your order has been shipped',
-    //     body: `Your order was shipped at!`,
-    //     android: {
-    //       channelId: 'orders',
-    //       pressAction: {
-    //         launchActivity: 'default',
-    //         id: 'default',
-    //       },
-    //     },
-    //   });
-    //   // onDisplayNotification();
-    //   // notifee.displayNotification;
-    //   console.error('1212122: ', notification);
-
-    //   if (notification.messageId !== lastMessageId) {
-    //     lastMessageId = notification.messageId || '';
-    //   }
-    //   // await notifee.decrementBadgeCount();
-    //   handleUserInteractionNotification(notification);
-    // });
+    messaging().onNotificationOpenedApp(async notification => {
+      if (notification.messageId !== lastMessageId) {
+        lastMessageId = notification.messageId || '';
+      }
+      handleUserInteractionNotification(notification);
+    });
 
     // messaging().setBackgroundMessageHandler(async notification => {
-    //   notifee.displayNotification({
-    //     title: 'Your order has been shipped',
-    //     body: `Your order was shipped at!`,
-    //     android: {
-    //       channelId: 'orders',
-    //       pressAction: {
-    //         launchActivity: 'default',
-    //         id: 'default',
-    //       },
-    //     },
-    //   });
-    //   // onDisplayNotification();
+
     //   if (notification.messageId !== lastMessageId) {
     //     lastMessageId = notification.messageId || '';
     //   }
-    //   console.log('setBackgroundMessageHandler: ', notification);
     //   // await notifee
     //   //   .incrementBadgeCount()
     //   //   .then(() => notifee.getBadgeCount())
@@ -118,11 +92,7 @@ function createAppNotification() {
       if (notification.messageId !== lastMessageId) {
         lastMessageId = notification.messageId || '';
       }
-      // const {notification, pressAction} = detail;
-      // if (type === EventType.ACTION_PRESS && pressAction?.id === 'mark-as-read') {
-      //   await notifee.decrementBadgeCount();
-      //   await notifee.cancelNotification(notification?.id);
-      // }
+      handleUserInteractionNotification(notification);
     });
 
     notifee.onForegroundEvent(async ({type, detail}: any) => {
@@ -130,14 +100,8 @@ function createAppNotification() {
       if (notification?.remote?.messageId !== lastMessageId) {
         lastMessageId = notification?.remote?.messageId || '';
       }
-      // const {notification, pressAction} = detail;
-      // if (type === EventType.ACTION_PRESS && pressAction?.id === 'mark-as-read') {
-      //   await notifee.decrementBadgeCount();
-      //   await notifee.cancelNotification(notification?.id);
-      // }
       handleUserInteractionNotification(notification);
     });
-    // onDisplayNotification();
   };
 
   const requestUserPermission = async () => {
@@ -200,13 +164,10 @@ function createAppNotification() {
 
   const handleUserInteractionNotification = (message: any) => {
     let {notification, data} = message;
-    // let title = '';
-    // let bodyMessage = '';
     try {
-      // title = notification.title;
-      // bodyMessage = notification?.title;
       switch (+data?.type) {
         case NOTIFICATION.BROAD_CAST:
+          handleNotificationBroadCast(message);
           break;
         case NOTIFICATION.LIKE:
           handleNotificationLike(message);
@@ -238,6 +199,87 @@ function createAppNotification() {
     } catch (error) {}
   };
 
+  const handleNotificationBroadCast = async (message: any) => {
+    let {data} = message;
+    switch (+data?.redirect_type) {
+      case ETypeRedirectBroadcast.PODCAST:
+        handleBroadCastPodCast(message);
+        break;
+      case ETypeRedirectBroadcast.VIDEO:
+        handleBroadCastVideo(message, false);
+        break;
+      case ETypeRedirectBroadcast.ROOM:
+        handleCreateNewTalk(message);
+        break;
+      case ETypeRedirectBroadcast.ARTICLE:
+        handleBroadCastArticle(message);
+        break;
+      case ETypeRedirectBroadcast.RECORD_ROOM:
+        handleBroadCastVideo(message, true);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleBroadCastArticle = async (message: any) => {
+    let {data} = message;
+    try {
+      if (data && !!data?.table_id) {
+        navigate(ROUTE_NAME.DETAIL_ARTICLE, {
+          article: {id: +data?.table_id, trimester: [], topic: [], mood: []},
+        });
+        await readNotification(+data?.noti_id);
+      }
+    } catch (e) {
+      showMessage({
+        message: '',
+        type: 'default',
+        backgroundColor: 'transparent',
+      });
+    }
+  };
+
+  const handleBroadCastVideo = async (message: any, isRecord: boolean) => {
+    let {data} = message;
+    try {
+      if (data) {
+        navigate(ROUTE_NAME.DETAIL_VIDEO, {
+          id: data?.table_id,
+          type: isRecord ? EVideoType.RECORD : EVideoType.VIDEO,
+          // url: item?.link,
+          // isRecord: isRecord,
+          // item: item,
+        });
+        await readNotification(+data?.noti_id);
+      }
+    } catch (e) {
+      showMessage({
+        message: '',
+        type: 'default',
+        backgroundColor: 'transparent',
+      });
+    }
+  };
+
+  const handleBroadCastPodCast = async (message: any) => {
+    let {data} = message;
+    try {
+      if (data && !!data?.table_id) {
+        navigate(ROUTE_NAME.DETAIL_PODCAST, {
+          podcast: {id: +data?.table_id, trimester: [], topic: []},
+        });
+        await readNotification(+data?.noti_id);
+      }
+    } catch (e) {
+      showMessage({
+        message: '',
+        type: 'default',
+        backgroundColor: 'transparent',
+      });
+    }
+  };
+
   const handleNotificationLike = async (message: any) => {
     let {data} = message;
     try {
@@ -253,13 +295,6 @@ function createAppNotification() {
       });
     }
   };
-
-  // const handleNotificationChangeWeek = (message: any) => {
-  //   // let {notification, data} = message;
-  //   console.log('handleNotificationChangeWeek: ', message);
-
-  //   navigate(ROUTE_NAME.SIZE_COMPARISON, {option: 1});
-  // };
 
   const handleNotificationChat = async (message: any) => {
     let {data} = message;
@@ -313,10 +348,6 @@ function createAppNotification() {
   };
 
   const handleNotificationReplyComment = async (message: any) => {
-    // console.log('handleNotificationReplyComment: ', message);
-    // let {data} = message;
-    // navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: +data?.table_id});
-
     let {data} = message;
     try {
       if (data) {
@@ -348,23 +379,17 @@ function createAppNotification() {
     }, 100);
   };
 
-  // navigate(ROUTE_NAME.WEEKLY_ARTICLES)}
   const saveDeviceToken = async (newFcmToken: string) => {
     try {
       const data = {
         device_token: newFcmToken,
-        // os_version: getSystemVersion(),
-        // os_name: Platform.OS,
+        app_version: VERSION_APP,
       };
       if (Platform.OS === 'android') {
-        appsFlyer.updateServerUninstallToken(newFcmToken, success => {
-          //...
-        });
+        appsFlyer.updateServerUninstallToken(newFcmToken, success => {});
       } else {
         DeviceInfo.getDeviceToken().then(deviceToken => {
-          appsFlyer.updateServerUninstallToken(deviceToken, success => {
-            //...
-          });
+          appsFlyer.updateServerUninstallToken(deviceToken, success => {});
         });
       }
       const res = await postUserDevice(data);
@@ -377,15 +402,10 @@ function createAppNotification() {
     }
   };
 
-  // const removeBadge = () => {
-  //   notifee.setBadgeCount(0);
-  // };
-
   return {
     requestUserPermission,
     fcmToken,
     initFB,
-    // removeBadge,
   };
 }
 

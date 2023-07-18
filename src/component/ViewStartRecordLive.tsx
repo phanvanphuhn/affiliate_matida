@@ -53,14 +53,10 @@ const ViewStartRecordLive = React.memo((props: any) => {
 
   const onChangeSTT = useCallback(async () => {
     if (status === 'start') {
-      // setStatus('loading');
-      // setTimeout(() => {
-      //   setStatus('started');
-      // }, 2000);
       Alert.alert(`${t('liveStream.noti')}`, `${t('liveStream.titleStart')}`, [
         {
           text: `${t('liveStream.no')}`,
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel',
         },
         {
@@ -69,11 +65,10 @@ const ViewStartRecordLive = React.memo((props: any) => {
         },
       ]);
     } else {
-      // setStatus('start');
       Alert.alert(`${t('liveStream.noti')}`, `${t('liveStream.titleEnd')}`, [
         {
           text: `${t('liveStream.no')}`,
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel',
         },
         {

@@ -63,6 +63,7 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 
-
-# Yarn dep
+#app
+#
+.env
 .yarn

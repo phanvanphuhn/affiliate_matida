@@ -6,13 +6,14 @@ import {NavigationUtils} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {logOut} from '@redux';
 import {colors} from '@stylesCommon';
-// import {BASEURL} from '@util';
-import {BASEURL} from '@env';
+import {BASEURL} from '@util';
+// import {BASEURL} from '@env';
 
 const api = axios.create();
 
 export const WEB_API_KEY = 'AIzaSyC97bqy22ssFYx7piwjAB5yFhaqoXfTEX4';
 export const DEEP_LINK = 'https://matida.page.link';
+export const OLD_DEEP_LINK = 'https://matida1.page.link';
 
 api.interceptors.request.use(
   async (config: any) => {

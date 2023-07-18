@@ -88,7 +88,7 @@ export const ListPeriodicTest = () => {
           renderItem={renderItem}
           keyExtractor={(_: any) => _.id}
           ListFooterComponent={ListFooterComponent}
-          ListEmptyComponent={<ViewEmpty />}
+          ListEmptyComponent={<ViewEmpty title={t('test.noDataQuiz')} />}
         />
       )}
     </View>

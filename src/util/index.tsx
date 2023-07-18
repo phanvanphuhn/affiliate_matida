@@ -6,6 +6,6 @@ export * from './functionApp';
 export * from './WebSocketHandle';
 export * from './eventTracking';
 export * from './FirebaseMessage';
-export * from './String';
 export * from './deepLink';
 export * from './hooks';
+export * from './String';

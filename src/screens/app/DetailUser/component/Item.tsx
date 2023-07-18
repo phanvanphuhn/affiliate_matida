@@ -1,25 +1,23 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {AppImage} from '@component';
+import {colorRoom} from '@constant';
 import {
-  iconImageLive,
-  iconUserLive,
   avatarDefault,
-  iconCalendar,
   iconLock,
   iconSavePng,
   iconUnSavePng,
+  iconUserLive,
   SvgCalendar,
 } from '@images';
-import {scaler, stylesCommon, colors, widthScreen} from '@stylesCommon';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {AppImage} from '@component';
-import moment from 'moment';
-import {convertLangMonth} from '@util';
 import {saveRoom, unSaveRoom} from '@services';
-import {showMessage} from 'react-native-flash-message';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {convertLangMonth} from '@util';
+import moment from 'moment';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {colorRoom} from '@constant';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {useSelector} from 'react-redux';
 
 const Item = React.memo((props: any) => {

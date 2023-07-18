@@ -1,20 +1,19 @@
+import {AppButton} from '@component';
+import {saveLoginInfo} from '@redux';
+import {GlobalService, resendCode, verifyLogin} from '@services';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {event, trackingAppEvent} from '@util';
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {iconZalo, iconFacebook} from '@images';
-import {AppInput, AppButton} from '@component';
-import {colors, stylesCommon, scaler} from '@stylesCommon';
 import {useTranslation} from 'react-i18next';
+import {StyleSheet, Text, View} from 'react-native';
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import {resendCode, verifyLogin, GlobalService} from '@services';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
-import {saveLoginInfo} from '@redux';
-import {trackingAppEvent, event} from '@util';
 
 const Step3 = React.memo((props: any) => {
   const {onChangeStep, token, phone, codePhone} = props;

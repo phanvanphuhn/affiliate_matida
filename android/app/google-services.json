@@ -22,14 +22,6 @@
           }
         },
         {
-          "client_id": "391777811229-d8mpanmpju1bgr4lhkv66ngpa8agn7st.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.growth.levers.matida",
-            "certificate_hash": "ae00692714bdc194bee45ffb6acdf8094e727fbe"
-          }
-        },
-        {
           "client_id": "391777811229-tnrf2adj3a3m7bdsn1tik6s4fcb75ukq.apps.googleusercontent.com",
           "client_type": 3
         }

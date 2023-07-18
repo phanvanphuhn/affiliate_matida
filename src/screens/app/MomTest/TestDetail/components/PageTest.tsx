@@ -15,7 +15,6 @@ export const PageTest = ({item, total}: Props) => {
   const {value: current, setValue: setCurrent} = getUseField('current');
   const {value: answer, setValue: setAnswer} = getUseField('answer');
 
-  // console.log('answer: ', answer);
   return (
     <View style={styles.containerPage}>
       <ScrollView

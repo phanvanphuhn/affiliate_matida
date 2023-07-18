@@ -1,4 +1,5 @@
 import {AppImage, AppTextUrl} from '@component';
+import {ETypeRedirectBroadcast, EVideoType} from '@constant';
 import {avatarDefault, LogoApp} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
@@ -64,6 +65,9 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
     } catch (e) {
     } finally {
       switch (item?.type) {
+        case NOTIFICATION.BROAD_CAST:
+          handleNotificationBroadCast();
+          break;
         case NOTIFICATION.LIKE:
           handleNotificationLike();
           break;
@@ -87,6 +91,62 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
         default:
           return;
       }
+    }
+  };
+
+  const handleNotificationBroadCast = () => {
+    switch (+item?.model_type) {
+      case ETypeRedirectBroadcast.PODCAST:
+        handleBroadCastPodCast();
+        break;
+      case ETypeRedirectBroadcast.VIDEO:
+        handleBroadCastVideo(false);
+        break;
+      case ETypeRedirectBroadcast.ROOM:
+        handleCreateNewTalk();
+        break;
+      case ETypeRedirectBroadcast.ARTICLE:
+        handleBroadCastArticle();
+        break;
+      case ETypeRedirectBroadcast.RECORD_ROOM:
+        handleBroadCastVideo(true);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleBroadCastArticle = () => {
+    if (item) {
+      navigate(ROUTE_NAME.DETAIL_ARTICLE, {
+        article: {id: +item?.table_id, trimester: [], topic: [], mood: []},
+      });
+    }
+  };
+
+  const handleCreateNewTalk = () => {
+    if (item) {
+      navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {id: +item?.table_id});
+    }
+  };
+
+  const handleBroadCastPodCast = () => {
+    if (item) {
+      navigate(ROUTE_NAME.DETAIL_PODCAST, {
+        podcast: {id: +item?.table_id, trimester: [], topic: []},
+      });
+    }
+  };
+
+  const handleBroadCastVideo = (record: boolean) => {
+    if (item) {
+      navigate(ROUTE_NAME.DETAIL_VIDEO, {
+        id: item?.table_id,
+        type: record ? EVideoType.RECORD : EVideoType.VIDEO,
+        // url: item?.link,
+        // isRecord: isRecord,
+        // item: item,
+      });
     }
   };
 

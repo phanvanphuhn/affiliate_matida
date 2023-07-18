@@ -1,20 +1,26 @@
 import {SvgCaretDown} from '@images';
+import {changePageExplore} from '@redux';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {t} from 'i18next';
 import React, {useState} from 'react';
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {IOption, Option} from '../type';
+import {useDispatch, useSelector} from 'react-redux';
+import {IOption, Option, Page} from '../type';
 import {HeaderFilter} from './HeaderFilter';
 
 const heightItemModal = scaler(50);
 
 type Props = {
-  onPress: (value: IOption) => void;
-  value: Option;
+  onCallback: () => void;
+  pageExplore: Page;
 };
 
-export const FilterMost = ({onPress, value}: Props) => {
+export const FilterMost = ({onCallback, pageExplore}: Props) => {
+  const filter = useSelector((state: any) => state?.explore?.filter);
+  const value = filter?.option;
+  const dispatch = useDispatch();
+
   const [visible, setVisible] = useState<boolean>(false);
 
   const listItem: IOption[] = [
@@ -35,7 +41,17 @@ export const FilterMost = ({onPress, value}: Props) => {
 
   const handlePress = (item: IOption) => {
     setVisible(false);
-    onPress(item);
+    onCallback();
+    dispatch(
+      changePageExplore({
+        page: 1,
+        pageExplore: pageExplore,
+        expert: '',
+        option: item.value,
+        trimesters: filter?.filterTopic?.trimesters,
+        topics: filter?.filterTopic?.topics,
+      }),
+    );
   };
 
   return (

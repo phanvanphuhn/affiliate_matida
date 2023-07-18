@@ -1,4 +1,9 @@
-import {Header, ModalConfirmPay, ModalConfirmPayment} from '@component';
+import {
+  Header,
+  HeaderMasterClass,
+  ModalConfirmPay,
+  ModalConfirmPayment,
+} from '@component';
 import {EPaymentType} from '@constant';
 import {SvgArrowLeft} from '@images';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
@@ -44,10 +49,8 @@ const MasterClass = () => {
     try {
       GlobalService.showLoading();
       const res = await getMasterClassDetail(id);
-      console.log('MasterClass: ', res?.data);
       setData(res?.data);
     } catch (e) {
-      console.log('error: ', e);
     } finally {
       GlobalService.hideLoading();
     }
@@ -67,11 +70,12 @@ const MasterClass = () => {
 
   return (
     <View style={styles.container}>
-      <Header
+      {/* <Header
         title={t('home.masterClass')}
         IconLeft={<SvgArrowLeft stroke={colors.textColor} />}
         // ComponentRight={<Image source={iconSave} />}
-      />
+      /> */}
+      <HeaderMasterClass />
       <ScrollView>
         <View style={styles.viewContent}>
           <ViewInfo data={data} onCallBack={onPayAll} />

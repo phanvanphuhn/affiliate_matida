@@ -52,6 +52,7 @@ import {MomPrepTest, TestDetail, TestResult} from './app/MomTest';
 import {ListRecord} from './app/ListRecord';
 import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
+import {Onboarding} from './auth/Onboarding';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -107,7 +108,8 @@ const screens = {
   TestResult,
   ListRecord,
   MasterClass,
-  ListMasterClass
+  ListMasterClass,
+  Onboarding,
 };
 
 export {screens};

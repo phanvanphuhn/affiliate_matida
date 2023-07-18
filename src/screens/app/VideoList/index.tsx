@@ -1,63 +1,54 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  RefreshControl,
-  ActivityIndicator,
-} from 'react-native';
-import {styles} from './styles';
 import {Header, PickerWeek} from '@component';
-import {SvgArrowLeft, iconClock, iconPlay} from '@images';
-import {useTranslation} from 'react-i18next';
-import {colors} from '@stylesCommon';
-import {useSelector} from 'react-redux';
-import {GlobalService, getListVideoOfWeek} from '@services';
+import {SvgArrowLeft} from '@images';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import Video from 'react-native-video';
+import {getListVideoOfWeek, GlobalService} from '@services';
+import {colors} from '@stylesCommon';
+import {event, trackingAppEvent, useUXCam} from '@util';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  Text,
+  View,
+} from 'react-native';
+import {useSelector} from 'react-redux';
 import {Item} from './Item';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {styles} from './styles';
 
 const VideoList = () => {
   useUXCam(ROUTE_NAME.VIDEO_LIST);
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
-  const week =
+  const weekRedux =
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
+  const week = weekRedux < 0 || weekRedux === null ? 40 : weekRedux;
   const lang = useSelector((state: any) => state?.auth?.lang);
   const [dataVideo, setDataVideo] = useState([]);
   const [localWeek, setLocalWeek] = useState(null);
   const [total, setTotal] = useState<any>(null);
-  const [page, setPage] = useState(1);
   const [isLoadMore, setIsLoadMore] = useState<boolean>(false);
 
   const refList = useRef<FlatList>(null);
   const refWeek = useRef<number>(week ?? 40);
-
-  useEffect(() => {
-    trackingAppEvent(event.SCREEN.VIDEO_LIST, {});
-    if (week) {
-      getListVideo(week);
-    }
-  }, [week]);
+  const refLoadMore = useRef<boolean>(true);
+  const refPage = useRef<number>(1);
 
   useFocusEffect(
     React.useCallback(() => {
+      refPage.current = 1;
+      trackingAppEvent(event.SCREEN.VIDEO_LIST, {});
       getListVideo(refWeek.current);
     }, [week]),
   );
 
   const handleLoadMore = () => {
-    if (dataVideo?.length >= total) {
-      null;
-    } else {
-      setPage(prevPage => prevPage + 1);
+    if (dataVideo?.length < total && refLoadMore.current) {
+      refPage.current++;
       setIsLoadMore(true);
     }
   };
@@ -73,11 +64,14 @@ const VideoList = () => {
   const getListVideo = async (value: any) => {
     setLocalWeek(value);
     refWeek.current = value;
+    refLoadMore.current = false;
     try {
-      GlobalService.showLoading();
+      if (refPage.current === 1) {
+        GlobalService.showLoading();
+      }
 
-      const res = await getListVideoOfWeek(value, page);
-      if (page === 1) {
+      const res = await getListVideoOfWeek(value, refPage.current);
+      if (refPage.current === 1) {
         setDataVideo(res?.data?.data);
       } else {
         setDataVideo(dataVideo?.concat(res?.data?.data));
@@ -86,22 +80,23 @@ const VideoList = () => {
       setIsLoadMore(false);
     } catch (error: any) {
     } finally {
-      setTimeout(() => {
-        refList?.current?.scrollToOffset({animated: true, offset: 0});
-      }, 50);
       GlobalService.hideLoading();
+      refLoadMore.current = true;
     }
   };
 
   const onSelectWeek = useCallback((value: any) => {
-    setPage(1);
+    refPage.current = 1;
+    setTimeout(() => {
+      refList?.current?.scrollToOffset({animated: true, offset: 0});
+    }, 50);
     getListVideo(value);
   }, []);
 
-  const onRefresh = useCallback(async () => {
-    await setPage(1);
+  const onRefresh = () => {
+    refPage.current = 1;
     getListVideo(localWeek);
-  }, [localWeek]);
+  };
 
   const renderItem = ({item}: any) => {
     return <Item item={item} />;

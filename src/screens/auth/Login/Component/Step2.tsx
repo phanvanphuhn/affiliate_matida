@@ -1,17 +1,16 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {iconZalo, iconFacebook} from '@images';
-import {AppInput, AppButton, AppSelectPhoneCode} from '@component';
-import {colors, stylesCommon, scaler, widthScreen} from '@stylesCommon';
+import {AppButton, AppInput, AppSelectPhoneCode} from '@component';
+import {GlobalService, loginWithPhone} from '@services';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {loginWithPhone, GlobalService} from '@services';
+import {StyleSheet, Text, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 
-import {useSelector} from 'react-redux';
-import {Formik} from 'formik';
-import * as yup from 'yup';
 import {hasWhiteSpace, validateForm, validateFormVN} from '@util';
- 
+import {Formik} from 'formik';
+import {useSelector} from 'react-redux';
+import * as yup from 'yup';
+
 const Step2 = React.memo((props: any) => {
   const {onChangeStep} = props;
   const {t} = useTranslation();

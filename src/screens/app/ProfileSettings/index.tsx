@@ -1,59 +1,50 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Platform,
-  ActivityIndicator,
-} from 'react-native';
-import {Formik, FormikProps, useFormik} from 'formik';
-import {trackingAppEvent, event, useUXCam} from '@util';
 import {
   AppButton,
   AppCameraModal,
+  AppImage,
   AppInput,
-  Header,
-  SelectionPicker,
   AppSelectPhoneCode,
-  ViewDisableInput,
-  ModalConfirm,
-  ModalConfirmSettings,
+  Header,
   ModalConfirmDelete,
+  ModalConfirmSettings,
+  SelectionPicker,
+  ViewDisableInput,
 } from '@component';
-import {
-  avatarDefault,
-  iconBack,
-  iconCamera,
-  iconEdit,
-  SvgArrowLeft,
-  imageLanguage,
-} from '@images';
+import {iconCamera, SvgArrowLeft} from '@images';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {colors, scaler, widthScreen} from '@stylesCommon';
+import {
+  event,
+  trackingAppEvent,
+  useUXCam,
+  validateForm,
+  validateFormVN,
+} from '@util';
+import {Formik, FormikProps} from 'formik';
 import {t} from 'i18next';
-import {DueDateComponent} from './DueDateComponent';
-import {validateForm, validateFormVN} from '@util';
-import {useFocusEffect} from '@react-navigation/native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useDispatch, useSelector} from 'react-redux';
-import {showMessage} from 'react-native-flash-message';
-import {useNavigation} from '@react-navigation/native';
-import FastImage from 'react-native-fast-image';
+import {DueDateComponent} from './DueDateComponent';
 
+import {logOut, saveDataUser} from '@redux';
+import {ROUTE_NAME} from '@routeName';
 import {
+  deleteAccount,
   getUserInfoApi,
   GlobalService,
   updateUserInfo,
   uploadImage,
-  deleteAccount,
 } from '@services';
-import {saveDataUser, logOut} from '@redux';
 import * as yup from 'yup';
-import moment from 'moment';
-import {ROUTE_NAME} from '@routeName';
 
 const ProfileSettingsScreen = () => {
   const navigation = useNavigation<any>();
@@ -292,6 +283,7 @@ const ProfileSettingsScreen = () => {
       {user ? (
         <Formik
           initialValues={initialValuesProfileSettings}
+          //@ts-ignore
           innerRef={formRef}
           enableReinitialize
           onSubmit={handleSave}
@@ -302,10 +294,6 @@ const ProfileSettingsScreen = () => {
               <Header
                 title={t('profileSettings.profileSettings')}
                 IconLeft={<SvgArrowLeft stroke={colors.textColor} />}
-                // ComponentRight={
-                //   <Image source={imageLanguage} style={styles.iconRight} />
-                // }
-                // onPressRight={() => navigation.navigate(ROUTE_NAME.CHANGE_LANG_AUTH)}
                 onPressLeft={handleConfirm}
                 styleContainer={{backgroundColor: '#FFFFFF'}}
                 styleContainerSafeArea={{backgroundColor: '#FFFFFF'}}
@@ -319,7 +307,12 @@ const ProfileSettingsScreen = () => {
                       activeOpacity={0.8}
                       style={styles.viewAvatar}
                       onPress={() => setVisible(true)}>
-                      {imageUrlApi?.length > 0 ? (
+                      <AppImage
+                        uri={imageUrlApi}
+                        style={styles.avatarImage}
+                        user
+                      />
+                      {/* {imageUrlApi?.length > 0 ? (
                         <>
                           <FastImage
                             style={styles.avatarImage}
@@ -337,16 +330,16 @@ const ProfileSettingsScreen = () => {
                           source={avatarDefault}
                           style={styles.avatarImage}
                         />
-                      )}
+                      )} */}
                       <Image source={iconCamera} style={styles.iconCamera} />
-                      {loading ? (
+                      {/* {loading ? (
                         <View style={styles.viewLoading}>
                           <ActivityIndicator
                             color={colors.primary}
                             size="small"
                           />
                         </View>
-                      ) : null}
+                      ) : null} */}
                     </TouchableOpacity>
                     <AppCameraModal
                       visible={visible}

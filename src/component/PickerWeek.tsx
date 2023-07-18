@@ -21,7 +21,6 @@ const PickerWeek = React.memo((props: any) => {
 
   const onSelectWeek = useCallback((value: number) => {
     setSelect(value);
-    console.log('onSelectWeek: ', value);
     onSelect(value);
     const index = data.findIndex((element: any) => element?.value == value);
     if (index >= 0) {

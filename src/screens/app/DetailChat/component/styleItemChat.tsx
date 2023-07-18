@@ -1,5 +1,5 @@
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {StyleSheet} from 'react-native';
-import {scaler, stylesCommon, colors, widthScreen} from '@stylesCommon';
 
 const styles = StyleSheet.create({
   container: {

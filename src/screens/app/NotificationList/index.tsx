@@ -47,15 +47,6 @@ export const NotificationList = () => {
     }, [indexButton]),
   );
 
-  // useEffect(() => {
-  //   return () => {
-  //     refPageAll.current = 1;
-  //     refPageUnread.current = 1;
-  //     setDataAll([]);
-  //     setDataRead([]);
-  //   };
-  // }, []);
-
   const getData = async () => {
     if (indexButton === OPTION_NOTIFICATION.ALL) {
       await getDataAll();
@@ -75,7 +66,6 @@ export const NotificationList = () => {
       } else {
         setDataAll(dataAll?.concat(res?.data?.data));
       }
-      // setListRead(res?.data?.data?.filter((item: any) => !item?.is_read));
       setTotal(res?.data?.total);
       setTotalUnRead(res?.data?.totalNotificationUnread);
       res?.data?.data?.length > 0 && refPageAll.current++;
@@ -90,15 +80,14 @@ export const NotificationList = () => {
   const getDataUnread = async () => {
     try {
       refLoadMore.current = false;
-      // setLoading(true);
       const res = await listNotReadNotification(refPageUnread.current);
       if (refPageUnread.current === 1) {
         setDataRead(res?.data?.data);
       } else {
         setDataRead(dataUnread?.concat(res?.data?.data));
       }
-      setTotal(res?.data?.total);
-      setTotalUnRead(res?.data?.totalNotificationUnread);
+      // setTotal(res?.data?.total);
+      setTotalUnRead(res?.data?.total);
       res?.data?.data?.length > 0 && refPageUnread.current++;
     } catch (e) {
     } finally {
@@ -125,7 +114,6 @@ export const NotificationList = () => {
     if (length >= totalData) {
       null;
     } else {
-      // setPage(prevPage => prevPage + 1);
       if (refLoadMore.current) {
         setLoadMore(true);
         getData();
@@ -139,8 +127,8 @@ export const NotificationList = () => {
   };
 
   const keyExtractor = useCallback(
-    (_: any, index: number) => index?.toString(),
-    [],
+    (_: any) => `${indexButton}-${_?.id?.toString()}`,
+    [indexButton],
   );
 
   const getDataFlatList = () => {
@@ -152,6 +140,38 @@ export const NotificationList = () => {
       default:
         return [];
     }
+  };
+
+  const renderItem = ({item}: {item: any}) => (
+    <ItemNotification item={item} onCallBack={onRefresh} />
+  );
+
+  const ListEmptyComponent = () => {
+    return (
+      <>
+        {loading ? (
+          <View style={styles.viewLoadMore}>
+            <ActivityIndicator color={colors.brandMainPinkRed} size="small" />
+          </View>
+        ) : (
+          <View style={styles.viewEmpty}>
+            <Text style={styles.txtEmpty}>{'Not data'}</Text>
+          </View>
+        )}
+      </>
+    );
+  };
+
+  const ListFooterComponent = () => {
+    return (
+      <>
+        {loadMore === true ? (
+          <View style={styles.viewLoadMore}>
+            <ActivityIndicator color={colors.brandMainPinkRed} size="small" />
+          </View>
+        ) : null}
+      </>
+    );
   };
 
   return (
@@ -169,10 +189,8 @@ export const NotificationList = () => {
         <FlatList
           data={getDataFlatList()}
           // key={indexButton.toString()}
-          renderItem={({item}) => (
-            <ItemNotification item={item} onCallBack={onRefresh} />
-          )}
-          keyExtractor={(_: any) => _.id}
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
           contentContainerStyle={{paddingBottom: scaler(220), flexGrow: 1}}
           onEndReachedThreshold={0.5}
           onEndReached={handleLoadMore}
@@ -186,37 +204,8 @@ export const NotificationList = () => {
               }
             />
           }
-          ListEmptyComponent={() => {
-            return (
-              <>
-                {loading ? (
-                  <View style={styles.viewLoadMore}>
-                    <ActivityIndicator
-                      color={colors.brandMainPinkRed}
-                      size="small"
-                    />
-                  </View>
-                ) : (
-                  <View style={styles.viewEmpty}>
-                    <Text style={styles.txtEmpty}>{'Not data'}</Text>
-                  </View>
-                )}
-              </>
-            );
-          }}
-          ListFooterComponent={
-            //loadMore === true
-            <>
-              {loadMore === true ? (
-                <View style={styles.viewLoadMore}>
-                  <ActivityIndicator
-                    color={colors.brandMainPinkRed}
-                    size="small"
-                  />
-                </View>
-              ) : null}
-            </>
-          }
+          ListEmptyComponent={ListEmptyComponent}
+          ListFooterComponent={ListFooterComponent}
         />
       </View>
     </View>

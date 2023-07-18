@@ -17,11 +17,13 @@ import {DefaultTFuncReturn} from 'i18next';
 interface IProps {
   titleButton?: string | DefaultTFuncReturn;
   customStyleButton?: StyleProp<ViewStyle>;
+  customStyleDisable?: StyleProp<ViewStyle>;
   customStyleText?: StyleProp<TextStyle>;
   onClick?: () => void;
   sourceIcon?: ImageSourcePropType | undefined;
   disable?: boolean;
   customStyleIcon?: any;
+  icon?: JSX.Element;
 }
 
 const AppButton = React.memo((props: IProps) => {
@@ -33,6 +35,8 @@ const AppButton = React.memo((props: IProps) => {
     sourceIcon,
     disable = false,
     customStyleIcon,
+    customStyleDisable,
+    icon,
   } = props;
 
   const onPressButton = useCallback(
@@ -56,12 +60,14 @@ const AppButton = React.memo((props: IProps) => {
             : colors.primary,
         },
         customStyleButton,
+        disable && customStyleDisable,
       ]}
       onPress={onPressButton}
       disabled={disable}>
       {sourceIcon ? (
         <Image source={sourceIcon} style={[styles.icon, customStyleIcon]} />
       ) : null}
+      {icon ? <View style={[styles.icon, customStyleIcon]}>{icon}</View> : null}
       <Text style={[styles.txtButton, customStyleText]}>{titleButton}</Text>
     </TouchableOpacity>
   );

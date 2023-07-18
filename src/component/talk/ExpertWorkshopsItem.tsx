@@ -1,4 +1,4 @@
-import {TypeRoom} from '@constant';
+import {EVideoType, TypeRoom} from '@constant';
 import {LogoApp, SvgCalendar, SvgLock, SvgPrevious44} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
@@ -41,10 +41,11 @@ export const ExpertWorkshopsItem = ({recorded = false, item}: Props) => {
     if (recorded) {
       item?.link &&
         navigate(ROUTE_NAME.DETAIL_VIDEO, {
-          url: item?.link,
           id: item?.id,
-          isRecord: true,
-          item: item,
+          type: EVideoType.RECORD,
+          // url: item?.link,
+          // isRecord: true,
+          // item: item,
         });
     } else {
       navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {id: item?.room?.id});

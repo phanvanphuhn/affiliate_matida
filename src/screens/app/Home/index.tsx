@@ -15,7 +15,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppHeader, HorizontalList, NewArticles} from '@component';
 import {navigate} from '@navigation';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
-import {clearDataChat, getDataHome, saveDataUser, updateDataHome} from '@redux';
+import {
+  clearDataChat,
+  getCheckingPaymentRedux,
+  getDataHome,
+  saveDataUser,
+  updateDataHome,
+  updateStatusDeepLink,
+} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
   answerDailyQuiz,
@@ -41,7 +48,13 @@ import {styles} from './styles';
 import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
 
 import {imageBackgroundOpacity, SvgMessages3} from '@images';
-import {AppNotification, handleDeepLink, useUXCam} from '@util';
+import {
+  APPID_ZEGO_KEY,
+  AppNotification,
+  APP_SIGN_ZEGO_KEY,
+  handleDeepLink,
+  useUXCam,
+} from '@util';
 import {t} from 'i18next';
 import {ListPostComponent} from './ListPostComponent';
 //@ts-ignore
@@ -50,7 +63,8 @@ import {event, trackingAppEvent} from '@util';
 //@ts-ignore
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
-import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
+import {EVideoType} from '@constant';
+// import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
   videos: IVideo[];
@@ -88,12 +102,15 @@ const Home = () => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const data = useSelector((state: any) => state?.home?.data);
+  const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
   const loading = useSelector((state: any) => state?.home?.loading);
+  const deepLink = useSelector((state: any) => state?.check?.deepLink);
 
   useUXCam(ROUTE_NAME.HOME);
 
   useEffect(() => {
     initFB();
+    dispatch(getCheckingPaymentRedux());
     const unSubscribe = dynamicLinks().onLink(handleDynamicLink);
     return () => unSubscribe();
   }, []);
@@ -121,7 +138,7 @@ const Home = () => {
       getData();
       dispatch(clearDataChat());
       ZegoUIKitPrebuiltCallService.init(
-        APPID_ZEGO_KEY,
+        +APPID_ZEGO_KEY,
         APP_SIGN_ZEGO_KEY,
         user?.id,
         user?.name,
@@ -161,9 +178,10 @@ const Home = () => {
 
   const fetchScreen = async () => {
     const getInitialLink = await dynamicLinks().getInitialLink();
-    if (getInitialLink !== null && getInitialLink?.url) {
+    if (getInitialLink !== null && getInitialLink?.url && deepLink) {
       //handle navigation
       handleDeepLink(getInitialLink?.url);
+      dispatch(updateStatusDeepLink());
     }
   };
 
@@ -201,10 +219,11 @@ const Home = () => {
 
   const handlePressItemVideo = (item: any) => {
     navigation.navigate(ROUTE_NAME.DETAIL_VIDEO, {
-      url: item?.url ?? '',
       id: item?.id ?? 0,
-      title: item?.title ?? '',
-      item: item,
+      type: EVideoType.VIDEO,
+      // url: item?.url ?? '',
+      // title: item?.title ?? '',
+      // item: item,
     });
   };
 
@@ -308,6 +327,37 @@ const Home = () => {
           paddingBottom: scaler(30),
           paddingTop: scaler(18),
         }}>
+        {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
+          <>
+            <View>
+              <WeeksPregnant />
+            </View>
+            <View
+              style={{
+                paddingHorizontal: scaler(20),
+                marginBottom: scaler(30),
+              }}>
+              <SizeComparisonComponent />
+              <PregnancyProgress />
+            </View>
+          </>
+        )}
+
+        <View>
+          <ListPostComponent loading={loading} posts={data?.posts} />
+
+          <TouchableOpacity
+            style={styles.createPostButton}
+            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+            <SvgMessages3 />
+            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
+          </TouchableOpacity>
+        </View>
+
+        {data?.dailyQuizz ? <ViewQuiz onAnswer={onAnswerQuiz} /> : null}
+
+        <BannerTestQuiz />
+
         <ChatGPTComponent />
 
         <HorizontalList
@@ -379,37 +429,6 @@ const Home = () => {
             <ItemMasterClass masterClass={masterClass} key={masterClass.id} />
           ))}
         </HorizontalList>
-
-        {data?.dailyQuizz ? <ViewQuiz onAnswer={onAnswerQuiz} /> : null}
-
-        <BannerTestQuiz />
-
-        <View>
-          <ListPostComponent loading={loading} posts={data?.posts} />
-
-          <TouchableOpacity
-            style={styles.createPostButton}
-            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
-            <SvgMessages3 />
-            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
-          </TouchableOpacity>
-        </View>
-
-        {!!user?.is_skip ? null : (
-          <>
-            <View>
-              <WeeksPregnant />
-            </View>
-            <View
-              style={{
-                paddingHorizontal: scaler(20),
-                marginBottom: scaler(30),
-              }}>
-              <SizeComparisonComponent />
-              <PregnancyProgress />
-            </View>
-          </>
-        )}
 
         <DailyAffirmation quote={data?.quote} />
       </ScrollView>

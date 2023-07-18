@@ -1,14 +1,12 @@
-import React, {useState, useCallback} from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import {scaler, colors, stylesCommon} from '@stylesCommon';
-import {avatarDefault, iconCalendar, iconChatGPT, TidaAIWhite} from '@images';
-import {useSelector} from 'react-redux';
-import {AppImage, AppButton} from '@component';
+import {AppImage} from '@component';
+import {TidaAIWhite} from '@images';
+import {isSameDay} from '@util';
 import moment from 'moment';
-import {isSameDay, convertLangMonth} from '@util';
-import {styles} from './styleItemChat';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {acceptJoinRoom, GlobalService, acceptJoinRoomRequest} from '@services';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {styles} from './styleItemChat';
 
 const ItemMessage = React.memo((props: any) => {
   const {t} = useTranslation();

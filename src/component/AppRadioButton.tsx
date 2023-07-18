@@ -1,7 +1,7 @@
-import {RadioButton, RadioButtonSelected} from '@images';
+import {SvgRadioCircle, SvgRadioSelected} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {IItem} from './_type';
 
 interface AppRadioButtonProps {
@@ -42,10 +42,9 @@ const ItemRadioButton = ({item, onPress, value}: ItemRadioButtonProps) => {
       activeOpacity={1}
       onPress={() => onPress(item.value)}
       style={styles.containerItem}>
-      <Image
-        source={isSelected ? RadioButtonSelected : RadioButton}
-        style={styles.radioImg}
-      />
+      <View style={styles.radioImg}>
+        {isSelected ? <SvgRadioSelected /> : <SvgRadioCircle />}
+      </View>
       <Text style={styles.textItem}>{item.label}</Text>
     </TouchableOpacity>
   );

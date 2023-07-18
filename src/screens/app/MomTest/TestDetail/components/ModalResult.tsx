@@ -58,7 +58,6 @@ export const ModalResult = ({
           </Text>
         </Text>
         <View style={styles.viewReward}>
-          {/* <Image source={reward1} style={styles.imageReward} /> */}
           <AppImage
             uri={result?.packageQuiz?.badge?.image}
             style={styles.imageReward}

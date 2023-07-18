@@ -1,34 +1,25 @@
-import React, {useState, useCallback, useRef, useEffect} from 'react';
-import {View, Text, Image, Platform, StatusBar} from 'react-native';
-import {styles} from './styles';
 import {AppButton} from '@component';
-import {useTranslation} from 'react-i18next';
-import {imageIntro, iconLogo, iconHeart} from '@images';
+import {iconHeart, imageIntro, SvgLogo} from '@images';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {scaler} from '@stylesCommon';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Image, Platform, StatusBar, Text, View} from 'react-native';
+import {styles} from './styles';
 
-import {Login} from '../Login';
-import {SignUp} from '../SignUp';
 import {ROUTE_NAME} from '@routeName';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Login} from '../Login';
+import {SignUp} from '../SignUp';
 
-import {useSelector, useDispatch} from 'react-redux';
 import {changeStatusLogin, saveDataLoginFacebook} from '@redux';
-import {loginFacebook, GlobalService, loginZalo, loginApple} from '@services';
+import {GlobalService, loginApple, loginFacebook, loginZalo} from '@services';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {
-  AccessToken,
-  AuthenticationToken,
-  LoginManager,
-} from 'react-native-fbsdk-next';
-import {
-  login as LoginWithZalo,
-  Constants,
-  logout,
-  getApplicationHashKey,
-} from 'react-native-zalo-kit';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {event, trackingAppEvent, useUXCam} from '@util';
+import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
+import {Constants, login as LoginWithZalo} from 'react-native-zalo-kit';
 
 const Intro = () => {
   const {t} = useTranslation();
@@ -191,7 +182,7 @@ const Intro = () => {
           resizeMode="cover"
         />
         <View style={styles.viewBottomText}>
-          <Image source={iconLogo} style={styles.imageLogo} />
+          <SvgLogo />
           {lang === 2 ? (
             <>
               <Text style={[styles.txtBottom, {marginTop: scaler(12)}]}>

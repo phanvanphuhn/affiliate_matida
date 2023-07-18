@@ -1,5 +1,5 @@
 import {AppButton, AppModal} from '@component';
-import {CaretDown} from '@images';
+import {SvgArrowDown} from '@images';
 import {
   colors,
   heightScreen,
@@ -9,18 +9,11 @@ import {
 } from '@stylesCommon';
 import React, {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  Image,
-  Platform,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Platform, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {styles} from './styles';
 import {HeaderModalPost} from './HeaderModalPost';
 import {ModalReason} from './ModalReason';
+import {styles} from './styles';
 
 type IItem = {
   id: number;
@@ -119,7 +112,7 @@ export const ModalReportPost = ({onClose, onReport}: Props) => {
                 {listReason?.find(item => item.value === reason)?.label ||
                   t('post.chooseReason')}
               </Text>
-              <Image source={CaretDown} style={{marginLeft: scaler(8)}} />
+              <SvgArrowDown style={{marginLeft: scaler(8)}} />
             </TouchableOpacity>
             <TouchableOpacity
               style={{

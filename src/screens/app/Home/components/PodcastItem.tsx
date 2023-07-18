@@ -94,7 +94,6 @@ export const PodcastItem = ({podcast}: Props) => {
         })
       }>
       <View style={{flexDirection: 'row'}}>
-        {/* <Image source={isStockPhoto} style={styles.image} /> */}
         <View>
           <AppImage uri={image} style={styles.image} />
           {isPayment ? <ViewLock opacity={'ba'} absolute /> : null}

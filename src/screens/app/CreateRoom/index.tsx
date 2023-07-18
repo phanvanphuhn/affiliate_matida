@@ -169,10 +169,13 @@ export const CreateRoom = () => {
                 ) : null}
                 <RoomNameCreate />
                 <RoomScheduleCreate />
-                <AppCheckBox
-                  active={inviteAll}
-                  onPress={() => setInviteAll(!inviteAll)}
-                />
+                {user?.role === 2 || user?.role === 3 ? (
+                  <AppCheckBox
+                    active={inviteAll}
+                    onPress={() => setInviteAll(!inviteAll)}
+                  />
+                ) : null}
+
                 {inviteAll === false ? <RoomParticipantsCreate /> : null}
                 {inviteAll === false ? <MemberParticipant /> : null}
               </KeyboardAwareScrollView>

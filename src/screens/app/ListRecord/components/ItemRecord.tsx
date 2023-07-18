@@ -1,4 +1,5 @@
 import {AppImage, ViewLockPayment} from '@component';
+import {EVideoType} from '@constant';
 import {iconClock, SvgEye, SvgPrevious44} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
@@ -46,10 +47,11 @@ export const ItemRecord = ({item}: Props) => {
       <TouchableOpacity
         onPress={() => {
           navigation.navigate(ROUTE_NAME.DETAIL_VIDEO, {
-            url: item?.link,
             id: item?.id,
-            isRecord: true,
-            item: item,
+            type: EVideoType.RECORD,
+            // url: item?.link,
+            // isRecord: true,
+            // item: item,
           });
         }}>
         <Video

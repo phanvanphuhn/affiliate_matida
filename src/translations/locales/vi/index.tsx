@@ -223,6 +223,10 @@ export const vi = {
     recent: 'Gần đây nhất',
     popular: 'Phổ biến nhất',
     filter: 'Chủ đề',
+    cancelFilterExpert: 'Xoá lọc theo chuyên gia',
+    filterExpert: 'Lọc chuyên gia',
+    searchExpert: 'Tìm kiếm chuyên gia',
+    noDataExpert: 'Không tìm thấy chuyên gia',
   },
   setting: {
     profile: 'Cài đặt thông tin cá nhân',
@@ -368,6 +372,7 @@ export const vi = {
     you: 'Bạn:',
     messageNotText: 'Đã gửi một tin nhắn',
     questionTida: 'Chọn câu hỏi để hỏi Tida AI',
+    cancel: 'Huỷ',
   },
   talk: {
     momTalk: 'Audio tâm sự',
@@ -512,6 +517,7 @@ export const vi = {
     noData: 'Bạn chưa hoàn thành bài test nào hết nha',
     seeMore: 'Xem thêm',
     doOtherTest: 'Làm bài kiểm tra khác',
+    noDataQuiz: 'Không có bài kiểm tra nào',
   },
   payment: {
     pay: '{{money}} {{currency}}',
@@ -534,6 +540,8 @@ export const vi = {
     msgFailure: 'Thanh toán không thành công. Vui lòng thử lại.',
     other: 'Thanh toán khác',
     method: 'Phương thức thanh toán',
+    tooltip:
+      'Sản phẩm bao gồm các tài liệu bản cứng, đồ dùng thực hành liên quan...\nCác sản phẩm sẽ được gửi đến bạn sau khi thanh toán thành công từ 2 đến 3 ngày. Vui lòng để ý tin nhắn trên Matida, chúng tôi sẽ liên hệ với bạn sớm.\nThời gian giao hàng có thể bị chậm trễ bởi số lượng đơn hàng quá lớn, vui lòng chờ.',
   },
   masterClass: {
     like: '{{like}} lượt thích',
@@ -542,5 +550,25 @@ export const vi = {
     course: 'khóa học',
     description: 'Mêu tả',
     exclusiveContent: 'Nội dung độc quyền',
+  },
+  feedback: {
+    help: {
+      title: 'Bạn mong đợi ứng dụng sẽ hỗ trợ được gì trong thai kỳ?',
+      textBody: 'Bạn hãy chia sẻ chi tiết nhất có thể với Matida nhé!',
+      placeholder: 'Nhập câu trả lời của bạn ở đây',
+    },
+    topic: {
+      title: 'Bạn mong muốn đọc những nội dung thuộc chủ đề nào?',
+      placeholder: 'Ý kiến khác',
+      topic: [
+        'Kiến thức y khoa',
+        'Dinh dưỡng - Nên ăn gì',
+        'Quản lý tài chính',
+        'Mẹ bỉm kiếm thêm thu nhập',
+        'Mua hàng giảm giá',
+        'Giữ gìn tình cảm gia đình',
+      ],
+    },
+    next: 'Tiếp theo',
   },
 };

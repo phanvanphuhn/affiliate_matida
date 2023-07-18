@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,14 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useDispatch, useSelector} from 'react-redux';
 // import {t} from 'i18next';
 import {useTranslation} from 'react-i18next';
-import {focusExploreTab, focusHomeTab, focusLiveTalkTab} from '@redux';
+import {
+  changePageExplore,
+  focusExploreTab,
+  focusHomeTab,
+  focusLiveTalkTab,
+  Option,
+  Page,
+} from '@redux';
 import {trackingAppEvent, event} from '@util';
 
 const width = Dimensions.get('window').width;
@@ -36,6 +43,9 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const {t} = useTranslation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const dispatch = useDispatch();
+
+  const isCallExplore = useRef<boolean>(true);
+
   const renderLabel = (value: string) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
@@ -78,6 +88,22 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
     }
   };
 
+  const onRefreshExplore = () => {
+    if (isCallExplore.current) {
+      dispatch(
+        changePageExplore({
+          page: 1,
+          pageExplore: Page.ARTICLE,
+          expert: '',
+          option: Option.RECENT,
+          trimesters: [],
+          topics: [],
+        }),
+      );
+      isCallExplore.current = false;
+    }
+  };
+
   return (
     <View style={styles.container}>
       {state.routes.map((route: any, index: number) => {
@@ -85,6 +111,10 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         const onPress = () => {
           if (!isFocused) {
             navigation.navigate(route.name);
+            onRefreshExplore();
+            if (route.name === ROUTE_NAME.TAB_EXPLORE) {
+              isCallExplore.current = true;
+            }
           } else {
             switch (route.name) {
               case ROUTE_NAME.TAB_HOME:
@@ -95,6 +125,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
                 break;
               case ROUTE_NAME.TAB_LIVETALK:
                 dispatch(focusLiveTalkTab());
+
                 break;
               default:
                 return;

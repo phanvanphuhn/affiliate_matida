@@ -1,32 +1,22 @@
 import {
   AppImage,
-  AppTextUrl,
+  ViewExpert,
   ViewLockPayment,
   ViewTextSeeMore,
 } from '@component';
+import {EVideoType} from '@constant';
 import {iconClock, SvgEye, SvgPrevious44} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {getConvertViewer} from '@util';
 import {t} from 'i18next';
 import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import Video from 'react-native-video';
-import {trackingAppEvent, event} from '@util';
-import {useSelector} from 'react-redux';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 const Item = React.memo((props: any) => {
   const {item} = props;
   const navigation = useNavigation<any>();
-  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const [loading, setLoading] = useState(true);
   const [duration, setDuration] = useState<any>(0);
@@ -37,18 +27,6 @@ const Item = React.memo((props: any) => {
     setDuration(Math?.round(item?.durations));
   }, []);
 
-  const onLoad = (data: any) => {
-    setLoading(false);
-    setDuration(Math?.round(data?.duration));
-  };
-
-  const onLoadStart = () => {
-    setLoading(true);
-  };
-
-  // const minutes = Math.floor(item?.durations / 60);
-  // const seconds = item?.durations - minutes * 60;
-
   const minutes = Math.floor(duration / 60);
   const seconds = duration - minutes * 60;
 
@@ -58,45 +36,20 @@ const Item = React.memo((props: any) => {
         activeOpacity={0.9}
         onPress={() => {
           navigation.navigate(ROUTE_NAME.DETAIL_VIDEO, {
-            url: item?.url,
+            type: EVideoType.VIDEO,
             id: item?.id,
-            title: item?.title,
-            item: item,
           });
         }}>
-        <Video
-          source={{uri: item?.url}}
-          style={(styles.image, {position: 'absolute'})}
-          resizeMode="cover"
-          paused={true}
-          volume={10}
-          ignoreSilentSwitch="ignore"
-          onLoad={onLoad}
-          //@ts-ignore
-          onLoadStart={onLoadStart}
-        />
         <View>
-          {!loading ? (
-            <View>
-              <AppImage
-                uri={item?.thumbnail ?? ''}
-                style={styles.image}
-                resizeMode="stretch"
-              />
-            </View>
-          ) : (
-            <View
-              style={[
-                styles.image,
-                {
-                  backgroundColor: colors.gray100,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                },
-              ]}>
-              <ActivityIndicator size="large" />
-            </View>
-          )}
+          <View>
+            <AppImage
+              uri={item?.thumbnail ?? ''}
+              style={styles.image}
+              resizeMode="stretch"
+              onLoadCallBack={() => setLoading(false)}
+            />
+          </View>
+
           {!loading && (
             <>
               <View style={styles.viewPrevious}>
@@ -118,10 +71,24 @@ const Item = React.memo((props: any) => {
           {item?.title}
         </Text>
         {item?.description?.length > 0 ? (
-          // <AppTextUrl style={styles.txtDes} color={colors.brandMainPinkRed}>
-          //   {item?.description}
-          // </AppTextUrl>
-          <ViewTextSeeMore text={item?.description} style={styles.txtDes} />
+          <ViewTextSeeMore
+            text={item?.description}
+            style={styles.txtDes}
+            heightMax={40}
+          />
+        ) : null}
+        {item?.expert_name ? (
+          <View
+            style={{
+              maxWidth: widthScreen - scaler(80),
+              // marginBottom: scaler(8),
+            }}>
+            <ViewExpert
+              name={item?.expert_name}
+              avatar={item?.expert_image}
+              numberOfLine={2}
+            />
+          </View>
         ) : null}
         <View style={{flexDirection: 'row'}}>
           {duration > 0 ? (
@@ -142,13 +109,6 @@ const Item = React.memo((props: any) => {
             </Text>
           </View>
         </View>
-        {/* <View style={styles.viewLoading}>
-          {loading === true ? (
-            <ActivityIndicator size="large" />
-          ) : (
-            <Image source={iconPlay} style={styles.iconPlay} />
-          )}
-        </View> */}
       </TouchableOpacity>
     </View>
   );

@@ -2,18 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
 
 import {AppButton, Header} from '@component';
+import {useNavigation} from '@react-navigation/native';
 import {styles} from '../styles';
 import {stylesScreen} from './styles';
-import {useNavigation} from '@react-navigation/native';
 
-import {Lemon} from '@images';
-import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
-import {useDispatch} from 'react-redux';
-import {changeStatusLogin} from '@redux';
+import {useUXCam} from '@util';
 import {useTranslation} from 'react-i18next';
-import {trackingAppEvent, event, useUXCam} from '@util';
-import {getDueDate, GlobalService} from '@services';
+import {useDispatch} from 'react-redux';
 
 const ResultDueDateScreenApp = (props: any) => {
   const {t} = useTranslation();

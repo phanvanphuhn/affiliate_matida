@@ -37,3 +37,8 @@ export const postRecordView: any = async (id: number | string | null) => {
   const response = await api.put(`${VIEWS_RECORD}/${id}`);
   return response;
 };
+
+export const getRecordRoomDetail: any = async (id: any) => {
+  const response = await api.get(`${LIST_RECORD}/${id}`);
+  return response;
+};

@@ -6,7 +6,11 @@ import ZegoUIKitPrebuiltLiveAudioRoom, {
   AUDIENCE_DEFAULT_CONFIG,
   //@ts-ignore
 } from '@zegocloud/zego-uikit-prebuilt-live-audio-room-rn';
-import {useUXCam} from '@util';
+import {
+  APPID_ZEGO_KEY_AUDIOLIVE,
+  APP_SIGN_ZEGO_KEY_AUDIOLIVE,
+  useUXCam,
+} from '@util';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
@@ -22,7 +26,7 @@ import {
 } from '@stylesCommon';
 import {trackingAppEvent, event} from '@util';
 import {ROUTE_NAME} from '@routeName';
-import {APPID_ZEGO_KEY_AUDIOLIVE, APP_SIGN_ZEGO_KEY_AUDIOLIVE} from '@env';
+// import {APPID_ZEGO_KEY_AUDIOLIVE, APP_SIGN_ZEGO_KEY_AUDIOLIVE} from '@env';
 
 const AudioLive = (props: any) => {
   const dispatch = useDispatch();
@@ -79,7 +83,6 @@ const AudioLive = (props: any) => {
   };
 
   const foregroundBuilder = ({userInfo}: any) => {
-    console.log(userInfo);
     return (
       <View style={styles.builder}>
         <Text style={styles.name} numberOfLines={1}>
@@ -92,7 +95,7 @@ const AudioLive = (props: any) => {
   return (
     <View style={styles.container}>
       <ZegoUIKitPrebuiltLiveAudioRoom
-        appID={APPID_ZEGO_KEY_AUDIOLIVE}
+        appID={+APPID_ZEGO_KEY_AUDIOLIVE}
         appSign={APP_SIGN_ZEGO_KEY_AUDIOLIVE}
         userID={renderIDuser()} // userID can be something like a phone number or the user id on your own user system.
         userName={renderName()}

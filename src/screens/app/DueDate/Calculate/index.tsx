@@ -29,7 +29,7 @@ const CalculateDueDateScreenApp = () => {
   const {t} = useTranslation();
   const [method, setMethod] = useState<string | number>(listMethod[0].value);
   const [cycleLength, setCycleLength] = useState<string>('TWENTY_EIGHT');
-  const [daysIVF, setDaysIVF] = useState<number>(3);
+  const [daysIVF, setDaysIVF] = useState<string>('IVF3');
   const [date, setDate] = useState<any>(moment());
 
   useUXCam(ROUTE_NAME.CALCULATE_DUE_DATE_APP);

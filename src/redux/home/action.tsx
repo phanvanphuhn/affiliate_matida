@@ -52,3 +52,7 @@ export const payMasterClassHome = (payload: any) => ({
   type: typeHome.PAY_MASTER_CLASS,
   payload,
 });
+
+export const cleanHome = () => ({
+  type: typeHome.CLEAR_HOME,
+});

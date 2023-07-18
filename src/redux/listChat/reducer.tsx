@@ -1,9 +1,7 @@
+import {produce} from 'immer';
+import {ChatState} from '../chat';
+import {INITIAL_LIST_CHAT, ListChatState} from './state';
 import {typeListChat} from './type';
-
-const INITIAL_LIST_CHAT = {
-  list: [],
-  notification: false,
-};
 
 export default function authReducer(state = INITIAL_LIST_CHAT, action: any) {
   switch (action.type) {
@@ -29,6 +27,26 @@ export default function authReducer(state = INITIAL_LIST_CHAT, action: any) {
         notification: false,
       };
 
+    case typeListChat.GET_LIST_USER_CHAT:
+      return produce(state, (draft: ListChatState) => {
+        draft.listUser =
+          action?.payload?.page === 1
+            ? action?.payload?.data
+            : draft?.listUser?.concat(action?.payload?.data);
+      });
+
+    case typeListChat.GET_SEARCH:
+      return produce(state, (draft: ListChatState) => {
+        draft.search = action?.payload;
+      });
+
+    case typeListChat.CHANGE_OPTION:
+      return produce(state, (draft: ListChatState) => {
+        draft.option = action?.payload;
+      });
+
+    case typeListChat.CLEAR_LIST_CHAT:
+      return INITIAL_LIST_CHAT;
     default:
       return state;
   }

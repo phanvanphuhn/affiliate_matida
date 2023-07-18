@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Image,
-  ImageSourcePropType,
   Modal,
   Platform,
   StyleProp,
@@ -14,12 +12,12 @@ import {
 } from 'react-native';
 
 import {
-  CaretDown,
-  RadioButton,
-  RadioButtonSelected,
+  SvgArrowDown,
   SvgArrowLeft,
+  SvgRadioCircle,
+  SvgRadioSelected,
 } from '@images';
-import {colors, heightScreen, scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {DefaultTFuncReturn, t} from 'i18next';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {AppButton} from './AppButton';
@@ -40,29 +38,24 @@ interface Props {
   stylesTextTitle?: StyleProp<TextStyle>;
   stylesTextLabel?: StyleProp<TextStyle>;
   stylesTextPlaceholder?: StyleProp<TextStyle>;
-  sourceIcon?: ImageSourcePropType | undefined;
   hideIcon?: boolean;
   titleSelection?: string | DefaultTFuncReturn;
   value: any;
   onPress?: (value: any) => void;
-  longModal?: boolean;
   placeholder?: string | DefaultTFuncReturn;
 }
 
 const heightItemModal = scaler(50);
-const heightLongModal = scaler((2 * heightScreen) / 3) + scaler(100);
 
 export const ModalMethodCalculation = ({
   stylesSelection,
   stylesTextTitle,
   stylesTextLabel,
   stylesTextPlaceholder,
-  sourceIcon = CaretDown,
   hideIcon = false,
   titleSelection = '',
   value,
   onPress = () => {},
-  longModal = false,
   placeholder = '',
 }: Props) => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -81,10 +74,6 @@ export const ModalMethodCalculation = ({
   ];
   const lengthList = listItem.length;
   const itemSelected = listItem.find(item => value === item.value);
-  //   const heightModal =
-  //     longModal || heightItemModal * lengthList > heightLongModal
-  //       ? heightLongModal
-  //       : scaler(heightItemModal * lengthList + 100);
 
   const heightModal = scaler(heightItemModal * lengthList + 100 + scaler(54));
   const handleOpenModal = () => {
@@ -93,17 +82,16 @@ export const ModalMethodCalculation = ({
 
   const handleCloseModal = () => {
     setVisible(false);
+    setValueChoose(value);
   };
 
   const handleSelection = (item: IItem) => {
     setValueChoose(item.value);
-    // onPress(item.value);
-    // handleCloseModal();
   };
 
   const handleSave = () => {
     onPress(valueChoose);
-    handleCloseModal();
+    setVisible(false);
   };
 
   return (
@@ -128,7 +116,7 @@ export const ModalMethodCalculation = ({
             </Text>
           )}
         </View>
-        {!hideIcon && <Image source={sourceIcon} style={styles.icon} />}
+        {!hideIcon && <SvgArrowDown style={styles.icon} />}
       </TouchableOpacity>
       <Modal
         transparent={true}
@@ -196,10 +184,13 @@ const RenderItem = ({item, onPress, value}: RenderItemProps) => {
           isIVF && {borderTopWidth: scaler(1), borderColor: colors.gray},
         ]}
         activeOpacity={0.9}>
-        <Image
-          source={isSelected ? RadioButtonSelected : RadioButton}
-          style={styles.radioImg}
-        />
+        <View style={styles.radioImg}>
+          {isSelected ? (
+            <SvgRadioSelected color={'#717D84'} />
+          ) : (
+            <SvgRadioCircle color={'#717D84'} />
+          )}
+        </View>
         <Text
           style={[styles.textLabel, {textAlign: 'center'}]}
           numberOfLines={1}>
@@ -335,7 +326,6 @@ const styles = StyleSheet.create({
   },
   radioImg: {
     marginRight: scaler(12),
-    tintColor: '#717D84',
   },
   textLink: {
     color: colors.brandMainPinkRed,

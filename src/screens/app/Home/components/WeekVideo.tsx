@@ -1,12 +1,11 @@
-import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View, Text} from 'react-native';
-import {colors, stylesCommon} from '@stylesCommon';
-import {iconClock, iconEye, isStockPhoto, SvgEye, SvgPrevious44} from '@images';
-import {scaler, widthScreen} from '@stylesCommon';
 import {AppImage, ViewLockPayment} from '@component';
-import {useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
+import {iconClock, SvgEye, SvgPrevious44} from '@images';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {getConvertViewer} from '@util';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
 
 interface IProps {
   onPress: (item: any) => void;

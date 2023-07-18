@@ -1,9 +1,9 @@
-import {AppHeader, ItemArticles, ItemPodCast, ItemVideo} from '@component';
+import {AppHeader, ItemArticles, ItemVideo} from '@component';
 import {SvgArticleExplore, SvgMediaExplore, SvgPodcastExplore} from '@images';
 import {navigate} from '@navigation';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {changePageExplore} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {getArticleMost, getPodcastMost, getVideoMost} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {event, trackingAppEvent, useUXCam} from '@util';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -12,45 +12,35 @@ import {
   ActivityIndicator,
   FlatList,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   ComponentPage,
+  FilterExpert,
   FilterExplore,
   FilterMost,
+  ItemPodCast,
   NoResultsFound,
 } from './components';
-import {IFilterTopic, IOption, IPage, Option, Page} from './type';
-
-const initFilterTopic: IFilterTopic = {
-  trimesters: [],
-  topics: [],
-};
+import {IPage, Option, Page} from './type';
 
 const Explore = () => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
-  const [pageExplore, setPageExplore] = useState<Page>(Page.ARTICLE);
-  const [option, setOption] = useState<Option>(Option.RECENT);
-  const [filterTopic, setFilterTopic] = useState<IFilterTopic>(initFilterTopic);
-  const [articles, setArticles] = useState<any>([]);
-  const [podcasts, setPodcasts] = useState<any>([]);
-  const [videos, setVideos] = useState<any>([]);
-  const [total, setTotal] = useState<number>(0);
-  const [loadMore, setLoadMore] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
 
-  const scrollRef = useRef<ScrollView>(null);
-
+  const explore = useSelector((state: any) => state?.explore);
+  const filter = useSelector((state: any) => state?.explore?.filter);
+  const loadMoreRedux = useSelector((state: any) => state?.explore?.loadMore);
   const isFocus = useSelector((state: any) => state?.tab?.explore);
+
+  const pageExplore = explore?.pageExplore;
+
   const firstRef = useRef(false);
-  const refLoadMore = useRef<boolean>(true);
   const refFlatList = useRef<FlatList>(null);
-  const refChangePage = useRef<boolean>(false);
+  const pageRef = useRef<number>(1);
 
   const listPage: IPage[] = [
     {
@@ -107,131 +97,56 @@ const Explore = () => {
     }
   }, [isFocus]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      handlePressLogo();
-      if (refChangePage?.current) {
-        getData();
-      } else {
-        refChangePage.current = true;
-      }
-    }, [pageExplore, option, filterTopic]),
-  );
-
-  const getData = () => {
-    switch (pageExplore) {
-      case Page.ARTICLE:
-        return getDataArticles();
-      case Page.PODCAST:
-        return getDataPodcast();
-      case Page.VIDEOS:
-        return getDataVideo();
-      default:
-        return;
-    }
-  };
-
-  const getDataArticles = async () => {
-    try {
-      refLoadMore.current = false;
-      const isRecent = option === Option.RECENT;
-      const res = await getArticleMost(
-        page,
-        filterTopic.trimesters,
-        filterTopic.topics,
-        isRecent,
-      );
-      if (page === 1) {
-        setArticles(res?.data?.data);
-      } else {
-        setArticles(articles?.concat(res?.data?.data));
-      }
-      setTotal(res?.data?.total);
-      res?.data?.data?.length > 0 && setPage(page + 1);
-    } catch (e) {
-    } finally {
-      setLoadMore(false);
-      setLoading(false);
-      refLoadMore.current = true;
-    }
-  };
-
-  const getDataPodcast = async () => {
-    try {
-      refLoadMore.current = false;
-      const isRecent = option === Option.RECENT;
-      const res = await getPodcastMost(
-        page,
-        filterTopic.trimesters,
-        filterTopic.topics,
-        isRecent,
-      );
-      if (page === 1) {
-        setPodcasts(res?.data?.data);
-      } else {
-        setPodcasts(podcasts?.concat(res?.data?.data));
-      }
-      setTotal(res?.data?.total);
-      res?.data?.data?.length > 0 && setPage(page + 1);
-    } catch (e) {
-    } finally {
-      setLoadMore(false);
-      setLoading(false);
-      refLoadMore.current = true;
-    }
-  };
-
-  const getDataVideo = async () => {
-    try {
-      refLoadMore.current = false;
-      const isRecent = option === Option.RECENT;
-      const res = await getVideoMost(page, isRecent);
-      if (page === 1) {
-        setVideos(res?.data?.data);
-      } else {
-        setVideos(videos?.concat(res?.data?.data));
-      }
-      setTotal(res?.data?.total);
-      res?.data?.data?.length > 0 && setPage(page + 1);
-    } catch (e) {
-    } finally {
-      setLoadMore(false);
-      setLoading(false);
-      refLoadMore.current = true;
-    }
+  const getData = (isNew: boolean) => {
+    dispatch(
+      changePageExplore({
+        page: isNew ? 1 : pageRef.current,
+        pageExplore: pageExplore,
+        expert: isNew ? '' : filter?.expert,
+        option: isNew ? Option.RECENT : filter?.option,
+        trimesters: isNew ? [] : filter?.filterTopic?.trimesters,
+        topics: isNew ? [] : filter?.filterTopic?.topics,
+      }),
+    );
   };
 
   const handleLoadMore = () => {
-    let length;
+    let length = 0;
+    let total = 0;
     switch (pageExplore) {
       case Page.ARTICLE:
-        length = articles?.length;
+        length = explore?.articles?.data?.length;
+        total = explore?.articles?.total;
         break;
       case Page.PODCAST:
-        length = podcasts?.length;
+        length = explore?.podcasts?.data?.length;
+        total = explore?.podcasts?.total;
         break;
       case Page.VIDEOS:
-        length = videos?.length;
+        length = explore?.videos?.data?.length;
+        total = explore?.videos?.total;
         break;
       default:
         length = 0;
+        total = 0;
         break;
     }
     if (length >= total) {
       null;
     } else {
-      // setPage(prevPage => prevPage + 1);
-      if (refLoadMore.current) {
-        setLoadMore(true);
-        getData();
-      }
+      setTimeout(() => {
+        if (loadMoreRedux) {
+          pageRef.current++;
+          getData(false);
+        }
+      }, 100);
     }
   };
 
   const onRefresh = useCallback(async () => {
-    await setPage(1);
-    getData();
-  }, [filterTopic, page, pageExplore, option]);
+    pageRef.current = 1;
+    getData(false);
+  }, [pageRef.current, pageExplore, filter]);
 
   const navigateUser = () => {
     navigate(ROUTE_NAME.PROFILE_SETTINGS);
@@ -246,12 +161,17 @@ const Explore = () => {
   };
 
   const handleChangePage = (page: Page) => {
-    setPage(1);
-    setLoading(true);
-    setOption(Option.RECENT);
-    refChangePage.current = false;
-    // setFilterTopic(initFilterTopic);
-    setPageExplore(page);
+    pageRef.current = 1;
+    dispatch(
+      changePageExplore({
+        page: 1,
+        pageExplore: page,
+        expert: '',
+        option: Option.RECENT,
+        trimesters: [],
+        topics: [],
+      }),
+    );
   };
 
   const handlePressLogo = () => {
@@ -260,16 +180,22 @@ const Explore = () => {
     }, 0);
   };
 
-  const handleFilterTopic = (values: IFilterTopic) => {
-    setPage(1);
-    setFilterTopic({...values});
+  const handleCallBack = () => {
+    pageRef.current = 1;
     trackingAppEvent(event.EXPLORE.CLICK_EXPLORE, {});
   };
 
-  const handlePressOption = (value: IOption) => {
-    setPage(1);
-    setOption(value.value);
-    trackingAppEvent(event.EXPLORE.CLICK_EXPLORE, {});
+  const getLoadingPage = () => {
+    switch (pageExplore) {
+      case Page.ARTICLE:
+        return explore?.articles?.loading;
+      case Page.PODCAST:
+        return explore?.podcasts?.loading;
+      case Page.VIDEOS:
+        return explore?.videos?.loading;
+      default:
+        return false;
+    }
   };
 
   const renderItem = ({item}: {item: any}) => {
@@ -283,7 +209,7 @@ const Explore = () => {
       case Page.PODCAST:
         return (
           <View style={{paddingHorizontal: scaler(16)}}>
-            <ItemPodCast item={item} onCallBack={getData} />
+            <ItemPodCast item={item} />
           </View>
         );
       case Page.VIDEOS:
@@ -296,11 +222,11 @@ const Explore = () => {
   const switchData = () => {
     switch (pageExplore) {
       case Page.ARTICLE:
-        return articles;
+        return explore?.articles?.data;
       case Page.PODCAST:
-        return podcasts;
+        return explore?.podcasts?.data;
       case Page.VIDEOS:
-        return videos;
+        return explore?.videos?.data;
       default:
         return [];
     }
@@ -328,17 +254,24 @@ const Explore = () => {
           })}
         </View>
         <View style={{flexDirection: 'row', marginTop: scaler(12)}}>
-          <FilterMost value={option} onPress={handlePressOption} />
-          <FilterExplore
-            onPressSave={handleFilterTopic}
-            pageExplore={pageExplore}
-          />
+          <FilterMost pageExplore={pageExplore} onCallback={handleCallBack} />
+
+          {pageExplore === Page.VIDEOS ? (
+            <FilterExpert
+              onCallback={handleCallBack}
+              pageExplore={pageExplore}
+            />
+          ) : (
+            <FilterExplore
+              onCallback={handleCallBack}
+              pageExplore={pageExplore}
+            />
+          )}
         </View>
       </View>
       <FlatList
         ref={refFlatList}
         data={switchData()}
-        // data={[]}
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.01}
         key={pageExplore.toString()}
@@ -348,9 +281,9 @@ const Explore = () => {
           paddingBottom: scaler(240),
           paddingTop: scaler(16),
         }}
-        keyExtractor={(_: any, index: number) => index?.toString()}
+        keyExtractor={(_: any, index: number) => _?.id?.toString()}
         ListEmptyComponent={() => {
-          return !loading ? (
+          return !getLoadingPage() ? (
             <NoResultsFound />
           ) : (
             <View style={[styles.viewLoadMore, {marginTop: scaler(20)}]}>
@@ -363,7 +296,7 @@ const Explore = () => {
         }
         ListFooterComponent={
           <>
-            {loadMore === true ? (
+            {loadMoreRedux === false && !getLoadingPage() ? (
               <View style={styles.viewLoadMore}>
                 <ActivityIndicator color={colors.primary} size="small" />
               </View>
