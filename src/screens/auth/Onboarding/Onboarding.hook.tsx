@@ -1,12 +1,14 @@
 import {FeedBack} from '@constant';
 import {useNavigation} from '@react-navigation/native';
 import {changeStatusLogin} from '@redux';
+import {ROUTE_NAME} from '@routeName';
 import {
   getQuestionOnboarding,
   GlobalService,
   postAnswerOnboarding,
 } from '@services';
 import {colors} from '@stylesCommon';
+import {useUXCam} from '@util';
 import {FormikProps} from 'formik';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -35,6 +37,8 @@ export const OnboardingHook = () => {
   const topics = data?.questions?.find(
     (element: any) => +element?.type === FeedBack.TOPIC,
   );
+
+  useUXCam(ROUTE_NAME.ON_BOARDING);
 
   useEffect(() => {
     getData();

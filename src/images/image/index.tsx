@@ -20,7 +20,6 @@ const iconMuteNoti = require('./iconMuteNoti.png');
 const iconUserLive = require('./iconUserLive.png');
 const iconViewMeeting = require('./viewMeeting.png');
 const iconRaiseHandModal = require('./raiseHandModal.png');
-const iconLive = require('./iconLive.png');
 const iconHand = require('./hand.png');
 const iconLock = require('./Lock.png');
 const iconSavePng = require('./iconSavePng.png');
@@ -28,7 +27,6 @@ const iconUnSavePng = require('./iconUnSavePng.png');
 const iconIsAdmin = require('./isAdmin.png');
 const iconPhoneCall = require('./phoneCallRoom.png');
 const iconLiveStream = require('./liveRoom.png');
-const iconChatGPT = require('./IconChatGPT.png');
 const TidaAI = require('./TidaAI.png');
 const TidaAIWhite = require('./TidaAIWhite.jpg');
 const IconBackgroundImageHome = require('./iconBackgroundImageHome.png');
@@ -36,9 +34,14 @@ const iconSuccessQuiz = require('./successQuiz.png');
 const iconFalseQuiz = require('./falseQuiz.png');
 const iconEmoji = require('./Emoji.png');
 const liveTalkBackground = require('./liveTalkBackground.gif');
-const iconCrown = require('./iconCrown.png');
 const lightQuiz = require('./light-quiz.png');
 const backgroundBannerQuiz = require('./background-banner-quiz.jpg');
+const slideIntro1 = require('./slideIntro1.png');
+const slideIntro2 = require('./slideIntro2.png');
+const slideIntro3 = require('./slideIntro3.png');
+const slideIntro4 = require('./slideIntro4.png');
+const slideIntro5 = require('./slideIntro5.png');
+const slideIntro5en = require('./slideIntro5en.png');
 
 export {
   imageIntro,
@@ -63,7 +66,6 @@ export {
   iconUserLive,
   iconViewMeeting,
   iconRaiseHandModal,
-  iconLive,
   iconHand,
   iconLock,
   iconSavePng,
@@ -71,7 +73,6 @@ export {
   iconIsAdmin,
   iconPhoneCall,
   iconLiveStream,
-  iconChatGPT,
   TidaAI,
   TidaAIWhite,
   IconBackgroundImageHome,
@@ -79,7 +80,12 @@ export {
   iconFalseQuiz,
   iconEmoji,
   liveTalkBackground,
-  iconCrown,
   lightQuiz,
   backgroundBannerQuiz,
+  slideIntro1,
+  slideIntro2,
+  slideIntro3,
+  slideIntro4,
+  slideIntro5,
+  slideIntro5en,
 };

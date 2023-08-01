@@ -28,7 +28,7 @@ const ResultDueDateScreen = (props: any) => {
 
   const handlePressButton = () => {
     // dispatch(changeStatusLogin(true));
-    navigation.navigate(ROUTE_NAME.ON_BOARDING);
+    navigation.navigate(ROUTE_NAME.SLIDE_INTRO);
   };
 
   return (

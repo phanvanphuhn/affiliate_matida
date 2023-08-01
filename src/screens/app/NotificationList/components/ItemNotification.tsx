@@ -1,5 +1,5 @@
 import {AppImage, AppTextUrl} from '@component';
-import {ETypeRedirectBroadcast, EVideoType} from '@constant';
+import {ETypeRedirectBroadcast, EVideoType, OptionComparison} from '@constant';
 import {avatarDefault, LogoApp} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
@@ -160,7 +160,10 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
   };
 
   const handleNotificationCheckUp = () => {
-    navigate(ROUTE_NAME.TIME_LINE);
+    // navigate(ROUTE_NAME.TIME_LINE);
+    navigate(ROUTE_NAME.SIZE_COMPARISON, {
+      option: OptionComparison.EMBRYO,
+    });
   };
 
   const handleNotificationLike = () => {

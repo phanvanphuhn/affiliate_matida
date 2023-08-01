@@ -566,4 +566,22 @@ export const en = {
     },
     next: 'Next',
   },
+  slideIntro: {
+    title: [
+      'Welcome!',
+      'Baby tracker',
+      'Forum',
+      'Tida AI',
+      'Thank you for signing up!',
+    ],
+    textBody: [
+      'Matida is here to support you to have a happy and healthy pregnancy',
+      'Follow your baby’s development week by week',
+      'Connect with other moms and share experiences',
+      'Ask questions and receive answers in seconds',
+      'We are so happy to have you.\nAlways remember, you are not alone.',
+    ],
+    skip: 'Skip',
+    dashboard: 'Start exploring',
+  },
 };

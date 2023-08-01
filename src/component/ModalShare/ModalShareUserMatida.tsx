@@ -166,6 +166,7 @@ export const ModalShareUserMatida = forwardRef<IModalShare, PropsUser>(
             </View>
             <FlatList
               showsVerticalScrollIndicator={false}
+              keyboardDismissMode="on-drag"
               contentContainerStyle={{flexGrow: 1}}
               data={list}
               renderItem={({item, index}) => (

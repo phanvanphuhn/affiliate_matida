@@ -1,19 +1,12 @@
-import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {stylesCommon, colors, scaler} from '@stylesCommon';
-import {
-  imageIntro,
-  iconCrown,
-  avatarDefault,
-  SvgCrown,
-  SvgHearted,
-  SvgHeart,
-} from '@images';
-import {useSelector} from 'react-redux';
-import {AppImage, ViewExpert, ViewLock, ViewLockPayment} from '@component';
-import {getConvertViewer} from '@util';
+import {AppImage, ViewExpert, ViewLockPayment} from '@component';
+import {SvgHeart, SvgHearted} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {getConvertViewer} from '@util';
+import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const Item = React.memo((props: any) => {
   const {item} = props;
