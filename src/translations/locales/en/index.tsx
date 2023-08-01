@@ -195,6 +195,7 @@ export const en = {
   },
   bottomTab: {
     explore: 'Explore',
+    feed: 'Feed',
     liveTalks: 'Live Talks',
     home: 'Baby tracker',
     community: 'Community',

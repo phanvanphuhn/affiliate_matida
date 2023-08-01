@@ -12,3 +12,7 @@ export const focusExploreTab = () => ({
 export const focusLiveTalkTab = () => ({
   type: typeTab.LIVE_TALK,
 });
+
+export const focusFeedTab = () => ({
+  type: typeTab.FEED
+})
