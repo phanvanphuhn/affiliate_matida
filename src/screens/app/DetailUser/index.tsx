@@ -60,6 +60,8 @@ const DetaiUser = (props: any) => {
     }, 500);
   };
 
+  console.log('idPost: ', idPost);
+
   const blockUser = async () => {
     try {
       GlobalService.showLoading();
@@ -69,8 +71,10 @@ const DetaiUser = (props: any) => {
         type: 'default',
         backgroundColor: colors.success_message,
       });
-      dispatch(getDetailPost(idPost));
-      dispatch(getListCommentAction({id: idPost, page: 1}));
+      if (idPost) {
+        dispatch(getDetailPost(idPost));
+        dispatch(getListCommentAction({id: idPost, page: 1}));
+      }
       navigation.goBack();
       GlobalService.hideLoading();
     } catch (errro) {

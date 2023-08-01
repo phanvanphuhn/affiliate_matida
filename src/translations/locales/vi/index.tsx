@@ -571,4 +571,22 @@ export const vi = {
     },
     next: 'Tiếp theo',
   },
+  slideIntro: {
+    title: [
+      'Matida chào bạn!',
+      'Theo dõi thai kỳ',
+      'Diễn đàn chia sẻ',
+      'Tida AI',
+      'Matida đồng hành cùng mẹ bầu',
+    ],
+    textBody: [
+      'Matida ở đây để hỗ trợ bạn có một thai kỳ hạnh phúc và khỏe mạnh.',
+      'Theo dõi sự phát triển của bé theo từng tuần',
+      'Chia sẻ, đặt câu hỏi để nhận được câu trả lời từ bác sĩ và các mẹ bầu khác',
+      'Trí tuệ nhân tạo giúp mẹ bầu giải đáp thắc mắc trong vài giây',
+      'Cảm ơn bạn đã chọn Matida đồng hành cùng mẹ theo dõi thai kỳ.',
+    ],
+    skip: 'Bỏ qua',
+    dashboard: 'Bắt đầu ngay',
+  },
 };

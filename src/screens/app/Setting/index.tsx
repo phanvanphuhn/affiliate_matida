@@ -15,7 +15,13 @@ import {cleanHome, clearExplore, clearListChat, logOut} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {deleteUserDevice} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam, VERSION_APP} from '@util';
+import {
+  event,
+  trackingAppEvent,
+  useUXCam,
+  VERSION_APP,
+  VERSION_CODE_PUSH,
+} from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -160,8 +166,7 @@ const Setting = () => {
       })}
       <View style={styles.viewBottom}>
         <Text style={styles.txtBottom}>
-          {t('setting.version')}
-          {VERSION_APP}
+          {`${t('setting.version')}${VERSION_APP} - ${VERSION_CODE_PUSH}`}
         </Text>
       </View>
       <ModalConfirm

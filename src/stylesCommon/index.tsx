@@ -31,6 +31,7 @@ const colors = {
   gray250: '#F7F7F7',
   gray300: '#1C272D',
   gray350: '#F6F6F6',
+  gray400: '#33302E',
   facebook: '#2875D0',
   zalo: '#2395FF',
   brandMainPinkRed: '#E86C6C',
@@ -52,10 +53,11 @@ const colors = {
   green150: '#57B1AD',
   yellow: '#F5BC65',
   yellow50: '#FFF9F0',
+  yellow100: '#FFF5F4',
+  yellow150: '#FFF6F3',
 
   success_message: '#28B4AE',
   error_message: '#A67481',
-  yellow100: '#FFF5F4',
   transparent: 'transparent',
 };
 

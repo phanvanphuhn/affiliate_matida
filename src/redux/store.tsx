@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['check'],
+  blacklist: ['check', 'listChat'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

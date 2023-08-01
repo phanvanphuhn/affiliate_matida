@@ -121,7 +121,7 @@ export const listUserBlockApi: any = async (page: any) => {
 
 export const getListUserApi: any = async (search: string, page: any) => {
   const response = await api.get(
-    `${LIST_USER}?page=${page}&size=10&keyword=${search}&exclude_me=1`,
+    `${LIST_USER}?page=${page}&size=10&keyword=${search}&exclude_me=1&exclude_blocked=2`,
   );
   return response;
 };

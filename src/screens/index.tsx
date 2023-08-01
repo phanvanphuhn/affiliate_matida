@@ -6,6 +6,8 @@ import ChooseDueDateScreen from './auth/DueDate/ChooseDueDate';
 import CalculateDueDateScreen from './auth/DueDate/Calculate';
 import ResultDueDateScreen from './auth/DueDate/ResultDueDate';
 import {ProfileSettingsScreen} from './app/ProfileSettings';
+import {Onboarding} from './auth/Onboarding';
+import {SlideIntro} from './auth/SlideIntro';
 
 import {Home} from './app/Home';
 import {Explore} from './app/Explore';
@@ -52,7 +54,6 @@ import {MomPrepTest, TestDetail, TestResult} from './app/MomTest';
 import {ListRecord} from './app/ListRecord';
 import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
-import {Onboarding} from './auth/Onboarding';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -110,6 +111,7 @@ const screens = {
   MasterClass,
   ListMasterClass,
   Onboarding,
+  SlideIntro,
 };
 
 export {screens};

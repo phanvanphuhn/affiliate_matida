@@ -9,30 +9,26 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {InteractiveView} from './InteractiveView';
-
 export const DiscussionPost = ({
   post,
   callBackData,
   onDelete,
   onPressOption,
+  cardBorderStyle,
 }: any) => {
   const navigation = useNavigation<any>();
   const userInfo = useSelector((state: any) => state?.auth?.userInfo);
   const {content, user_name, user_avatar, name, created_at, image, user} = post;
-
   const handleShow = () => navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: post?.id});
-
   const onNavigateEdit = () => {
     navigation.navigate(ROUTE_NAME.EDIT_POST, {id: post?.id});
   };
-
   const handlePostSettings = () => {
     onPressOption(post?.id ?? 0, post);
   };
-
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={[styles.container, cardBorderStyle || {}]}
       activeOpacity={1}
       onPress={handleShow}>
       <View style={{flex: 1}}>
@@ -43,14 +39,14 @@ export const DiscussionPost = ({
             marginBottom: scaler(12),
             justifyContent: 'space-between',
           }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
             {user_avatar ? (
               <AppImage user style={styles.image} uri={user_avatar} />
             ) : (
               <Image style={styles.image} source={avatarDefault} />
             )}
-            <View style={{marginLeft: scaler(8)}}>
-              <Text style={styles.textAuthor}>
+            <View style={{marginLeft: scaler(8), flex: 1}}>
+              <Text numberOfLines={1} style={styles.textAuthor}>
                 {/* {name ?? user?.name ?? user_name ?? ''} */}
                 {user?.name ? user?.name : ''}
               </Text>
@@ -94,7 +90,6 @@ export const DiscussionPost = ({
           )}
         </View>
       </View>
-
       <View>
         <View
           style={{
@@ -110,12 +105,10 @@ export const DiscussionPost = ({
     </TouchableOpacity>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     width: scaler(widthScreen * 0.7),
     padding: scaler(16),
-    // backgroundColor: colors.white,
     backgroundColor: colors.white,
     borderRadius: scaler(8),
     marginRight: scaler(16),

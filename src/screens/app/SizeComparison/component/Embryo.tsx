@@ -28,7 +28,7 @@ const Embryo = React.memo((props: any) => {
         return (
           <View style={styles.container}>
             <View style={styles.viewRow}>
-              <Text style={styles.txtHeader}>{`${data?.title} `}</Text>
+              <Text style={styles.txtHeader}>{data?.title}</Text>
               {/* <Text style={styles.txtHeader2}>
                 {lang === 2 ? data?.name_vn : data?.name_en}
               </Text> */}
