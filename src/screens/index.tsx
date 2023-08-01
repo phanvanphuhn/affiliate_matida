@@ -53,6 +53,7 @@ import {ListRecord} from './app/ListRecord';
 import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
 import {Onboarding} from './auth/Onboarding';
+import Feed from './app/Feed'
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -110,6 +111,7 @@ const screens = {
   MasterClass,
   ListMasterClass,
   Onboarding,
+  Feed
 };
 
 export {screens};

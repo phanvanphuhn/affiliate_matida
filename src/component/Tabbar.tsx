@@ -14,6 +14,7 @@ import {
   iconTabHome,
   iconTabLiveTalk,
   iconCommunity,
+  iconTabFeed
 } from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,6 +23,7 @@ import {useTranslation} from 'react-i18next';
 import {
   changePageExplore,
   focusExploreTab,
+  focusFeedTab,
   focusHomeTab,
   focusLiveTalkTab,
   Option,
@@ -50,6 +52,8 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
         return t('bottomTab.explore');
+      case ROUTE_NAME.TAB_FEED:
+        return t('bottomTab.feed')
       case ROUTE_NAME.TAB_HOME:
         return t('bottomTab.home');
       case ROUTE_NAME.TAB_COMMUNITY:
@@ -62,6 +66,8 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
         return iconTabExplore;
+      case ROUTE_NAME.TAB_FEED:
+        return iconTabFeed;
       case ROUTE_NAME.TAB_HOME:
         return iconTabHome;
       case ROUTE_NAME.TAB_COMMUNITY:
@@ -75,6 +81,9 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
         trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {});
+        break;
+      case ROUTE_NAME.TAB_FEED:
+        trackingAppEvent(event.TAB.CLICK_TAB_FEED, {});
         break;
       case ROUTE_NAME.TAB_HOME:
         trackingAppEvent(event.TAB.CLICK_TAB_HOME, {});
@@ -125,7 +134,9 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
                 break;
               case ROUTE_NAME.TAB_LIVETALK:
                 dispatch(focusLiveTalkTab());
-
+                break;
+              case ROUTE_NAME.TAB_FEED:
+                dispatch(focusFeedTab());
                 break;
               default:
                 return;
@@ -172,7 +183,7 @@ const styles = StyleSheet.create({
     borderColor: '#A8A8A8',
   },
   button: {
-    width: width / 4,
+    width: width / 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -183,7 +194,7 @@ const styles = StyleSheet.create({
   },
   txtLabel: {
     ...stylesCommon.fontWeight500,
-    fontSize: scaler(12),
+    fontSize: scaler(10),
     marginTop: scaler(8),
   },
   iconHome: {

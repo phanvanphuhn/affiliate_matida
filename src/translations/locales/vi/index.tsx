@@ -200,6 +200,7 @@ export const vi = {
   },
   bottomTab: {
     explore: 'Khám phá',
+    feed: 'Dành cho bạn',
     liveTalks: 'Trò chuyện',
     home: 'Trang chủ',
     community: 'Kết nối',

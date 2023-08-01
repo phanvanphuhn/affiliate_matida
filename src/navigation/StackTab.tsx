@@ -35,6 +35,7 @@ const StackTab = () => {
       }}
       initialRouteName={ROUTE_NAME.TAB_HOME}>
       <Tab.Screen name={ROUTE_NAME.TAB_HOME} component={screens.Home} />
+      <Tab.Screen name={ROUTE_NAME.TAB_FEED} component={screens.Feed} />
       <Tab.Screen name={ROUTE_NAME.TAB_EXPLORE} component={screens.Explore} />
       <Tab.Screen
         name={ROUTE_NAME.TAB_COMMUNITY}
