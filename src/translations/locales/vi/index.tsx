@@ -595,4 +595,7 @@ export const vi = {
     skip: 'Bỏ qua',
     dashboard: 'Bắt đầu ngay',
   },
+  feed:{
+    search: 'Tìm kiếm'
+  }
 };

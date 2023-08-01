@@ -590,4 +590,7 @@ export const en = {
     skip: 'Skip',
     dashboard: 'Start exploring',
   },
+  feed:{
+    search: 'search'
+  }
 };
