@@ -21,16 +21,16 @@ export const ViewSmallQuiz = React.memo(() => {
           <Image source={iconEmoji} style={styles.icon} />
           <Text style={styles.txtTitleContent}>
             {lang === 1
-              ? 'Perfect reading! Ready to take our test?'
+              ? 'Are You Up for a Quiz Challenge?'
               : 'Làm bài test kiểm tra kiến thức'}
           </Text>
           <Text style={styles.txtContent}>
             {lang === 1
-              ? ' Try our test to build your knowledge.'
+              ? `Let's test your knowledge about parenthood.`
               : 'Bộ database 100+ câu hỏi kiểm tra kiến thức cho mẹ mang thai'}
           </Text>
           <AppButton
-            titleButton={lang === 1 ? 'Do the test' : 'Làm test ngay'}
+            titleButton={lang === 1 ? 'Start the Test' : 'Làm test ngay'}
             customStyleButton={styles.buttonBottom}
             onClick={() => navigate(ROUTE_NAME.MOM_PREP_TEST)}
           />

@@ -1,33 +1,48 @@
-import React, {useCallback, useRef, useState, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  PermissionsAndroid,
-  Image,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-} from 'react-native';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
-import {useNavigation} from '@react-navigation/native';
-import Video from 'react-native-video';
-import MediaControls from '../../../lib/react-native-media-controls';
-import {heightScreen, scaler, widthScreen} from '@stylesCommon';
-import {iconBack} from '@images';
-import {postRecordView, postVideoView} from '@services';
-import {showMessage} from 'react-native-flash-message';
-import {stylesCommon, colors} from '@stylesCommon';
-import {trackingAppEvent, event, useUXCam} from '@util';
-import {ROUTE_NAME} from '@routeName';
 import {AppImage, ViewPayment} from '@component';
+import {EContentType, EPaymentType, EVideoType} from '@constant';
+import {SvgArrowLeft} from '@images';
+import {useNavigation} from '@react-navigation/native';
+import {payVideoExplore, payVideoHome} from '@redux';
+import {ROUTE_NAME} from '@routeName';
+import {
+  getRecordRoomDetail,
+  getVideoDetail,
+  getVideoMasterClassDetail,
+  postRecordView,
+  postVideoView,
+} from '@services';
+import {
+  colors,
+  heightScreen,
+  scaler,
+  stylesCommon,
+  widthScreen,
+} from '@stylesCommon';
+import {event, trackingAppEvent, useContentView, useUXCam} from '@util';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {showMessage} from 'react-native-flash-message';
+import {getStatusBarHeight} from 'react-native-iphone-x-helper';
+import Video from 'react-native-video';
 import {useDispatch, useSelector} from 'react-redux';
-import {EPaymentType} from '@constant';
-import {payVideoHome} from '@redux';
+import MediaControls from '../../../lib/react-native-media-controls';
+import {TextDescriptionVideo} from './component';
 
 const PLAYER_STATES = {
   PLAYING: 0,
   PAUSED: 1,
   ENDED: 2,
+};
+
+const getContentTypeVideo = (type: EVideoType) => {
+  switch (type) {
+    case EVideoType.RECORD:
+      return EContentType.VIDEO_RECORD;
+    case EVideoType.MASTER_CLASS:
+      return EContentType.VIDEO_MASTER_CLASS;
+    default:
+      return EContentType.VIDEO;
+  }
 };
 
 const DetailVideo = (props: any) => {
@@ -37,24 +52,75 @@ const DetailVideo = (props: any) => {
   const {route} = props;
   const lang = useSelector((state: any) => state?.auth?.lang);
 
-  const {url, id, title, isRecord, item = {}} = route?.params;
+  const {id, type} = route?.params;
   const navigation = useNavigation<any>();
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [paused, setPaused] = useState(true);
   const [playerState, setPlayerState] = useState(PLAYER_STATES.PAUSED);
-  const [isPaid, setIsPaid] = useState<boolean>(true);
+  const [data, setData] = useState<any>({});
 
   useUXCam(ROUTE_NAME.DETAIL_VIDEO);
 
+  useContentView(id, getContentTypeVideo(type));
+
+  const isPayment = data?.is_payment && !data?.is_paid;
+
   useEffect(() => {
+    getData();
     postAddView();
     trackingAppEvent(event.SCREEN.DETAIL_VIDEO, {});
-    const isPayment = item?.is_payment && !item?.is_paid;
-    setIsPaid(isPayment);
+    return () => {
+      setPaused(true);
+    };
   }, []);
+
+  const getData = async () => {
+    try {
+      const res = await getSwitchVideo();
+      setData(res?.data);
+    } catch (e) {
+      console.log('e');
+    }
+  };
+
+  const getSwitchVideo = async () => {
+    try {
+      switch (type) {
+        case EVideoType.VIDEO:
+          return await getVideoDetail(id);
+        case EVideoType.RECORD:
+          return await getRecordRoomDetail(id);
+        case EVideoType.MASTER_CLASS:
+          return await getVideoMasterClassDetail(id);
+        default:
+          return new Error('Error type video!');
+      }
+    } catch (e) {}
+  };
+
+  const postAddView = async () => {
+    try {
+      switch (type) {
+        case EVideoType.VIDEO:
+          await postVideoView(id);
+          break;
+        case EVideoType.RECORD:
+          await postRecordView(id);
+          break;
+        default:
+          break;
+      }
+    } catch (e) {
+      showMessage({
+        message: '',
+        type: 'default',
+        backgroundColor: 'transparent',
+      });
+    }
+  };
 
   const goBack = useCallback(() => {
     setPlayerState(PLAYER_STATES.ENDED);
@@ -70,65 +136,103 @@ const DetailVideo = (props: any) => {
     setPlayerState(playerState);
   };
 
-  const postAddView = async () => {
-    try {
-      !!isRecord ? await postRecordView(id) : await postVideoView(id);
-    } catch (e) {
-      showMessage({
-        message: '',
-        type: 'default',
-        backgroundColor: 'transparent',
-      });
-    }
-  };
-
   const onReplay = () => {
     setPlayerState(PLAYER_STATES.PLAYING);
     videoPlayer.current?.seek(0);
   };
 
   const onProgress = (data: any) => {
-    if (!isLoading && playerState !== PLAYER_STATES.ENDED) {
+    if (!loading && playerState !== PLAYER_STATES.ENDED) {
       setCurrentTime(data.currentTime);
     }
   };
 
   const onLoad = (data: any) => {
     setDuration(data?.duration);
-    setIsLoading(false);
-    if (!isPaid) {
+    setLoading(false);
+    if (!isPayment) {
       setPlayerState(PLAYER_STATES.PLAYING);
       setPaused(false);
     }
   };
 
-  const onLoadStart = (data: any) => setIsLoading(true);
+  const onLoadStart = (data: any) => setLoading(true);
 
   const onEnd = () => setPlayerState(PLAYER_STATES.ENDED);
 
   const onSeeking = (currentTime: any) => setCurrentTime(currentTime);
 
   const onPay = () => {
-    setIsPaid(false);
     setPlayerState(PLAYER_STATES.PLAYING);
     setPaused(false);
-    if (!isRecord) {
+    if (type === EVideoType.VIDEO) {
       dispatch(payVideoHome({id: +id}));
+      dispatch(payVideoExplore({id: +id}));
     }
   };
 
-  if (isPaid) {
+  const getURLVideo = () => {
+    switch (type) {
+      case EVideoType.VIDEO:
+        return data?.url;
+      case EVideoType.RECORD:
+        return data?.link;
+      case EVideoType.MASTER_CLASS:
+        return lang === 2 ? data?.url_vn : data?.url_en;
+      default:
+        return null;
+    }
+  };
+
+  const getTypePaymentVideo = () => {
+    switch (type) {
+      case EVideoType.RECORD:
+        return EPaymentType.ROOM_RECORD;
+      case EVideoType.MASTER_CLASS:
+        return EPaymentType.VIDEO_MASTER_CLASS;
+      default:
+        return EPaymentType.VIDEO;
+    }
+  };
+
+  const getTitleVideo = () => {
+    switch (type) {
+      case EVideoType.VIDEO:
+        return data?.title;
+      case EVideoType.MASTER_CLASS:
+      case EVideoType.RECORD:
+        return lang === 2 ? data?.title_vn : data?.title_en;
+      default:
+        return '';
+    }
+  };
+
+  const getDescriptionVideo = () => {
+    switch (type) {
+      case EVideoType.VIDEO:
+        return data?.description;
+      case EVideoType.MASTER_CLASS:
+      case EVideoType.RECORD:
+        return lang === 2 ? data?.description_vn : data?.description_en;
+      default:
+        return '';
+    }
+  };
+
+  const titleVideo = getTitleVideo();
+
+  if (isPayment) {
     return (
       <View style={{flex: 1, justifyContent: 'center'}}>
-        {item?.thumbnail ? (
-          <AppImage uri={item?.thumbnail} style={styles.thumbnail} />
+        {data?.thumbnail ? (
+          <AppImage uri={data?.thumbnail} style={styles.thumbnail} />
         ) : null}
 
         <ViewPayment
-          isPay={item?.is_payment && !item?.is_paid}
-          id={item?.id}
-          price={item?.price_vn}
-          type={isRecord ? EPaymentType.ROOM_RECORD : EPaymentType.VIDEO}
+          isPay={data?.is_payment && !data?.is_paid}
+          id={data?.id}
+          price={data?.price_vn}
+          type={getTypePaymentVideo()}
           onCallBack={onPay}
         />
       </View>
@@ -136,46 +240,66 @@ const DetailVideo = (props: any) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Video
-        source={{uri: url}}
-        style={styles.video}
-        resizeMode="contain"
-        ref={videoPlayer}
-        onEnd={onEnd}
-        onLoad={onLoad}
-        //@ts-ignore
-        onLoadStart={onLoadStart}
-        onProgress={onProgress}
-        paused={paused}
-        volume={10}
-        ignoreSilentSwitch="ignore"
-      />
+    <>
+      <View style={styles.container}>
+        {getURLVideo() ? (
+          <Video
+            source={{uri: getURLVideo()}}
+            style={styles.video}
+            resizeMode="contain"
+            ref={videoPlayer}
+            onEnd={onEnd}
+            onLoad={onLoad}
+            //@ts-ignore
+            onLoadStart={onLoadStart}
+            onProgress={onProgress}
+            paused={paused}
+            volume={10}
+            ignoreSilentSwitch="ignore"
+          />
+        ) : null}
 
-      {/* @ts-ignore */}
-      <MediaControls
-        duration={duration}
-        isLoading={isLoading}
-        mainColor="#333"
-        onPaused={onPaused}
-        onReplay={onReplay}
-        onSeek={onSeek}
-        onSeeking={onSeeking}
-        playerState={playerState}
-        progress={currentTime}></MediaControls>
+        {/* @ts-ignore */}
+        <MediaControls
+          duration={duration}
+          isLoading={loading}
+          mainColor="#333"
+          onPaused={onPaused}
+          onReplay={onReplay}
+          onSeek={onSeek}
+          onSeeking={onSeeking}
+          playerState={playerState}
+          progress={currentTime}></MediaControls>
+        {getDescriptionVideo()?.length > 0 && paused ? (
+          <View
+            style={{
+              position: 'absolute',
+              bottom: scaler(40),
+              left: 0,
+              right: 0,
+              paddingHorizontal: scaler(20),
+              maxHeight: scaler(200),
+            }}>
+            <TextDescriptionVideo
+              title={titleVideo}
+              text={getDescriptionVideo()}
+            />
+          </View>
+        ) : null}
 
-      <View style={styles.viewHeaderImage}>
-        <TouchableOpacity onPress={goBack}>
-          <Image source={iconBack} style={styles.iconClose} />
-        </TouchableOpacity>
-        <View style={styles.viewTxt}>
-          <Text style={styles.txtTitle} numberOfLines={1}>
-            {title}
-          </Text>
+        <View style={styles.viewHeaderImage}>
+          <TouchableOpacity onPress={goBack}>
+            <SvgArrowLeft />
+          </TouchableOpacity>
+          <View style={styles.viewTxt}>
+            <Text style={styles.txtTitle} numberOfLines={1}>
+              {titleVideo}
+            </Text>
+          </View>
+          <View style={styles.viewRight} />
         </View>
-        <View style={styles.viewRight} />
       </View>
-    </View>
+    </>
   );
 };
 
@@ -235,6 +359,11 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: widthScreen,
     height: scaler(widthScreen * 0.75),
+  },
+  txtDes: {
+    fontSize: scaler(13),
+    marginTop: scaler(5),
+    color: colors.borderColor,
   },
 });
 

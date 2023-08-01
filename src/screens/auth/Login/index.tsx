@@ -1,13 +1,13 @@
-import {iconBackLogin} from '@images';
+import {SvgArrowBackLogin} from '@images';
 import React, {useEffect, useState} from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 
+import {ROUTE_NAME} from '@routeName';
+import {event, trackingAppEvent, useUXCam} from '@util';
 import {Step1} from './Component/Step1';
 import {Step2} from './Component/Step2';
 import {Step3} from './Component/Step3';
-import {trackingAppEvent, event, useUXCam} from '@util';
-import {ROUTE_NAME} from '@routeName';
 
 const Login = (props: any) => {
   const {visible, closeModal, onOpenSignUp, onSuccess, loginSocial} = props;
@@ -88,8 +88,10 @@ const Login = (props: any) => {
         // onStartShouldSetResponder={closeModal}
       />
       <View style={styles.container}>
-        <TouchableOpacity onPress={handleBackAction}>
-          <Image source={iconBackLogin} style={styles.iconBack} />
+        <TouchableOpacity
+          onPress={handleBackAction}
+          style={{alignSelf: 'flex-start'}}>
+          <SvgArrowBackLogin style={styles.iconBack} />
         </TouchableOpacity>
         <>{renderStep()}</>
       </View>

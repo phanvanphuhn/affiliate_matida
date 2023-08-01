@@ -64,6 +64,7 @@ const Community = () => {
       <View style={styles.container}>
         <FlatList
           data={[1]}
+          showsVerticalScrollIndicator={false}
           renderItem={() =>
             indexButton === 1 ? (
               <AllPostComponent statusRefresh={statusRefresh} />

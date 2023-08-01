@@ -54,7 +54,6 @@ export const ListRecord = () => {
     try {
       loadRef.current = false;
       const res = await getListRecord(pageRef.current, search);
-      console.log('res?.data?.data: ', res?.data?.data);
       if (pageRef.current === 1) {
         setData(res?.data?.data);
       } else {

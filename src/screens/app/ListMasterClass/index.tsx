@@ -7,9 +7,10 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import {stylesCommon, scaler, colors} from '@stylesCommon';
-import {Header} from '@component';
+import {Header, HeaderMasterClass} from '@component';
 import {SvgArrowLeft, iconSave} from '@images';
 import {Item} from './component/Item';
 import {getListClass} from '@services';
@@ -17,6 +18,8 @@ import {useTranslation} from 'react-i18next';
 import {useFocusEffect} from '@react-navigation/native';
 import {event, trackingAppEvent, useUXCam} from '@util';
 import {ROUTE_NAME} from '@routeName';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {goBack} from '@navigation';
 
 const ListMasterClass = () => {
   const {t} = useTranslation();
@@ -48,7 +51,6 @@ const ListMasterClass = () => {
     try {
       loadRef.current = false;
       const res = await getListClass(refPage.current);
-      console.log('ListMasterClass: ', res?.data);
       if (refPage.current === 1) {
         setData(res?.data?.data);
       } else {
@@ -82,11 +84,13 @@ const ListMasterClass = () => {
 
   return (
     <View style={styles.container}>
-      <Header
+      {/* <Header
         title={t('home.masterClass')}
         IconLeft={<SvgArrowLeft stroke={colors.textColor} />}
         // ComponentRight={<Image source={iconSave} />}
-      />
+      /> */}
+      <HeaderMasterClass />
+
       <View style={styles.viewContent}>
         {loading ? (
           <View style={styles.viewLoadmore}>
@@ -133,7 +137,6 @@ const styles = StyleSheet.create({
   },
   viewContent: {
     flex: 1,
-    // paddingBottom: scaler(16),
   },
   viewEmpty: {
     alignItems: 'center',
@@ -151,11 +154,8 @@ const styles = StyleSheet.create({
     marginBottom: scaler(8),
   },
   flatList: {
-    // paddingHorizontal: scaler(20),
     flexGrow: 1,
     paddingBottom: scaler(50),
-    // backgroundColor: colors.gray250,
-    // paddingHorizontal: scaler(16),
   },
 });
 

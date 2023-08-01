@@ -16,21 +16,15 @@ import {
   SvgTrimester3,
 } from '@images';
 import {useFocusEffect} from '@react-navigation/native';
+import {changePageExplore} from '@redux';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {getUseField} from '@util';
-import {Formik, FormikProps} from 'formik';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {IFilterTopic, Page} from '../type';
+import {useDispatch, useSelector} from 'react-redux';
+import {Page} from '../type';
 import {HeaderFilter} from './HeaderFilter';
-
-type IField = (
-  field: string,
-  value: any,
-  shouldValidate?: boolean | undefined,
-) => void;
 
 type ITtemFilter = {
   label: string;
@@ -43,55 +37,31 @@ type IList = {
   data: ITtemFilter[];
 };
 
-const initFilter: IFilterTopic = {
-  trimesters: [],
-  topics: [],
-};
-
 type Props = {
-  onPressSave: (value: IFilterTopic) => void;
+  onCallback: () => void;
   pageExplore: Page;
 };
 
-export const FilterExplore = ({onPressSave, pageExplore}: Props) => {
+export const FilterExplore = ({onCallback, pageExplore}: Props) => {
   const {t} = useTranslation();
-  const refSearch = useRef(initFilter);
-  const refFirst = useRef(false);
-  const formRef = useRef<
-    FormikProps<{
-      trimesters: number[];
-      topics: number[];
-    }>
-  >();
+  const dispatch = useDispatch();
 
-  // const {value: valueTrimester, setValue: setValueTrimester} =
-  //   getUseField('trimesters');
-  // const {value: valueTopics, setValue: setValueTopics} = getUseField('topics');
+  const filter = useSelector((state: any) => state?.explore?.filter);
 
   const [visible, setVisible] = useState<boolean>(false);
-  const [filtered, setFiltered] = useState<boolean>(false);
   const [trimesters, setTrimesters] = useState<number[]>([]);
   const [topics, setTopics] = useState<number[]>([]);
 
-  const isVideoPage = pageExplore === Page.VIDEOS;
-
   useFocusEffect(
     React.useCallback(() => {
-      refSearch.current = initFilter;
-      setTrimesters([]);
-      setTopics([]);
-      setFiltered(false);
-    }, []),
+      setTrimesters(filter?.filterTopic?.trimesters);
+      setTopics(filter?.filterTopic?.topics);
+    }, [filter]),
   );
 
-  useEffect(() => {
-    refSearch.current = initFilter;
-    formRef.current?.handleReset();
-    setTrimesters([]);
-    setTopics([]);
-    setFiltered(false);
-    handleSave(initFilter);
-  }, [pageExplore]);
+  const filtered =
+    filter?.filterTopic?.trimesters?.length !== 0 ||
+    filter?.filterTopic?.topics?.length !== 0;
 
   const list: IList[] = [
     {
@@ -161,135 +131,125 @@ export const FilterExplore = ({onPressSave, pageExplore}: Props) => {
     },
   ];
 
-  const handleSave = (values: any) => {
-    refSearch.current = {trimesters, topics};
-    let valueSoft = values;
-    valueSoft = {
-      trimesters: trimesters.sort((a: number, b: number) => a - b),
-      topics: topics.sort((a: number, b: number) => a - b),
+  const handleSave = () => {
+    const valueSoft = {
+      trimesters:
+        trimesters.length > 1
+          ? trimesters.sort((a: number, b: number) => a - b)
+          : trimesters,
+      topics:
+        topics.length > 1
+          ? topics.sort((a: number, b: number) => a - b)
+          : topics,
     };
-    formRef.current?.setFieldValue('trimesters', trimesters);
-    formRef.current?.setFieldValue('topics', topics);
-    onPressSave({...valueSoft});
+    dispatch(
+      changePageExplore({
+        page: 1,
+        pageExplore: pageExplore,
+        expert: '',
+        option: filter?.option,
+        trimesters: valueSoft?.trimesters,
+        topics: valueSoft?.topics,
+      }),
+    );
+    onCallback();
     setVisible(false);
-    if (isFiltered({trimesters, topics})) {
-      setFiltered(true);
-    } else {
-      setFiltered(false);
-    }
   };
 
-  const handleClear = (setFieldValue: IField) => {
-    // setFieldValue('trimesters', []);
-    // setFieldValue('topics', []);
+  const handleClear = () => {
     setTrimesters([]);
     setTopics([]);
   };
 
   const handleCancel = () => {
     setVisible(false);
-    setTrimesters(formRef.current?.values?.trimesters || []);
-    setTopics(formRef.current?.values?.topics || []);
+    setTrimesters(filter?.filterTopic?.trimesters || []);
+    setTopics(filter?.filterTopic?.topics || []);
   };
 
   return (
-    <Formik
-      initialValues={refSearch.current}
-      validateOnChange={false}
-      //@ts-ignore
-      innerRef={formRef}
-      enableReinitialize
-      onSubmit={handleSave}>
-      {({values, setFieldValue}) => (
-        <>
-          <TouchableOpacity
-            onPress={() => setVisible(true)}
-            disabled={isVideoPage}
-            activeOpacity={0.9}
-            style={[
-              styles.btnOption,
-              {
-                marginLeft: scaler(5),
-                marginRight: 0,
-                backgroundColor: filtered ? colors.brandMainPinkRed : '#F7F7F7',
-                opacity: isVideoPage ? 0 : 1,
-              },
-            ]}>
-            <Text
-              style={{
-                ...stylesCommon.fontWeight400,
-                fontSize: scaler(14),
-                textAlign: 'center',
-                color: filtered ? colors.white : colors.gray200,
-              }}>
-              {t('explore.filter')}
-            </Text>
-            <SvgCaretDown stroke={filtered ? colors.white : colors.gray200} />
-          </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        onPress={() => setVisible(true)}
+        activeOpacity={0.9}
+        style={[
+          styles.btnOption,
+          {
+            marginLeft: scaler(5),
+            marginRight: 0,
+            backgroundColor: filtered ? colors.brandMainPinkRed : '#F7F7F7',
+            opacity: 1,
+          },
+        ]}>
+        <Text
+          style={{
+            ...stylesCommon.fontWeight400,
+            fontSize: scaler(14),
+            textAlign: 'center',
+            color: filtered ? colors.white : colors.gray200,
+          }}>
+          {t('explore.filter')}
+        </Text>
+        <SvgCaretDown stroke={filtered ? colors.white : colors.gray200} />
+      </TouchableOpacity>
 
-          <Modal
-            transparent={true}
-            visible={visible}
-            onRequestClose={() => {}}
-            animationType="fade">
-            <View style={styles.containerModal}>
-              <View
-                style={styles.viewOut}
-                //@ts-ignore
-                onStartShouldSetResponder={handleCancel}
+      <Modal
+        transparent={true}
+        visible={visible}
+        onRequestClose={() => {}}
+        animationType="fade">
+        <View style={styles.containerModal}>
+          <View
+            style={styles.viewOut}
+            //@ts-ignore
+            onStartShouldSetResponder={handleCancel}
+          />
+          <View style={[styles.containerViewModal]}>
+            <HeaderFilter
+              onPress={handleCancel}
+              title={t('explore.titleFilterTopic')}
+            />
+            <KeyboardAwareScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.keyboardAwareScrollView}
+              bounces={false}>
+              <RenderItem
+                item={list[0]}
+                value={trimesters}
+                setValue={setTrimesters}
               />
-              <View style={[styles.containerViewModal]}>
-                <HeaderFilter
-                  onPress={handleCancel}
-                  title={t('explore.titleFilterTopic')}
-                />
-                <KeyboardAwareScrollView
-                  showsVerticalScrollIndicator={false}
-                  contentContainerStyle={styles.keyboardAwareScrollView}
-                  bounces={false}>
-                  <RenderItem
-                    item={list[0]}
-                    value={trimesters}
-                    setValue={setTrimesters}
-                  />
-                  <RenderItem
-                    item={list[1]}
-                    value={topics}
-                    setValue={setTopics}
-                  />
-                </KeyboardAwareScrollView>
+              <RenderItem item={list[1]} value={topics} setValue={setTopics} />
+            </KeyboardAwareScrollView>
 
-                <View style={{paddingHorizontal: scaler(16)}}>
-                  <AppButton
-                    titleButton={t('articles.filter.apply')}
-                    customStyleButton={styles.buttonSave}
-                    customStyleText={{
-                      color: colors.white,
-                    }}
-                    onClick={() => handleSave(values)}
-                  />
-                  <AppButton
-                    titleButton={t('articles.filter.clearAll')}
-                    customStyleButton={[
-                      styles.buttonSave,
-                      {
-                        marginBottom: scaler(30),
-                        backgroundColor: colors.white,
-                        marginTop: scaler(4),
-                      },
-                    ]}
-                    customStyleText={{
-                      color: colors.brandMainPinkRed,
-                    }}
-                    onClick={() => handleClear(setFieldValue)}
-                  />
-                </View>
-              </View>
+            <View style={{paddingHorizontal: scaler(16)}}>
+              <AppButton
+                titleButton={t('articles.filter.apply')}
+                customStyleButton={styles.buttonSave}
+                customStyleText={{
+                  color: colors.white,
+                }}
+                onClick={handleSave}
+              />
+              <AppButton
+                titleButton={t('articles.filter.clearAll')}
+                customStyleButton={[
+                  styles.buttonSave,
+                  {
+                    marginBottom: scaler(30),
+                    backgroundColor: colors.white,
+                    marginTop: scaler(4),
+                  },
+                ]}
+                customStyleText={{
+                  color: colors.brandMainPinkRed,
+                }}
+                onClick={handleClear}
+              />
             </View>
-          </Modal>
-        </>
-      )}
-    </Formik>
+          </View>
+        </View>
+      </Modal>
+    </>
   );
 };
 
@@ -334,10 +294,6 @@ const RenderItem = ({item, value, setValue}: PropsITem) => {
       })}
     </>
   );
-};
-
-const isFiltered = (values: {trimesters: number[]; topics: number[]}) => {
-  return values.trimesters.length !== 0 || values.topics.length !== 0;
 };
 
 const styles = StyleSheet.create({

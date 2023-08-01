@@ -18,6 +18,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {getCheckMessageUnread, listNotReadNotification} from '@services';
 import {updateTotalUnread, updateTotalUnreadNotification} from '@redux';
 import {showMessage} from 'react-native-flash-message';
+import {AppImage} from './AppImage';
 
 interface IProps {
   onPressMenu: () => void;
@@ -107,7 +108,7 @@ export const AppHeader = ({
         <TouchableOpacity
           onPress={onPressAvatar}
           style={{marginLeft: scaler(20)}}>
-          {user?.avatar?.length > 0 ? (
+          {/* {user?.avatar?.length > 0 ? (
             <>
               <FastImage
                 style={styles.avatarImage}
@@ -122,7 +123,8 @@ export const AppHeader = ({
             </>
           ) : (
             <Image source={avatarDefault} style={styles.avatarImage} />
-          )}
+          )} */}
+          <AppImage uri={user?.avatar} style={styles.avatarImage} user />
           {loading === true ? (
             <View style={styles.viewLoading}>
               <ActivityIndicator color={colors.primary} size="small" />
@@ -201,13 +203,6 @@ const styles = StyleSheet.create({
     width: scaler(42),
     height: scaler(42),
     borderRadius: scaler(42),
-  },
-  iconNotification: {
-    height: scaler(20),
-    width: scaler(20),
-    borderWidth: scaler(1.5),
-    borderRadius: scaler(8),
-    borderColor: '#515151',
   },
   viewLoading: {
     width: scaler(42),

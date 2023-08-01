@@ -5,7 +5,11 @@ import ZegoUIKitPrebuiltLiveStreaming, {
   HOST_DEFAULT_CONFIG,
   AUDIENCE_DEFAULT_CONFIG,
 } from '@zegocloud/zego-uikit-prebuilt-live-streaming-rn';
-import {useUXCam} from '@util';
+import {
+  APPID_ZEGO_KEY_LIVESTREAM,
+  APP_SIGN_ZEGO_KEY_LIVESTREAM,
+  useUXCam,
+} from '@util';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
@@ -17,7 +21,7 @@ import {showMessage} from 'react-native-flash-message';
 import * as ZIM from 'zego-zim-react-native';
 import {trackingAppEvent, event} from '@util';
 import {ROUTE_NAME} from '@routeName';
-import {APP_SIGN_ZEGO_KEY_LIVESTREAM, APPID_ZEGO_KEY_LIVESTREAM} from '@env';
+// import {APP_SIGN_ZEGO_KEY_LIVESTREAM, APPID_ZEGO_KEY_LIVESTREAM} from '@env';
 
 const LiveStreamDetail = (props: any) => {
   const dispatch = useDispatch();
@@ -81,7 +85,7 @@ const LiveStreamDetail = (props: any) => {
   return (
     <View style={styles.container}>
       <ZegoUIKitPrebuiltLiveStreaming
-        appID={APPID_ZEGO_KEY_LIVESTREAM}
+        appID={+APPID_ZEGO_KEY_LIVESTREAM}
         appSign={APP_SIGN_ZEGO_KEY_LIVESTREAM}
         userID={renderIDuser()} // userID can be something like a phone number or the user id on your own user system.
         userName={renderName()}

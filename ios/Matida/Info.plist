@@ -55,9 +55,34 @@
 				<string>matida.page.link</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.growth.levers.matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida1.page.link</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Bundle ID</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.growth.levers.matida</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CodePushDeploymentKey</key>
+	<!-- PRODUCT -->
+	<!-- <string>KMAL5G75tak3x4qyPCIahmzWFugl38rFT8Aii</string> -->
+	<!-- STAGGING -->
+	<string>VxBWiTOax_Xi1voP-41-nI-E6vW7b_kAZ_zYY</string>
 	<key>FacebookAppID</key>
 	<string>1325262418044786</string>
 	<key>FacebookClientToken</key>

@@ -5,7 +5,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {WEEK_MAX} from '@constant';
 import {SvgArrowCircleLeft, SvgArrowCircleRight} from '@images';
 import {getDataHomeByWeek} from '@redux';
-import {scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useDispatch, useSelector} from 'react-redux';
 
 export const WeeksPregnant = () => {
@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontPlus600,
     fontSize: scaler(25),
     lineHeight: 30,
-    color: 'rgba(214, 93, 93, 0.9)',
+    // color: 'rgba(214, 93, 93, 0.9)',
+    color: colors.white,
     textAlign: 'center',
     flex: 1,
   },

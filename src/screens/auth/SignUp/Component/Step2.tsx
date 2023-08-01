@@ -1,17 +1,16 @@
+import {AppButton, AppInput, AppSelectPhoneCode} from '@component';
+import {GlobalService, signUpPhone} from '@services';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import {iconZalo, iconFacebook} from '@images';
-import {AppInput, AppButton, AppSelectPhoneCode} from '@component';
-import {colors, stylesCommon, scaler, widthScreen} from '@stylesCommon';
 import {useTranslation} from 'react-i18next';
-import {signUpPhone, GlobalService} from '@services';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
+import {hasWhiteSpace, validateForm, validateFormVN} from '@util';
 import {Formik} from 'formik';
-import * as yup from 'yup';
-import {validateForm, validateFormVN, hasWhiteSpace} from '@util';
-import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {showMessage} from 'react-native-flash-message';
+import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useSelector} from 'react-redux';
+import * as yup from 'yup';
 
 const Step2 = React.memo((prop: any) => {
   const {onChangeStep, onOpenSignIn} = prop;

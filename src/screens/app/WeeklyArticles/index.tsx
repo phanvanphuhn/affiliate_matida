@@ -1,7 +1,7 @@
 import {AppGallery, Header, ItemArticles, PickerWeek} from '@component';
 import {SvgArrowLeft, SvgListBookmark} from '@images';
 import {navigate} from '@navigation';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {
   getListArticlesOfWeek,
@@ -22,7 +22,7 @@ export const WeeklyArticles = () => {
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
-  const [weeks, setWeeks] = useState<number>(week);
+  const [weeks, setWeeks] = useState<number>(week < 0 ? 40 : week);
   const [listArticles, setListArticles] = useState<any>([]);
   const [listPopular, setListPopular] = useState<any>([]);
   const [refreshing, setRefreshing] = useState<boolean>(true);
@@ -31,36 +31,46 @@ export const WeeklyArticles = () => {
 
   useUXCam(ROUTE_NAME.WEEKLY_ARTICLES);
 
-  useEffect(() => {
-    trackingAppEvent(event.SCREEN.WEEKLY_ARTICLES, {});
-    setTimeout(() => {
-      scrollRef?.current?.scrollTo({x: 0, y: 0, animated: true});
-    }, 50);
-    getDataArticles();
-    if (weeks !== 42) {
-      getListPopular();
-    } else {
-      setListPopular([]);
-    }
-  }, [weeks]);
+  // useEffect(() => {
+  //   trackingAppEvent(event.SCREEN.WEEKLY_ARTICLES, {});
+  //   setTimeout(() => {
+  //     scrollRef?.current?.scrollTo({x: 0, y: 0, animated: true});
+  //   }, 50);
+  //   getDataArticles();
+  //   if (weeks !== 42) {
+  //     getListPopular();
+  //   } else {
+  //     setListPopular([]);
+  //   }
+  // }, [weeks]);
+  useFocusEffect(
+    React.useCallback(() => {
+      trackingAppEvent(event.SCREEN.WEEKLY_ARTICLES, {});
+      setTimeout(() => {
+        scrollRef?.current?.scrollTo({x: 0, y: 0, animated: true});
+      }, 50);
+      getDataArticles();
+      if (weeks !== 42) {
+        getListPopular();
+      } else {
+        setListPopular([]);
+      }
+    }, [weeks]),
+  );
 
   const getDataArticles = async () => {
     try {
-      // GlobalService.showLoading();
       const res = await getListArticlesOfWeek(weeks);
       setListArticles([...res.data.data]);
-      // GlobalService.hideLoading();
     } catch (e) {}
   };
 
   const getListPopular = async () => {
     try {
-      // GlobalService.showLoading();
       const res = await getListArticlesPopular({size: 10, week: weeks});
       setListPopular([...res.data]);
     } catch (e) {
     } finally {
-      // GlobalService.hideLoading();
       setRefreshing(false);
     }
   };

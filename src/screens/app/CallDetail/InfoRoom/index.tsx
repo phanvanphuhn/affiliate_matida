@@ -1,27 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  Touchable,
-  TouchableOpacity,
-  RefreshControl,
-  Platform,
-} from 'react-native';
-import {styles} from './styles';
-import {iconEdit, iconLive, CaretDown, iconHand, imageLogOut} from '@images';
-import {AppButton} from '@component';
-import {scaler} from '@stylesCommon';
-import {ViewInfoHost} from './component/ViewInfoHost';
-import {ItemColumn} from './component/ItemColumn';
-import {useDispatch, useSelector} from 'react-redux';
+import {iconHand, imageLogOut, SvgArrowDown} from '@images';
 import {getInfoInRoom} from '@redux';
-import {useTranslation} from 'react-i18next';
-import {ViewDeleteUser} from './component/ViewDeleteUser';
 import {kickUser} from '@services';
 import {colors} from '@stylesCommon';
 import {AppSocket} from '@util';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {
+  FlatList,
+  Image,
+  Platform,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {ItemColumn} from './component/ItemColumn';
+import {ViewDeleteUser} from './component/ViewDeleteUser';
+import {ViewInfoHost} from './component/ViewInfoHost';
+import {styles} from './styles';
 
 const InfoRoom = React.memo((props: any) => {
   const {t} = useTranslation();
@@ -127,7 +124,7 @@ const InfoRoom = React.memo((props: any) => {
       <View style={styles.container}>
         <View style={styles.viewHeader}>
           <TouchableOpacity onPress={onClose}>
-            <Image source={CaretDown} />
+            <SvgArrowDown />
           </TouchableOpacity>
           <TouchableOpacity style={styles.viewRow} onPress={onLeaveRoom}>
             <Image source={imageLogOut} style={styles.iconLeave} />

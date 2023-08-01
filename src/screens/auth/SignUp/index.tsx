@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {View, TouchableOpacity, Modal, Image} from 'react-native';
+import {SvgArrowBackLogin} from '@images';
+import React, {useEffect, useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
-import {iconBackLogin} from '@images';
 
+import {event, trackingAppEvent} from '@util';
 import {Step1} from './Component/Step1';
 import {Step2} from './Component/Step2';
 import {Step3} from './Component/Step3';
-import {trackingAppEvent, event} from '@util';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const SignUp = (props: any) => {
   const {visible, closeModal, onOpenSignIn, onSuccess, loginSocial} = props;
@@ -89,8 +88,10 @@ const SignUp = (props: any) => {
         // onStartShouldSetResponder={closeModal}
       />
       <View style={styles.container}>
-        <TouchableOpacity onPress={handleBackAction}>
-          <Image source={iconBackLogin} style={styles.iconBack} />
+        <TouchableOpacity
+          onPress={handleBackAction}
+          style={{alignSelf: 'flex-start'}}>
+          <SvgArrowBackLogin style={styles.iconBack} />
         </TouchableOpacity>
         <>{renderStep()}</>
       </View>

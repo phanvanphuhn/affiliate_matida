@@ -14,7 +14,8 @@ import {showMessage} from 'react-native-flash-message';
 import {colors} from '@stylesCommon';
 import {NavigationUtils} from '@navigation';
 import {t} from 'i18next';
-import {socketURL} from '@env';
+import {socketURL} from '@util';
+// import {socketURL} from '@env';
 
 let socket = io('', {
   autoConnect: false,

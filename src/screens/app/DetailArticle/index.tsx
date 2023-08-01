@@ -1,5 +1,5 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, trackingAppEvent, useContentView, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, ScrollView, StyleSheet, Text, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';
@@ -14,9 +14,9 @@ import {
   ViewPayment,
   ViewSmallQuiz,
 } from '@component';
-import {EPaymentType, TypeDeepLink} from '@constant';
+import {EContentType, EPaymentType, TypeDeepLink} from '@constant';
 import {SvgIconApp} from '@images';
-import {payArticleHome} from '@redux';
+import {payArticleExplore, payArticleHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
   getArticleDetail,
@@ -62,6 +62,8 @@ export const DetailArticle = () => {
   const refShare = useRef<IModalShare>(null);
 
   useUXCam(ROUTE_NAME.DETAIL_ARTICLE);
+
+  useContentView(id, EContentType.ARTICLE);
 
   useEffect(() => {
     trackingAppEvent(event.SCREEN.DETAIL_ARTICLE, {});
@@ -137,6 +139,7 @@ export const DetailArticle = () => {
 
   const onPay = async () => {
     dispatch(payArticleHome({id: +id ?? 1}));
+    dispatch(payArticleExplore({id: +id ?? 1}));
     await getArticlesDetail();
   };
 

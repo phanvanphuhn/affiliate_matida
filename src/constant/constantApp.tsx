@@ -19,3 +19,5 @@ export const listPreAnswer = [
 
 const lengthListPreAnswer = listPreAnswer.length;
 export {lengthListPreAnswer};
+
+export const VERSION_APP = '1.1.5';

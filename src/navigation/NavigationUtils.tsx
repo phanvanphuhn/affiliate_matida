@@ -38,10 +38,15 @@ function pop(value: any) {
   _navigator.dispatch(StackActions.pop(value));
 }
 
+function push(routeName: any, params?: any) {
+  _navigator.dispatch(StackActions.push(routeName, params));
+}
+
 export const NavigationUtils = {
   navigate,
   setTopLevelNavigator,
   goBack,
   pop,
-  reset
+  reset,
+  push,
 };

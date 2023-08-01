@@ -8,7 +8,7 @@ import {
 } from '@zegocloud/zego-uikit-prebuilt-call-rn';
 //@ts-ignore
 import {ZegoLayoutMode} from '@zegocloud/zego-uikit-rn';
-import {useUXCam} from '@util';
+import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY, useUXCam} from '@util';
 import {useNavigation} from '@react-navigation/native';
 import {InfoRoom} from './InfoRoom';
 import {scaler} from '@stylesCommon';
@@ -19,7 +19,7 @@ import {leaveRoomMeeting} from '@redux';
 import {AppSocket} from '@util';
 import {trackingAppEvent, event} from '@util';
 import {ROUTE_NAME} from '@routeName';
-import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
+// import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 
 const CallDetail = (props: any) => {
   const {route} = props;
@@ -67,7 +67,7 @@ const CallDetail = (props: any) => {
   return (
     <View style={styles.container}>
       <ZegoUIKitPrebuiltCall
-        appID={APPID_ZEGO_KEY}
+        appID={+APPID_ZEGO_KEY}
         appSign={APP_SIGN_ZEGO_KEY}
         userID={renderIDuser()} // userID can be something like a phone number or the user id on your own user system.
         userName={renderName()}

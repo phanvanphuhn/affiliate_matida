@@ -10,6 +10,7 @@ const typeHome = {
   PAY_ARTICLE: 'PAY_ARTICLE',
   PAY_PODCAST: 'PAY_PODCAST',
   PAY_MASTER_CLASS: 'PAY_MASTER_CLASS',
+  CLEAR_HOME: 'CLEAR_HOME',
 };
 
 export {typeHome};

@@ -1,24 +1,15 @@
-import {scaler, stylesCommon, colors, widthScreen} from '@stylesCommon';
+import {AppButton, AppImage} from '@component';
+import {avatarDefault, iconIsAdmin, iconSms, iconThreeDot} from '@images';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import {AppImage, AppButton} from '@component';
-import {
-  iconSms,
-  iconThreeDot,
-  avatarDefault,
-  iconIsAdmin,
-  reward1,
-  reward2,
-} from '@images';
 import {useTranslation} from 'react-i18next';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 
 const ViewInfo = React.memo((props: any) => {
   const use = useSelector((state: any) => state?.auth?.userInfo);
   const {data, onOpenModal, sendMessage, dataReward} = props;
   const {t} = useTranslation();
-
-  const dataTest = [reward1, reward2];
 
   return (
     <View style={styles.container}>

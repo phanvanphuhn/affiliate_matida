@@ -115,6 +115,9 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
           <Stack.Screen
             name={ROUTE_NAME.DETAIL_VIDEO}
             component={screens.DetailVideo}
+            options={{
+              gestureEnabled: false,
+            }}
           />
           <Stack.Screen
             name={ROUTE_NAME.CHANGE_LANG_AUTH}
@@ -274,6 +277,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
           <Stack.Screen
             name={ROUTE_NAME.RESULT_DUE_DATE}
             component={screens.ResultDueDateScreen}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.ON_BOARDING}
+            component={screens.Onboarding}
           />
         </Stack.Navigator>
       );

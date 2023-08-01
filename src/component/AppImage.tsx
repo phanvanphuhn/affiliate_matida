@@ -16,12 +16,6 @@ const AppImage = React.memo((props: any) => {
   const [loading, setLoading] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!uri) {
-      onError();
-    }
-  }, []);
-
   const onLoadStart = useCallback(() => {
     setLoading(true);
   }, []);
@@ -36,11 +30,9 @@ const AppImage = React.memo((props: any) => {
     setError(true);
   };
 
-  // const onLoadEnd = () => {};
-
   return (
     <View style={[style, {borderWidth: 0}]}>
-      {error ? (
+      {!uri || error ? (
         <Image source={user ? avatarDefault : LogoApp} style={[style]} />
       ) : (
         <FastImage

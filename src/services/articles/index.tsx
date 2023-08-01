@@ -1,3 +1,4 @@
+import {EContentType} from '@constant';
 import api from '../api';
 
 const GET_ARTICLES_POPULAR = 'articles/popular';
@@ -6,6 +7,7 @@ const SAVE_ARTICLES = 'user/save-article';
 const UN_SAVE_ARTICLES = 'user/unsave-article';
 const ARTICLES = 'articles';
 const ARTICLES_MOST_POPULAR = 'articles/most-popular';
+const CONTENT_VIEWS = 'content-views';
 
 export const getListArticles: any = async (data: any) => {
   const {page, size, search, sort, topic = [], mood = [], week = 'null'} = data;
@@ -83,5 +85,15 @@ export const getArticleMost: any = async (
     ? `${ARTICLES}?size=10&page=${page}&sort=1&payload={"trimester":[${trimester}],"topic":[${topic}]}`
     : `${ARTICLES_MOST_POPULAR}?page=${page}&size=10&trimester=[${trimester}]&topic=[${topic}]`;
   const response = await api.get(link);
+  return response;
+};
+
+export const postContentViews: any = async (data: {
+  content_id: any;
+  content_type: EContentType;
+  start_time: string;
+  end_time: string;
+}) => {
+  const response = await api.post(CONTENT_VIEWS, data);
   return response;
 };

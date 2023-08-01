@@ -1,28 +1,27 @@
-import {stylesCommon, scaler, colors} from '@stylesCommon';
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, Image} from 'react-native';
-import {AppImage} from '@component';
-import {useSelector, useDispatch} from 'react-redux';
+import {AppImage, ModalConfirm} from '@component';
+import {ETypeUser} from '@constant';
 import {
-  iconClose,
-  imageSettingUser,
-  imageLogOut,
-  imageSettingLang,
   avatarDefault,
-  iconListPost,
-  imagePrivacy,
-  imageBlock,
+  iconClose,
+  SvgBlocked,
+  SvgLanguage,
+  SvgLogout,
+  SvgPost,
+  SvgPrivacy,
+  SvgProfileUser,
 } from '@images';
 import {useNavigation} from '@react-navigation/native';
+import {cleanHome, clearExplore, clearListChat, logOut} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {ModalConfirm} from '@component';
-import {logOut} from '@redux';
-import {useTranslation} from 'react-i18next';
 import {deleteUserDevice} from '@services';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {event, trackingAppEvent, useUXCam, VERSION_APP} from '@util';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
-import {ETypeUser} from '@constant';
-import {trackingAppEvent, event, useUXCam, VERSION_APP} from '@util';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Setting = () => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -41,7 +40,6 @@ const Setting = () => {
     try {
       await deleteUserDevice();
     } catch (e) {
-      console.log('error: ', e);
       showMessage({
         message: '',
         type: 'default',
@@ -49,6 +47,9 @@ const Setting = () => {
       });
     } finally {
       dispatch(logOut());
+      dispatch(clearListChat());
+      dispatch(cleanHome());
+      dispatch(clearExplore());
     }
   };
 
@@ -56,32 +57,32 @@ const Setting = () => {
     {
       id: 1,
       title: t('setting.profile'),
-      uri: imageSettingUser,
+      svg: <SvgProfileUser />,
     },
     {
       id: 2,
       title: t('setting.lang'),
-      uri: imageSettingLang,
+      svg: <SvgLanguage />,
     },
     {
       id: 3,
       title: t('setting.my_post'),
-      uri: iconListPost,
+      svg: <SvgPost />,
     },
     {
       id: 4,
       title: t('setting.privacyPolicy'),
-      uri: imagePrivacy,
+      svg: <SvgPrivacy />,
     },
     {
       id: 6,
       title: t('setting.block'),
-      uri: imageBlock,
+      svg: <SvgBlocked />,
     },
     {
       id: 5,
       title: t('setting.logOut'),
-      uri: imageLogOut,
+      svg: <SvgLogout />,
     },
   ];
 
@@ -152,7 +153,7 @@ const Setting = () => {
             style={styles.viewItem}
             key={item?.id}
             onPress={() => onSelect(item?.id)}>
-            <Image source={item?.uri} style={styles.imageIcon} />
+            {item.svg}
             <Text style={styles.txtTitle}>{item?.title}</Text>
           </TouchableOpacity>
         );
@@ -213,11 +214,6 @@ const styles = StyleSheet.create({
     paddingVertical: scaler(12),
     marginVertical: scaler(10),
     alignItems: 'center',
-  },
-  imageIcon: {
-    width: scaler(24),
-    height: scaler(24),
-    tintColor: colors.primary,
   },
   txtTitle: {
     ...stylesCommon.fontWeight400,

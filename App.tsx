@@ -1,21 +1,22 @@
-import React, {useEffect} from 'react';
-import {AppState, Platform, StatusBar} from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, AppState, Platform, StatusBar } from 'react-native';
 import NavigationApp from './src/navigation/StackContainer';
 
-import {GlobalUI, ToastCustom, ToastCustomPost} from '@component';
-import {NavigationUtils} from '@navigation';
-import {GlobalService} from '@services';
+import { GlobalUI, ToastCustom, ToastCustomPost } from '@component';
+import { NavigationUtils } from '@navigation';
+import { GlobalService } from '@services';
 import moment from 'moment';
-import {LogBox, Text, TextInput, View} from 'react-native';
+import { LogBox, Text, TextInput, View } from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 import FlashMessage from 'react-native-flash-message';
-import {Provider} from 'react-redux';
-import {PersistGate} from 'redux-persist/integration/react';
-import {persistor, store} from './src/redux/store';
-import {clearDataLiveTalk} from '@redux';
-import {ROUTE_NAME} from '@routeName';
-import {KEY_UXCAM, MERCHANT_IDENTIFIER, STRIPE_KEY} from '@env';
-import {initI18n} from '@i18n';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from './src/redux/store';
+import { clearDataLiveTalk } from '@redux';
+import { ROUTE_NAME } from '@routeName';
+// import {KEY_UXCAM, MERCHANT_IDENTIFIER, STRIPE_KEY} from '@env';
+import { initI18n } from '@i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast, {
   ToastConfig,
@@ -26,10 +27,10 @@ import TrackPlayer, {
   Capability,
   RepeatMode,
 } from 'react-native-track-player';
-import {AppNotification} from '@util';
+import { KEY_UXCAM, MERCHANT_IDENTIFIER, STRIPE_KEY } from '@util';
 import messaging from '@react-native-firebase/messaging';
 import '@images';
-import {scaler} from '@stylesCommon';
+import { heightScreen, scaler, widthScreen } from '@stylesCommon';
 import RNUxcam from 'react-native-ux-cam';
 
 //Disable yellow box warning
@@ -37,28 +38,19 @@ LogBox.ignoreAllLogs();
 initI18n();
 import KeepAwake from 'react-native-keep-awake';
 
-import {StripeProvider} from '@stripe/stripe-react-native';
+import { StripeProvider } from '@stripe/stripe-react-native';
+import CodePush, { DownloadProgress } from 'react-native-code-push';
 
-const setupPlayer = async (
-  options: Parameters<typeof TrackPlayer.setupPlayer>[0],
-) => {
-  const setup = async () => {
-    try {
-      await TrackPlayer.setupPlayer(options);
-    } catch (error) {
-      return (error as Error & {code?: string}).code;
-    }
-  };
-  while ((await setup()) === 'android_cannot_setup_player_in_background') {
-    // A timeout will mostly only execute when the app is in the foreground,
-    // and even if we were in the background still, it will reject the promise
-    // and we'll try again:
-    await new Promise<void>(resolve => setTimeout(resolve, 1));
-  }
+const options = {
+  // updateDialog: true,
+  installMode: CodePush.InstallMode.IMMEDIATE,
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
 };
 
 const App = () => {
-  messaging().setBackgroundMessageHandler(async notification => {});
+  messaging().setBackgroundMessageHandler(async () => { });
+
+  const [isUpdating, setUpdating] = useState(true);
 
   RNUxcam.optIntoSchematicRecordings();
   const configuration = {
@@ -81,7 +73,7 @@ const App = () => {
     };
     appsFlyer.initSdk(
       Platform.OS === 'ios' ? iosConfig : androidConfig,
-      result => {},
+      () => { },
       error => {
         console.error(error);
       },
@@ -90,7 +82,7 @@ const App = () => {
 
   const saveDataStartTracking = async () => {
     const timeStartTracking = moment().format('HH:mm:ss DD/MM/YYYY');
-    let data = await AsyncStorage.setItem('TIME_START', `${timeStartTracking}`);
+    await AsyncStorage.setItem('TIME_START', `${timeStartTracking}`);
   };
 
   const initPlayer = async () => {
@@ -130,12 +122,12 @@ const App = () => {
     appsFlyer.logEvent(
       eventName,
       {},
-      res => {},
-      err => {},
+      () => { },
+      () => { },
     );
   };
 
-  const changeColorStatusBar = async () => {};
+  const changeColorStatusBar = async () => { };
 
   useEffect(() => {
     KeepAwake.activate();
@@ -179,7 +171,7 @@ const App = () => {
   }, []);
 
   const setLanguage = async (language: string) => {
-    let data = await AsyncStorage.setItem('LANGUAGE', language);
+    await AsyncStorage.setItem('LANGUAGE', language);
   };
 
   const getLocalize = async () => {
@@ -191,13 +183,56 @@ const App = () => {
   };
 
   const toastConfig: ToastConfig = {
-    customToast: ({text1, props}: ToastConfigParams<any>) => (
+    customToast: ({ text1, props }: ToastConfigParams<any>) => (
       <ToastCustom id={props.id} onPressUndo={props.onPressUndo} />
     ),
-    customToastPost: ({text1, props}: ToastConfigParams<any>) => (
+    customToastPost: ({ text1, props }: ToastConfigParams<any>) => (
       <ToastCustomPost onPress={props.onPress} />
     ),
   };
+
+  const codePushFunction = () => {
+    CodePush.sync(
+      options,
+      (status: CodePush.SyncStatus) => {
+        console.log({ status }, CodePush.SyncStatus.UPDATE_IGNORED);
+        switch (status) {
+          case CodePush.SyncStatus.SYNC_IN_PROGRESS: {
+            setUpdating(false);
+            break;
+          }
+          case CodePush.SyncStatus.INSTALLING_UPDATE: {
+            break;
+          }
+          case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
+            break;
+          case CodePush.SyncStatus.UP_TO_DATE:
+            setUpdating(false);
+            break;
+          case CodePush.SyncStatus.UPDATE_IGNORED:
+            setUpdating(false);
+            break;
+          case CodePush.SyncStatus.UPDATE_INSTALLED:
+            setUpdating(false);
+            break;
+          case CodePush.SyncStatus.UNKNOWN_ERROR:
+            setUpdating(false);
+            break;
+          // default:
+          //   setUpdating(false);
+          //   break;
+        }
+      },
+      () => { },
+      () => { },
+    ).then(() => {
+      setUpdating(false);
+    });
+  };
+
+  useEffect(() => {
+    codePushFunction();
+  }, []);
 
   return (
     <>
@@ -223,7 +258,7 @@ const App = () => {
         position="top"
         floating={true}
         hideStatusBar={false}
-        style={{marginTop: Platform.OS === 'ios' ? 0 : scaler(16)}}
+        style={{ marginTop: Platform.OS === 'ios' ? 0 : scaler(16) }}
       />
       <Toast
         position="bottom"
@@ -232,11 +267,42 @@ const App = () => {
         autoHide
       />
       <GlobalUI ref={GlobalService.globalUIRef} />
+      {isUpdating && (
+        <View
+          style={{
+            flex: 1,
+            position: 'absolute',
+            width: widthScreen,
+            height: heightScreen,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#c5c5c580',
+          }}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              padding: 20,
+              paddingVertical: 40,
+              borderRadius: 5,
+            }}>
+            <ActivityIndicator size={'small'} color={'red'} />
+            <Text
+              style={{
+                color: '#000',
+                marginTop: 15,
+                textAlign: 'center',
+                fontSize: 16,
+              }}>
+              {'Checking for update please wait a moment...'}
+            </Text>
+          </View>
+        </View>
+      )}
     </>
   );
 };
 
-export default App;
+export default CodePush(options)(App);
 
 //NOTE:
 //Turn on log redux: check src/redux/store.tsx

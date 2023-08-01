@@ -89,7 +89,7 @@ export const getUserByID: any = async (data: any) => {
 
 export const getListVideoOfWeek: any = async (data: any, page: any) => {
   const response = await api.get(
-    `${GET_VIDEO_OF_WEEK}?week_id=[${data}]&page=${page}`,
+    `${GET_VIDEO_OF_WEEK}?week_id=[${data}]&page=${page}&sort={"videos.created_at":"DESC"}`,
   );
   return response;
 };

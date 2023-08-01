@@ -11,7 +11,7 @@ import {goBack} from '@navigation';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {getPodcastDetail, likePodCast, unlikePodCast} from '@services';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {convertLangMonth, useUXCam} from '@util';
+import {convertLangMonth, useContentView, useUXCam} from '@util';
 import {t} from 'i18next';
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
@@ -29,8 +29,13 @@ import {systemFonts, tagsStyles} from '../DetailArticle/settingHTML';
 import {trackingAppEvent, event} from '@util';
 import {ROUTE_NAME} from '@routeName';
 import {useDispatch, useSelector} from 'react-redux';
-import {EPaymentType} from '@constant';
-import {getDataHomeByWeek, payPodcastHome} from '@redux';
+import {EContentType, EPaymentType} from '@constant';
+import {
+  changeLikePodcastExplore,
+  getDataHomeByWeek,
+  payPodcastExplore,
+  payPodcastHome,
+} from '@redux';
 
 export const DetailPodCast = () => {
   const route = useRoute<any>();
@@ -57,6 +62,8 @@ export const DetailPodCast = () => {
   const isPayment = podcastDetail?.is_payment && !podcastDetail?.is_paid;
 
   useUXCam(ROUTE_NAME.DETAIL_PODCAST);
+
+  useContentView(id, EContentType.PODCAST);
 
   useEffect(() => {
     getData();
@@ -87,6 +94,13 @@ export const DetailPodCast = () => {
     if (isLike !== refLike.current) {
       try {
         isLike ? await likePodCast(id) : await unlikePodCast(id);
+        dispatch(
+          changeLikePodcastExplore({
+            isLike: isLike,
+            id: id,
+            totalLike: totalLike,
+          }),
+        );
         refLike.current = isLike;
         refTotal.current = totalLike;
       } catch (e) {
@@ -106,6 +120,7 @@ export const DetailPodCast = () => {
 
   const onPay = async () => {
     dispatch(payPodcastHome({id: +id}));
+    dispatch(payPodcastExplore({id: +id}));
     await getData();
   };
 

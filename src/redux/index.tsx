@@ -6,3 +6,5 @@ export * from './listChat';
 export * from './liveTalk';
 export * from './chatGPT';
 export * from './home';
+export * from './explore';
+export * from './check';

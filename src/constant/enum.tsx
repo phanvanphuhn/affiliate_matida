@@ -77,3 +77,44 @@ export enum EPaymentType {
   VIDEO_MASTER_CLASS = 6,
   ROOM_RECORD = 4,
 }
+
+export enum ETypeRedirectBroadcast {
+  PODCAST = 1,
+  VIDEO = 2,
+  ROOM = 3,
+  ARTICLE = 4,
+  RECORD_ROOM = 5,
+}
+
+export enum EVideoType {
+  VIDEO,
+  RECORD,
+  MASTER_CLASS,
+}
+
+export enum EChatOption {
+  CHAT,
+  USER,
+}
+
+export enum EContentType {
+  ARTICLE = 'article',
+  VIDEO = 'video',
+  VIDEO_MASTER_CLASS = 'video_master_class',
+  VIDEO_RECORD = 'video_record',
+  PODCAST = 'podcast',
+}
+
+export enum FeedBack {
+  HELP = 6,
+  TOPIC = 5,
+}
+
+export enum ETopicFeedBack {
+  MEDICAL_KNOWLEDGE,
+  NUTRITION,
+  FINANCES,
+  MAKING_MONEY,
+  SHOPPING_AND_HOT_DEALS,
+  RELATIONSHIP,
+}

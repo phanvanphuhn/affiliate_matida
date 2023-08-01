@@ -65,6 +65,8 @@ export default function homeReducer(state = INITIAL_STATE_HOME, action: any) {
           masterClass.is_paid = true;
         }
       });
+    case typeHome.CLEAR_HOME:
+      return INITIAL_STATE_HOME;
     default:
       return state;
   }

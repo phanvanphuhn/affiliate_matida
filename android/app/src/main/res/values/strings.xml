@@ -4,4 +4,10 @@
     <string name="facebook_client_token">465e835b8d6071f7b05ce8b57745bc7b</string>
     <string name="appID">2775448152357876593</string>
     <string name="facebookAppId">1325262418044786</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+    <!-- STAGGING -->
+    <string moduleConfig="true" name="CodePushDeploymentKey">wLMzRSVq_OZt-FgtUl7_rEVk5kxxkDuVhnqIi</string>
+    <!-- PRODUCT -->
+    <!-- <string moduleConfig="true" name="CodePushDeploymentKey">h7RyfVg974r_vNF66JH0r0Br7Ty7J0rKfNyBC</string> -->
 </resources>

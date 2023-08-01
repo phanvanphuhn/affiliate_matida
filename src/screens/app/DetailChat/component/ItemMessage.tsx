@@ -1,29 +1,17 @@
-import React, {useState, useCallback} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  Linking,
-} from 'react-native';
-import {scaler, colors, stylesCommon} from '@stylesCommon';
+import {AppButton, AppImage, AppTextUrl} from '@component';
 import {avatarDefault, iconCalendar} from '@images';
-import {useSelector} from 'react-redux';
-import {AppImage, AppButton, AppTextUrl} from '@component';
-import moment from 'moment';
-import {isSameDay, convertLangMonth, handleDeepLink} from '@util';
-import {styles} from './styleItemChat';
-import {useTranslation} from 'react-i18next';
-import {
-  acceptJoinRoom,
-  GlobalService,
-  acceptJoinRoomRequest,
-  DEEP_LINK,
-} from '@services';
-import {ROUTE_NAME} from '@routeName';
 import {navigate} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
+import {acceptJoinRoom, acceptJoinRoomRequest, GlobalService} from '@services';
+import {colors, scaler} from '@stylesCommon';
+import {convertLangMonth, isSameDay} from '@util';
+import moment from 'moment';
+import React, {useCallback, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {styles} from './styleItemChat';
 
 const ItemMessage = React.memo((props: any) => {
   const {t} = useTranslation();

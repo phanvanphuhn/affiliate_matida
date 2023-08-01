@@ -58,3 +58,4 @@ export * from './AppTextUrl';
 export * from './ViewTextSeeMore';
 export * from './Payment';
 export * from './ViewExpert';
+export * from './HeaderMasterClass';

@@ -1,9 +1,9 @@
-import React from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
-import {iconZalo, iconFacebook, iconPhone, iconApple} from '@images';
 import {AppButton} from '@component';
-import {colors, stylesCommon, scaler} from '@stylesCommon';
+import {iconApple, iconPhone, SvgIconFacebook, SvgIconZalo} from '@images';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
+import {Platform, StyleSheet, Text} from 'react-native';
 
 const Step1 = React.memo((props: any) => {
   const {onOpenSignUp, onChangeStep, loginSocial} = props;
@@ -25,13 +25,13 @@ const Step1 = React.memo((props: any) => {
       <AppButton
         titleButton={t('login.continueFace')}
         customStyleButton={[styles.customButton, styles.customButtonFace]}
-        sourceIcon={iconFacebook}
+        icon={<SvgIconFacebook />}
         onClick={() => loginSocial('Facebook')}
       />
       <AppButton
         titleButton={t('login.continueZalo')}
         customStyleButton={[styles.customButton, styles.customButtonZalo]}
-        sourceIcon={iconZalo}
+        icon={<SvgIconZalo />}
         onClick={() => loginSocial('Zalo')}
       />
       {Platform?.OS === 'ios' ? (

@@ -8,6 +8,8 @@ import liveTalk from './liveTalk/reducer';
 import chatGPT from './chatGPT/reducer';
 import unread from './main/unread/reducer';
 import home from './home/reducer';
+import explore from './explore/reducer';
+import check from './check/reducer';
 
 //Khai báo các root reducer ở đây
 const appReducer = combineReducers({
@@ -20,6 +22,8 @@ const appReducer = combineReducers({
   chatGPT,
   unread,
   home,
+  explore,
+  check,
 });
 
 export type RootState = ReturnType<typeof appReducer>;

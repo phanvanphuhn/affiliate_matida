@@ -63,6 +63,7 @@
               <data android:scheme="zalo-2775448152357876593" />
               <data android:scheme="https" />
               <data android:host="matida.page.link"/>
+              <data android:host="matida1.page.link"/>
         </intent-filter>
       </activity>
       

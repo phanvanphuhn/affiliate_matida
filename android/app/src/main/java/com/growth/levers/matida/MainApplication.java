@@ -11,7 +11,7 @@ import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.growth.levers.matida.newarchitecture.MainApplicationReactNativeHost;
 import com.zing.zalo.zalosdk.oauth.ZaloSDKApplication;
-
+import com.microsoft.codepush.react.CodePush;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -36,6 +36,10 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected String getJSMainModuleName() {
           return "index";
+        }
+        @Override
+        protected String getJSBundleFile() {
+            return CodePush.getJSBundleFile();
         }
       };
 

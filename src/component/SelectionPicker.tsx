@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Image,
-  ImageSourcePropType,
   Modal,
   Platform,
   StyleProp,
@@ -13,7 +11,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {CaretDown} from '@images';
+import {SvgArrowDown} from '@images';
 import {colors, heightScreen, scaler, stylesCommon} from '@stylesCommon';
 import {DefaultTFuncReturn} from 'i18next';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -24,7 +22,6 @@ interface SelectionPickerProps {
   stylesTextTitle?: StyleProp<TextStyle>;
   stylesTextLabel?: StyleProp<TextStyle>;
   stylesTextPlaceholder?: StyleProp<TextStyle>;
-  sourceIcon?: ImageSourcePropType | undefined;
   hideIcon?: boolean;
   titleSelection?: string | DefaultTFuncReturn;
   value: any;
@@ -42,7 +39,6 @@ export const SelectionPicker = ({
   stylesTextTitle,
   stylesTextLabel,
   stylesTextPlaceholder,
-  sourceIcon = CaretDown,
   hideIcon = false,
   titleSelection = '',
   value,
@@ -94,7 +90,7 @@ export const SelectionPicker = ({
             </Text>
           )}
         </View>
-        {!hideIcon && <Image source={sourceIcon} style={styles.icon} />}
+        {!hideIcon && <SvgArrowDown style={styles.icon} />}
       </TouchableOpacity>
       <Modal
         transparent={true}

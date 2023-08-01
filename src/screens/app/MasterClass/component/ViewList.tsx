@@ -1,4 +1,5 @@
 import {AppImage, ViewLock, ViewPrice} from '@component';
+import {EVideoType} from '@constant';
 import {SvgHeart, SvgHearted} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
@@ -63,10 +64,8 @@ const ItemMasterClass = ({data, item, onPay}: PropsItem) => {
     if (like !== refLike.current) {
       try {
         const res = await postVideoMasterClass(item?.id);
-        console.log('res: ', res?.data);
         refLike.current = like;
       } catch (e) {
-        console.log('error: ', e);
         setLike(refLike.current);
       }
     }
@@ -80,9 +79,10 @@ const ItemMasterClass = ({data, item, onPay}: PropsItem) => {
   const handlePress = () => {
     if (data?.is_paid || item?.is_paid) {
       navigate(ROUTE_NAME.DETAIL_VIDEO, {
-        url: lang === 2 ? item?.url_vn : item?.url_en,
+        type: EVideoType.MASTER_CLASS,
         id: item?.id,
-        item: item,
+        // url: lang === 2 ? item?.url_vn : item?.url_en,
+        // item: item,
       });
     } else {
       onPay(item);

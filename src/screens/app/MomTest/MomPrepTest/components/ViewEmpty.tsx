@@ -1,13 +1,18 @@
 import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {DefaultTFuncReturn} from 'i18next';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
 
-export const ViewEmpty = () => {
+type Props = {
+  title?: string | DefaultTFuncReturn;
+};
+
+export const ViewEmpty = ({title}: Props) => {
   const {t} = useTranslation();
   return (
     <View style={styles.viewEmpty}>
-      <Text style={styles.txtEmpty}>{t('test.noData')}</Text>
+      <Text style={styles.txtEmpty}>{title || t('test.noData')}</Text>
     </View>
   );
 };

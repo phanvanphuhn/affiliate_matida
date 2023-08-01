@@ -218,6 +218,10 @@ export const en = {
     recent: 'Most Recent',
     popular: 'Most Popular',
     filter: 'Filter',
+    cancelFilterExpert: 'Delete filter by expert',
+    filterExpert: 'Filter Expert',
+    searchExpert: 'Search expert',
+    noDataExpert: 'No experts found',
   },
   setting: {
     profile: 'My Account',
@@ -364,6 +368,7 @@ export const en = {
     you: 'You:',
     messageNotText: 'Sent a message',
     questionTida: 'Select question to ask Tida AI',
+    cancel: 'Cancel',
   },
   talk: {
     momTalk: 'Mom’s Talks',
@@ -508,6 +513,7 @@ export const en = {
     noData: `You haven't taken any tests yet`,
     seeMore: 'See more',
     doOtherTest: 'Try another test',
+    noDataQuiz: 'There are no tests',
   },
   payment: {
     pay: '{{money}} {{currency}}',
@@ -529,6 +535,8 @@ export const en = {
     msgFailure: 'Payment failed. Please try again.',
     other: 'Other Payment',
     method: 'Method Payment',
+    tooltip:
+      'Products include hard copy documents, related practice tools...\nProducts will be sent to you 2 to 3 days after successful payment. Please pay attention to the message on Matida, we will contact you soon.\nDelivery time may be delayed due to the large number of orders, please wait.',
   },
   masterClass: {
     like: '{{like}} like',
@@ -537,5 +545,25 @@ export const en = {
     course: 'course',
     description: 'Description',
     exclusiveContent: 'Exclusive Content',
+  },
+  feedback: {
+    help: {
+      title: 'What do you hope Matida will help you with?',
+      textBody: 'Please answer as detailed as possible',
+      placeholder: 'Typing your answer here',
+    },
+    topic: {
+      title: 'What topics around pregnancy interest you most?',
+      placeholder: 'Others',
+      topic: [
+        'Medical knowledge',
+        'Nutrition',
+        'Finances',
+        'Making money',
+        'Shopping & hot deals',
+        'Relationship',
+      ],
+    },
+    next: 'Next',
   },
 };
