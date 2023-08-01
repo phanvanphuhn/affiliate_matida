@@ -222,7 +222,7 @@ function SvgSearch(props: any) {
       {...props}>
       <Path
         d="M16.927 17.04L20.4 20.4m-1.12-8.96a7.84 7.84 0 11-15.68 0 7.84 7.84 0 0115.68 0z"
-        stroke="#424242"
+        stroke={props ? props.color : "#424242"}
         strokeWidth={2}
         strokeLinecap="round"
       />

@@ -572,4 +572,7 @@ export const vi = {
     },
     next: 'Tiếp theo',
   },
+  feed:{
+    search: 'Tìm kiếm'
+  }
 };

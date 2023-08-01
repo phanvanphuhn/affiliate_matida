@@ -8,7 +8,7 @@ import {
   Text,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {imageNameApp} from '@images';
+import {imageNameApp, SvgSearch} from '@images';
 
 import {avatarDefault, SvgMenu, SvgMessage, SvgNotification} from '@images';
 import {scaler, colors, stylesCommon} from '@stylesCommon';
@@ -21,11 +21,12 @@ import {showMessage} from 'react-native-flash-message';
 import {AppImage} from './AppImage';
 
 interface IProps {
-  onPressMenu: () => void;
+  onPressMenu?: () => void;
   onPressAvatar: () => void;
-  onPressNotification: () => void;
-  onPressMessage: () => void;
+  onPressNotification?: () => void;
+  onPressMessage?: () => void;
   onPressLogo: () => void;
+  onPressSearch?: () => void;
   IconNotification?: JSX.Element;
   IconMessage?: JSX.Element;
 }
@@ -35,6 +36,7 @@ export const AppHeader = ({
   onPressNotification,
   onPressMessage,
   onPressLogo,
+  onPressSearch,
   IconNotification = <SvgNotification />,
   IconMessage = <SvgMessage />,
 }: IProps) => {
@@ -97,14 +99,14 @@ export const AppHeader = ({
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <View style={styles.row}>
-        <TouchableOpacity
+        {onPressMenu && <TouchableOpacity
           onPress={onPressMenu}
           style={{
             paddingLeft: scaler(16),
             paddingVertical: scaler(10),
           }}>
           <SvgMenu />
-        </TouchableOpacity>
+        </TouchableOpacity>}
         <TouchableOpacity
           onPress={onPressAvatar}
           style={{marginLeft: scaler(20)}}>
@@ -137,7 +139,7 @@ export const AppHeader = ({
         <Image source={imageNameApp} style={styles.imageNameApp} />
       </TouchableOpacity>
       <View style={styles.row}>
-        <TouchableOpacity
+        {onPressNotification && <TouchableOpacity
           onPress={onPressNotification}
           style={{
             paddingRight: scaler(20),
@@ -168,14 +170,20 @@ export const AppHeader = ({
               )}
             </View>
           )}
-        </TouchableOpacity>
+        </TouchableOpacity>}
         {/* <View style={{paddingRight: scaler(20), paddingVertical: scaler(10)}} /> */}
-        <TouchableOpacity
+        {onPressMessage && <TouchableOpacity
           onPress={onPressMessage}
           style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
           {IconMessage}
           {dot && <View style={styles.dotMessage} />}
-        </TouchableOpacity>
+        </TouchableOpacity>}
+        {onPressSearch && <TouchableOpacity
+          onPress={onPressSearch}
+          style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}
+        >
+          <SvgSearch color={colors.white}/>
+        </TouchableOpacity>}
         {/* <View style={{paddingVertical: scaler(10)}}>
           <View style={{width: scaler(60)}} />
         </View> */}

@@ -567,4 +567,7 @@ export const en = {
     },
     next: 'Next',
   },
+  feed:{
+    search: 'search'
+  }
 };
