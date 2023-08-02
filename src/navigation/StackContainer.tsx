@@ -263,6 +263,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.SEARCH_FEED}
             component={screens.SearchFeed}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.DETAIL_FEED}
+            component={screens.DetailFeed}
+          />
         </Stack.Navigator>
       );
     } else {

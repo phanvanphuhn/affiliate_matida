@@ -3,6 +3,9 @@ export type IDataListFeed = {
   image: string;
   duration?: string;
   view: string;
+  url?: string;
   title: string;
-  author?: string
-}
+  author?: string;
+  type?: string;
+  description: string;
+};

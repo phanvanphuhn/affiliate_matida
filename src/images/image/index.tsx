@@ -42,6 +42,14 @@ const slideIntro3 = require('./slideIntro3.png');
 const slideIntro4 = require('./slideIntro4.png');
 const slideIntro5 = require('./slideIntro5.png');
 const slideIntro5en = require('./slideIntro5en.png');
+const ic_back = require('./ic_back.png');
+const ic_search = require('./ic_search.png');
+const ic_heart = require('./ic_heart.png');
+const ic_comment = require('./ic_comment.png');
+const ic_menu = require('./ic_menu.png');
+const ic_share = require('./ic_share.png');
+const ic_star = require('./ic_star.png');
+const ic_play = require('./ic_play.png');
 
 export {
   imageIntro,
@@ -88,4 +96,12 @@ export {
   slideIntro4,
   slideIntro5,
   slideIntro5en,
+  ic_back,
+  ic_search,
+  ic_heart,
+  ic_comment,
+  ic_menu,
+  ic_share,
+  ic_star,
+  ic_play,
 };
