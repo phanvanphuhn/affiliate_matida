@@ -39,6 +39,14 @@ const liveTalkBackground = require('./liveTalkBackground.gif');
 const iconCrown = require('./iconCrown.png');
 const lightQuiz = require('./light-quiz.png');
 const backgroundBannerQuiz = require('./background-banner-quiz.jpg');
+const ic_back = require('./ic_back.png');
+const ic_search = require('./ic_search.png');
+const ic_heart = require('./ic_heart.png');
+const ic_comment = require('./ic_comment.png');
+const ic_menu = require('./ic_menu.png');
+const ic_share = require('./ic_share.png');
+const ic_star = require('./ic_star.png');
+const ic_play = require('./ic_play.png');
 
 export {
   imageIntro,
@@ -82,4 +90,12 @@ export {
   iconCrown,
   lightQuiz,
   backgroundBannerQuiz,
+  ic_back,
+  ic_search,
+  ic_heart,
+  ic_comment,
+  ic_menu,
+  ic_share,
+  ic_star,
+  ic_play,
 };

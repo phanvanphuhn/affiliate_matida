@@ -1,17 +1,30 @@
 import {SvgEye, iconClock} from '@images';
 import {colors} from '@stylesCommon';
 import React from 'react';
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  ListRenderItem,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
+import {ROUTE_NAME} from '@routeName';
+import {useNavigation} from '@react-navigation/native';
 
 const ListFeed = (props: any) => {
   const {data} = props;
+  const navigation = useNavigation<any>();
 
-  const renderItem = ({item}: IDataListFeed) => {
+  const onDetailClick = () => {
+    navigation.navigate(ROUTE_NAME.DETAIL_FEED);
+  };
+  const renderItem: ListRenderItem<IDataListFeed> = ({item}) => {
     return (
-      <TouchableOpacity style={styles.itemContainer}>
+      <TouchableOpacity onPress={onDetailClick} style={styles.itemContainer}>
         <View>
           <Image source={{uri: item.image}} style={styles.image} />
           <View style={styles.leftDescription}>
