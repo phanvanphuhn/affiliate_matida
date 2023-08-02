@@ -54,6 +54,7 @@ import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
 import {Onboarding} from './auth/Onboarding';
 import Feed from './app/Feed'
+import SearchFeed from './app/Feed/components/SearchFeed';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -111,7 +112,8 @@ const screens = {
   MasterClass,
   ListMasterClass,
   Onboarding,
-  Feed
+  Feed,
+  SearchFeed
 };
 
 export {screens};

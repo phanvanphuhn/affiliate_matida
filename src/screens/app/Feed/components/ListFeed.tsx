@@ -1,21 +1,19 @@
-import React from 'react'
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import { IDataListFeed } from '../type'
-import { colors } from '@stylesCommon'
-import {styles} from '../styles'
-import {iconClock, SvgEye} from '@images';
+import {SvgEye, iconClock} from '@images';
+import {colors} from '@stylesCommon';
+import React from 'react';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import {styles} from '../styles';
+import {IDataListFeed} from '../type';
 
 const ListFeed = (props: any) => {
-  const {data} = props
+  const {data} = props;
 
-  const renderItem = ({item}: IDataListFeed) =>{
-    return(
+  const renderItem = ({item}: IDataListFeed) => {
+    return (
       <TouchableOpacity style={styles.itemContainer}>
         <View>
-          <Image
-            source={{uri: item.image}}
-            style={styles.image}
-          /> 
+          <Image source={{uri: item.image}} style={styles.image} />
           <View style={styles.leftDescription}>
             <Image source={iconClock} />
 
@@ -31,22 +29,18 @@ const ListFeed = (props: any) => {
             </Text>
           </View>
         </View>
-        <Text style={styles.title}>
-          {item.title}
-        </Text>
+        <Text style={styles.title}>{item.title}</Text>
         <View style={styles.wrapAvatarContainer}>
-          <Image
-            source={{uri: item.image}}
-            style={styles.imageAvatar}
-          /> 
+          <FastImage source={{uri: item.image}} style={styles.imageAvatar} />
 
           <Text style={styles.subTitle}>
-            Coach by <Text style={{color: colors.success_message}}>{item.author}</Text> 
-         </Text>  
-        </View>        
+            Coach by{' '}
+            <Text style={{color: colors.success_message}}>{item.author}</Text>
+          </Text>
+        </View>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -58,7 +52,7 @@ const ListFeed = (props: any) => {
         showsVerticalScrollIndicator={false}
       />
     </View>
-  )
-}
+  );
+};
 
 export default ListFeed;
