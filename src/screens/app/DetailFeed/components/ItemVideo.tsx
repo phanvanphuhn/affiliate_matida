@@ -16,8 +16,8 @@ import TitleFeed from './TitleFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
-  onNext: () => void;
   isFocused: boolean;
+  isPause: boolean;
   isAudio: boolean;
 }
 
@@ -29,19 +29,14 @@ const ItemVideo = (props: ItemVideoProps) => {
   );
   const videoPlayer = useRef<Video>();
   useEffect(() => {
-    if (props.isFocused) {
-    } else {
-      videoPlayer.current?.seek(0);
-      setProgress(0);
-      setPlayerState(PLAYER_STATES.PLAYING);
+    if (!props.isFocused) {
+      onReset();
     }
     return () => {
       setProgress(0);
     };
   }, [props.isFocused]);
-  const onEnd = () => {
-    onReset();
-  };
+  const onEnd = () => {};
   const onProgress = (data: OnProgressData) => {
     if (data.seekableDuration) {
       const percent = parseInt(
@@ -54,6 +49,7 @@ const ItemVideo = (props: ItemVideoProps) => {
 
   const onReset = () => {
     videoPlayer.current?.seek(0);
+
     setProgress(0);
     setPlayerState(PLAYER_STATES.PLAYING);
   };
@@ -67,6 +63,8 @@ const ItemVideo = (props: ItemVideoProps) => {
         : PLAYER_STATES.PLAYING,
     );
   };
+  // @ts-ignore
+  // @ts-ignore
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
@@ -74,29 +72,9 @@ const ItemVideo = (props: ItemVideoProps) => {
           <ImageBackground
             source={{uri: props.item.image}}
             blurRadius={5}
-            style={{
-              width: widthScreen,
-              height: heightScreen - 65,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              source={{uri: props.item.image}}
-              style={{
-                width: widthScreen / 1.5,
-                height: widthScreen / 1.5,
-                borderRadius: widthScreen,
-              }}
-            />
-            <View
-              style={{
-                backgroundColor: colors.white,
-                height: 12,
-                width: 12,
-                borderRadius: 10,
-                position: 'absolute',
-              }}
-            />
+            style={styles.imgBackground}>
+            <Image source={{uri: props.item.image}} style={styles.imgPodcast} />
+            <View style={styles.dot} />
           </ImageBackground>
         )}
         {!!props.item.url && (
@@ -104,43 +82,28 @@ const ItemVideo = (props: ItemVideoProps) => {
             source={{uri: props.item.url}}
             style={styles.video}
             resizeMode="contain"
+            // @ts-ignore
             ref={videoPlayer}
             audioOnly={props.isAudio}
             onEnd={onEnd}
+            selectedVideoTrack={{
+              type: 'resolution',
+              value: '144',
+            }}
             onProgress={onProgress}
+            repeat={true}
             paused={
+              props.isPause ||
               (playerState == PLAYER_STATES.PAUSED && props.isFocused) ||
               !props.isFocused
             }
             volume={10}
-            ignoreSilentSwitch="ignore"
           />
         )}
-        <TouchableOpacity
-          onPress={onTooglePlay}
-          style={{
-            position: 'absolute',
-            alignItems: 'center',
-            justifyContent: 'center',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 100,
-          }}>
+        <TouchableOpacity onPress={onTooglePlay} style={styles.containerPlay}>
           <View>
-            {isVisible && (
-              <TouchableOpacity
-                style={{
-                  padding: 10,
-                  width: 45,
-                  height: 45,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#F0F0F060',
-                  borderRadius: 50,
-                }}
-                onPress={onPause}>
+            {(!!isVisible || !!props.isPause) && (
+              <TouchableOpacity style={styles.buttonPlay} onPress={onPause}>
                 <Image source={getPlayerStateIcon(playerState)} />
               </TouchableOpacity>
             )}
@@ -157,11 +120,48 @@ const ItemVideo = (props: ItemVideoProps) => {
 export default ItemVideo;
 
 const styles = StyleSheet.create({
+  buttonPlay: {
+    padding: 10,
+    width: 45,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F0F0F060',
+    borderRadius: 50,
+  },
+  containerPlay: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+  },
+  imgPodcast: {
+    width: widthScreen / 1.5,
+    height: widthScreen / 1.5,
+    borderRadius: widthScreen,
+  },
+  imgBackground: {
+    width: widthScreen,
+    height: heightScreen - 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dot: {
+    backgroundColor: colors.white,
+    height: 12,
+    width: 12,
+    borderRadius: 10,
+    position: 'absolute',
+  },
   container: {
     flex: 1,
   },
   video: {
     width: widthScreen,
-    height: heightScreen - 100,
+    height: heightScreen - 45,
   },
 });

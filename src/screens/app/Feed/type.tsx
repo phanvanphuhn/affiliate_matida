@@ -8,4 +8,5 @@ export type IDataListFeed = {
   author?: string;
   type?: string;
   description: string;
+  thumbnail: string;
 };

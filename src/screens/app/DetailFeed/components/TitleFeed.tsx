@@ -10,29 +10,9 @@ interface TitleFeedProps {
 const TitleFeed = (props: TitleFeedProps) => {
   const [state, setState] = useState();
   return (
-    <View
-      style={{
-        position: 'absolute',
-        bottom: 30,
-        padding: 16,
-      }}>
-      <Text
-        style={{
-          fontSize: 18,
-          color: colors.white,
-          fontWeight: '600',
-          paddingBottom: 10,
-        }}>
-        {props.item.title}
-      </Text>
-      <Text
-        style={{
-          fontSize: 12,
-          color: colors.white,
-          lineHeight: 16,
-        }}>
-        {props.item.description}
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{props.item.title}</Text>
+      <Text style={styles.description}>{props.item.description}</Text>
     </View>
   );
 };
@@ -40,5 +20,20 @@ const TitleFeed = (props: TitleFeedProps) => {
 export default TitleFeed;
 
 const styles = StyleSheet.create({
-  container: {},
+  description: {
+    fontSize: 12,
+    color: colors.white,
+    lineHeight: 16,
+  },
+  title: {
+    fontSize: 18,
+    color: colors.white,
+    fontWeight: '600',
+    paddingBottom: 10,
+  },
+  container: {
+    position: 'absolute',
+    bottom: 30,
+    padding: 16,
+  },
 });
