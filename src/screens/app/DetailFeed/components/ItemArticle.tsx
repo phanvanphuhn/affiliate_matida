@@ -1,11 +1,10 @@
+import {heightScreen, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import {heightScreen, widthScreen} from '@stylesCommon';
 import {IDataListFeed} from '../../Feed/type';
-import TitleFeed from './TitleFeed';
 import SliderFeed from './SliderFeed';
+import TitleFeed from './TitleFeed';
 
-const duration = 10000;
 interface ItemArticleProps {
   item: IDataListFeed;
   onNext: () => void;
@@ -13,6 +12,7 @@ interface ItemArticleProps {
 }
 const ItemArticle = (props: ItemArticleProps) => {
   const [progress, setProgress] = useState<number>(0);
+  const duration = 10000;
   const timeinterval = useRef<any>();
   useEffect(() => {
     if (props.isFocused) {

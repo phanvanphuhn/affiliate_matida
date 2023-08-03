@@ -1,14 +1,13 @@
-import React, {useRef, useState} from 'react';
-import {Image, ListRenderItem, StyleSheet, View} from 'react-native';
-import HeaderFeed from '../../../component/HeaderFeed';
 import {ic_back, ic_search} from '@images';
 import {heightScreen} from '@stylesCommon';
-import {IDataListFeed} from '../Feed/type';
+import React, {useRef, useState} from 'react';
+import {Image, ListRenderItem, StyleSheet, View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import HeaderFeed from '../../../component/HeaderFeed';
+import {IDataListFeed} from '../Feed/type';
 import FooterFeed from './components/FooterFeed';
 import ItemArticle from './components/ItemArticle';
 import ItemVideo from './components/ItemVideo';
-
 interface DetailFeedProps {}
 const dataListFeed: IDataListFeed[] = [
   {
@@ -84,7 +83,6 @@ const dataListFeed: IDataListFeed[] = [
 const DetailFeed = (props: DetailFeedProps) => {
   const [state, setState] = useState<IDataListFeed[]>(dataListFeed);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  console.log('=>(index.tsx:82) currentIndex', currentIndex);
   const _carousel = useRef<Carousel<IDataListFeed>>();
 
   const onNext = () => {
