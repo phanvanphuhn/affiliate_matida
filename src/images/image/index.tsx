@@ -46,7 +46,6 @@ const ic_comment = require('./ic_comment.png');
 const ic_menu = require('./ic_menu.png');
 const ic_share = require('./ic_share.png');
 const ic_star = require('./ic_star.png');
-const ic_play = require('./ic_play.png');
 
 export {
   imageIntro,
@@ -97,5 +96,4 @@ export {
   ic_menu,
   ic_share,
   ic_star,
-  ic_play,
 };

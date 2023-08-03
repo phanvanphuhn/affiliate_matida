@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
-import {colors, heightScreen, widthScreen} from '@stylesCommon';
+import {Image, StyleSheet, View} from 'react-native';
+import {heightScreen, widthScreen} from '@stylesCommon';
 import {IDataListFeed} from '../../Feed/type';
 import TitleFeed from './TitleFeed';
 import SliderFeed from './SliderFeed';
-import {duration} from './ItemPodcast';
 
+const duration = 10000;
 interface ItemArticleProps {
   item: IDataListFeed;
   onNext: () => void;
