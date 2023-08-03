@@ -13,7 +13,6 @@ import TitleFeed from './TitleFeed';
 import SliderFeed from './SliderFeed';
 import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
-import {duration} from './ItemPodcast';
 
 interface ItemVideoProps {
   item: IDataListFeed;

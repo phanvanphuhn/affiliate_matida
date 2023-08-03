@@ -8,8 +8,7 @@ import Carousel from 'react-native-snap-carousel';
 import FooterFeed from './components/FooterFeed';
 import ItemArticle from './components/ItemArticle';
 import ItemVideo from './components/ItemVideo';
-import ItemPodcast from './components/ItemPodcast';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+
 interface DetailFeedProps {}
 const dataListFeed: IDataListFeed[] = [
   {
@@ -19,7 +18,7 @@ const dataListFeed: IDataListFeed[] = [
     view: '230',
     duration: '2',
     url: 'https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav',
-    type: 'podcast',
+    type: 'article',
     title: 'Yoga for mom',
     author: 'pregnancy Podcast',
     description:
@@ -31,7 +30,7 @@ const dataListFeed: IDataListFeed[] = [
     image:
       'https://thuthuatnhanh.com/wp-content/uploads/2021/11/hinh-anh-chill-dep.jpg',
     view: '230',
-    url: 'https://onlinetestcase.com/wp-content/uploads/2023/06/1-MB-MP3.mp3',
+    url: 'https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav',
     duration: '2',
     title: 'Yoga for mom',
     type: 'podcast',
