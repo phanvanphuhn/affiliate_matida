@@ -1,3 +1,4 @@
+import {colors, heightScreen, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
@@ -7,12 +8,11 @@ import {
   View,
 } from 'react-native';
 import Video, {OnProgressData} from 'react-native-video';
-import {IDataListFeed} from '../../Feed/type';
-import {colors, heightScreen, widthScreen} from '@stylesCommon';
-import TitleFeed from './TitleFeed';
-import SliderFeed from './SliderFeed';
-import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
+import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
+import {IDataListFeed} from '../../Feed/type';
+import SliderFeed from './SliderFeed';
+import TitleFeed from './TitleFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -23,7 +23,6 @@ interface ItemVideoProps {
 
 const ItemVideo = (props: ItemVideoProps) => {
   const [progress, setProgress] = useState<number>(0);
-  console.log('=>(ItemVideo.tsx:20) progress', progress);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [playerState, setPlayerState] = useState<PLAYER_STATES>(
     PLAYER_STATES.PLAYING,
