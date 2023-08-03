@@ -7,7 +7,6 @@ import TitleFeed from './TitleFeed';
 
 interface ItemArticleProps {
   item: IDataListFeed;
-  onNext: () => void;
   isFocused: boolean;
 }
 const ItemArticle = (props: ItemArticleProps) => {
@@ -36,12 +35,12 @@ const ItemArticle = (props: ItemArticleProps) => {
     }
   }, [progress]);
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Image
         source={{uri: props.item.image}}
         style={{
           width: widthScreen,
-          aspectRatio: widthScreen / (heightScreen - 65),
+          aspectRatio: widthScreen / (heightScreen - 45),
           resizeMode: 'contain',
         }}
       />

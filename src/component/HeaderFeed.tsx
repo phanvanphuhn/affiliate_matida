@@ -42,7 +42,7 @@ const HeaderFeed = ({
 }: HeaderProps) => {
   const insets = useSafeAreaInsets();
   return (
-    <View style={[styles.container, {top: insets.top}, styleContainer]}>
+    <View style={[styles.container, {top: insets.top + 15}, styleContainer]}>
       <TouchableOpacity
         onPress={onPressLeft}
         activeOpacity={0.9}

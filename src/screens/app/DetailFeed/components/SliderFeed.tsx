@@ -10,7 +10,7 @@ interface SliderFeedProps {
 
 const SliderFeed = (props: SliderFeedProps) => {
   return (
-    <View style={{position: 'absolute', bottom: -13, width: '100%'}}>
+    <View style={styles.container}>
       <RNSlider
         maximumValue={props.duration}
         value={props.progress}
@@ -26,7 +26,7 @@ const SliderFeed = (props: SliderFeedProps) => {
 export default SliderFeed;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {position: 'absolute', bottom: -10, zIndex: 100, width: '100%'},
   thumb: {
     backgroundColor: '#141414',
     borderRadius: 50,
