@@ -9,6 +9,7 @@ const iconDelete = require('./iconDelete.png');
 const iconReplyArr = require('./iconReply.png');
 const imageModalConfirmProfile = require('./imageModalConfirmProfile.png');
 const imageNameApp = require('./NameApp.png');
+const imageNameAppBlack = require('./NameAppBlack.png');
 const imageBackgroundOpacity = require('./backgroundOpacity.png');
 const iconNext = require('./ImageIconArrowRight.png');
 const avatarSpeaker = require('./avatarSpeaker.png');
@@ -97,6 +98,7 @@ export {
   imageLogOut,
   imageModalConfirmProfile,
   imageNameApp,
+  imageNameAppBlack,
   imageUpload,
   isStockPhoto,
   lightQuiz,
