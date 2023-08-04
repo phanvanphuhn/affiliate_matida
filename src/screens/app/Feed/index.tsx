@@ -74,7 +74,7 @@ const Feed = () => {
   };
 
   return (
-    <View style={{backgroundColor: colors.white}}>
+    <View style={{backgroundColor: colors.white, flex: 1}}>
       <AppHeader
         onPressAvatar={navigateUser}
         onPressLogo={handlePressLogo}

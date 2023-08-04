@@ -23,7 +23,6 @@ const useDetailFeed = () => {
       ...preState,
     }),
   );
-  console.log('=>(useDetailFeed.ts:26) state', state);
   const weekRedux =
     useSelector(
       (stateRedux: any) =>

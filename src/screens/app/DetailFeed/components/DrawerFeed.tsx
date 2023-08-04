@@ -6,6 +6,7 @@ import {
   FlatList,
   ListRenderItem,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import {colors} from '@stylesCommon';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -20,12 +21,12 @@ const DrawerFeed = (props: DrawerFeedProps) => {
 
   const renderItem: ListRenderItem<IDataListFeed> = ({item, index}) => {
     return (
-      <View style={styles.containerItem}>
+      <TouchableOpacity style={styles.containerItem}>
         <Image source={{uri: item.thumbnail}} style={styles.imageThumbnail} />
         <Text numberOfLines={2} style={styles.textTitle}>
           {item.title}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   };
   const keyExtractor = (item: IDataListFeed, index: number) => index.toString();

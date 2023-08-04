@@ -4,8 +4,9 @@ import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    paddingBottom: scaler(240),
+    // paddingBottom: scaler(240),
     padding: scaler(8),
+    flex: 1,
   },
   itemContainer: {
     flex: 0.5,

@@ -5,6 +5,7 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import Video, {OnProgressData} from 'react-native-video';
@@ -13,6 +14,7 @@ import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/sr
 import {IDataListFeed} from '../../Feed/type';
 import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
+import {useIsFocused} from '@react-navigation/native';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -33,7 +35,7 @@ const ItemVideo = (props: ItemVideoProps) => {
       onReset();
     }
     return () => {
-      setProgress(0);
+      onReset();
     };
   }, [props.isFocused]);
   const onEnd = () => {};
@@ -63,8 +65,6 @@ const ItemVideo = (props: ItemVideoProps) => {
         : PLAYER_STATES.PLAYING,
     );
   };
-  // @ts-ignore
-  // @ts-ignore
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
@@ -100,15 +100,15 @@ const ItemVideo = (props: ItemVideoProps) => {
             volume={10}
           />
         )}
-        <TouchableOpacity onPress={onTooglePlay} style={styles.containerPlay}>
-          <View>
+        <TouchableWithoutFeedback onPress={onTooglePlay}>
+          <View style={styles.containerPlay}>
             {(!!isVisible || !!props.isPause) && (
               <TouchableOpacity style={styles.buttonPlay} onPress={onPause}>
                 <Image source={getPlayerStateIcon(playerState)} />
               </TouchableOpacity>
             )}
           </View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
         <SliderFeed progress={progress} duration={100} />
       </View>
 
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     height: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F0F0F060',
+    backgroundColor: '#F0F0F090',
     borderRadius: 50,
   },
   containerPlay: {

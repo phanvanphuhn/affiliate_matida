@@ -1,5 +1,5 @@
 import {ic_back, ic_search} from '@images';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import HeaderFeed from '../../../component/HeaderFeed';
 import {IDataListFeed} from '../Feed/type';
@@ -11,13 +11,16 @@ import useDetailFeed from './useDetailFeed';
 import {Drawer} from 'react-native-drawer-layout';
 import DrawerFeed from './components/DrawerFeed';
 import {ROUTE_NAME} from '@routeName';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {heightScreen, widthScreen} from '@stylesCommon';
 interface DetailFeedProps {}
 const DetailFeed = (props: DetailFeedProps) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const {state} = useDetailFeed();
   const [open, setOpen] = React.useState(false);
+  const refDrawer = useRef<Drawer>();
   const navigation = useNavigation<any>();
+  const isFocused = useIsFocused();
   const renderItem = (item: IDataListFeed, index: number) => {
     switch (item.type) {
       case 'video':
@@ -25,7 +28,7 @@ const DetailFeed = (props: DetailFeedProps) => {
         return (
           <ItemVideo
             item={item}
-            isPause={open && currentIndex == index}
+            isPause={(open && currentIndex == index) || !isFocused}
             isFocused={currentIndex == index}
             isAudio={item.type == 'podcast'}
           />
