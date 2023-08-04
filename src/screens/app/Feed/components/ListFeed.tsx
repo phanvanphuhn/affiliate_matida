@@ -26,7 +26,7 @@ const ListFeed = (props: any) => {
     return (
       <TouchableOpacity onPress={onDetailClick} style={styles.itemContainer}>
         <View>
-          <Image source={{uri: item.image}} style={styles.image} />
+          <FastImage source={{uri: item.image}} style={styles.image} />
           <View style={styles.leftDescription}>
             <Image source={iconClock} />
 
