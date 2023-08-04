@@ -1,23 +1,22 @@
+import {imageNameApp, imageNameAppBlack, SvgSearch} from '@images';
 import React, {useCallback, useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
-  Text,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {imageNameApp, SvgSearch} from '@images';
 
-import {avatarDefault, SvgMenu, SvgMessage, SvgNotification} from '@images';
-import {scaler, colors, stylesCommon} from '@stylesCommon';
-import {useDispatch, useSelector} from 'react-redux';
-import FastImage from 'react-native-fast-image';
+import {SvgMenu, SvgMessage, SvgNotification} from '@images';
 import {useFocusEffect} from '@react-navigation/native';
-import {getCheckMessageUnread, listNotReadNotification} from '@services';
 import {updateTotalUnread, updateTotalUnreadNotification} from '@redux';
+import {getCheckMessageUnread, listNotReadNotification} from '@services';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {showMessage} from 'react-native-flash-message';
+import {useDispatch, useSelector} from 'react-redux';
 import {AppImage} from './AppImage';
 
 interface IProps {
@@ -29,6 +28,7 @@ interface IProps {
   onPressSearch?: () => void;
   IconNotification?: JSX.Element;
   IconMessage?: JSX.Element;
+  bgc?: string;
 }
 export const AppHeader = ({
   onPressMenu,
@@ -39,6 +39,7 @@ export const AppHeader = ({
   onPressSearch,
   IconNotification = <SvgNotification />,
   IconMessage = <SvgMessage />,
+  bgc,
 }: IProps) => {
   const user = useSelector((state: any) => state.auth.userInfo);
   // const dataListChat = useSelector((state: any) => state?.listChat?.list);
@@ -97,16 +98,20 @@ export const AppHeader = ({
   };
 
   return (
-    <SafeAreaView edges={['top']} style={styles.container}>
+    <SafeAreaView
+      edges={['top']}
+      style={[styles.container, bgc ? {backgroundColor: colors.white} : {}]}>
       <View style={styles.row}>
-        {onPressMenu && <TouchableOpacity
-          onPress={onPressMenu}
-          style={{
-            paddingLeft: scaler(16),
-            paddingVertical: scaler(10),
-          }}>
-          <SvgMenu />
-        </TouchableOpacity>}
+        {onPressMenu && (
+          <TouchableOpacity
+            onPress={onPressMenu}
+            style={{
+              paddingLeft: scaler(16),
+              paddingVertical: scaler(10),
+            }}>
+            <SvgMenu />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           onPress={onPressAvatar}
           style={{marginLeft: scaler(20)}}>
@@ -136,54 +141,62 @@ export const AppHeader = ({
       </View>
       <TouchableOpacity onPress={onPressLogo} activeOpacity={0.9}>
         {/* <Text style={styles.textLogo}>Matida</Text> */}
-        <Image source={imageNameApp} style={styles.imageNameApp} />
+        <Image
+          source={bgc ? imageNameAppBlack : imageNameApp}
+          style={styles.imageNameApp}
+        />
       </TouchableOpacity>
       <View style={styles.row}>
-        {onPressNotification && <TouchableOpacity
-          onPress={onPressNotification}
-          style={{
-            paddingRight: scaler(20),
-            paddingVertical: scaler(10),
-          }}>
-          {IconNotification}
-          {!!totalUnreadNotification && (
-            <View
-              style={[
-                styles.viewIndexNoti,
-                +totalUnreadNotification < 10 && {
-                  paddingHorizontal: scaler(5),
-                },
-              ]}>
-              <Text style={styles.textIndexNoti}>
-                {+totalUnreadNotification > 99 ? 99 : totalUnreadNotification}
-              </Text>
-              {+totalUnreadNotification > 99 && (
-                <Text
-                  style={[
-                    {
-                      textAlignVertical: 'top',
-                    },
-                    styles.textIndexNoti,
-                  ]}>
-                  +
+        {onPressNotification && (
+          <TouchableOpacity
+            onPress={onPressNotification}
+            style={{
+              paddingRight: scaler(20),
+              paddingVertical: scaler(10),
+            }}>
+            {IconNotification}
+            {!!totalUnreadNotification && (
+              <View
+                style={[
+                  styles.viewIndexNoti,
+                  +totalUnreadNotification < 10 && {
+                    paddingHorizontal: scaler(5),
+                  },
+                ]}>
+                <Text style={styles.textIndexNoti}>
+                  {+totalUnreadNotification > 99 ? 99 : totalUnreadNotification}
                 </Text>
-              )}
-            </View>
-          )}
-        </TouchableOpacity>}
+                {+totalUnreadNotification > 99 && (
+                  <Text
+                    style={[
+                      {
+                        textAlignVertical: 'top',
+                      },
+                      styles.textIndexNoti,
+                    ]}>
+                    +
+                  </Text>
+                )}
+              </View>
+            )}
+          </TouchableOpacity>
+        )}
         {/* <View style={{paddingRight: scaler(20), paddingVertical: scaler(10)}} /> */}
-        {onPressMessage && <TouchableOpacity
-          onPress={onPressMessage}
-          style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
-          {IconMessage}
-          {dot && <View style={styles.dotMessage} />}
-        </TouchableOpacity>}
-        {onPressSearch && <TouchableOpacity
-          onPress={onPressSearch}
-          style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}
-        >
-          <SvgSearch color={colors.white}/>
-        </TouchableOpacity>}
+        {onPressMessage && (
+          <TouchableOpacity
+            onPress={onPressMessage}
+            style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
+            {IconMessage}
+            {dot && <View style={styles.dotMessage} />}
+          </TouchableOpacity>
+        )}
+        {onPressSearch && (
+          <TouchableOpacity
+            onPress={onPressSearch}
+            style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
+            <SvgSearch color={bgc ? colors.black : colors.white} />
+          </TouchableOpacity>
+        )}
         {/* <View style={{paddingVertical: scaler(10)}}>
           <View style={{width: scaler(60)}} />
         </View> */}
