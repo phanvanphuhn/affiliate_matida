@@ -14,17 +14,6 @@ const screenOptions = {
 };
 
 const StackTab = () => {
-  const renderTabHome = () => {
-    return (
-      <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen name={ROUTE_NAME.HOME} component={screens.Home} />
-        <Stack.Screen
-          name={ROUTE_NAME.WEEKLY_ARTICLES}
-          component={screens.WeeklyArticles}
-        />
-      </Stack.Navigator>
-    );
-  };
   //Render ra bottomTab
   return (
     <Tab.Navigator
@@ -36,10 +25,7 @@ const StackTab = () => {
       initialRouteName={ROUTE_NAME.TAB_HOME}>
       <Tab.Screen name={ROUTE_NAME.TAB_HOME} component={screens.Home} />
       <Tab.Screen name={ROUTE_NAME.TAB_EXPLORE} component={screens.Explore} />
-      <Tab.Screen
-        name={ROUTE_NAME.TAB_COMMUNITY}
-        component={screens.Community}
-      />
+      <Tab.Screen name={ROUTE_NAME.TAB_COMMUNITY} component={screens.Forum} />
       <Tab.Screen name={ROUTE_NAME.TAB_LIVETALK} component={screens.LiveTalk} />
     </Tab.Navigator>
   );

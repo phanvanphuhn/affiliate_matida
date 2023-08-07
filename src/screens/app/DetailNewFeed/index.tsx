@@ -58,6 +58,7 @@ import {ROUTE_NAME} from '@routeName';
 import {AppSocket, event, trackingAppEvent, useUXCam} from '@util';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
+import {ETypeUser} from '@constant';
 
 const DetailNewFeed = (props: any) => {
   const navigation = useNavigation<any>();
@@ -438,7 +439,7 @@ const DetailNewFeed = (props: any) => {
                         value={text}
                         placeholder={`${t('post.write_a_comment')}`}
                         placeholderTextColor={colors.textSmallColor}
-                        maxLength={225}
+                        maxLength={+user?.role === ETypeUser.USER ? 225 : 750}
                         textAlignVertical="center"
                         multiline
                       />
