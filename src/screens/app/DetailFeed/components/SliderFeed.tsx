@@ -26,7 +26,12 @@ const SliderFeed = (props: SliderFeedProps) => {
 export default SliderFeed;
 
 const styles = StyleSheet.create({
-  container: {position: 'absolute', bottom: -10, zIndex: 100, width: '100%'},
+  container: {
+    position: 'absolute',
+    top: -20,
+    zIndex: 9999,
+    width: '100%',
+  },
   thumb: {
     backgroundColor: '#141414',
     borderRadius: 50,

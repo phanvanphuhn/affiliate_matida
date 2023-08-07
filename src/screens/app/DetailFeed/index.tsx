@@ -1,6 +1,12 @@
 import {ic_back, ic_search} from '@images';
 import React, {useRef, useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  NativeSyntheticEvent,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import HeaderFeed from '../../../component/HeaderFeed';
 import {IDataListFeed} from '../Feed/type';
 import FooterFeed from './components/FooterFeed';
@@ -13,13 +19,15 @@ import DrawerFeed from './components/DrawerFeed';
 import {ROUTE_NAME} from '@routeName';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {heightScreen, widthScreen} from '@stylesCommon';
+import SliderFeed from './components/SliderFeed';
+import Container from './components/Container';
+import ItemPurchase from './components/ItemPurchase';
 interface DetailFeedProps {}
 const DetailFeed = (props: DetailFeedProps) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const {state} = useDetailFeed();
+  const {state, onPageSelected} = useDetailFeed();
   const [open, setOpen] = React.useState(false);
-  const refDrawer = useRef<Drawer>();
   const navigation = useNavigation<any>();
+  const pagerViewRef = useRef<PagerView>();
   const isFocused = useIsFocused();
   const renderItem = (item: IDataListFeed, index: number) => {
     switch (item.type) {
@@ -28,18 +36,41 @@ const DetailFeed = (props: DetailFeedProps) => {
         return (
           <ItemVideo
             item={item}
-            isPause={(open && currentIndex == index) || !isFocused}
-            isFocused={currentIndex == index}
+            isPause={(open && state.currentIndex == index) || !isFocused}
+            isFocused={state.currentIndex == index}
             isAudio={item.type == 'podcast'}
           />
         );
       default:
-        return <ItemArticle item={item} isFocused={currentIndex == index} />;
+        return (
+          <ItemArticle item={item} isFocused={state.currentIndex == index} />
+        );
     }
   };
 
+  const onPageHandler = (event: NativeSyntheticEvent<any>) => {
+    const currentPage = event.nativeEvent.position;
+    const reachedFakeLastSlide = currentPage === 0;
+    const reachedFakeFirstSlide = currentPage === state.data.length - 1;
+
+    if (reachedFakeFirstSlide) {
+      pagerViewRef.current?.setPageWithoutAnimation(1);
+    } else if (reachedFakeLastSlide) {
+      pagerViewRef.current?.setPageWithoutAnimation(state.data.length - 2);
+    } else {
+      onPageSelected(event);
+    }
+    console.log(
+      '=>(index.tsx:52) event.nativeEvent.position',
+      event.nativeEvent.position,
+    );
+    console.log('=>(index.tsx:53) state?.data.length', state?.data.length);
+  };
   const renderDrawer = () => {
     return <DrawerFeed />;
+  };
+  const renderPurchase = (item: IDataListFeed, index: number) => {
+    return <ItemPurchase item={item} />;
   };
   const onPressSearch = () => {
     navigation.navigate(ROUTE_NAME.SEARCH_FEED);
@@ -57,7 +88,7 @@ const DetailFeed = (props: DetailFeedProps) => {
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
       renderDrawerContent={renderDrawer}>
-      <View style={styles.container}>
+      <Container>
         <HeaderFeed
           IconLeft={<Image source={ic_back} style={styles.iconHeader} />}
           onPressRight={onPressSearch}
@@ -65,21 +96,23 @@ const DetailFeed = (props: DetailFeedProps) => {
             <Image source={ic_search} style={styles.iconHeader} />
           }
         />
-        <PagerView
-          orientation={'vertical'}
-          style={styles.pagerView}
-          onPageSelected={e => setCurrentIndex(e.nativeEvent.position)}
-          initialPage={0}>
-          {state?.data?.map((item, index) => (
-            <View style={styles.pagerView} key={index.toString()}>
-              {renderItem(item, index)}
-            </View>
-          ))}
-        </PagerView>
-        <View style={{height: 65, zIndex: -1}}>
-          <FooterFeed />
-        </View>
-      </View>
+        {!!state?.data.length && (
+          <PagerView
+            initialPage={1}
+            orientation={'vertical'}
+            style={styles.pagerView}
+            onPageSelected={onPageHandler}
+            ref={pagerViewRef}>
+            {state?.data?.map((item, index) => (
+              <View style={styles.pagerView} key={index}>
+                {!item.isPurchase
+                  ? renderItem(item, index)
+                  : renderPurchase(item, index)}
+              </View>
+            ))}
+          </PagerView>
+        )}
+      </Container>
     </Drawer>
   );
 };

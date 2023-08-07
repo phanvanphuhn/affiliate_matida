@@ -1,12 +1,36 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ic_comment, ic_heart, ic_menu, ic_share, ic_star} from '@images';
+import {
+  ic_comment,
+  ic_heart,
+  ic_menu,
+  ic_share,
+  ic_star,
+  SvgHeart,
+  SvgHearted,
+} from '@images';
+import {useVideo} from './Container';
 
 interface FooterFeedProps {}
 
 const FooterFeed = (props: FooterFeedProps) => {
-  const [state, setState] = useState();
+  const {state, setState} = useVideo();
+  const onHearth = () => {
+    setState({
+      feed: {...state.feed, is_liked: !state.feed?.is_liked},
+    });
+  };
+  const onComment = () => {
+    // setState({isShowComment: true});
+    console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
+  };
+  const onRate = () => {
+    console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
+  };
+  const onShare = () => {
+    console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
+  };
   return (
     <View
       style={[
@@ -15,16 +39,16 @@ const FooterFeed = (props: FooterFeedProps) => {
           paddingBottom: useSafeAreaInsets().bottom,
         },
       ]}>
-      <TouchableOpacity style={styles.buttonFooter}>
-        <Image source={ic_heart} />
+      <TouchableOpacity onPress={onHearth} style={styles.buttonFooter}>
+        {state.feed?.is_liked ? <SvgHearted /> : <SvgHeart />}
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonFooter}>
+      <TouchableOpacity onPress={onComment} style={styles.buttonFooter}>
         <Image source={ic_comment} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonFooter}>
+      <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
         <Image source={ic_star} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonFooter}>
+      <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
         <Image source={ic_share} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonFooter}>
