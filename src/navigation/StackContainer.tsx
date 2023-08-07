@@ -1,13 +1,12 @@
-import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ROUTE_NAME} from './routeName';
-import {screens} from '../screens';
+import {AppSocket} from '@util';
+import * as React from 'react';
 import RNBootSplash from 'react-native-bootsplash';
 import {useSelector} from 'react-redux';
+import {screens} from '../screens';
 import StackTab from './StackTab';
-import {AppSocket} from '@util';
-import {StatusBar, Platform} from 'react-native';
+import {ROUTE_NAME} from './routeName';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -20,14 +19,14 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   const isLogin: any = useSelector((state: any) => state?.auth?.statusLogin);
   let token = useSelector((state: any) => state?.auth?.token);
 
-  React.useEffect(() => {
-    if (token) {
-      init(token);
-      return () => {
-        endConnect();
-      };
-    }
-  }, [token]);
+  // React.useEffect(() => {
+  //   if (token) {
+  //     init(token);
+  //     return () => {
+  //       endConnect();
+  //     };
+  //   }
+  // }, [token]);
 
   const renderIntro = () => {
     if (lang) {
