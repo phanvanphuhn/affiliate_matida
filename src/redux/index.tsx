@@ -8,3 +8,4 @@ export * from './chatGPT';
 export * from './home';
 export * from './explore';
 export * from './check';
+export * from './forum';

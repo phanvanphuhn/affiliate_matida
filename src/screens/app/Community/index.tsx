@@ -29,21 +29,6 @@ const Community = () => {
 
   useUXCam(ROUTE_NAME.TAB_COMMUNITY);
 
-  const listButton = [
-    {
-      id: 1,
-      label: t('post.all_posts'),
-      value: 1,
-      amount: null,
-    },
-    {
-      id: 2,
-      label: t('post.my_post'),
-      value: 2,
-      amount: null,
-    },
-  ];
-
   const handlePressButton = (value: number) => {
     setIndexButton(value);
   };

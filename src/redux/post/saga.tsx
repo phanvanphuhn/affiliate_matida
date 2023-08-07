@@ -30,6 +30,7 @@ import {typePost} from './type';
 import {showMessage} from 'react-native-flash-message';
 import {t} from 'i18next';
 import {colors} from '@stylesCommon';
+import {deletePostForum} from '../forum';
 
 interface ResponseGenerator {
   result?: any;
@@ -100,6 +101,7 @@ function* deleteUserPostSaga(action: any) {
       backgroundColor: colors.success_message,
     });
     yield put(deleteListUserPostSuccess(action.payload));
+    yield put(deletePostForum(action.payload));
     GlobalService.hideLoading();
   } catch (error) {
   } finally {
@@ -113,7 +115,6 @@ function* getDetailPostSaga(action: any) {
     const res: ResponseGenerator = yield getPostInfo(action.payload);
     yield put(getDetailPostSuccess(res?.data));
   } catch (error) {
-    
   } finally {
     yield put(finishLoading());
   }

@@ -8,6 +8,7 @@ import {chatGptSaga} from './chatGPT';
 import {homeSaga} from './home';
 import {exploreSaga} from './explore';
 import {checkSaga} from './check';
+import {forumSaga} from './forum';
 
 //Khai báo các root saga ở đây
 function* rootSaga() {
@@ -20,6 +21,7 @@ function* rootSaga() {
     fork(homeSaga),
     fork(exploreSaga),
     fork(checkSaga),
+    fork(forumSaga),
   ]);
 }
 
