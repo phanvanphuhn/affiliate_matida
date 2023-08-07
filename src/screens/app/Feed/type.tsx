@@ -9,4 +9,6 @@ export type IDataListFeed = {
   type?: string;
   description: string;
   thumbnail: string;
+  isPurchase: boolean;
+  is_liked: boolean;
 };

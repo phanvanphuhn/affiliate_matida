@@ -1,39 +1,40 @@
 import {heightScreen, widthScreen} from '@stylesCommon';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {IDataListFeed} from '../../Feed/type';
-import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
+import {useVideo} from './Container';
 
 interface ItemArticleProps {
   item: IDataListFeed;
   isFocused: boolean;
 }
+const duration = 10000;
 const ItemArticle = (props: ItemArticleProps) => {
-  const [progress, setProgress] = useState<number>(0);
-  const duration = 10000;
+  const {state, setState} = useVideo();
   const timeinterval = useRef<any>();
   useEffect(() => {
     if (props.isFocused) {
       timeinterval.current = setInterval(() => {
-        setProgress(pro => pro + 1000);
+        setState({progress: (state.progress || 0) + 1000, duration});
       }, 1000);
+      setState({feed: props.item});
     } else {
       onReset();
     }
     return onReset;
   }, [props.isFocused]);
   const onReset = () => {
-    setProgress(0);
+    setState({progress: 0});
     if (timeinterval.current) {
       clearInterval(timeinterval.current);
     }
   };
   useEffect(() => {
-    if (progress == duration) {
-      setProgress(0);
+    if (state.progress == state.duration) {
+      setState({progress: 0});
     }
-  }, [progress]);
+  }, [state.progress]);
   return (
     <View style={{flex: 1}}>
       <Image
@@ -44,7 +45,6 @@ const ItemArticle = (props: ItemArticleProps) => {
           resizeMode: 'contain',
         }}
       />
-      <SliderFeed progress={progress} duration={duration} />
       <TitleFeed item={props.item} />
     </View>
   );

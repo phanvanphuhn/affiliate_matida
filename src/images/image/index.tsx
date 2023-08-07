@@ -50,6 +50,7 @@ const ic_comment = require('./ic_comment.png');
 const ic_menu = require('./ic_menu.png');
 const ic_share = require('./ic_share.png');
 const ic_star = require('./ic_star.png');
+const ic_purchase = require('./ic_purchase.png');
 
 export {
   LogoApp,
@@ -104,4 +105,5 @@ export {
   lightQuiz,
   liveTalkBackground,
   noResults,
+  ic_purchase,
 };

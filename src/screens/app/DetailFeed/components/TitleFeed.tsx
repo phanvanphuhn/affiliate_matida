@@ -1,18 +1,60 @@
-import React, {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {colors} from '@stylesCommon';
+import React, {useCallback, useState} from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  NativeSyntheticEvent,
+} from 'react-native';
+import {colors, heightScreen, scaler} from '@stylesCommon';
 import {IDataListFeed} from '../../Feed/type';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface TitleFeedProps {
   item: IDataListFeed;
 }
-
 const TitleFeed = (props: TitleFeedProps) => {
-  const [state, setState] = useState();
+  const [textShown, setTextShown] = useState(false);
+  const [lengthMore, setLengthMore] = useState(false);
+  const insets = useSafeAreaInsets();
+  const toggleNumberOfLines = () => {
+    setTextShown(!textShown);
+  };
+
+  const onTextLayout = useCallback((e: NativeSyntheticEvent<any>) => {
+    setLengthMore(e.nativeEvent.lines.length >= 4);
+  }, []);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{props.item.title}</Text>
-      <Text style={styles.description}>{props.item.description}</Text>
+    <View
+      style={[
+        styles.container,
+        textShown
+          ? {
+              top: 0,
+              bottom: 0,
+              backgroundColor: '#00000099',
+              paddingTop: insets.top + scaler(170),
+            }
+          : {},
+      ]}>
+      <View style={{}}>
+        <Text style={styles.title}>{props.item.title}</Text>
+        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
+          <View style={{flex: 1}}>
+            <Text
+              onTextLayout={onTextLayout}
+              numberOfLines={textShown ? undefined : 4}
+              style={styles.description}>
+              {props.item.description}
+            </Text>
+          </View>
+        </ScrollView>
+      </View>
+      {lengthMore ? (
+        <Text onPress={toggleNumberOfLines} style={styles.showMore}>
+          {textShown ? 'See less' : 'See more'}
+        </Text>
+      ) : null}
     </View>
   );
 };
@@ -25,6 +67,13 @@ const styles = StyleSheet.create({
     color: colors.white,
     lineHeight: 16,
   },
+  showMore: {
+    lineHeight: 21,
+    marginTop: 10,
+    color: colors.white,
+    fontSize: 12,
+    textDecorationLine: 'underline',
+  },
   title: {
     fontSize: 18,
     color: colors.white,
@@ -33,7 +82,10 @@ const styles = StyleSheet.create({
   },
   container: {
     position: 'absolute',
-    bottom: 30,
+    paddingBottom: 30,
+    bottom: 0,
     padding: 16,
+    maxHeight: heightScreen,
+    justifyContent: 'flex-end',
   },
 });
