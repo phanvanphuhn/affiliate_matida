@@ -16,7 +16,6 @@ import {IDataListFeed} from '../../Feed/type';
 import TitleFeed from './TitleFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
-import {SvgHearted} from '@images';
 
 interface ItemVideoProps {
   item: IDataListFeed;

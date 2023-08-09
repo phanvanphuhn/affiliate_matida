@@ -9,6 +9,7 @@ import {
 import {colors, heightScreen, scaler} from '@stylesCommon';
 import {IDataListFeed} from '../../Feed/type';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useVideo} from './Container';
 
 interface TitleFeedProps {
   item: IDataListFeed;
@@ -17,6 +18,7 @@ const TitleFeed = (props: TitleFeedProps) => {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const insets = useSafeAreaInsets();
+  const {state} = useVideo();
   const toggleNumberOfLines = () => {
     setTextShown(!textShown);
   };
@@ -24,6 +26,9 @@ const TitleFeed = (props: TitleFeedProps) => {
   const onTextLayout = useCallback((e: NativeSyntheticEvent<any>) => {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
+  if (state.isShowComment) {
+    return null;
+  }
   return (
     <View
       style={[

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
@@ -11,18 +11,26 @@ import {
   SvgHearted,
 } from '@images';
 import {useVideo} from './Container';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
+import Extrapolate = module;
 
 interface FooterFeedProps {}
 
 const FooterFeed = (props: FooterFeedProps) => {
   const {state, setState} = useVideo();
+
   const onHearth = () => {
     setState({
       feed: {...state.feed, is_liked: !state.feed?.is_liked},
     });
   };
   const onComment = () => {
-    // setState({isShowComment: true});
+    setState({isShowComment: true});
     console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
   const onRate = () => {
@@ -32,13 +40,7 @@ const FooterFeed = (props: FooterFeedProps) => {
     console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
   return (
-    <View
-      style={[
-        styles.containerFooter,
-        {
-          paddingBottom: useSafeAreaInsets().bottom,
-        },
-      ]}>
+    <View style={[styles.containerFooter]}>
       <TouchableOpacity onPress={onHearth} style={styles.buttonFooter}>
         {state.feed?.is_liked ? <SvgHearted /> : <SvgHeart />}
       </TouchableOpacity>
@@ -65,12 +67,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    height: '100%',
+    paddingTop: 15,
+    paddingBottom: 25,
   },
   containerFooter: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: '#141414',
-    paddingTop: 15,
+    height: '100%',
   },
 });
