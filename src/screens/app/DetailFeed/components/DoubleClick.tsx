@@ -3,6 +3,7 @@ import {useRef} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
+import {useVideo} from './Container';
 interface DoubleClick {
   isShowButtonPlay?: boolean;
   children: React.ReactNode;
@@ -18,6 +19,7 @@ const DoubleClick = ({
   isShowButtonPlay,
 }: DoubleClick) => {
   const doubleTapRef = useRef(null);
+  const {state, setState} = useVideo();
 
   const onSingleTapEvent = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
@@ -26,8 +28,11 @@ const DoubleClick = ({
   };
 
   const onDoubleTapEvent = (event: any) => {
+    console.log('=>(DoubleClick.tsx:37) event', event.nativeEvent);
     if (event.nativeEvent.state === State.ACTIVE) {
-      onDoubleClick && onDoubleClick();
+      setState({
+        feed: {...state.feed, is_liked: true},
+      });
     }
   };
 

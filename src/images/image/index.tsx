@@ -48,6 +48,7 @@ const ic_menu = require('./ic_menu.png');
 const ic_share = require('./ic_share.png');
 const ic_star = require('./ic_star.png');
 const ic_purchase = require('./ic_purchase.png');
+const ic_send = require('./ic_send.png');
 
 export {
   IconBackgroundImageHome,
@@ -100,4 +101,5 @@ export {
   liveTalkBackground,
   noResults,
   ic_purchase,
+  ic_send,
 };
