@@ -17,6 +17,7 @@ import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import {LikeView} from './LikeView';
 
 import {useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   onPressOption: (idPost: any, dataUser: any) => void;
@@ -29,6 +30,7 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const navigation = useNavigation<any>();
   const [modalImage, setModalImage] = useState(false);
+  const {t} = useTranslation();
 
   const viewImage = useCallback(() => {
     setModalImage(!modalImage);
@@ -57,13 +59,20 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
       <View style={styles.viewContent}>
         <View style={[styles.viewAvatar, {justifyContent: 'space-between'}]}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {/* //Change according to api response  post?.isPrivate*/}
+
             <TouchableOpacity
               onPress={() => {
+                if (detail?.isPrivate) {
+                  return;
+                }
                 navigation.navigate(ROUTE_NAME.DETAIL_USER, {
                   id: detail?.user?.id,
                 });
               }}>
-              {detail?.user?.avatar?.length > 0 ? (
+              {/* //Change according to api response  post?.isPrivate*/}
+
+              {detail?.user?.avatar?.length > 0 && !detail?.isPrivate ? (
                 <AppImage
                   user
                   uri={detail?.user?.avatar}
@@ -76,7 +85,11 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
             </TouchableOpacity>
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
-                {detail?.user?.name}
+                {/* {detail?.user?.name} */}
+
+                {/* //Change according to api response  post?.isPrivate*/}
+                {detail?.isPrivate ? t('post.ano') : detail?.user?.name}
+                {user?.id === detail?.user_id && ` (${t('post.me')})`}
               </Text>
               <Text style={styles.txtTime}>
                 {moment(detail?.created_at).format('HH:mm DD/MM/YY')}

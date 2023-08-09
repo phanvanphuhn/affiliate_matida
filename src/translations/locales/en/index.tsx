@@ -315,6 +315,9 @@ export const en = {
     titleIssue: 'What’s the issue?',
     chooseReason: 'Choose Reason',
     notData: 'The post does not exist or has been deleted by the user',
+    anonymous: 'Post anonymously in forum',
+    ano: 'Anonymous',
+    me: 'Me',
   },
   podcast: {
     headerList: 'Podcasts',

@@ -1,4 +1,4 @@
-import {AppCameraModal2, AppImage, Header} from '@component';
+import {AppCameraModal2, AppCheckBox, AppImage, Header} from '@component';
 import {avatarDefault, imageUpload, SvgArrowLeft} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
@@ -28,6 +28,7 @@ const CreateNewPost = () => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [title, setTitle] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [content, setContent] = useState<any>('');
   const [visible, setVisible] = useState<boolean>(false);
   const [imageUrlApi, setImageUrlApi] = useState<any>(null);
@@ -129,6 +130,18 @@ const CreateNewPost = () => {
             <Text style={styles.txtName} numberOfLines={2}>
               {user?.name}{' '}
             </Text>
+          </View>
+          <View
+            style={{
+              marginVertical: 10,
+            }}>
+            <AppCheckBox
+              active={isAnonymous}
+              // title="Post anonymously in forum"
+              title={t('post.anonymous')}
+              onPress={() => setIsAnonymous(!isAnonymous)}
+            />
+            {/* <Text>Post anonymously in forum</Text> */}
           </View>
           <TouchableOpacity
             style={styles.viewImage}

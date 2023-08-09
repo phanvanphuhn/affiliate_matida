@@ -8,11 +8,13 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {LikeView} from './LikeView';
+import {useTranslation} from 'react-i18next';
 
 const ItemPost = React.memo((props: any) => {
   const {item, onDelete, onPressOption = () => {}} = props;
   const navigation = useNavigation<any>();
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const {t} = useTranslation();
 
   const onNavigate = () => {
     navigation.navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id});
@@ -36,11 +38,19 @@ const ItemPost = React.memo((props: any) => {
         }>
         <View style={styles.viewAvatar}>
           <View style={styles.viewRow}>
-            <AppImage user uri={item?.avatar} style={styles.image} />
+            {/* //Change according to api response  item?.isPrivate*/}
+
+            <AppImage
+              user
+              uri={item?.isPrivate ? undefined : item?.avatar}
+              style={styles.image}
+            />
 
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
-                {item?.name}
+                {/* //Change according to api response  item?.isPrivate*/}
+                {item?.isPrivate ? t('post.ano') : item?.name}
+                {user?.id === item?.user_id && ` (${t('post.me')})`}
               </Text>
               <Text style={styles.txtTime}>
                 {moment(item?.created_at).format('HH:mm DD/MM/YY')}
