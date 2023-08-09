@@ -9,6 +9,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {colors, heightScreen} from '@stylesCommon';
 import {IDataComment} from '../types';
@@ -105,10 +106,10 @@ const CommentFeed = (props: CommentProps) => {
   };
   const keyExtractor = (item: IDataComment, index: number) => index.toString();
   return (
-    <KeyboardAvoidingView
-      behavior={'position'}
+    <View
       style={{
-        zIndex: -10,
+        backgroundColor: '#00000020',
+        justifyContent: 'flex-end',
       }}>
       <View
         style={[
@@ -135,40 +136,47 @@ const CommentFeed = (props: CommentProps) => {
           renderItem={renderItem}
           keyExtractor={keyExtractor}
         />
-        <View
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 330 : undefined}
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            width: '100%',
-            paddingTop: 10,
+            zIndex: -10,
           }}>
-          <Image
-            source={{
-              uri: 'https://deviet.vn/wp-content/uploads/2019/04/vuong-quoc-anh.jpg',
-            }}
+          <View
             style={{
-              height: 30,
-              width: 30,
-              borderRadius: 20,
-            }}
-          />
-          <TextInput
-            style={{
-              backgroundColor: '#F5F5FF',
-              flex: 1,
-              borderRadius: 12,
-              paddingVertical: 10,
-              paddingLeft: 20,
-              marginLeft: 12,
-            }}
-            placeholder={'Comment'}
-          />
-          <View style={{paddingHorizontal: 10}}>
-            <Image source={ic_send} />
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: '100%',
+              paddingTop: 10,
+            }}>
+            <Image
+              source={{
+                uri: 'https://deviet.vn/wp-content/uploads/2019/04/vuong-quoc-anh.jpg',
+              }}
+              style={{
+                height: 30,
+                width: 30,
+                borderRadius: 20,
+              }}
+            />
+            <TextInput
+              style={{
+                backgroundColor: '#F5F5FF',
+                flex: 1,
+                borderRadius: 12,
+                paddingVertical: 10,
+                paddingLeft: 20,
+                marginLeft: 12,
+              }}
+              placeholder={'Comment'}
+            />
+            <View style={{paddingHorizontal: 10}}>
+              <Image source={ic_send} />
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

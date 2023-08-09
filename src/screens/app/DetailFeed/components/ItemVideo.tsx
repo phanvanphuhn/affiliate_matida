@@ -61,11 +61,15 @@ const ItemVideo = (props: ItemVideoProps) => {
   };
 
   const onPause = () => {
-    setPlayerState(player =>
-      player == PLAYER_STATES.PLAYING
-        ? PLAYER_STATES.PAUSED
-        : PLAYER_STATES.PLAYING,
-    );
+    if (state.isShowComment) {
+      setState({isShowComment: false});
+    } else {
+      setPlayerState(player =>
+        player == PLAYER_STATES.PLAYING
+          ? PLAYER_STATES.PAUSED
+          : PLAYER_STATES.PLAYING,
+      );
+    }
   };
   return (
     <DoubleClick
