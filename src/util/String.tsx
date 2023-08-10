@@ -15,7 +15,7 @@ export const VERSION_APP = '1.1.9';
 export const VERSION_CODE_PUSH = 'v4';
 
 // DOMAIN DEV
-// export const BASEURL = 'https://baby-nation-api-dev.adamo.tech/api/'; //Domain dev
+// export const BASEURL = 'https://api.matida.dev/api/'; //Domain dev
 // export const socketURL = 'https://baby-nation-api-dev.adamo.tech'; //SOCKET dev
 // export const KEY_UXCAM = '9rr2pitkauc2liv';
 // export const STRIPE_KEY =
