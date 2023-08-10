@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    right: scaler(8),
     bottom: scaler(16),
   },
   description: {

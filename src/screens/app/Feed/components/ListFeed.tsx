@@ -1,5 +1,5 @@
 import {SvgEye, iconClock} from '@images';
-import {colors} from '@stylesCommon';
+import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {
   FlatList,
@@ -14,31 +14,76 @@ import {styles} from '../styles';
 import {IDataListFeed} from '../type';
 import {ROUTE_NAME} from '@routeName';
 import {useNavigation} from '@react-navigation/native';
+import useDetailFeed from '../../DetailFeed/useDetailFeed';
 
 const ListFeed = (props: any) => {
-  const {data} = props;
+  const {state, onPageSelected, handleLoadMore, handleLoadLess} =
+    useDetailFeed();
   const navigation = useNavigation<any>();
 
-  const onDetailClick = () => {
-    navigation.navigate(ROUTE_NAME.DETAIL_FEED);
+  const onDetailClick = (index: number) => {
+    navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
+      index,
+      currentPage: state.page,
+    });
   };
-  const renderItem: ListRenderItem<IDataListFeed> = ({item}) => {
+  const getTotalView = (item: IDataListFeed) => {
+    let totalView = 0;
+    switch (item.content_type) {
+      case 'article':
+      case 'video':
+        totalView = item.views;
+        break;
+      case 'podcast':
+        totalView = item.total_views;
+        break;
+    }
+    return totalView;
+  };
+  const getThumbnail = (item: IDataListFeed) => {
+    let url = '';
+    switch (item.content_type) {
+      case 'video':
+        url = item.thumbnail || '';
+        break;
+      case 'article':
+      case 'podcast':
+        url = item.image || '';
+        break;
+    }
+    return url;
+  };
+  const renderItem: ListRenderItem<IDataListFeed> = ({item, index}) => {
     return (
-      <TouchableOpacity onPress={onDetailClick} style={styles.itemContainer}>
+      <TouchableOpacity
+        onPress={() => onDetailClick(index)}
+        style={styles.itemContainer}>
         <View>
-          <FastImage source={{uri: item.image}} style={styles.image} />
-          <View style={styles.leftDescription}>
-            <Image source={iconClock} />
+          <FastImage source={{uri: getThumbnail(item)}} style={styles.image} />
+          {(item.content_type == 'video' || item.content_type == 'podcast') && (
+            <View style={styles.leftDescription}>
+              <Image source={iconClock} />
 
-            <Text style={styles.description} numberOfLines={1}>
-              {item.duration} mins watch
-            </Text>
-          </View>
-          <View style={styles.rightDescription}>
+              <Text style={styles.description} numberOfLines={1}>
+                {item.duration} mins watch
+              </Text>
+            </View>
+          )}
+          <View
+            style={[
+              styles.rightDescription,
+              item.content_type == 'article'
+                ? {
+                    left: scaler(8),
+                  }
+                : {
+                    right: scaler(8),
+                  },
+            ]}>
             <SvgEye stroke={colors.borderColor} />
 
             <Text style={styles.description} numberOfLines={1}>
-              {item.view} views
+              {getTotalView(item)} views
             </Text>
           </View>
         </View>
@@ -58,7 +103,7 @@ const ListFeed = (props: any) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={data}
+        data={state.data}
         renderItem={renderItem}
         keyExtractor={(item, index) => item.id}
         numColumns={2}

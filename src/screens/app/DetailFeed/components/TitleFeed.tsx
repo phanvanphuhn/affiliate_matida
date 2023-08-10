@@ -10,6 +10,8 @@ import {colors, heightScreen, scaler} from '@stylesCommon';
 import {IDataListFeed} from '../../Feed/type';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useVideo} from './Container';
+import Description from './Description';
+import RenderHtml from 'react-native-render-html';
 
 interface TitleFeedProps {
   item: IDataListFeed;
@@ -29,6 +31,21 @@ const TitleFeed = (props: TitleFeedProps) => {
   if (state.isShowComment) {
     return null;
   }
+
+  const getDescription = () => {
+    let description = '';
+    switch (props.item.content_type) {
+      case 'article':
+        description = props.item.content;
+        break;
+      case 'video':
+        description = props.item.description;
+      case 'podcast':
+        description = props.item.desc;
+        break;
+    }
+    return description?.replace(/<[^>]+>/g, '');
+  };
   return (
     <View
       style={[
@@ -45,14 +62,16 @@ const TitleFeed = (props: TitleFeedProps) => {
       <View style={{}}>
         <Text style={styles.title}>{props.item.title}</Text>
         <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
-          <View style={{flex: 1}}>
-            <Text
-              onTextLayout={onTextLayout}
-              numberOfLines={textShown ? undefined : 4}
-              style={styles.description}>
-              {props.item.description}
-            </Text>
-          </View>
+          <RenderHtml
+            contentWidth={100}
+            source={{html: `<div>${getDescription()}</div>`}}
+            baseStyle={styles.description}
+            defaultTextProps={{
+              numberOfLines: textShown ? undefined : 4,
+              onTextLayout: onTextLayout,
+              style: styles.description,
+            }}
+          />
         </ScrollView>
       </View>
       {lengthMore ? (

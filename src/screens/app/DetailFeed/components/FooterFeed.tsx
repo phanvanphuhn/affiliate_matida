@@ -9,6 +9,7 @@ import {
   ic_star,
   SvgHeart,
   SvgHearted,
+  SvgStar,
 } from '@images';
 import {useVideo} from './Container';
 import Animated, {
@@ -18,6 +19,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import Extrapolate = module;
+import {colors} from '@stylesCommon';
 
 interface FooterFeedProps {}
 
@@ -34,6 +36,9 @@ const FooterFeed = (props: FooterFeedProps) => {
     console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
   const onRate = () => {
+    setState({
+      feed: {...state.feed, isRated: !state.feed?.isRated},
+    });
     console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
   const onShare = () => {
@@ -48,7 +53,11 @@ const FooterFeed = (props: FooterFeedProps) => {
         <Image source={ic_comment} />
       </TouchableOpacity>
       <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
-        <Image source={ic_star} />
+        {state.feed?.isRated ? (
+          <SvgStar fill={colors.yellow} color={colors.yellow} />
+        ) : (
+          <SvgStar />
+        )}
       </TouchableOpacity>
       <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
         <Image source={ic_share} />

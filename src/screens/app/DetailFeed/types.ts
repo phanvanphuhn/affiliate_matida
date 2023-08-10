@@ -1,5 +1,8 @@
 import {IDataListFeed} from '../Feed/type';
-
+export interface IDetailParams {
+  index: number;
+  currentPage: number;
+}
 export interface IStateVideo {
   data: IDataListFeed[];
   page: number;

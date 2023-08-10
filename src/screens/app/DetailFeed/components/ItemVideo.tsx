@@ -26,7 +26,7 @@ interface ItemVideoProps {
 
 const duration = 100;
 const ItemVideo = (props: ItemVideoProps) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [playerState, setPlayerState] = useState<PLAYER_STATES>(
     PLAYER_STATES.PLAYING,
@@ -71,6 +71,30 @@ const ItemVideo = (props: ItemVideoProps) => {
       );
     }
   };
+  const getUrl = () => {
+    let url = '';
+    switch (props.item.content_type) {
+      case 'video':
+        url = props.item.url || '';
+        break;
+      case 'podcast':
+        url = props.item.audio || '';
+        break;
+    }
+    return url;
+  };
+  const getThumbnail = () => {
+    let url = '';
+    switch (props.item.content_type) {
+      case 'video':
+        url = props.item.thumbnail || '';
+        break;
+      case 'podcast':
+        url = props.item.image || '';
+        break;
+    }
+    return url;
+  };
   return (
     <DoubleClick
       onSingleClick={onPause}
@@ -83,30 +107,31 @@ const ItemVideo = (props: ItemVideoProps) => {
         <View style={{flex: 1}}>
           {!!props?.isAudio && (
             <ImageBackground
-              source={{uri: props.item.thumbnail}}
+              source={{uri: props.item.image}}
               blurRadius={5}
               style={styles.imgBackground}>
               <Image
-                source={{uri: props.item.thumbnail}}
+                source={{uri: props.item.image}}
                 style={styles.imgPodcast}
               />
               <View style={styles.dot} />
             </ImageBackground>
           )}
-          {!!props.item.url && (
+          {!!getUrl() && (
             <Video
-              source={{uri: props.item.url}}
+              source={{uri: getUrl()}}
               style={styles.video}
               resizeMode="contain"
               // @ts-ignore
               ref={videoPlayer}
               audioOnly={props.isAudio}
               preferredForwardBufferDuration={1}
-              poster={props.item.thumbnail}
+              poster={isVisible ? getThumbnail() : undefined}
               playInBackground={props.isAudio}
               reportBandwidth={true}
               onReadyForDisplay={() => {
                 setIsLoading(false);
+                setIsVisible(false);
               }}
               onLoadStart={() => {
                 setIsLoading(true);
@@ -162,7 +187,7 @@ const styles = StyleSheet.create({
   },
   imgBackground: {
     width: widthScreen,
-    height: heightScreen - 45,
+    aspectRatio: widthScreen / (heightScreen - 45),
     alignItems: 'center',
     justifyContent: 'center',
   },
