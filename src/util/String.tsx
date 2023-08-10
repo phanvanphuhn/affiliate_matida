@@ -14,7 +14,7 @@ export const MERCHANT_IDENTIFIER = 'merchant.com.growth.levers.matida';
 export const VERSION_APP = '1.1.8';
 
 // DOMAIN DEV
-// export const BASEURL = 'https://baby-nation-api-dev.adamo.tech/api/'; //Domain dev
+// export const BASEURL = 'https://api.matida.dev/api/'; //Domain dev
 // export const socketURL = 'https://baby-nation-api-dev.adamo.tech'; //SOCKET dev
 // export const KEY_UXCAM = 'ayds69vc0q4shqf';
 // export const STRIPE_KEY =

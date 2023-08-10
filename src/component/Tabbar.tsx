@@ -1,25 +1,24 @@
-import React, {useRef} from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  Image,
-} from 'react-native';
-import {ROUTE_NAME} from '../navigation/routeName';
-import {getBottomSpace} from 'react-native-iphone-x-helper';
-import {
+  iconCommunity,
   iconTabExplore,
+  iconTabFeed,
   iconTabHome,
   iconTabLiveTalk,
-  iconCommunity,
-  iconTabFeed
 } from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
+import React, {useRef} from 'react';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
+import {ROUTE_NAME} from '../navigation/routeName';
 // import {t} from 'i18next';
-import {useTranslation} from 'react-i18next';
 import {
   changePageExplore,
   focusExploreTab,
@@ -29,7 +28,8 @@ import {
   Option,
   Page,
 } from '@redux';
-import {trackingAppEvent, event} from '@util';
+import {event, trackingAppEvent} from '@util';
+import {useTranslation} from 'react-i18next';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -53,7 +53,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
       case ROUTE_NAME.TAB_EXPLORE:
         return t('bottomTab.explore');
       case ROUTE_NAME.TAB_FEED:
-        return t('bottomTab.feed')
+        return t('bottomTab.feed');
       case ROUTE_NAME.TAB_HOME:
         return t('bottomTab.home');
       case ROUTE_NAME.TAB_COMMUNITY:
@@ -145,7 +145,11 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
           trackingTab(route.name);
         };
         return (
-          <TouchableOpacity onPress={onPress} style={styles.button} key={index}>
+          <TouchableOpacity
+            onPress={onPress}
+            style={styles.button}
+            key={index}
+            disabled={isFocused ? true : false}>
             {isFocused ? <View style={styles.viewActive} /> : null}
             <Image
               source={renderIcon(route.name)}
