@@ -9,6 +9,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {InteractiveView} from './InteractiveView';
+import {useTranslation} from 'react-i18next';
 export const DiscussionPost = ({
   post,
   callBackData,
@@ -17,6 +18,8 @@ export const DiscussionPost = ({
   cardBorderStyle,
 }: any) => {
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
+
   const userInfo = useSelector((state: any) => state?.auth?.userInfo);
   const {content, user_name, user_avatar, name, created_at, image, user} = post;
   const handleShow = () => navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: post?.id});
@@ -40,7 +43,8 @@ export const DiscussionPost = ({
             justifyContent: 'space-between',
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
-            {user_avatar ? (
+            {/* //Change according to api response  post?.isPrivate*/}
+            {user_avatar && !post?.isPrivate ? (
               <AppImage user style={styles.image} uri={user_avatar} />
             ) : (
               <Image style={styles.image} source={avatarDefault} />
@@ -48,7 +52,10 @@ export const DiscussionPost = ({
             <View style={{marginLeft: scaler(8), flex: 1}}>
               <Text numberOfLines={1} style={styles.textAuthor}>
                 {/* {name ?? user?.name ?? user_name ?? ''} */}
-                {user?.name ? user?.name : ''}
+                {/* {user?.name ? user?.name : ''} */}
+                {/* //Change according to api response  post?.isPrivate*/}
+                {post?.isPrivate ? t('post.ano') : user?.name}
+                {userInfo?.id === user?.user_id && ` (${t('post.me')})`}
               </Text>
               {created_at ? (
                 <Text style={styles.textTime}>

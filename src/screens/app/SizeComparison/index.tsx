@@ -112,7 +112,7 @@ const SizeComparison = () => {
         {homeData?.data?.dailyQuizz ? (
           <ViewQuiz onAnswer={onAnswerQuiz} />
         ) : null}
-        <BannerTestQuiz />
+        {/* <BannerTestQuiz /> */}
       </View>
     );
   };

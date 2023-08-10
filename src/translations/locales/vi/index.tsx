@@ -319,6 +319,9 @@ export const vi = {
     titleIssue: 'Vấn đề là gì?',
     chooseReason: 'Chọn lý do',
     notData: 'Bài đăng không tồn tại hoặc người dùng đã xoá',
+    anonymous: 'Đăng bài chế độ ẩn danh',
+    ano: 'Ẩn danh',
+    me: 'Tôi',
   },
   podcast: {
     headerList: 'Podcasts',
