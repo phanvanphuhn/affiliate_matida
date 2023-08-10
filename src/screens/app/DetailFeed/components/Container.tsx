@@ -5,6 +5,7 @@ import SliderFeed from './SliderFeed';
 import {IState} from '../types';
 import {IDataListFeed} from '../../Feed/type';
 import CommentFeed from './CommentFeed';
+import KeyboardShift from './KeyboardShift';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -58,14 +59,12 @@ const Container: React.FC<ContainerProps> = props => {
             duration={state.duration || 0}
           />
         </View>
-        {state.isShowComment ? (
-          <CommentFeed />
-        ) : (
-          <View style={{height: 65, zIndex: -1000}}>
-            <FooterFeed />
-          </View>
-        )}
+        <View style={{height: 65, zIndex: -1000}}>
+          <FooterFeed />
+        </View>
       </View>
+      <CommentFeed />
+      {!!state.isShowComment && <KeyboardShift />}
     </VideoContext.Provider>
   );
 };

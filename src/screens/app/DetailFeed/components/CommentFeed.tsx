@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -17,13 +17,28 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ic_comment, ic_send, iconClose} from '@images';
 import useDetailFeed from '../useDetailFeed';
 import {useVideo} from './Container';
-
+import KeyboardShift from './KeyboardShift';
+import {useKeyboard} from '@react-native-community/hooks';
+import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
 interface CommentProps {}
 
 const CommentFeed = (props: CommentProps) => {
   const [dataComment, setDataComment] = useState<IDataComment[]>();
   const insets = useSafeAreaInsets();
   const {state, setState} = useVideo();
+  const keyboard = useKeyboard();
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['70%'], []);
+
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+    if (index == -1) {
+      setState({isShowComment: false});
+    }
+  }, []);
   useEffect(() => {
     setDataComment([
       {
@@ -56,8 +71,45 @@ const CommentFeed = (props: CommentProps) => {
         likeCount: 2,
         commentCount: 5,
       },
+      {
+        name: 'Vương quốc Anh',
+        comment:
+          'Vương quốc Anh và những điều thú vị bạn chưa biết\n' +
+          'Vương quốc Anh ở đâu ? Vương quốc Anh bao gồm những nước nào ? Vương Quốc Anh có gì nổi tiếng là những câu hỏi mà rất nhiều khách hàng thường hỏi Dế Việt. Hãy cùng Dế Việt tìm hiểu những thông tin thú vị về Vương Quốc Anh qua bài viết sau đây nhé.',
+        avatarUrl:
+          'https://deviet.vn/wp-content/uploads/2019/04/vuong-quoc-anh.jpg',
+        likeCount: 2,
+        commentCount: 5,
+      },
+      {
+        name: 'Vương quốc Anh',
+        comment:
+          'Vương quốc Anh và những điều thú vị bạn chưa biết\n' +
+          'Vương quốc Anh ở đâu ? Vương quốc Anh bao gồm những nước nào ? Vương Quốc Anh có gì nổi tiếng là những câu hỏi mà rất nhiều khách hàng thường hỏi Dế Việt. Hãy cùng Dế Việt tìm hiểu những thông tin thú vị về Vương Quốc Anh qua bài viết sau đây nhé.',
+        avatarUrl:
+          'https://deviet.vn/wp-content/uploads/2019/04/vuong-quoc-anh.jpg',
+        likeCount: 2,
+        commentCount: 5,
+      },
+      {
+        name: 'Vương quốc Anh',
+        comment:
+          'Vương quốc Anh và những điều thú vị bạn chưa biết\n' +
+          'Vương quốc Anh ở đâu ? Vương quốc Anh bao gồm những nước nào ? Vương Quốc Anh có gì nổi tiếng là những câu hỏi mà rất nhiều khách hàng thường hỏi Dế Việt. Hãy cùng Dế Việt tìm hiểu những thông tin thú vị về Vương Quốc Anh qua bài viết sau đây nhé.',
+        avatarUrl:
+          'https://deviet.vn/wp-content/uploads/2019/04/vuong-quoc-anh.jpg',
+        likeCount: 2,
+        commentCount: 5,
+      },
     ]);
   }, []);
+  useEffect(() => {
+    if (state.isShowComment) {
+      bottomSheetRef.current?.collapse();
+    } else {
+      bottomSheetRef.current?.close();
+    }
+  }, [state.isShowComment]);
 
   const renderItem: ListRenderItem<IDataComment> = ({item}) => {
     return (
@@ -106,16 +158,13 @@ const CommentFeed = (props: CommentProps) => {
   };
   const keyExtractor = (item: IDataComment, index: number) => index.toString();
   return (
-    <View
-      style={{
-        backgroundColor: '#00000020',
-        justifyContent: 'flex-end',
-      }}>
-      <View
-        style={[
-          styles.container,
-          {paddingBottom: insets.bottom, paddingTop: 10},
-        ]}>
+    <BottomSheet
+      ref={bottomSheetRef}
+      index={-1}
+      enablePanDownToClose={true}
+      snapPoints={snapPoints}
+      onChange={handleSheetChanges}>
+      <View style={[styles.container, {paddingTop: 10}]}>
         <View
           style={{
             flexDirection: 'row',
@@ -131,52 +180,16 @@ const CommentFeed = (props: CommentProps) => {
             <Image source={iconClose} style={{height: 24, width: 24}} />
           </TouchableOpacity>
         </View>
-        <FlatList
+        <BottomSheetFlatList
           data={dataComment}
           renderItem={renderItem}
+          contentContainerStyle={{
+            paddingBottom: insets.bottom + 65,
+          }}
           keyExtractor={keyExtractor}
         />
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 330 : undefined}
-          style={{
-            zIndex: -10,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              width: '100%',
-              paddingTop: 10,
-            }}>
-            <Image
-              source={{
-                uri: 'https://deviet.vn/wp-content/uploads/2019/04/vuong-quoc-anh.jpg',
-              }}
-              style={{
-                height: 30,
-                width: 30,
-                borderRadius: 20,
-              }}
-            />
-            <TextInput
-              style={{
-                backgroundColor: '#F5F5FF',
-                flex: 1,
-                borderRadius: 12,
-                paddingVertical: 10,
-                paddingLeft: 20,
-                marginLeft: 12,
-              }}
-              placeholder={'Comment'}
-            />
-            <View style={{paddingHorizontal: 10}}>
-              <Image source={ic_send} />
-            </View>
-          </View>
-        </KeyboardAvoidingView>
       </View>
-    </View>
+    </BottomSheet>
   );
 };
 
@@ -185,6 +198,6 @@ export default CommentFeed;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    height: heightScreen / 1.5,
+    flex: 1,
   },
 });

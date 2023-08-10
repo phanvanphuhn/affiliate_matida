@@ -24,13 +24,14 @@ import Container from './components/Container';
 import ItemPurchase from './components/ItemPurchase';
 interface DetailFeedProps {}
 const DetailFeed = (props: DetailFeedProps) => {
-  const {state, onPageSelected} = useDetailFeed();
+  const {state, onPageSelected, handleLoadMore, handleLoadLess} =
+    useDetailFeed();
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigation<any>();
   const pagerViewRef = useRef<PagerView>();
   const isFocused = useIsFocused();
   const renderItem = (item: IDataListFeed, index: number) => {
-    switch (item.type) {
+    switch (item.content_type) {
       case 'video':
       case 'podcast':
         return (
@@ -38,7 +39,7 @@ const DetailFeed = (props: DetailFeedProps) => {
             item={item}
             isPause={(open && state.currentIndex == index) || !isFocused}
             isFocused={state.currentIndex == index}
-            isAudio={item.type == 'podcast'}
+            isAudio={item.content_type == 'podcast'}
           />
         );
       default:
@@ -50,6 +51,7 @@ const DetailFeed = (props: DetailFeedProps) => {
 
   const onPageHandler = (event: NativeSyntheticEvent<any>) => {
     const currentPage = event.nativeEvent.position;
+    console.log('=>(index.tsx:54) currentPage', currentPage);
     const reachedFakeLastSlide = currentPage === 0;
     const reachedFakeFirstSlide = currentPage === state.data.length - 1;
 
@@ -98,13 +100,13 @@ const DetailFeed = (props: DetailFeedProps) => {
         />
         {!!state?.data.length && (
           <PagerView
-            initialPage={1}
+            initialPage={state.currentIndex}
             orientation={'vertical'}
             style={styles.pagerView}
             onPageSelected={onPageHandler}
             ref={pagerViewRef}>
             {state?.data?.map((item, index) => (
-              <View style={styles.pagerView} key={index}>
+              <View style={styles.pagerView} key={item.id}>
                 {!item.isPurchase
                   ? renderItem(item, index)
                   : renderPurchase(item, index)}

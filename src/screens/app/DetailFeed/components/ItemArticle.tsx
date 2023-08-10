@@ -1,5 +1,5 @@
 import {heightScreen, widthScreen} from '@stylesCommon';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {IDataListFeed} from '../../Feed/type';
 import TitleFeed from './TitleFeed';
@@ -12,29 +12,43 @@ interface ItemArticleProps {
 const duration = 10000;
 const ItemArticle = (props: ItemArticleProps) => {
   const {state, setState} = useVideo();
+  const [progress, setProgress] = useState<{
+    progress?: number;
+    duration?: number;
+  }>({
+    progress: 0,
+    duration: duration,
+  });
   const timeinterval = useRef<any>();
   useEffect(() => {
     if (props.isFocused) {
       timeinterval.current = setInterval(() => {
-        setState({progress: (state.progress || 0) + 1000, duration});
+        setProgress(preState => ({
+          ...preState,
+          progress: (preState.progress || 0) + 1000,
+        }));
       }, 1000);
       setState({feed: props.item});
     } else {
       onReset();
     }
-    return onReset;
+    return () => {
+      onReset();
+    };
   }, [props.isFocused]);
   const onReset = () => {
-    setState({progress: 0});
+    setProgress(prevState => ({...prevState, progress: 0}));
     if (timeinterval.current) {
       clearInterval(timeinterval.current);
     }
   };
   useEffect(() => {
-    if (state.progress == state.duration) {
-      setState({progress: 0});
+    if (progress.progress == progress.duration) {
+      setProgress(prevState => ({...prevState, progress: 0}));
+    } else {
+      setState({progress: progress.progress, duration: progress.duration});
     }
-  }, [state.progress]);
+  }, [progress.duration, progress.progress]);
   return (
     <View style={{flex: 1}}>
       <Image
