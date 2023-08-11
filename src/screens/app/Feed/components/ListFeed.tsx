@@ -107,7 +107,7 @@ const ListFeed = (props: any) => {
       <FlatList
         data={state.data}
         renderItem={renderItem}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item, index) => index?.toString()}
         numColumns={2}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.4}
