@@ -137,7 +137,7 @@ export const vi = {
   },
   home: {
     talkAbout: 'Chia sẻ',
-    mom_and_baby: 'Mẹ & Bé',
+    mom_and_baby: 'Theo dõi thai kỳ',
     weeks: 'Tuần {{weeks}}',
     sizeComparison: {
       babySize: 'Kích thước',
@@ -322,6 +322,7 @@ export const vi = {
     anonymous: 'Đăng bài chế độ ẩn danh',
     ano: 'Ẩn danh',
     me: 'Tôi',
+    postedInAnonymus: 'Đăng bài ẩn danh',
   },
   podcast: {
     headerList: 'Podcasts',
@@ -478,6 +479,7 @@ export const vi = {
     contentNote:
       'Tida AI là một sản phẩm trí tuệ nhân tạo. Thông tin chỉ mang tính chất tham khảo. Vui lòng liên hệ với bác sĩ của bạn để biết thông tin y khoa.',
     titleModalSuggest: 'Chọn câu hỏi để hỏi AI',
+    postForum: 'Hỏi bác sĩ',
   },
   modalEndCall: {
     title: 'Xác nhận đóng phòng',

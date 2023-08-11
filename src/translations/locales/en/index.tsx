@@ -136,7 +136,7 @@ export const en = {
   },
   home: {
     talkAbout: 'What mothers discuss',
-    mom_and_baby: 'Baby & Mom',
+    mom_and_baby: 'Pregnancy Tracker',
     weeks: 'Week {{weeks}}',
     sizeComparison: {
       babySize: "Baby's size",
@@ -318,6 +318,7 @@ export const en = {
     anonymous: 'Post anonymously in forum',
     ano: 'Anonymous',
     me: 'Me',
+    postedInAnonymus: 'Posted in Anonymous',
   },
   podcast: {
     headerList: 'Podcasts',
@@ -474,6 +475,7 @@ export const en = {
     contentNote:
       'Tida AI is an artificial intelligence product. Information is for reference purposes only. Please contact your doctor for medical information.',
     titleModalSuggest: 'Select question to ask AI',
+    postForum: 'Post in forum',
   },
   modalEndCall: {
     title: 'Closing Confirmation',
@@ -513,7 +515,7 @@ export const en = {
     cancel: 'Cancel',
     exit: 'Exit',
     tryMoreTest: 'Try another test',
-    noData: `You haven't taken any tests yet`,
+    noData: "You haven't taken any tests yet",
     seeMore: 'See more',
     doOtherTest: 'Try another test',
     noDataQuiz: 'There are no tests',

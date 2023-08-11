@@ -1,18 +1,28 @@
 import {AppImage} from '@component';
-import {TidaAIWhite} from '@images';
+import {icon_PostForum, TidaAIWhite} from '@images';
+import {navigate} from '@navigation';
+import {ROUTE_NAME} from '@routeName';
+import {scaler, stylesCommon} from '@stylesCommon';
 import {isSameDay} from '@util';
 import moment from 'moment';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
+import reactotron from 'reactotron-react-native';
+import {RootState} from 'src/redux/rootReducer';
 import {styles} from './styleItemChat';
 
 const ItemMessage = React.memo((props: any) => {
   const {t} = useTranslation();
   const user_id = useSelector((state: any) => state.auth.userInfo.id);
   const lang = useSelector((state: any) => state.auth.lang);
-  const {user, text, images, createdAt, invite, request, index} =
+  const idSuggestMessage = useSelector(
+    (state: RootState) => state.chatGPT.suggestMessageID,
+  );
+
+  const {user, text, images, createdAt, invite, request, index, _id} =
     props.currentMessage;
   const [showSTT, setShowSTT] = useState(invite?.status ? invite?.status : 1);
   const [showSTTrequest, setShowSTTrequest] = useState(
@@ -34,6 +44,13 @@ const ItemMessage = React.memo((props: any) => {
       );
     }
     return null;
+  };
+
+  const onClickPostForum = () => {
+    //Go to Create new Post
+    navigate(ROUTE_NAME.CREATE_NEWPOST, {
+      message: text,
+    });
   };
 
   return (
@@ -117,6 +134,23 @@ const ItemMessage = React.memo((props: any) => {
               ) : null}
             </TouchableOpacity>
           ) : null}
+          {user._id === 2 &&
+            _id !== idSuggestMessage &&
+            (text?.length ?? 0) > 30 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={onClickPostForum}
+                style={styleMessage.postButton}>
+                <FastImage
+                  source={icon_PostForum}
+                  style={styleMessage.iconPostButton}
+                  resizeMode={'contain'}
+                />
+                <Text style={styleMessage.textPostButton}>
+                  {t('chatGPT.postForum')}
+                </Text>
+              </TouchableOpacity>
+            )}
           {createdAt ? (
             <Text style={styles.txtDate}>
               {moment(createdAt, 'YYYY/MM/DD hh:mm:ss').format('HH:mm')}
@@ -126,6 +160,27 @@ const ItemMessage = React.memo((props: any) => {
       )}
     </>
   );
+});
+
+const styleMessage = StyleSheet.create({
+  postButton: {
+    height: scaler(40),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: scaler(8),
+    borderRadius: scaler(8),
+    backgroundColor: 'rgba(255, 231, 231, 1)',
+  },
+  iconPostButton: {
+    height: scaler(24),
+    width: scaler(24),
+    marginRight: scaler(9),
+  },
+  textPostButton: {
+    ...stylesCommon.fontWeight500,
+    color: '#E66D6E',
+    fontSize: scaler(14),
+  },
 });
 
 export {ItemMessage};

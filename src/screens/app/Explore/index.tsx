@@ -1,4 +1,4 @@
-import {AppHeader, ItemArticles, ItemVideo} from '@component';
+import {AppHeader, FLoatingAIButton, ItemArticles, ItemVideo} from '@component';
 import {SvgArticleExplore, SvgMediaExplore, SvgPodcastExplore} from '@images';
 import {navigate} from '@navigation';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
@@ -237,7 +237,7 @@ const Explore = () => {
   };
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <AppHeader
         onPressAvatar={navigateUser}
         onPressMenu={navigateSetting}
@@ -304,6 +304,7 @@ const Explore = () => {
           </>
         }
       />
+      <FLoatingAIButton />
     </View>
   );
 };

@@ -1,3 +1,4 @@
+import {FLoatingAIButton} from '@component';
 import {getListTabForum} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
@@ -39,6 +40,7 @@ export const Forum = () => {
           <ListPost />
         </>
       )}
+      <FLoatingAIButton />
     </View>
   );
 };

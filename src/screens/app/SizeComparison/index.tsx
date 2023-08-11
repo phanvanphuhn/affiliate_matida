@@ -11,7 +11,7 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import {Header, PickerWeek, ViewButton} from '@component';
+import {FLoatingAIButton, Header, PickerWeek, ViewButton} from '@component';
 import {SvgArrowLeft, SvgMessages3} from '@images';
 import {trackingAppEvent, event, useUXCam} from '@util';
 import {colors} from '@stylesCommon';
@@ -141,6 +141,7 @@ const SizeComparison = () => {
         bounces={false}
         ListFooterComponent={renderView}
       />
+      <FLoatingAIButton />
     </View>
   );
 };

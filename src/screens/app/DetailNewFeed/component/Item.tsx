@@ -18,6 +18,7 @@ import {LikeView} from './LikeView';
 
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
+import reactotron from 'reactotron-react-native';
 
 type Props = {
   onPressOption: (idPost: any, dataUser: any) => void;
@@ -63,7 +64,7 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
 
             <TouchableOpacity
               onPress={() => {
-                if (detail?.isPrivate) {
+                if (detail?.is_anonymous) {
                   return;
                 }
                 navigation.navigate(ROUTE_NAME.DETAIL_USER, {
@@ -72,7 +73,7 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
               }}>
               {/* //Change according to api response  post?.isPrivate*/}
 
-              {detail?.user?.avatar?.length > 0 && !detail?.isPrivate ? (
+              {detail?.user?.avatar?.length > 0 ? (
                 <AppImage
                   user
                   uri={detail?.user?.avatar}
@@ -88,8 +89,13 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
                 {/* {detail?.user?.name} */}
 
                 {/* //Change according to api response  post?.isPrivate*/}
-                {detail?.isPrivate ? t('post.ano') : detail?.user?.name}
-                {user?.id === detail?.user_id && ` (${t('post.me')})`}
+                {/* {detail?.isPrivate ? t('post.ano') : detail?.user?.name}
+                {user?.id === detail?.user_id && ` (${t('post.me')})`} */}
+                {user?.id === detail?.user_id
+                  ? detail?.is_anonymous
+                    ? ` ${t('post.me')} (${t('post.postedInAnonymus')})`
+                    : `${t('post.me')}`
+                  : detail?.user?.name}
               </Text>
               <Text style={styles.txtTime}>
                 {moment(detail?.created_at).format('HH:mm DD/MM/YY')}

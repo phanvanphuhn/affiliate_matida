@@ -9,6 +9,7 @@ import {
   clearDataChat,
   getListChatGPT,
   addMessageToListChatGPT,
+  saveSuggestMessageId,
 } from '@redux';
 import {
   GlobalService,
@@ -32,6 +33,7 @@ export const useFunction = (props: any) => {
   const [urlImage, setUrlImage] = useState<any>(null);
   const [text, setText] = useState<any>('');
   const [modalSuggest, setModalSuggest] = useState(false);
+  const [isSendMessageSuggest, setIsSendMessageSuggest] = useState(false);
 
   const chatUser = useMemo(() => {
     return {
@@ -133,10 +135,12 @@ export const useFunction = (props: any) => {
   };
 
   const onClickSuggest = async (value: any) => {
+    const idChat = renderRandomID();
+    dispatch(saveSuggestMessageId(idChat));
     const dataAdd = {
       content: value,
       created_at: moment(),
-      id: renderRandomID(),
+      id: idChat,
       sender: 2,
       updated_at: moment(),
       user_id: user_id,
@@ -148,6 +152,7 @@ export const useFunction = (props: any) => {
         prompt: value,
       };
       const res = await sendMessageGPTApi(body);
+      setIsSendMessageSuggest(true);
       setText('');
       setShowViewSelect(false);
       setUrlImage(null);
@@ -176,5 +181,6 @@ export const useFunction = (props: any) => {
     modalSuggest,
     setModalSuggest,
     onClickSuggest,
+    isSendMessageSuggest,
   };
 };

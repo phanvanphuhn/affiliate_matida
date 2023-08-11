@@ -59,3 +59,4 @@ export * from './ViewTextSeeMore';
 export * from './Payment';
 export * from './ViewExpert';
 export * from './HeaderMasterClass';
+export * from './FloatingAIButton';

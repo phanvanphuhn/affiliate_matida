@@ -10,6 +10,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {InteractiveView} from './InteractiveView';
 import {useTranslation} from 'react-i18next';
+import reactotron from 'reactotron-react-native';
 export const DiscussionPost = ({
   post,
   callBackData,
@@ -29,6 +30,7 @@ export const DiscussionPost = ({
   const handlePostSettings = () => {
     onPressOption(post?.id ?? 0, post);
   };
+
   return (
     <TouchableOpacity
       style={[styles.container, cardBorderStyle || {}]}
@@ -44,7 +46,7 @@ export const DiscussionPost = ({
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
             {/* //Change according to api response  post?.isPrivate*/}
-            {user_avatar && !post?.isPrivate ? (
+            {user_avatar ? (
               <AppImage user style={styles.image} uri={user_avatar} />
             ) : (
               <Image style={styles.image} source={avatarDefault} />
@@ -54,8 +56,13 @@ export const DiscussionPost = ({
                 {/* {name ?? user?.name ?? user_name ?? ''} */}
                 {/* {user?.name ? user?.name : ''} */}
                 {/* //Change according to api response  post?.isPrivate*/}
-                {post?.isPrivate ? t('post.ano') : user?.name}
-                {userInfo?.id === user?.user_id && ` (${t('post.me')})`}
+                {/* {post?.isPrivate ? t('post.ano') : user?.name}
+                {userInfo?.id === user?.user_id && ` (${t('post.me')})`} */}
+                {userInfo?.id === user?.user_id
+                  ? post?.is_anonymous
+                    ? ` ${t('post.me')} (${t('post.postedInAnonymus')})`
+                    : `${t('post.me')}`
+                  : user?.name}
               </Text>
               {created_at ? (
                 <Text style={styles.textTime}>

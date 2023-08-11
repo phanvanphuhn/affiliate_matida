@@ -12,7 +12,7 @@ export const APPID_ZEGO_KEY_AUDIOLIVE = 74380430;
 export const MERCHANT_IDENTIFIER = 'merchant.com.growth.levers.matida';
 
 export const VERSION_APP = '1.1.9';
-export const VERSION_CODE_PUSH = 'v3';
+export const VERSION_CODE_PUSH = 'v4';
 
 // DOMAIN DEV
 // export const BASEURL = 'https://baby-nation-api-dev.adamo.tech/api/'; //Domain dev
@@ -23,7 +23,9 @@ export const VERSION_CODE_PUSH = 'v3';
 
 //DOMAIN PRODUCT
 export const BASEURL = 'https://api.matida.app/api/'; //Domain product
+// export const BASEURL = 'https://api.matida.dev/api/'; //DOMAIN DEV
 export const socketURL = 'https://api.matida.app'; //SOCKET product
+// export const socketURL = 'https://api.matida.dev'; //SOCKET DEV
 export const KEY_UXCAM = 'ayds69vc0q4shqf';
 export const STRIPE_KEY =
   'pk_live_51NN5F6EZXr4feaDmhnC29iKRzFMbJDs5apgAB0KmFiEXyz32aJujFa5f8aE4mCfL2z1MMjT9qzzu3MlUXvZtdtcd00WYiPY7HL';

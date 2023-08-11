@@ -8,10 +8,14 @@ import {AppImage} from '@component';
 import {avatarDefault, iconDelete, iconEdit} from '@images';
 import moment from 'moment';
 import {convertLangMonth, valid} from '@util';
+import {useSelector} from 'react-redux';
+import {t} from 'i18next';
+import reactotron from 'reactotron-react-native';
 
 const Item = React.memo((props: any) => {
   const {item, index, onDelete, callBackData} = props;
   const navigation = useNavigation<any>();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const onNavigate = () => {
     navigation.navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id});
@@ -20,6 +24,7 @@ const Item = React.memo((props: any) => {
   const onNavigateEdit = () => {
     navigation.navigate(ROUTE_NAME.EDIT_POST, {id: item?.id});
   };
+  reactotron.log?.(item);
 
   return (
     <View style={styles.container}>
@@ -37,6 +42,13 @@ const Item = React.memo((props: any) => {
             )}
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
+                {/* {user?.id === item?.user_id
+                  ? item?.is_anonymous
+                    ? ` ${t('post.me')}(${t('post.postedInAnonymus')})`
+                    : `${t('post.me')}`
+                  : item?.is_anonymous
+                  ? ` (${t('post.ano')})`
+                  : item?.name} */}
                 {item?.name}
               </Text>
               <Text style={styles.txtTime}>
