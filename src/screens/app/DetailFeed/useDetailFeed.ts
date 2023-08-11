@@ -20,7 +20,7 @@ const useDetailFeed = () => {
   const route = useRoute<any>();
   const getIndex = useCallback(() => {
     return route.params?.index >= 11
-      ? route.params?.index - 11
+      ? route.params?.index - (route.params?.currentPage - 1) * 11
       : route.params?.index;
   }, [route.params?.index]);
   const [state, setState] = useReducer(
