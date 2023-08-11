@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   imgBackground: {
     width: widthScreen,
-    aspectRatio: widthScreen / (heightScreen - 45),
+    aspectRatio: widthScreen / (heightScreen - 65),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   video: {
-    aspectRatio: widthScreen / heightScreen,
+    aspectRatio: widthScreen / (heightScreen - 65),
     width: widthScreen,
   },
 });

@@ -55,7 +55,7 @@ const ItemArticle = (props: ItemArticleProps) => {
         source={{uri: props.item.image}}
         style={{
           width: widthScreen,
-          aspectRatio: widthScreen / (heightScreen - 45),
+          aspectRatio: widthScreen / (heightScreen - 65),
           resizeMode: 'contain',
         }}
       />

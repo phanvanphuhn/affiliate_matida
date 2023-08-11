@@ -61,18 +61,20 @@ const TitleFeed = (props: TitleFeedProps) => {
       ]}>
       <View style={{}}>
         <Text style={styles.title}>{props.item.title}</Text>
-        <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
-          <RenderHtml
-            contentWidth={100}
-            source={{html: `<div>${getDescription()}</div>`}}
-            baseStyle={styles.description}
-            defaultTextProps={{
-              numberOfLines: textShown ? undefined : 4,
-              onTextLayout: onTextLayout,
-              style: styles.description,
-            }}
-          />
-        </ScrollView>
+        {!!getDescription() && (
+          <ScrollView showsVerticalScrollIndicator={false} scrollEnabled={true}>
+            <RenderHtml
+              contentWidth={100}
+              source={{html: `<div>${getDescription()}</div>`}}
+              baseStyle={styles.description}
+              defaultTextProps={{
+                numberOfLines: textShown ? undefined : 4,
+                onTextLayout: onTextLayout,
+                style: styles.description,
+              }}
+            />
+          </ScrollView>
+        )}
       </View>
       {lengthMore ? (
         <Text onPress={toggleNumberOfLines} style={styles.showMore}>
