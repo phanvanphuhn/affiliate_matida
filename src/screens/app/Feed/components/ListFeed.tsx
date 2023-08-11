@@ -24,7 +24,7 @@ const ListFeed = (props: any) => {
   const onDetailClick = (index: number) => {
     navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
       index,
-      currentPage: state.page,
+      currentPage: Math.ceil((index + 1) / 11),
     });
   };
   const getTotalView = (item: IDataListFeed) => {
@@ -93,7 +93,9 @@ const ListFeed = (props: any) => {
 
           <Text style={styles.subTitle}>
             Coach by{' '}
-            <Text style={{color: colors.success_message}}>{item.author}</Text>
+            <Text style={{color: colors.success_message}}>
+              {item.speaker_name}
+            </Text>
           </Text>
         </View>
       </TouchableOpacity>
@@ -105,8 +107,10 @@ const ListFeed = (props: any) => {
       <FlatList
         data={state.data}
         renderItem={renderItem}
-        keyExtractor={(item, index) => item.id}
+        keyExtractor={item => item.id.toString()}
         numColumns={2}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.4}
         showsVerticalScrollIndicator={false}
       />
     </View>

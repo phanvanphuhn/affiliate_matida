@@ -10,13 +10,24 @@ import {
 import {ic_purchase} from '@images';
 import {IDataListFeed} from '../../Feed/type';
 import {colors, heightScreen, widthScreen} from '@stylesCommon';
+import {useVideo} from './Container';
 
 interface ItemPurchaseProps {
   item: IDataListFeed;
 }
 
 const ItemPurchase = (props: ItemPurchaseProps) => {
-  const [state, setState] = useState();
+  const formatPrice = (str: string | number) => {
+    if (!str) {
+      return '';
+    }
+    let price = parseInt(String(str));
+    return price
+      .toFixed(2)
+      .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+      .replace('.00', '')
+      .replace(/,/g, '.');
+  };
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -29,7 +40,9 @@ const ItemPurchase = (props: ItemPurchaseProps) => {
             This video has been locked. Please purchase to continue.
           </Text>
           <TouchableOpacity style={styles.buttonPurchase}>
-            <Text style={styles.textButtonPurchase}>100.000 VND</Text>
+            <Text style={styles.textButtonPurchase}>
+              {formatPrice(props?.item?.price_vn || '')} VND
+            </Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -66,6 +79,6 @@ const styles = StyleSheet.create({
   },
   container: {
     width: widthScreen,
-    aspectRatio: widthScreen / heightScreen,
+    aspectRatio: widthScreen / (heightScreen - 65),
   },
 });
