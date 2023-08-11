@@ -6,6 +6,7 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {ic_purchase} from '@images';
 import {IDataListFeed} from '../../Feed/type';
@@ -79,6 +80,9 @@ const styles = StyleSheet.create({
   },
   container: {
     width: widthScreen,
-    aspectRatio: widthScreen / (heightScreen - 65),
+    aspectRatio: Platform.select({
+      android: widthScreen / (heightScreen - 27),
+      ios: widthScreen / (heightScreen - 65),
+    }),
   },
 });

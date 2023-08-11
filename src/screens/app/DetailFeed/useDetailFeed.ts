@@ -108,9 +108,11 @@ const useDetailFeed = () => {
   const onPageSelected = (pageNumber: number) => {
     console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
     const firstSlide = pageNumber === 0;
-    const lastSlide = pageNumber === state.data.length - 1;
+    const lastSlide = pageNumber === state.data.length - 2;
     if (firstSlide) {
       handleLoadLess();
+    } else if (lastSlide) {
+      handleLoadMore();
     } else {
       setState({
         currentIndex: pageNumber,
