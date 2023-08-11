@@ -67,13 +67,13 @@ const DetailFeed = (props: DetailFeedProps) => {
     const reachedFakeLastSlide = currentPage === 0;
     const reachedFakeFirstSlide = currentPage === state.data.length - 1;
 
-    if (reachedFakeFirstSlide) {
-      pagerViewRef.current?.setPageWithoutAnimation(1);
-    } else if (reachedFakeLastSlide) {
-      pagerViewRef.current?.setPageWithoutAnimation(state.data.length - 2);
-    } else {
-      onPageSelected(event);
-    }
+    // if (reachedFakeFirstSlide) {
+    //   pagerViewRef.current?.setPageWithoutAnimation(1);
+    // } else if (reachedFakeLastSlide) {
+    //   pagerViewRef.current?.setPageWithoutAnimation(state.data.length - 2);
+    // } else {
+    onPageSelected(currentPage);
+    // }
     console.log(
       '=>(index.tsx:52) event.nativeEvent.position',
       event.nativeEvent.position,
@@ -139,33 +139,20 @@ const DetailFeed = (props: DetailFeedProps) => {
           }
         />
         {!!state?.data.length && (
-          <FlatList
-            data={state.data}
-            renderItem={({item, index}) => {
-              return (
-                <View style={[styles.pagerView]}>
-                  {!item.is_payment
-                    ? renderItem(item, index)
-                    : renderPurchase(item, index)}
-                </View>
-              );
-            }}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={2}
-            ref={pagerViewRef}
-            removeClippedSubviews
-            keyExtractor={keyExtractor}
-            onMomentumScrollEnd={onScrollEnd}
-            pagingEnabled
-            getItemLayout={getItemLayout}
-            maxToRenderPerBatch={2}
-            // snapToInterval={Platform.select({
-            //   ios: heightScreen - 65,
-            //   android: heightScreen - 25,
-            // })}
-            decelerationRate="fast"
-            initialScrollIndex={state.currentIndex}
-          />
+          <PagerView
+            initialPage={state.currentIndex}
+            orientation={'vertical'}
+            style={styles.pagerView}
+            onPageSelected={onPageHandler}
+            ref={pagerViewRef}>
+            {state?.data?.map((item, index) => (
+              <View style={styles.pagerView} key={index}>
+                {!item.is_payment
+                  ? renderItem(item, index)
+                  : renderPurchase(item, index)}
+              </View>
+            ))}
+          </PagerView>
         )}
       </Container>
     </Drawer>
