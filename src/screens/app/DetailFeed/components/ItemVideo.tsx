@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Image,
   ImageBackground,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -16,6 +17,7 @@ import {IDataListFeed} from '../../Feed/type';
 import TitleFeed from './TitleFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
+import FastImage from 'react-native-fast-image';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -110,7 +112,7 @@ const ItemVideo = (props: ItemVideoProps) => {
               source={{uri: props.item.image}}
               blurRadius={5}
               style={styles.imgBackground}>
-              <Image
+              <FastImage
                 source={{uri: props.item.image}}
                 style={styles.imgPodcast}
               />
@@ -187,7 +189,10 @@ const styles = StyleSheet.create({
   },
   imgBackground: {
     width: widthScreen,
-    aspectRatio: widthScreen / (heightScreen - 65),
+    aspectRatio: Platform.select({
+      android: widthScreen / (heightScreen - 27),
+      ios: widthScreen / (heightScreen - 65),
+    }),
     alignItems: 'center',
     justifyContent: 'center',
   },

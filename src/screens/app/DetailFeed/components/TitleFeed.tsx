@@ -40,6 +40,7 @@ const TitleFeed = (props: TitleFeedProps) => {
         break;
       case 'video':
         description = props.item.description;
+        break;
       case 'podcast':
         description = props.item.desc;
         break;

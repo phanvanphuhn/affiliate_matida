@@ -1,9 +1,10 @@
 import {heightScreen, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, Platform, StyleSheet, View} from 'react-native';
 import {IDataListFeed} from '../../Feed/type';
 import TitleFeed from './TitleFeed';
 import {useVideo} from './Container';
+import FastImage from 'react-native-fast-image';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -51,12 +52,15 @@ const ItemArticle = (props: ItemArticleProps) => {
   }, [progress.duration, progress.progress]);
   return (
     <View style={{flex: 1}}>
-      <Image
+      <FastImage
         source={{uri: props.item.image}}
+        resizeMode={'contain'}
         style={{
           width: widthScreen,
-          aspectRatio: widthScreen / (heightScreen - 65),
-          resizeMode: 'contain',
+          aspectRatio: Platform.select({
+            android: widthScreen / (heightScreen - 27),
+            ios: widthScreen / (heightScreen - 65),
+          }),
         }}
       />
       <TitleFeed item={props.item} />

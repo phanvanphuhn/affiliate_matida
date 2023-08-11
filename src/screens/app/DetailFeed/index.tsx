@@ -1,8 +1,10 @@
 import {ic_back, ic_search} from '@images';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
+  FlatList,
   Image,
   NativeSyntheticEvent,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -17,18 +19,28 @@ import useDetailFeed from './useDetailFeed';
 import {Drawer} from 'react-native-drawer-layout';
 import DrawerFeed from './components/DrawerFeed';
 import {ROUTE_NAME} from '@routeName';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {heightScreen, widthScreen} from '@stylesCommon';
 import SliderFeed from './components/SliderFeed';
 import Container from './components/Container';
 import ItemPurchase from './components/ItemPurchase';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 interface DetailFeedProps {}
+const previewCount = 3;
+//to center items
+//the screen will show `previewCount` + 1/4 firstItemWidth + 1/4 lastItemWidth
+//so for example if previewCount = 3
+//itemWidth will be =>>> itemWidth = screenWidth / (3 + 1/4 + 1/4)
+const itemWidth = heightScreen / (previewCount + 0.5);
+//to center items you start from 3/4 firstItemWidth
+const startScroll = (itemWidth * 3) / 4;
+
 const DetailFeed = (props: DetailFeedProps) => {
   const {state, onPageSelected, handleLoadMore, handleLoadLess} =
     useDetailFeed();
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigation<any>();
-  const pagerViewRef = useRef<PagerView>();
+  const pagerViewRef = useRef<FlatList>();
   const isFocused = useIsFocused();
   const renderItem = (item: IDataListFeed, index: number) => {
     switch (item.content_type) {
@@ -77,6 +89,34 @@ const DetailFeed = (props: DetailFeedProps) => {
   const onPressSearch = () => {
     navigation.navigate(ROUTE_NAME.SEARCH_FEED);
   };
+  const onScrollEnd = e => {
+    let pageNumber = Math.min(
+      Math.max(
+        Math.floor(e.nativeEvent.contentOffset.y / (heightScreen - 65) + 0.5),
+        0,
+      ),
+      state.data?.length,
+    );
+    onPageSelected(pageNumber);
+  };
+  const route = useRoute<any>();
+  const getItemLayout = (data: ID, index) => ({
+    length: heightScreen - 65,
+    offset: (heightScreen - 65) * index,
+    index,
+  });
+  const insets = useSafeAreaInsets();
+  // useEffect(() => {
+  //   if (pagerViewRef.current) {
+  //     console.log('=>(index.tsx:95) route.params?.index', route.params?.index);
+  //     pagerViewRef.current?.scrollToIndex({
+  //       animated: true,
+  //       index: route.params?.index,
+  //     });
+  //   }
+  // }, [route.params?.currentPage, route.params?.index]);
+  const keyExtractor = (item: IDataListFeed, index: number) =>
+    index?.toString();
   return (
     <Drawer
       drawerType={'front'}
@@ -99,20 +139,33 @@ const DetailFeed = (props: DetailFeedProps) => {
           }
         />
         {!!state?.data.length && (
-          <PagerView
-            initialPage={state.currentIndex}
-            orientation={'vertical'}
-            style={styles.pagerView}
-            onPageSelected={onPageHandler}
-            ref={pagerViewRef}>
-            {state?.data?.map((item, index) => (
-              <View style={styles.pagerView} key={item.id}>
-                {!item.isPurchase
-                  ? renderItem(item, index)
-                  : renderPurchase(item, index)}
-              </View>
-            ))}
-          </PagerView>
+          <FlatList
+            data={state.data}
+            renderItem={({item, index}) => {
+              return (
+                <View style={[styles.pagerView]}>
+                  {!item.is_payment
+                    ? renderItem(item, index)
+                    : renderPurchase(item, index)}
+                </View>
+              );
+            }}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={2}
+            ref={pagerViewRef}
+            removeClippedSubviews
+            keyExtractor={keyExtractor}
+            onMomentumScrollEnd={onScrollEnd}
+            pagingEnabled
+            getItemLayout={getItemLayout}
+            maxToRenderPerBatch={2}
+            // snapToInterval={Platform.select({
+            //   ios: heightScreen - 65,
+            //   android: heightScreen - 25,
+            // })}
+            decelerationRate="fast"
+            initialScrollIndex={state.currentIndex}
+          />
         )}
       </Container>
     </Drawer>
@@ -129,5 +182,10 @@ const styles = StyleSheet.create({
   },
   pagerView: {
     flex: 1,
+    position: 'relative',
+    height: Platform.select({
+      ios: heightScreen - 65,
+      android: heightScreen - 25,
+    }),
   },
 });
