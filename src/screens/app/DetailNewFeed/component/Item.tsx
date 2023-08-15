@@ -1,10 +1,10 @@
 import {AppImage, AppTextUrl} from '@component';
 import {
+  SvgDotsThree,
   avatarDefault,
   iconClose,
   iconDelete,
   iconEdit,
-  SvgDotsThree,
 } from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
@@ -16,9 +16,8 @@ import ImageView from 'react-native-image-viewing';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import {LikeView} from './LikeView';
 
-import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import reactotron from 'reactotron-react-native';
+import {useSelector} from 'react-redux';
 
 type Props = {
   onPressOption: (idPost: any, dataUser: any) => void;

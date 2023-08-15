@@ -1,16 +1,13 @@
-import {scaler, stylesCommon, colors, widthScreen} from '@stylesCommon';
-import React from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import {LikeView} from './LikeView';
-import {useNavigation} from '@react-navigation/native';
-import {ROUTE_NAME} from '@routeName';
 import {AppImage} from '@component';
 import {avatarDefault, iconDelete, iconEdit} from '@images';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import moment from 'moment';
-import {convertLangMonth, valid} from '@util';
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {t} from 'i18next';
-import reactotron from 'reactotron-react-native';
+import {LikeView} from './LikeView';
 
 const Item = React.memo((props: any) => {
   const {item, index, onDelete, callBackData} = props;
@@ -24,7 +21,6 @@ const Item = React.memo((props: any) => {
   const onNavigateEdit = () => {
     navigation.navigate(ROUTE_NAME.EDIT_POST, {id: item?.id});
   };
-  reactotron.log?.(item);
 
   return (
     <View style={styles.container}>

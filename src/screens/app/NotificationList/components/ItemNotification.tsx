@@ -1,10 +1,10 @@
 import {AppImage, AppTextUrl} from '@component';
 import {ETypeRedirectBroadcast, EVideoType, OptionComparison} from '@constant';
-import {avatarDefault, LogoApp} from '@images';
+import {LogoApp} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {readNotification} from '@services';
-import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {NOTIFICATION} from '@util';
 import moment from 'moment';
 import React from 'react';
@@ -12,7 +12,6 @@ import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {useSelector} from 'react-redux';
-import reactotron from 'reactotron-react-native';
 import {systemFonts, tagsStyles} from './settingHTML';
 type Props = {
   item: any;
@@ -159,7 +158,6 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
   const handleNotificationArticle = () => {
     const dataJson = JSON.parse(item.data_json) as {week: string};
     const week = parseInt(dataJson.week, 10);
-    reactotron.log?.('ITEM COMPARISON', item);
     navigate(ROUTE_NAME.SIZE_COMPARISON, {
       option: OptionComparison.EMBRYO,
       week: week,
@@ -170,7 +168,6 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
     // navigate(ROUTE_NAME.TIME_LINE);
     const dataJson = JSON.parse(item.data_json) as {week: string};
     const week = parseInt(dataJson.week, 10);
-    reactotron.log?.('ITEM NOTIFICATION', item, week);
     navigate(ROUTE_NAME.WEEKLY_ARTICLES, {
       week: week,
     });

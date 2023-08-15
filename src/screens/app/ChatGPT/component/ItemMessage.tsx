@@ -10,7 +10,6 @@ import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
-import reactotron from 'reactotron-react-native';
 import {RootState} from 'src/redux/rootReducer';
 import {styles} from './styleItemChat';
 
