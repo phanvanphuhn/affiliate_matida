@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import {InteractiveView} from './InteractiveView';
 import {useTranslation} from 'react-i18next';
 import reactotron from 'reactotron-react-native';
+
 export const DiscussionPost = ({
   post,
   callBackData,

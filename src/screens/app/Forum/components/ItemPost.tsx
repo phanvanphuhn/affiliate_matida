@@ -43,6 +43,7 @@ const ItemPost = React.memo((props: any) => {
 
             <AppImage user uri={item?.avatar} style={styles.image} />
 
+
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
                 {/* //Change according to api response  item?.isPrivate*/}
@@ -53,6 +54,7 @@ const ItemPost = React.memo((props: any) => {
                     ? ` ${t('post.me')} (${t('post.postedInAnonymus')})`
                     : `${t('post.me')}`
                   : item?.name}
+
               </Text>
               <Text style={styles.txtTime}>
                 {moment(item?.created_at).format('HH:mm DD/MM/YY')}
