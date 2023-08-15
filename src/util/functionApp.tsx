@@ -155,7 +155,7 @@ export function convertArrUnique(arr: any, comp: any) {
 export const trackingAppEvent = (eventName: any, eventParams: any) => {
   try {
     //MixPanel
-    mixpanel.track(eventName, {Params: eventParams});
+    mixpanel.track(eventName, eventParams);
     //AppFlyer
     appsFlyer.logEvent(
       eventName,

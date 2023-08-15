@@ -228,6 +228,7 @@ const DetailNewFeed = (props: any) => {
           comment_id: dataReply?.id,
           content: text,
         };
+        trackingAppEvent(event.FORUM.REPLY, {content: body});
         const res = await createReplyComment(body);
         dispatch(
           addReplyCommentToList({data: [{...res?.data}], idCmt: dataReply?.id}),
@@ -241,6 +242,7 @@ const DetailNewFeed = (props: any) => {
         });
       } else {
         const body = {post_id: id, content: text};
+        trackingAppEvent(event.FORUM.COMMENT, {content: body});
         const res = await addCommentApi(body);
         dispatch(addCommentToList([{...res?.data}]));
         socket.emit('commentPost', {
