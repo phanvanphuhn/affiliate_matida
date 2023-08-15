@@ -10,7 +10,6 @@ import {LikeViewReply} from './LikeViewReply';
 
 import {getDataReply} from '@redux';
 import {useDispatch, useSelector} from 'react-redux';
-import reactotron from 'reactotron-react-native';
 
 const ItemListComment = React.memo((props: any) => {
   const navigation = useNavigation<any>();
@@ -22,7 +21,6 @@ const ItemListComment = React.memo((props: any) => {
   const detail = useSelector((state: any) => state?.post?.detailPost);
 
   let idComment = item?.id;
-  reactotron.log?.('REPLY COMMENT', item);
 
   const onReplyMessage = () => {
     if (show === false) {

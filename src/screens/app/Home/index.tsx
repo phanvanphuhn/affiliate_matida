@@ -6,19 +6,11 @@ import {
   RefreshControl,
   ScrollView,
   StatusBar,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {
-  AppHeader,
-  FLoatingAIButton,
-  HorizontalList,
-  NewArticles,
-} from '@component';
-import {navigate} from '@navigation';
+import {AppHeader, FLoatingAIButton} from '@component';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {
   clearDataChat,
@@ -37,39 +29,29 @@ import {
 } from '@services';
 import {scaler} from '@stylesCommon';
 import {
-  BannerTestQuiz,
-  ChatGPTComponent,
-  DailyAffirmation,
-  ItemMasterClass,
-  ItemTalks,
-  PodcastItem,
   PregnancyProgress,
   SizeComparisonComponent,
   ViewQuiz,
   WeeksPregnant,
-  WeekVideo,
 } from './components';
 import {styles} from './styles';
 import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
 
-import {imageBackgroundOpacity, SvgMessages3} from '@images';
+import {imageBackgroundOpacity} from '@images';
 import {
+  APP_SIGN_ZEGO_KEY,
   APPID_ZEGO_KEY,
   AppNotification,
-  APP_SIGN_ZEGO_KEY,
   handleDeepLink,
   useUXCam,
 } from '@util';
-import {t} from 'i18next';
-import {ListPostComponent} from './ListPostComponent';
 //@ts-ignore
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {event, trackingAppEvent} from '@util';
 //@ts-ignore
+import {EVideoType} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
-import {EVideoType} from '@constant';
-import reactotron from 'reactotron-react-native';
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
@@ -271,7 +253,6 @@ const Home = () => {
     try {
       GlobalService.showLoading();
       const res = await answerDailyQuiz(value);
-      reactotron.log?.('DATA HOME', res);
       dispatch(
         updateDataHome({
           ...data,

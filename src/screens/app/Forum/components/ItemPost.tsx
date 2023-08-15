@@ -5,11 +5,10 @@ import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import moment from 'moment';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {LikeView} from './LikeView';
-import {useTranslation} from 'react-i18next';
-import reactotron from 'reactotron-react-native';
 
 const ItemPost = React.memo((props: any) => {
   const {item, onDelete, onPressOption = () => {}} = props;
@@ -43,7 +42,6 @@ const ItemPost = React.memo((props: any) => {
 
             <AppImage user uri={item?.avatar} style={styles.image} />
 
-
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
                 {/* //Change according to api response  item?.isPrivate*/}
@@ -54,7 +52,6 @@ const ItemPost = React.memo((props: any) => {
                     ? ` ${t('post.me')} (${t('post.postedInAnonymus')})`
                     : `${t('post.me')}`
                   : item?.name}
-
               </Text>
               <Text style={styles.txtTime}>
                 {moment(item?.created_at).format('HH:mm DD/MM/YY')}

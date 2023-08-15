@@ -6,11 +6,10 @@ import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import moment from 'moment';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {InteractiveView} from './InteractiveView';
-import {useTranslation} from 'react-i18next';
-import reactotron from 'reactotron-react-native';
 
 export const DiscussionPost = ({
   post,
