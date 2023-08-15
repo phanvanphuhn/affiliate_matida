@@ -3,6 +3,7 @@ import {EPreRoute} from '@constant';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
+import {event, trackingAppEvent} from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text, TouchableOpacity, View} from 'react-native';
@@ -22,12 +23,14 @@ export const ItemPeriodic = ({item}: Props) => {
       return;
     }
     if (+item?.maxScore === +item?.total_questions) {
+      trackingAppEvent(event.MOM_TEST.START, {content: item?.id});
       navigate(ROUTE_NAME.TEST_RESULT, {
         id: item?.id,
         redoTest: () => {},
         preRoute: EPreRoute.PERIODIC,
       });
     } else {
+      trackingAppEvent(event.MOM_TEST.START, {content: item});
       navigate(ROUTE_NAME.TEST_DETAIL, {quiz: item});
     }
   };

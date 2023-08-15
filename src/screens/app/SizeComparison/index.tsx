@@ -1,14 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  FlatList,
-  ListRenderItem,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import {Header, PickerWeek, ViewButton} from '@component';
+import {FLoatingAIButton, Header, PickerWeek, ViewButton} from '@component';
 import {SvgArrowLeft, SvgMessages3} from '@images';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {updateDataHome} from '@redux';
@@ -16,7 +6,9 @@ import {ROUTE_NAME} from '@routeName';
 import {GlobalService, answerDailyQuiz, getSizeComparison} from '@services';
 import {colors} from '@stylesCommon';
 import {event, trackingAppEvent, useUXCam} from '@util';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {ListPostComponent} from '../Home/ListPostComponent';
 import {ViewQuiz} from '../Home/components';

@@ -88,4 +88,8 @@ export const event = {
     VIDEO_SCROLL: 'video_scroll',
     ARTICLE_SCROLL: 'article_scroll',
   },
+  MOM_TEST: {
+    START: 'MOM_TEST_START',
+    DO: 'MOM_DO_DAILY_QUIZ',
+  },
 };
