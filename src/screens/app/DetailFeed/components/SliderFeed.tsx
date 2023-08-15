@@ -1,14 +1,29 @@
-import React, {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import React from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {colors} from '@stylesCommon';
 import RNSlider from 'react-native-slider';
-
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+let AnimSlider = Animated.createAnimatedComponent(RNSlider);
 interface SliderFeedProps {
+  onSeek?: (value: number) => void;
+  onSeeking?: (value: number) => void;
   progress: number;
   duration: number;
 }
 
 const SliderFeed = (props: SliderFeedProps) => {
+  const onSeekData = (value: number) => {
+    props.onSeek && props.onSeek(value);
+  };
+  const onSeekingData = (value: number) => {
+    props.onSeeking && props.onSeeking(value);
+  };
   return (
     <View style={styles.container}>
       <RNSlider
@@ -18,6 +33,8 @@ const SliderFeed = (props: SliderFeedProps) => {
         thumbStyle={[styles.thumb]}
         minimumTrackTintColor={colors.red50}
         maximumTrackTintColor={'#141414'}
+        onSlidingComplete={onSeekData}
+        onValueChange={onSeekingData}
       />
     </View>
   );
@@ -27,9 +44,8 @@ export default SliderFeed;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: -20,
     zIndex: 9999,
+    bottom: Platform.select({android: -12, ios: -14}),
     width: '100%',
   },
   thumb: {

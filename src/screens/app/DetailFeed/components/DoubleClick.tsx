@@ -7,15 +7,13 @@ import {useVideo} from './Container';
 interface DoubleClick {
   isShowButtonPlay?: boolean;
   children: React.ReactNode;
-  onSingleClick: () => void;
-  onDoubleClick: () => void;
-  playerState: PLAYER_STATES;
+  onSingleClick?: () => void;
+  playerState?: PLAYER_STATES;
 }
 const DoubleClick = ({
   children,
   playerState,
   onSingleClick,
-  onDoubleClick,
   isShowButtonPlay,
 }: DoubleClick) => {
   const doubleTapRef = useRef(null);
@@ -28,7 +26,6 @@ const DoubleClick = ({
   };
 
   const onDoubleTapEvent = (event: any) => {
-    console.log('=>(DoubleClick.tsx:37) event', event.nativeEvent);
     if (event.nativeEvent.state === State.ACTIVE) {
       setState({
         feed: {...state.feed, is_liked: true},
@@ -44,7 +41,7 @@ const DoubleClick = ({
         ref={doubleTapRef}
         onHandlerStateChange={onDoubleTapEvent}
         numberOfTaps={2}>
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, zIndex: 999}}>
           {children}
           {!!isShowButtonPlay && playerState == PLAYER_STATES.PAUSED && (
             <View style={styles.containerPlay}>
