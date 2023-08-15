@@ -13,9 +13,11 @@ interface ContainerProps {
 
 interface IState {
   progress?: number;
+  progressChange?: number;
   feed?: IDataListFeed;
   duration?: number;
   isShowComment?: boolean;
+  progressStatus?: 'SEEKING' | 'DONE';
 }
 
 interface IVideoContext {
@@ -26,9 +28,11 @@ interface IVideoContext {
 const VideoContext = React.createContext<IVideoContext>({
   state: {
     progress: 0,
+    progressChange: 0,
     duration: 0,
     feed: undefined,
     isShowComment: false,
+    progressStatus: undefined,
   },
   setState: (value: IState) => value,
 });
@@ -42,7 +46,9 @@ const Container: React.FC<ContainerProps> = props => {
     {
       duration: 0,
       progress: 0,
+      progressChange: 0,
       feed: undefined,
+      progressStatus: undefined,
       isShowComment: false,
     },
     (preState: IState) => ({
@@ -51,18 +57,7 @@ const Container: React.FC<ContainerProps> = props => {
   );
   return (
     <VideoContext.Provider value={{state, setState}}>
-      <View style={styles.container}>
-        {props.children}
-        <View>
-          <SliderFeed
-            progress={state.progress || 0}
-            duration={state.duration || 0}
-          />
-        </View>
-        <View style={{height: 65, zIndex: -1000}}>
-          <FooterFeed />
-        </View>
-      </View>
+      <View style={styles.container}>{props.children}</View>
       <CommentFeed />
       {!!state.isShowComment && <KeyboardShift />}
     </VideoContext.Provider>
@@ -72,5 +67,5 @@ const Container: React.FC<ContainerProps> = props => {
 export default Container;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#141414'},
+  container: {flex: 1, backgroundColor: '#141414', justifyContent: 'flex-end'},
 });

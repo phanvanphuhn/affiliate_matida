@@ -119,6 +119,7 @@ const CommentFeed = (props: CommentProps) => {
           alignItems: 'flex-start',
           paddingTop: 10,
           paddingBottom: 5,
+          paddingHorizontal: 10,
         }}>
         <Image
           source={{uri: item.avatarUrl}}

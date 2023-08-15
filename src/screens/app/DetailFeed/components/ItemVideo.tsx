@@ -2,22 +2,19 @@ import {colors, heightScreen, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
-  Image,
   ImageBackground,
   Platform,
   StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import Video, {OnProgressData} from 'react-native-video';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
-import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
 import {IDataListFeed} from '../../Feed/type';
 import TitleFeed from './TitleFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import FastImage from 'react-native-fast-image';
+import SliderFeed from './SliderFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -30,6 +27,8 @@ const duration = 100;
 const ItemVideo = (props: ItemVideoProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [progress, setProgress] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
   const [playerState, setPlayerState] = useState<PLAYER_STATES>(
     PLAYER_STATES.PLAYING,
   );
@@ -54,11 +53,9 @@ const ItemVideo = (props: ItemVideoProps) => {
   const onEnd = () => {};
   const onProgress = (data: OnProgressData) => {
     if (data.seekableDuration) {
-      const percent = parseInt(
-        String((data.currentTime * 100) / data.seekableDuration),
-        10,
-      );
-      setState({progress: percent, duration});
+      setProgress(data.currentTime);
+      setDuration(data.seekableDuration);
+      // setState({progress: data.currentTime, duration: data.seekableDuration});
     }
   };
 
@@ -72,6 +69,14 @@ const ItemVideo = (props: ItemVideoProps) => {
           : PLAYER_STATES.PLAYING,
       );
     }
+  };
+  const onSeek = (value: number) => {
+    setPlayerState(PLAYER_STATES.PLAYING);
+    videoPlayer.current?.seek(value || 0);
+  };
+  const onSeeking = (value: number) => {
+    setPlayerState(PLAYER_STATES.PAUSED);
+    setProgress(value);
   };
   const getUrl = () => {
     let url = '';
@@ -156,7 +161,7 @@ const ItemVideo = (props: ItemVideoProps) => {
               volume={10}
             />
           )}
-          {!!isLoading && state.progress == 0 && (
+          {!!isLoading && progress == 0 && (
             <View style={styles.loading}>
               <ActivityIndicator size={'large'} color={colors.primary} />
             </View>
@@ -165,6 +170,12 @@ const ItemVideo = (props: ItemVideoProps) => {
 
         <TitleFeed item={props.item} />
       </View>
+      <SliderFeed
+        progress={progress || 0}
+        duration={duration || 0}
+        onSeek={onSeek}
+        onSeeking={onSeeking}
+      />
     </DoubleClick>
   );
 };
@@ -190,8 +201,8 @@ const styles = StyleSheet.create({
   imgBackground: {
     width: widthScreen,
     aspectRatio: Platform.select({
-      android: widthScreen / (heightScreen - 27),
-      ios: widthScreen / (heightScreen - 65),
+      android: widthScreen / (heightScreen - 33),
+      ios: widthScreen / (heightScreen - 71),
     }),
     alignItems: 'center',
     justifyContent: 'center',

@@ -13,44 +13,15 @@ interface ItemArticleProps {
 }
 const duration = 10000;
 const ItemArticle = (props: ItemArticleProps) => {
-  const {state, setState} = useVideo();
-  const [progress, setProgress] = useState<{
-    progress?: number;
-    duration?: number;
-  }>({
-    progress: 0,
-    duration: duration,
-  });
-  const timeinterval = useRef<any>();
+  console.log('=>(ItemArticle.tsx:47) props', props);
+  const {setState} = useVideo();
   useEffect(() => {
     if (props.isFocused) {
-      timeinterval.current = setInterval(() => {
-        setProgress(preState => ({
-          ...preState,
-          progress: (preState.progress || 0) + 1000,
-        }));
-      }, 1000);
       setState({feed: props.item});
     } else {
-      onReset();
     }
-    return () => {
-      onReset();
-    };
+    return () => {};
   }, [props.isFocused]);
-  const onReset = () => {
-    setProgress(prevState => ({...prevState, progress: 0}));
-    if (timeinterval.current) {
-      clearInterval(timeinterval.current);
-    }
-  };
-  useEffect(() => {
-    if (progress.progress == progress.duration) {
-      setProgress(prevState => ({...prevState, progress: 0}));
-    } else {
-      setState({progress: progress.progress, duration: progress.duration});
-    }
-  }, [progress.duration, progress.progress]);
   return (
     <DoubleClick
       isShowButtonPlay={false}

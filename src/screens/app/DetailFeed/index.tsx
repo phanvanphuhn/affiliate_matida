@@ -142,11 +142,11 @@ const DetailFeed = (props: DetailFeedProps) => {
           <PagerView
             initialPage={state.currentIndex}
             orientation={'vertical'}
-            style={styles.pagerView}
+            style={[styles.pagerView]}
             onPageSelected={onPageHandler}
             ref={pagerViewRef}>
             {state?.data?.map((item, index) => (
-              <View style={styles.pagerView} key={index}>
+              <View style={[styles.pagerView]} key={index}>
                 {!item.is_payment
                   ? renderItem(item, index)
                   : renderPurchase(item, index)}
@@ -154,6 +154,7 @@ const DetailFeed = (props: DetailFeedProps) => {
             ))}
           </PagerView>
         )}
+        <View style={{height: 65, zIndex: 999}}>{<FooterFeed />}</View>
       </Container>
     </Drawer>
   );
@@ -170,6 +171,7 @@ const styles = StyleSheet.create({
   pagerView: {
     flex: 1,
     position: 'relative',
+
     height: Platform.select({
       ios: heightScreen - 65,
       android: heightScreen - 25,
