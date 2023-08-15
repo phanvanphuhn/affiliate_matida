@@ -12,6 +12,7 @@ import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {useSelector} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 import {systemFonts, tagsStyles} from './settingHTML';
 type Props = {
   item: any;
@@ -156,13 +157,22 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
   };
 
   const handleNotificationArticle = () => {
-    navigate(ROUTE_NAME.WEEKLY_ARTICLES);
+    const dataJson = JSON.parse(item.data_json) as {week: string};
+    const week = parseInt(dataJson.week, 10);
+    reactotron.log?.('ITEM COMPARISON', item);
+    navigate(ROUTE_NAME.SIZE_COMPARISON, {
+      option: OptionComparison.EMBRYO,
+      week: week,
+    });
   };
 
   const handleNotificationCheckUp = () => {
     // navigate(ROUTE_NAME.TIME_LINE);
-    navigate(ROUTE_NAME.SIZE_COMPARISON, {
-      option: OptionComparison.EMBRYO,
+    const dataJson = JSON.parse(item.data_json) as {week: string};
+    const week = parseInt(dataJson.week, 10);
+    reactotron.log?.('ITEM NOTIFICATION', item, week);
+    navigate(ROUTE_NAME.WEEKLY_ARTICLES, {
+      week: week,
     });
   };
 
@@ -186,7 +196,7 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
             <Text numberOfLines={3} style={styles.textBody}>
               <Text
                 style={{...stylesCommon.fontWeight600, color: colors.black}}>
-                {isNotificationUser ? `${item?.sender?.name} ` : `Matida `}
+                {isNotificationUser ? `${item?.sender?.name} ` : 'Matida '}
               </Text>
               {`${title} ${item?.suffix_noti ? `"${item?.suffix_noti}"` : ''}`}
             </Text>
@@ -200,7 +210,7 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
               {title}
               <Text
                 style={{...stylesCommon.fontWeight600, color: colors.black}}>
-                {isNotificationUser ? ` ${item?.sender?.name} ` : ` Matida `}
+                {isNotificationUser ? ` ${item?.sender?.name} ` : ' Matida '}
               </Text>
             </Text>
             <Text style={styles.textBody} numberOfLines={3}>
@@ -219,7 +229,7 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
             <Text numberOfLines={2} style={styles.textBody}>
               <Text
                 style={{...stylesCommon.fontWeight600, color: colors.black}}>
-                {isNotificationUser ? ` ${item?.sender?.name} ` : ` Matida `}
+                {isNotificationUser ? ` ${item?.sender?.name} ` : ' Matida '}
               </Text>
               {title}
             </Text>
@@ -248,7 +258,7 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
             <Text numberOfLines={2} style={styles.textBody}>
               <Text
                 style={{...stylesCommon.fontWeight600, color: colors.black}}>
-                {isNotificationUser ? `${item?.sender?.name} ` : `Matida `}
+                {isNotificationUser ? `${item?.sender?.name} ` : 'Matida '}
               </Text>
               {title}
             </Text>

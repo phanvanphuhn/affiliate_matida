@@ -19,6 +19,8 @@ const iconBlock = require('./iconBlockUser.png');
 const iconPen = require('./iconPen.png');
 const iconShare = require('./iconShare.png');
 const iconTick = require('./tick.png');
+const icon_PostForum = require('./icon_PostForum.png');
+const floating_button = require('./floating_button.png');
 
 export {
   iconFlagVn,
@@ -42,4 +44,6 @@ export {
   iconPen,
   iconShare,
   iconTick,
+  icon_PostForum,
+  floating_button,
 };

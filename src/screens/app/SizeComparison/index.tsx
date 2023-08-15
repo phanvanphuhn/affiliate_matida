@@ -11,7 +11,7 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import {Header, PickerWeek, ViewButton} from '@component';
+import {FLoatingAIButton, Header, PickerWeek, ViewButton} from '@component';
 import {SvgArrowLeft, SvgMessages3} from '@images';
 import {trackingAppEvent, event, useUXCam} from '@util';
 import {colors} from '@stylesCommon';
@@ -23,11 +23,13 @@ import {Body} from './component/Body';
 import {Embryo} from './component/Embryo';
 import {Size} from './component/Size';
 import {ListPostComponent} from '../Home/ListPostComponent';
-import {ViewQuiz, BannerTestQuiz} from '../Home/components';
+import {ViewQuiz} from '../Home/components';
+
 const SizeComparison = () => {
   const dispatch = useDispatch();
   const route = useRoute<any>();
   const {option} = route?.params;
+  const weekNotifi = route?.params?.week;
   const {t} = useTranslation();
   const [status, setStatus] = useState(option);
   const [data, setData] = useState<any>(null);
@@ -35,10 +37,11 @@ const SizeComparison = () => {
   const flatListRef = useRef<FlatList>(null);
   const navigation = useNavigation<any>();
   const homeData = useSelector((state: any) => state?.home);
-  const week =
+  const weekPregnant =
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
+  const week = weekNotifi ? weekNotifi : weekPregnant;
 
   useUXCam(ROUTE_NAME.SIZE_COMPARISON);
   const getData = async (value: any) => {
@@ -125,6 +128,7 @@ const SizeComparison = () => {
       <PickerWeek
         customStyleContainer={styles.containerPicker}
         onSelect={(value: any) => getData(value)}
+        weekNotifi={week}
       />
       <FlatList
         data={[1]}
@@ -141,6 +145,7 @@ const SizeComparison = () => {
         bounces={false}
         ListFooterComponent={renderView}
       />
+      <FLoatingAIButton />
     </View>
   );
 };

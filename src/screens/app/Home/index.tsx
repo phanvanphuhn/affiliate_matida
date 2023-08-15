@@ -12,7 +12,12 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AppHeader, HorizontalList, NewArticles} from '@component';
+import {
+  AppHeader,
+  FLoatingAIButton,
+  HorizontalList,
+  NewArticles,
+} from '@component';
 import {navigate} from '@navigation';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {
@@ -64,6 +69,7 @@ import {event, trackingAppEvent} from '@util';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
 import {EVideoType} from '@constant';
+import reactotron from 'reactotron-react-native';
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
@@ -265,6 +271,7 @@ const Home = () => {
     try {
       GlobalService.showLoading();
       const res = await answerDailyQuiz(value);
+      reactotron.log?.('DATA HOME', res);
       dispatch(
         updateDataHome({
           ...data,
@@ -343,7 +350,7 @@ const Home = () => {
           </>
         )}
 
-        <View>
+        {/* <View>
           <ListPostComponent loading={loading} posts={data?.posts} />
 
           <TouchableOpacity
@@ -352,14 +359,14 @@ const Home = () => {
             <SvgMessages3 />
             <Text style={styles.titleButton}>{t('home.createPost')}</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {data?.dailyQuizz ? <ViewQuiz onAnswer={onAnswerQuiz} /> : null}
-
+        {/*
         <BannerTestQuiz />
 
-        <ChatGPTComponent />
-
+        <ChatGPTComponent /> */}
+        {/*
         <HorizontalList
           loading={loading}
           title={t('home.weeklyVideos')}
@@ -375,9 +382,9 @@ const Home = () => {
               key={video.id}
             />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           loading={loading}
           length={data?.rooms?.length}
           title={t('home.groupTalks')}
@@ -386,9 +393,9 @@ const Home = () => {
           {data?.rooms?.map((item: any, index: number) => (
             <ItemTalks item={item} index={index} key={index} />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           loading={loading}
           title={t('home.weeklyArticles')}
           length={data?.articles?.length}
@@ -402,9 +409,9 @@ const Home = () => {
               key={article.id}
             />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           loading={loading}
           title={t('home.podcasts')}
           styleHeader={{paddingHorizontal: scaler(20)}}
@@ -413,9 +420,9 @@ const Home = () => {
           {data?.podcast?.map((podcast: any, index: number) => (
             <PodcastItem podcast={podcast} key={podcast.id} />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           // IconSvg={<SvgBook />}
           loading={loading}
           title={t('home.masterClass')}
@@ -428,10 +435,11 @@ const Home = () => {
           {data?.masterClasses?.map((masterClass: IArticles) => (
             <ItemMasterClass masterClass={masterClass} key={masterClass.id} />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <DailyAffirmation quote={data?.quote} />
+        {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
+      <FLoatingAIButton />
     </View>
   );
 };

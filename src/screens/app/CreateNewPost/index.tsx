@@ -22,14 +22,22 @@ import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 
-const CreateNewPost = () => {
+const CreateNewPost = (props: {
+  route: {
+    params: {
+      message?: string;
+    };
+  };
+}) => {
+  const message = props?.route?.params?.message;
+
   const {t} = useTranslation();
   const navigation = useNavigation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [title, setTitle] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [content, setContent] = useState<any>('');
+  const [content, setContent] = useState<any>(message ?? '');
   const [visible, setVisible] = useState<boolean>(false);
   const [imageUrlApi, setImageUrlApi] = useState<any>(null);
   const [loading, setLoading] = useState<any>(false);
@@ -48,6 +56,7 @@ const CreateNewPost = () => {
         title: title,
         content: content,
         image: imageUrlApi,
+        is_anonymous: isAnonymous,
       };
       const res = await createPostApi(body);
       showMessage({

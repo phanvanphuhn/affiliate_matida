@@ -59,6 +59,7 @@ import {AppSocket, event, trackingAppEvent, useUXCam} from '@util';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
 import {ETypeUser} from '@constant';
+import reactotron from 'reactotron-react-native';
 
 const DetailNewFeed = (props: any) => {
   const navigation = useNavigation<any>();
@@ -71,6 +72,10 @@ const DetailNewFeed = (props: any) => {
   const detail = useSelector((state: any) => state?.post?.detailPost);
   const loading = useSelector((state: any) => state?.post?.loading);
   const week = useSelector((state: any) => state?.home?.week);
+
+  useEffect(() => {
+    reactotron.log?.('LIST COMMENT', listComment, detail, user);
+  }, [listComment]);
 
   const textInput = useRef<any>();
   const {route} = props;

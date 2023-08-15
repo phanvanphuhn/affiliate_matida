@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import {Header, PickerWeek} from '@component';
+import {FLoatingAIButton, Header, PickerWeek} from '@component';
 import {SvgArrowLeft} from '@images';
 import {colors, scaler} from '@stylesCommon';
 import {useTranslation} from 'react-i18next';
@@ -173,6 +173,7 @@ const TimeLine = () => {
           keyExtractor={(item: any) => item?.id}
         />
       </View>
+      <FLoatingAIButton />
     </View>
   );
 };

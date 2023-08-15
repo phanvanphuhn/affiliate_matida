@@ -9,6 +9,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {LikeView} from './LikeView';
 import {useTranslation} from 'react-i18next';
+import reactotron from 'reactotron-react-native';
 
 const ItemPost = React.memo((props: any) => {
   const {item, onDelete, onPressOption = () => {}} = props;
@@ -40,17 +41,20 @@ const ItemPost = React.memo((props: any) => {
           <View style={styles.viewRow}>
             {/* //Change according to api response  item?.isPrivate*/}
 
-            <AppImage
-              user
-              uri={item?.isPrivate ? undefined : item?.avatar}
-              style={styles.image}
-            />
+            <AppImage user uri={item?.avatar} style={styles.image} />
+
 
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
                 {/* //Change according to api response  item?.isPrivate*/}
-                {item?.isPrivate ? t('post.ano') : item?.name}
-                {user?.id === item?.user_id && ` (${t('post.me')})`}
+                {/* {item?.isPrivate ? t('post.ano') : item?.name}
+                {user?.id === item?.user_id && ` (${t('post.me')})`} */}
+                {user?.id === item?.user_id
+                  ? item?.is_anonymous
+                    ? ` ${t('post.me')} (${t('post.postedInAnonymus')})`
+                    : `${t('post.me')}`
+                  : item?.name}
+
               </Text>
               <Text style={styles.txtTime}>
                 {moment(item?.created_at).format('HH:mm DD/MM/YY')}

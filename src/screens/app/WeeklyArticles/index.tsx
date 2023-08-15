@@ -15,14 +15,19 @@ import {RefreshControl, ScrollView, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {styles} from './styles';
 import {trackingAppEvent, event, useUXCam} from '@util';
+import reactotron from 'reactotron-react-native';
 
-export const WeeklyArticles = () => {
+export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
   const navigation = useNavigation<any>();
+  const weekNotifi = route?.params?.week;
   const week =
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
-  const [weeks, setWeeks] = useState<number>(week < 0 ? 40 : week);
+  reactotron.log?.('WEEKLY ARTICLE', weekNotifi);
+  const [weeks, setWeeks] = useState<number>(
+    weekNotifi ? weekNotifi : week < 0 ? 40 : week,
+  );
   const [listArticles, setListArticles] = useState<any>([]);
   const [listPopular, setListPopular] = useState<any>([]);
   const [refreshing, setRefreshing] = useState<boolean>(true);
@@ -92,6 +97,7 @@ export const WeeklyArticles = () => {
       <PickerWeek
         customStyleContainer={styles.containerPicker}
         onSelect={(value: any) => setWeeks(value)}
+        weekNotifi={weekNotifi}
       />
       <View
         style={{
