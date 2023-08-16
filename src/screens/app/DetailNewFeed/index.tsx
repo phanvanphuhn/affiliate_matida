@@ -9,19 +9,19 @@ import {
   Option,
 } from '@component';
 import {
+  SvgArrowLeft,
+  SvgFlag,
+  SvgProhibit,
   avatarDefault,
   buttonSend,
   iconClose,
   iconReplyArr,
-  SvgArrowLeft,
-  SvgFlag,
-  SvgProhibit,
 } from '@images';
 import {
+  GlobalService,
   addCommentApi,
   blockUserApi,
   createReplyComment,
-  GlobalService,
 } from '@services';
 import {colors, scaler, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
@@ -45,6 +45,7 @@ import {Item} from './component/Item';
 import {ItemListComment} from './component/ItemListComment';
 import {styles} from './styles';
 
+import {ETypeUser} from '@constant';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {
   addCommentToList,
@@ -438,7 +439,7 @@ const DetailNewFeed = (props: any) => {
                         value={text}
                         placeholder={`${t('post.write_a_comment')}`}
                         placeholderTextColor={colors.textSmallColor}
-                        maxLength={225}
+                        maxLength={+user?.role === ETypeUser.USER ? 225 : 750}
                         textAlignVertical="center"
                         multiline
                       />

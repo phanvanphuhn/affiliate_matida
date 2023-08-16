@@ -1,4 +1,4 @@
-import {AppCameraModal2, AppImage, Header} from '@component';
+import {AppCameraModal2, AppCheckBox, AppImage, Header} from '@component';
 import {avatarDefault, imageUpload, SvgArrowLeft} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
@@ -22,13 +22,22 @@ import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
 
-const CreateNewPost = () => {
+const CreateNewPost = (props: {
+  route: {
+    params: {
+      message?: string;
+    };
+  };
+}) => {
+  const message = props?.route?.params?.message;
+
   const {t} = useTranslation();
   const navigation = useNavigation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState<any>('');
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [content, setContent] = useState<any>(message ?? '');
   const [visible, setVisible] = useState<boolean>(false);
   const [imageUrlApi, setImageUrlApi] = useState<any>(null);
   const [loading, setLoading] = useState<any>(false);
@@ -47,6 +56,7 @@ const CreateNewPost = () => {
         title: title,
         content: content,
         image: imageUrlApi,
+        is_anonymous: isAnonymous,
       };
       const res = await createPostApi(body);
       showMessage({
@@ -129,6 +139,18 @@ const CreateNewPost = () => {
             <Text style={styles.txtName} numberOfLines={2}>
               {user?.name}{' '}
             </Text>
+          </View>
+          <View
+            style={{
+              marginVertical: 10,
+            }}>
+            <AppCheckBox
+              active={isAnonymous}
+              // title="Post anonymously in forum"
+              title={t('post.anonymous')}
+              onPress={() => setIsAnonymous(!isAnonymous)}
+            />
+            {/* <Text>Post anonymously in forum</Text> */}
           </View>
           <TouchableOpacity
             style={styles.viewImage}

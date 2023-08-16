@@ -16,18 +16,17 @@ import {useTranslation} from 'react-i18next';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {DiscussionPost} from './components';
-
+import {StyleProp, ViewStyle} from 'react-native';
 type Props = {
   posts: any[];
   // callBackData: () => void;
   loading: boolean;
+  cardBorderStyle?: StyleProp<ViewStyle>;
 };
-
 export enum Option {
   REPORT,
   BLOCK,
 }
-
 export type IOption = {
   id: number;
   label: string;
@@ -35,12 +34,9 @@ export type IOption = {
   value: Option;
   icon: React.ReactNode;
 };
-
-export const ListPostComponent = ({posts, loading}: Props) => {
+export const ListPostComponent = ({posts, loading, cardBorderStyle}: Props) => {
   const dispatch = useDispatch();
-
   const week = useSelector((state: any) => state?.home?.week);
-
   const {t} = useTranslation();
   const [idDelete, setIdDelete] = useState(null);
   const [modalDelete, setModalDelete] = useState(false);
@@ -48,7 +44,6 @@ export const ListPostComponent = ({posts, loading}: Props) => {
   const [modalBlock, setModalBlock] = useState<any>(false);
   const [dataUser, setDataUser] = useState<any>(null);
   const refOption = useRef<any>(null);
-
   const listOption: IOption[] = [
     {
       id: 1,
@@ -65,7 +60,6 @@ export const ListPostComponent = ({posts, loading}: Props) => {
       icon: <SvgProhibit />,
     },
   ];
-
   const handleReportUser = () => {};
   const handleBlockUser = () => {
     refOption.current?.close();
@@ -73,24 +67,20 @@ export const ListPostComponent = ({posts, loading}: Props) => {
       setModalBlock(true);
     }, 500);
   };
-
   const deleteItem = (value: any) => {
     setIdDelete(value?.id);
     setModalDelete(true);
   };
-
   const handlePressOption = (idPost: any, dataUser: any) => {
     setIdPostSelect(idPost ?? 0);
     setDataUser(dataUser);
     refOption.current?.open();
   };
-
   const onConfirmDelete = async () => {
     setModalDelete(false);
     dispatch(deleteListUserPost(idDelete));
     callBackData();
   };
-
   const blockUser = async () => {
     try {
       GlobalService.showLoading();
@@ -106,11 +96,9 @@ export const ListPostComponent = ({posts, loading}: Props) => {
       GlobalService.hideLoading();
     }
   };
-
   const callBackData = () => {
     dispatch(getDataHomeByWeek({week: week}));
   };
-
   return (
     <>
       <HorizontalList
@@ -130,6 +118,7 @@ export const ListPostComponent = ({posts, loading}: Props) => {
             callBackData={callBackData}
             onDelete={() => deleteItem(post)}
             onPressOption={handlePressOption}
+            cardBorderStyle={cardBorderStyle}
             key={post.id}
           />
         ))}

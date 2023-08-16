@@ -1,10 +1,10 @@
 import {AppImage, AppTextUrl} from '@component';
 import {
+  SvgDotsThree,
   avatarDefault,
   iconClose,
   iconDelete,
   iconEdit,
-  SvgDotsThree,
 } from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
@@ -16,6 +16,7 @@ import ImageView from 'react-native-image-viewing';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import {LikeView} from './LikeView';
 
+import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
 type Props = {
@@ -29,6 +30,7 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const navigation = useNavigation<any>();
   const [modalImage, setModalImage] = useState(false);
+  const {t} = useTranslation();
 
   const viewImage = useCallback(() => {
     setModalImage(!modalImage);
@@ -57,12 +59,19 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
       <View style={styles.viewContent}>
         <View style={[styles.viewAvatar, {justifyContent: 'space-between'}]}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            {/* //Change according to api response  post?.isPrivate*/}
+
             <TouchableOpacity
               onPress={() => {
+                if (detail?.is_anonymous) {
+                  return;
+                }
                 navigation.navigate(ROUTE_NAME.DETAIL_USER, {
                   id: detail?.user?.id,
                 });
               }}>
+              {/* //Change according to api response  post?.isPrivate*/}
+
               {detail?.user?.avatar?.length > 0 ? (
                 <AppImage
                   user
@@ -76,7 +85,16 @@ const Item = React.memo(({onPressOption, onDelete}: Props) => {
             </TouchableOpacity>
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
-                {detail?.user?.name}
+                {/* {detail?.user?.name} */}
+
+                {/* //Change according to api response  post?.isPrivate*/}
+                {/* {detail?.isPrivate ? t('post.ano') : detail?.user?.name}
+                {user?.id === detail?.user_id && ` (${t('post.me')})`} */}
+                {user?.id === detail?.user_id
+                  ? detail?.is_anonymous
+                    ? ` ${t('post.me')} (${t('post.postedInAnonymus')})`
+                    : `${t('post.me')}`
+                  : detail?.user?.name}
               </Text>
               <Text style={styles.txtTime}>
                 {moment(detail?.created_at).format('HH:mm DD/MM/YY')}

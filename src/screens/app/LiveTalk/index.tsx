@@ -3,6 +3,7 @@ import {
   AppImage,
   ButtonCreateTalk,
   ExpertWorkshopsItem,
+  FLoatingAIButton,
   HorizontalList,
   MomsTalkItem,
 } from '@component';
@@ -261,6 +262,7 @@ const LiveTalk = () => {
         </ScrollView>
       </View>
       <ButtonCreateTalk />
+      <FLoatingAIButton />
     </View>
   );
 };

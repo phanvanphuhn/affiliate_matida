@@ -56,7 +56,7 @@ const ChooseDueDateScreen = () => {
       });
       dispatch(saveDataUser(res?.data?.user));
       // dispatch(changeStatusLogin(true));
-      navigate(ROUTE_NAME.ON_BOARDING);
+      navigate(ROUTE_NAME.SLIDE_INTRO);
     } catch (e) {
       showMessage({
         message: '',

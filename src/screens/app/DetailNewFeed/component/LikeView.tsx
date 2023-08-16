@@ -1,5 +1,5 @@
 import {SvgComment, SvgHeart, SvgHearted} from '@images';
-import {changeStatusLike} from '@redux';
+import {changeLikeForum, changeStatusLike} from '@redux';
 import {addLikePost, addUnLikePost} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {AppSocket} from '@util';
@@ -50,6 +50,14 @@ export const LikeView = (props: any) => {
           });
         }
         // dispatch(getDataHomeByWeek({week: week}));
+        console.log('is_liked: ', is_liked);
+        dispatch(
+          changeLikeForum({
+            isLike: !is_liked,
+            id: data?.id,
+            totalLike: is_liked ? +numberLike - 1 : +numberLike + 1,
+          }),
+        );
         dispatch(changeStatusLike({id: data?.id}));
       } catch (error) {
         if (is_liked) {

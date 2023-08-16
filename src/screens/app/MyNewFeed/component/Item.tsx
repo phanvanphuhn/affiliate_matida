@@ -1,17 +1,18 @@
-import {scaler, stylesCommon, colors, widthScreen} from '@stylesCommon';
-import React from 'react';
-import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
-import {LikeView} from './LikeView';
-import {useNavigation} from '@react-navigation/native';
-import {ROUTE_NAME} from '@routeName';
 import {AppImage} from '@component';
 import {avatarDefault, iconDelete, iconEdit} from '@images';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import moment from 'moment';
-import {convertLangMonth, valid} from '@util';
+import React from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {LikeView} from './LikeView';
 
 const Item = React.memo((props: any) => {
   const {item, index, onDelete, callBackData} = props;
   const navigation = useNavigation<any>();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const onNavigate = () => {
     navigation.navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id});
@@ -37,6 +38,13 @@ const Item = React.memo((props: any) => {
             )}
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>
+                {/* {user?.id === item?.user_id
+                  ? item?.is_anonymous
+                    ? ` ${t('post.me')}(${t('post.postedInAnonymus')})`
+                    : `${t('post.me')}`
+                  : item?.is_anonymous
+                  ? ` (${t('post.ano')})`
+                  : item?.name} */}
                 {item?.name}
               </Text>
               <Text style={styles.txtTime}>

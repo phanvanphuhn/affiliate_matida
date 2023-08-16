@@ -9,13 +9,16 @@ import {LikeViewComment} from './LikeViewComment';
 import {LikeViewReply} from './LikeViewReply';
 
 import {getDataReply} from '@redux';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const ItemListComment = React.memo((props: any) => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const {item, index, callBackSocket, onReply} = props;
   const [show, setShow] = useState(false);
+
+  const userInfo = useSelector((state: any) => state?.auth?.userInfo);
+  const detail = useSelector((state: any) => state?.post?.detailPost);
 
   let idComment = item?.id;
 
@@ -35,6 +38,9 @@ const ItemListComment = React.memo((props: any) => {
         <View style={styles.viewAvatar}>
           <TouchableOpacity
             onPress={() => {
+              if (detail?.is_anonymous) {
+                return;
+              }
               navigation.navigate(ROUTE_NAME.DETAIL_USER, {
                 id: item?.user?.id,
               });
@@ -71,6 +77,9 @@ const ItemListComment = React.memo((props: any) => {
                       style={[styles.viewAvatar, {marginTop: scaler(20)}]}>
                       <TouchableOpacity
                         onPress={() => {
+                          if (detail?.is_anonymous) {
+                            return;
+                          }
                           navigation.navigate(ROUTE_NAME.DETAIL_USER, {
                             id: item?.user?.id,
                           });

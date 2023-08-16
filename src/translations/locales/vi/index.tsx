@@ -137,7 +137,7 @@ export const vi = {
   },
   home: {
     talkAbout: 'Chia sẻ',
-    mom_and_baby: 'Mẹ & Bé',
+    mom_and_baby: 'Theo dõi thai kỳ',
     weeks: 'Tuần {{weeks}}',
     sizeComparison: {
       babySize: 'Kích thước',
@@ -320,6 +320,10 @@ export const vi = {
     titleIssue: 'Vấn đề là gì?',
     chooseReason: 'Chọn lý do',
     notData: 'Bài đăng không tồn tại hoặc người dùng đã xoá',
+    anonymous: 'Đăng bài chế độ ẩn danh',
+    ano: 'Ẩn danh',
+    me: 'Tôi',
+    postedInAnonymus: 'Đăng bài ẩn danh',
   },
   podcast: {
     headerList: 'Podcasts',
@@ -476,6 +480,7 @@ export const vi = {
     contentNote:
       'Tida AI là một sản phẩm trí tuệ nhân tạo. Thông tin chỉ mang tính chất tham khảo. Vui lòng liên hệ với bác sĩ của bạn để biết thông tin y khoa.',
     titleModalSuggest: 'Chọn câu hỏi để hỏi AI',
+    postForum: 'Hỏi bác sĩ',
   },
   modalEndCall: {
     title: 'Xác nhận đóng phòng',
@@ -572,7 +577,25 @@ export const vi = {
     },
     next: 'Tiếp theo',
   },
-  feed:{
-    search: 'Tìm kiếm'
-  }
+  slideIntro: {
+    title: [
+      'Matida chào bạn!',
+      'Theo dõi thai kỳ',
+      'Diễn đàn chia sẻ',
+      'Tida AI',
+      'Matida đồng hành cùng mẹ bầu',
+    ],
+    textBody: [
+      'Matida ở đây để hỗ trợ bạn có một thai kỳ hạnh phúc và khỏe mạnh.',
+      'Theo dõi sự phát triển của bé theo từng tuần',
+      'Chia sẻ, đặt câu hỏi để nhận được câu trả lời từ bác sĩ và các mẹ bầu khác',
+      'Trí tuệ nhân tạo giúp mẹ bầu giải đáp thắc mắc trong vài giây',
+      'Cảm ơn bạn đã chọn Matida đồng hành cùng mẹ theo dõi thai kỳ.',
+    ],
+    skip: 'Bỏ qua',
+    dashboard: 'Bắt đầu ngay',
+  },
+  feed: {
+    search: 'Tìm kiếm',
+  },
 };

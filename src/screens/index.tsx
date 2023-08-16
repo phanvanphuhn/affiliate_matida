@@ -6,6 +6,8 @@ import ChooseDueDateScreen from './auth/DueDate/ChooseDueDate';
 import CalculateDueDateScreen from './auth/DueDate/Calculate';
 import ResultDueDateScreen from './auth/DueDate/ResultDueDate';
 import {ProfileSettingsScreen} from './app/ProfileSettings';
+import {Onboarding} from './auth/Onboarding';
+import {SlideIntro} from './auth/SlideIntro';
 
 import {Home} from './app/Home';
 import {Explore} from './app/Explore';
@@ -52,7 +54,7 @@ import {MomPrepTest, TestDetail, TestResult} from './app/MomTest';
 import {ListRecord} from './app/ListRecord';
 import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
-import {Onboarding} from './auth/Onboarding';
+import {Forum} from './app/Forum';
 import Feed from './app/Feed'
 import SearchFeed from './app/Feed/components/SearchFeed';
 import DetailFeed from './app/DetailFeed';
@@ -113,6 +115,8 @@ const screens = {
   MasterClass,
   ListMasterClass,
   Onboarding,
+  SlideIntro,
+  Forum,
   Feed,
   DetailFeed,
   SearchFeed

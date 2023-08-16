@@ -19,7 +19,7 @@ import {changeWeekUser, updateTotalUnread, uploadListChat} from '@redux';
 import notifee, {EventType} from '@notifee/react-native';
 import appsFlyer from 'react-native-appsflyer';
 import DeviceInfo from 'react-native-device-info';
-import {ETypeRedirectBroadcast, EVideoType} from '@constant';
+import {ETypeRedirectBroadcast, EVideoType, OptionComparison} from '@constant';
 import {VERSION_APP} from './String';
 
 export enum NOTIFICATION {
@@ -367,7 +367,10 @@ function createAppNotification() {
     const {data} = message;
     store.dispatch(changeWeekUser(+data?.week));
     setTimeout(() => {
-      navigate(ROUTE_NAME.TIME_LINE);
+      // navigate(ROUTE_NAME.TIME_LINE);
+      navigate(ROUTE_NAME.SIZE_COMPARISON, {
+        option: OptionComparison.EMBRYO,
+      });
     }, 100);
   };
 

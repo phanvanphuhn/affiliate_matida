@@ -14,3 +14,4 @@ export * from './chatGPT';
 export * from './quiz';
 export * from './masterClass';
 export * from './pay';
+export * from './forum';

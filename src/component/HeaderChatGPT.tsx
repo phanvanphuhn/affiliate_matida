@@ -1,31 +1,20 @@
 import {DefaultTFuncReturn} from 'i18next';
-import React, {useState} from 'react';
+import React from 'react';
 import {
-  LayoutChangeEvent,
-  Platform,
+  Image,
   StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   ViewStyle,
-  Image,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {AppImage} from '@component';
 
 import {goBack} from '@navigation';
 
-import {
-  SvgArrowLeft,
-  avatarDefault,
-  iconThreedot,
-  iconMuteNoti,
-  iconChatGPT,
-  TidaAIWhite,
-} from '@images';
+import {SvgArrowLeft, TidaAIWhite} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {ROUTE_NAME} from '@routeName';
 import {useSelector} from 'react-redux';
 
 interface HeaderProps {

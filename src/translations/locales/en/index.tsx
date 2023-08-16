@@ -136,7 +136,7 @@ export const en = {
   },
   home: {
     talkAbout: 'What mothers discuss',
-    mom_and_baby: 'Baby & Mom',
+    mom_and_baby: 'Pregnancy Tracker',
     weeks: 'Week {{weeks}}',
     sizeComparison: {
       babySize: "Baby's size",
@@ -316,6 +316,10 @@ export const en = {
     titleIssue: 'What’s the issue?',
     chooseReason: 'Choose Reason',
     notData: 'The post does not exist or has been deleted by the user',
+    anonymous: 'Post anonymously in forum',
+    ano: 'Anonymous',
+    me: 'Me',
+    postedInAnonymus: 'Posted in Anonymous',
   },
   podcast: {
     headerList: 'Podcasts',
@@ -472,6 +476,7 @@ export const en = {
     contentNote:
       'Tida AI is an artificial intelligence product. Information is for reference purposes only. Please contact your doctor for medical information.',
     titleModalSuggest: 'Select question to ask AI',
+    postForum: 'Post in forum',
   },
   modalEndCall: {
     title: 'Closing Confirmation',
@@ -511,7 +516,7 @@ export const en = {
     cancel: 'Cancel',
     exit: 'Exit',
     tryMoreTest: 'Try another test',
-    noData: `You haven't taken any tests yet`,
+    noData: "You haven't taken any tests yet",
     seeMore: 'See more',
     doOtherTest: 'Try another test',
     noDataQuiz: 'There are no tests',
@@ -567,7 +572,25 @@ export const en = {
     },
     next: 'Next',
   },
-  feed:{
-    search: 'search'
-  }
+  slideIntro: {
+    title: [
+      'Welcome!',
+      'Baby tracker',
+      'Forum',
+      'Tida AI',
+      'Thank you for signing up!',
+    ],
+    textBody: [
+      'Matida is here to support you to have a happy and healthy pregnancy',
+      'Follow your baby’s development week by week',
+      'Connect with other moms and share experiences',
+      'Ask questions and receive answers in seconds',
+      'We are so happy to have you.\nAlways remember, you are not alone.',
+    ],
+    skip: 'Skip',
+    dashboard: 'Start exploring',
+  },
+  feed: {
+    search: 'search',
+  },
 };

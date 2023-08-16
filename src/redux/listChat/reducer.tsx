@@ -1,5 +1,4 @@
 import {produce} from 'immer';
-import {ChatState} from '../chat';
 import {INITIAL_LIST_CHAT, ListChatState} from './state';
 import {typeListChat} from './type';
 

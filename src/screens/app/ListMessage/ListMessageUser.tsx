@@ -61,11 +61,9 @@ export const ListMessageUser = () => {
   const onRefresh = () => {
     refPage.current = 1;
     getData();
-    // dispatch(getSearch(''));
   };
 
   const handleLoadMore = () => {
-    console.log('handleLoadMore');
     if (dataUser?.length < total && refLoadMore.current) {
       setLoadMore(true);
       getData();

@@ -9,13 +9,14 @@ const MARGIN_HORIZONTAL = scaler(6);
 
 const PickerWeek = React.memo((props: any) => {
   const flatList: any = useRef(null);
-  const {customStyleContainer, onSelect} = props;
+  const {customStyleContainer, onSelect, weekNotifi} = props;
   const data = convertArrayScroll();
   const colorSelect = '#E66D6E';
-  const week =
+  const weekPregnant =
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
+  const week = weekNotifi ? weekNotifi : weekPregnant ?? 40;
 
   const [select, setSelect] = useState<any>(null);
 

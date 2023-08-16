@@ -6,14 +6,11 @@ import {
   RefreshControl,
   ScrollView,
   StatusBar,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AppHeader, HorizontalList, NewArticles} from '@component';
-import {navigate} from '@navigation';
+import {AppHeader, FLoatingAIButton} from '@component';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {
   clearDataChat,
@@ -32,38 +29,29 @@ import {
 } from '@services';
 import {scaler} from '@stylesCommon';
 import {
-  BannerTestQuiz,
-  ChatGPTComponent,
-  DailyAffirmation,
-  ItemMasterClass,
-  ItemTalks,
-  PodcastItem,
   PregnancyProgress,
   SizeComparisonComponent,
   ViewQuiz,
   WeeksPregnant,
-  WeekVideo,
 } from './components';
 import {styles} from './styles';
 import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
 
-import {imageBackgroundOpacity, SvgMessages3} from '@images';
+import {imageBackgroundOpacity} from '@images';
 import {
+  APP_SIGN_ZEGO_KEY,
   APPID_ZEGO_KEY,
   AppNotification,
-  APP_SIGN_ZEGO_KEY,
   handleDeepLink,
   useUXCam,
 } from '@util';
-import {t} from 'i18next';
-import {ListPostComponent} from './ListPostComponent';
 //@ts-ignore
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {event, trackingAppEvent} from '@util';
 //@ts-ignore
+import {EVideoType} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
-import {EVideoType} from '@constant';
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
@@ -343,7 +331,7 @@ const Home = () => {
           </>
         )}
 
-        <View>
+        {/* <View>
           <ListPostComponent loading={loading} posts={data?.posts} />
 
           <TouchableOpacity
@@ -352,14 +340,14 @@ const Home = () => {
             <SvgMessages3 />
             <Text style={styles.titleButton}>{t('home.createPost')}</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         {data?.dailyQuizz ? <ViewQuiz onAnswer={onAnswerQuiz} /> : null}
-
+        {/*
         <BannerTestQuiz />
 
-        <ChatGPTComponent />
-
+        <ChatGPTComponent /> */}
+        {/*
         <HorizontalList
           loading={loading}
           title={t('home.weeklyVideos')}
@@ -375,9 +363,9 @@ const Home = () => {
               key={video.id}
             />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           loading={loading}
           length={data?.rooms?.length}
           title={t('home.groupTalks')}
@@ -386,9 +374,9 @@ const Home = () => {
           {data?.rooms?.map((item: any, index: number) => (
             <ItemTalks item={item} index={index} key={index} />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           loading={loading}
           title={t('home.weeklyArticles')}
           length={data?.articles?.length}
@@ -402,9 +390,9 @@ const Home = () => {
               key={article.id}
             />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           loading={loading}
           title={t('home.podcasts')}
           styleHeader={{paddingHorizontal: scaler(20)}}
@@ -413,9 +401,9 @@ const Home = () => {
           {data?.podcast?.map((podcast: any, index: number) => (
             <PodcastItem podcast={podcast} key={podcast.id} />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <HorizontalList
+        {/* <HorizontalList
           // IconSvg={<SvgBook />}
           loading={loading}
           title={t('home.masterClass')}
@@ -428,10 +416,11 @@ const Home = () => {
           {data?.masterClasses?.map((masterClass: IArticles) => (
             <ItemMasterClass masterClass={masterClass} key={masterClass.id} />
           ))}
-        </HorizontalList>
+        </HorizontalList> */}
 
-        <DailyAffirmation quote={data?.quote} />
+        {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
+      <FLoatingAIButton />
     </View>
   );
 };

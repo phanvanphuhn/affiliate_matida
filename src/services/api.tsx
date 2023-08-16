@@ -56,18 +56,18 @@ api.interceptors.response.use(
   function (error) {
     const {errors} = error?.response?.data;
     if (error?.response?.status == 401 || error?.response?.data?.code === 401) {
-      showMessage({
-        message: errors ? errors?.toString() : 'Network Error',
-        type: 'danger',
-      });
+      // showMessage({
+      //   message: errors ? errors?.toString() : 'Network Error',
+      //   type: 'danger',
+      // });
       store.dispatch(logOut());
     } else {
-      showMessage({
-        message: errors ? errors?.toString() : 'Network Error',
-        type: 'default',
-        backgroundColor: colors.error_message,
-        color: '#FFFFFF',
-      });
+      // showMessage({
+      //   message: errors ? errors?.toString() : 'Network Error',
+      //   type: 'default',
+      //   backgroundColor: colors.error_message,
+      //   color: '#FFFFFF',
+      // });
     }
 
     //Hàm log trả về error (Có thể bật và tắt trong file logger)

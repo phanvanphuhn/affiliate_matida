@@ -289,6 +289,14 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.ON_BOARDING}
             component={screens.Onboarding}
           />
+
+          <Stack.Screen
+            name={ROUTE_NAME.SLIDE_INTRO}
+            component={screens.SlideIntro}
+            options={{
+              gestureEnabled: false,
+            }}
+          />
         </Stack.Navigator>
       );
     }

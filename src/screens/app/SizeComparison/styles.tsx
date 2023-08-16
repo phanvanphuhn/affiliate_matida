@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { scaler, colors, stylesCommon } from '@stylesCommon';
-
+import {StyleSheet} from 'react-native';
+import {scaler, colors, stylesCommon} from '@stylesCommon';
 const styles = StyleSheet.create({
   container: {
     ...stylesCommon.viewContainer,
@@ -17,15 +16,20 @@ const styles = StyleSheet.create({
     height: scaler(48),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: scaler(8)
+    borderRadius: scaler(8),
+    borderWidth: 1,
+    borderColor: '#F5F5F5',
   },
   titleButton: {
     fontSize: scaler(14),
     ...stylesCommon.fontWeight600,
     lineHeight: scaler(21),
     color: colors.primary,
-    marginLeft: scaler(11)
-  }
+    marginLeft: scaler(11),
+  },
+  viewLoadmore: {
+    alignItems: 'center',
+    marginBottom: scaler(8),
+  },
 });
-
-export { styles };
+export {styles};
