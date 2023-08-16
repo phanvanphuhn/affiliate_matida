@@ -1,4 +1,4 @@
-import {imageNameApp, imageNameAppBlack, SvgSearch} from '@images';
+import {SvgSearch, imageNameApp, imageNameAppPick} from '@images';
 import React, {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
@@ -142,7 +142,7 @@ export const AppHeader = ({
       <TouchableOpacity onPress={onPressLogo} activeOpacity={0.9}>
         {/* <Text style={styles.textLogo}>Matida</Text> */}
         <Image
-          source={bgc ? imageNameAppBlack : imageNameApp}
+          source={bgc ? imageNameAppPick : imageNameApp}
           style={styles.imageNameApp}
         />
       </TouchableOpacity>
