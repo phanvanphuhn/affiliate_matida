@@ -25,6 +25,7 @@ import SliderFeed from './components/SliderFeed';
 import Container from './components/Container';
 import ItemPurchase from './components/ItemPurchase';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import QuizFeed from './components/QuizFeed';
 interface DetailFeedProps {}
 const previewCount = 3;
 //to center items
@@ -54,6 +55,8 @@ const DetailFeed = (props: DetailFeedProps) => {
             isAudio={item.content_type == 'podcast'}
           />
         );
+      case 'daily_quizz':
+        return <QuizFeed item={item} isFocused={state.currentIndex == index} />;
       default:
         return (
           <ItemArticle item={item} isFocused={state.currentIndex == index} />
@@ -63,22 +66,7 @@ const DetailFeed = (props: DetailFeedProps) => {
 
   const onPageHandler = (event: NativeSyntheticEvent<any>) => {
     const currentPage = event.nativeEvent.position;
-    console.log('=>(index.tsx:54) currentPage', currentPage);
-    const reachedFakeLastSlide = currentPage === 0;
-    const reachedFakeFirstSlide = currentPage === state.data.length - 1;
-
-    // if (reachedFakeFirstSlide) {
-    //   pagerViewRef.current?.setPageWithoutAnimation(1);
-    // } else if (reachedFakeLastSlide) {
-    //   pagerViewRef.current?.setPageWithoutAnimation(state.data.length - 2);
-    // } else {
     onPageSelected(currentPage);
-    // }
-    console.log(
-      '=>(index.tsx:52) event.nativeEvent.position',
-      event.nativeEvent.position,
-    );
-    console.log('=>(index.tsx:53) state?.data.length', state?.data.length);
   };
   const renderDrawer = () => {
     return <DrawerFeed />;
@@ -89,34 +77,6 @@ const DetailFeed = (props: DetailFeedProps) => {
   const onPressSearch = () => {
     navigation.navigate(ROUTE_NAME.SEARCH_FEED);
   };
-  const onScrollEnd = e => {
-    let pageNumber = Math.min(
-      Math.max(
-        Math.floor(e.nativeEvent.contentOffset.y / (heightScreen - 65) + 0.5),
-        0,
-      ),
-      state.data?.length,
-    );
-    onPageSelected(pageNumber);
-  };
-  const route = useRoute<any>();
-  const getItemLayout = (data: ID, index) => ({
-    length: heightScreen - 65,
-    offset: (heightScreen - 65) * index,
-    index,
-  });
-  const insets = useSafeAreaInsets();
-  // useEffect(() => {
-  //   if (pagerViewRef.current) {
-  //     console.log('=>(index.tsx:95) route.params?.index', route.params?.index);
-  //     pagerViewRef.current?.scrollToIndex({
-  //       animated: true,
-  //       index: route.params?.index,
-  //     });
-  //   }
-  // }, [route.params?.currentPage, route.params?.index]);
-  const keyExtractor = (item: IDataListFeed, index: number) =>
-    index?.toString();
   return (
     <Drawer
       drawerType={'front'}
@@ -140,13 +100,16 @@ const DetailFeed = (props: DetailFeedProps) => {
         />
         {!!state?.data.length && (
           <PagerView
+            key={state?.data.length}
             initialPage={state.currentIndex}
             orientation={'vertical'}
             style={[styles.pagerView]}
             onPageSelected={onPageHandler}
             ref={pagerViewRef}>
             {state?.data?.map((item, index) => (
-              <View style={[styles.pagerView]} key={index}>
+              <View
+                style={[styles.pagerView]}
+                key={item?.content_type + item?.id}>
                 {!item.is_payment
                   ? renderItem(item, index)
                   : renderPurchase(item, index)}

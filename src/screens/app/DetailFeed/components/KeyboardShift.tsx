@@ -66,7 +66,7 @@ export default function KeyboardShift(props: Props) {
           style={[
             styles.containerInput,
             {
-              paddingBottom: insets.bottom,
+              paddingBottom: 20,
             },
           ]}>
           <Image

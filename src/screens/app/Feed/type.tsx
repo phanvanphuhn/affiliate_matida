@@ -1,6 +1,6 @@
 export type IDataListFeed = {
   audio?: string;
-  content_type: 'podcast' | 'article' | 'video';
+  content_type: 'podcast' | 'article' | 'video' | 'daily_quizz';
   contentid: string;
   created_at: string;
   desc: string;
@@ -39,4 +39,25 @@ export type IDataListFeed = {
   mood: string;
   podcast: string;
   week: string;
+
+  /**
+   * content_type: "daily_quizz"
+   */
+  answers: IAnswers[];
+  date_show: string;
+  is_passed: number;
+  package_id?: string;
+  question_en: string;
+  question_vi: string;
+  type: number;
 };
+
+export interface IAnswers {
+  answer_en: string;
+  answer_vi: string;
+  created_at: string;
+  id: number;
+  is_correct: boolean;
+  question_id: number;
+  updated_at: string;
+}

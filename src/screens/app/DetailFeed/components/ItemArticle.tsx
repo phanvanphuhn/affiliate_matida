@@ -11,9 +11,7 @@ interface ItemArticleProps {
   item: IDataListFeed;
   isFocused: boolean;
 }
-const duration = 10000;
 const ItemArticle = (props: ItemArticleProps) => {
-  console.log('=>(ItemArticle.tsx:47) props', props);
   const {setState} = useVideo();
   useEffect(() => {
     if (props.isFocused) {

@@ -24,7 +24,7 @@ const ListFeed = (props: any) => {
   const onDetailClick = (index: number) => {
     navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
       index,
-      currentPage: Math.ceil((index + 1) / 11),
+      currentPage: Math.ceil((index + 1) / 10),
     });
   };
   const getTotalView = (item: IDataListFeed) => {

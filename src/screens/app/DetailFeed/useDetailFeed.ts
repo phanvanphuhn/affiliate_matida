@@ -19,8 +19,8 @@ import {indexOf} from 'lodash';
 const useDetailFeed = () => {
   const route = useRoute<any>();
   const getIndex = useCallback(() => {
-    return route.params?.index >= 11
-      ? route.params?.index - (route.params?.currentPage - 1) * 11
+    return route.params?.index >= 10
+      ? route.params?.index - (route.params?.currentPage - 1) * 10
       : route.params?.index;
   }, [route.params?.index]);
   const [state, setState] = useReducer(
@@ -43,27 +43,20 @@ const useDetailFeed = () => {
       ...preState,
     }),
   );
+  console.log('=>(useDetailFeed.ts:46) s.state', state);
 
   const getListVideo = async () => {
     try {
       const res = await getListFeedApi(state.page, state.size);
       if (res.success) {
-        let data = res?.data;
-        // ?.map(e => e.id)
-        // ?.filter((item, index, arr) => arr.indexOf(item))
-        // .map(item => {
-        //   return res?.data.find(e => e.id == item);
-        // });
-        // const firstSlide = data[0];
-        // const lastSlide = data[data.length - 1];
-        // const loopingSlides = [lastSlide, ...data, firstSlide];
+        let data = res?.data?.feeds;
+        setState({total: res.data?.total});
         handlerData(data);
       }
       setState({isLoadMore: false});
     } catch (error: any) {}
   };
   const handlerData = (arr: IDataListFeed[]) => {
-    console.log('=>(useDetailFeed.ts:62) arr', arr);
     if (arr?.length == 0) {
       if (state.page == 1 && route.params?.currentPage == 1) {
         setState({data: []});
@@ -86,29 +79,27 @@ const useDetailFeed = () => {
   };
 
   const handleLoadMore = () => {
-    console.log('=>(useDetailFeed.ts:58)handleLoadMore state.page', state.page);
-    console.log(
-      '=>(useDetailFeed.ts:59)handleLoadMore state.currentIndex',
-      state.currentIndex,
-    );
-    if (state.page * (state.size + 1) <= state.data.length) {
+    if (state.page * state.size <= state.total) {
       setState({page: state.page + 1, isLoadMore: true});
     }
   };
   const handleLoadLess = () => {
-    console.log('=>(useDetailFeed.ts:58)handleLoadMore state.page', state.page);
-    console.log(
-      '=>(useDetailFeed.ts:59)handleLoadMore state.currentIndex',
-      state.currentIndex,
-    );
     if (route.params?.currentPage > 1 && state.page > 1) {
-      setState({page: state.page - 1, isLoadMore: false});
+      setState({
+        page: state.page - 1,
+        isLoadMore: false,
+        currentIndex:
+          (route.params?.currentPage - (state.currentIndex + 1)) * state.size,
+      });
     }
   };
   const onPageSelected = (pageNumber: number) => {
     console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
-    const firstSlide = pageNumber === 0;
-    const lastSlide = pageNumber === state.data.length - 2;
+    const firstSlide = pageNumber >= 0 && pageNumber <= 1;
+    console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
+    const lastSlide =
+      pageNumber >= state.data.length - 2 && pageNumber < state.data.length;
+    console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
     if (firstSlide) {
       handleLoadLess();
     } else if (lastSlide) {
@@ -120,7 +111,6 @@ const useDetailFeed = () => {
     }
   };
   useEffect(() => {
-    console.log('=>(useDetailFeed.ts:88) state.page', state.page);
     getListVideo();
   }, [state.page]);
   return {state, onPageSelected, setState, handleLoadMore};
