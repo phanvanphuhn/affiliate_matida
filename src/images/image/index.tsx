@@ -10,6 +10,7 @@ const iconReplyArr = require('./iconReply.png');
 const imageModalConfirmProfile = require('./imageModalConfirmProfile.png');
 const imageNameApp = require('./NameApp.png');
 const imageNameAppBlack = require('./NameAppBlack.png');
+const imageNameAppPick = require('./NameAppPink.png');
 const imageBackgroundOpacity = require('./backgroundOpacity.png');
 const iconNext = require('./ImageIconArrowRight.png');
 const avatarSpeaker = require('./avatarSpeaker.png');
@@ -54,14 +55,8 @@ const ic_purchase = require('./ic_purchase.png');
 const ic_send = require('./ic_send.png');
 
 export {
-  LogoApp,
   IconBackgroundImageHome,
-  slideIntro1,
-  slideIntro2,
-  slideIntro3,
-  slideIntro4,
-  slideIntro5,
-  slideIntro5en,
+  LogoApp,
   TidaAI,
   TidaAIWhite,
   avatarDefault,
@@ -72,7 +67,9 @@ export {
   ic_comment,
   ic_heart,
   ic_menu,
+  ic_purchase,
   ic_search,
+  ic_send,
   ic_share,
   ic_star,
   iconDelete,
@@ -101,11 +98,16 @@ export {
   imageModalConfirmProfile,
   imageNameApp,
   imageNameAppBlack,
+  imageNameAppPick,
   imageUpload,
   isStockPhoto,
   lightQuiz,
   liveTalkBackground,
   noResults,
-  ic_purchase,
-  ic_send,
+  slideIntro1,
+  slideIntro2,
+  slideIntro3,
+  slideIntro4,
+  slideIntro5,
+  slideIntro5en,
 };

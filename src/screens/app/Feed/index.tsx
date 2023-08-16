@@ -5,8 +5,6 @@ import {colors} from '@stylesCommon';
 import React, {useRef} from 'react';
 import {FlatList, View} from 'react-native';
 import ListFeed from './components/ListFeed';
-import {IDataListFeed} from './type';
-import useDetailFeed from '../DetailFeed/useDetailFeed';
 
 const Feed = () => {
   const navigation = useNavigation<any>();
