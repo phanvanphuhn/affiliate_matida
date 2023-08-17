@@ -1,25 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
-  ic_comment,
-  ic_heart,
-  ic_menu,
-  ic_share,
-  ic_star,
   SvgHeart,
   SvgHearted,
   SvgStar,
+  ic_comment,
+  ic_menu,
+  ic_share,
 } from '@images';
-import {useVideo} from './Container';
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
-import Extrapolate = module;
+import {navigate} from '@navigation';
+import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
+import React from 'react';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {useVideo} from './Container';
+import Extrapolate = module;
 
 interface FooterFeedProps {}
 
@@ -44,6 +37,9 @@ const FooterFeed = (props: FooterFeedProps) => {
   const onShare = () => {
     console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
+  const onMenu = () => {
+    navigate(ROUTE_NAME.MOM_PREP_TEST);
+  };
   return (
     <View style={[styles.containerFooter]}>
       <TouchableOpacity onPress={onHearth} style={styles.buttonFooter}>
@@ -62,7 +58,7 @@ const FooterFeed = (props: FooterFeedProps) => {
       <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
         <Image source={ic_share} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonFooter}>
+      <TouchableOpacity style={styles.buttonFooter} onPress={onMenu}>
         <Image source={ic_menu} />
       </TouchableOpacity>
     </View>

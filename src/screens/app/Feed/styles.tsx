@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
     borderRadius: scaler(12),
   },
   tagTitle: {
-    color: colors.brandMainPinkRed,
-    fontSize: scaler(12),
-    ...stylesCommon.fontWeight400,
+    color: colors.red50,
+    fontSize: scaler(10),
+    ...stylesCommon.fontWeight600,
   },
   leftDescription: {
     flexDirection: 'row',
