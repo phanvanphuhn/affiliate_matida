@@ -13,10 +13,10 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import {useSelector} from 'react-redux';
 import useDetailFeed from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
-import { useSelector } from 'react-redux';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
@@ -65,17 +65,21 @@ const ListFeed = (props: any) => {
         onPress={() => onDetailClick(index)}
         style={styles.itemContainer}>
         <View>
-          <FastImage
-            source={{uri: getThumbnail(item)}}
-            style={styles.image}
-            resizeMode="contain"
-          />
+          <View style={styles.tag}>
+            <Text style={styles.tagTitle}>
+              {item.content_type?.replace(
+                /^./,
+                item.content_type[0]?.toUpperCase(),
+              )}
+            </Text>
+          </View>
+          <FastImage source={{uri: getThumbnail(item)}} style={styles.image} />
           {(item.content_type == 'video' || item.content_type == 'podcast') && (
             <View style={styles.leftDescription}>
               <Image source={iconClock} />
 
               <Text style={styles.description} numberOfLines={1}>
-                {item.duration} {t('feed.min')}
+                {item.duration ? item.duration : '0'} {t('feed.min')}
               </Text>
             </View>
           )}
@@ -132,6 +136,7 @@ const ListFeed = (props: any) => {
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.4}
         showsVerticalScrollIndicator={false}
+        columnWrapperStyle={{justifyContent: 'space-between'}}
       />
     </View>
   );
