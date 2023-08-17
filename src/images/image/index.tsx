@@ -10,7 +10,7 @@ const iconReplyArr = require('./iconReply.png');
 const imageModalConfirmProfile = require('./imageModalConfirmProfile.png');
 const imageNameApp = require('./NameApp.png');
 const imageNameAppBlack = require('./NameAppBlack.png');
-const imageNameAppPick = require('./NameAppPink.png');
+const imageNameAppPink = require('./NameAppPink.png');
 const imageBackgroundOpacity = require('./backgroundOpacity.png');
 const iconNext = require('./ImageIconArrowRight.png');
 const avatarSpeaker = require('./avatarSpeaker.png');
@@ -60,8 +60,6 @@ export {
   TidaAI,
   TidaAIWhite,
   avatarDefault,
-  isStockPhoto,
-  noResults,
   buttonSend,
   ic_back,
   ic_comment,
@@ -98,7 +96,7 @@ export {
   imageModalConfirmProfile,
   imageNameApp,
   imageNameAppBlack,
-  imageNameAppPick,
+  imageNameAppPink,
   imageUpload,
   isStockPhoto,
   lightQuiz,

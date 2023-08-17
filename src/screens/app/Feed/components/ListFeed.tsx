@@ -1,6 +1,9 @@
-import {SvgEye, iconClock} from '@images';
+import {SvgEye, iconClock, imageNameAppPink} from '@images';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   FlatList,
   Image,
@@ -10,14 +13,14 @@ import {
   View,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import useDetailFeed from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
-import {ROUTE_NAME} from '@routeName';
-import {useNavigation} from '@react-navigation/native';
-import useDetailFeed from '../../DetailFeed/useDetailFeed';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const ListFeed = (props: any) => {
+  const {t} = useTranslation();
+
   const {state, onPageSelected, handleLoadMore, handleLoadLess} =
     useDetailFeed();
   const navigation = useNavigation<any>();
@@ -62,13 +65,17 @@ const ListFeed = (props: any) => {
         onPress={() => onDetailClick(index)}
         style={styles.itemContainer}>
         <View>
-          <FastImage source={{uri: getThumbnail(item)}} style={styles.image} />
+          <FastImage
+            source={{uri: getThumbnail(item)}}
+            style={styles.image}
+            resizeMode="contain"
+          />
           {(item.content_type == 'video' || item.content_type == 'podcast') && (
             <View style={styles.leftDescription}>
               <Image source={iconClock} />
 
               <Text style={styles.description} numberOfLines={1}>
-                {item.duration} mins watch
+                {item.duration} {t('feed.min')}
               </Text>
             </View>
           )}
@@ -86,7 +93,7 @@ const ListFeed = (props: any) => {
             <SvgEye stroke={colors.borderColor} />
 
             <Text style={styles.description} numberOfLines={1}>
-              {getTotalView(item)} views
+              {getTotalView(item)} {t('feed.views')}
             </Text>
           </View>
         </View>
@@ -98,12 +105,16 @@ const ListFeed = (props: any) => {
             : item.title}
         </Text>
         <View style={styles.wrapAvatarContainer}>
-          <FastImage source={{uri: item.image}} style={styles.imageAvatar} />
+          <FastImage
+            source={item.image ? {uri: item.image} : imageNameAppPink}
+            style={styles.imageAvatar}
+            resizeMode="contain"
+          />
 
           <Text style={styles.subTitle}>
-            Coach by{' '}
+            {t('feed.by')}{' '}
             <Text style={{color: colors.success_message}}>
-              {item.speaker_name}
+              {item.speaker_name ? item.speaker_name : 'Matida'}
             </Text>
           </Text>
         </View>

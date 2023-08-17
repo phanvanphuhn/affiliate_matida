@@ -1,33 +1,20 @@
-import React, {ReactNode, useCallback, useState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  NativeSyntheticEvent,
-  ActivityIndicator,
-  Image,
-} from 'react-native';
-import {colors, heightScreen, scaler, widthScreen} from '@stylesCommon';
-import {IDataListFeed} from '../../Feed/type';
+import {colors, heightScreen, scaler} from '@stylesCommon';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import RenderHtml from 'react-native-render-html';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {IDataListFeed} from '../../Feed/type';
 import {useVideo} from './Container';
-import Description from './Description';
-import RenderHtml, {
-  CustomBlockRenderer,
-  IMGElementContainer,
-  IMGElementContentError,
-  TNodeChildrenRenderer,
-  useIMGElementProps,
-  useIMGElementState,
-} from 'react-native-render-html';
-import clip from './clip';
 import CustomImageRenderer from './CustomImageRenderer';
+import clip from './clip';
 
 interface TitleFeedProps {
   item: IDataListFeed;
 }
 const TitleFeed = (props: TitleFeedProps) => {
+  const {t} = useTranslation();
+
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const insets = useSafeAreaInsets();
@@ -102,7 +89,7 @@ const TitleFeed = (props: TitleFeedProps) => {
       </View>
       {getDescription(150)?.length < getFullDescription()?.length ? (
         <Text onPress={toggleNumberOfLines} style={styles.showMore}>
-          {textShown ? 'See less' : 'See more'}
+          {textShown ? t('feed.seeLess') : t('feed.seeMore')}
         </Text>
       ) : null}
     </View>

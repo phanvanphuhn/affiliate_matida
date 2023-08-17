@@ -592,5 +592,12 @@ export const en = {
   },
   feed: {
     search: 'search',
+    seeMore: 'See more',
+    seeLess: 'See less',
+    by: 'by',
+    min: 'mins watch',
+    view: 'views',
+    like: 'Like',
+    comment: 'Comment',
   },
 };

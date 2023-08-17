@@ -597,5 +597,12 @@ export const vi = {
   },
   feed: {
     search: 'Tìm kiếm',
+    seeMore: 'Xem thêm',
+    seeLess: 'Thu gọn',
+    by: 'bởi',
+    min: 'phút',
+    views: 'lượt xem',
+    like: 'Lượt thích',
+    comment: 'Bình luận',
   },
 };

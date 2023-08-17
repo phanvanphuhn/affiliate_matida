@@ -1,28 +1,25 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  ListRenderItem,
-  Image,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
-import {colors, heightScreen} from '@stylesCommon';
-import {IDataComment} from '../types';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ic_comment, ic_send, iconClose} from '@images';
-import useDetailFeed from '../useDetailFeed';
-import {useVideo} from './Container';
-import KeyboardShift from './KeyboardShift';
-import {useKeyboard} from '@react-native-community/hooks';
 import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import {iconClose} from '@images';
+import {useKeyboard} from '@react-native-community/hooks';
+import {colors} from '@stylesCommon';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {
+  Image,
+  ListRenderItem,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {IDataComment} from '../types';
+import {useVideo} from './Container';
 interface CommentProps {}
 
 const CommentFeed = (props: CommentProps) => {
+  const {t} = useTranslation();
+
   const [dataComment, setDataComment] = useState<IDataComment[]>();
   const insets = useSafeAreaInsets();
   const {state, setState} = useVideo();
@@ -142,10 +139,10 @@ const CommentFeed = (props: CommentProps) => {
                 color: '#585858',
                 paddingRight: 20,
               }}>
-              {item.likeCount} Like
+              {item.likeCount} {t('feed.like')}
             </Text>
             <Text style={{fontWeight: '400', fontSize: 12, color: '#585858'}}>
-              {item.commentCount} Comment
+              {item.commentCount} {t('feed.comment')}
             </Text>
           </View>
         </View>
@@ -174,7 +171,7 @@ const CommentFeed = (props: CommentProps) => {
             paddingBottom: 10,
           }}>
           <View style={{width: 50}} />
-          <Text style={{fontWeight: '600'}}>111 Bình luận</Text>
+          <Text style={{fontWeight: '600'}}>111 {t('feed.comment')}</Text>
           <TouchableOpacity
             onPress={onCloseComment}
             style={{paddingHorizontal: 15}}>
