@@ -18,11 +18,11 @@ import {indexOf} from 'lodash';
 
 const useDetailFeed = () => {
   const route = useRoute<any>();
-  const getIndex = useCallback(() => {
-    return route.params?.index >= 10
-      ? route.params?.index - (route.params?.currentPage - 1) * 10
+  const getIndex = (size: number) => {
+    return route.params?.index >= (size || 10)
+      ? route.params?.index - (route.params?.currentPage - 1) * (size || 10)
       : route.params?.index;
-  }, [route.params?.index]);
+  };
   const [state, setState] = useReducer(
     (preState: IStateVideo, newState: Partial<IStateVideo>) => ({
       ...preState,
@@ -33,7 +33,7 @@ const useDetailFeed = () => {
       page: route.params?.currentPage || 1,
       size: 10,
       total: 0,
-      currentIndex: getIndex() || 0,
+      currentIndex: getIndex(10) || 0,
       refreshing: false,
       isOpen: false,
       isLoading: false,
@@ -80,30 +80,34 @@ const useDetailFeed = () => {
 
   const handleLoadMore = () => {
     if (state.page * state.size <= state.total) {
-      setState({page: state.page + 1, isLoadMore: true});
+      setState({
+        page: state.page + 1,
+        isLoadMore: true,
+      });
     }
   };
-  const handleLoadLess = () => {
+  const handleLoadLess = (pageNumber: number) => {
     if (route.params?.currentPage > 1 && state.page > 1) {
       setState({
         page: state.page - 1,
         isLoadMore: false,
-        currentIndex:
-          (route.params?.currentPage - (state.currentIndex + 1)) * state.size,
+        currentIndex: (pageNumber ?? state.currentIndex) + state.size,
       });
     }
   };
   const onPageSelected = (pageNumber: number) => {
     console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
-    const firstSlide = pageNumber >= 0 && pageNumber <= 1;
+    const firstSlide = pageNumber == 0;
     console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
-    const lastSlide =
-      pageNumber >= state.data.length - 2 && pageNumber < state.data.length;
+    const lastSlide = pageNumber == state.data.length - 1;
     console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
     if (firstSlide) {
-      handleLoadLess();
+      handleLoadLess(pageNumber);
     } else if (lastSlide) {
       handleLoadMore();
+      setState({
+        currentIndex: pageNumber,
+      });
     } else {
       setState({
         currentIndex: pageNumber,

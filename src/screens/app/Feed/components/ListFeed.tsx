@@ -15,11 +15,13 @@ import {IDataListFeed} from '../type';
 import {ROUTE_NAME} from '@routeName';
 import {useNavigation} from '@react-navigation/native';
 import useDetailFeed from '../../DetailFeed/useDetailFeed';
+import {useSelector} from 'react-redux';
 
 const ListFeed = (props: any) => {
   const {state, onPageSelected, handleLoadMore, handleLoadLess} =
     useDetailFeed();
   const navigation = useNavigation<any>();
+  const lang = useSelector((state: any) => state.auth.lang);
 
   const onDetailClick = (index: number) => {
     navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
@@ -48,6 +50,7 @@ const ListFeed = (props: any) => {
         break;
       case 'article':
       case 'podcast':
+      case 'package_quizz':
         url = item.image || '';
         break;
     }
@@ -87,7 +90,13 @@ const ListFeed = (props: any) => {
             </Text>
           </View>
         </View>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>
+          {item.content_type == 'package_quizz'
+            ? lang === 1
+              ? item?.name_en
+              : item?.name_vi
+            : item.title}
+        </Text>
         <View style={styles.wrapAvatarContainer}>
           <FastImage source={{uri: item.image}} style={styles.imageAvatar} />
 

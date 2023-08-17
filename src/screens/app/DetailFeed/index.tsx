@@ -25,7 +25,8 @@ import SliderFeed from './components/SliderFeed';
 import Container from './components/Container';
 import ItemPurchase from './components/ItemPurchase';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import QuizFeed from './components/QuizFeed';
+import DailyQuizFeed from './components/DailyQuizFeed';
+import PackageQuizFeed from './components/PackageQuizFeed';
 interface DetailFeedProps {}
 const previewCount = 3;
 //to center items
@@ -56,7 +57,16 @@ const DetailFeed = (props: DetailFeedProps) => {
           />
         );
       case 'daily_quizz':
-        return <QuizFeed item={item} isFocused={state.currentIndex == index} />;
+        return (
+          <DailyQuizFeed item={item} isFocused={state.currentIndex == index} />
+        );
+      case 'package_quizz':
+        return (
+          <PackageQuizFeed
+            item={item}
+            isFocused={state.currentIndex == index}
+          />
+        );
       default:
         return (
           <ItemArticle item={item} isFocused={state.currentIndex == index} />
