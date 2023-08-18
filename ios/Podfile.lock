@@ -398,6 +398,8 @@ PODS:
     - React-Core
   - react-native-image-picker (4.10.3):
     - React-Core
+  - react-native-in-app-review (4.3.3):
+    - React-Core
   - react-native-keep-awake (4.0.0):
     - React
   - react-native-render-html (6.3.4):
@@ -646,6 +648,7 @@ DEPENDENCIES:
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-in-app-review (from `../node_modules/react-native-in-app-review`)
   - react-native-keep-awake (from `../node_modules/react-native-keep-awake`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -791,6 +794,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fbsdk-next"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-in-app-review:
+    :path: "../node_modules/react-native-in-app-review"
   react-native-keep-awake:
     :path: "../node_modules/react-native-keep-awake"
   react-native-render-html:
@@ -930,6 +935,7 @@ SPEC CHECKSUMS:
   react-native-date-picker: 04e866ba4e7857f83abd504ad42e787f0f02ae00
   react-native-fbsdk-next: 5291a5d67aab4e649d072c50988033ff0d05b915
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
+  react-native-in-app-review: db8bb167a5f238e7ceca5c242d6b36ce8c4404a4
   react-native-keep-awake: afad8a51dfef9fe9655a6344771be32c8596d774
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: b8979f5eda6ed5903d4dbc885be3846ea3daa753
@@ -993,4 +999,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: af174a2f5ee7c7401fd6b57da86a2691a80a5c00
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

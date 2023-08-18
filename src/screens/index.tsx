@@ -55,6 +55,9 @@ import {ListRecord} from './app/ListRecord';
 import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
 import {Forum} from './app/Forum';
+import {SelectDOB} from './auth/DueDate/SelectDOB';
+import {Question2} from './auth/DueDate/Question2';
+import {Question3} from './auth/DueDate/Question3';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -114,6 +117,9 @@ const screens = {
   Onboarding,
   SlideIntro,
   Forum,
+  SelectDOB,
+  Question2,
+  Question3,
 };
 
 export {screens};

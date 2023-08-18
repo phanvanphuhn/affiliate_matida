@@ -7,6 +7,7 @@ import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 
 export const LikeView = (props: any) => {
   const dispatch = useDispatch<any>();
@@ -23,7 +24,11 @@ export const LikeView = (props: any) => {
   useEffect(() => {
     setNumberLike(data?.post_like);
     setIsLike(data?.is_liked);
-    setNumberComment(data?.comments?.length);
+
+    const totalComment = data?.comments
+      ?.map((comment: any) => (comment?.reply_comments?.length ?? 0) + 1)
+      .reduce((nextValue: number, crrValue: number) => nextValue + crrValue, 0);
+    setNumberComment(totalComment);
   }, [data]);
 
   const onPressLike = useCallback(

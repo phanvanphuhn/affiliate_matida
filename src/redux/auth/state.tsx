@@ -3,6 +3,8 @@ export type AuthState = {
   userInfo: any;
   lang: any;
   statusLogin: any;
+  isDoneDaily: boolean;
+  isSeenComment: boolean;
 };
 
 export const INITIAL_STATE_AUTH: AuthState = {
@@ -10,4 +12,6 @@ export const INITIAL_STATE_AUTH: AuthState = {
   userInfo: null,
   lang: null,
   statusLogin: false,
+  isDoneDaily: false,
+  isSeenComment: false,
 };

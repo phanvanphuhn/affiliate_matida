@@ -1,13 +1,15 @@
-import {AppImage} from '@component';
-import {avatarDefault, iconDelete, iconEdit} from '@images';
+import {scaler, stylesCommon, colors, widthScreen} from '@stylesCommon';
+import React from 'react';
+import {View, StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import {LikeView} from './LikeView';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {AppImage} from '@component';
+import {avatarDefault, iconDelete, iconEdit} from '@images';
 import moment from 'moment';
-import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {convertLangMonth, valid} from '@util';
 import {useSelector} from 'react-redux';
-import {LikeView} from './LikeView';
+import {t} from 'i18next';
 
 const Item = React.memo((props: any) => {
   const {item, index, onDelete, callBackData} = props;

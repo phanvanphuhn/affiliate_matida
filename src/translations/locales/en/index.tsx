@@ -54,6 +54,16 @@ export const en = {
     notKnowDueDate: 'I don’t know my due date',
     save: 'Save',
     skip: 'Skip',
+    submit: 'Submit',
+    titleQuestion1: 'What is your date of birth',
+    titleQuestion2: 'How did you hear about Matida',
+    titleQuestion3: 'How would you describe your lifestyle pregnancy',
+    placeHolderQuestion2: 'I.e. Friends, KOL tiktok.. ',
+    option1: 'Relaxed and carefree: not stressing over minor details.',
+    option2:
+      'Nervous mom: Seeking support (as first-time moms or moms with health challenges)',
+    option3: 'Busy working moms need work-life balance',
+    placeholderOption4: 'Other - please describe:',
   },
   calculateDueDate: {
     calculateDuaDate: 'Calculate your\ndue date',

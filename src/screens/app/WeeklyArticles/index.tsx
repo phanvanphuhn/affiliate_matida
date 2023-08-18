@@ -3,14 +3,18 @@ import {SvgArrowLeft, SvgListBookmark} from '@images';
 import {navigate} from '@navigation';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {getListArticlesOfWeek, getListArticlesPopular} from '@services';
+import {
+  getListArticlesOfWeek,
+  getListArticlesPopular,
+  GlobalService,
+} from '@services';
 import {colors, scaler} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
 import {t} from 'i18next';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {RefreshControl, ScrollView, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {styles} from './styles';
+import {trackingAppEvent, event, useUXCam} from '@util';
 
 export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
   const navigation = useNavigation<any>();

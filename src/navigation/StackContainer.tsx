@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -8,6 +9,9 @@ import {useSelector} from 'react-redux';
 import StackTab from './StackTab';
 import {AppSocket} from '@util';
 import {StatusBar, Platform} from 'react-native';
+import {RootState} from 'src/redux/rootReducer';
+import InAppReview from 'react-native-in-app-review';
+import reactotron from 'reactotron-react-native';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -19,6 +23,12 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const isLogin: any = useSelector((state: any) => state?.auth?.statusLogin);
   let token = useSelector((state: any) => state?.auth?.token);
+  const isDoneDaily = useSelector(
+    (state: RootState) => state?.home?.data?.dailyQuizz?.question,
+  );
+  const isSeenComment = useSelector(
+    (state: RootState) => state.auth.isSeenComment,
+  );
 
   React.useEffect(() => {
     if (token) {
@@ -28,6 +38,21 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
       };
     }
   }, [token]);
+
+  React.useEffect(() => {
+    if (!!isDoneDaily && !!isSeenComment && Platform.OS === 'android') {
+      setTimeout(() => {
+        InAppReview.isAvailable() &&
+          InAppReview.RequestInAppReview().then(
+            hasFlowFinishedSuccessfully => {},
+          );
+      }, 10000);
+      // InAppReview.isAvailable() &&
+      //   InAppReview.RequestInAppReview().then(
+      //     hasFlowFinishedSuccessfully => {},
+      //   );
+    }
+  }, [isDoneDaily, isSeenComment]);
 
   const renderIntro = () => {
     if (lang) {
@@ -282,7 +307,18 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.ON_BOARDING}
             component={screens.Onboarding}
           />
-
+          <Stack.Screen
+            name={ROUTE_NAME.SELECT_DOB}
+            component={screens.SelectDOB}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.QUESTION2_ONBOARDING}
+            component={screens.Question2}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.QUESTION3_ONBOARDING}
+            component={screens.Question3}
+          />
           <Stack.Screen
             name={ROUTE_NAME.SLIDE_INTRO}
             component={screens.SlideIntro}
@@ -290,6 +326,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
               gestureEnabled: false,
             }}
           />
+          {/* <Stack.Screen
+            name={ROUTE_NAME.SELECT_DOB}
+            component={screens.SelectDOB}
+          /> */}
         </Stack.Navigator>
       );
     }

@@ -1,10 +1,10 @@
 import {AppImage, AppTextUrl} from '@component';
 import {ETypeRedirectBroadcast, EVideoType, OptionComparison} from '@constant';
-import {LogoApp} from '@images';
+import {avatarDefault, LogoApp} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {readNotification} from '@services';
-import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {NOTIFICATION} from '@util';
 import moment from 'moment';
 import React from 'react';

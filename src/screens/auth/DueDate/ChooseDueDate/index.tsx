@@ -46,6 +46,7 @@ const ChooseDueDateScreen = () => {
 
   const navigateToCalculate = () => {
     navigate(ROUTE_NAME.CALCULATE_DUE_DATE);
+    // navigate(ROUTE_NAME.ON_BOARDING);
   };
 
   const handlePressSkip = async () => {

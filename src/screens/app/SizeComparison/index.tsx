@@ -24,6 +24,7 @@ import {Embryo} from './component/Embryo';
 import {Size} from './component/Size';
 import {ListPostComponent} from '../Home/ListPostComponent';
 import {ViewQuiz} from '../Home/components';
+import reactotron from 'reactotron-react-native';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const SizeComparison = () => {
   };
   useEffect(() => {
     trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {});
+    reactotron.log?.('DATA WEEK', homeData?.data?.posts);
     if (week) {
       getData(week);
     }

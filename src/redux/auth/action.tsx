@@ -39,3 +39,13 @@ export const changeWeekUser = (payload: any) => ({
   type: typeAuth.CHANGE_WEEK,
   payload,
 });
+
+export const saveIsDoneDaily = (payload: boolean) => ({
+  type: typeAuth.IS_DONE_DAILY,
+  payload,
+});
+
+export const saveIsSeenComment = (payload: boolean) => ({
+  type: typeAuth.IS_SEEN_COMMENT,
+  payload,
+});

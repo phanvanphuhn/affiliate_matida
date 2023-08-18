@@ -52,6 +52,16 @@ export default function authReducer(state = INITIAL_STATE_AUTH, action: any) {
           },
         },
       };
+    case typeAuth.IS_DONE_DAILY:
+      return {
+        ...state,
+        isDoneDaily: action.payload,
+      };
+    case typeAuth.IS_SEEN_COMMENT:
+      return {
+        ...state,
+        isSeenComment: action.payload,
+      };
     default:
       return state;
   }

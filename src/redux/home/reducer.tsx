@@ -8,7 +8,7 @@ export default function homeReducer(state = INITIAL_STATE_HOME, action: any) {
     case typeHome.UPDATE_DATA_HOME:
       return {
         ...state,
-        data: action.payload,
+        data: {...action.payload},
       };
 
     case typeHome.CHANGE_WEEK_PREGNANT:
