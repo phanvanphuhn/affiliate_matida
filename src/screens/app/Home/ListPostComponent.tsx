@@ -9,14 +9,14 @@ import {SvgFlag, SvgProhibit} from '@images';
 import {navigate} from '@navigation';
 import {deleteListUserPost, getDataHomeByWeek} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {blockUserApi, GlobalService} from '@services';
+import {GlobalService, blockUserApi} from '@services';
 import {colors, scaler, widthScreen} from '@stylesCommon';
 import React, {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {StyleProp, ViewStyle} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {DiscussionPost} from './components';
-import {StyleProp, ViewStyle} from 'react-native';
 type Props = {
   posts: any[];
   // callBackData: () => void;

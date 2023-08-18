@@ -3,7 +3,7 @@ import {iconEdit, SvgArrowLeft} from '@images';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import {useUXCam} from '@util';
+import {event, trackingAppEvent, useUXCam} from '@util';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -63,9 +63,10 @@ const Community = () => {
                 <View style={styles.viewCreate}>
                   <TouchableOpacity
                     style={styles.viewRow}
-                    onPress={() =>
-                      navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)
-                    }>
+                    onPress={() => {
+                      trackingAppEvent(event.FORUM.CREATE_NEW_POST_BUTTON, {});
+                      navigation.navigate(ROUTE_NAME.CREATE_NEWPOST);
+                    }}>
                     <Image source={iconEdit} />
                     <Text style={styles.txtCreate}>{t('post.create_new')}</Text>
                   </TouchableOpacity>

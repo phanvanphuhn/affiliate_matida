@@ -1,11 +1,16 @@
 import {WEEK_MAX} from '@constant';
-import {colors} from '@stylesCommon';
+import dayjs from 'dayjs';
 import {t} from 'i18next';
+import {Mixpanel} from 'mixpanel-react-native';
 import {ColorValue} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
-import dayjs from 'dayjs';
 
 const validTag = /^<\/?[A-Za-z]+>$/;
+const trackAutomaticEvents = true;
+const mixpanel = new Mixpanel(
+  'da7e3368476b1df669b65f4a887ccaaa',
+  trackAutomaticEvents,
+);
 
 export const hasWhiteSpace = (s: any) => {
   var regExp = /^\s+$/;
@@ -149,6 +154,9 @@ export function convertArrUnique(arr: any, comp: any) {
 
 export const trackingAppEvent = (eventName: any, eventParams: any) => {
   try {
+    //MixPanel
+    mixpanel.track(eventName, eventParams);
+    //AppFlyer
     appsFlyer.logEvent(
       eventName,
       eventParams,

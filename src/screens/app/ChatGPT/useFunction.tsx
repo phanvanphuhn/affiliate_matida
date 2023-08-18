@@ -1,24 +1,14 @@
-import React, {useState, useMemo, useEffect, useCallback} from 'react';
-import moment from 'moment';
-import {Platform} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {
-  getListChat,
-  addMessageToList,
-  saveTopicID,
-  clearDataChat,
-  getListChatGPT,
   addMessageToListChatGPT,
+  getListChatGPT,
   saveSuggestMessageId,
 } from '@redux';
-import {
-  GlobalService,
-  uploadImage,
-  sendMessageApi,
-  sendMessageGPTApi,
-  getDetailUser,
-} from '@services';
-import {hasWhiteSpace} from '@util';
+import {GlobalService, sendMessageGPTApi, uploadImage} from '@services';
+import {event, hasWhiteSpace, trackingAppEvent} from '@util';
+import moment from 'moment';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {Platform} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 export const useFunction = (props: any) => {
   const {route} = props;
@@ -118,6 +108,7 @@ export const useFunction = (props: any) => {
       updated_at: moment(),
       user_id: user_id,
     };
+    trackingAppEvent(event.TIDA.TIDA_ASK, {content: dataAdd});
     dispatch(addMessageToListChatGPT([{...dataAdd}]));
     try {
       setShowViewSelect(true);

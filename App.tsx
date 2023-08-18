@@ -1,23 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, AppState, Platform, StatusBar } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, AppState, Platform, StatusBar} from 'react-native';
 import NavigationApp from './src/navigation/StackContainer';
 
-import { GlobalUI, ToastCustom, ToastCustomPost } from '@component';
-import { NavigationUtils } from '@navigation';
-import { GlobalService } from '@services';
+import {GlobalUI, ToastCustom, ToastCustomPost} from '@component';
+import {NavigationUtils} from '@navigation';
+import {clearDataLiveTalk} from '@redux';
+import {ROUTE_NAME} from '@routeName';
+import {GlobalService} from '@services';
 import moment from 'moment';
-import { LogBox, Text, TextInput, View } from 'react-native';
+import {LogBox, Text, TextInput, View} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 import FlashMessage from 'react-native-flash-message';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from './src/redux/store';
-import { clearDataLiveTalk } from '@redux';
-import { ROUTE_NAME } from '@routeName';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistor, store} from './src/redux/store';
 // import {KEY_UXCAM, MERCHANT_IDENTIFIER, STRIPE_KEY} from '@env';
-import { initI18n } from '@i18n';
+import {initI18n} from '@i18n';
+import '@images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import messaging from '@react-native-firebase/messaging';
+import {heightScreen, scaler, widthScreen} from '@stylesCommon';
+import {KEY_UXCAM, MERCHANT_IDENTIFIER, STRIPE_KEY} from '@util';
+import {Mixpanel} from 'mixpanel-react-native';
+import KeepAwake from 'react-native-keep-awake';
 import Toast, {
   ToastConfig,
   ToastConfigParams,
@@ -27,19 +33,14 @@ import TrackPlayer, {
   Capability,
   RepeatMode,
 } from 'react-native-track-player';
-import { KEY_UXCAM, MERCHANT_IDENTIFIER, STRIPE_KEY } from '@util';
-import messaging from '@react-native-firebase/messaging';
-import '@images';
-import { heightScreen, scaler, widthScreen } from '@stylesCommon';
 import RNUxcam from 'react-native-ux-cam';
 
 //Disable yellow box warning
 LogBox.ignoreAllLogs();
 initI18n();
-import KeepAwake from 'react-native-keep-awake';
 
-import { StripeProvider } from '@stripe/stripe-react-native';
-import CodePush, { DownloadProgress } from 'react-native-code-push';
+import {StripeProvider} from '@stripe/stripe-react-native';
+import CodePush from 'react-native-code-push';
 
 const options = {
   // updateDialog: true,
@@ -48,7 +49,7 @@ const options = {
 };
 
 const App = () => {
-  messaging().setBackgroundMessageHandler(async () => { });
+  messaging().setBackgroundMessageHandler(async () => {});
 
   const [isUpdating, setUpdating] = useState(true);
 
@@ -62,6 +63,15 @@ const App = () => {
   RNUxcam.startWithConfiguration(configuration);
 
   const initTrackingApp = () => {
+    //Mixpanel
+    const trackAutomaticEvents = true;
+    const mixpanel = new Mixpanel(
+      'da7e3368476b1df669b65f4a887ccaaa',
+      trackAutomaticEvents,
+    );
+    mixpanel.setLoggingEnabled(true);
+    mixpanel.init();
+    //AppFlyer
     const androidConfig = {
       devKey: 'Ez8yDawVpmfmiY7VEtJyC9',
       isDebug: true,
@@ -73,7 +83,7 @@ const App = () => {
     };
     appsFlyer.initSdk(
       Platform.OS === 'ios' ? iosConfig : androidConfig,
-      () => { },
+      () => {},
       error => {
         console.error(error);
       },
@@ -122,12 +132,12 @@ const App = () => {
     appsFlyer.logEvent(
       eventName,
       {},
-      () => { },
-      () => { },
+      () => {},
+      () => {},
     );
   };
 
-  const changeColorStatusBar = async () => { };
+  const changeColorStatusBar = async () => {};
 
   useEffect(() => {
     KeepAwake.activate();
@@ -183,10 +193,10 @@ const App = () => {
   };
 
   const toastConfig: ToastConfig = {
-    customToast: ({ text1, props }: ToastConfigParams<any>) => (
+    customToast: ({text1, props}: ToastConfigParams<any>) => (
       <ToastCustom id={props.id} onPressUndo={props.onPressUndo} />
     ),
-    customToastPost: ({ text1, props }: ToastConfigParams<any>) => (
+    customToastPost: ({text1, props}: ToastConfigParams<any>) => (
       <ToastCustomPost onPress={props.onPress} />
     ),
   };
@@ -195,7 +205,7 @@ const App = () => {
     CodePush.sync(
       options,
       (status: CodePush.SyncStatus) => {
-        console.log({ status }, CodePush.SyncStatus.UPDATE_IGNORED);
+        console.log({status}, CodePush.SyncStatus.UPDATE_IGNORED);
         switch (status) {
           case CodePush.SyncStatus.SYNC_IN_PROGRESS: {
             setUpdating(false);
@@ -223,8 +233,8 @@ const App = () => {
           //   break;
         }
       },
-      () => { },
-      () => { },
+      () => {},
+      () => {},
     ).then(() => {
       setUpdating(false);
     });
@@ -258,7 +268,7 @@ const App = () => {
         position="top"
         floating={true}
         hideStatusBar={false}
-        style={{ marginTop: Platform.OS === 'ios' ? 0 : scaler(16) }}
+        style={{marginTop: Platform.OS === 'ios' ? 0 : scaler(16)}}
       />
       <Toast
         position="bottom"
