@@ -1,6 +1,8 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {getTestDetailById, GlobalService, postSubmitTest} from '@services';
+import {ROUTE_NAME} from '@routeName';
+import {GlobalService, getTestDetailById, postSubmitTest} from '@services';
 import {widthScreen} from '@stylesCommon';
+import {event, trackingAppEvent, useUXCam} from '@util';
 import {Formik, FormikProps} from 'formik';
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, View} from 'react-native';
@@ -15,8 +17,6 @@ import {
   PageTest,
   ViewButtonTest,
 } from './components';
-import {trackingAppEvent, event, useUXCam} from '@util';
-import {ROUTE_NAME} from '@routeName';
 
 type IFormik = {
   answer: IAnswer[];
@@ -68,6 +68,7 @@ export const TestDetail = () => {
     try {
       GlobalService.showLoading();
       const listAnswers = formRef.current?.values?.answer;
+      trackingAppEvent(event.MOM_TEST.DO, {content: listAnswers});
       const res = await postSubmitTest(quiz?.id, {data: listAnswers});
       setResult(res?.data);
       setVisibleResult(true);

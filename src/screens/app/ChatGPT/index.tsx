@@ -1,5 +1,5 @@
 import {AppCameraModal2, HeaderChatGPT} from '@component';
-import {iconSend, SvgArrowLeft} from '@images';
+import {SvgArrowLeft, iconSend} from '@images';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
 import {event, trackingAppEvent, useUXCam} from '@util';

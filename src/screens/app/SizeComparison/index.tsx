@@ -1,29 +1,21 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  FlatList,
-  ListRenderItem,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useTranslation} from 'react-i18next';
 import {FLoatingAIButton, Header, PickerWeek, ViewButton} from '@component';
 import {SvgArrowLeft, SvgMessages3} from '@images';
-import {trackingAppEvent, event, useUXCam} from '@util';
-import {colors} from '@stylesCommon';
-import {ROUTE_NAME} from '@routeName';
-import {GlobalService, getSizeComparison, answerDailyQuiz} from '@services';
-import {styles} from './styles';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {updateDataHome} from '@redux';
+import {ROUTE_NAME} from '@routeName';
+import {GlobalService, answerDailyQuiz, getSizeComparison} from '@services';
+import {colors} from '@stylesCommon';
+import {event, trackingAppEvent, useUXCam} from '@util';
+import React, {useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {ListPostComponent} from '../Home/ListPostComponent';
+import {ViewQuiz} from '../Home/components';
 import {Body} from './component/Body';
 import {Embryo} from './component/Embryo';
 import {Size} from './component/Size';
-import {ListPostComponent} from '../Home/ListPostComponent';
-import {ViewQuiz} from '../Home/components';
+import {styles} from './styles';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -127,7 +119,12 @@ const SizeComparison = () => {
       />
       <PickerWeek
         customStyleContainer={styles.containerPicker}
-        onSelect={(value: any) => getData(value)}
+        onSelect={(value: any) => {
+          trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_CHANGE_WEEK, {
+            content: value,
+          });
+          getData(value);
+        }}
         weekNotifi={week}
       />
       <FlatList
