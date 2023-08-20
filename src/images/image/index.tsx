@@ -53,8 +53,10 @@ const ic_share = require('./ic_share.png');
 const ic_star = require('./ic_star.png');
 const ic_purchase = require('./ic_purchase.png');
 const ic_send = require('./ic_send.png');
+const DailyQuiz = require('./dailyQuiz.png');
 
 export {
+  DailyQuiz,
   IconBackgroundImageHome,
   LogoApp,
   TidaAI,

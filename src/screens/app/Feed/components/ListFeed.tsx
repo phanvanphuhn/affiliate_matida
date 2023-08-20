@@ -1,4 +1,4 @@
-import {SvgEye, iconClock, imageNameAppPink} from '@images';
+import {DailyQuiz, SvgEye, iconClock, imageNameAppPink} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
@@ -59,29 +59,36 @@ const ListFeed = (props: any) => {
     }
     return url;
   };
+  const renderTag = (item: IDataListFeed) => {
+    switch (item.content_type) {
+      case 'daily_quizz':
+        return 'Daily Quiz';
+      case 'package_quizz':
+        return 'Mom prep test';
+      default:
+        return item.content_type?.replace(
+          /^./,
+          item.content_type[0]?.toUpperCase(),
+        );
+    }
+  };
   const renderItem: ListRenderItem<IDataListFeed> = ({item, index}) => {
-    const renderTag = () => {
-      switch (item.content_type) {
-        case 'daily_quizz':
-          return 'Daily Quiz';
-        case 'package_quizz':
-          return 'Mom prep test';
-        default:
-          return item.content_type?.replace(
-            /^./,
-            item.content_type[0]?.toUpperCase(),
-          );
-      }
-    };
     return (
       <TouchableOpacity
         onPress={() => onDetailClick(index)}
         style={styles.itemContainer}>
         <View>
           <View style={styles.tag}>
-            <Text style={styles.tagTitle}>{renderTag()}</Text>
+            <Text style={styles.tagTitle}>{renderTag(item)}</Text>
           </View>
-          <FastImage source={{uri: getThumbnail(item)}} style={styles.image} />
+          <FastImage
+            source={
+              item.content_type === 'daily_quizz'
+                ? DailyQuiz
+                : {uri: getThumbnail(item)}
+            }
+            style={styles.image}
+          />
           {(item.content_type == 'video' || item.content_type == 'podcast') && (
             <View style={styles.leftDescription}>
               <Image source={iconClock} />
