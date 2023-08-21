@@ -17,6 +17,7 @@ import {useSelector} from 'react-redux';
 import useDetailFeed from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
+import LazyImage from '../../../../component/LazyImage';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
@@ -81,11 +82,15 @@ const ListFeed = (props: any) => {
           <View style={styles.tag}>
             <Text style={styles.tagTitle}>{renderTag(item)}</Text>
           </View>
-          <FastImage
+          <LazyImage
             source={
               item.content_type === 'daily_quizz'
                 ? DailyQuiz
-                : {uri: getThumbnail(item)}
+                : {
+                    uri: getThumbnail(item),
+                    priority: FastImage.priority.high,
+                    cache: FastImage.cacheControl.immutable,
+                  }
             }
             style={styles.image}
           />
@@ -148,6 +153,9 @@ const ListFeed = (props: any) => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index?.toString()}
         numColumns={2}
+        initialNumToRender={4}
+        maxToRenderPerBatch={4}
+        windowSize={5}
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.4}
         showsVerticalScrollIndicator={false}

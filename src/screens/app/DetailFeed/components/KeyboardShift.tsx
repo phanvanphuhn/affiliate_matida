@@ -18,11 +18,21 @@ import {useKeyboard} from '@react-native-community/hooks';
 import {colors, heightScreen} from '@stylesCommon';
 import {ic_send} from '@images';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import useActionFeed from '../useActionFeed';
+import useCommentFeed from '../useCommentFeed';
+import {useSelector} from 'react-redux';
+import {AppImage} from '@component';
 
-interface Props extends ViewProps {}
+interface Props extends ViewProps {
+  onChangeText: (value: string) => void;
+  onComment: () => void;
+  value: string;
+}
 
 export default function KeyboardShift(props: Props) {
   const insets = useSafeAreaInsets();
+  const user = useSelector((state: any) => state.auth.userInfo);
+
   const [isKeyBoardShow, setIsKeyBoardShow] = useState<boolean>(false);
   useEffect(() => {
     let keyboardDidShow = Keyboard.addListener(
@@ -69,14 +79,16 @@ export default function KeyboardShift(props: Props) {
               paddingBottom: 20,
             },
           ]}>
-          <Image
-            source={{
-              uri: 'https://deviet.vn/wp-content/uploads/2019/04/vuong-quoc-anh.jpg',
-            }}
-            style={styles.imageAvatar}
+          <AppImage uri={user?.avatar} style={styles.imageAvatar} />
+          <TextInput
+            style={styles.input}
+            placeholder={'Comment'}
+            value={props?.value || ''}
+            onChangeText={props.onChangeText}
           />
-          <TextInput style={styles.input} placeholder={'Comment'} />
-          <TouchableOpacity style={{paddingHorizontal: 10}}>
+          <TouchableOpacity
+            onPress={props.onComment}
+            style={{paddingHorizontal: 10}}>
             <Image source={ic_send} />
           </TouchableOpacity>
         </View>

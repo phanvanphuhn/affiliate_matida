@@ -59,7 +59,6 @@ const Container: React.FC<ContainerProps> = props => {
     <VideoContext.Provider value={{state, setState}}>
       <View style={styles.container}>{props.children}</View>
       <CommentFeed />
-      {!!state.isShowComment && <KeyboardShift />}
     </VideoContext.Provider>
   );
 };

@@ -56,12 +56,21 @@ const TitleFeed = (props: TitleFeedProps) => {
               top: 0,
               bottom: 0,
               backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              paddingTop: insets.top + scaler(170),
+              paddingTop: insets.top + scaler(150),
             }
           : {},
       ]}>
-      <View style={{}}>
-        <Text style={styles.title}>{props.item.title}</Text>
+      <View
+        style={{
+          padding: 16,
+          backgroundColor: textShown ? colors.white : 'transparent',
+          paddingBottom: 30,
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
+        }}>
+        <Text style={[styles.title, textShown ? styles.colorWhite : {}]}>
+          {props.item.title}
+        </Text>
         {!!getFullDescription() && (
           <ScrollView
             style={{maxHeight: '100%'}}
@@ -81,17 +90,22 @@ const TitleFeed = (props: TitleFeedProps) => {
               defaultTextProps={{
                 // numberOfLines: textShown ? undefined : 4,
                 // onTextLayout: onTextLayout,
-                style: styles.description,
+                style: {
+                  ...styles.description,
+                  color: textShown ? colors.textColor : colors.white,
+                },
               }}
             />
           </ScrollView>
         )}
+        {getDescription(150)?.length < getFullDescription()?.length ? (
+          <Text
+            onPress={toggleNumberOfLines}
+            style={[styles.showMore, textShown ? styles.colorWhite : {}]}>
+            {textShown ? t('feed.seeLess') : t('feed.seeMore')}
+          </Text>
+        ) : null}
       </View>
-      {getDescription(150)?.length < getFullDescription()?.length ? (
-        <Text onPress={toggleNumberOfLines} style={styles.showMore}>
-          {textShown ? t('feed.seeLess') : t('feed.seeMore')}
-        </Text>
-      ) : null}
     </View>
   );
 };
@@ -99,6 +113,9 @@ const TitleFeed = (props: TitleFeedProps) => {
 export default TitleFeed;
 
 const styles = StyleSheet.create({
+  colorWhite: {
+    color: colors.textColor,
+  },
   description: {
     fontSize: 12,
     color: colors.white,
@@ -119,9 +136,7 @@ const styles = StyleSheet.create({
   },
   container: {
     position: 'absolute',
-    paddingBottom: 30,
     bottom: 0,
-    padding: 16,
     maxHeight: heightScreen,
     justifyContent: 'flex-end',
   },

@@ -1,4 +1,4 @@
-type ContentTypeFeed =
+export type ContentTypeFeed =
   | 'podcast'
   | 'article'
   | 'video'
