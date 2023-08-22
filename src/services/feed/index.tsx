@@ -41,8 +41,14 @@ export const likeCommentFeedApi: any = async (comment_id: string) => {
   });
   return response;
 };
+export const likeFeedApi: any = async (feed_type: string, feed_id: string) => {
+  const response = await api.put(
+    `${GET_LIST_FEED}/${feed_type}/${feed_id}/like`,
+  );
+  return response;
+};
 export const repliesCommentFeedApi: any = async (
-  comment_id: string,
+  comment_id: number,
   content: string,
 ) => {
   const response = await api.post(`${API_REPLY_COMMENT_FEED}`, {
@@ -53,5 +59,12 @@ export const repliesCommentFeedApi: any = async (
 };
 export const getRepliesCommentFeedApi: any = async (comment_id: string) => {
   const response = await api.get(`${API_REPLY_COMMENT_FEED}/${comment_id}`);
+  return response;
+};
+export const getDetailFeedApi: any = async (
+  feed_type: string,
+  feed_id: string,
+) => {
+  const response = await api.get(`${GET_LIST_FEED}/${feed_type}/${feed_id}`);
   return response;
 };

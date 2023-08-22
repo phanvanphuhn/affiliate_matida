@@ -11,6 +11,7 @@ import PagerView, {
   PagerViewOnPageScrollEventData,
 } from 'react-native-pager-view';
 import {OnPageSelectedEventData} from 'react-native-pager-view/src/PagerViewNativeComponent';
+import {WithDefault} from 'react-native/Libraries/Types/CodegenTypes';
 
 type PageSelectedEvent = NativeSyntheticEvent<PagerViewOnPageScrollEventData>;
 
@@ -26,12 +27,13 @@ interface LazyViewPagerProps<T> {
   /**
    * Number of items to render before and after the current page. Default 1.
    */
-  buffer?: number;
+  buffer?: number | null;
   data: T[];
   /**
    * Index of starting page.
    */
   initialPage?: number;
+  orientation?: WithDefault<'horizontal' | 'vertical', 'horizontal'>;
   onPageSelected?: (page: number) => void;
   renderItem: RenderItem<T>;
   style?: StyleProp<ViewStyle>;
@@ -76,7 +78,9 @@ function LazyViewPagerImpl<T>(
   // Internal buffer is larger; supports paging.
   const internalBuffer = 8;
   const buffer =
-    (props.buffer == null ? 1 : Math.max(0, props.buffer)) + internalBuffer;
+    (props.buffer == null || props.buffer == undefined
+      ? 1
+      : Math.max(0, props.buffer)) + internalBuffer;
 
   // When set to `true`, forces `ViewPager` to remount.
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -176,6 +180,7 @@ function LazyViewPagerImpl<T>(
       initialPage={page - offset}
       ref={vpRef}
       style={props.style}
+      orientation={props?.orientation}
       onPageSelected={onPageSelected}>
       {props.data
         .slice(offset, offset + windowLength)

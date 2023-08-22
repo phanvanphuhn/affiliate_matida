@@ -43,7 +43,6 @@ const useDetailFeed = () => {
       ...preState,
     }),
   );
-  console.log('=>(useDetailFeed.ts:46) s.state', state);
 
   const getListVideo = async () => {
     try {
@@ -96,23 +95,23 @@ const useDetailFeed = () => {
     }
   };
   const onPageSelected = (pageNumber: number) => {
-    console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
-    const firstSlide = pageNumber == 0;
-    console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
-    const lastSlide = pageNumber == state.data.length - 1;
-    console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
-    if (firstSlide) {
-      handleLoadLess(pageNumber);
-    } else if (lastSlide) {
-      handleLoadMore();
-      setState({
-        currentIndex: pageNumber,
-      });
-    } else {
-      setState({
-        currentIndex: pageNumber,
-      });
-    }
+    // console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
+    // const firstSlide = pageNumber == 0;
+    // console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
+    // const lastSlide = pageNumber == state.data.length - 1;
+    // console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
+    // if (firstSlide) {
+    //   handleLoadLess(pageNumber);
+    // } else if (lastSlide) {
+    //   handleLoadMore();
+    //   setState({
+    //     currentIndex: pageNumber,
+    //   });
+    // } else {
+    setState({
+      currentIndex: pageNumber,
+    });
+    // }
   };
   useEffect(() => {
     getListVideo();

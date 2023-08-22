@@ -1,5 +1,5 @@
 import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import {iconClose} from '@images';
+import {ic_comment, iconClose, SvgHeart, SvgHearted} from '@images';
 import {useKeyboard} from '@react-native-community/hooks';
 import {colors} from '@stylesCommon';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -19,6 +19,7 @@ import {useVideo} from './Container';
 import useCommentFeed from '../useCommentFeed';
 import KeyboardShift from './KeyboardShift';
 import {AppImage} from '@component';
+import ItemComment from './ItemComment';
 interface CommentProps {}
 
 const CommentFeed = (props: CommentProps) => {
@@ -43,6 +44,8 @@ const CommentFeed = (props: CommentProps) => {
     actionComment,
     setState: setStateComment,
     flatlitRef,
+    actionLikeComment,
+    actionReliesComment,
   } = useCommentFeed();
   useEffect(() => {
     if (state.isShowComment) {
@@ -55,43 +58,11 @@ const CommentFeed = (props: CommentProps) => {
 
   const renderItem: ListRenderItem<IDataComment> = ({item}) => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          paddingTop: 10,
-          paddingBottom: 5,
-          paddingHorizontal: 10,
-        }}>
-        <AppImage
-          uri={item?.user?.avatar}
-          style={{
-            height: 30,
-            width: 30,
-            borderRadius: 15,
-          }}
-        />
-        <View style={{paddingLeft: 10, flex: 1}}>
-          <Text style={{fontWeight: '700', paddingBottom: 10}}>
-            {item?.user?.name}
-          </Text>
-          <Text style={{fontWeight: '400', fontSize: 12}}>{item.content}</Text>
-          <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Text
-              style={{
-                fontWeight: '400',
-                fontSize: 12,
-                color: '#585858',
-                paddingRight: 20,
-              }}>
-              {item.total_likes} {t('feed.like')}
-            </Text>
-            <Text style={{fontWeight: '400', fontSize: 12, color: '#585858'}}>
-              {item.total_reply_comment} {t('feed.comment')}
-            </Text>
-          </View>
-        </View>
-      </View>
+      <ItemComment
+        item={item}
+        onLiked={actionLikeComment}
+        isShowReplies={true}
+      />
     );
   };
   const onCloseComment = () => {
@@ -100,6 +71,10 @@ const CommentFeed = (props: CommentProps) => {
     });
   };
   const keyExtractor = (item: IDataComment, index: number) => index.toString();
+
+  const onComment = () => {
+    state?.comment ? actionReliesComment(state.comment.id) : actionComment();
+  };
   return (
     <>
       <BottomSheet
@@ -154,7 +129,7 @@ const CommentFeed = (props: CommentProps) => {
       </BottomSheet>
       {!!state.isShowComment && (
         <KeyboardShift
-          onComment={actionComment}
+          onComment={onComment}
           value={stateComment.content}
           onChangeText={content => setStateComment({content})}
         />

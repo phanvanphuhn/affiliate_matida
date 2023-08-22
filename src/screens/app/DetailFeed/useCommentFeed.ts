@@ -37,7 +37,6 @@ const useCommentFeed = () => {
       ...preState,
     }),
   );
-  console.log('=>(useCommentFeed.ts:46) s.state', state);
   const {state: stateFeed} = useVideo();
   const actionComment = async () => {
     try {
@@ -50,7 +49,6 @@ const useCommentFeed = () => {
         stateFeed.feed?.id,
       );
       if (res.success) {
-        console.log('=>(useCommentFeed.ts:49) res', res);
         setState({data: state.data.concat([res.data]), content: ''});
         setTimeout(() => {
           flatlitRef.current?.scrollToEnd();
@@ -58,33 +56,28 @@ const useCommentFeed = () => {
       }
     } catch (error: any) {}
   };
-  const actionLikeComment = async (comment_id: string) => {
+  const actionLikeComment = async (item: IDataComment) => {
     try {
-      const res = await likeCommentFeedApi(comment_id);
+      const res = await likeCommentFeedApi(item.id);
       if (res.success) {
-        console.log('=>(useCommentFeed.ts:49) res', res);
-        setState({data: state.data.concat([res.data]), content: ''});
-        setTimeout(() => {
-          flatlitRef.current?.scrollToEnd();
-        }, 300);
+        item.is_liked = 1;
+        setState({data: state.data});
       }
     } catch (error: any) {}
   };
-  const actionReliesComment = async (comment_id: string) => {
+  const actionReliesComment = async (comment_id: number) => {
     try {
-      const res = await repliesCommentFeedApi(comment_id);
+      const res = await repliesCommentFeedApi(comment_id, state.content);
       if (res.success) {
-        console.log('=>(useCommentFeed.ts:49) res', res);
-        setState({data: state.data.concat([res.data]), content: ''});
-        // setTimeout(() => {
-        //   flatlitRef.current?.scrollToEnd();
-        // }, 500);
+        let i = state.data.findIndex(e => e.id === comment_id);
+        let data = [...state.data];
+        data[i].reply_comments.push(res?.data);
+        setState({data, content: ''});
       }
     } catch (error: any) {}
   };
   const getListComment = async () => {
     try {
-      console.log('=>(useCommentFeed.ts:67) state.page', state.page);
       const res = await getListCommentFeedApi(
         stateFeed.feed?.content_type,
         stateFeed.feed?.id,

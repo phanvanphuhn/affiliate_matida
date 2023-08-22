@@ -2,7 +2,7 @@ import React, {useContext, useReducer} from 'react';
 import {StyleSheet, View} from 'react-native';
 import FooterFeed from './FooterFeed';
 import SliderFeed from './SliderFeed';
-import {IState} from '../types';
+import {IDataComment, IState} from '../types';
 import {IDataListFeed} from '../../Feed/type';
 import CommentFeed from './CommentFeed';
 import KeyboardShift from './KeyboardShift';
@@ -15,8 +15,11 @@ interface IState {
   progress?: number;
   progressChange?: number;
   feed?: IDataListFeed;
+  comment?: IDataComment;
   duration?: number;
   isShowComment?: boolean;
+  is_liked?: boolean;
+  is_rated?: boolean;
   progressStatus?: 'SEEKING' | 'DONE';
 }
 
@@ -31,7 +34,10 @@ const VideoContext = React.createContext<IVideoContext>({
     progressChange: 0,
     duration: 0,
     feed: undefined,
+    comment: undefined,
     isShowComment: false,
+    is_liked: false,
+    is_rated: false,
     progressStatus: undefined,
   },
   setState: (value: IState) => value,
@@ -48,8 +54,11 @@ const Container: React.FC<ContainerProps> = props => {
       progress: 0,
       progressChange: 0,
       feed: undefined,
+      comment: undefined,
       progressStatus: undefined,
       isShowComment: false,
+      is_liked: false,
+      is_rated: false,
     },
     (preState: IState) => ({
       ...preState,

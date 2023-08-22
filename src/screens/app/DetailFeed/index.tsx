@@ -27,6 +27,7 @@ import ItemPurchase from './components/ItemPurchase';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import DailyQuizFeed from './components/DailyQuizFeed';
 import PackageQuizFeed from './components/PackageQuizFeed';
+import {SwiperFlatList} from './SwiperFlatlist/SwiperFlatList';
 interface DetailFeedProps {}
 const previewCount = 3;
 //to center items
@@ -78,6 +79,10 @@ const DetailFeed = (props: DetailFeedProps) => {
     const currentPage = event.nativeEvent.position;
     onPageSelected(currentPage);
   };
+  const onPageHandlerFlatlist = (item: {index: number; prevIndex: number}) => {
+    console.log('=>(index.tsx:81) item', item);
+    onPageSelected(item.index);
+  };
   const renderDrawer = () => {
     return <DrawerFeed />;
   };
@@ -127,6 +132,26 @@ const DetailFeed = (props: DetailFeedProps) => {
             ))}
           </PagerView>
         )}
+        {/*<SwiperFlatList*/}
+        {/*  index={state.currentIndex}*/}
+        {/*  data={state.data}*/}
+        {/*  onChangeIndex={onPageHandlerFlatlist}*/}
+        {/*  vertical={true}*/}
+        {/*  onEndReachedThreshold={0.1}*/}
+        {/*  onEndReached={handleLoadMore}*/}
+        {/*  keyExtractor={item => item?.content_type + item?.id}*/}
+        {/*  renderItem={({item, index}) => {*/}
+        {/*    return (*/}
+        {/*      <View style={[styles.pagerView]}>*/}
+        {/*        {!item.is_payment*/}
+        {/*          ? renderItem(item, index)*/}
+        {/*          : renderPurchase(item, index)}*/}
+        {/*      </View>*/}
+        {/*    );*/}
+        {/*  }}*/}
+        {/*  pagingEnabled={true}*/}
+        {/*/>*/}
+
         <View style={{height: 65, zIndex: 999}}>{<FooterFeed />}</View>
       </Container>
     </Drawer>

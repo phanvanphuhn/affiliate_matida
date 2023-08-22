@@ -24,6 +24,9 @@ export interface IDataListFeed
   updated_at: string;
   title: string;
   topic: string;
+
+  is_liked?: boolean;
+  total_comments?: number;
 }
 
 export interface IPodcastFeed {

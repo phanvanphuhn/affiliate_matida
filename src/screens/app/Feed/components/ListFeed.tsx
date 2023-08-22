@@ -154,8 +154,9 @@ const ListFeed = (props: any) => {
         keyExtractor={(item, index) => index?.toString()}
         numColumns={2}
         initialNumToRender={4}
-        maxToRenderPerBatch={4}
-        windowSize={5}
+        maxToRenderPerBatch={8}
+        windowSize={10}
+        removeClippedSubviews
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.4}
         showsVerticalScrollIndicator={false}

@@ -9,20 +9,53 @@ import {
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useVideo} from './Container';
 import Extrapolate = module;
+import {
+  commentFeedApi,
+  getDetailFeedApi,
+  likeFeedApi,
+} from '../../../../services/feed';
 
 interface FooterFeedProps {}
 
 const FooterFeed = (props: FooterFeedProps) => {
   const {state, setState} = useVideo();
 
-  const onHearth = () => {
-    setState({
-      feed: {...state.feed, is_liked: !state.feed?.is_liked},
-    });
+  const getDetail = async () => {
+    if (!state.feed) {
+      return;
+    }
+    const res = await getDetailFeedApi(
+      state.feed?.content_type,
+      state.feed?.id,
+    );
+    if (res.success) {
+      console.log('=>(useCommentFeed.ts:49) res', res);
+      setState({
+        is_liked: res?.data?.is_liked,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getDetail();
+  }, [state.feed?.id, state.feed?.content_type]);
+  const onLike = async () => {
+    try {
+      if (!state.feed) {
+        return;
+      }
+      const res = await likeFeedApi(state.feed?.content_type, state.feed?.id);
+      if (res.success) {
+        console.log('=>(useCommentFeed.ts:49) res', res);
+        setState({
+          is_liked: res.data?.is_liked,
+        });
+      }
+    } catch (error: any) {}
   };
   const onComment = () => {
     setState({isShowComment: true});
@@ -30,7 +63,7 @@ const FooterFeed = (props: FooterFeedProps) => {
   };
   const onRate = () => {
     setState({
-      feed: {...state.feed, isRated: !state.feed?.isRated},
+      feed: {...state.feed, is_rated: !state.feed?.is_rated},
     });
     console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
@@ -42,14 +75,14 @@ const FooterFeed = (props: FooterFeedProps) => {
   };
   return (
     <View style={[styles.containerFooter]}>
-      <TouchableOpacity onPress={onHearth} style={styles.buttonFooter}>
-        {state.feed?.is_liked ? <SvgHearted /> : <SvgHeart />}
+      <TouchableOpacity onPress={onLike} style={styles.buttonFooter}>
+        {state?.is_liked ? <SvgHearted /> : <SvgHeart />}
       </TouchableOpacity>
       <TouchableOpacity onPress={onComment} style={styles.buttonFooter}>
         <Image source={ic_comment} />
       </TouchableOpacity>
       <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
-        {state.feed?.isRated ? (
+        {state.feed?.is_rated ? (
           <SvgStar fill={colors.yellow} color={colors.yellow} />
         ) : (
           <SvgStar />

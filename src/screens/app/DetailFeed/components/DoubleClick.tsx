@@ -4,6 +4,7 @@ import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
 import {useVideo} from './Container';
+import {likeFeedApi} from '../../../../services/feed';
 interface DoubleClick {
   isShowButtonPlay?: boolean;
   children: React.ReactNode;
@@ -25,11 +26,19 @@ const DoubleClick = ({
     }
   };
 
-  const onDoubleTapEvent = (event: any) => {
+  const onDoubleTapEvent = async (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      setState({
-        feed: {...state.feed, is_liked: true},
-      });
+      try {
+        if (!state.feed || state.is_liked) {
+          return;
+        }
+        const res = await likeFeedApi(state.feed?.content_type, state.feed?.id);
+        if (res.success) {
+          setState({
+            is_liked: res.data?.is_liked,
+          });
+        }
+      } catch (error: any) {}
     }
   };
 

@@ -1,5 +1,5 @@
 import {colors, heightScreen, scaler} from '@stylesCommon';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';
@@ -22,6 +22,11 @@ const TitleFeed = (props: TitleFeedProps) => {
   const toggleNumberOfLines = () => {
     setTextShown(!textShown);
   };
+  useEffect(() => {
+    if (state.feed) {
+      setTextShown(false);
+    }
+  }, [state.feed]);
 
   if (state.isShowComment) {
     return null;
