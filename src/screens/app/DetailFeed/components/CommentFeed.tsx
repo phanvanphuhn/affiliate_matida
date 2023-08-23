@@ -1,8 +1,7 @@
 import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import {ic_comment, iconClose, SvgHeart, SvgHearted} from '@images';
-import {useKeyboard} from '@react-native-community/hooks';
+import {iconClose} from '@images';
 import {colors} from '@stylesCommon';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ActivityIndicator,
@@ -15,11 +14,10 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IDataComment} from '../types';
-import {useVideo} from './Container';
 import useCommentFeed from '../useCommentFeed';
-import KeyboardShift from './KeyboardShift';
-import {AppImage} from '@component';
+import {useVideo} from './Container';
 import ItemComment from './ItemComment';
+import KeyboardShift from './KeyboardShift';
 interface CommentProps {}
 
 const CommentFeed = (props: CommentProps) => {
@@ -117,7 +115,7 @@ const CommentFeed = (props: CommentProps) => {
               !stateComment.isLoading ? (
                 <View
                   style={{flex: 1, alignItems: 'center', paddingTop: '50%'}}>
-                  <Text>Không có bình luận nào</Text>
+                  <Text>{t('feed.noComment')}</Text>
                 </View>
               ) : null
             }

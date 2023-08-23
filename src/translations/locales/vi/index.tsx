@@ -604,5 +604,6 @@ export const vi = {
     views: 'lượt xem',
     like: 'Lượt thích',
     comment: 'Bình luận',
+    noComment: 'Không có bình luận nào',
   },
 };

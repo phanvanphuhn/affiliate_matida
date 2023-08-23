@@ -599,5 +599,6 @@ export const en = {
     view: 'views',
     like: 'Like',
     comment: 'Comment',
+    noComment: 'No comments',
   },
 };
