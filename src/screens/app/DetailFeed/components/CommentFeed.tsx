@@ -53,6 +53,7 @@ const CommentFeed = (props: CommentProps) => {
     } else {
       bottomSheetRef.current?.close();
       setStateComment({page: 1});
+      setState({comment: undefined});
     }
   }, [state.isShowComment]);
 
@@ -93,7 +94,7 @@ const CommentFeed = (props: CommentProps) => {
             }}>
             <View style={{width: 50}} />
             <Text style={{fontWeight: '600'}}>
-              {stateComment.total ? stateComment.total : ''} {t('feed.comment')}
+              {state.totalComment ? state.totalComment : ''} {t('feed.comment')}
             </Text>
             <TouchableOpacity
               onPress={onCloseComment}

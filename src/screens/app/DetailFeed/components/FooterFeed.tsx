@@ -10,7 +10,7 @@ import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
 import React, {useCallback, useEffect} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useVideo} from './Container';
 import Extrapolate = module;
 import {
@@ -36,6 +36,7 @@ const FooterFeed = (props: FooterFeedProps) => {
       console.log('=>(useCommentFeed.ts:49) res', res);
       setState({
         is_liked: res?.data?.is_liked,
+        totalComment: res?.data?.total_comments,
       });
     }
   };
@@ -78,8 +79,18 @@ const FooterFeed = (props: FooterFeedProps) => {
       <TouchableOpacity onPress={onLike} style={styles.buttonFooter}>
         {state?.is_liked ? <SvgHearted /> : <SvgHeart />}
       </TouchableOpacity>
-      <TouchableOpacity onPress={onComment} style={styles.buttonFooter}>
+      <TouchableOpacity
+        onPress={onComment}
+        style={[
+          styles.buttonFooter,
+          {flexDirection: 'row', alignItems: 'center'},
+        ]}>
         <Image source={ic_comment} />
+        {!!state.totalComment && (
+          <Text style={{color: colors.white, fontSize: 12, marginLeft: 5}}>
+            {state.totalComment}
+          </Text>
+        )}
       </TouchableOpacity>
       <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
         {state.feed?.is_rated ? (

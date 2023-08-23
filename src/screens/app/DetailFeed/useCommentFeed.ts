@@ -37,7 +37,7 @@ const useCommentFeed = () => {
       ...preState,
     }),
   );
-  const {state: stateFeed} = useVideo();
+  const {state: stateFeed, setState: setStateFeed} = useVideo();
   const actionComment = async () => {
     try {
       if (!state.content) {
@@ -50,6 +50,7 @@ const useCommentFeed = () => {
       );
       if (res.success) {
         setState({data: state.data.concat([res.data]), content: ''});
+        setStateFeed({totalComment: (stateFeed.totalComment || 0) + 1});
         setTimeout(() => {
           flatlitRef.current?.scrollToEnd();
         }, 300);
@@ -72,6 +73,7 @@ const useCommentFeed = () => {
         let i = state.data.findIndex(e => e.id === comment_id);
         let data = [...state.data];
         data[i].reply_comments.push(res?.data);
+        data[i].total_reply_comment = data[i].total_reply_comment + 1;
         setState({data, content: ''});
       }
     } catch (error: any) {}
@@ -87,6 +89,8 @@ const useCommentFeed = () => {
       if (res.success) {
         let data = res?.data?.comments;
         setState({total: res.data?.total});
+        setStateFeed({totalComment: res.data?.total});
+
         handlerData(data);
       }
       setState({isLoadMore: false, isLoading: false});

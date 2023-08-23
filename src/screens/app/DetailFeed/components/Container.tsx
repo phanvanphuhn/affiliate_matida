@@ -2,7 +2,7 @@ import React, {useContext, useReducer} from 'react';
 import {StyleSheet, View} from 'react-native';
 import FooterFeed from './FooterFeed';
 import SliderFeed from './SliderFeed';
-import {IDataComment, IState} from '../types';
+import {IDataComment} from '../types';
 import {IDataListFeed} from '../../Feed/type';
 import CommentFeed from './CommentFeed';
 import KeyboardShift from './KeyboardShift';
@@ -17,6 +17,7 @@ interface IState {
   feed?: IDataListFeed;
   comment?: IDataComment;
   duration?: number;
+  totalComment?: number;
   isShowComment?: boolean;
   is_liked?: boolean;
   is_rated?: boolean;
@@ -33,6 +34,7 @@ const VideoContext = React.createContext<IVideoContext>({
     progress: 0,
     progressChange: 0,
     duration: 0,
+    totalComment: 0,
     feed: undefined,
     comment: undefined,
     isShowComment: false,
@@ -53,6 +55,7 @@ const Container: React.FC<ContainerProps> = props => {
       duration: 0,
       progress: 0,
       progressChange: 0,
+      totalComment: 0,
       feed: undefined,
       comment: undefined,
       progressStatus: undefined,
