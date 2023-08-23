@@ -13,7 +13,6 @@ import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getDetailFeedApi, likeFeedApi} from '../../../../services/feed';
 import {useVideo} from './Container';
-import Extrapolate = module;
 
 interface FooterFeedProps {}
 
@@ -26,7 +25,7 @@ const FooterFeed = (props: FooterFeedProps) => {
     }
     const res = await getDetailFeedApi(
       state.feed?.content_type,
-      state.feed?.id,
+      state.feed?.contentid,
     );
     if (res.success) {
       console.log('=>(useCommentFeed.ts:49) res', res);
@@ -45,7 +44,10 @@ const FooterFeed = (props: FooterFeedProps) => {
       if (!state.feed) {
         return;
       }
-      const res = await likeFeedApi(state.feed?.content_type, state.feed?.id);
+      const res = await likeFeedApi(
+        state.feed?.content_type,
+        state.feed?.contentid,
+      );
       if (res.success) {
         console.log('=>(useCommentFeed.ts:49) res', res);
         setState({

@@ -14,15 +14,10 @@ import {OnPageSelectedEventData} from 'react-native-pager-view/src/PagerViewNati
 import {getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
 import {useRoute} from '@react-navigation/native';
-import {indexOf} from 'lodash';
 
 const useDetailFeed = () => {
   const route = useRoute<any>();
-  const getIndex = (size: number) => {
-    return route.params?.index >= (size || 10)
-      ? route.params?.index - (route.params?.currentPage - 1) * (size || 10)
-      : route.params?.index;
-  };
+
   const [state, setState] = useReducer(
     (preState: IStateVideo, newState: Partial<IStateVideo>) => ({
       ...preState,
@@ -33,7 +28,7 @@ const useDetailFeed = () => {
       page: route.params?.currentPage || 1,
       size: 10,
       total: 0,
-      currentIndex: getIndex(10) || 0,
+      currentIndex: 0,
       refreshing: false,
       isOpen: false,
       isLoading: false,
@@ -43,6 +38,14 @@ const useDetailFeed = () => {
       ...preState,
     }),
   );
+  useEffect(() => {
+    const getIndex = (size: number) => {
+      return route.params?.index >= (size || 10)
+        ? route.params?.index - (route.params?.currentPage - 1) * (size || 10)
+        : route.params?.index;
+    };
+    setState({currentIndex: getIndex(10)});
+  }, [route.params?.index, route.params?.currentPage]);
 
   const getListVideo = async () => {
     try {
@@ -95,23 +98,23 @@ const useDetailFeed = () => {
     }
   };
   const onPageSelected = (pageNumber: number) => {
-    // console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
-    // const firstSlide = pageNumber == 0;
-    // console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
-    // const lastSlide = pageNumber == state.data.length - 1;
-    // console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
-    // if (firstSlide) {
-    //   handleLoadLess(pageNumber);
-    // } else if (lastSlide) {
-    //   handleLoadMore();
-    //   setState({
-    //     currentIndex: pageNumber,
-    //   });
-    // } else {
-    setState({
-      currentIndex: pageNumber,
-    });
-    // }
+    console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
+    const firstSlide = pageNumber == 0;
+    console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
+    const lastSlide = pageNumber == state.data.length - 1;
+    console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
+    if (firstSlide) {
+      handleLoadLess(pageNumber);
+    } else if (lastSlide) {
+      handleLoadMore();
+      setState({
+        currentIndex: pageNumber,
+      });
+    } else {
+      setState({
+        currentIndex: pageNumber,
+      });
+    }
   };
   useEffect(() => {
     getListVideo();

@@ -1,4 +1,7 @@
-import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+} from '@gorhom/bottom-sheet';
 import {iconClose} from '@images';
 import {colors} from '@stylesCommon';
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
@@ -14,10 +17,12 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IDataComment} from '../types';
-import useCommentFeed from '../useCommentFeed';
 import {useVideo} from './Container';
-import ItemComment from './ItemComment';
+import useCommentFeed from '../useCommentFeed';
 import KeyboardShift from './KeyboardShift';
+import ItemComment from './ItemComment';
+import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
+
 interface CommentProps {}
 
 const CommentFeed = (props: CommentProps) => {
@@ -44,6 +49,7 @@ const CommentFeed = (props: CommentProps) => {
     flatlitRef,
     actionLikeComment,
     actionReliesComment,
+    actionLikeRepliesComment,
   } = useCommentFeed();
   useEffect(() => {
     if (state.isShowComment) {
@@ -55,12 +61,14 @@ const CommentFeed = (props: CommentProps) => {
     }
   }, [state.isShowComment]);
 
-  const renderItem: ListRenderItem<IDataComment> = ({item}) => {
+  const renderItem: ListRenderItem<IDataComment> = ({item, index}) => {
     return (
       <ItemComment
         item={item}
         onLiked={actionLikeComment}
+        onLikeReplies={actionLikeRepliesComment}
         isShowReplies={true}
+        index={index}
       />
     );
   };
@@ -74,12 +82,23 @@ const CommentFeed = (props: CommentProps) => {
   const onComment = () => {
     state?.comment ? actionReliesComment(state.comment.id) : actionComment();
   };
+  const renderBackdrop = useCallback(
+    (props2: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props2}
+        onPress={onCloseComment}
+        pressBehavior={'close'}
+      />
+    ),
+    [],
+  );
   return (
     <>
       <BottomSheet
         ref={bottomSheetRef}
         index={-1}
         enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}>
         <View style={[styles.container, {paddingTop: 10}]}>

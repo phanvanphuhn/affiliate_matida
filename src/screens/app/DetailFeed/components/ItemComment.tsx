@@ -9,7 +9,9 @@ import {useVideo} from './Container';
 interface ItemCommentProps {
   item: IDataComment;
   onLiked: (item: IDataComment) => void;
+  onLikeReplies?: (index: number, reply: IDataComment) => void;
   isShowReplies?: boolean;
+  index: number;
 }
 
 const ItemComment = (props: ItemCommentProps) => {
@@ -57,7 +59,13 @@ const ItemComment = (props: ItemCommentProps) => {
                   paddingLeft: 40,
                   flex: 1,
                 }}>
-                <ItemComment item={reply} onLiked={() => {}} />
+                <ItemComment
+                  item={reply}
+                  onLiked={() =>
+                    props?.onLikeReplies &&
+                    props.onLikeReplies(props.index, reply)
+                  }
+                />
               </View>
             );
           })

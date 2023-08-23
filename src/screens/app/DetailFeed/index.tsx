@@ -111,7 +111,6 @@ const DetailFeed = (props: DetailFeedProps) => {
         />
         {!!state?.data.length && (
           <PagerView
-            key={state?.data.length}
             initialPage={state.currentIndex}
             orientation={'vertical'}
             style={[styles.pagerView]}
@@ -120,9 +119,8 @@ const DetailFeed = (props: DetailFeedProps) => {
             {state?.data?.map((item, index) => (
               <View
                 style={[styles.pagerView]}
-                key={item?.content_type + item?.id}>
-                {item.is_payment?.toString() == '1' &&
-                item.content_type !== 'daily_quizz'
+                key={item?.content_type + item?.contentid}>
+                {item.is_payment == '1' && item.content_type !== 'daily_quizz'
                   ? renderPurchase(item, index)
                   : renderItem(item, index)}
               </View>

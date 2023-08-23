@@ -8,7 +8,7 @@ export interface IStateVideo {
   page: number;
   size: number;
   total: number;
-  currentIndex: number;
+  currentIndex?: number;
   refreshing: boolean;
   isOpen: boolean;
   isLoading: boolean;

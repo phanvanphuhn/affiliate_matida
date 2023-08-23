@@ -21,14 +21,14 @@ const ItemArticle = (props: ItemArticleProps) => {
     return () => {};
   }, [props.isFocused]);
   return (
-    <DoubleClick
-      isShowButtonPlay={false}
-      onDoubleClick={() => {
-        console.log('=>(ItemVideo.tsx:148) onDoubleClick');
-      }}>
+    <DoubleClick isShowButtonPlay={false}>
       <View style={{flex: 1}}>
         <FastImage
-          source={{uri: props.item.image}}
+          source={{
+            uri: props.item.image,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
           resizeMode={'contain'}
           style={{
             width: widthScreen,

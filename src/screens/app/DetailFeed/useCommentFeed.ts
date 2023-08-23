@@ -1,14 +1,14 @@
-import { BottomSheetFlatListMethods } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/types';
-import { useRoute } from '@react-navigation/native';
-import { useEffect, useReducer, useRef } from 'react';
+import {BottomSheetFlatListMethods} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/types';
+import {useRoute} from '@react-navigation/native';
+import {useEffect, useReducer, useRef} from 'react';
 import {
   commentFeedApi,
   getListCommentFeedApi,
   likeCommentFeedApi,
   repliesCommentFeedApi,
 } from '../../../services/feed';
-import { useVideo } from './components/Container';
-import { IDataComment, IStateComment } from './types';
+import {useVideo} from './components/Container';
+import {IDataComment, IStateComment} from './types';
 
 const useCommentFeed = () => {
   const route = useRoute<any>();
@@ -58,12 +58,37 @@ const useCommentFeed = () => {
     try {
       const res = await likeCommentFeedApi(item.id);
       if (res.success) {
-        if (res?.data?.is_liked) {
-          item.is_liked = 1;
+        let i = state.data.findIndex(e => e.id === item.id);
+        let data = [...state.data];
+        console.log('=>(useCommentFeed.ts:63) data', data);
+        data[i].is_liked = res.data.is_liked;
+        if (res.data.is_liked) {
+          data[i].total_likes += 1;
         } else {
-          item.is_liked = 0;
+          data[i].total_likes -= 1;
         }
-        setState({data: state.data});
+        setState({data});
+      }
+    } catch (error: any) {}
+  };
+  const actionLikeRepliesComment = async (
+    index: number,
+    reply: IDataComment,
+  ) => {
+    try {
+      const res = await likeCommentFeedApi(reply.id);
+      if (res.success) {
+        let i = state.data[index].reply_comments.findIndex(
+          e => e.id === reply.id,
+        );
+        let data = [...state.data];
+        data[index].reply_comments[i].is_liked = res.data.is_liked;
+        if (res.data.is_liked) {
+          data[index].reply_comments[i].total_likes += 1;
+        } else {
+          data[index].reply_comments[i].total_likes -= 1;
+        }
+        setState({data});
       }
     } catch (error: any) {}
   };
@@ -134,6 +159,7 @@ const useCommentFeed = () => {
     flatlitRef,
     actionLikeComment,
     actionReliesComment,
+    actionLikeRepliesComment,
   };
 };
 

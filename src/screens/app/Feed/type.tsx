@@ -14,7 +14,7 @@ export interface IDataListFeed
   content_type: ContentTypeFeed;
   contentid: string;
   created_at: string;
-  is_payment: number;
+  is_payment: string;
   lang: 'vi';
   price_vn: number;
   id: number;
