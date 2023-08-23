@@ -106,10 +106,7 @@ const ItemVideo = (props: ItemVideoProps) => {
     <DoubleClick
       onSingleClick={onPause}
       playerState={playerState}
-      isShowButtonPlay={true}
-      onDoubleClick={() => {
-        console.log('=>(ItemVideo.tsx:148) onDoubleClick');
-      }}>
+      isShowButtonPlay={true}>
       <View style={styles.container}>
         <View style={{flex: 1}}>
           {!!props?.isAudio && (
@@ -117,6 +114,14 @@ const ItemVideo = (props: ItemVideoProps) => {
               source={{uri: props.item.image}}
               blurRadius={5}
               style={styles.imgBackground}>
+              <View
+                style={{
+                  backgroundColor: '#00000070',
+                  height: '100%',
+                  width: '100%',
+                  ...StyleSheet.absoluteFillObject,
+                }}
+              />
               <FastImage
                 source={{uri: props.item.image}}
                 style={styles.imgPodcast}
