@@ -3,7 +3,7 @@ import {avatarDefault} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {LikeViewComment} from './LikeViewComment';
 import {LikeViewReply} from './LikeViewReply';

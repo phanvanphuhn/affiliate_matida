@@ -14,6 +14,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 import {HelpComponent, TopicComponent} from './components';
 import {IFormikFeedback} from './Onboarding.props';
 
@@ -47,7 +48,7 @@ export const OnboardingHook = () => {
   const getData = async () => {
     try {
       const res = await getQuestionOnboarding();
-      console.log('OnboardingHook: ', res?.data);
+      reactotron.log?.('OnboardingHook: ', res?.data);
       setData(res?.data);
     } catch (e) {
     } finally {

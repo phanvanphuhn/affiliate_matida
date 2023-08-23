@@ -269,7 +269,8 @@ const DetailVideo = (props: any) => {
           onSeek={onSeek}
           onSeeking={onSeeking}
           playerState={playerState}
-          progress={currentTime}></MediaControls>
+          progress={currentTime}
+        />
         {getDescriptionVideo()?.length > 0 && paused ? (
           <View
             style={{

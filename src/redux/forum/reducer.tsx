@@ -1,4 +1,5 @@
 import {produce} from 'immer';
+import reactotron from 'reactotron-react-native';
 import {ForumState, INITIAL_STATE_FORUM} from './state';
 import {typeForum} from './type';
 
@@ -21,6 +22,7 @@ export default function forumReducer(state = INITIAL_STATE_FORUM, action: any) {
         } else {
           draft.forum = draft.forum?.concat(action.payload?.result?.posts);
         }
+        reactotron.log?.('PAYLOAD POSTS', action.payload);
         draft.total = action.payload?.result?.total;
       });
 

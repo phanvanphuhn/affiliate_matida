@@ -1,28 +1,27 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {scaler, stylesCommon, widthScreen, colors} from '@stylesCommon';
+import {ViewTextSeeMore} from '@component';
+import {EDailyQuiz} from '@constant';
 import {
   IconBackgroundImageHome,
-  iconSuccessQuiz,
-  iconFalseQuiz,
-  SvgVerify,
   SvgFailed,
   SvgLikeQuiz,
   SvgUnLikeQuiz,
+  SvgVerify,
 } from '@images';
-import {useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
-import {EDailyQuiz} from '@constant';
-import {ViewTextSeeMore} from '@component';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {event, trackingAppEvent} from '@util';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useSelector} from 'react-redux';
 
 export const ViewQuiz = React.memo((props: any) => {
   const {onAnswer} = props;
@@ -207,6 +206,7 @@ export const ViewQuiz = React.memo((props: any) => {
             question_id: data?.id,
             answer_id: item?.id,
           };
+          trackingAppEvent(event.BABY_TRACKER.DAILY_QUIZ, {content: body});
           onAnswer(body);
         }}>
         <Text style={styles.txtTrueFalse}>

@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  Platform,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import {DefaultTFuncReturn} from 'i18next';
 import {useSelector} from 'react-redux';
@@ -11,6 +18,7 @@ interface AppDatePickerProps {
   onChange: any;
   minimumDate?: any;
   dataDate?: any;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const AppDatePicker = ({
@@ -18,6 +26,7 @@ export const AppDatePicker = ({
   onChange,
   minimumDate,
   dataDate,
+  style,
 }: AppDatePickerProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const [date, setDate] = useState(new Date());
@@ -36,6 +45,7 @@ export const AppDatePicker = ({
               ? scaler(179)
               : scaler(169),
         },
+        style,
       ]}>
       {!!title && <Text style={styles.textTitle}>{title}</Text>}
       <View style={[styles.viewDatePicker]}>

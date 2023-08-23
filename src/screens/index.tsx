@@ -58,6 +58,9 @@ import {Forum} from './app/Forum';
 import Feed from './app/Feed'
 import SearchFeed from './app/Feed/components/SearchFeed';
 import DetailFeed from './app/DetailFeed';
+import {SelectDOB} from './auth/DueDate/SelectDOB';
+import {Question2} from './auth/DueDate/Question2';
+import {Question3} from './auth/DueDate/Question3';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -119,7 +122,10 @@ const screens = {
   Forum,
   Feed,
   DetailFeed,
-  SearchFeed
+  SearchFeed,
+  SelectDOB,
+  Question2,
+  Question3,
 };
 
 export {screens};

@@ -7,6 +7,7 @@ import {iconNext, SvgIconBaby, SvgIconMom, SvgIconPear} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {event, trackingAppEvent} from '@util';
 import {t} from 'i18next';
 import {useSelector} from 'react-redux';
 
@@ -41,6 +42,7 @@ export const SizeComparisonComponent = () => {
   ];
 
   const handlePress = () => {
+    trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_OPEN, {});
     navigate(ROUTE_NAME.SIZE_COMPARISON, {
       option: OptionComparison.EMBRYO,
     });

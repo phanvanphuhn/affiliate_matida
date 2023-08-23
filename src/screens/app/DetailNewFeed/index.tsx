@@ -9,19 +9,19 @@ import {
   Option,
 } from '@component';
 import {
-  SvgArrowLeft,
-  SvgFlag,
-  SvgProhibit,
   avatarDefault,
   buttonSend,
   iconClose,
   iconReplyArr,
+  SvgArrowLeft,
+  SvgFlag,
+  SvgProhibit,
 } from '@images';
 import {
-  GlobalService,
   addCommentApi,
   blockUserApi,
   createReplyComment,
+  GlobalService,
 } from '@services';
 import {colors, scaler, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
@@ -45,7 +45,6 @@ import {Item} from './component/Item';
 import {ItemListComment} from './component/ItemListComment';
 import {styles} from './styles';
 
-import {ETypeUser} from '@constant';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {
   addCommentToList,
@@ -54,11 +53,14 @@ import {
   deleteListUserPost,
   getDetailPost,
   getListCommentAction,
+  saveIsSeenComment,
 } from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {AppSocket, event, trackingAppEvent, useUXCam} from '@util';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
+import {ETypeUser} from '@constant';
+import {RootState} from 'src/redux/rootReducer';
 
 const DetailNewFeed = (props: any) => {
   const navigation = useNavigation<any>();
@@ -71,6 +73,9 @@ const DetailNewFeed = (props: any) => {
   const detail = useSelector((state: any) => state?.post?.detailPost);
   const loading = useSelector((state: any) => state?.post?.loading);
   const week = useSelector((state: any) => state?.home?.week);
+  const isSeenComment = useSelector(
+    (state: RootState) => state.auth.isSeenComment,
+  );
 
   const textInput = useRef<any>();
   const {route} = props;
@@ -143,6 +148,16 @@ const DetailNewFeed = (props: any) => {
       null;
     }
   }, [page]);
+
+  useEffect(() => {
+    if (
+      !isSeenComment &&
+      listComment?.length > 0 &&
+      detail?.user_id === user?.id
+    ) {
+      dispatch(saveIsSeenComment(true));
+    }
+  }, [listComment]);
 
   const getData = () => {
     getDataInfoPost();
@@ -228,6 +243,7 @@ const DetailNewFeed = (props: any) => {
           comment_id: dataReply?.id,
           content: text,
         };
+        trackingAppEvent(event.FORUM.REPLY, {content: body});
         const res = await createReplyComment(body);
         dispatch(
           addReplyCommentToList({data: [{...res?.data}], idCmt: dataReply?.id}),
@@ -241,6 +257,7 @@ const DetailNewFeed = (props: any) => {
         });
       } else {
         const body = {post_id: id, content: text};
+        trackingAppEvent(event.FORUM.COMMENT, {content: body});
         const res = await addCommentApi(body);
         dispatch(addCommentToList([{...res?.data}]));
         socket.emit('commentPost', {

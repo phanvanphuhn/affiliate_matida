@@ -1,4 +1,5 @@
 import {getHome, getHomeByWeeks} from '@services';
+import reactotron from 'reactotron-react-native';
 import {put, takeEvery} from 'redux-saga/effects';
 import {
   changeWeek,
@@ -18,6 +19,7 @@ interface ResponseGenerator {
 export function* getDataHomeSaga() {
   try {
     const res: ResponseGenerator = yield getHome();
+    reactotron.log?.('HOME DATA', res.data);
     yield put(getDataHomeSuccess(res?.data));
     yield put(
       changeWeekPregnant(

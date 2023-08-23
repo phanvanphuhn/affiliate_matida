@@ -54,6 +54,15 @@ export const vi = {
     notKnowDueDate: 'Không biết ngày dự sinh?',
     save: 'Lưu',
     skip: 'Bỏ qua',
+    submit: 'Tiếp theo',
+    titleQuestion1: 'Vui lòng cung cấp ngày tháng năm sinh',
+    titleQuestion2: 'Mẹ bầu biết đến Matida từ đâu?',
+    titleQuestion3: 'Bạn thuộc tuýp mẹ bầu nào sau đây?',
+    placeHolderQuestion2: 'VD: Bạn bè, KOL tiktok...',
+    option1: 'Vui vẻ, vô lo',
+    option2: 'Bận rộn, tìm kiếm sự cân bằng',
+    option3: 'Hay lo lắng, cần sự giúp đỡ',
+    placeholderOption4: 'Khác (mẹ bầu chia sẻ thêm ở đây nhé!)',
   },
 
   calculateDueDate: {

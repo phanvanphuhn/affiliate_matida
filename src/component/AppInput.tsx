@@ -29,6 +29,7 @@ interface IAppInput {
   onValueChange: (e: any) => void;
   keyboardType?: any;
   maxLength?: number;
+  placeholderColor?: string;
 }
 
 export const AppInput = (props: IAppInput) => {
@@ -47,6 +48,7 @@ export const AppInput = (props: IAppInput) => {
     onValueChange,
     keyboardType,
     maxLength,
+    placeholderColor,
     ...rest
   } = props;
   const animatedIsFocused = React.useRef(
@@ -114,7 +116,7 @@ export const AppInput = (props: IAppInput) => {
           selection={isFocused ? undefined : {start: 0, end: 0}}
           style={[styles.input, inputStyle]}
           placeholder={placeholder}
-          placeholderTextColor="rgba(90, 117, 132, 0.5);"
+          placeholderTextColor={placeholderColor ?? 'rgba(90, 117, 132, 0.5);'}
           value={value}
           multiline={multiline}
           onFocus={handleFocus}

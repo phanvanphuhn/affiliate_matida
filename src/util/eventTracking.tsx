@@ -68,4 +68,29 @@ export const event = {
     MASTER_CLASS: 'af_screen_master_class_detail',
     LIST_MASTER_CLASS: 'af_screen_list_master_class',
   },
+  FORUM: {
+    LIKE: 'post_liked',
+    COMMENT: 'post_commented',
+    CREATE_NEW_POST_BUTTON: 'post_create_new_post_button',
+    REPLY: 'post_reply',
+    CREATE_NEW_POST_PAGE: 'post_create_new_post_page',
+    POST_IN_FORUM: 'post_in_forum',
+  },
+  TIDA: {
+    TIDA_OPEN: 'tida_open',
+    TIDA_ASK: 'tida_ask_questions',
+  },
+  BABY_TRACKER: {
+    BABY_TRACKER_OPEN: 'baby_tracker_open',
+    BABY_TRACKER_FORUM_SECTION: 'baby_tracker_forum_section',
+    BABY_TRACKER_CHANGE_WEEK: 'baby_tracker_change_week',
+    DAILY_QUIZ: 'daily_quiz',
+    PODCAST_SCROLL: 'podcast_scroll',
+    VIDEO_SCROLL: 'video_scroll',
+    ARTICLE_SCROLL: 'article_scroll',
+  },
+  MOM_TEST: {
+    START: 'MOM_TEST_START',
+    DO: 'MOM_DO_DAILY_QUIZ',
+  },
 };

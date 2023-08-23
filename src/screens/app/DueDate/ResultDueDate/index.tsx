@@ -39,7 +39,8 @@ const ResultDueDateScreenApp = (props: any) => {
 
   const handlePressButton = () => {
     if (type === 'Choose') {
-      navigation.pop(2);
+      // navigation.pop(2);
+      navigation.navigate(ROUTE_NAME.SELECT_DOB);
     } else {
       navigation.pop(3);
     }

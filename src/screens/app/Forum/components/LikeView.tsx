@@ -7,6 +7,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 
 export const LikeView = (props: any) => {
   const {data, id, onNavigate} = props;
@@ -31,6 +32,10 @@ export const LikeView = (props: any) => {
       clearTimeout(debounceLike);
     };
   }, [isLike]);
+
+  useEffect(() => {
+    reactotron.log?.('DATA POST', data);
+  }, [data]);
 
   const handleEventLike = async () => {
     if (isLike !== !!data?.is_liked) {
@@ -79,7 +84,10 @@ export const LikeView = (props: any) => {
           activeOpacity={0.8}
           onPress={onNavigate}>
           <SvgComment />
-          <Text style={styles.text}>{data?.total_comment}</Text>
+          <Text style={styles.text}>
+            {parseInt(data?.total_comment ?? '0', 10) +
+              parseInt(data?.total_reply_comment ?? '0', 10)}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
