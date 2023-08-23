@@ -1,3 +1,4 @@
+import {toNumber} from 'lodash';
 import api from '../api';
 
 const GET_LIST_FEED = 'feeds';
@@ -36,9 +37,9 @@ export const commentFeedApi: any = async (
   return response;
 };
 export const likeCommentFeedApi: any = async (comment_id: string) => {
-  const response = await api.post(`${API_LIKE_COMMENT_FEED}`, {
-    comment_id,
-  });
+  const response = await api.put(
+    `${API_LIKE_COMMENT_FEED}/${toNumber(comment_id)}`,
+  );
   return response;
 };
 export const likeFeedApi: any = async (feed_type: string, feed_id: string) => {

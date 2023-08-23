@@ -1,17 +1,14 @@
-import {useEffect, useReducer, useRef} from 'react';
-import {IDataComment, IStateComment} from './types';
+import { BottomSheetFlatListMethods } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/types';
+import { useRoute } from '@react-navigation/native';
+import { useEffect, useReducer, useRef } from 'react';
 import {
   commentFeedApi,
   getListCommentFeedApi,
-  getListFeedApi,
   likeCommentFeedApi,
   repliesCommentFeedApi,
 } from '../../../services/feed';
-import {IDataListFeed} from '../Feed/type';
-import {useRoute} from '@react-navigation/native';
-import {useVideo} from './components/Container';
-import BottomSheet, {BottomSheetFlatList} from '@gorhom/bottom-sheet';
-import {BottomSheetFlatListMethods} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetScrollable/types';
+import { useVideo } from './components/Container';
+import { IDataComment, IStateComment } from './types';
 
 const useCommentFeed = () => {
   const route = useRoute<any>();
@@ -61,7 +58,11 @@ const useCommentFeed = () => {
     try {
       const res = await likeCommentFeedApi(item.id);
       if (res.success) {
-        item.is_liked = 1;
+        if (res?.data?.is_liked) {
+          item.is_liked = 1;
+        } else {
+          item.is_liked = 0;
+        }
         setState({data: state.data});
       }
     } catch (error: any) {}
