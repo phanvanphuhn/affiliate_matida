@@ -22,8 +22,8 @@ export const VERSION_CODE_PUSH = 'v4';
 //   'pk_test_51NN5F6EZXr4feaDmXdY60loywUjSNUHz8VAYfiK4hL2hWed4lsPlHCEzJeA8PUy5DgucigO3hBd5At6zWwaoyebh00VDKioM01';
 
 //DOMAIN PRODUCT
-export const BASEURL = 'https://api.matida.app/api/'; //Domain product
-// export const BASEURL = 'https://api.matida.dev/api/'; //DOMAIN DEV
+// export const BASEURL = 'https://api.matida.app/api/'; //Domain product
+export const BASEURL = 'https://api.matida.dev/api/'; //DOMAIN DEV
 export const socketURL = 'https://api.matida.app'; //SOCKET product
 // export const socketURL = 'https://api.matida.dev'; //SOCKET DEV
 export const KEY_UXCAM = 'ayds69vc0q4shqf';

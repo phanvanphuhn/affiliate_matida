@@ -9,15 +9,11 @@ import {
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {getDetailFeedApi, likeFeedApi} from '../../../../services/feed';
 import {useVideo} from './Container';
 import Extrapolate = module;
-import {
-  commentFeedApi,
-  getDetailFeedApi,
-  likeFeedApi,
-} from '../../../../services/feed';
 
 interface FooterFeedProps {}
 

@@ -7,14 +7,14 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import Video, {OnProgressData} from 'react-native-video';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
 import {IDataListFeed} from '../../Feed/type';
-import TitleFeed from './TitleFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
-import FastImage from 'react-native-fast-image';
 import SliderFeed from './SliderFeed';
+import TitleFeed from './TitleFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -112,7 +112,7 @@ const ItemVideo = (props: ItemVideoProps) => {
           {!!props?.isAudio && (
             <ImageBackground
               source={{uri: props.item.image}}
-              blurRadius={5}
+              blurRadius={10}
               style={styles.imgBackground}>
               <View
                 style={{

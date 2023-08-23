@@ -1,23 +1,21 @@
+import {ViewTextSeeMore} from '@component';
+import {IconBackgroundImageHome} from '@images';
+import {updateDataHome} from '@redux';
+import {GlobalService, answerDailyQuiz} from '@services';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
-  FlatList,
   ImageBackground,
-  ListRenderItem,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {IAnswers, IDataListFeed} from '../../Feed/type';
-import {useDispatch, useSelector} from 'react-redux';
-import {useVideo} from './Container';
-import {answerDailyQuiz, GlobalService} from '@services';
-import {updateDataHome} from '@redux';
 import {showMessage} from 'react-native-flash-message';
-import {useTranslation} from 'react-i18next';
-import {IconBackgroundImageHome} from '@images';
-import {ViewTextSeeMore} from '@component';
+import {useDispatch, useSelector} from 'react-redux';
+import {IAnswers, IDataListFeed} from '../../Feed/type';
+import {useVideo} from './Container';
 import ResultQuizFeed from './ResultQuizFeed';
 
 interface DailyQuizFeedProps {

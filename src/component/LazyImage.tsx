@@ -1,21 +1,17 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {colors} from '@stylesCommon';
+import React, {useCallback, useState} from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   ActivityIndicator,
-  Image,
-  StyleProp,
   ImageRequireSource,
-  ImageSourcePropType,
+  StyleProp,
+  StyleSheet,
+  View,
 } from 'react-native';
 import FastImage, {
+  ImageStyle,
   ResizeMode,
   Source,
-  ImageStyle,
 } from 'react-native-fast-image';
-import {colors} from '@stylesCommon';
-import {avatarDefault, LogoApp} from '@images';
 
 interface LazyImageProps {
   source?: Source | ImageRequireSource;
@@ -23,7 +19,7 @@ interface LazyImageProps {
   onLoadCallBack?: () => void;
   resizeMode?: ResizeMode;
 }
-const LazyImage = React.memo((props: LazyImageProps) => {
+export const LazyImage = React.memo((props: LazyImageProps) => {
   const {source, style, resizeMode, onLoadCallBack = () => {}} = props;
 
   const [loading, setLoading] = useState<any>(null);
@@ -71,5 +67,3 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
 });
-
-export default LazyImage;

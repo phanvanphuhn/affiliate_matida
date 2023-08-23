@@ -1,33 +1,29 @@
 import {ic_back, ic_search} from '@images';
-import React, {useEffect, useRef, useState} from 'react';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
+import {heightScreen} from '@stylesCommon';
+import React, {useRef} from 'react';
 import {
   FlatList,
   Image,
   NativeSyntheticEvent,
   Platform,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
+import {Drawer} from 'react-native-drawer-layout';
+import PagerView from 'react-native-pager-view';
 import HeaderFeed from '../../../component/HeaderFeed';
 import {IDataListFeed} from '../Feed/type';
+import Container from './components/Container';
+import DailyQuizFeed from './components/DailyQuizFeed';
+import DrawerFeed from './components/DrawerFeed';
 import FooterFeed from './components/FooterFeed';
 import ItemArticle from './components/ItemArticle';
-import ItemVideo from './components/ItemVideo';
-import PagerView from 'react-native-pager-view';
-import useDetailFeed from './useDetailFeed';
-import {Drawer} from 'react-native-drawer-layout';
-import DrawerFeed from './components/DrawerFeed';
-import {ROUTE_NAME} from '@routeName';
-import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
-import {heightScreen, widthScreen} from '@stylesCommon';
-import SliderFeed from './components/SliderFeed';
-import Container from './components/Container';
 import ItemPurchase from './components/ItemPurchase';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import DailyQuizFeed from './components/DailyQuizFeed';
+import ItemVideo from './components/ItemVideo';
 import PackageQuizFeed from './components/PackageQuizFeed';
-import {SwiperFlatList} from './SwiperFlatlist/SwiperFlatList';
+import useDetailFeed from './useDetailFeed';
 interface DetailFeedProps {}
 const previewCount = 3;
 //to center items
@@ -125,9 +121,10 @@ const DetailFeed = (props: DetailFeedProps) => {
               <View
                 style={[styles.pagerView]}
                 key={item?.content_type + item?.id}>
-                {!item.is_payment
-                  ? renderItem(item, index)
-                  : renderPurchase(item, index)}
+                {item.is_payment?.toString() == '1' &&
+                item.content_type !== 'daily_quizz'
+                  ? renderPurchase(item, index)
+                  : renderItem(item, index)}
               </View>
             ))}
           </PagerView>

@@ -1,4 +1,5 @@
-import {DailyQuiz, SvgEye, iconClock, imageNameAppPink} from '@images';
+import {LazyImage} from '@component/LazyImage';
+import {SvgEye, iconClock, imageNameAppPink} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
@@ -17,7 +18,7 @@ import {useSelector} from 'react-redux';
 import useDetailFeed from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
-import LazyImage from '../../../../component/LazyImage';
+import DailyQuiz from './dailyQuiz';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
@@ -74,6 +75,9 @@ const ListFeed = (props: any) => {
     }
   };
   const renderItem: ListRenderItem<IDataListFeed> = ({item, index}) => {
+    if (item.content_type == 'daily_quizz') {
+      return <DailyQuiz item={item} index={index} />;
+    }
     return (
       <TouchableOpacity
         onPress={() => onDetailClick(index)}
@@ -83,15 +87,11 @@ const ListFeed = (props: any) => {
             <Text style={styles.tagTitle}>{renderTag(item)}</Text>
           </View>
           <LazyImage
-            source={
-              item.content_type === 'daily_quizz'
-                ? DailyQuiz
-                : {
-                    uri: getThumbnail(item),
-                    priority: FastImage.priority.high,
-                    cache: FastImage.cacheControl.immutable,
-                  }
-            }
+            source={{
+              uri: getThumbnail(item),
+              priority: FastImage.priority.high,
+              cache: FastImage.cacheControl.immutable,
+            }}
             style={styles.image}
           />
           {(item.content_type == 'video' || item.content_type == 'podcast') && (
