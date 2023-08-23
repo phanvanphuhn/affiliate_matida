@@ -3,6 +3,7 @@ import api from '../api';
 const SELECT_DUE_DATE = 'user/select-due-date';
 const GET_DUE_DATE = 'user/get-due-date';
 const CALCULATE_DATE = '/user/calculate-due-date';
+const UPDATE_BIRTH = 'user/date-of-birth';
 const GET_USER_INFO = 'auth/user/infor';
 const UPDATE_USER_INFO = 'user/profile';
 const UPLOAD_IMAGE = 'clouds/upload';
@@ -55,6 +56,11 @@ export const updateUserInfo: any = async (data: any) => {
 
 export const uploadImage: any = async (data: any) => {
   const response = await api.post(UPLOAD_IMAGE, data);
+  return response;
+};
+
+export const updateUserBirth: any = async (data: any) => {
+  const response = await api.put(UPDATE_BIRTH, data);
   return response;
 };
 
