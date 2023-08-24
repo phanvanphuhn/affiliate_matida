@@ -15,6 +15,7 @@ import {getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
 import {useRoute} from '@react-navigation/native';
 
+export const SIZE_DEFAULT = 10;
 const useDetailFeed = () => {
   const route = useRoute<any>();
 
@@ -26,9 +27,9 @@ const useDetailFeed = () => {
     {
       data: [],
       page: route.params?.currentPage || 1,
-      size: 10,
+      size: SIZE_DEFAULT,
       total: 0,
-      currentIndex: 0,
+      currentIndex: undefined,
       refreshing: false,
       isOpen: false,
       isLoading: false,
@@ -38,13 +39,16 @@ const useDetailFeed = () => {
       ...preState,
     }),
   );
+  console.log('=>(useDetailFeed.ts:41) state', state);
   useEffect(() => {
     const getIndex = (size: number) => {
-      return route.params?.index >= (size || 10)
-        ? route.params?.index - (route.params?.currentPage - 1) * (size || 10)
+      return route.params?.index >= (size || SIZE_DEFAULT)
+        ? route.params?.index -
+            (route.params?.currentPage - 1) * (size || SIZE_DEFAULT)
         : route.params?.index;
     };
-    setState({currentIndex: getIndex(10)});
+    console.log('=>(useDetailFeed.ts:48) getIndex(10)', getIndex(SIZE_DEFAULT));
+    setState({currentIndex: getIndex(SIZE_DEFAULT)});
   }, [route.params?.index, route.params?.currentPage]);
 
   const getListVideo = async () => {
@@ -106,7 +110,7 @@ const useDetailFeed = () => {
     if (firstSlide) {
       handleLoadLess(pageNumber);
     } else if (lastSlide) {
-      handleLoadMore();
+      // handleLoadMore();
       setState({
         currentIndex: pageNumber,
       });

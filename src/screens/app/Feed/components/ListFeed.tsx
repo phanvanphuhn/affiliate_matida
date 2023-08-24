@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
-import useDetailFeed from '../../DetailFeed/useDetailFeed';
+import useDetailFeed, {SIZE_DEFAULT} from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
 import DailyQuiz from './dailyQuiz';
@@ -31,7 +31,7 @@ const ListFeed = (props: any) => {
   const onDetailClick = (index: number) => {
     navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
       index,
-      currentPage: Math.ceil((index + 1) / 10),
+      currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
     });
   };
   const getTotalView = (item: IDataListFeed) => {
@@ -89,9 +89,8 @@ const ListFeed = (props: any) => {
           <LazyImage
             source={{
               uri: getThumbnail(item),
-              priority: FastImage.priority.high,
-              cache: FastImage.cacheControl.immutable,
             }}
+            fastImage={true}
             style={styles.image}
           />
           {(item.content_type == 'video' || item.content_type == 'podcast') && (

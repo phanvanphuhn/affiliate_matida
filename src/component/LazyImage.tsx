@@ -1,69 +1,198 @@
-import {colors} from '@stylesCommon';
-import React, {useCallback, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  ActivityIndicator,
-  ImageRequireSource,
-  StyleProp,
-  StyleSheet,
   View,
-} from 'react-native';
-import FastImage, {
+  Animated,
+  ActivityIndicator,
+  ImageSourcePropType,
+  AccessibilityProps,
+  StyleProp,
   ImageStyle,
-  ResizeMode,
-  Source,
-} from 'react-native-fast-image';
+  ImagePropsBase,
+  ImagePropsIOS,
+  ImagePropsAndroid,
+  StyleSheet,
+  ImageURISource,
+} from 'react-native';
+import FastImage, {ResizeMode} from 'react-native-fast-image';
 
-interface LazyImageProps {
-  source?: Source | ImageRequireSource;
-  style?: StyleProp<ImageStyle>;
-  onLoadCallBack?: () => void;
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
+
+export interface LazyImageProps
+  extends ImagePropsBase,
+    ImagePropsIOS,
+    ImagePropsAndroid,
+    AccessibilityProps {
+  onLoad?(): void;
+  withIndicator?: boolean;
+  thumbnailSource?: ImageSourcePropType;
+  source: ImageSourcePropType;
+  style?: StyleProp<ImageStyle> & any;
+  fastImage?: boolean;
   resizeMode?: ResizeMode;
 }
-export const LazyImage = React.memo((props: LazyImageProps) => {
-  const {source, style, resizeMode, onLoadCallBack = () => {}} = props;
 
-  const [loading, setLoading] = useState<any>(null);
-  const [error, setError] = useState<boolean>(false);
+export function LazyImage({
+  onLoad,
+  withIndicator = true,
+  thumbnailSource,
+  source,
+  style = {},
+  fastImage,
+  resizeMode,
+  ...props
+}: LazyImageProps) {
+  const [imgAnim] = useState<any>(new Animated.Value(0));
+  const [thumbnailAnim] = useState<any>(new Animated.Value(0));
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const onLoadStart = useCallback(() => {
-    setLoading(true);
+  const [helper, setHelper] = useState<boolean>(false);
+
+  useEffect(() => {
+    thumbnailSource && setHelper(true);
+    const timer = setTimeout(() => setLoading(false), 10000); // fetch image timeout 10s
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, []);
 
-  const onLoad = useCallback(() => {
+  const handleThumbnailLoad = () => {
     setLoading(false);
-    onLoadCallBack();
-  }, []);
-
-  const onError = () => {
+    Animated.timing(thumbnailAnim, {
+      toValue: 1,
+      useNativeDriver: false,
+    }).start();
+  };
+  const onImageLoad = () => {
     setLoading(false);
-    setError(true);
+    helper && setHelper(false);
+    Animated.timing(imgAnim, {
+      toValue: 1,
+      useNativeDriver: false,
+    }).start();
+    onLoad && onLoad();
   };
 
-  return (
-    <View style={style}>
-      <FastImage
-        source={source}
-        style={style}
-        resizeMode={resizeMode ? resizeMode : 'cover'}
-        onLoadStart={() => onLoadStart()}
-        onLoad={() => onLoad()}
-        onError={onError}
-        // onLoadEnd={onLoadEnd}
-      />
+  const styleBorder: {
+    borderBottomLeftRadius?: number;
+    borderBottomRightRadius?: number;
+    borderColor?: string;
+    borderWidth?: number;
+    borderRadius?: number;
+    borderTopLeftRadius?: number;
+    borderTopRightRadius?: number;
+  } = {
+    borderBottomLeftRadius: style?.borderBottomLeftRadius || undefined,
+    borderBottomRightRadius: style?.borderBottomRightRadius || undefined,
+    borderColor: style?.borderColor || undefined,
+    borderWidth: style?.borderWidth || undefined,
+    borderRadius: style?.borderRadius || undefined,
+    borderTopLeftRadius: style?.borderTopLeftRadius || undefined,
+    borderTopRightRadius: style?.borderTopRightRadius || undefined,
+  };
+  const sizeLoading: any = {
+    width: style?.width || undefined,
+    height: style?.height || undefined,
+  };
 
-      {loading ? (
-        <View style={[styles.viewLoading, style]}>
-          <ActivityIndicator color={colors.primary} size="small" />
+  if (style.length) {
+    //
+    for (let i = 0; i < style.length; i++) {
+      // find width & height for loading frame indicators
+      if (style[i].width != undefined) {
+        sizeLoading.width = style[i].width;
+      }
+      if (style[i].height != undefined) {
+        sizeLoading.height = style[i].height;
+      }
+      // find border radius for loading frame indicators
+      if (style[i].borderBottomLeftRadius != undefined) {
+        styleBorder.borderBottomLeftRadius = style[i].borderBottomLeftRadius;
+      }
+      if (style[i].borderBottomRightRadius != undefined) {
+        styleBorder.borderBottomRightRadius = style[i].borderBottomRightRadius;
+      }
+      if (style[i].borderColor != undefined) {
+        styleBorder.borderColor = style[i].borderColor;
+      }
+      if (style[i].borderWidth != undefined) {
+        styleBorder.borderWidth = style[i].borderWidth;
+      }
+      if (style[i].borderRadius != undefined) {
+        styleBorder.borderRadius = style[i].borderRadius;
+      }
+      if (style[i].borderTopLeftRadius != undefined) {
+        styleBorder.borderTopLeftRadius = style[i].borderTopLeftRadius;
+      }
+      if (style[i].borderTopRightRadius != undefined) {
+        styleBorder.borderTopRightRadius = style[i].borderTopRightRadius;
+      }
+    }
+  }
+
+  const sourceUri = source as ImageURISource;
+
+  return (
+    <>
+      {thumbnailSource && helper && (
+        <Animated.Image
+          {...props}
+          source={thumbnailSource}
+          style={[
+            style,
+            {opacity: thumbnailAnim},
+            {...StyleSheet.absoluteFillObject},
+          ]}
+          onLoad={handleThumbnailLoad}
+          blurRadius={1}
+        />
+      )}
+
+      {!fastImage || (!fastImage && sourceUri.uri) ? (
+        <Animated.Image
+          {...props}
+          source={source}
+          style={[style, {opacity: imgAnim}]}
+          onLoad={onImageLoad}
+        />
+      ) : (
+        // @ts-ignore
+        <AnimatedFastImage
+          {...props}
+          source={{
+            uri: sourceUri.uri,
+            priority: FastImage.priority.high,
+            cache: FastImage.cacheControl.immutable,
+          }}
+          style={[style, {opacity: imgAnim}]}
+          onLoad={onImageLoad}
+          resizeMode={resizeMode}
+        />
+      )}
+
+      {withIndicator && loading && (
+        <View
+          style={[
+            styles.imageOverlay,
+            styles.centerSection,
+            styleBorder,
+            sizeLoading,
+          ]}>
+          <ActivityIndicator />
         </View>
-      ) : null}
-    </View>
+      )}
+    </>
   );
-});
+}
 
 const styles = StyleSheet.create({
-  viewLoading: {
+  imageOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#ecf0f1',
+  },
+  centerSection: {
     justifyContent: 'center',
     alignItems: 'center',
-    ...StyleSheet.absoluteFillObject,
   },
 });

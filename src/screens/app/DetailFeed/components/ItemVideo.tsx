@@ -138,7 +138,7 @@ const ItemVideo = (props: ItemVideoProps) => {
               ref={videoPlayer}
               audioOnly={props.isAudio}
               preferredForwardBufferDuration={1}
-              poster={isVisible ? getThumbnail() : undefined}
+              poster={isVisible && !props.isAudio ? getThumbnail() : undefined}
               playInBackground={props.isAudio}
               reportBandwidth={true}
               onReadyForDisplay={() => {
@@ -223,7 +223,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   video: {
-    aspectRatio: widthScreen / (heightScreen - 65),
+    aspectRatio: Platform.select({
+      android: widthScreen / (heightScreen - 27),
+      ios: widthScreen / (heightScreen - 65),
+    }),
     width: widthScreen,
+    ...StyleSheet.absoluteFillObject,
+    top: 45,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });

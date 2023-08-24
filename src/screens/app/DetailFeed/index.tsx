@@ -1,8 +1,8 @@
 import {ic_back, ic_search} from '@images';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {heightScreen} from '@stylesCommon';
-import React, {useRef} from 'react';
+import {heightScreen, widthScreen} from '@stylesCommon';
+import React, {useEffect, useRef} from 'react';
 import {
   FlatList,
   Image,
@@ -23,6 +23,7 @@ import ItemArticle from './components/ItemArticle';
 import ItemPurchase from './components/ItemPurchase';
 import ItemVideo from './components/ItemVideo';
 import PackageQuizFeed from './components/PackageQuizFeed';
+import {SwiperFlatList} from './SwiperFlatlist/SwiperFlatList';
 import useDetailFeed from './useDetailFeed';
 interface DetailFeedProps {}
 const previewCount = 3;
@@ -39,7 +40,7 @@ const DetailFeed = (props: DetailFeedProps) => {
     useDetailFeed();
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigation<any>();
-  const pagerViewRef = useRef<FlatList>();
+  const pagerViewRef = useRef<SwiperFlatList>();
   const isFocused = useIsFocused();
   const renderItem = (item: IDataListFeed, index: number) => {
     switch (item.content_type) {
@@ -64,10 +65,12 @@ const DetailFeed = (props: DetailFeedProps) => {
             isFocused={state.currentIndex == index}
           />
         );
-      default:
+      case 'article':
         return (
           <ItemArticle item={item} isFocused={state.currentIndex == index} />
         );
+      default:
+        return null;
     }
   };
 
@@ -87,6 +90,24 @@ const DetailFeed = (props: DetailFeedProps) => {
   };
   const onPressSearch = () => {
     navigation.navigate(ROUTE_NAME.SEARCH_FEED);
+  };
+  const _getItemLayout = (
+    data: IDataListFeed[] | undefined | null,
+    index: number,
+  ) => {
+    return {
+      length:
+        Platform.select({
+          android: heightScreen - 27,
+          ios: heightScreen - 65,
+        }) || 0,
+      offset:
+        (Platform.select({
+          android: heightScreen - 27,
+          ios: heightScreen - 65,
+        }) || 0) * index,
+      index,
+    };
   };
   return (
     <Drawer
@@ -109,43 +130,50 @@ const DetailFeed = (props: DetailFeedProps) => {
             <Image source={ic_search} style={styles.iconHeader} />
           }
         />
-        {!!state?.data.length && (
-          <PagerView
-            initialPage={state.currentIndex}
-            orientation={'vertical'}
-            style={[styles.pagerView]}
-            onPageSelected={onPageHandler}
-            ref={pagerViewRef}>
-            {state?.data?.map((item, index) => (
-              <View
-                style={[styles.pagerView]}
-                key={item?.content_type + item?.contentid}>
+        {/*{!!state?.data.length && (*/}
+        {/*  <PagerView*/}
+        {/*    initialPage={state.currentIndex}*/}
+        {/*    orientation={'vertical'}*/}
+        {/*    style={[styles.pagerView]}*/}
+        {/*    onPageSelected={onPageHandler}*/}
+        {/*    ref={pagerViewRef}>*/}
+        {/*    {state?.data?.map((item, index) => (*/}
+        {/*      <View*/}
+        {/*        style={[styles.pagerView]}*/}
+        {/*        key={item?.content_type + item?.contentid}>*/}
+        {/*        {item.is_payment == '1' && item.content_type !== 'daily_quizz'*/}
+        {/*          ? renderPurchase(item, index)*/}
+        {/*          : renderItem(item, index)}*/}
+        {/*      </View>*/}
+        {/*    ))}*/}
+        {/*  </PagerView>*/}
+        {/*)}*/}
+        <SwiperFlatList
+          index={state.currentIndex}
+          disableIntervalMomentum={true}
+          decelerationRate={0}
+          disableScrollViewPanResponder={true}
+          data={state.data}
+          onChangeIndex={onPageHandlerFlatlist}
+          vertical={true}
+          onEndReachedThreshold={1}
+          onEndReached={handleLoadMore}
+          getItemLayout={_getItemLayout}
+          initialNumToRender={1}
+          windowSize={10}
+          removeClippedSubviews
+          keyExtractor={item => item?.content_type + item?.contentid}
+          renderItem={({item, index}) => {
+            return (
+              <View style={[styles.pagerView]}>
                 {item.is_payment == '1' && item.content_type !== 'daily_quizz'
                   ? renderPurchase(item, index)
                   : renderItem(item, index)}
               </View>
-            ))}
-          </PagerView>
-        )}
-        {/*<SwiperFlatList*/}
-        {/*  index={state.currentIndex}*/}
-        {/*  data={state.data}*/}
-        {/*  onChangeIndex={onPageHandlerFlatlist}*/}
-        {/*  vertical={true}*/}
-        {/*  onEndReachedThreshold={0.1}*/}
-        {/*  onEndReached={handleLoadMore}*/}
-        {/*  keyExtractor={item => item?.content_type + item?.id}*/}
-        {/*  renderItem={({item, index}) => {*/}
-        {/*    return (*/}
-        {/*      <View style={[styles.pagerView]}>*/}
-        {/*        {!item.is_payment*/}
-        {/*          ? renderItem(item, index)*/}
-        {/*          : renderPurchase(item, index)}*/}
-        {/*      </View>*/}
-        {/*    );*/}
-        {/*  }}*/}
-        {/*  pagingEnabled={true}*/}
-        {/*/>*/}
+            );
+          }}
+          pagingEnabled={true}
+        />
 
         <View style={{height: 65, zIndex: 999}}>{<FooterFeed />}</View>
       </Container>
