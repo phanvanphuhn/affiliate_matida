@@ -23,6 +23,7 @@ import ItemPurchase from './components/ItemPurchase';
 import ItemVideo from './components/ItemVideo';
 import PackageQuizFeed from './components/PackageQuizFeed';
 import useDetailFeed from './useDetailFeed';
+import PagerView from 'react-native-pager-view';
 interface DetailFeedProps {}
 const previewCount = 3;
 //to center items
@@ -128,46 +129,44 @@ const DetailFeed = (props: DetailFeedProps) => {
             <Image source={ic_search} style={styles.iconHeader} />
           }
         />
-        {/*{!!state?.data.length && (*/}
-        {/*  <PagerView*/}
-        {/*    initialPage={state.currentIndex}*/}
-        {/*    orientation={'vertical'}*/}
-        {/*    style={[styles.pagerView]}*/}
-        {/*    onPageSelected={onPageHandler}*/}
-        {/*    ref={pagerViewRef}>*/}
-        {/*    {state?.data?.map((item, index) => (*/}
-        {/*      <View*/}
-        {/*        style={[styles.pagerView]}*/}
-        {/*        key={item?.content_type + item?.contentid}>*/}
-        {/*        {item.is_payment == '1' && item.content_type !== 'daily_quizz'*/}
-        {/*          ? renderPurchase(item, index)*/}
-        {/*          : renderItem(item, index)}*/}
-        {/*      </View>*/}
-        {/*    ))}*/}
-        {/*  </PagerView>*/}
-        {/*)}*/}
-        <SwiperFlatList
-          index={state.currentIndex}
-          disableIntervalMomentum={true}
-          decelerationRate={0}
-          disableScrollViewPanResponder={true}
-          data={state.data}
-          onChangeIndex={onPageHandlerFlatlist}
-          vertical={true}
-          onEndReachedThreshold={1}
-          onEndReached={handleLoadMore}
-          getItemLayout={_getItemLayout}
-          initialNumToRender={1}
-          windowSize={10}
-          removeClippedSubviews
-          keyExtractor={item => item?.content_type + item?.contentid}
-          renderItem={({item, index}) => {
-            return (
-              <View style={[styles.pagerView]}>{renderItem(item, index)}</View>
-            );
-          }}
-          pagingEnabled={true}
-        />
+        {!!state?.data.length && (
+          <PagerView
+            initialPage={state.currentIndex}
+            orientation={'vertical'}
+            style={[styles.pagerView]}
+            onPageSelected={onPageHandler}
+            ref={pagerViewRef}>
+            {state?.data?.map((item, index) => (
+              <View
+                style={[styles.pagerView]}
+                key={item?.content_type + item?.contentid}>
+                {renderItem(item, index)}
+              </View>
+            ))}
+          </PagerView>
+        )}
+        {/*<SwiperFlatList*/}
+        {/*  index={state.currentIndex}*/}
+        {/*  disableIntervalMomentum={true}*/}
+        {/*  decelerationRate={0}*/}
+        {/*  disableScrollViewPanResponder={true}*/}
+        {/*  data={state.data}*/}
+        {/*  onChangeIndex={onPageHandlerFlatlist}*/}
+        {/*  vertical={true}*/}
+        {/*  onEndReachedThreshold={1}*/}
+        {/*  onEndReached={handleLoadMore}*/}
+        {/*  getItemLayout={_getItemLayout}*/}
+        {/*  initialNumToRender={1}*/}
+        {/*  windowSize={10}*/}
+        {/*  removeClippedSubviews*/}
+        {/*  keyExtractor={item => item?.content_type + item?.contentid}*/}
+        {/*  renderItem={({item, index}) => {*/}
+        {/*    return (*/}
+        {/*      <View style={[styles.pagerView]}>{renderItem(item, index)}</View>*/}
+        {/*    );*/}
+        {/*  }}*/}
+        {/*  pagingEnabled={true}*/}
+        {/*/>*/}
 
         <View style={{height: 65, zIndex: 999}}>{<FooterFeed />}</View>
       </Container>

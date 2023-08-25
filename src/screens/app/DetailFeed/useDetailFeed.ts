@@ -117,7 +117,8 @@ const useDetailFeed = () => {
     console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
     if (firstSlide) {
       // handleLoadLess(pageNumber);
-    } else {
+    } else if (lastSlide) {
+      handleLoadMore();
     }
     setState({
       currentIndex: pageNumber,
