@@ -10,6 +10,7 @@ import {
   createTopic,
   getDetailUser,
   getListReward,
+  getListUserPostApi,
   getRoomUser,
   GlobalService,
 } from '@services';
@@ -25,6 +26,7 @@ import {getDetailPost, getListCommentAction} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {event, trackingAppEvent, useUXCam} from '@util';
 import {useDispatch, useSelector} from 'react-redux';
+import {ListPost} from './component/ListPost';
 
 const DetaiUser = (props: any) => {
   const dispatch = useDispatch();
@@ -38,6 +40,8 @@ const DetaiUser = (props: any) => {
   const [dataReward, setDataReward] = useState([]);
   const [modalOption, setModalOption] = useState<any>(false);
   const [modalBlock, setModalBlock] = useState<any>(false);
+  const [dataPost, setDataPost] = useState([]);
+  const [reset, setReset] = useState(false);
 
   const idPost = useSelector((state: any) => state?.post?.detailPost?.id);
 
@@ -86,7 +90,9 @@ const DetaiUser = (props: any) => {
     try {
       GlobalService.showLoading();
       const res = await getDetailUser(id);
+      const postRes = await getListUserPostApi(id, 1);
       setDataUser(res?.data);
+      setDataPost(postRes?.data?.posts ?? []);
       GlobalService.hideLoading();
     } catch (error) {
       GlobalService.hideLoading();
@@ -169,6 +175,7 @@ const DetaiUser = (props: any) => {
           {dataReward?.length > 0 ? (
             <ViewBadge title={t('profileSettings.reward')} data={dataReward} />
           ) : null}
+          <ListPost data={dataPost} />
         </ScrollView>
       </View>
       <ModalOption

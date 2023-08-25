@@ -1,3 +1,5 @@
+import {EEnvironment} from '@enum';
+
 //KEY ZEGOCLOUND
 export const APP_SIGN_ZEGO_KEY =
   '6e7a776aaeb497664906585505817f83d8c19788ac006565cc0a3de4884a77c1';
@@ -11,22 +13,30 @@ export const APPID_ZEGO_KEY_AUDIOLIVE = 74380430;
 
 export const MERCHANT_IDENTIFIER = 'merchant.com.growth.levers.matida';
 
+// const environment: EEnvironment = EEnvironment.DEVERLOPMENT;
+const environment: EEnvironment = EEnvironment.PRODUCT;
+
 export const VERSION_APP = '1.1.9';
-export const VERSION_CODE_PUSH = 'v5';
+export const VERSION_CODE_PUSH = `v6.1${
+  environment === EEnvironment.PRODUCT ? '' : '(staging)'
+}`;
 
 // DOMAIN DEV
-// export const BASEURL = 'https://api.matida.dev/api/'; //Domain dev
+// export const BASEURL = 'https://baby-nation-api-dev.adamo.tech/api/'; //Domain dev
 // export const socketURL = 'https://baby-nation-api-dev.adamo.tech'; //SOCKET dev
 // export const KEY_UXCAM = '9rr2pitkauc2liv';
 // export const STRIPE_KEY =
 //   'pk_test_51NN5F6EZXr4feaDmXdY60loywUjSNUHz8VAYfiK4hL2hWed4lsPlHCEzJeA8PUy5DgucigO3hBd5At6zWwaoyebh00VDKioM01';
 
 //DOMAIN PRODUCT
-// export const BASEURL = 'https://api.matida.app/api/'; //Domain product
-// export const BASEURL = 'https://api.matida.app/api/'; //Domain product
-export const BASEURL = 'https://api.matida.dev/api/'; //DOMAIN DEV
-// export const socketURL = 'https://api.matida.app'; //SOCKET product
-export const socketURL = 'https://api.matida.dev'; //SOCKET DEV
+export const BASEURL =
+  environment === EEnvironment.PRODUCT
+    ? 'https://api.matida.app/api/' //Domain product
+    : 'https://api.matida.dev/api/'; //DOMAIN DEV
+export const socketURL =
+  environment === EEnvironment.PRODUCT
+    ? 'https://api.matida.app' //SOCKET product
+    : 'https://api.matida.dev'; //SOCKET DEV
 export const KEY_UXCAM = 'ayds69vc0q4shqf';
 export const STRIPE_KEY =
   'pk_live_51NN5F6EZXr4feaDmhnC29iKRzFMbJDs5apgAB0KmFiEXyz32aJujFa5f8aE4mCfL2z1MMjT9qzzu3MlUXvZtdtcd00WYiPY7HL';

@@ -353,7 +353,7 @@ const Home = () => {
         )}
 
         {/* <View>
-          <ListPostComponent loading={loading} posts={data?.posts} />
+          <ListPostComponent posts={data?.posts} />
 
           <TouchableOpacity
             style={styles.createPostButton}

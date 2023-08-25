@@ -7,7 +7,6 @@ import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import reactotron from 'reactotron-react-native';
 
 export const LikeView = (props: any) => {
   const dispatch = useDispatch<any>();

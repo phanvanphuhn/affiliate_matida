@@ -1,3 +1,4 @@
+import {TGetPostByWeekParams} from '@type';
 import api from '../api';
 
 const GET_LIST_POST = 'posts';
@@ -21,6 +22,7 @@ const REPLY_INFO = 'reply-comments';
 const COMMENT_INFO = 'comments';
 const EDIT_POST = 'posts';
 const REPORT_POST = 'reports';
+const GET_POST = 'posts';
 
 export const getListPostApi: any = async (page: any) => {
   const response = await api.get(`${GET_LIST_POST}?page=${page}`);
@@ -54,6 +56,13 @@ export const deletePost: any = async (id: any) => {
 
 export const getPostInfo: any = async (id: any) => {
   const response = await api.get(`${GET_POST_INFO}/${id}`);
+  return response;
+};
+
+export const getPostByWeek = async (params: TGetPostByWeekParams) => {
+  const response = await api.get(`${GET_POST}`, {
+    params,
+  });
   return response;
 };
 

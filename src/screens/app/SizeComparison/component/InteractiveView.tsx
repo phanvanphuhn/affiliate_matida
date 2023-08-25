@@ -1,26 +1,26 @@
 import {SvgComment, SvgHeart, SvgHearted} from '@images';
+import {navigate} from '@navigation';
 import {useFocusEffect} from '@react-navigation/native';
-import {changeLikeForum} from '@redux';
+import {ROUTE_NAME} from '@routeName';
 import {addLikePost, addUnLikePost} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
-import {useDispatch} from 'react-redux';
+export const InteractiveView = (props: any) => {
+  const {data, callBackData, id} = props;
 
-export const LikeView = (props: any) => {
-  const {data, id, onNavigate} = props;
-  const dispatch = useDispatch();
-
-  const [isLike, setIsLike] = useState<boolean>(!!data?.is_liked);
-  const [totalLike, setTotalLike] = useState<number>(+data?.post_like ?? 0);
+  const [isLike, setIsLike] = useState<boolean>(data?.is_liked === 1 ?? false);
+  const [totalLike, setTotalLike] = useState<number>(data?.post_like ?? 0);
+  const refLike = useRef<boolean>(isLike);
+  const refTotal = useRef<number>(totalLike);
 
   useFocusEffect(
     React.useCallback(() => {
-      // trackingAppEvent(event.SCREEN.HOME, {});
-      setTotalLike(+data?.post_like ?? 0);
-      setIsLike(!!data?.is_liked);
-    }, []),
+      refLike.current = data?.is_liked === 1 ?? false;
+      refTotal.current = +data?.post_like ?? 0;
+      setTotalLike(+data?.post_like);
+      setIsLike(data?.is_liked === 1 ?? false);
+    }, [data]),
   );
 
   useEffect(() => {
@@ -33,33 +33,24 @@ export const LikeView = (props: any) => {
   }, [isLike]);
 
   const handleEventLike = async () => {
-    if (isLike !== !!data?.is_liked) {
+    if (isLike !== refLike.current) {
       const body = {
         post_id: id,
       };
       try {
         isLike ? await addLikePost(body) : await addUnLikePost(id);
-        dispatch(
-          changeLikeForum({
-            isLike: isLike,
-            id: id,
-            totalLike: totalLike,
-          }),
-        );
+        refLike.current = isLike;
+        refTotal.current = totalLike;
       } catch (e) {
-        showMessage({
-          message: '',
-          type: 'default',
-          backgroundColor: colors.transparent,
-          color: '#FFFFFF',
-        });
-        setIsLike(!!data?.is_liked);
-        setTotalLike(+data?.post_like ?? 0);
+        setIsLike(refLike.current);
+        setTotalLike(refTotal.current);
+      } finally {
+        await callBackData();
       }
     }
   };
 
-  const handlePressLike = () => {
+  const handleLike = () => {
     !isLike ? setTotalLike(totalLike + 1) : setTotalLike(totalLike - 1);
     setIsLike(!isLike);
   };
@@ -69,7 +60,7 @@ export const LikeView = (props: any) => {
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           style={{flexDirection: 'row', alignItems: 'center'}}
-          onPress={handlePressLike}
+          onPress={handleLike}
           activeOpacity={0.8}>
           {isLike ? <SvgHearted /> : <SvgHeart />}
           <Text style={styles.text}>{totalLike}</Text>
@@ -77,12 +68,9 @@ export const LikeView = (props: any) => {
         <TouchableOpacity
           style={{flexDirection: 'row', alignItems: 'center'}}
           activeOpacity={0.8}
-          onPress={onNavigate}>
+          onPress={() => navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: data?.id})}>
           <SvgComment />
-          <Text style={styles.text}>
-            {parseInt(data?.total_comment ?? '0', 10) +
-              parseInt(data?.total_reply_comment ?? '0', 10)}
-          </Text>
+          <Text style={styles.text}>{data?.total_comment}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -101,11 +89,5 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     marginLeft: scaler(8),
     marginRight: scaler(20),
-  },
-  textTime: {
-    color: colors.borderColor,
-    ...stylesCommon.fontWeight400,
-    fontSize: scaler(12),
-    lineHeight: 15,
   },
 });

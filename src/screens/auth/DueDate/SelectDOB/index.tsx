@@ -10,13 +10,12 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
 
 export const SelectDOB = () => {
-  const crrDate = new Date();
-  crrDate.setFullYear(2000);
+  const crrDate = new Date(2000, 1, 29);
+  // crrDate.setFullYear(2000);
 
   const [date, setDate] = useState<any>(crrDate);
 
   const handlePressButton = async () => {
-    navigate(ROUTE_NAME.ON_BOARDING);
     try {
       GlobalService.showLoading();
       const res = await updateUserBirth({

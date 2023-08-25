@@ -17,6 +17,8 @@ module.exports = {
           '@images': './src/images',
           '@i18n': './src/translations/i18n',
           '@constant': './src/constant',
+          '@enum': './src/enum',
+          '@type': './src/type',
         },
       },
     ],

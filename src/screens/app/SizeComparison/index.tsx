@@ -1,9 +1,16 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {FLoatingAIButton, Header, PickerWeek, ViewButton} from '@component';
 import {SvgArrowLeft, SvgMessages3} from '@images';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {updateDataHome} from '@redux';
+import {saveIsDoneDaily, updateDataHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {GlobalService, answerDailyQuiz, getSizeComparison} from '@services';
+import {
+  GlobalService,
+  answerDailyQuiz,
+  getSizeComparison,
+  getValueTimeLine,
+} from '@services';
 import {colors} from '@stylesCommon';
 import {event, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
@@ -16,25 +23,37 @@ import {Body} from './component/Body';
 import {Embryo} from './component/Embryo';
 import {Size} from './component/Size';
 import {styles} from './styles';
-import reactotron from 'reactotron-react-native';
+import {ListPostByWeek} from './component/ListPostByWeek';
+import {ListArticle} from './component/ListArticle';
+import {ViewSelectType} from './component/ViewSelectType';
+import {Timeline} from './component/TImeLine';
+import {CheckupCalendar} from './component/CheckupCalendar';
+import {RootState} from 'src/redux/rootReducer';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
+
   const route = useRoute<any>();
   const {option} = route?.params;
   const weekNotifi = route?.params?.week;
-  const {t} = useTranslation();
-  const [status, setStatus] = useState(option);
-  const [data, setData] = useState<any>(null);
-  const [selectedWeek, setSelectedWeek] = useState(null);
-  const flatListRef = useRef<FlatList>(null);
-  const navigation = useNavigation<any>();
   const homeData = useSelector((state: any) => state?.home);
+  const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
   const weekPregnant =
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
   const week = weekNotifi ? weekNotifi : weekPregnant;
+
+  const {t} = useTranslation();
+  const [status, setStatus] = useState(option);
+  const [data, setData] = useState<any>(null);
+  const [dataTimeline, setDataTimeline] = useState([]);
+  const [listImage, setListImage] = useState<any[]>([]);
+  const [weekSelected, setWeek] = useState(week);
+
+  const [selectedWeek, setSelectedWeek] = useState(null);
+  const flatListRef = useRef<FlatList>(null);
+  const navigation = useNavigation<any>();
 
   useUXCam(ROUTE_NAME.SIZE_COMPARISON);
   const getData = async (value: any) => {
@@ -46,6 +65,12 @@ const SizeComparison = () => {
       }, 50);
       const res = await getSizeComparison(value);
       setData(res?.data);
+      const image = res?.data?.baby?.image
+        .concat(res?.data?.baby_size?.image)
+        .concat(res?.data?.mom?.image);
+      setListImage(image ?? []);
+      const resTimeline = await getValueTimeLine(value);
+      setDataTimeline(resTimeline?.data?.data);
     } catch (error) {
     } finally {
       GlobalService.hideLoading();
@@ -55,6 +80,7 @@ const SizeComparison = () => {
     try {
       GlobalService.showLoading();
       const res = await answerDailyQuiz(value);
+      !isDoneDaily && dispatch(saveIsDoneDaily(true));
       dispatch(
         updateDataHome({
           ...data,
@@ -71,7 +97,6 @@ const SizeComparison = () => {
   };
   useEffect(() => {
     trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {});
-    reactotron.log?.('DATA WEEK', homeData?.data?.posts);
     if (week) {
       getData(week);
     }
@@ -79,9 +104,26 @@ const SizeComparison = () => {
   const renderBodyByStatus = () => {
     switch (status) {
       case 1:
-        return <Size data={data?.baby_size} week={selectedWeek} />;
+        return (
+          <>
+            {/* <Embryo
+              data={data?.baby}
+              week={selectedWeek}
+              listImage={listImage ?? []}
+            /> */}
+            <Size data={data?.baby_size} week={selectedWeek} />
+            {/* <Body data={data?.mom} week={selectedWeek} /> */}
+          </>
+        );
       case 2:
-        return <Embryo data={data?.baby} week={selectedWeek} />;
+        // return <CheckupCalendar />;
+        return (
+          <Embryo
+            data={data?.baby}
+            week={selectedWeek}
+            listImage={listImage ?? []}
+          />
+        );
       case 3:
         return <Body data={data?.mom} week={selectedWeek} />;
       default:
@@ -92,24 +134,29 @@ const SizeComparison = () => {
     return (
       <View>
         {renderBodyByStatus()}
-        <ListPostComponent
-          loading={homeData?.loading}
-          posts={homeData?.data?.posts}
-          cardBorderStyle={{
-            borderWidth: 1,
-            borderColor: '#F5F5F5',
-          }}
-        />
-        <TouchableOpacity
-          style={styles.createPostButton}
-          onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
-          <SvgMessages3 />
-          <Text style={styles.titleButton}>{t('home.createPost')}</Text>
-        </TouchableOpacity>
-        {homeData?.data?.dailyQuizz ? (
-          <ViewQuiz onAnswer={onAnswerQuiz} />
-        ) : null}
-        {/* <BannerTestQuiz /> */}
+
+        {/* {status === 1 && ( */}
+        <>
+          <ListPostByWeek
+            week={weekSelected}
+            cardBorderStyle={{
+              borderWidth: 1,
+              borderColor: '#F5F5F5',
+            }}
+          />
+          <TouchableOpacity
+            style={styles.createPostButton}
+            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+            <SvgMessages3 />
+            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
+          </TouchableOpacity>
+          {homeData?.data?.dailyQuizz ? (
+            <ViewQuiz onAnswer={onAnswerQuiz} />
+          ) : null}
+          {/* <BannerTestQuiz /> */}
+          <ListArticle week={weekSelected} />
+        </>
+        {/* )} */}
       </View>
     );
   };
@@ -126,6 +173,7 @@ const SizeComparison = () => {
             content: value,
           });
           getData(value);
+          setWeek(value);
         }}
         weekNotifi={week}
       />
@@ -139,6 +187,10 @@ const SizeComparison = () => {
               data={data}
               option={option}
             />
+            // <ViewSelectType
+            //   onChaneStatus={value => setStatus(value)}
+            //   status={status}
+            // />
           );
         }}
         bounces={false}

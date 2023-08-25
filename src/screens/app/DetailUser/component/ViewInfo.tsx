@@ -66,24 +66,28 @@ const ViewInfo = React.memo((props: any) => {
               </View>
             ) : null}
           </View>
-          <View style={styles.viewRow}>
-            <Image source={iconSms} />
-            <Text style={styles.txtMail}>
-              {data?.email?.length > 0 ? data?.email : '-'}
-            </Text>
-          </View>
-          <View style={[styles.viewRow, {marginTop: scaler(8)}]}>
-            {dataReward?.length > 0 &&
-              dataReward?.map((item: any, index: any) => {
-                return (
-                  <AppImage
-                    style={styles.iconReward}
-                    uri={item?.badge?.image}
-                    key={item?.id}
-                  />
-                );
-              })}
-          </View>
+          {!!data?.email?.length && (
+            <View style={styles.viewRow}>
+              <Image source={iconSms} />
+              <Text style={styles.txtMail}>
+                {data?.email?.length > 0 ? data?.email : '-'}
+              </Text>
+            </View>
+          )}
+          {!!dataReward?.length && (
+            <View style={[styles.viewRow, {marginTop: scaler(8)}]}>
+              {dataReward?.length > 0 &&
+                dataReward?.map((item: any, index: any) => {
+                  return (
+                    <AppImage
+                      style={styles.iconReward}
+                      uri={item?.badge?.image}
+                      key={item?.id}
+                    />
+                  );
+                })}
+            </View>
+          )}
         </View>
       </View>
       {use?.id === data?.id ? null : (

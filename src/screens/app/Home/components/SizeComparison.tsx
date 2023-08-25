@@ -1,15 +1,15 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {t} from 'i18next';
 
 import {AppImage} from '@component';
-import {OptionComparison} from '@constant';
-import {iconNext, SvgIconBaby, SvgIconMom, SvgIconPear} from '@images';
+import {iconNext} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {event, trackingAppEvent} from '@util';
-import {t} from 'i18next';
-import {useSelector} from 'react-redux';
+import {OptionComparison} from '@constant';
 
 export const SizeComparisonComponent = () => {
   const data = useSelector((state: any) => state?.home?.data);
@@ -19,27 +19,6 @@ export const SizeComparisonComponent = () => {
   const imageBaby = babyProgress?.baby?.image
     ? babyProgress?.baby?.image[0]
     : '';
-  const imageBabySize = babyProgress?.baby_size?.image
-    ? babyProgress?.baby_size.image[0]
-    : '';
-  const imageMom = babyProgress?.mom?.image ? babyProgress?.mom.image[0] : '';
-  const ViewBaby = [
-    {
-      title: t('home.sizeComparison.babySize'),
-      image: <SvgIconPear />,
-      value: OptionComparison.BABY_SIZE,
-    },
-    {
-      title: t('home.sizeComparison.embryo'),
-      image: <SvgIconBaby />,
-      value: OptionComparison.EMBRYO,
-    },
-    {
-      title: t('home.sizeComparison.mom'),
-      image: <SvgIconMom />,
-      value: OptionComparison.MOM,
-    },
-  ];
 
   const handlePress = () => {
     trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_OPEN, {});
@@ -50,21 +29,7 @@ export const SizeComparisonComponent = () => {
 
   return (
     <>
-      <View
-        style={styles.container}
-        // onPress={() => onPress(OptionComparison.EMBRYO)}
-      >
-        {/* <AppImage uri={imageBaby} style={styles.image} resizeMode="stretch" /> */}
-        {/* <View
-          style={{
-            position: 'absolute',
-            backgroundColor: colors.pink150,
-            height: scaler(338),
-            borderRadius: scaler(40),
-            width: '100%',
-          }}
-        /> */}
-
+      <View style={styles.container}>
         <TouchableOpacity
           style={styles.viewImage}
           activeOpacity={0.9}

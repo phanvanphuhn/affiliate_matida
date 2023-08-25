@@ -55,7 +55,7 @@ export const vi = {
     save: 'Lưu',
     skip: 'Bỏ qua',
     submit: 'Tiếp theo',
-    titleQuestion1: 'Mẹ bầu ơi! Chia sẻ với Matida năm sinh của bạn nhé!',
+    titleQuestion1: 'Mẹ bầu ơi! Chia sẻ với Matida năm sinh của bạn nhé! ',
     titleQuestion2: 'Mẹ bầu biết đến Matida từ đâu?',
     titleQuestion3: 'Bạn thuộc tuýp mẹ bầu nào sau đây?',
     placeHolderQuestion2: 'VD: Bạn bè, KOL tiktok...',
@@ -152,6 +152,8 @@ export const vi = {
       babySize: 'Kích thước',
       embryo: 'Bé yêu',
       mom: 'Mẹ',
+      sympton: 'Lời khuyên và triệu chứng',
+      weeks: 'tuần',
     },
     pregnancy: {
       pregnant: 'Con được {{weeks}} tuần {{days}} ngày tuổi',

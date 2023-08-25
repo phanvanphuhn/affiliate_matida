@@ -159,7 +159,7 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
     const dataJson = JSON.parse(item.data_json) as {week: string};
     const week = parseInt(dataJson.week, 10);
     navigate(ROUTE_NAME.SIZE_COMPARISON, {
-      option: OptionComparison.EMBRYO,
+      option: 1,
       week: week,
     });
   };

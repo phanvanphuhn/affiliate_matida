@@ -1,5 +1,8 @@
+/* eslint-disable curly */
 import {ETypeHost} from '@constant';
-import moment from 'moment';
+import i18next from 'i18next';
+import moment, {MomentInput} from 'moment';
+import 'moment/min/locales';
 import {convertLangMonth} from './functionApp';
 const month = [
   'January',
@@ -24,6 +27,12 @@ const day = [
   'Saturday',
   'Sunday',
 ];
+
+export const formatDate = (date: MomentInput, format: string) => {
+  if (!date) return '';
+  return moment(date).locale(i18next.language).format(format);
+};
+
 export const getFullMonth = (d: Date) => {
   return month[d.getMonth()];
 };
@@ -132,7 +141,7 @@ export const getTimeStartRoom = (date: string) => {
 };
 
 export const getTimeHistoryMomTest = (date: string) => {
-  return !!date
+  return date
     ? `${convertLangMonth(
         moment(date, 'YYYY/MM/DD hh:mm:ss').format('MMMM'),
       )} ${moment(date, 'YYYY/MM/DD hh:mm:ss').format('DD')}, ${moment(

@@ -7,7 +7,9 @@
     <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
     <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
     <!-- STAGGING -->
-    <string moduleConfig="true" name="CodePushDeploymentKey">wLMzRSVq_OZt-FgtUl7_rEVk5kxxkDuVhnqIi</string>
+    <!-- <string moduleConfig="true" name="CodePushDeploymentKey">wLMzRSVq_OZt-FgtUl7_rEVk5kxxkDuVhnqIi</string> -->
     <!-- PRODUCT -->
     <!-- <string moduleConfig="true" name="CodePushDeploymentKey">h7RyfVg974r_vNF66JH0r0Br7Ty7J0rKfNyBC</string> -->
+    <!-- Testing -->
+    <string moduleConfig="true" name="CodePushDeploymentKey">_vj-sV7JELSZOtyIRL2q_98lziY2xYL17JHth</string>
 </resources>
