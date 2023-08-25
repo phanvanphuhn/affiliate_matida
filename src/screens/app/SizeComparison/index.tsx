@@ -135,28 +135,28 @@ const SizeComparison = () => {
       <View>
         {renderBodyByStatus()}
 
-        {status === 1 && (
-          <>
-            <ListPostByWeek
-              week={weekSelected}
-              cardBorderStyle={{
-                borderWidth: 1,
-                borderColor: '#F5F5F5',
-              }}
-            />
-            <TouchableOpacity
-              style={styles.createPostButton}
-              onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
-              <SvgMessages3 />
-              <Text style={styles.titleButton}>{t('home.createPost')}</Text>
-            </TouchableOpacity>
-            {homeData?.data?.dailyQuizz ? (
-              <ViewQuiz onAnswer={onAnswerQuiz} />
-            ) : null}
-            {/* <BannerTestQuiz /> */}
-            <ListArticle week={weekSelected} />
-          </>
-        )}
+        {/* {status === 1 && ( */}
+        <>
+          <ListPostByWeek
+            week={weekSelected}
+            cardBorderStyle={{
+              borderWidth: 1,
+              borderColor: '#F5F5F5',
+            }}
+          />
+          <TouchableOpacity
+            style={styles.createPostButton}
+            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+            <SvgMessages3 />
+            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
+          </TouchableOpacity>
+          {homeData?.data?.dailyQuizz ? (
+            <ViewQuiz onAnswer={onAnswerQuiz} />
+          ) : null}
+          {/* <BannerTestQuiz /> */}
+          <ListArticle week={weekSelected} />
+        </>
+        {/* )} */}
       </View>
     );
   };
