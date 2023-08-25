@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {EContentType} from '@constant';
 import api from '../api';
 
@@ -8,6 +9,7 @@ const UN_SAVE_ARTICLES = 'user/unsave-article';
 const ARTICLES = 'articles';
 const ARTICLES_MOST_POPULAR = 'articles/most-popular';
 const CONTENT_VIEWS = 'content-views';
+const GET_ARTICLE_BY_WEEK = 'articles/week';
 
 export const getListArticles: any = async (data: any) => {
   const {page, size, search, sort, topic = [], mood = [], week = 'null'} = data;
@@ -72,6 +74,11 @@ export const postUnSaveArticles: any = async (id: number) => {
 
 export const getArticleDetail: any = async (id: number) => {
   const response = await api.get(`${ARTICLES}/${id}`);
+  return response;
+};
+
+export const getArticleByWeek: any = async (week: number) => {
+  const response = await api.get(`${GET_ARTICLE_BY_WEEK}/${week}`);
   return response;
 };
 

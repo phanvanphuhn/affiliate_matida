@@ -1,7 +1,10 @@
 import {typeAuth} from './type';
-import {INITIAL_STATE_AUTH} from './state';
+import {AuthState, INITIAL_STATE_AUTH} from './state';
 
-export default function authReducer(state = INITIAL_STATE_AUTH, action: any) {
+export default function authReducer(
+  state = INITIAL_STATE_AUTH,
+  action: any,
+): AuthState {
   switch (action.type) {
     case typeAuth.SAVE_LANG:
       return {
@@ -61,6 +64,11 @@ export default function authReducer(state = INITIAL_STATE_AUTH, action: any) {
       return {
         ...state,
         isSeenComment: action.payload,
+      };
+    case typeAuth.iS_REVIEW:
+      return {
+        ...state,
+        isReview: action.payload,
       };
     default:
       return state;

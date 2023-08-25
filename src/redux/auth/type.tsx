@@ -9,6 +9,7 @@ const typeAuth = {
   CHANGE_WEEK: 'CHANGE_WEEK',
   IS_DONE_DAILY: 'IS_DONE_DAILY',
   IS_SEEN_COMMENT: 'IS_SEEN_COMMENT',
+  iS_REVIEW: 'IS_REVIEW',
 };
 
 export {typeAuth};

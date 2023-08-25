@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable react-native/no-inline-styles */
 import {AppCameraModal2, AppCheckBox, AppImage, Header} from '@component';
 import {SvgArrowLeft, avatarDefault, imageUpload} from '@images';
 import {useNavigation} from '@react-navigation/native';
@@ -52,6 +55,7 @@ const CreateNewPost = (props: {
   const createPost = async () => {
     try {
       GlobalService.showLoading();
+      setLoading(true);
       const body = {
         title: title,
         content: content,
@@ -66,8 +70,9 @@ const CreateNewPost = (props: {
         backgroundColor: colors.success_message,
       });
       navigation.goBack();
-      GlobalService.hideLoading();
     } catch (error) {
+    } finally {
+      setLoading(false);
       GlobalService.hideLoading();
     }
   };
@@ -124,8 +129,14 @@ const CreateNewPost = (props: {
               },
             ]}
             onPress={createPost}
-            disabled={content?.length === 0 || hasWhiteSpace(content)}>
-            <Text style={styles.txtButton}>{t('post.post')}</Text>
+            disabled={
+              content?.length === 0 || hasWhiteSpace(content) || loading
+            }>
+            {loading ? (
+              <ActivityIndicator color={colors.white} />
+            ) : (
+              <Text style={styles.txtButton}>{t('post.post')}</Text>
+            )}
           </TouchableOpacity>
         }
       />

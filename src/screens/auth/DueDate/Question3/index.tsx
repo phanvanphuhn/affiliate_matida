@@ -5,7 +5,6 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {t} from 'i18next';
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
-import reactotron from 'reactotron-react-native';
 import {ItemQuestion} from './ItemQuestion';
 
 export const Question3 = () => {

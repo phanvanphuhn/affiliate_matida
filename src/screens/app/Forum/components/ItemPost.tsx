@@ -11,13 +11,20 @@ import {LikeView} from './LikeView';
 import {useTranslation} from 'react-i18next';
 
 const ItemPost = React.memo((props: any) => {
-  const {item, onDelete, onPressOption = () => {}} = props;
+  const {
+    item,
+    onDelete,
+    onPressOption = () => {},
+    navigateType = 'navigate',
+  } = props;
   const navigation = useNavigation<any>();
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const {t} = useTranslation();
 
   const onNavigate = () => {
-    navigation.navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id});
+    navigateType === 'navigate'
+      ? navigation.navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id})
+      : navigation.push(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id});
   };
 
   const onNavigateEdit = () => {
@@ -33,14 +40,16 @@ const ItemPost = React.memo((props: any) => {
       <TouchableOpacity
         activeOpacity={0.9}
         style={styles.viewContent}
-        onPress={() =>
-          navigation.navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id})
-        }>
+        onPress={() => onNavigate()}>
         <View style={styles.viewAvatar}>
           <View style={styles.viewRow}>
             {/* //Change according to api response  item?.isPrivate*/}
 
-            <AppImage user uri={item?.avatar} style={styles.image} />
+            <AppImage
+              user
+              uri={item?.avatar ? item?.avatar : item?.user_avatar}
+              style={styles.image}
+            />
 
             <View style={styles.viewColumn}>
               <Text style={styles.txtName} numberOfLines={1}>

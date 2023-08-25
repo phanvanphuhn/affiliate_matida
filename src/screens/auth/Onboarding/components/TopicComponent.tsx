@@ -22,11 +22,12 @@ export const TopicComponent = ({data}: TopicComponentProps) => {
   const {value: valueOther, setValue: setValueOther} = getUseField('other');
 
   const handleOnPress = (itemValue: ETopicFeedBack) => {
-    if (valueTopic?.includes(itemValue)) {
-      setValueTopic(valueTopic.filter((x: number) => +x !== +itemValue));
-    } else {
-      setValueTopic([...valueTopic, itemValue]);
-    }
+    // if (valueTopic?.includes(itemValue)) {
+    //   setValueTopic(valueTopic.filter((x: number) => +x !== +itemValue));
+    // } else {
+    //   setValueTopic([...valueTopic, itemValue]);
+    // }
+    setValueTopic([itemValue]);
   };
 
   return (
