@@ -49,3 +49,8 @@ export const saveIsSeenComment = (payload: boolean) => ({
   type: typeAuth.IS_SEEN_COMMENT,
   payload,
 });
+
+export const saveIsReview = (payload: boolean) => ({
+  type: typeAuth.iS_REVIEW,
+  payload,
+});

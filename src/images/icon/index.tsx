@@ -21,6 +21,7 @@ const iconShare = require('./iconShare.png');
 const iconTick = require('./tick.png');
 const icon_PostForum = require('./icon_PostForum.png');
 const floating_button = require('./floating_button.png');
+const iconCalendarCheckup = require('./icon_calendar_checkup.png');
 
 export {
   iconFlagVn,
@@ -46,4 +47,5 @@ export {
   iconTick,
   icon_PostForum,
   floating_button,
+  iconCalendarCheckup,
 };

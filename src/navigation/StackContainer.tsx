@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -5,13 +6,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ROUTE_NAME} from './routeName';
 import {screens} from '../screens';
 import RNBootSplash from 'react-native-bootsplash';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import StackTab from './StackTab';
 import {AppSocket} from '@util';
 import {StatusBar, Platform} from 'react-native';
 import {RootState} from 'src/redux/rootReducer';
 import InAppReview from 'react-native-in-app-review';
-import reactotron from 'reactotron-react-native';
+import {saveIsReview} from '@redux';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -20,15 +21,18 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   const screenOptions = {
     headerShown: false,
   };
+  const dispatch = useDispatch();
+
   const lang = useSelector((state: any) => state?.auth?.lang);
   const isLogin: any = useSelector((state: any) => state?.auth?.statusLogin);
   let token = useSelector((state: any) => state?.auth?.token);
   const isDoneDaily = useSelector(
-    (state: RootState) => state?.home?.data?.dailyQuizz?.question,
+    (state: RootState) => state?.auth?.isDoneDaily,
   );
   const isSeenComment = useSelector(
-    (state: RootState) => state.auth.isSeenComment,
+    (state: RootState) => state?.auth?.isSeenComment,
   );
+  const isReview = useSelector((state: RootState) => state?.auth?.isReview);
 
   React.useEffect(() => {
     if (token) {
@@ -40,17 +44,27 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   }, [token]);
 
   React.useEffect(() => {
-    if (!!isDoneDaily && !!isSeenComment && Platform.OS === 'android') {
-      setTimeout(() => {
+    if (
+      ((!!isDoneDaily && !isSeenComment) ||
+        (!isDoneDaily && !!isSeenComment)) &&
+      !isReview &&
+      Platform.OS === 'android'
+    ) {
+      if (isSeenComment) {
+        setTimeout(() => {
+          InAppReview.isAvailable() &&
+            InAppReview.RequestInAppReview().then(
+              hasFlowFinishedSuccessfully => {},
+            );
+          dispatch(saveIsReview(true));
+        }, 10000);
+      } else if (isDoneDaily) {
         InAppReview.isAvailable() &&
           InAppReview.RequestInAppReview().then(
             hasFlowFinishedSuccessfully => {},
           );
-      }, 10000);
-      // InAppReview.isAvailable() &&
-      //   InAppReview.RequestInAppReview().then(
-      //     hasFlowFinishedSuccessfully => {},
-      //   );
+        dispatch(saveIsReview(true));
+      }
     }
   }, [isDoneDaily, isSeenComment]);
 
@@ -279,7 +293,6 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.DATE_PICKER_SCREEN}
             component={screens.DatePickerScreen}
           />
-
           <Stack.Screen
             name={ROUTE_NAME.LIST_MASTER_CLASS}
             component={screens.ListMasterClass}

@@ -50,7 +50,9 @@
       "@routeName":["./src/navigation/routeName"],
       "@images": ["./src/images"],
       "@i18n": ["./src/translations/i18n"],
-      "@constant": ["./src/constant"]
+      "@constant": ["./src/constant"],
+      "@enum": ["./src/enum"],
+      "@type": ["./src/type"],
     },
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */

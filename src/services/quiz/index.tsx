@@ -13,7 +13,7 @@ export const answerDailyQuiz: any = async (body: any) => {
 };
 
 export const getListPeriodicTest: any = async (page: number) => {
-  const response = await api.get(`${MOM_PREP_TEST}?page=${page}&limit=3`);
+  const response = await api.get(`${MOM_PREP_TEST}?page=${page}&limit=10`);
   return response;
 };
 
@@ -33,10 +33,11 @@ export const getAllAnswerById: any = async (id: any) => {
 };
 
 export const getListReward: any = async (user_id: any) => {
-  const response = await api.get(`${LIST_REWARD_USER}/${user_id}?page=1&limit=10000`);
+  const response = await api.get(
+    `${LIST_REWARD_USER}/${user_id}?page=1&limit=10000`,
+  );
   return response;
 };
-
 
 export const getListHistoryTest: any = async (page: any) => {
   const response = await api.get(`${TEST_HISTORY}?page=${page}&limit=10`);

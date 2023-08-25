@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {scaler, stylesCommon, colors} from '@stylesCommon';
 import {useTranslation} from 'react-i18next';
 import moment from 'moment';
+import {formatDate} from '@util';
 
 const ViewContent = React.memo((props: any) => {
   const {data} = props;
@@ -67,30 +68,28 @@ const ViewContent = React.memo((props: any) => {
         <>
           <Item
             title={t('profileSettings.dueDate')}
-            content={`${moment(data?.due_date).format('DD')} ${convertDat(
-              moment(data?.due_date).format('M'),
-            )} ${moment(data?.due_date).format('YYYY')}`}
+            content={`${formatDate(data?.due_date, 'DD MMMM YYYY')}`}
           />
           <Item
             title={t('profileSettings.babyName')}
             content={data?.baby_name}
           />
-          <Item
+          {/* <Item
             title={t('profileSettings.typeOfPregnancy')}
             content={
               data?.pregnant_type === 2
                 ? t('profileSettings.typeOfPregnancyDetail.multiple')
                 : t('profileSettings.typeOfPregnancyDetail.one_baby')
             }
-          />
+          /> */}
         </>
       ) : null}
-      <Item
+      {/* <Item
         title={`${t('signUp.phoneNumber')}`}
         content={`${data?.calling_code ? data?.calling_code : ''} ${
           data?.phone_number ? data?.phone_number : ''
         }`}
-      />
+      /> */}
     </View>
   );
 });

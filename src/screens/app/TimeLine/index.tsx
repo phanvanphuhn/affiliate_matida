@@ -5,13 +5,11 @@ import {FLoatingAIButton, Header, PickerWeek} from '@component';
 import {SvgArrowLeft} from '@images';
 import {colors, scaler} from '@stylesCommon';
 import {useTranslation} from 'react-i18next';
-import {ViewPickerTime} from './component/ViewPickerTime';
 import {getValueTimeLine, GlobalService} from '@services';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import moment from 'moment';
-import {convertLangDay, convertLangMonth, useUXCam} from '@util';
+import {useUXCam} from '@util';
 import {trackingAppEvent, event} from '@util';
 
 const TimeLine = () => {

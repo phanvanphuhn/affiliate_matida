@@ -7,7 +7,6 @@ import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import moment from 'moment';
 import {useTranslation} from 'react-i18next';
-import reactotron from 'reactotron-react-native';
 
 export const DueDateComponent = (props: any) => {
   const {t} = useTranslation();
@@ -15,7 +14,6 @@ export const DueDateComponent = (props: any) => {
   const {dateValue} = props;
 
   const handleOnPress = () => {
-    reactotron.log?.('NAVIGATE DUEDATE');
     navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE_APP, {value: dateValue});
   };
 
