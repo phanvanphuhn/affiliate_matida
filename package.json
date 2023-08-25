@@ -16,7 +16,13 @@
     "push-ip": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida -d Production",
     "push-is": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida -d Staging",
     "push-ap": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida-1 -d Production",
-    "push-as": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida-1 -d Staging"
+    "push-as": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida-1 -d Staging",
+    "push-at": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida-1 -d Testing",
+    "push-it": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida -d Testing",
+    "rollback-as": "appcenter codepush rollback -a cao.tran-adamosoft.com/Matida-1 Staging --target-release",
+    "rollback-ap": "appcenter codepush rollback -a cao.tran-adamosoft.com/Matida-1 Production --target-release",
+    "rollback-is": "appcenter codepush rollback -a cao.tran-adamosoft.com/Matida Staging --target-release",
+    "rollback-ip": "appcenter codepush rollback -a cao.tran-adamosoft.com/Matida Production --target-release"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.2.2",
