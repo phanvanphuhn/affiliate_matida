@@ -1,11 +1,4 @@
-import {
-  SvgHeart,
-  SvgHearted,
-  SvgStar,
-  ic_comment,
-  ic_menu,
-  ic_share,
-} from '@images';
+import {SvgHeart, SvgHearted, ic_comment, ic_menu} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
@@ -91,16 +84,16 @@ const FooterFeed = (props: FooterFeedProps) => {
           </Text>
         )}
       </TouchableOpacity>
-      <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
+      {/* <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
         {state.feed?.is_rated ? (
           <SvgStar fill={colors.yellow} color={colors.yellow} />
         ) : (
           <SvgStar />
         )}
-      </TouchableOpacity>
-      <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
+      </TouchableOpacity> */}
+      {/* <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
         <Image source={ic_share} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.buttonFooter} onPress={onMenu}>
         <Image source={ic_menu} />
       </TouchableOpacity>
