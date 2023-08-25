@@ -112,7 +112,7 @@ const SizeComparison = () => {
               listImage={listImage ?? []}
             /> */}
             <Size data={data?.baby_size} week={selectedWeek} />
-            <Body data={data?.mom} week={selectedWeek} />
+            {/* <Body data={data?.mom} week={selectedWeek} /> */}
           </>
         );
       case 2:
