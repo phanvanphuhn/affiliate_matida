@@ -15,7 +15,7 @@ import {getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
 import {useRoute} from '@react-navigation/native';
 
-export const SIZE_DEFAULT = 5;
+export const SIZE_DEFAULT = 20;
 const useDetailFeed = () => {
   const route = useRoute<any>();
 
