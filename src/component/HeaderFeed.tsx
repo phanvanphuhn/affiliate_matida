@@ -1,22 +1,17 @@
-import {DefaultTFuncReturn} from 'i18next';
-import React, {useState} from 'react';
+import React from 'react';
 import {
-  LayoutChangeEvent,
-  Platform,
   StyleProp,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {goBack} from '@navigation';
 
 import {SvgArrowLeft} from '@images';
-import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {ROUTE_NAME} from '@routeName';
+import {colors, scaler} from '@stylesCommon';
 
 interface HeaderProps {
   IconLeft?: JSX.Element;
@@ -50,12 +45,14 @@ const HeaderFeed = ({
         disabled={hideLeftButton}>
         {IconLeft}
       </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.buttonRight, styleButtonRight]}
-        activeOpacity={0.9}
-        onPress={onPressRight}>
-        {ComponentRight}
-      </TouchableOpacity>
+      {onPressRight && (
+        <TouchableOpacity
+          style={[styles.buttonRight, styleButtonRight]}
+          activeOpacity={0.9}
+          onPress={onPressRight}>
+          {ComponentRight}
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

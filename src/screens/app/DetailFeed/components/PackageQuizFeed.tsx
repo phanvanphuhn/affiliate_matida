@@ -1,41 +1,31 @@
+import {ViewTextSeeMore} from '@component';
+import {IconBackgroundImageHome, imageNameAppPink} from '@images';
+import {navigate} from '@navigation';
+import {updateDataHome} from '@redux';
+import {ROUTE_NAME} from '@routeName';
+import {GlobalService, answerDailyQuiz} from '@services';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
-  FlatList,
-  Image,
   ImageBackground,
-  ListRenderItem,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {IAnswers, IDataListFeed} from '../../Feed/type';
-import {useDispatch, useSelector} from 'react-redux';
-import {useVideo} from './Container';
-import {answerDailyQuiz, GlobalService} from '@services';
-import {updateDataHome} from '@redux';
-import ModalResultQuiz from './ModalResultQuiz';
+import FastImage from 'react-native-fast-image';
 import {showMessage} from 'react-native-flash-message';
-import {useTranslation} from 'react-i18next';
-import {EDailyQuiz} from '@constant';
-import {
-  IconBackgroundImageHome,
-  SvgFailed,
-  SvgLikeQuiz,
-  SvgUnLikeQuiz,
-  SvgVerify,
-} from '@images';
-import {navigate} from '@navigation';
-import {ROUTE_NAME} from '@routeName';
-import {ViewTextSeeMore} from '@component';
-import ResultQuizFeed from './ResultQuizFeed';
+import {useDispatch, useSelector} from 'react-redux';
+import {IAnswers, IDataListFeed} from '../../Feed/type';
+import {useVideo} from './Container';
 
 interface PackageQuizFeedProps {
   item: IDataListFeed;
   isFocused: boolean;
 }
 const PackageQuizFeed = (props: PackageQuizFeedProps) => {
+  console.log('PackageQuizFeed: ', props);
   const {setState} = useVideo();
   const [answer, setAnswer] = useState<IAnswers>();
   const [isVisible, setIsvisible] = useState<boolean>(false);
@@ -78,38 +68,51 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
   };
 
   const renderViewResult = () => {
-    if (data?.percent_diff_answer || data?.percent_same_answer) {
-      return <ResultQuizFeed />;
-    } else {
-      return (
-        <View style={styles.viewResult}>
-          <Text
-            style={{
-              ...stylesCommon.fontPlus600,
-              fontSize: scaler(24),
-              color: '#FFFFFF',
-              textAlign: 'center',
-              marginBottom: scaler(24),
-            }}>
-            {t('home.testKnowledge')}
-          </Text>
-          <View style={styles.viewTitle}>
-            <ViewTextSeeMore
-              heightMax={110}
-              text={lang === 1 ? props?.item?.name_en : props?.item?.name_vi}
-              style={styles.txtTitleContent}
-              numberOfLines={3}
-            />
-          </View>
-          <View style={{flexDirection: 'row'}}>
+    // if (data?.percent_diff_answer || data?.percent_same_answer) {
+    //   return <ResultQuizFeed />;
+    // } else {
+    return (
+      <View style={styles.viewResult}>
+        <Text
+          style={{
+            ...stylesCommon.fontPlus600,
+            fontSize: scaler(24),
+            color: '#FFFFFF',
+            textAlign: 'center',
+            marginBottom: scaler(24),
+          }}>
+          {t('home.testKnowledge')}
+        </Text>
+        <View style={styles.viewTitle}>
+          <ViewTextSeeMore
+            heightMax={110}
+            text={lang === 1 ? props?.item?.name_en : props?.item?.name_vi}
+            style={styles.txtTitleContent}
+            numberOfLines={3}
+          />
+        </View>
+        <View>
+          <FastImage
+            source={
+              props?.item?.image ? {uri: props?.item?.image} : imageNameAppPink
+            }
+            style={styles.imageAvatar}
+          />
+        </View>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => navigate(ROUTE_NAME.MOM_PREP_TEST)}>
+          <Text style={styles.txtBottom}>{t('test.tryMoreTest')}</Text>
+        </TouchableOpacity>
+        {/* <View style={{flexDirection: 'row'}}>
             {!!props.item?.answers?.length &&
               props.item?.answers?.map((answer, i) => {
                 return renderItemAnswer(answer, i);
               })}
-          </View>
-        </View>
-      );
-    }
+          </View> */}
+      </View>
+    );
+    // }
   };
 
   const renderItemAnswer = (item: IAnswers, index: number) => {
@@ -265,5 +268,10 @@ const styles = StyleSheet.create({
     color: colors.textColor,
     ...stylesCommon.fontWeight600,
     textAlign: 'center',
+  },
+  imageAvatar: {
+    marginTop: scaler(6),
+    width: widthScreen - scaler(128),
+    height: scaler(150),
   },
 });

@@ -1,10 +1,9 @@
 import {ic_back, ic_search} from '@images';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {heightScreen, widthScreen} from '@stylesCommon';
-import React, {useEffect, useRef} from 'react';
+import {heightScreen} from '@stylesCommon';
+import React, {useRef} from 'react';
 import {
-  FlatList,
   Image,
   NativeSyntheticEvent,
   Platform,
@@ -12,9 +11,9 @@ import {
   View,
 } from 'react-native';
 import {Drawer} from 'react-native-drawer-layout';
-import PagerView from 'react-native-pager-view';
 import HeaderFeed from '../../../component/HeaderFeed';
 import {IDataListFeed} from '../Feed/type';
+import {SwiperFlatList} from './SwiperFlatlist/SwiperFlatList';
 import Container from './components/Container';
 import DailyQuizFeed from './components/DailyQuizFeed';
 import DrawerFeed from './components/DrawerFeed';
@@ -23,7 +22,6 @@ import ItemArticle from './components/ItemArticle';
 import ItemPurchase from './components/ItemPurchase';
 import ItemVideo from './components/ItemVideo';
 import PackageQuizFeed from './components/PackageQuizFeed';
-import {SwiperFlatList} from './SwiperFlatlist/SwiperFlatList';
 import useDetailFeed from './useDetailFeed';
 interface DetailFeedProps {}
 const previewCount = 3;
@@ -126,7 +124,7 @@ const DetailFeed = (props: DetailFeedProps) => {
       <Container>
         <HeaderFeed
           IconLeft={<Image source={ic_back} style={styles.iconHeader} />}
-          onPressRight={onPressSearch}
+          // onPressRight={onPressSearch}
           ComponentRight={
             <Image source={ic_search} style={styles.iconHeader} />
           }

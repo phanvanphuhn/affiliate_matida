@@ -29,6 +29,7 @@ interface IProps {
   IconNotification?: JSX.Element;
   IconMessage?: JSX.Element;
   bgc?: string;
+  isFeed?: boolean;
 }
 export const AppHeader = ({
   onPressMenu,
@@ -40,6 +41,7 @@ export const AppHeader = ({
   IconNotification = <SvgNotification />,
   IconMessage = <SvgMessage />,
   bgc,
+  isFeed,
 }: IProps) => {
   const user = useSelector((state: any) => state.auth.userInfo);
   // const dataListChat = useSelector((state: any) => state?.listChat?.list);
@@ -190,13 +192,15 @@ export const AppHeader = ({
             {dot && <View style={styles.dotMessage} />}
           </TouchableOpacity>
         )}
-        {onPressSearch && (
+        {onPressSearch ? (
           <TouchableOpacity
             onPress={onPressSearch}
             style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
             <SvgSearch color={bgc ? colors.black : colors.white} />
           </TouchableOpacity>
-        )}
+        ) : isFeed ? (
+          <View style={{width: scaler(48)}} />
+        ) : null}
         {/* <View style={{paddingVertical: scaler(10)}}>
           <View style={{width: scaler(60)}} />
         </View> */}
