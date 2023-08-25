@@ -610,5 +610,7 @@ export const en = {
     like: 'Like',
     comment: 'Comment',
     noComment: 'No comments',
+    todayQuestion: 'Matida Pregnancy Preparation',
+    enterTest: 'Enter test',
   },
 };

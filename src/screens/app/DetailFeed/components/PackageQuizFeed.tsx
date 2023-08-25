@@ -81,7 +81,7 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
             textAlign: 'center',
             marginBottom: scaler(24),
           }}>
-          {t('home.testKnowledge')}
+          {t('feed.todayQuestion')}
         </Text>
         <View style={styles.viewTitle}>
           <ViewTextSeeMore
@@ -102,7 +102,7 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
         <TouchableOpacity
           activeOpacity={0.9}
           onPress={() => navigate(ROUTE_NAME.MOM_PREP_TEST)}>
-          <Text style={styles.txtBottom}>{t('test.tryMoreTest')}</Text>
+          <Text style={styles.txtBottom}>{t('feed.enterTest')}</Text>
         </TouchableOpacity>
         {/* <View style={{flexDirection: 'row'}}>
             {!!props.item?.answers?.length &&

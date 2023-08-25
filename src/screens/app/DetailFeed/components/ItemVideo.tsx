@@ -1,4 +1,6 @@
+import {EContentType} from '@constant';
 import {colors, heightScreen, widthScreen} from '@stylesCommon';
+import {useContentView} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -33,6 +35,12 @@ const ItemVideo = (props: ItemVideoProps) => {
     PLAYER_STATES.PLAYING,
   );
   const {state, setState} = useVideo();
+  useContentView(
+    props.item.id,
+    props.item.content_type == 'podcast'
+      ? EContentType.PODCAST
+      : EContentType.VIDEO,
+  );
   const videoPlayer = useRef<Video>();
   const onReset = () => {
     videoPlayer.current?.seek(0);

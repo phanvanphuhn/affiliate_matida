@@ -614,5 +614,7 @@ export const vi = {
     like: 'Lượt thích',
     comment: 'Bình luận',
     noComment: 'Không có bình luận nào',
+    todayQuestion: 'Bổ sung kiến thức mang thai',
+    enterTest: 'Làm test ngay',
   },
 };

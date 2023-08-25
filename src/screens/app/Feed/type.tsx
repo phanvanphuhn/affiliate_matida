@@ -32,7 +32,7 @@ export interface IDataListFeed
 export interface IPodcastFeed {
   audio?: string;
   desc: string;
-  duration: number;
+  durations: number;
   speaker_bio: string;
   speaker_name: string;
   total_views: number;

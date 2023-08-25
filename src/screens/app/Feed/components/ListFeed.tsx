@@ -102,7 +102,7 @@ const ListFeed = (props: any) => {
               <Image source={iconClock} />
 
               <Text style={styles.description} numberOfLines={1}>
-                {item.duration ? item.duration : '0'} {t('feed.min')}
+                {item.durations ? item.durations : '0'} {t('feed.min')}
               </Text>
             </View>
           )}
