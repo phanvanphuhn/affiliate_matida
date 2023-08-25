@@ -207,9 +207,9 @@ export const en = {
   },
   bottomTab: {
     explore: 'Explore',
-    feed: 'Feed',
+    feed: 'Explore',
     liveTalks: 'Live Talks',
-    home: 'Baby tracker',
+    home: 'Pregnancy tracker',
     community: 'Community',
   },
   popularArticles: 'More to read',
@@ -613,6 +613,6 @@ export const en = {
     comment: 'Comment',
     noComment: 'No comments',
     todayQuestion: 'Matida Pregnancy Preparation',
-    enterTest: 'Enter test',
+    enterTest: 'Start the test',
   },
 };

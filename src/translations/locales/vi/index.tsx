@@ -211,9 +211,9 @@ export const vi = {
   },
   bottomTab: {
     explore: 'Khám phá',
-    feed: 'Dành cho bạn',
+    feed: 'Khám phá',
     liveTalks: 'Trò chuyện',
-    home: 'Trang chủ',
+    home: 'Theo dõi thai kỳ',
     community: 'Kết nối',
   },
   popularArticles: 'Đọc nhiều hơn',

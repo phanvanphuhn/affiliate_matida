@@ -1,21 +1,10 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
-import {getListVideoOfWeek, GlobalService} from '@services';
-import {useSelector} from 'react-redux';
-import {FlatList, NativeSyntheticEvent} from 'react-native';
-import {IDetailParams, IStateVideo} from './types';
-import {OnPageSelectedEventData} from 'react-native-pager-view/src/PagerViewNativeComponent';
+import {useRoute} from '@react-navigation/native';
+import {useEffect, useReducer} from 'react';
 import {getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
-import {useRoute} from '@react-navigation/native';
+import {IStateVideo} from './types';
 
-export const SIZE_DEFAULT = 20;
+export const SIZE_DEFAULT = 10;
 const useDetailFeed = () => {
   const route = useRoute<any>();
 

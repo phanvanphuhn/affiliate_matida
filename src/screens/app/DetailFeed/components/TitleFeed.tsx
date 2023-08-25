@@ -92,6 +92,9 @@ const TitleFeed = (props: TitleFeedProps) => {
                 }</div>`,
               }}
               baseStyle={styles.description}
+              enableExperimentalMarginCollapsing={true}
+              enableExperimentalBRCollapsing={true}
+              enableExperimentalGhostLinesPrevention={true}
               defaultTextProps={{
                 // numberOfLines: textShown ? undefined : 4,
                 // onTextLayout: onTextLayout,

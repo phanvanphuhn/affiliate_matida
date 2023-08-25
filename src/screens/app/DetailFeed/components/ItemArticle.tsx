@@ -1,6 +1,4 @@
-import {EContentType} from '@constant';
 import {heightScreen, widthScreen} from '@stylesCommon';
-import {useContentView} from '@util';
 import React, {useEffect} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -15,7 +13,7 @@ interface ItemArticleProps {
 }
 const ItemArticle = (props: ItemArticleProps) => {
   const {setState} = useVideo();
-  useContentView(props.item.id, EContentType.ARTICLE);
+  // useContentView(props.item.contentid, EContentType.ARTICLE);
   useEffect(() => {
     if (props.isFocused) {
       console.log('=>(ItemArticle.tsx:19) props.item', props.item);
