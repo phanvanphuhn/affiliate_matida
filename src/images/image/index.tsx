@@ -9,6 +9,8 @@ const iconDelete = require('./iconDelete.png');
 const iconReplyArr = require('./iconReply.png');
 const imageModalConfirmProfile = require('./imageModalConfirmProfile.png');
 const imageNameApp = require('./NameApp.png');
+const imageNameAppBlack = require('./NameAppBlack.png');
+const imageNameAppPink = require('./NameAppPink.png');
 const imageBackgroundOpacity = require('./backgroundOpacity.png');
 const iconNext = require('./ImageIconArrowRight.png');
 const avatarSpeaker = require('./avatarSpeaker.png');
@@ -42,46 +44,68 @@ const slideIntro3 = require('./slideIntro3.png');
 const slideIntro4 = require('./slideIntro4.png');
 const slideIntro5 = require('./slideIntro5.png');
 const slideIntro5en = require('./slideIntro5en.png');
+const ic_back = require('./ic_back.png');
+const ic_search = require('./ic_search.png');
+const ic_heart = require('./ic_heart.png');
+const ic_comment = require('./ic_comment.png');
+const ic_menu = require('./ic_menu.png');
+const ic_share = require('./ic_share.png');
+const ic_star = require('./ic_star.png');
+const ic_purchase = require('./ic_purchase.png');
+const ic_send = require('./ic_send.png');
+const DailyQuiz = require('./dailyQuiz.png');
+const DailyQuizBackground = require('./dailyQuizzBackground.png');
 
 export {
-  imageIntro,
-  avatarDefault,
-  isStockPhoto,
-  noResults,
-  buttonSend,
-  imageLogOut,
-  imageUpload,
-  iconDelete,
-  iconReplyArr,
-  imageModalConfirmProfile,
-  imageNameApp,
-  imageBackgroundOpacity,
-  iconNext,
-  avatarSpeaker,
-  iconSend,
-  iconUploadImageChat,
+  DailyQuiz,
+  DailyQuizBackground,
+  IconBackgroundImageHome,
   LogoApp,
-  iconThreedot,
-  iconMuteNoti,
-  iconUserLive,
-  iconViewMeeting,
-  iconRaiseHandModal,
-  iconHand,
-  iconLock,
-  iconSavePng,
-  iconUnSavePng,
-  iconIsAdmin,
-  iconPhoneCall,
-  iconLiveStream,
   TidaAI,
   TidaAIWhite,
-  IconBackgroundImageHome,
-  iconSuccessQuiz,
-  iconFalseQuiz,
+  avatarDefault,
+  buttonSend,
+  ic_back,
+  ic_comment,
+  ic_heart,
+  ic_menu,
+  ic_purchase,
+  ic_search,
+  ic_send,
+  ic_share,
+  ic_star,
+  iconDelete,
   iconEmoji,
-  liveTalkBackground,
+  iconFalseQuiz,
+  iconHand,
+  iconIsAdmin,
+  iconLiveStream,
+  iconLock,
+  iconMuteNoti,
+  iconNext,
+  iconPhoneCall,
+  iconRaiseHandModal,
+  iconReplyArr,
+  iconSavePng,
+  iconSend,
+  iconSuccessQuiz,
+  iconThreedot,
+  iconUnSavePng,
+  iconUploadImageChat,
+  iconUserLive,
+  iconViewMeeting,
+  imageBackgroundOpacity,
+  imageIntro,
+  imageLogOut,
+  imageModalConfirmProfile,
+  imageNameApp,
+  imageNameAppBlack,
+  imageNameAppPink,
+  imageUpload,
+  isStockPhoto,
   lightQuiz,
-  backgroundBannerQuiz,
+  liveTalkBackground,
+  noResults,
   slideIntro1,
   slideIntro2,
   slideIntro3,

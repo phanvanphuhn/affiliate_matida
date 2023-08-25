@@ -1,12 +1,8 @@
-import axios from 'axios';
-import {describeSuccessResponse, describeErrorResponse} from './logger';
-import {showMessage} from 'react-native-flash-message';
-import {store} from '../redux/store';
-import {NavigationUtils} from '@navigation';
-import {ROUTE_NAME} from '@routeName';
 import {logOut} from '@redux';
-import {colors} from '@stylesCommon';
 import {BASEURL} from '@util';
+import axios from 'axios';
+import {store} from '../redux/store';
+import {describeErrorResponse, describeSuccessResponse} from './logger';
 // import {BASEURL} from '@env';
 
 const api = axios.create();

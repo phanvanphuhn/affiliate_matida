@@ -33,7 +33,7 @@ export * from './TrimesterComponent';
 export * from './ItemPodCast';
 export * from './TopicComponent';
 export * from './ItemVideo';
-export * from './ModalConfirmDelete';
+export * from './LazyImage';
 export * from './ModalConfirmBlock';
 export * from './AppModal';
 export * from './ToastCustomPost';

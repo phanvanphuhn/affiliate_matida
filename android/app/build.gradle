@@ -166,6 +166,10 @@ android {
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
     }
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
     signingConfigs {
         debug {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
@@ -281,11 +285,11 @@ dependencies {
     implementation "me.zalo:sdk-core:+"
     implementation "me.zalo:sdk-auth:+"
     implementation "me.zalo:sdk-openapi:+"
-    
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     // implementation 'com.facebook.android:facebook-android-sdk:latest.release'
-    implementation 'com.facebook.android:facebook-android-sdk:[8,9)' 
+    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

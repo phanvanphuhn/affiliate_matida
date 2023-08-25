@@ -55,6 +55,9 @@ import {ListRecord} from './app/ListRecord';
 import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
 import {Forum} from './app/Forum';
+import Feed from './app/Feed'
+import SearchFeed from './app/Feed/components/SearchFeed';
+import DetailFeed from './app/DetailFeed';
 import {SelectDOB} from './auth/DueDate/SelectDOB';
 import {Question2} from './auth/DueDate/Question2';
 import {Question3} from './auth/DueDate/Question3';
@@ -117,6 +120,9 @@ const screens = {
   Onboarding,
   SlideIntro,
   Forum,
+  Feed,
+  DetailFeed,
+  SearchFeed,
   SelectDOB,
   Question2,
   Question3,
