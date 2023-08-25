@@ -38,6 +38,7 @@ const startScroll = (itemWidth * 3) / 4;
 const DetailFeed = (props: DetailFeedProps) => {
   const {state, onPageSelected, handleLoadMore, handleLoadLess} =
     useDetailFeed();
+  console.log('=>(index.tsx:41) state.currentIndex', state.currentIndex);
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigation<any>();
   const pagerViewRef = useRef<SwiperFlatList>();
@@ -165,11 +166,7 @@ const DetailFeed = (props: DetailFeedProps) => {
           keyExtractor={item => item?.content_type + item?.contentid}
           renderItem={({item, index}) => {
             return (
-              <View style={[styles.pagerView]}>
-                {item.is_payment == '1' && item.content_type !== 'daily_quizz'
-                  ? renderPurchase(item, index)
-                  : renderItem(item, index)}
-              </View>
+              <View style={[styles.pagerView]}>{renderItem(item, index)}</View>
             );
           }}
           pagingEnabled={true}

@@ -37,8 +37,9 @@ const FooterFeed = (props: FooterFeedProps) => {
   };
 
   useEffect(() => {
+    console.log('=>(FooterFeed.tsx:42) state.feed', state.feed);
     getDetail();
-  }, [state.feed?.id, state.feed?.content_type]);
+  }, [state.feed?.contentid, state.feed?.content_type]);
   const onLike = async () => {
     try {
       if (!state.feed) {

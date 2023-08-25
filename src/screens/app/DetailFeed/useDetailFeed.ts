@@ -109,16 +109,10 @@ const useDetailFeed = () => {
     console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
     if (firstSlide) {
       handleLoadLess(pageNumber);
-    } else if (lastSlide) {
-      // handleLoadMore();
-      setState({
-        currentIndex: pageNumber,
-      });
-    } else {
-      setState({
-        currentIndex: pageNumber,
-      });
     }
+    setState({
+      currentIndex: pageNumber,
+    });
   };
   useEffect(() => {
     getListVideo();

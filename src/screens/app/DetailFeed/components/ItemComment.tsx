@@ -55,6 +55,7 @@ const ItemComment = (props: ItemCommentProps) => {
         ? props.item?.reply_comments?.map(reply => {
             return (
               <View
+                key={reply?.id?.toString()}
                 style={{
                   paddingLeft: 40,
                   flex: 1,
