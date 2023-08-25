@@ -92,7 +92,9 @@ export const SwiperFlatList = React.forwardRef(
           _index !== _prevIndex,
         );
         console.log('=>(SwiperFlatList.tsx:94) _prevIndex', _prevIndex);
-        onChangeIndex?.({index: _index, prevIndex: _prevIndex});
+        if (_index !== _prevIndex) {
+          onChangeIndex?.({index: _index, prevIndex: _prevIndex});
+        }
       },
       [onChangeIndex],
     );

@@ -29,6 +29,10 @@ const ListFeed = (props: any) => {
   const lang = useSelector((state: any) => state.auth.lang);
 
   const onDetailClick = (index: number) => {
+    console.log(
+      '=>(ListFeed.tsx:36) Math.ceil((index + 1) / SIZE_DEFAULT)',
+      Math.ceil((index + 1) / SIZE_DEFAULT),
+    );
     navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
       index,
       currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),

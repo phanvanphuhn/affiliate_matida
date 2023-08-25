@@ -6,6 +6,7 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
+import {SIZE_DEFAULT} from '../../DetailFeed/useDetailFeed';
 
 const DailyQuiz = ({item, index}: any) => {
   const navigation = useNavigation<any>();
@@ -14,7 +15,7 @@ const DailyQuiz = ({item, index}: any) => {
   const onDetailClick = (index: number) => {
     navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
       index,
-      currentPage: Math.ceil((index + 1) / 10),
+      currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
     });
   };
 

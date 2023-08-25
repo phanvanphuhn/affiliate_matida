@@ -15,7 +15,7 @@ import {getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
 import {useRoute} from '@react-navigation/native';
 
-export const SIZE_DEFAULT = 10;
+export const SIZE_DEFAULT = 5;
 const useDetailFeed = () => {
   const route = useRoute<any>();
 
@@ -42,6 +42,14 @@ const useDetailFeed = () => {
   console.log('=>(useDetailFeed.ts:41) state', state);
   useEffect(() => {
     const getIndex = (size: number) => {
+      console.log(
+        '=>(useDetailFeed.ts:50) route.params?.index',
+        route.params?.index,
+      );
+      console.log(
+        '=>(useDetailFeed.ts:54) route.params?.currentPage',
+        route.params?.currentPage,
+      );
       return route.params?.index >= (size || SIZE_DEFAULT)
         ? route.params?.index -
             (route.params?.currentPage - 1) * (size || SIZE_DEFAULT)
@@ -108,7 +116,8 @@ const useDetailFeed = () => {
     const lastSlide = pageNumber == state.data.length - 1;
     console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
     if (firstSlide) {
-      handleLoadLess(pageNumber);
+      // handleLoadLess(pageNumber);
+    } else {
     }
     setState({
       currentIndex: pageNumber,
