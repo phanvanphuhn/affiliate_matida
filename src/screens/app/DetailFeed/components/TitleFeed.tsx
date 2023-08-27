@@ -133,8 +133,9 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     marginTop: 10,
     color: colors.white,
-    fontSize: 12,
+    fontSize: 14,
     textDecorationLine: 'underline',
+    fontWeight: '700',
   },
   title: {
     fontSize: 18,
