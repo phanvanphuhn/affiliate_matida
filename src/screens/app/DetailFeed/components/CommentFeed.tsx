@@ -2,6 +2,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetFlatList,
 } from '@gorhom/bottom-sheet';
+import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 import {iconClose} from '@images';
 import {colors} from '@stylesCommon';
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
@@ -17,11 +18,10 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IDataComment} from '../types';
-import {useVideo} from './Container';
 import useCommentFeed from '../useCommentFeed';
-import KeyboardShift from './KeyboardShift';
+import {useVideo} from './Container';
 import ItemComment from './ItemComment';
-import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
+import KeyboardShift from './KeyboardShift';
 
 interface CommentProps {}
 
@@ -86,6 +86,9 @@ const CommentFeed = (props: CommentProps) => {
     (props2: BottomSheetBackdropProps) => (
       <BottomSheetBackdrop
         {...props2}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        opacity={0.5}
         onPress={onCloseComment}
         pressBehavior={'close'}
       />

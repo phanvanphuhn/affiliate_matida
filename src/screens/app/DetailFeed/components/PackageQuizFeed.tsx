@@ -1,10 +1,12 @@
 import {ViewTextSeeMore} from '@component';
+import {EPreRoute} from '@constant';
 import {IconBackgroundImageHome, imageNameAppPink} from '@images';
 import {navigate} from '@navigation';
 import {updateDataHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {GlobalService, answerDailyQuiz} from '@services';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {event, trackingAppEvent} from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -25,7 +27,6 @@ interface PackageQuizFeedProps {
   isFocused: boolean;
 }
 const PackageQuizFeed = (props: PackageQuizFeedProps) => {
-  console.log('PackageQuizFeed: ', props);
   const {setState} = useVideo();
   const [answer, setAnswer] = useState<IAnswers>();
   const [isVisible, setIsvisible] = useState<boolean>(false);
@@ -66,7 +67,22 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
       GlobalService.hideLoading();
     }
   };
-
+  const onDoMomPrepTest = (item: IDataListFeed) => {
+    if (!item?.is_active) {
+      return;
+    }
+    if (+item?.maxScore === +item?.total_questions) {
+      trackingAppEvent(event.MOM_TEST.START, {content: item?.id});
+      navigate(ROUTE_NAME.TEST_RESULT, {
+        id: item?.id,
+        redoTest: () => {},
+        preRoute: EPreRoute.PERIODIC,
+      });
+    } else {
+      trackingAppEvent(event.MOM_TEST.START, {content: item});
+      navigate(ROUTE_NAME.TEST_DETAIL, {quiz: item});
+    }
+  };
   const renderViewResult = () => {
     // if (data?.percent_diff_answer || data?.percent_same_answer) {
     //   return <ResultQuizFeed />;
@@ -101,7 +117,7 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
         </View>
         <TouchableOpacity
           activeOpacity={0.9}
-          onPress={() => navigate(ROUTE_NAME.MOM_PREP_TEST)}>
+          onPress={() => onDoMomPrepTest(props?.item)}>
           <Text style={styles.txtBottom}>{t('feed.enterTest')}</Text>
         </TouchableOpacity>
         {/* <View style={{flexDirection: 'row'}}>

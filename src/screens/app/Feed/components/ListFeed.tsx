@@ -1,8 +1,11 @@
 import {LazyImage} from '@component/LazyImage';
+import {EPreRoute} from '@constant';
 import {SvgEye, iconClock, imageNameAppPink} from '@images';
+import {navigate} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
+import {event, trackingAppEvent} from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -28,15 +31,32 @@ const ListFeed = (props: any) => {
   const navigation = useNavigation<any>();
   const lang = useSelector((state: any) => state.auth.lang);
 
-  const onDetailClick = (index: number) => {
+  const onDetailClick = (index: number, item: IDataListFeed) => {
     console.log(
       '=>(ListFeed.tsx:36) Math.ceil((index + 1) / SIZE_DEFAULT)',
       Math.ceil((index + 1) / SIZE_DEFAULT),
     );
-    navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
-      index,
-      currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
-    });
+    if (item?.content_type == 'package_quizz') {
+      if (!item?.is_active) {
+        return;
+      }
+      if (+item?.maxScore === +item?.total_questions) {
+        trackingAppEvent(event.MOM_TEST.START, {content: item?.id});
+        navigate(ROUTE_NAME.TEST_RESULT, {
+          id: item?.id,
+          redoTest: () => {},
+          preRoute: EPreRoute.PERIODIC,
+        });
+      } else {
+        trackingAppEvent(event.MOM_TEST.START, {content: item});
+        navigate(ROUTE_NAME.TEST_DETAIL, {quiz: item});
+      }
+    } else {
+      navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
+        index,
+        currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
+      });
+    }
   };
   const getTotalView = (item: IDataListFeed) => {
     let totalView = 0;
@@ -84,7 +104,7 @@ const ListFeed = (props: any) => {
     }
     return (
       <TouchableOpacity
-        onPress={() => onDetailClick(index)}
+        onPress={() => onDetailClick(index, item)}
         style={styles.itemContainer}>
         <View>
           <View style={styles.tag}>
