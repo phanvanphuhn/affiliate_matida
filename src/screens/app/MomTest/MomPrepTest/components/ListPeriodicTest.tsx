@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {getListPeriodicTest} from '@services';
 import {scaler} from '@stylesCommon';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from '../style';

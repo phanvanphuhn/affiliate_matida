@@ -1,14 +1,14 @@
 import {Header} from '@component';
 import {TYPE_LIST_TEST} from '@constant';
 import {SvgArrowLeft} from '@images';
+import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import React, {useRef, useEffect} from 'react';
+import {event, trackingAppEvent, useUXCam} from '@util';
+import React, {useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, View} from 'react-native';
 import {HistoryRef, ListHistoryTest, ListPeriodicTest} from './components';
 import {styles} from './style';
-import {trackingAppEvent, event, useUXCam} from '@util';
-import {ROUTE_NAME} from '@routeName';
 
 export const MomPrepTest = () => {
   const {t} = useTranslation();
