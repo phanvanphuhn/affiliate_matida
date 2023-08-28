@@ -182,7 +182,7 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
   );
 };
 
-export default PackageQuizFeed;
+export default React.memo(PackageQuizFeed);
 
 const styles = StyleSheet.create({
   container: {

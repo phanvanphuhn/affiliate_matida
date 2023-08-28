@@ -24,6 +24,7 @@ import ItemVideo from './components/ItemVideo';
 import PackageQuizFeed from './components/PackageQuizFeed';
 import useDetailFeed from './useDetailFeed';
 import PagerView from 'react-native-pager-view';
+import Swiper from './SwiperFlatlist/Swiper';
 interface DetailFeedProps {}
 const previewCount = 3;
 //to center items
@@ -81,6 +82,9 @@ const DetailFeed = (props: DetailFeedProps) => {
     console.log('=>(index.tsx:81) item', item);
     onPageSelected(item.index);
   };
+  const onPageHandlerSwiper = (index: number) => {
+    onPageSelected(index);
+  };
   const renderDrawer = () => {
     return <DrawerFeed />;
   };
@@ -129,12 +133,36 @@ const DetailFeed = (props: DetailFeedProps) => {
             <Image source={ic_search} style={styles.iconHeader} />
           }
         />
+        {/*{!!state?.data.length && (*/}
+        {/*  <PagerView*/}
+        {/*    initialPage={state.currentIndex}*/}
+        {/*    orientation={'vertical'}*/}
+        {/*    style={[styles.pagerView]}*/}
+        {/*    onPageSelected={onPageHandler}*/}
+        {/*    ref={pagerViewRef}>*/}
+        {/*    {state?.data?.map((item, index) => (*/}
+        {/*      <View*/}
+        {/*        style={[styles.pagerView]}*/}
+        {/*        key={item?.content_type + item?.contentid}>*/}
+        {/*        {renderItem(item, index)}*/}
+        {/*      </View>*/}
+        {/*    ))}*/}
+        {/*  </PagerView>*/}
+        {/*)}*/}
         {!!state?.data.length && (
-          <PagerView
-            initialPage={state.currentIndex}
-            orientation={'vertical'}
-            style={[styles.pagerView]}
-            onPageSelected={onPageHandler}
+          <Swiper
+            index={state.currentIndex}
+            horizontal={false}
+            // style={[styles.pagerView]}
+            scrollEnabled={true}
+            showsPagination={false}
+            showsButtons={true}
+            loop={false}
+            removeClippedSubviews={true}
+            loadMinimal={true}
+            loadMinimalSize={4}
+            bounces={true}
+            onIndexChanged={onPageHandlerSwiper}
             ref={pagerViewRef}>
             {state?.data?.map((item, index) => (
               <View
@@ -143,7 +171,7 @@ const DetailFeed = (props: DetailFeedProps) => {
                 {renderItem(item, index)}
               </View>
             ))}
-          </PagerView>
+          </Swiper>
         )}
         {/*<SwiperFlatList*/}
         {/*  index={state.currentIndex}*/}
@@ -184,11 +212,9 @@ const styles = StyleSheet.create({
   },
   pagerView: {
     flex: 1,
-    position: 'relative',
-
-    height: Platform.select({
-      ios: heightScreen - 65,
-      android: heightScreen - 25,
-    }),
+    // height: Platform.select({
+    //   ios: heightScreen - 65,
+    //   android: heightScreen - 25,
+    // }),
   },
 });

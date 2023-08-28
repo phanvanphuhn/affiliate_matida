@@ -145,7 +145,7 @@ const DailyQuizFeed = (props: DailyQuizFeedProps) => {
   );
 };
 
-export default DailyQuizFeed;
+export default React.memo(DailyQuizFeed);
 
 const styles = StyleSheet.create({
   group: {

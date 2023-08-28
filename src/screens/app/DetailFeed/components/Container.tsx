@@ -75,7 +75,7 @@ const Container: React.FC<ContainerProps> = props => {
   );
 };
 
-export default Container;
+export default React.memo(Container);
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#141414', justifyContent: 'flex-end'},

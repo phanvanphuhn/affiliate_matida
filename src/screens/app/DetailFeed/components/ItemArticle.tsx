@@ -6,6 +6,7 @@ import {IDataListFeed} from '../../Feed/type';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import TitleFeed from './TitleFeed';
+import {LazyImage} from '@component';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -25,12 +26,11 @@ const ItemArticle = (props: ItemArticleProps) => {
   return (
     <DoubleClick isShowButtonPlay={false}>
       <View style={{flex: 1}}>
-        <FastImage
+        <LazyImage
           source={{
             uri: props.item.image,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
           }}
+          fastImage={true}
           resizeMode={'contain'}
           style={{
             width: widthScreen,
@@ -46,7 +46,7 @@ const ItemArticle = (props: ItemArticleProps) => {
   );
 };
 
-export default ItemArticle;
+export default React.memo(ItemArticle);
 
 const styles = StyleSheet.create({
   container: {},

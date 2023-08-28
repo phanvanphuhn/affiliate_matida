@@ -159,7 +159,7 @@ const CommentFeed = (props: CommentProps) => {
   );
 };
 
-export default CommentFeed;
+export default React.memo(CommentFeed);
 
 const styles = StyleSheet.create({
   container: {

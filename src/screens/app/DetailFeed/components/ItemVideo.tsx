@@ -191,7 +191,7 @@ const ItemVideo = (props: ItemVideoProps) => {
   );
 };
 
-export default ItemVideo;
+export default React.memo(ItemVideo);
 
 const styles = StyleSheet.create({
   loading: {
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   imgBackground: {
     width: widthScreen,
     aspectRatio: Platform.select({
-      android: widthScreen / (heightScreen - 33),
+      android: widthScreen / (heightScreen - 34),
       ios: widthScreen / (heightScreen - 71),
     }),
     alignItems: 'center',

@@ -104,4 +104,4 @@ const Description: FunctionComponent<Props> = props => {
   );
 };
 
-export default Description;
+export default React.memo(Description);

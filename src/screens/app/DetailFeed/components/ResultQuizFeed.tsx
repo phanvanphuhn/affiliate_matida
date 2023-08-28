@@ -101,7 +101,7 @@ const ResultQuizFeed = (props: ResultQuizFeedProps) => {
   );
 };
 
-export default ResultQuizFeed;
+export default React.memo(ResultQuizFeed);
 
 const styles = StyleSheet.create({
   container: {

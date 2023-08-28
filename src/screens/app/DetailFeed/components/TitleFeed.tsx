@@ -118,7 +118,7 @@ const TitleFeed = (props: TitleFeedProps) => {
   );
 };
 
-export default TitleFeed;
+export default React.memo(TitleFeed);
 
 const styles = StyleSheet.create({
   colorWhite: {

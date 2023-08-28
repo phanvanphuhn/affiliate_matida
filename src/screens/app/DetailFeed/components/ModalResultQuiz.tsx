@@ -115,7 +115,7 @@ const ModalResultQuiz = (props: ModalResultQuizProps) => {
   );
 };
 
-export default ModalResultQuiz;
+export default React.memo(ModalResultQuiz);
 
 const styles = StyleSheet.create({
   container: {

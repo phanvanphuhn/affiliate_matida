@@ -52,7 +52,7 @@ function CustomImageRenderer(props: CustomImageRendererProps) {
   );
 }
 
-export default CustomImageRenderer;
+export default React.memo(CustomImageRenderer);
 
 const styles = StyleSheet.create({
   container: {},

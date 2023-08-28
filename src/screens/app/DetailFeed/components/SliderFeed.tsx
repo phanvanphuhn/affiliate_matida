@@ -40,7 +40,7 @@ const SliderFeed = (props: SliderFeedProps) => {
   );
 };
 
-export default SliderFeed;
+export default React.memo(SliderFeed);
 
 const styles = StyleSheet.create({
   container: {

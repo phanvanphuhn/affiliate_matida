@@ -1,5 +1,5 @@
 import {State, TapGestureHandler} from 'react-native-gesture-handler';
-import {useRef} from 'react';
+import React, {useRef} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
@@ -64,7 +64,7 @@ const DoubleClick = ({
     </TapGestureHandler>
   );
 };
-export default DoubleClick;
+export default React.memo(DoubleClick);
 const styles = StyleSheet.create({
   buttonPlay: {
     padding: 10,
