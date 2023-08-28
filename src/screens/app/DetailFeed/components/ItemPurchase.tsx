@@ -51,7 +51,7 @@ const ItemPurchase = (props: ItemPurchaseProps) => {
   );
 };
 
-export default ItemPurchase;
+export default React.memo(ItemPurchase);
 
 const styles = StyleSheet.create({
   textButtonPurchase: {

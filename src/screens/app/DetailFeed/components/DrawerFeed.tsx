@@ -11,15 +11,16 @@ import {
 import {colors} from '@stylesCommon';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IDataListFeed} from '../../Feed/type';
-import useDetailFeed from '../useDetailFeed';
+import useDetailFeed, {SIZE_DEFAULT} from '../useDetailFeed';
 import {ROUTE_NAME} from '@routeName';
 import {useNavigation} from '@react-navigation/native';
+import {LazyImage} from '@component';
 
 interface DrawerFeedProps {}
 
 const DrawerFeed = (props: DrawerFeedProps) => {
   const insets = useSafeAreaInsets();
-  const {state} = useDetailFeed();
+  const {state, handleLoadMore} = useDetailFeed();
   const getThumbnail = (item: IDataListFeed) => {
     let url = '';
     switch (item.content_type) {
@@ -38,7 +39,7 @@ const DrawerFeed = (props: DrawerFeedProps) => {
   const onDetail = (index: number) => {
     navigation.replace(ROUTE_NAME.DETAIL_FEED, {
       index,
-      currentPage: Math.ceil((index + 1) / 10),
+      currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
     });
   };
   const renderItem: ListRenderItem<IDataListFeed> = ({item, index}) => {
@@ -46,7 +47,8 @@ const DrawerFeed = (props: DrawerFeedProps) => {
       <TouchableOpacity
         onPress={() => onDetail(index)}
         style={styles.containerItem}>
-        <Image
+        <LazyImage
+          fastImage={true}
           source={{uri: getThumbnail(item)}}
           style={styles.imageThumbnail}
         />
@@ -63,12 +65,14 @@ const DrawerFeed = (props: DrawerFeedProps) => {
         data={state.data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.6}
       />
     </View>
   );
 };
 
-export default DrawerFeed;
+export default React.memo(DrawerFeed);
 
 const styles = StyleSheet.create({
   container: {

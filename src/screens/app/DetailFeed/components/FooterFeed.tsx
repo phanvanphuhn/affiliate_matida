@@ -101,7 +101,7 @@ const FooterFeed = (props: FooterFeedProps) => {
   );
 };
 
-export default FooterFeed;
+export default React.memo(FooterFeed);
 
 const styles = StyleSheet.create({
   buttonFooter: {

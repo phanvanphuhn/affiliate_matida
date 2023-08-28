@@ -32,7 +32,7 @@ interface Props extends ViewProps {
   value: string;
 }
 
-export default function KeyboardShift(props: Props) {
+function KeyboardShift(props: Props) {
   const insets = useSafeAreaInsets();
   const {t} = useTranslation();
 
@@ -134,7 +134,7 @@ export default function KeyboardShift(props: Props) {
     </TouchableWithoutFeedback>
   );
 }
-
+export default React.memo(KeyboardShift);
 const styles = StyleSheet.create({
   viewRow: {
     flexDirection: 'row',
