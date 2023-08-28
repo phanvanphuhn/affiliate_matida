@@ -22,6 +22,7 @@ import useDetailFeed, {SIZE_DEFAULT} from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
 import DailyQuiz from './dailyQuiz';
+import MomPrepTest from './momPrepTest';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
@@ -100,7 +101,9 @@ const ListFeed = (props: any) => {
   };
   const renderItem: ListRenderItem<IDataListFeed> = ({item, index}) => {
     if (item.content_type == 'daily_quizz') {
-      return <DailyQuiz item={item} index={index} />;
+      return <DailyQuiz item={item} index={index} onPress={onDetailClick} />;
+    } else if (item.content_type == 'package_quizz') {
+      return <MomPrepTest item={item} index={index} onPress={onDetailClick} />;
     }
     return (
       <TouchableOpacity
@@ -144,7 +147,7 @@ const ListFeed = (props: any) => {
             </Text>
           </View>
         </View>
-        <Text style={styles.title}>
+        <Text style={styles.title} numberOfLines={2}>
           {item.content_type == 'package_quizz'
             ? lang === 1
               ? item?.name_en

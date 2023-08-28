@@ -1,27 +1,16 @@
 import {LazyImage} from '@component/LazyImage';
 import {DailyQuizBackground} from '@images';
-import {useNavigation} from '@react-navigation/native';
-import {ROUTE_NAME} from '@routeName';
-import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {SIZE_DEFAULT} from '../../DetailFeed/useDetailFeed';
 
-const DailyQuiz = ({item, index}: any) => {
-  const navigation = useNavigation<any>();
+const DailyQuiz = ({item, index, onPress}: any) => {
   const lang = useSelector((state: any) => state.auth.lang);
-
-  const onDetailClick = (index: number) => {
-    navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
-      index,
-      currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
-    });
-  };
 
   return (
     <TouchableOpacity
-      onPress={() => onDetailClick(index)}
+      onPress={() => onPress(index, item)}
       style={styles.itemContainer}>
       <View>
         <View style={styles.tag}>
@@ -40,10 +29,8 @@ const DailyQuiz = ({item, index}: any) => {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    flex: 0.5,
-    padding: scaler(8),
     marginBottom: scaler(4),
-    borderRadius: scaler(8),
+    flex: 0.48,
   },
   tag: {
     position: 'absolute',
@@ -76,8 +63,9 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontWeight600,
   },
   image: {
-    height: scaler(270),
+    height: scaler(280),
     borderRadius: scaler(8),
+    width: widthScreen / 2 - scaler(16),
   },
 });
 
