@@ -29,7 +29,7 @@ const Feed = () => {
       <AppHeader
         onPressAvatar={navigateUser}
         onPressLogo={handlePressLogo}
-        // onPressSearch={onPressSearch}
+        onPressSearch={onPressSearch}
         bgc={colors.white}
         isFeed={true}
       />

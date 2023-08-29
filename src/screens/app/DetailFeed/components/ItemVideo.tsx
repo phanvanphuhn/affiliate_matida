@@ -15,6 +15,7 @@ import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
+import ImagePodcast from './ImagePodcast';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -128,11 +129,14 @@ const ItemVideo = (props: ItemVideoProps) => {
                   ...StyleSheet.absoluteFillObject,
                 }}
               />
-              <FastImage
-                source={{uri: props.item.image}}
-                style={styles.imgPodcast}
+              <ImagePodcast
+                item={props.item}
+                isPause={
+                  props.isPause ||
+                  (playerState == PLAYER_STATES.PAUSED && props.isFocused) ||
+                  !props.isFocused
+                }
               />
-              <View style={styles.dot} />
             </ImageBackground>
           )}
           {!!getUrl() && (

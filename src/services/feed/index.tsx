@@ -12,6 +12,10 @@ export const getListFeedApi: any = async (page: number, limit: number = 10) => {
   );
   return response;
 };
+export const searchListFeedApi: any = async (keyword: string) => {
+  const response = await api.get(`${GET_LIST_FEED}/search?query=${keyword}`);
+  return response;
+};
 export const getListCommentFeedApi: any = async (
   feedType: string,
   feedId: string,

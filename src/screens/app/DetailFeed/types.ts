@@ -4,14 +4,14 @@ export interface IDetailParams {
   currentPage: number;
 }
 export interface IStateVideo {
-  data: IDataListFeed[];
-  page: number;
-  size: number;
-  total: number;
+  data?: IDataListFeed[];
+  page?: number;
+  size?: number;
+  total?: number;
   currentIndex?: number;
-  refreshing: boolean;
-  isOpen: boolean;
-  isLoading: boolean;
+  refreshing?: boolean;
+  isOpen?: boolean;
+  isLoading?: boolean;
   isLoadMore?: boolean;
   isLoadLess?: boolean;
 }

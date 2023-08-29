@@ -24,6 +24,7 @@ import {navigate} from '@navigation';
 import {EPreRoute} from '@constant';
 import {DailyQuizBackground} from '@images';
 import {useSelector} from 'react-redux';
+import useListFeed from '../../Feed/useListFeed';
 
 interface DrawerFeedProps {}
 
@@ -31,7 +32,7 @@ const DrawerFeed = (props: DrawerFeedProps) => {
   const insets = useSafeAreaInsets();
   const lang = useSelector((state: any) => state.auth.lang);
 
-  const {state, handleLoadMore} = useDetailFeed();
+  const {state, handleLoadMore} = useListFeed();
   const getThumbnail = (item: IDataListFeed) => {
     let url = '';
     switch (item.content_type) {
