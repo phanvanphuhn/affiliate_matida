@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flex: 0.48,
     marginBottom: scaler(12),
     borderRadius: scaler(8),
-    backgroundColor: '#E1E1F3',
+    backgroundColor: colors.backgroundFeed,
   },
   image: {
     height: scaler(220),
