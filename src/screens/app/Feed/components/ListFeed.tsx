@@ -7,17 +7,17 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, ListRenderItem, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import useDetailFeed, {SIZE_DEFAULT} from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
 import DailyQuiz from './dailyQuiz';
 import MomPrepTest from './momPrepTest';
 import ItemFeed from './ItemFeed';
+import useListFeed from '../useListFeed';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
 
-  const {state, handleLoadMore, onRefresh} = useDetailFeed();
+  const {state, handleLoadMore, onRefresh} = useListFeed();
   const navigation = useNavigation<any>();
   const lang = useSelector((state: any) => state.auth.lang);
 
@@ -39,8 +39,8 @@ const ListFeed = (props: any) => {
       }
     } else {
       navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
-        index,
-        currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
+        id: item.contentid,
+        content_type: item.content_type,
       });
     }
   };

@@ -98,3 +98,18 @@ export interface IAnswers {
   question_id: number;
   updated_at: string;
 }
+
+export interface IStateSearchFeed {
+  dataAll: IDataListFeed[];
+  dataVideo: IDataListFeed[];
+  dataPodcast: IDataListFeed[];
+  dataArticle: IDataListFeed[];
+  currentIndex: number;
+  page: number;
+  size: number;
+  total: number;
+  keyword?: string;
+  refreshing: boolean;
+  isLoading: boolean;
+  isLoadMore?: boolean;
+}

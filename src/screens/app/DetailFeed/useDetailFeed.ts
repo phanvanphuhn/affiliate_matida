@@ -1,44 +1,49 @@
 import {useRoute} from '@react-navigation/native';
 import {RefObject, useEffect, useReducer} from 'react';
-import {getListFeedApi} from '../../../services/feed';
+import {getDetailFeedApi, getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
 import {IStateVideo} from './types';
 import Swiper from './SwiperFlatlist/Swiper';
+import {useVideo} from './components/Container';
 
 export const SIZE_DEFAULT = 20;
-const useDetailFeed = (pagerViewRef: RefObject<Swiper>) => {
+const useDetailFeed = () => {
   const route = useRoute<any>();
 
-  const [state, setState] = useReducer(
-    (preState: IStateVideo, newState: Partial<IStateVideo>) => ({
-      ...preState,
-      ...newState,
-    }),
-    {
-      data: [],
-      page: route.params?.currentPage || 1,
-      size: SIZE_DEFAULT,
-      total: 0,
-      currentIndex: undefined,
-      refreshing: false,
-      isOpen: false,
-      isLoading: false,
-      isLoadMore: undefined,
-      isLoadLess: undefined,
-    },
-    (preState: IStateVideo) => ({
-      ...preState,
-    }),
-  );
+  const {state, setState} = useVideo();
+  console.log('=>(useDetailFeed.ts:14) state', state);
+
+  const getIndex = (index: number, page: number) => {
+    return index >= SIZE_DEFAULT ? index - (page - 1) * SIZE_DEFAULT : index;
+  };
+  const getDetail = async () => {
+    if (!route.params?.id && !route.params?.content_type) {
+      return;
+    }
+    const res = await getDetailFeedApi(
+      route.params?.content_type,
+      route.params?.id,
+    );
+    if (res.success) {
+      console.log('=>(useCommentFeed.ts:49) res', res);
+      let page = Math.ceil((res?.data?.feed_detail?.index + 1) / SIZE_DEFAULT);
+      let currentIndex = getIndex(res?.data?.feed_detail?.index, page);
+      console.log('=>(useDetailFeed.ts:31) currentIndex', currentIndex);
+      console.log('=>(useDetailFeed.ts:27) page', page);
+      setState({
+        is_liked: res?.data?.is_liked,
+        totalComment: res?.data?.total_comments,
+        page,
+        currentIndex,
+      });
+    }
+  };
+
   useEffect(() => {
-    const getIndex = (size: number) => {
-      return route.params?.index >= (size || SIZE_DEFAULT)
-        ? route.params?.index -
-            (route.params?.currentPage - 1) * (size || SIZE_DEFAULT)
-        : route.params?.index;
-    };
-    setState({currentIndex: getIndex(SIZE_DEFAULT)});
-  }, [route.params?.index, route.params?.currentPage]);
+    getDetail();
+
+    console.log('=>(useDetailFeed.ts:37) route.params', route.params);
+  }, [route.params?.id, route.params?.content_type]);
 
   // useEffect(() => {
   //   if (state.data.length && !!state.currentIndex && pagerViewRef) {
@@ -130,7 +135,9 @@ const useDetailFeed = (pagerViewRef: RefObject<Swiper>) => {
     }
   }, [state.refreshing]);
   useEffect(() => {
-    if (!state.refreshing) {
+    console.log('=>(useDetailFeed.ts:136) state.refreshing', state.refreshing);
+    console.log('=>(useDetailFeed.ts:137) state.page', state.page);
+    if (!state.refreshing && state.page) {
       getListVideo();
     }
   }, [state.page]);
