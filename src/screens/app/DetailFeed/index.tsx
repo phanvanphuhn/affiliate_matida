@@ -7,6 +7,7 @@ import {
   Image,
   NativeSyntheticEvent,
   Platform,
+  RefreshControl,
   StyleSheet,
   View,
 } from 'react-native';
@@ -23,24 +24,16 @@ import ItemPurchase from './components/ItemPurchase';
 import ItemVideo from './components/ItemVideo';
 import PackageQuizFeed from './components/PackageQuizFeed';
 import useDetailFeed from './useDetailFeed';
-import PagerView from 'react-native-pager-view';
 import Swiper from './SwiperFlatlist/Swiper';
+
 interface DetailFeedProps {}
-const previewCount = 3;
-//to center items
-//the screen will show `previewCount` + 1/4 firstItemWidth + 1/4 lastItemWidth
-//so for example if previewCount = 3
-//itemWidth will be =>>> itemWidth = screenWidth / (3 + 1/4 + 1/4)
-const itemWidth = heightScreen / (previewCount + 0.5);
-//to center items you start from 3/4 firstItemWidth
-const startScroll = (itemWidth * 3) / 4;
 
 const DetailFeed = (props: DetailFeedProps) => {
-  const {state, onPageSelected, handleLoadMore, handleLoadLess} =
-    useDetailFeed();
+  const pagerViewRef = useRef<Swiper>();
+  const {state, onPageSelected, onRefresh} = useDetailFeed();
+  console.log('=>(index.tsx:32) state.currentIndex', state.currentIndex);
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigation<any>();
-  const pagerViewRef = useRef<SwiperFlatList>();
   const isFocused = useIsFocused();
   const renderItem = (item: IDataListFeed, index: number) => {
     switch (item.content_type) {
@@ -153,15 +146,17 @@ const DetailFeed = (props: DetailFeedProps) => {
           <Swiper
             index={state.currentIndex}
             horizontal={false}
-            // style={[styles.pagerView]}
-            scrollEnabled={true}
-            showsPagination={false}
-            showsButtons={true}
             loop={false}
             removeClippedSubviews={true}
             loadMinimal={true}
             loadMinimalSize={4}
             bounces={true}
+            refreshControl={
+              <RefreshControl
+                onRefresh={onRefresh}
+                refreshing={state.refreshing}
+              />
+            }
             onIndexChanged={onPageHandlerSwiper}
             ref={pagerViewRef}>
             {state?.data?.map((item, index) => (
