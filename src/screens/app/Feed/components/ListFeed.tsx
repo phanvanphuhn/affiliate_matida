@@ -17,15 +17,11 @@ import ItemFeed from './ItemFeed';
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
 
-  const {state, handleLoadMore} = useDetailFeed();
+  const {state, handleLoadMore, onRefresh} = useDetailFeed();
   const navigation = useNavigation<any>();
   const lang = useSelector((state: any) => state.auth.lang);
 
   const onDetailClick = (index: number, item: IDataListFeed) => {
-    console.log(
-      '=>(ListFeed.tsx:36) Math.ceil((index + 1) / SIZE_DEFAULT)',
-      Math.ceil((index + 1) / SIZE_DEFAULT),
-    );
     if (item?.content_type == 'package_quizz') {
       if (!item?.is_active) {
         return;
@@ -68,6 +64,8 @@ const ListFeed = (props: any) => {
         initialNumToRender={4}
         maxToRenderPerBatch={8}
         windowSize={10}
+        onRefresh={onRefresh}
+        refreshing={state.refreshing}
         removeClippedSubviews
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.4}

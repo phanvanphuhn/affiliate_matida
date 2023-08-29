@@ -263,6 +263,8 @@ export default class Swiper extends PureComponent<IProps, IState> {
 
   UNSAFE_componentWillUpdate(nextProps: IProps, nextState: IState) {
     // If the index has changed, we notify the parent via the onIndexChanged callback
+    console.log('=>(Swiper.tsx:266) nextState.index', nextState.index);
+    console.log('=>(Swiper.tsx:267) this.state.index', this.state.index);
     if (this.state.index !== nextState.index) {
       this.props.onIndexChanged(nextState.index);
     }
@@ -468,6 +470,10 @@ export default class Swiper extends PureComponent<IProps, IState> {
         };
       }
     }
+    console.log(
+      '=>(Swiper.tsx:477) e.nativeEvent.contentOffset',
+      e.nativeEvent.contentOffset,
+    );
 
     this.updateIndex(e.nativeEvent.contentOffset, this.state.dir, () => {
       this.autoplay();
@@ -688,10 +694,6 @@ export default class Swiper extends PureComponent<IProps, IState> {
   };
 
   renderScrollView = (pages: React.ReactNode[]) => {
-    console.log(
-      '=>(Swiper.tsx:702) this.internals.isScrolling',
-      this.internals.isScrolling,
-    );
     return (
       <ScrollView
         ref={this.refScrollView}
@@ -702,7 +704,6 @@ export default class Swiper extends PureComponent<IProps, IState> {
         onScrollBeginDrag={this.onScrollBegin}
         onMomentumScrollEnd={this.onScrollEnd}
         onScrollEndDrag={this.onScrollEndDrag}
-        scrollEnabled={!this.internals.isScrolling}
         style={this.props.scrollViewStyle}>
         {pages}
       </ScrollView>

@@ -1,11 +1,12 @@
 import {useRoute} from '@react-navigation/native';
-import {useEffect, useReducer} from 'react';
+import {RefObject, useEffect, useReducer} from 'react';
 import {getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
 import {IStateVideo} from './types';
+import Swiper from './SwiperFlatlist/Swiper';
 
-export const SIZE_DEFAULT = 10;
-const useDetailFeed = () => {
+export const SIZE_DEFAULT = 5;
+const useDetailFeed = (pagerViewRef: RefObject<Swiper>) => {
   const route = useRoute<any>();
 
   const [state, setState] = useReducer(
@@ -22,32 +23,28 @@ const useDetailFeed = () => {
       refreshing: false,
       isOpen: false,
       isLoading: false,
-      isLoadMore: false,
+      isLoadMore: undefined,
+      isLoadLess: undefined,
     },
     (preState: IStateVideo) => ({
       ...preState,
     }),
   );
-  console.log('=>(useDetailFeed.ts:41) state', state);
   useEffect(() => {
     const getIndex = (size: number) => {
-      console.log(
-        '=>(useDetailFeed.ts:50) route.params?.index',
-        route.params?.index,
-      );
-      console.log(
-        '=>(useDetailFeed.ts:54) route.params?.currentPage',
-        route.params?.currentPage,
-      );
       return route.params?.index >= (size || SIZE_DEFAULT)
         ? route.params?.index -
             (route.params?.currentPage - 1) * (size || SIZE_DEFAULT)
         : route.params?.index;
     };
-    console.log('=>(useDetailFeed.ts:48) getIndex(10)', getIndex(SIZE_DEFAULT));
     setState({currentIndex: getIndex(SIZE_DEFAULT)});
   }, [route.params?.index, route.params?.currentPage]);
 
+  // useEffect(() => {
+  //   if (state.data.length && !!state.currentIndex && pagerViewRef) {
+  //     pagerViewRef.current?.scrollTo(state.currentIndex, false);
+  //   }
+  // }, [state.data]);
   const getListVideo = async () => {
     try {
       const res = await getListFeedApi(state.page, state.size);
@@ -56,16 +53,28 @@ const useDetailFeed = () => {
         setState({total: res.data?.total});
         handlerData(data);
       }
-      setState({isLoadMore: false});
-    } catch (error: any) {}
+      setState({isLoadMore: false, refreshing: false});
+    } catch (error: any) {
+      setState({isLoadMore: false, refreshing: false});
+
+      console.log('=>(useDetailFeed.ts:65) error', error);
+    }
   };
   const handlerData = (arr: IDataListFeed[]) => {
+    console.log(
+      '=>(useDetailFeed.ts:65) route.params?.currentPage',
+      route.params?.currentPage,
+    );
     if (arr?.length == 0) {
       if (state.page == 1 && route.params?.currentPage == 1) {
         setState({data: []});
       }
     } else {
-      if (state.page == 1 && route.params?.currentPage == 1) {
+      if (
+        state.page == 1 &&
+        (route.params?.currentPage == undefined ||
+          route.params?.currentPage == 1)
+      ) {
         setState({data: arr});
       } else {
         if (state.isLoadMore) {
@@ -75,6 +84,7 @@ const useDetailFeed = () => {
         } else {
           setState({
             data: [...arr, ...state.data],
+            // currentIndex: state.size,
           });
         }
       }
@@ -86,26 +96,24 @@ const useDetailFeed = () => {
       setState({
         page: state.page + 1,
         isLoadMore: true,
+        isLoadLess: false,
       });
     }
   };
-  const handleLoadLess = (pageNumber: number) => {
+  const handleLoadLess = () => {
     if (route.params?.currentPage > 1 && state.page > 1) {
       setState({
         page: state.page - 1,
         isLoadMore: false,
-        currentIndex: (pageNumber ?? state.currentIndex) + state.size,
+        isLoadLess: true,
       });
     }
   };
   const onPageSelected = (pageNumber: number) => {
-    console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
     const firstSlide = pageNumber == 0;
-    console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
     const lastSlide = pageNumber == state.data.length - 1;
-    console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
     if (firstSlide) {
-      // handleLoadLess(pageNumber);
+      // handleLoadLess();
     } else if (lastSlide) {
       handleLoadMore();
     }
@@ -113,10 +121,27 @@ const useDetailFeed = () => {
       currentIndex: pageNumber,
     });
   };
+  const onRefresh = () => {
+    setState({page: 1, refreshing: true});
+  };
   useEffect(() => {
-    getListVideo();
+    if (state.refreshing) {
+      getListVideo();
+    }
+  }, [state.refreshing]);
+  useEffect(() => {
+    if (!state.refreshing) {
+      getListVideo();
+    }
   }, [state.page]);
-  return {state, onPageSelected, setState, handleLoadMore};
+  return {
+    state,
+    onPageSelected,
+    setState,
+    handleLoadMore,
+    handleLoadLess,
+    onRefresh,
+  };
 };
 
 export default useDetailFeed;

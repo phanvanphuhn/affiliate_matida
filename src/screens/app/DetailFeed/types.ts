@@ -12,7 +12,8 @@ export interface IStateVideo {
   refreshing: boolean;
   isOpen: boolean;
   isLoading: boolean;
-  isLoadMore: boolean;
+  isLoadMore?: boolean;
+  isLoadLess?: boolean;
 }
 export interface IStateComment {
   data: IDataComment[];
