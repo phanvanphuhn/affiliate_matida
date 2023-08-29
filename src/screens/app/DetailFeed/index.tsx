@@ -155,6 +155,8 @@ const DetailFeed = (props: DetailFeedProps) => {
               <RefreshControl
                 onRefresh={onRefresh}
                 refreshing={state.refreshing}
+                tintColor="#fff"
+                titleColor="#fff"
               />
             }
             onIndexChanged={onPageHandlerSwiper}
