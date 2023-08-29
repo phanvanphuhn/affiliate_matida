@@ -5,7 +5,7 @@ import {IDataListFeed} from '../Feed/type';
 import {IStateVideo} from './types';
 import Swiper from './SwiperFlatlist/Swiper';
 
-export const SIZE_DEFAULT = 5;
+export const SIZE_DEFAULT = 20;
 const useDetailFeed = (pagerViewRef: RefObject<Swiper>) => {
   const route = useRoute<any>();
 
