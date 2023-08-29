@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: scaler(12),
     flex: 0.48,
-    backgroundColor: '#E1E1F3',
+    backgroundColor: colors.backgroundFeed,
     borderRadius: scaler(8),
   },
   tag: {

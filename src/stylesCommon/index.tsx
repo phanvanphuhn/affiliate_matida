@@ -1,4 +1,4 @@
-import {StyleSheet, Platform, Dimensions} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 //@ts-ignore
 import {create} from 'react-native-pixel-perfect';
 
@@ -55,6 +55,7 @@ const colors = {
   yellow50: '#FFF9F0',
   yellow100: '#FFF5F4',
   yellow150: '#FFF6F3',
+  backgroundFeed: '#F5F5FF',
 
   success_message: '#28B4AE',
   error_message: '#A67481',
@@ -113,4 +114,4 @@ const stylesCommon = StyleSheet.create({
 
 const scaler = (size: any) => perfectSize(size);
 
-export {colors, stylesCommon, scaler, widthScreen, heightScreen};
+export {colors, heightScreen, scaler, stylesCommon, widthScreen};
