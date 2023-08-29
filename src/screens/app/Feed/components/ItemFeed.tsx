@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {iconClock, imageNameAppPink, SvgEye} from '@images';
-import {colors, scaler} from '@stylesCommon';
-import FastImage from 'react-native-fast-image';
-import {IDataListFeed} from '../type';
 import {LazyImage} from '@component';
+import {SvgEye, iconClock, imageNameAppPink} from '@images';
+import {colors, scaler} from '@stylesCommon';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {styles} from '../styles';
+import {IDataListFeed} from '../type';
 
 interface ItemFeedProps {
   item: IDataListFeed;
@@ -50,7 +50,7 @@ const ItemFeed = (props: ItemFeedProps) => {
     let url = '';
     switch (item.content_type) {
       case 'video':
-        url = item.thumbnail || '';
+        url = item.thumbnails ? item.thumbnails['3x4'] : item.thumbnail || '';
         break;
       case 'article':
       case 'podcast':

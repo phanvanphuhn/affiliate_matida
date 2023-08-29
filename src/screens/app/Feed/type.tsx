@@ -61,6 +61,7 @@ export interface IVideoFeed {
   expert_image?: string;
   expert_name?: string;
   thumbnail?: string;
+  thumbnails?: string[];
   views: number;
 }
 export interface IPackageQuizz {

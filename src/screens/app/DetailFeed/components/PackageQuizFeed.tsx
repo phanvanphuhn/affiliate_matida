@@ -1,4 +1,3 @@
-import {ViewTextSeeMore} from '@component';
 import {EPreRoute} from '@constant';
 import {IconBackgroundImageHome, imageNameAppPink} from '@images';
 import {navigate} from '@navigation';
@@ -84,29 +83,17 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
     }
   };
   const renderViewResult = () => {
-    // if (data?.percent_diff_answer || data?.percent_same_answer) {
-    //   return <ResultQuizFeed />;
-    // } else {
     return (
       <View style={styles.viewResult}>
         <Text
           style={{
             ...stylesCommon.fontPlus600,
             fontSize: scaler(24),
-            color: '#FFFFFF',
-            textAlign: 'center',
+            color: colors.textColor,
             marginBottom: scaler(24),
           }}>
-          {t('feed.todayQuestion')}
+          {lang === 1 ? props?.item?.name_en : props?.item?.name_vi}
         </Text>
-        <View style={styles.viewTitle}>
-          <ViewTextSeeMore
-            heightMax={110}
-            text={lang === 1 ? props?.item?.name_en : props?.item?.name_vi}
-            style={styles.txtTitleContent}
-            numberOfLines={3}
-          />
-        </View>
         <View>
           <FastImage
             source={
@@ -120,15 +107,8 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
           onPress={() => onDoMomPrepTest(props?.item)}>
           <Text style={styles.txtBottom}>{t('feed.enterTest')}</Text>
         </TouchableOpacity>
-        {/* <View style={{flexDirection: 'row'}}>
-            {!!props.item?.answers?.length &&
-              props.item?.answers?.map((answer, i) => {
-                return renderItemAnswer(answer, i);
-              })}
-          </View> */}
       </View>
     );
-    // }
   };
 
   const renderItemAnswer = (item: IAnswers, index: number) => {
@@ -139,7 +119,7 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
         style={[
           // styles.buttonAnswer,
           {
-            backgroundColor: '#FFFFFF',
+            backgroundColor: colors.backgroundDefault,
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: scaler(8),
@@ -164,19 +144,17 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
   return (
     <View
       style={{
-        backgroundColor: colors.white,
+        backgroundColor: colors.backgroundDefault,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
       }}>
       {data ? (
-        <View style={styles.container}>
-          <ImageBackground
-            source={IconBackgroundImageHome}
-            style={styles.viewContent}>
-            {renderViewResult()}
-          </ImageBackground>
-        </View>
+        <ImageBackground
+          source={IconBackgroundImageHome}
+          style={styles.viewContent}>
+          {renderViewResult()}
+        </ImageBackground>
       ) : null}
     </View>
   );
@@ -185,16 +163,20 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
 export default React.memo(PackageQuizFeed);
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: scaler(24),
-    marginBottom: scaler(40),
-  },
   viewContent: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#654AC9',
     borderRadius: scaler(16),
     paddingVertical: scaler(24),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
   },
   imageBackground: {
     width: scaler(134),
@@ -204,6 +186,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: scaler(24),
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.backgroundPackage,
+    borderRadius: scaler(16),
+    paddingTop: scaler(16),
+    paddingBottom: scaler(16),
   },
   viewTitle: {
     padding: scaler(16),
@@ -216,7 +202,7 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontPlus600,
     fontSize: scaler(18),
     lineHeight: scaler(33),
-    color: '#FFFFFF',
+    color: colors.textColor,
     textAlign: 'center',
   },
   viewRow: {
@@ -273,7 +259,7 @@ const styles = StyleSheet.create({
   },
   txtBottom: {
     fontSize: scaler(14),
-    color: '#FFFFFF',
+    color: colors.textColor,
     ...stylesCommon.fontWeight600,
     lineHeight: scaler(21),
     marginTop: scaler(43),

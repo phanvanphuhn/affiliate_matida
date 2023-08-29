@@ -56,6 +56,7 @@ const colors = {
   yellow100: '#FFF5F4',
   yellow150: '#FFF6F3',
   backgroundFeed: '#F5F5FF',
+  backgroundPackage: '#FBFBFF',
 
   success_message: '#28B4AE',
   error_message: '#A67481',
