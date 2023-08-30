@@ -67,8 +67,8 @@ const DrawerFeed = (props: DrawerFeedProps) => {
       }
     } else {
       navigation.replace(ROUTE_NAME.DETAIL_FEED, {
-        index,
-        currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
+        id: item.contentid,
+        content_type: item.content_type,
       });
     }
   };
