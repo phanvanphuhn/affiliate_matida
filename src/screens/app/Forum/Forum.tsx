@@ -1,18 +1,23 @@
-import {FLoatingAIButton} from '@component';
+import {AppTabBar, FLoatingAIButton} from '@component';
 import {getListTabForum} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
 import {event, trackingAppEvent, useUXCam} from '@util';
-import React, {useEffect} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, View, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {HeaderForum, ListPost, ListTopTab} from './components';
+import {ForumTab} from './components/ForumTab';
+import {ListActivePeople} from './components/ListActivePeople';
+import {ListPostHorizontal} from './components/ListPostHorizontal';
 import {styles} from './Forum.style';
 
 export const Forum = () => {
   const dispatch = useDispatch();
 
   const loading = useSelector((state: any) => state?.forum?.loading);
+
+  const [tab, setTab] = useState(0);
 
   useEffect(() => {
     trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {});
@@ -39,7 +44,7 @@ export const Forum = () => {
         </View>
       ) : (
         <>
-          <ListTopTab />
+          {/* <ListTopTab /> */}
           <ListPost />
         </>
       )}
