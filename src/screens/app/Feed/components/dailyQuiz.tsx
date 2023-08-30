@@ -2,11 +2,13 @@ import {LazyImage} from '@component/LazyImage';
 import {DailyQuizBackground} from '@images';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 
 const DailyQuiz = ({item, index, onPress}: any) => {
   const lang = useSelector((state: any) => state.auth.lang);
+  const {t} = useTranslation();
 
   return (
     <TouchableOpacity
@@ -14,7 +16,7 @@ const DailyQuiz = ({item, index, onPress}: any) => {
       style={styles.itemContainer}>
       <View>
         <View style={styles.tag}>
-          <Text style={styles.tagTitle}>Daily Quiz</Text>
+          <Text style={styles.tagTitle}>{t('feed.dailyQuiz')}</Text>
         </View>
         <View style={styles.contentDailyQuiz}>
           <Text style={styles.contentText}>

@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: scaler(8),
-    left: scaler(2),
+    left: scaler(8),
   },
   rightDescription: {
     flexDirection: 'row',

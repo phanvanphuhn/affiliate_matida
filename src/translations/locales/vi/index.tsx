@@ -619,6 +619,8 @@ export const vi = {
     todayQuestion: 'Bổ sung kiến thức mang thai',
     enterTest: 'Làm test ngay',
     completed: 'hoàn thành',
-    momPrepTest: 'Câu hỏi hôm nay',
+    momPrepTest: 'Kiểm tra kiến thức',
+    article: 'Bài viết',
+    dailyQuiz: 'Câu hỏi hôm nay',
   },
 };

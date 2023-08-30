@@ -1,5 +1,5 @@
 import {LazyImage} from '@component';
-import {SvgEye, iconClock, imageNameAppPink} from '@images';
+import {LogoApp, SvgEye, iconClock} from '@images';
 import {colors, scaler} from '@stylesCommon';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -23,11 +23,11 @@ const ItemFeed = (props: ItemFeedProps) => {
   const renderTag = (item: IDataListFeed) => {
     switch (item.content_type) {
       case 'daily_quizz':
-        return 'Daily Quiz';
+        return t('feed.dailyQuiz');
       case 'package_quizz':
         return t('feed.momPrepTest');
       case 'article':
-        return 'Articles';
+        return t('feed.article');
       default:
         return item.content_type?.replace(
           /^./,
@@ -57,7 +57,7 @@ const ItemFeed = (props: ItemFeedProps) => {
       case 'article':
       case 'podcast':
       case 'package_quizz':
-        url = item.image || '';
+        url = item.thumbnails ? item.thumbnails['3x4'] : item.image || '';
         break;
     }
     return url;
@@ -85,8 +85,7 @@ const ItemFeed = (props: ItemFeedProps) => {
             <Image source={iconClock} />
 
             <Text style={styles.description} numberOfLines={1}>
-              {props.item.durationsString ? props.item.durationsString : '0'}{' '}
-              {t('feed.min')}
+              {props.item.durationsString ? props.item.durationsString : '0'}
             </Text>
           </View>
         )}
@@ -95,10 +94,10 @@ const ItemFeed = (props: ItemFeedProps) => {
             styles.rightDescription,
             props.item.content_type == 'article'
               ? {
-                  left: scaler(2),
+                  left: scaler(8),
                 }
               : {
-                  right: scaler(2),
+                  right: scaler(8),
                 },
           ]}>
           <SvgEye stroke={colors.borderColor} />
@@ -119,7 +118,7 @@ const ItemFeed = (props: ItemFeedProps) => {
       </View>
       <View style={styles.wrapAvatarContainer}>
         <FastImage
-          source={props.item.image ? {uri: props.item.image} : imageNameAppPink}
+          source={LogoApp}
           style={styles.imageAvatar}
           resizeMode="contain"
         />

@@ -616,5 +616,7 @@ export const en = {
     enterTest: 'Start the test',
     completed: 'completed',
     momPrepTest: 'Test your knowledge',
+    article: 'Article',
+    dailyQuiz: 'Daily quiz',
   },
 };
