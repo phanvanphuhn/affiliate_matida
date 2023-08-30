@@ -31,6 +31,15 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: scaler(4),
     flex: 0.48,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   tag: {
     position: 'absolute',
@@ -63,7 +72,7 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontWeight600,
   },
   image: {
-    height: scaler(280),
+    height: scaler(292),
     borderRadius: scaler(8),
     width: widthScreen / 2 - scaler(16),
   },

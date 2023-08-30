@@ -1,6 +1,6 @@
 import {useRoute} from '@react-navigation/native';
-import {RefObject, useEffect, useReducer} from 'react';
-import {getListFeedApi, searchListFeedApi} from '../../../services/feed';
+import {useEffect, useReducer} from 'react';
+import {searchListFeedApi} from '../../../services/feed';
 import {IDataListFeed, IStateSearchFeed} from '../Feed/type';
 
 export const SIZE_DEFAULT = 20;
@@ -104,7 +104,7 @@ const useSearchFeed = () => {
   useEffect(() => {
     let timeout = setTimeout(() => {
       searchListVideo();
-    }, 500);
+    }, 200);
     return () => {
       if (timeout) {
         clearTimeout(timeout);

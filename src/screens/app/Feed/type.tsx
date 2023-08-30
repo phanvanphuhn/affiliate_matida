@@ -36,6 +36,7 @@ export interface IPodcastFeed {
   speaker_bio: string;
   speaker_name: string;
   total_views: number;
+  durationsString: string;
   url?: string;
 }
 export interface IDailyQuizz {
@@ -62,6 +63,7 @@ export interface IVideoFeed {
   expert_name?: string;
   thumbnail?: string;
   thumbnails?: string[];
+  durationsString: string;
   views: number;
 }
 export interface IPackageQuizz {

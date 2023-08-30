@@ -1,12 +1,14 @@
 import {LazyImage} from '@component/LazyImage';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import RNSlider from 'react-native-slider';
 import {useSelector} from 'react-redux';
 
 const MomPrepTest = ({item, index, onPress}: any) => {
   const lang = useSelector((state: any) => state.auth.lang);
+  const {t} = useTranslation();
 
   return (
     <TouchableOpacity
@@ -14,7 +16,7 @@ const MomPrepTest = ({item, index, onPress}: any) => {
       style={styles.itemContainer}>
       <View>
         <View style={styles.tag}>
-          <Text style={styles.tagTitle}>Mom prep test</Text>
+          <Text style={styles.tagTitle}>{t('feed.momPrepTest')}</Text>
         </View>
         <View style={styles.contentDailyQuiz}>
           <Text style={styles.contentText}>
@@ -45,10 +47,9 @@ const MomPrepTest = ({item, index, onPress}: any) => {
           minimumTrackTintColor={'#28B4AE'}
           maximumTrackTintColor={'#E8F8F7'}
         />
-        <Text
-          style={
-            styles.trackTitle
-          }>{`${item.maxScore}/${item.total_questions} correct`}</Text>
+        <Text style={styles.trackTitle}>{`${item.maxScore}/${
+          item.total_questions
+        } ${t('feed.completed')}`}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -60,6 +61,15 @@ const styles = StyleSheet.create({
     flex: 0.48,
     backgroundColor: colors.backgroundFeed,
     borderRadius: scaler(8),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   tag: {
     position: 'absolute',

@@ -614,5 +614,7 @@ export const en = {
     noComment: 'No comments',
     todayQuestion: 'Matida Pregnancy Preparation',
     enterTest: 'Start the test',
+    completed: 'completed',
+    momPrepTest: 'Test your knowledge',
   },
 };
