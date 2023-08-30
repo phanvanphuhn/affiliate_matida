@@ -1,20 +1,15 @@
 import {Header} from '@component';
 import {SvgArrowLeft, SvgClose, SvgSearch} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
-  FlatList,
   NativeSyntheticEvent,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-import useSearchFeed from '../useSearchFeed';
-import ListSearchFeed from './ListSearchFeed';
 import PagerView from 'react-native-pager-view';
 import Animated, {
   interpolateColor,
@@ -24,6 +19,8 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import {IStateSearchFeed} from '../type';
+import useSearchFeed from '../useSearchFeed';
+import ListSearchFeed from './ListSearchFeed';
 const AnimatedPagerView = Animated.createAnimatedComponent(PagerView);
 function usePageScrollHandler(handlers: any, dependencies: any[]) {
   const {context, doDependenciesDiffer} = useHandler(handlers, dependencies);
@@ -97,6 +94,7 @@ const SearchFeed = () => {
           value={state.keyword}
           selectionColor={colors.black}
           style={{width: '80%'}}
+          autoFocus={true}
         />
         {!!state.keyword && (
           <TouchableOpacity
@@ -106,7 +104,7 @@ const SearchFeed = () => {
           </TouchableOpacity>
         )}
       </View>
-      <View style={styles.containerButtonTab}>
+      {/* <View style={styles.containerButtonTab}>
         <TouchableOpacity onPress={handleNextTab(0)} style={styles.buttonTab}>
           <Text
             style={
@@ -141,7 +139,7 @@ const SearchFeed = () => {
             {state.dataArticle.length ? `(${state.dataArticle.length})` : ''}
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <AnimatedPagerView
         initialPage={state.currentIndex}
         orientation={'horizontal'}

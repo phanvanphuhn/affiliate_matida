@@ -1,12 +1,13 @@
+// import {LazyImage} from '@component';
+import {LazyImage} from '@component';
 import {heightScreen, widthScreen} from '@stylesCommon';
 import React, {useEffect} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 import {IDataListFeed} from '../../Feed/type';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import TitleFeed from './TitleFeed';
-import {LazyImage} from '@component';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -30,8 +31,8 @@ const ItemArticle = (props: ItemArticleProps) => {
           source={{
             uri: props.item.image,
           }}
+          resizeMode={'cover'}
           fastImage={true}
-          resizeMode={'contain'}
           style={{
             width: widthScreen,
             aspectRatio: Platform.select({
@@ -40,6 +41,13 @@ const ItemArticle = (props: ItemArticleProps) => {
             }),
           }}
         />
+        <LinearGradient
+          colors={['#00000000', '#00000090']}
+          style={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+          }}></LinearGradient>
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>

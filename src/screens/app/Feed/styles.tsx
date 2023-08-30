@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.backgroundDefault,
     // paddingBottom: scaler(240),
     padding: scaler(8),
     flex: 1,
@@ -13,6 +13,15 @@ const styles = StyleSheet.create({
     marginBottom: scaler(12),
     borderRadius: scaler(8),
     backgroundColor: colors.backgroundFeed,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   image: {
     height: scaler(220),
