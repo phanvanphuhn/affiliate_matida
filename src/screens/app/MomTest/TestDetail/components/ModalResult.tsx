@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {HeaderComponent, YourResult} from '../../TestResult/components';
+import {useRoute} from '@react-navigation/native';
 type Props = {
   setVisibleResult: React.Dispatch<React.SetStateAction<boolean>>;
   onRedoTest: () => void;
@@ -23,6 +24,7 @@ export const ModalResult = ({
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state.auth.lang);
   const [showReward, setShowReward] = useState<boolean>(false);
+  const route = useRoute<any>();
 
   const isPerfect = result?.isPassed;
 
@@ -92,7 +94,13 @@ export const ModalResult = ({
         titleTop={isPerfect ? t('test.getReward') : t('test.redoTest')}
         titleBottom={t('test.maybeLater')}
         onPressTop={handlePressTop}
-        onPressBottom={() => goBack()}
+        onPressBottom={() => {
+          goBack();
+          route?.params?.onComplete &&
+            route?.params?.onComplete({
+              maxScore: result?.userScore,
+            });
+        }}
         hideButtonBottom={isPerfect}
       />
     </View>

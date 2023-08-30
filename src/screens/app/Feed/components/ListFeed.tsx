@@ -13,15 +13,18 @@ import DailyQuiz from './dailyQuiz';
 import MomPrepTest from './momPrepTest';
 import ItemFeed from './ItemFeed';
 import useListFeed from '../useListFeed';
+import {produce} from 'immer';
+import {IAnswer} from '../../MomTest/TestDetail/components';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
 
-  const {state, handleLoadMore, onRefresh} = useListFeed();
+  const {state, setState, handleLoadMore, onRefresh} = useListFeed();
   const navigation = useNavigation<any>();
   const lang = useSelector((state: any) => state.auth.lang);
 
   const onDetailClick = (index: number, item: IDataListFeed) => {
+    console.log('=>(ListFeed.tsx:47) item', item);
     if (item?.content_type == 'package_quizz') {
       if (!item?.is_active) {
         return;
@@ -35,7 +38,21 @@ const ListFeed = (props: any) => {
         });
       } else {
         trackingAppEvent(event.MOM_TEST.START, {content: item});
-        navigate(ROUTE_NAME.TEST_DETAIL, {quiz: item});
+        navigate(ROUTE_NAME.TEST_DETAIL, {
+          quiz: item,
+          onComplete: (result: any) => {
+            if (result.maxScore <= item.maxScore) {
+              return;
+            }
+            const newItem = produce(state.data, (draft: IDataListFeed[]) => {
+              draft[index] = {
+                ...item,
+                maxScore: result.maxScore,
+              };
+            });
+            setState({data: newItem});
+          },
+        });
       }
     } else {
       navigation.navigate(ROUTE_NAME.DETAIL_FEED, {

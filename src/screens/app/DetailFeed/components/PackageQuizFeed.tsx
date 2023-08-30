@@ -18,19 +18,26 @@ import {
 import FastImage from 'react-native-fast-image';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
-import {IAnswers, IDataListFeed} from '../../Feed/type';
+import {
+  IAnswers,
+  IAnswersPackage,
+  IDataListFeed,
+  IPackageQuizzList,
+} from '../../Feed/type';
 import {useVideo} from './Container';
+import ResultPackageQuiz from './ResultPackageQuiz';
 
 interface PackageQuizFeedProps {
   item: IDataListFeed;
   isFocused: boolean;
 }
+
+const ListChar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 const PackageQuizFeed = (props: PackageQuizFeedProps) => {
-  const {setState} = useVideo();
-  const [answer, setAnswer] = useState<IAnswers>();
+  const {state, setState} = useVideo();
+  const [answer, setAnswer] = useState<IAnswersPackage>();
   const [isVisible, setIsvisible] = useState<boolean>(false);
-  const lang = useSelector((state: any) => state.auth.lang);
-  const data = useSelector((state: any) => state?.home?.data?.dailyQuizz);
+  const lang = useSelector((_state: any) => _state.auth.lang);
   const dispatch = useDispatch();
   const {t} = useTranslation();
 
@@ -41,121 +48,96 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
     }
     return () => {};
   }, [props.isFocused]);
-  const onAnswerQuiz = async (e: IAnswers) => {
-    try {
-      setAnswer(e);
-      let params = {
-        question_id: props.item.id,
-        answer_id: e.id,
-      };
-      GlobalService.showLoading();
-      const res = await answerDailyQuiz(params);
-      setIsvisible(true);
-      dispatch(
-        updateDataHome({
-          ...data,
-          dailyQuizz: {
-            ...data?.dailyQuizz,
-            ...res.data,
-          },
-        }),
-      );
-      GlobalService.hideLoading();
-    } catch (error) {
-      showMessage({message: error?.response?.data?.message, type: 'danger'});
-      GlobalService.hideLoading();
-    }
-  };
-  const onDoMomPrepTest = (item: IDataListFeed) => {
-    if (!item?.is_active) {
+  const onDoMomPrepTest = (question: IPackageQuizzList) => {
+    if (!props?.item?.is_active) {
       return;
     }
-    if (+item?.maxScore === +item?.total_questions) {
-      trackingAppEvent(event.MOM_TEST.START, {content: item?.id});
+    if (+props.item?.maxScore === +props.item?.total_questions) {
+      trackingAppEvent(event.MOM_TEST.START, {content: props.item?.id});
       navigate(ROUTE_NAME.TEST_RESULT, {
-        id: item?.id,
+        id: props.item?.id,
         redoTest: () => {},
         preRoute: EPreRoute.PERIODIC,
       });
     } else {
-      trackingAppEvent(event.MOM_TEST.START, {content: item});
-      navigate(ROUTE_NAME.TEST_DETAIL, {quiz: item});
+      trackingAppEvent(event.MOM_TEST.START, {content: props.item});
+      navigate(ROUTE_NAME.TEST_DETAIL, {
+        quiz: props.item,
+        next_question: 1,
+        answer: {
+          question_id: +question?.id,
+          answer_id: +(answer?.id || ''),
+        },
+      });
     }
   };
-  const renderViewResult = () => {
+  const renderViewResult = (item: IPackageQuizzList) => {
     return (
-      <View style={styles.viewResult}>
-        <Text
-          style={{
-            ...stylesCommon.fontPlus600,
-            fontSize: scaler(24),
-            color: colors.textColor,
-            marginBottom: scaler(24),
-          }}>
-          {lang === 1 ? props?.item?.name_en : props?.item?.name_vi}
-        </Text>
-        <View>
-          <FastImage
-            source={
-              props?.item?.image ? {uri: props?.item?.image} : imageNameAppPink
-            }
-            style={styles.imageAvatar}
-          />
+      <View style={styles.containerResult}>
+        <View style={styles.viewResult}>
+          <Text style={styles.txtQuestion}>{item?.question}</Text>
+          <View style={{marginBottom: '7%'}}>
+            <FastImage
+              source={
+                props?.item?.image
+                  ? {uri: props?.item?.image}
+                  : imageNameAppPink
+              }
+              style={styles.imageAvatar}
+            />
+          </View>
+          {item.answers?.map((e, i) => {
+            return renderItemAnswer(e, i);
+          })}
         </View>
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={() => onDoMomPrepTest(props?.item)}>
-          <Text style={styles.txtBottom}>{t('feed.enterTest')}</Text>
-        </TouchableOpacity>
+        {!!answer && (
+          <TouchableOpacity
+            style={styles.buttonTest}
+            onPress={() => onDoMomPrepTest(item)}>
+            <Text style={styles.txtBottom}>{t('feed.enterTest')}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
 
-  const renderItemAnswer = (item: IAnswers, index: number) => {
+  const renderItemAnswer = (item: IAnswersPackage, index: number) => {
     return (
       <TouchableOpacity
         key={item?.id?.toString()}
         activeOpacity={0.9}
         style={[
-          // styles.buttonAnswer,
-          {
-            backgroundColor: colors.backgroundDefault,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: scaler(8),
-            padding: scaler(12),
-            width: (widthScreen - scaler(24) * 4) / 2 - scaler(8),
-          },
-          {
-            marginRight: index === 0 ? scaler(8) : 0,
-            marginLeft: index === 0 ? 0 : scaler(8),
-          },
+          styles.buttonAnswer,
+          item.id == answer?.id ? styles.buttonSelected : null,
         ]}
         onPress={() => {
-          onAnswerQuiz(item);
+          setAnswer(item);
         }}>
-        <Text style={styles.txtTrueFalse}>
-          {lang === 1 ? item?.answer_en : item?.answer_vi}
+        <Text
+          style={[
+            styles.txtTrueFalse,
+            item.id == answer?.id ? styles.txtSelected : null,
+          ]}>
+          {ListChar[index]}. {item?.answer}
         </Text>
       </TouchableOpacity>
     );
   };
 
+  if (!props.isFocused) {
+    return <View style={{flex: 1, backgroundColor: colors.white}} />;
+  }
   return (
-    <View
-      style={{
-        backgroundColor: colors.backgroundDefault,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      {data ? (
-        <ImageBackground
-          source={IconBackgroundImageHome}
-          style={styles.viewContent}>
-          {renderViewResult()}
-        </ImageBackground>
-      ) : null}
+    <View style={styles.container}>
+      {+props.item?.maxScore != +props.item?.total_questions ? (
+        !!state?.questions?.length && (
+          <View style={styles.viewContent}>
+            {renderViewResult(state?.questions?.[0])}
+          </View>
+        )
+      ) : (
+        <ResultPackageQuiz item={props.item} />
+      )}
     </View>
   );
 };
@@ -163,30 +145,37 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
 export default React.memo(PackageQuizFeed);
 
 const styles = StyleSheet.create({
+  txtQuestion: {
+    ...stylesCommon.fontWeight400,
+    fontSize: scaler(20),
+    color: colors.textColor,
+    marginBottom: scaler(10),
+  },
+  container: {
+    backgroundColor: colors.white,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 40,
+  },
   viewContent: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: scaler(16),
-    paddingVertical: scaler(24),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
+    paddingHorizontal: scaler(20),
   },
   imageBackground: {
     width: scaler(134),
     height: scaler(249),
   },
+  containerResult: {
+    justifyContent: 'space-between',
+    flex: 1,
+    paddingVertical: scaler(10),
+    paddingTop: '18%',
+  },
   viewResult: {
     paddingHorizontal: scaler(24),
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.backgroundPackage,
+    backgroundColor: colors.green50,
     borderRadius: scaler(16),
     paddingTop: scaler(16),
     paddingBottom: scaler(16),
@@ -220,13 +209,16 @@ const styles = StyleSheet.create({
     height: scaler(45),
   },
   buttonAnswer: {
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colors.white,
     borderRadius: scaler(8),
-    flex: 1,
     padding: scaler(12),
-    // height: '100%',
+    borderColor: colors.gray,
+    borderWidth: 1,
+    marginBottom: scaler(10),
+  },
+  buttonSelected: {
+    backgroundColor: colors.red50,
+    borderWidth: 0,
   },
   iconIconResult: {
     width: scaler(64),
@@ -259,21 +251,31 @@ const styles = StyleSheet.create({
   },
   txtBottom: {
     fontSize: scaler(14),
-    color: colors.textColor,
+    color: colors.white,
     ...stylesCommon.fontWeight600,
     lineHeight: scaler(21),
-    marginTop: scaler(43),
-    textDecorationLine: 'underline',
+  },
+  buttonTest: {
+    backgroundColor: colors.green,
+    borderRadius: scaler(8),
+    paddingVertical: scaler(10),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: scaler(10),
   },
   txtTrueFalse: {
-    fontSize: scaler(14),
+    fontSize: scaler(16),
     color: colors.textColor,
-    ...stylesCommon.fontWeight600,
-    textAlign: 'center',
+    lineHeight: scaler(24),
+  },
+  txtSelected: {
+    color: colors.white,
+    ...stylesCommon.fontWeight500,
   },
   imageAvatar: {
     marginTop: scaler(6),
-    width: widthScreen - scaler(128),
-    height: scaler(150),
+    width: '100%',
+    height: widthScreen - scaler(150),
+    borderRadius: scaler(32),
   },
 });

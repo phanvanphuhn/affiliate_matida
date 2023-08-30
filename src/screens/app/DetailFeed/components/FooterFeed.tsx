@@ -25,6 +25,7 @@ const FooterFeed = (props: FooterFeedProps) => {
       setState({
         is_liked: res?.data?.is_liked,
         totalComment: res?.data?.total_comments,
+        questions: res?.data?.questions || [],
       });
     }
   };

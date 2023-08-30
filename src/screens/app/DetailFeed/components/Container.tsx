@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import FooterFeed from './FooterFeed';
 import SliderFeed from './SliderFeed';
 import {IDataComment, IStateVideo} from '../types';
-import {IDataListFeed} from '../../Feed/type';
+import {IAnswers, IDataListFeed, IPackageQuizzList} from '../../Feed/type';
 import CommentFeed from './CommentFeed';
 import KeyboardShift from './KeyboardShift';
 import {SIZE_DEFAULT} from '../useDetailFeed';
@@ -18,6 +18,7 @@ interface IState extends IStateVideo {
   progressChange?: number;
   feed?: IDataListFeed;
   comment?: IDataComment;
+  questions?: IPackageQuizzList[];
   duration?: number;
   totalComment?: number;
   isShowComment?: boolean;
@@ -38,6 +39,7 @@ const VideoContext = React.createContext<IVideoContext>({
     duration: 0,
     totalComment: 0,
     feed: undefined,
+    questions: undefined,
     comment: undefined,
     isShowComment: false,
     is_liked: false,
@@ -62,8 +64,6 @@ const Container: React.FC<ContainerProps> = props => {
 
   const [state, setState] = useReducer(
     (preState: IState, newState: Partial<IState>) => {
-      console.log('=>(Container.tsx:96) preState', preState);
-      console.log('=>(Container.tsx:96) newState', newState);
       return {
         ...preState,
         ...newState,
@@ -75,6 +75,7 @@ const Container: React.FC<ContainerProps> = props => {
       progressChange: 0,
       totalComment: 0,
       feed: undefined,
+      questions: undefined,
       comment: undefined,
       progressStatus: undefined,
       isShowComment: false,
@@ -95,7 +96,6 @@ const Container: React.FC<ContainerProps> = props => {
       ...preState,
     }),
   );
-  console.log('=>(Container.tsx:98) state', state);
 
   return (
     <VideoContext.Provider value={{state, setState}}>

@@ -51,6 +51,7 @@ const colors = {
   green50: '#E8F8F7',
   green100: '#EAF8EE',
   green150: '#57B1AD',
+  green200: '#B1D39D',
   yellow: '#F5BC65',
   yellow50: '#FFF9F0',
   yellow100: '#FFF5F4',

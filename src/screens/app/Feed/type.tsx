@@ -48,6 +48,13 @@ export interface IDailyQuizz {
   question_vi: string;
   type: number;
 }
+export interface IPackageQuizzList {
+  answers: IAnswersPackage[];
+  id: number;
+  is_answered: boolean;
+  is_correct: boolean;
+  question: string;
+}
 export interface IArticleFeed {
   content: string;
   is_popular: number;
@@ -99,6 +106,12 @@ export interface IAnswers {
   is_correct: boolean;
   question_id: number;
   updated_at: string;
+}
+export interface IAnswersPackage {
+  answer: string;
+  id: number;
+  is_correct: boolean;
+  selected: boolean;
 }
 
 export interface IStateSearchFeed {
