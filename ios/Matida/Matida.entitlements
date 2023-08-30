@@ -12,6 +12,8 @@
 	<array>
 		<string>applinks:matida1.page.link</string>
 		<string>applinks:matida.page.link</string>
+		<string>applinks:matida.app.link</string>
+		<string>applinks:matida-alternate.app.link</string>
 	</array>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>

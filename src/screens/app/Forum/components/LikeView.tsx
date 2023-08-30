@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-native/no-inline-styles */
 import {SvgComment, SvgHeart, SvgHearted} from '@images';
 import {useFocusEffect} from '@react-navigation/native';
 import {changeLikeForum} from '@redux';
@@ -9,7 +11,7 @@ import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
 
 export const LikeView = (props: any) => {
-  const {data, id, onNavigate} = props;
+  const {data, id, onNavigate, color} = props;
   const dispatch = useDispatch();
 
   const [isLike, setIsLike] = useState<boolean>(!!data?.is_liked);
@@ -71,15 +73,33 @@ export const LikeView = (props: any) => {
           style={{flexDirection: 'row', alignItems: 'center'}}
           onPress={handlePressLike}
           activeOpacity={0.8}>
-          {isLike ? <SvgHearted /> : <SvgHeart />}
-          <Text style={styles.text}>{totalLike}</Text>
+          {isLike ? (
+            <SvgHearted color={'white'} />
+          ) : (
+            <SvgHeart color={'white'} />
+          )}
+          <Text
+            style={[
+              styles.text,
+              color && {
+                color: 'white',
+              },
+            ]}>
+            {totalLike}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{flexDirection: 'row', alignItems: 'center'}}
           activeOpacity={0.8}
           onPress={onNavigate}>
           <SvgComment />
-          <Text style={styles.text}>
+          <Text
+            style={[
+              styles.text,
+              color && {
+                color: 'white',
+              },
+            ]}>
             {parseInt(data?.total_comment ?? '0', 10) +
               parseInt(data?.total_reply_comment ?? '0', 10)}
           </Text>
