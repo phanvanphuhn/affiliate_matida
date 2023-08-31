@@ -4,7 +4,6 @@
 #import <FBSDKCoreKit/FBSDKCoreKit-swift.h>
 #import <ZaloSDK/ZaloSDK.h>
 #import <AppsFlyerLib/AppsFlyerLib.h>
-#import <RNBranch/RNBranch.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -42,11 +41,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [FIRApp configure];
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
-
-    // Uncomment this line to use the test key instead of the live one.
-    // [RNBranch useTestInstance];
-    [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
-    NSURL *jsCodeLocation;
   
   RCTAppSetupPrepareApp(application);
   
@@ -83,7 +77,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
-   [RNBranch application:app openURL:url options:options];
+  
   BOOL handledF = [[FBSDKApplicationDelegate sharedInstance]application:app
                                                                 openURL:url
                                                                 options:options];
@@ -93,11 +87,6 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   
   return handledF || handledZ;
 }
-
-// - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
-//    [RNBranch continueUserActivity:userActivity];
-//    return YES;
-// }
 
 // AppsFlyerLib
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
