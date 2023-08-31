@@ -1,31 +1,21 @@
 import {EPreRoute} from '@constant';
-import {IconBackgroundImageHome, imageNameAppPink} from '@images';
+import {SvgLogoDailyAffirmation} from '@images';
 import {navigate} from '@navigation';
-import {updateDataHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {GlobalService, answerDailyQuiz} from '@services';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {event, trackingAppEvent} from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {showMessage} from 'react-native-flash-message';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  IAnswers,
   IAnswersPackage,
   IDataListFeed,
   IPackageQuizzList,
 } from '../../Feed/type';
-import {useVideo} from './Container';
+import {ListPackage, useVideo} from './Container';
 import ResultPackageQuiz from './ResultPackageQuiz';
+import {produce} from 'immer';
 
 interface PackageQuizFeedProps {
   item: IDataListFeed;
@@ -49,9 +39,6 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
     return () => {};
   }, [props.isFocused]);
   const onDoMomPrepTest = (question: IPackageQuizzList) => {
-    if (!props?.item?.is_active) {
-      return;
-    }
     if (+props.item?.maxScore === +props.item?.total_questions) {
       trackingAppEvent(event.MOM_TEST.START, {content: props.item?.id});
       navigate(ROUTE_NAME.TEST_RESULT, {
@@ -68,6 +55,38 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
           question_id: +question?.id,
           answer_id: +(answer?.id || ''),
         },
+        onComplete: (result: any) => {
+          if (result.maxScore <= props.item.maxScore) {
+            return;
+          }
+          const newItem = produce(state.data, (draft: IDataListFeed[]) => {
+            draft[state.currentIndex] = {
+              ...props.item,
+              maxScore: result.maxScore,
+            };
+          });
+          const newPackage = produce(
+            state?.listPackage,
+            (draft: ListPackage[]) => {
+              const todo = draft.find(
+                el =>
+                  el.id === props.item?.id &&
+                  props.item?.content_type == el.content_type,
+              );
+              if (todo) {
+                todo.maxScore = result.maxScore;
+              } else {
+                draft.push({
+                  id: props.item?.contentid,
+                  content_type: props.item?.content_type,
+                  maxScore: result.maxScore,
+                });
+              }
+            },
+          );
+          console.log('=>(PackageQuizFeed.tsx:103) newPackage', newPackage);
+          setState({data: newItem, listPackage: newPackage});
+        },
       });
     }
   };
@@ -75,16 +94,23 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
     return (
       <View style={styles.containerResult}>
         <View style={styles.viewResult}>
-          <Text style={styles.txtQuestion}>{item?.question}</Text>
-          <View style={{marginBottom: '7%'}}>
-            <FastImage
-              source={
-                props?.item?.image
-                  ? {uri: props?.item?.image}
-                  : imageNameAppPink
-              }
-              style={styles.imageAvatar}
+          <View style={styles.viewQuestion}>
+            <SvgLogoDailyAffirmation
+              color={colors.white}
+              style={{
+                position: 'absolute',
+                top: scaler(15),
+                right: -scaler(60),
+              }}
             />
+            <View style={styles.viewIndexQuestion}>
+              {props?.item?.total_questions ? (
+                <Text style={styles.textIndexQuestion}>
+                  {1}/{props?.item?.total_questions}
+                </Text>
+              ) : null}
+            </View>
+            <Text style={styles.textQuestion}>{item?.question}</Text>
           </View>
           {item.answers?.map((e, i) => {
             return renderItemAnswer(e, i);
@@ -145,6 +171,33 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
 export default React.memo(PackageQuizFeed);
 
 const styles = StyleSheet.create({
+  viewQuestion: {
+    padding: scaler(24),
+    backgroundColor: colors.purple,
+    borderRadius: scaler(16),
+    alignItems: 'flex-start',
+    marginBottom: scaler(25),
+  },
+  viewIndexQuestion: {
+    borderRadius: scaler(200),
+    backgroundColor: colors.purple100,
+    // width: scaler(46),
+    height: scaler(46),
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: scaler(6),
+  },
+  textIndexQuestion: {
+    fontSize: scaler(16),
+    ...stylesCommon.fontWeight600,
+    color: colors.white,
+  },
+  textQuestion: {
+    fontSize: scaler(24),
+    ...stylesCommon.fontPlus600,
+    color: colors.white,
+    marginTop: scaler(32),
+  },
   txtQuestion: {
     ...stylesCommon.fontWeight400,
     fontSize: scaler(20),
@@ -152,15 +205,15 @@ const styles = StyleSheet.create({
     marginBottom: scaler(10),
   },
   container: {
-    backgroundColor: colors.white,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
+    backgroundColor: colors.gray250,
   },
   viewContent: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 40,
     paddingHorizontal: scaler(20),
   },
   imageBackground: {
@@ -174,8 +227,6 @@ const styles = StyleSheet.create({
     paddingTop: '18%',
   },
   viewResult: {
-    paddingHorizontal: scaler(24),
-    backgroundColor: colors.green50,
     borderRadius: scaler(16),
     paddingTop: scaler(16),
     paddingBottom: scaler(16),
@@ -216,10 +267,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: scaler(10),
   },
-  buttonSelected: {
-    backgroundColor: colors.red50,
-    borderWidth: 0,
-  },
+  buttonSelected: {borderColor: colors.purple},
   iconIconResult: {
     width: scaler(64),
     height: scaler(64),
@@ -256,7 +304,7 @@ const styles = StyleSheet.create({
     lineHeight: scaler(21),
   },
   buttonTest: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.red50,
     borderRadius: scaler(8),
     paddingVertical: scaler(10),
     alignItems: 'center',
@@ -269,8 +317,7 @@ const styles = StyleSheet.create({
     lineHeight: scaler(24),
   },
   txtSelected: {
-    color: colors.white,
-    ...stylesCommon.fontWeight500,
+    color: colors.purple,
   },
   imageAvatar: {
     marginTop: scaler(6),

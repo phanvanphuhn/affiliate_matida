@@ -17,7 +17,7 @@ export interface IDataListFeed
   is_payment: string;
   lang: 'vi';
   price_vn: number;
-  id: number;
+  id: string;
   rank: number;
   image?: string;
   trimester: string;

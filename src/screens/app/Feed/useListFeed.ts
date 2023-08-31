@@ -35,9 +35,9 @@ const useListFeed = () => {
         setState({total: res?.data?.total});
         handlerData(data);
       }
-      setState({isLoadMore: false, refreshing: false});
+      setState({isLoadMore: false, isLoading: false, refreshing: false});
     } catch (error: any) {
-      setState({isLoadMore: false, refreshing: false});
+      setState({isLoadMore: false, isLoading: false, refreshing: false});
     }
   };
   const handlerData = (arr: IDataListFeed[]) => {
@@ -50,14 +50,17 @@ const useListFeed = () => {
         setState({data: arr});
       } else {
         setState({
-          data: [...state.data, ...arr],
+          data: [...(state.data || []), ...arr],
         });
       }
     }
   };
 
   const handleLoadMore = () => {
-    if (state.page * state.size <= state.total) {
+    console.log('=>(useListFeed.ts:60) state.total', state.total);
+    console.log('=>(useListFeed.ts:61) state.page', state.page);
+    console.log('=>(useListFeed.ts:62) state.size', state.size);
+    if (state.page * state.size <= state.total && !state.isLoadMore) {
       setState({
         page: state.page + 1,
         isLoadMore: true,
@@ -68,13 +71,19 @@ const useListFeed = () => {
   const onRefresh = () => {
     setState({page: 1, refreshing: true});
   };
+
   useEffect(() => {
     if (state.refreshing) {
       getListVideo();
     }
   }, [state.refreshing]);
   useEffect(() => {
-    if (!state.refreshing) {
+    if (state.isLoading) {
+      getListVideo();
+    }
+  }, [state.isLoading]);
+  useEffect(() => {
+    if (!state.refreshing && !state.isLoading) {
       getListVideo();
     }
   }, [state.page]);
@@ -83,6 +92,7 @@ const useListFeed = () => {
     setState,
     handleLoadMore,
     onRefresh,
+    getListVideo,
   };
 };
 

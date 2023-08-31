@@ -95,6 +95,8 @@ export default ResultPackageQuiz;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 40,
+    backgroundColor: colors.white,
     width: widthScreen,
   },
   contentContainerStyle: {
