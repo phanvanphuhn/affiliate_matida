@@ -1,5 +1,3 @@
-import {LazyImage} from '@component/LazyImage';
-import {DailyQuizBackground} from '@images';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
@@ -14,17 +12,15 @@ const DailyQuiz = ({item, index, onPress}: any) => {
     <TouchableOpacity
       onPress={() => onPress(index, item)}
       style={styles.itemContainer}>
-      <View>
-        <View style={styles.tag}>
-          <Text style={styles.tagTitle}>{t('feed.dailyQuiz')}</Text>
-        </View>
-        <View style={styles.contentDailyQuiz}>
-          <Text style={styles.contentText}>
-            {lang === 1 ? item.question_en : item.question_vi}
-          </Text>
-        </View>
-        <LazyImage source={DailyQuizBackground} style={styles.image} />
+      <View style={styles.tag}>
+        <Text style={styles.tagTitle}>{t('feed.dailyQuiz')}</Text>
       </View>
+      <View style={styles.contentDailyQuiz}>
+        <Text style={styles.contentText}>
+          {lang === 1 ? item.question_en : item.question_vi}
+        </Text>
+      </View>
+      {/* <LazyImage source={DailyQuizBackground} style={styles.image} /> */}
     </TouchableOpacity>
   );
 };
@@ -42,6 +38,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
+    backgroundColor: '#654AC9',
+    borderRadius: scaler(8),
+    height: scaler(292),
   },
   tag: {
     position: 'absolute',
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
   },
   contentDailyQuiz: {
     position: 'absolute',
-    zIndex: 999,
+    zIndex: 1000,
     height: '100%',
     width: '100%',
     justifyContent: 'center',

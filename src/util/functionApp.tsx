@@ -12,6 +12,11 @@ const mixpanel = new Mixpanel(
   trackAutomaticEvents,
 );
 
+const eventType = {
+  MIX_PANEL: 'mix_panel',
+  AFF_FLYER: 'aff_flyer',
+};
+
 export const hasWhiteSpace = (s: any) => {
   var regExp = /^\s+$/;
   return regExp.test(s);
@@ -152,7 +157,11 @@ export function convertArrUnique(arr: any, comp: any) {
   return unique;
 }
 
-export const trackingAppEvent = (eventName: any, eventParams: any) => {
+export const trackingAppEvent = (
+  eventName: any,
+  eventParams: any,
+  type: string,
+) => {
   try {
     //MixPanel
     mixpanel.track(eventName, eventParams);
