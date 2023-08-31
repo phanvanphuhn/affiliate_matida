@@ -140,7 +140,7 @@ const SearchFeed = () => {
           </Text>
         </TouchableOpacity>
       </View> */}
-      <AnimatedPagerView
+      {/* <AnimatedPagerView
         initialPage={state.currentIndex}
         orientation={'horizontal'}
         style={[styles.container]}
@@ -148,17 +148,17 @@ const SearchFeed = () => {
         onPageScroll={pageScrollHandler}
         ref={pagerViewRef}>
         {['dataAll', 'dataVideo', 'dataPodcast', 'dataArticle']?.map(
-          (item, index) => (
+          (item, index) => ( */}
             <View style={styles.wrapContainer}>
               <ListSearchFeed
-                data={state[item as keyof IStateSearchFeed]}
+                data={state?.dataAll}
                 refreshing={state.refreshing}
                 onRefresh={() => {}}
               />
             </View>
-          ),
+          {/* ),
         )}
-      </AnimatedPagerView>
+      </AnimatedPagerView> */}
     </View>
   );
 };
