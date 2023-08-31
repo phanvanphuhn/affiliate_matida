@@ -101,11 +101,11 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CodePushDeploymentKey</key>
 	<!-- PRODUCT -->
-	<!-- <string>KMAL5G75tak3x4qyPCIahmzWFugl38rFT8Aii</string> -->
+	<string>KMAL5G75tak3x4qyPCIahmzWFugl38rFT8Aii</string>
 	<!-- STAGGING -->
 	<!-- <string>VxBWiTOax_Xi1voP-41-nI-E6vW7b_kAZ_zYY</string> -->
 	<!-- Testing -->
-	<string>GGK8l1OTBPmIGo0QBh6Bch175ua2EsGM8gsrG</string>
+	<!-- <string>GGK8l1OTBPmIGo0QBh6Bch175ua2EsGM8gsrG</string> -->
 	<key>FacebookAppID</key>
 	<string>1325262418044786</string>
 	<key>FacebookClientToken</key>
