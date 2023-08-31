@@ -35,16 +35,16 @@ export const Forum = () => {
   return (
     <View style={{flex: 1, backgroundColor: colors.white}}>
       <HeaderForum />
-      <ForumTab tab={tab} onChange={(item, index) => setTab(index)} />
+      {/* <ForumTab tab={tab} onChange={(item, index) => setTab(index)} />
       <ListActivePeople />
-      <ListPostHorizontal />
+      <ListPostHorizontal /> */}
       {loading ? (
         <View style={styles.viewLoadMore}>
           <ActivityIndicator color={colors.primary} size="small" />
         </View>
       ) : (
         <>
-          {/* <ListTopTab /> */}
+          <ListTopTab />
           <ListPost />
         </>
       )}
