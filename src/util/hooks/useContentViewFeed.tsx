@@ -20,7 +20,7 @@ export const useContentViewFeed = (
   const handleContentView = async () => {
     try {
       await postContentViews({
-        content_id: id,
+        content_id: +id,
         content_type: type,
         start_time: start.current,
         end_time: getTimeNow(),
