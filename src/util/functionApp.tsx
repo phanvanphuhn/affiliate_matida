@@ -4,6 +4,10 @@ import {t} from 'i18next';
 import {Mixpanel} from 'mixpanel-react-native';
 import {ColorValue} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
+import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
+import reactotron from 'reactotron-react-native';
+
+let buoApp: any = null;
 
 const validTag = /^<\/?[A-Za-z]+>$/;
 const trackAutomaticEvents = true;
@@ -152,10 +156,13 @@ export function convertArrUnique(arr: any, comp: any) {
   return unique;
 }
 
-export const trackingAppEvent = (eventName: any, eventParams: any) => {
+export const trackingAppEvent = async (eventName: any, eventParams: any) => {
   try {
     //MixPanel
     mixpanel.track(eventName, eventParams);
+    //Branch
+
+    trackEventBranch(eventName, eventParams);
     //AppFlyer
     appsFlyer.logEvent(
       eventName,
@@ -168,6 +175,37 @@ export const trackingAppEvent = (eventName: any, eventParams: any) => {
       },
     );
   } catch (error) {}
+};
+
+export const createBranchUniversalObject = async (
+  identifier: string,
+  options: any,
+) => {
+  const result = await branch.createBranchUniversalObject(identifier, options);
+  buoApp = result;
+};
+
+export const trackEventBranch = async (
+  eventName: string,
+  params: BranchEventParams,
+) => {
+  try {
+    // if (!buoApp) {
+    //   await createBranchUniversalObject('Matida', {
+    //     title: 'Matida',
+    //   });
+    // }
+    // buoApp?.logEvent(eventName, {
+    //   customData: params,
+    // });
+    const event = new BranchEvent(eventName, null, {
+      customData: params,
+    });
+    event.logEvent();
+    reactotron.log?.('LOG EVENT', eventName);
+  } catch (error) {
+    reactotron.log?.('ERROR LOG EVENT', eventName);
+  }
 };
 
 export const getConvertViewer = (view: number | string | null) => {

@@ -94,10 +94,10 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   return handledF || handledZ;
 }
 
-// - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
-//    [RNBranch continueUserActivity:userActivity];
-//    return YES;
-// }
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
+   [RNBranch continueUserActivity:userActivity];
+   return YES;
+}
 
 // AppsFlyerLib
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
