@@ -613,7 +613,7 @@ export const en = {
     comment: 'Comment',
     noComment: 'No comments',
     todayQuestion: 'Matida Pregnancy Preparation',
-    enterTest: 'Start the test',
+    enterTest: 'Next',
     completed: 'completed',
     momPrepTest: 'Test your knowledge',
     article: 'Article',

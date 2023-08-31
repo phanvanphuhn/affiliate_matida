@@ -617,7 +617,7 @@ export const vi = {
     comment: 'Bình luận',
     noComment: 'Không có bình luận nào',
     todayQuestion: 'Bổ sung kiến thức mang thai',
-    enterTest: 'Làm test ngay',
+    enterTest: 'Kế tiếp',
     completed: 'hoàn thành',
     momPrepTest: 'Bài trắc nghiệm',
     article: 'Bài viết',
