@@ -8,6 +8,9 @@ import {IDataListFeed} from '../../Feed/type';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import TitleFeed from './TitleFeed';
+import {useContentView} from '@util';
+import {EContentType} from '@constant';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -15,7 +18,11 @@ interface ItemArticleProps {
 }
 const ItemArticle = (props: ItemArticleProps) => {
   const {setState} = useVideo();
-  // useContentView(props.item.contentid, EContentType.ARTICLE);
+  useContentViewFeed(
+    props.item.contentid,
+    EContentType.ARTICLE,
+    props.isFocused,
+  );
   useEffect(() => {
     if (props.isFocused) {
       console.log('=>(ItemArticle.tsx:19) props.item', props.item);
@@ -47,7 +54,8 @@ const ItemArticle = (props: ItemArticleProps) => {
             height: '100%',
             width: '100%',
             position: 'absolute',
-          }}></LinearGradient>
+          }}
+        />
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>

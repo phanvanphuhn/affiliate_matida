@@ -16,6 +16,9 @@ import DoubleClick from './DoubleClick';
 import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
 import ImagePodcast from './ImagePodcast';
+import {useContentView} from '@util';
+import {EContentType} from '@constant';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -34,12 +37,13 @@ const ItemVideo = (props: ItemVideoProps) => {
     PLAYER_STATES.PLAYING,
   );
   const {state, setState} = useVideo();
-  // useContentView(
-  //   props.item.contentid,
-  //   props.item.content_type == 'podcast'
-  //     ? EContentType.PODCAST
-  //     : EContentType.VIDEO,
-  // );
+  useContentViewFeed(
+    props.item.contentid,
+    props.item.content_type == 'podcast'
+      ? EContentType.PODCAST
+      : EContentType.VIDEO,
+    props.isFocused,
+  );
   const videoPlayer = useRef<Video>();
   const onReset = () => {
     videoPlayer.current?.seek(0);
