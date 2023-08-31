@@ -75,7 +75,13 @@ export const ModalResult = ({
           titleTop={t('test.viewAllAnswer')}
           titleBottom={t('test.continueMatida')}
           onPressTop={handlePressSeeAll}
-          onPressBottom={() => goBack()}
+          onPressBottom={() => {
+            route?.params?.onComplete &&
+              route?.params?.onComplete({
+                maxScore: result?.userScore,
+              });
+            goBack();
+          }}
           // hideButtonBottom
         />
       </View>

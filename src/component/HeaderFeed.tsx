@@ -12,6 +12,8 @@ import {goBack} from '@navigation';
 
 import {SvgArrowLeft} from '@images';
 import {colors, scaler} from '@stylesCommon';
+import {useRoute} from '@react-navigation/native';
+import {useVideo} from '../screens/app/DetailFeed/components/Container';
 
 interface HeaderProps {
   IconLeft?: JSX.Element;
@@ -36,10 +38,17 @@ const HeaderFeed = ({
   styleButtonRight,
 }: HeaderProps) => {
   const insets = useSafeAreaInsets();
+  const route = useRoute<any>();
+  const {state, setState} = useVideo();
+
+  const onBack = () => {
+    onPressLeft();
+    route?.params?.onComplete && route?.params?.onComplete(state.listPackage);
+  };
   return (
     <View style={[styles.container, {top: insets.top + 15}, styleContainer]}>
       <TouchableOpacity
-        onPress={onPressLeft}
+        onPress={onBack}
         activeOpacity={0.9}
         style={[styles.buttonLeft, styleButtonLeft]}
         disabled={hideLeftButton}>

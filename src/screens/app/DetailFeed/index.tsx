@@ -1,5 +1,5 @@
 import {ic_back, ic_search} from '@images';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {heightScreen} from '@stylesCommon';
 import React, {useEffect, useRef} from 'react';
@@ -15,7 +15,7 @@ import {Drawer} from 'react-native-drawer-layout';
 import HeaderFeed from '../../../component/HeaderFeed';
 import {IDataListFeed} from '../Feed/type';
 import {SwiperFlatList} from './SwiperFlatlist/SwiperFlatList';
-import Container, {useVideo} from './components/Container';
+import Container, {useVideo, VideoContext} from './components/Container';
 import DailyQuizFeed from './components/DailyQuizFeed';
 import DrawerFeed from './components/DrawerFeed';
 import FooterFeed from './components/FooterFeed';
@@ -26,6 +26,7 @@ import PackageQuizFeed from './components/PackageQuizFeed';
 import useDetailFeed from './useDetailFeed';
 import Swiper from './SwiperFlatlist/Swiper';
 import ListFeedDetail from './components/ListFeedDetail';
+import {goBack} from '@navigation';
 
 interface DetailFeedProps {}
 
@@ -79,7 +80,9 @@ const DetailFeed = (props: DetailFeedProps) => {
           }
         />
         <ListFeedDetail open={open} />
-        <View style={{height: 65, zIndex: 999}}>{<FooterFeed />}</View>
+        <View style={{height: 65, zIndex: 999}}>
+          <FooterFeed />
+        </View>
       </Container>
     </Drawer>
   );

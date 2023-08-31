@@ -3,7 +3,12 @@ import {StyleSheet, View} from 'react-native';
 import FooterFeed from './FooterFeed';
 import SliderFeed from './SliderFeed';
 import {IDataComment, IStateVideo} from '../types';
-import {IAnswers, IDataListFeed, IPackageQuizzList} from '../../Feed/type';
+import {
+  ContentTypeFeed,
+  IAnswers,
+  IDataListFeed,
+  IPackageQuizzList,
+} from '../../Feed/type';
 import CommentFeed from './CommentFeed';
 import KeyboardShift from './KeyboardShift';
 import {SIZE_DEFAULT} from '../useDetailFeed';
@@ -12,13 +17,18 @@ import {useRoute} from '@react-navigation/native';
 interface ContainerProps {
   children: React.ReactNode;
 }
-
+export interface ListPackage {
+  id: string;
+  content_type: ContentTypeFeed;
+  maxScore: number;
+}
 interface IState extends IStateVideo {
   progress?: number;
   progressChange?: number;
   feed?: IDataListFeed;
   comment?: IDataComment;
   questions?: IPackageQuizzList[];
+  listPackage: ListPackage[];
   duration?: number;
   totalComment?: number;
   isShowComment?: boolean;
@@ -32,7 +42,7 @@ interface IVideoContext {
   setState: (value: IState) => void;
 }
 
-const VideoContext = React.createContext<IVideoContext>({
+export const VideoContext = React.createContext<IVideoContext>({
   state: {
     progress: 0,
     progressChange: 0,
@@ -46,6 +56,7 @@ const VideoContext = React.createContext<IVideoContext>({
     is_rated: false,
     progressStatus: undefined,
     data: [],
+    listPackage: [],
     page: undefined,
     size: SIZE_DEFAULT,
     total: 0,
@@ -82,6 +93,7 @@ const Container: React.FC<ContainerProps> = props => {
       is_liked: false,
       is_rated: false,
       data: [],
+      listPackage: [],
       page: undefined,
       size: SIZE_DEFAULT,
       total: 0,
