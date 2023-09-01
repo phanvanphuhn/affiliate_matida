@@ -104,7 +104,7 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
       hideModalContentWhileAnimating
       backdropTransitionOutTiming={0}
       backdropOpacity={0.7}
-      // onBackdropPress={() => setIsVisible(false)}
+      onBackdropPress={() => setIsVisible(false)}
       isVisible={isVisible}>
       <View style={styles.viewContent}>
         <Text
@@ -118,6 +118,7 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
         <Text
           style={{
             fontSize: scaler(14),
+            textAlign: 'center',
           }}>
           Please update the app to continue
         </Text>
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonUpdate: {
-    backgroundColor: colors.green150,
+    backgroundColor: colors.red50,
     borderRadius: scaler(8),
     paddingHorizontal: scaler(20),
     paddingVertical: scaler(10),
