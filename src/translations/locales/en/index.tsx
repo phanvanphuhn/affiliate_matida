@@ -619,4 +619,9 @@ export const en = {
     article: 'Article',
     dailyQuiz: 'Daily quiz',
   },
+  appUpdate:{
+    welcome: 'Welcome',
+    desc: 'Please update the app to continue',
+    update: 'Update'
+  }
 };

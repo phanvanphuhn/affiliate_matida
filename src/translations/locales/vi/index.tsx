@@ -623,4 +623,9 @@ export const vi = {
     article: 'Bài viết',
     dailyQuiz: 'Câu hỏi hôm nay',
   },
+  appUpdate:{
+    welcome: 'Chào bạn, Matida đây!',
+    desc: 'Cập nhật app ngay để trải nghiệm những tính năng tuyệt vời nhất',
+    update: 'Cập nhật'
+  }
 };

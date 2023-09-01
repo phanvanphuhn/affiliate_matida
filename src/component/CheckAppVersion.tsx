@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  AppState,
   Linking,
   Platform,
   StyleSheet,
@@ -11,6 +12,7 @@ import Modal from 'react-native-modal';
 import {colors, scaler} from '@stylesCommon';
 import {getVersionApp} from '@services';
 import DeviceInfo from 'react-native-device-info';
+import {useTranslation} from 'react-i18next';
 
 /**
  *
@@ -59,6 +61,10 @@ interface CheckAppVersionProps {}
 
 export const CheckAppVersion = (props: CheckAppVersionProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const {t} = useTranslation();
+  const appState = React.useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
   const getVersion = async () => {
     const res = await getVersionApp();
     if (res.success) {
@@ -81,6 +87,28 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
     getVersion();
   }, []);
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+        'change',
+        (nextAppState) => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === 'active'
+            ) {
+                console.log('App has come to the foreground!');
+            }
+
+            appState.current = nextAppState;
+            setAppStateVisible(appState.current);
+            getVersion()
+        }
+    );
+
+    return () => {
+        subscription.remove();
+    };
+}, []);
+
   const onUpdate = async () => {
     try {
       let packageName = 'com.growth.levers.matida';
@@ -88,8 +116,8 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
 
       let url =
         Platform.OS == 'android'
-          ? `market://details?id=${packageName}`
-          : `itms-apps://itunes.apple.com/us/app/id${id}?mt=8`;
+          ? `https://play.google.com/store/apps/details?id=${packageName}`
+          : `https://apps.apple.com/vn/app/matida-app-theo-d%C3%B5i-thai-k%E1%BB%B3/id${id}?l=vi`;
       let response = await Linking.canOpenURL(url);
       if (response) {
         Linking.openURL(url);
@@ -113,17 +141,17 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
             fontWeight: '600',
             marginBottom: scaler(15),
           }}>
-          Welcome
+          {t('appUpdate.welcome')}
         </Text>
         <Text
           style={{
             fontSize: scaler(14),
-            textAlign: 'center',
+            textAlign: 'center'
           }}>
-          Please update the app to continue
+          {t('appUpdate.desc')}
         </Text>
         <TouchableOpacity onPress={onUpdate} style={styles.buttonUpdate}>
-          <Text style={styles.textUpdate}>Update</Text>
+          <Text style={styles.textUpdate}>{t('appUpdate.update')}</Text>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -141,12 +169,11 @@ const styles = StyleSheet.create({
     borderRadius: scaler(16),
     paddingVertical: scaler(24),
     paddingHorizontal: scaler(20),
-    flexWrap: 'wrap',
     alignContent: 'center',
     alignItems: 'center',
   },
   buttonUpdate: {
-    backgroundColor: colors.red50,
+    backgroundColor: colors.primary,
     borderRadius: scaler(8),
     paddingHorizontal: scaler(20),
     paddingVertical: scaler(10),
