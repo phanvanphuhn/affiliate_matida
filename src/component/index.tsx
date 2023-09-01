@@ -61,3 +61,4 @@ export * from './ViewExpert';
 export * from './HeaderMasterClass';
 export * from './FloatingAIButton';
 export * from './AppPictureInPicture';
+export * from './CheckAppVersion'

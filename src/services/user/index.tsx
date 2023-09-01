@@ -23,6 +23,7 @@ const LIST_USER_BLOCK = 'block-user';
 const LIST_USER = 'user';
 
 const SHARE_LINK_USER = 'topics/send-message/users';
+const GET_VERSION = 'versions';
 
 export const selectDueDate: any = async (data: any) => {
   const response = await api.post(SELECT_DUE_DATE, data);
@@ -134,5 +135,10 @@ export const getListUserApi: any = async (search: string, page: any) => {
 
 export const postShareLinkUser: any = async (data: any) => {
   const response = await api.post(SHARE_LINK_USER, data);
+  return response;
+};
+
+export const getVersionApp: any = async () => {
+  const response = await api.get(GET_VERSION);
   return response;
 };

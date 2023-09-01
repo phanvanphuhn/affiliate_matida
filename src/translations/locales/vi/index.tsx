@@ -617,6 +617,15 @@ export const vi = {
     comment: 'Bình luận',
     noComment: 'Không có bình luận nào',
     todayQuestion: 'Bổ sung kiến thức mang thai',
-    enterTest: 'Làm test ngay',
+    enterTest: 'Kế tiếp',
+    completed: 'hoàn thành',
+    momPrepTest: 'Bài trắc nghiệm',
+    article: 'Bài viết',
+    dailyQuiz: 'Câu hỏi hôm nay',
   },
+  appUpdate:{
+    welcome: 'Chào bạn, Matida đây!',
+    desc: 'Cập nhật app ngay để trải nghiệm những tính năng tuyệt vời nhất',
+    update: 'Cập nhật'
+  }
 };
