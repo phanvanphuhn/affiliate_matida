@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 import {ItemRecord} from './components';
 import {styles} from './style';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
 
 export const ListRecord = () => {
@@ -34,7 +34,7 @@ export const ListRecord = () => {
   useUXCam(ROUTE_NAME.LIST_RECORD);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.LIST_RECORD, {});
+    trackingAppEvent(event.SCREEN.LIST_RECORD, {}, eventType.AFF_FLYER);
   }, []);
 
   useEffect(() => {

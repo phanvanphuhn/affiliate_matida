@@ -2,7 +2,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {GlobalService, getTestDetailById, postSubmitTest} from '@services';
 import {widthScreen} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {Formik, FormikProps} from 'formik';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, View} from 'react-native';
@@ -50,7 +50,7 @@ export const TestDetail = () => {
 
   useEffect(() => {
     getData();
-    trackingAppEvent(event.SCREEN.TEST_DETAIL, {});
+    trackingAppEvent(event.SCREEN.TEST_DETAIL, {}, eventType.AFF_FLYER);
   }, []);
   const nextQuestion = useCallback(() => {
     if (!!next_question || next_question == 0) {
@@ -77,7 +77,7 @@ export const TestDetail = () => {
     try {
       GlobalService.showLoading();
       const listAnswers = formRef.current?.values?.answer;
-      trackingAppEvent(event.MOM_TEST.DO, {content: listAnswers});
+      trackingAppEvent(event.MOM_TEST.DO, {content: listAnswers}, eventType.MIX_PANEL);
       const res = await postSubmitTest(quiz?.id, {data: listAnswers});
       setResult(res?.data);
       setVisibleResult(true);

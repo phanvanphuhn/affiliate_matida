@@ -12,7 +12,7 @@ import {
   getValueTimeLine,
 } from '@services';
 import {colors} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
@@ -96,7 +96,7 @@ const SizeComparison = () => {
     }
   };
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {});
+    trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {}, eventType.AFF_FLYER);
     if (week) {
       getData(week);
     }
@@ -171,7 +171,7 @@ const SizeComparison = () => {
         onSelect={(value: any) => {
           trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_CHANGE_WEEK, {
             content: value,
-          });
+          }, eventType.AFF_FLYER);
           getData(value);
           setWeek(value);
         }}

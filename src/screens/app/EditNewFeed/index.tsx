@@ -110,7 +110,7 @@ const EditPost = (props: any) => {
 
   useEffect(() => {
     getDataDetail();
-    trackingAppEvent(event.SCREEN.EDIT_POST, {});
+    trackingAppEvent(event.SCREEN.EDIT_POST, {}, eventType.AFF_FLYER);
   }, []);
 
   return (

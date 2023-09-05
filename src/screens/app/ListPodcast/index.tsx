@@ -15,7 +15,7 @@ import {
   View,
 } from 'react-native';
 import {styles} from './styles';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
 
 interface IFilter {
@@ -42,7 +42,7 @@ export const ListPodcast = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.LIST_PODCAST, {});
+      trackingAppEvent(event.SCREEN.LIST_PODCAST, {}, eventType.AFF_FLYER);
     }, []),
   );
 

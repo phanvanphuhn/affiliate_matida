@@ -24,6 +24,7 @@ import {
   AppSocket,
   convertLangMonth,
   event,
+  eventType,
   getTimeEndRoom,
   getTimeStartRoom,
   trackingAppEvent,
@@ -87,7 +88,7 @@ const DetailMeetingRoom = (props: any) => {
   );
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.DETAIL_MEETING_ROOM, {});
+    trackingAppEvent(event.SCREEN.DETAIL_MEETING_ROOM, {}, eventType.AFF_FLYER);
     socket.emit('add-user', {
       userId: user?.id,
     });

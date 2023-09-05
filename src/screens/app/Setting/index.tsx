@@ -17,6 +17,7 @@ import {deleteUserDevice} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
   event,
+  eventType,
   trackingAppEvent,
   useUXCam,
   VERSION_APP,
@@ -38,7 +39,7 @@ const Setting = () => {
   const {t} = useTranslation();
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.SETTING_SCREEN, {});
+    trackingAppEvent(event.SCREEN.SETTING_SCREEN, {}, eventType.AFF_FLYER);
   }, []);
 
   useUXCam(ROUTE_NAME.SETTING_SCREEN);
@@ -53,6 +54,7 @@ const Setting = () => {
         backgroundColor: 'transparent',
       });
     } finally {
+      trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL)
       dispatch(logOut());
       dispatch(clearListChat());
       dispatch(cleanHome());

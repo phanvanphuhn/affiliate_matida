@@ -9,7 +9,7 @@ import {getValueTimeLine, GlobalService} from '@services';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {useUXCam} from '@util';
+import {eventType, useUXCam} from '@util';
 import {trackingAppEvent, event} from '@util';
 
 const TimeLine = () => {
@@ -41,7 +41,7 @@ const TimeLine = () => {
   };
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.TIME_LINE, {});
+    trackingAppEvent(event.SCREEN.TIME_LINE, {}, eventType.AFF_FLYER);
     if (week) {
       callApiGetValueTimeLine(week);
     }

@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {IAnswersPackage, IDataListFeed} from '../../Feed/type';
-import {ic_gemstone, SvgReward, SvgTrimester1, SvgVerify} from '@images';
+import {ic_gemstone, SvgTrimester1, SvgVerify} from '@images';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {ViewLoading} from '../../MomTest/MomPrepTest/components';
 import {
@@ -19,7 +19,7 @@ import {
   YourResult,
   YourReward,
 } from '../../MomTest/TestResult/components';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import {getAllAnswerById} from '@services';
 import {EPreRoute} from '@constant';
 import {navigate, NavigationUtils} from '@navigation';
@@ -37,7 +37,7 @@ const ResultPackageQuiz = (props: ResultPackageQuizProps) => {
 
   useEffect(() => {
     getData();
-    trackingAppEvent(event.SCREEN.TEST_RESULT, {});
+    trackingAppEvent(event.SCREEN.TEST_RESULT, {}, eventType.MIX_PANEL);
   }, []);
 
   const getData = async () => {
@@ -64,7 +64,7 @@ const ResultPackageQuiz = (props: ResultPackageQuizProps) => {
   };
 
   const onReTest = () => {
-    trackingAppEvent(event.MOM_TEST.START, {content: props.item});
+    trackingAppEvent(event.MOM_TEST.START, {content: props.item}, eventType.MIX_PANEL);
     navigate(ROUTE_NAME.TEST_DETAIL, {
       quiz: props.item,
     });

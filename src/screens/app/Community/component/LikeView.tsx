@@ -2,7 +2,7 @@ import {SvgComment, SvgHeart, SvgHearted} from '@images';
 import {changeStatusLike} from '@redux';
 import {addLikePost, addUnLikePost} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import {debounce} from 'lodash';
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -21,7 +21,7 @@ export const LikeView = (props: any) => {
         const body = {
           post_id: id,
         };
-        trackingAppEvent(event.FORUM.LIKE, {content: body});
+        trackingAppEvent(event.FORUM.LIKE, {content: body}, eventType.MIX_PANEL);
         if (data?.is_liked) {
           const res = await addUnLikePost(id);
         } else {

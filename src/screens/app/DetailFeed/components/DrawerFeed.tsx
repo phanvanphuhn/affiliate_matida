@@ -19,7 +19,7 @@ import {LazyImage} from '@component';
 import DailyQuiz from '../../Feed/components/dailyQuiz';
 import MomPrepTest from '../../Feed/components/momPrepTest';
 import ItemFeed from '../../Feed/components/ItemFeed';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import {navigate} from '@navigation';
 import {EPreRoute} from '@constant';
 import {DailyQuizBackground} from '@images';
@@ -55,14 +55,14 @@ const DrawerFeed = (props: DrawerFeedProps) => {
         return;
       }
       if (+item?.maxScore === +item?.total_questions) {
-        trackingAppEvent(event.MOM_TEST.START, {content: item?.id});
+        trackingAppEvent(event.MOM_TEST.START, {content: item?.id}, eventType.MIX_PANEL);
         navigate(ROUTE_NAME.TEST_RESULT, {
           id: item?.id,
           redoTest: () => {},
           preRoute: EPreRoute.PERIODIC,
         });
       } else {
-        trackingAppEvent(event.MOM_TEST.START, {content: item});
+        trackingAppEvent(event.MOM_TEST.START, {content: item}, eventType.MIX_PANEL);
         navigate(ROUTE_NAME.TEST_DETAIL, {quiz: item});
       }
     } else {

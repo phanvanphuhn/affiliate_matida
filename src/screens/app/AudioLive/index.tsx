@@ -9,6 +9,7 @@ import ZegoUIKitPrebuiltLiveAudioRoom, {
 import {
   APPID_ZEGO_KEY_AUDIOLIVE,
   APP_SIGN_ZEGO_KEY_AUDIOLIVE,
+  eventType,
   useUXCam,
 } from '@util';
 import {useSelector} from 'react-redux';
@@ -54,7 +55,7 @@ const AudioLive = (props: any) => {
     socket.emit('add-user', {
       userId: me,
     });
-    trackingAppEvent(event.SCREEN.AUDIO_LIVE, {});
+    trackingAppEvent(event.SCREEN.AUDIO_LIVE, {}, eventType.AFF_FLYER);
     return () => {
       socket.emit('leaveRoom', {
         roomId: idRoom,
