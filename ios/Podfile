@@ -30,7 +30,6 @@ target 'Matida' do
   )
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
-  pod 'react-native-branch', path: '../node_modules/react-native-branch'
 
   target 'MatidaTests' do
     inherit! :complete

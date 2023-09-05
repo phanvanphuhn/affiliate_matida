@@ -15,8 +15,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import io.branch.rnbranch.*;
-
 import com.zoontek.rnbootsplash.RNBootSplash;
 
 public class MainActivity extends ReactActivity {
@@ -38,20 +36,6 @@ public class MainActivity extends ReactActivity {
     super.onActivityResult(requestCode, resultCode, data);
   }
   
-   // Override onStart:
-   @Override
-   protected void onStart() {
-       super.onStart();
-       RNBranchModule.initSession(getIntent().getData(), this);
-   }
-   
-   // Override onNewIntent:
-   @Override
-   public void onNewIntent(Intent intent) {
-       super.onNewIntent(intent);
-      RNBranchModule.onNewIntent(intent);
-   }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     RNBootSplash.init(this); // <- initialize the splash screen
