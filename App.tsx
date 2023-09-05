@@ -4,7 +4,12 @@ import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, AppState, Platform, StatusBar} from 'react-native';
 import NavigationApp from './src/navigation/StackContainer';
 
-import {CheckAppVersion, GlobalUI, ToastCustom, ToastCustomPost} from '@component';
+import {
+  CheckAppVersion,
+  GlobalUI,
+  ToastCustom,
+  ToastCustomPost,
+} from '@component';
 import {NavigationUtils} from '@navigation';
 import {clearDataLiveTalk} from '@redux';
 import {ROUTE_NAME} from '@routeName';
@@ -42,7 +47,6 @@ initI18n();
 
 import {StripeProvider} from '@stripe/stripe-react-native';
 import CodePush from 'react-native-code-push';
-import {CheckAppVersion} from '@component';
 
 const options = {
   // updateDialog: true,

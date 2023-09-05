@@ -21,7 +21,6 @@ const FooterFeed = (props: FooterFeedProps) => {
       state.feed?.contentid,
     );
     if (res.success) {
-      console.log('=>(useCommentFeed.ts:49) res', res);
       setState({
         is_liked: res?.data?.is_liked,
         totalComment: res?.data?.total_comments,
@@ -31,7 +30,6 @@ const FooterFeed = (props: FooterFeedProps) => {
   };
 
   useEffect(() => {
-    console.log('=>(FooterFeed.tsx:42) state.feed', state.feed);
     getDetail();
   }, [state.feed?.contentid, state.feed?.content_type]);
   const onLike = async () => {
@@ -44,7 +42,6 @@ const FooterFeed = (props: FooterFeedProps) => {
         state.feed?.contentid,
       );
       if (res.success) {
-        console.log('=>(useCommentFeed.ts:49) res', res);
         setState({
           is_liked: res.data?.is_liked,
         });
@@ -53,17 +50,13 @@ const FooterFeed = (props: FooterFeedProps) => {
   };
   const onComment = () => {
     setState({isShowComment: true});
-    console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
   const onRate = () => {
     setState({
       feed: {...state.feed, is_rated: !state.feed?.is_rated},
     });
-    console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
   };
-  const onShare = () => {
-    console.log('=>(FooterFeed.tsx:12) state.feed', state.feed);
-  };
+  const onShare = () => {};
   const onMenu = () => {
     navigate(ROUTE_NAME.MOM_PREP_TEST);
   };
