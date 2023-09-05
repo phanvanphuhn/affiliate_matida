@@ -44,7 +44,7 @@ export const Forum = () => {
         </View>
       ) : (
         <>
-          {/* <ListTopTab /> */}
+          <ListTopTab />
           <ListPost />
         </>
       )}

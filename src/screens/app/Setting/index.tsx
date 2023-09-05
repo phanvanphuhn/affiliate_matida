@@ -25,6 +25,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import {showMessage} from 'react-native-flash-message';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -166,7 +167,7 @@ const Setting = () => {
       })}
       <View style={styles.viewBottom}>
         <Text style={styles.txtBottom}>
-          {`${t('setting.version')}${VERSION_APP} - ${VERSION_CODE_PUSH}`}
+          {`${t('setting.version')}${DeviceInfo?.getVersion()} - ${VERSION_CODE_PUSH}`}
         </Text>
       </View>
       <ModalConfirm

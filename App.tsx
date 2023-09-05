@@ -42,7 +42,6 @@ initI18n();
 
 import {StripeProvider} from '@stripe/stripe-react-native';
 import CodePush from 'react-native-code-push';
-import {CheckAppVersion} from '@component';
 
 const options = {
   // updateDialog: true,
