@@ -1,53 +1,55 @@
 import {useRoute} from '@react-navigation/native';
-import {useEffect, useReducer} from 'react';
-import {getListFeedApi} from '../../../services/feed';
+import {RefObject, useEffect, useReducer} from 'react';
+import {getDetailFeedApi, getListFeedApi} from '../../../services/feed';
 import {IDataListFeed} from '../Feed/type';
 import {IStateVideo} from './types';
+import Swiper from './SwiperFlatlist/Swiper';
+import {useVideo} from './components/Container';
 
-export const SIZE_DEFAULT = 10;
+export const SIZE_DEFAULT = 20;
 const useDetailFeed = () => {
   const route = useRoute<any>();
 
-  const [state, setState] = useReducer(
-    (preState: IStateVideo, newState: Partial<IStateVideo>) => ({
-      ...preState,
-      ...newState,
-    }),
-    {
-      data: [],
-      page: route.params?.currentPage || 1,
-      size: SIZE_DEFAULT,
-      total: 0,
-      currentIndex: undefined,
-      refreshing: false,
-      isOpen: false,
-      isLoading: false,
-      isLoadMore: false,
-    },
-    (preState: IStateVideo) => ({
-      ...preState,
-    }),
-  );
-  console.log('=>(useDetailFeed.ts:41) state', state);
-  useEffect(() => {
-    const getIndex = (size: number) => {
-      console.log(
-        '=>(useDetailFeed.ts:50) route.params?.index',
-        route.params?.index,
-      );
-      console.log(
-        '=>(useDetailFeed.ts:54) route.params?.currentPage',
-        route.params?.currentPage,
-      );
-      return route.params?.index >= (size || SIZE_DEFAULT)
-        ? route.params?.index -
-            (route.params?.currentPage - 1) * (size || SIZE_DEFAULT)
-        : route.params?.index;
-    };
-    console.log('=>(useDetailFeed.ts:48) getIndex(10)', getIndex(SIZE_DEFAULT));
-    setState({currentIndex: getIndex(SIZE_DEFAULT)});
-  }, [route.params?.index, route.params?.currentPage]);
+  const {state, setState} = useVideo();
+  console.log('=>(useDetailFeed.ts:14) state', state);
 
+  const getIndex = (index: number, page: number) => {
+    return index >= SIZE_DEFAULT ? index - (page - 1) * SIZE_DEFAULT : index;
+  };
+  const getDetail = async () => {
+    if (!route.params?.id && !route.params?.content_type) {
+      return;
+    }
+    const res = await getDetailFeedApi(
+      route.params?.content_type,
+      route.params?.id,
+    );
+    if (res.success) {
+      console.log('=>(useCommentFeed.ts:49) res', res);
+      let page = Math.ceil((res?.data?.feed_detail?.index + 1) / SIZE_DEFAULT);
+      let currentIndex = getIndex(res?.data?.feed_detail?.index, page);
+      console.log('=>(useDetailFeed.ts:31) currentIndex', currentIndex);
+      console.log('=>(useDetailFeed.ts:27) page', page);
+      setState({
+        is_liked: res?.data?.is_liked,
+        totalComment: res?.data?.total_comments,
+        page,
+        currentIndex,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getDetail();
+
+    console.log('=>(useDetailFeed.ts:37) route.params', route.params);
+  }, [route.params?.id, route.params?.content_type]);
+
+  // useEffect(() => {
+  //   if (state.data.length && !!state.currentIndex && pagerViewRef) {
+  //     pagerViewRef.current?.scrollTo(state.currentIndex, false);
+  //   }
+  // }, [state.data]);
   const getListVideo = async () => {
     try {
       const res = await getListFeedApi(state.page, state.size);
@@ -56,16 +58,28 @@ const useDetailFeed = () => {
         setState({total: res.data?.total});
         handlerData(data);
       }
-      setState({isLoadMore: false});
-    } catch (error: any) {}
+      setState({isLoadMore: false, refreshing: false});
+    } catch (error: any) {
+      setState({isLoadMore: false, refreshing: false});
+
+      console.log('=>(useDetailFeed.ts:65) error', error);
+    }
   };
   const handlerData = (arr: IDataListFeed[]) => {
+    console.log(
+      '=>(useDetailFeed.ts:65) route.params?.currentPage',
+      route.params?.currentPage,
+    );
     if (arr?.length == 0) {
       if (state.page == 1 && route.params?.currentPage == 1) {
         setState({data: []});
       }
     } else {
-      if (state.page == 1 && route.params?.currentPage == 1) {
+      if (
+        state.page == 1 &&
+        (route.params?.currentPage == undefined ||
+          route.params?.currentPage == 1)
+      ) {
         setState({data: arr});
       } else {
         if (state.isLoadMore) {
@@ -75,6 +89,7 @@ const useDetailFeed = () => {
         } else {
           setState({
             data: [...arr, ...state.data],
+            // currentIndex: state.size,
           });
         }
       }
@@ -86,26 +101,24 @@ const useDetailFeed = () => {
       setState({
         page: state.page + 1,
         isLoadMore: true,
+        isLoadLess: false,
       });
     }
   };
-  const handleLoadLess = (pageNumber: number) => {
+  const handleLoadLess = () => {
     if (route.params?.currentPage > 1 && state.page > 1) {
       setState({
         page: state.page - 1,
         isLoadMore: false,
-        currentIndex: (pageNumber ?? state.currentIndex) + state.size,
+        isLoadLess: true,
       });
     }
   };
   const onPageSelected = (pageNumber: number) => {
-    console.log('=>(useDetailFeed.ts:100) pageNumber', pageNumber);
     const firstSlide = pageNumber == 0;
-    console.log('=>(useDetailFeed.ts:108) firstSlide', firstSlide);
     const lastSlide = pageNumber == state.data.length - 1;
-    console.log('=>(useDetailFeed.ts:111) lastSlide', lastSlide);
     if (firstSlide) {
-      // handleLoadLess(pageNumber);
+      // handleLoadLess();
     } else if (lastSlide) {
       handleLoadMore();
     }
@@ -113,10 +126,29 @@ const useDetailFeed = () => {
       currentIndex: pageNumber,
     });
   };
+  const onRefresh = () => {
+    setState({page: 1, refreshing: true});
+  };
   useEffect(() => {
-    getListVideo();
+    if (state.refreshing) {
+      getListVideo();
+    }
+  }, [state.refreshing]);
+  useEffect(() => {
+    console.log('=>(useDetailFeed.ts:136) state.refreshing', state.refreshing);
+    console.log('=>(useDetailFeed.ts:137) state.page', state.page);
+    if (!state.refreshing && state.page) {
+      getListVideo();
+    }
   }, [state.page]);
-  return {state, onPageSelected, setState, handleLoadMore};
+  return {
+    state,
+    onPageSelected,
+    setState,
+    handleLoadMore,
+    handleLoadLess,
+    onRefresh,
+  };
 };
 
 export default useDetailFeed;

@@ -1,11 +1,16 @@
+// import {LazyImage} from '@component';
+import {LazyImage} from '@component';
 import {heightScreen, widthScreen} from '@stylesCommon';
 import React, {useEffect} from 'react';
 import {Platform, StyleSheet, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 import {IDataListFeed} from '../../Feed/type';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import TitleFeed from './TitleFeed';
+import {useContentView} from '@util';
+import {EContentType} from '@constant';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -13,7 +18,11 @@ interface ItemArticleProps {
 }
 const ItemArticle = (props: ItemArticleProps) => {
   const {setState} = useVideo();
-  // useContentView(props.item.contentid, EContentType.ARTICLE);
+  useContentViewFeed(
+    props.item.contentid,
+    EContentType.ARTICLE,
+    props.isFocused,
+  );
   useEffect(() => {
     if (props.isFocused) {
       console.log('=>(ItemArticle.tsx:19) props.item', props.item);
@@ -25,13 +34,12 @@ const ItemArticle = (props: ItemArticleProps) => {
   return (
     <DoubleClick isShowButtonPlay={false}>
       <View style={{flex: 1}}>
-        <FastImage
+        <LazyImage
           source={{
             uri: props.item.image,
-            priority: FastImage.priority.high,
-            cache: FastImage.cacheControl.immutable,
           }}
-          resizeMode={'contain'}
+          resizeMode={'cover'}
+          fastImage={true}
           style={{
             width: widthScreen,
             aspectRatio: Platform.select({
@@ -40,13 +48,21 @@ const ItemArticle = (props: ItemArticleProps) => {
             }),
           }}
         />
+        <LinearGradient
+          colors={['#00000000', '#00000090']}
+          style={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+          }}
+        />
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>
   );
 };
 
-export default ItemArticle;
+export default React.memo(ItemArticle);
 
 const styles = StyleSheet.create({
   container: {},

@@ -15,6 +15,10 @@ import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
+import ImagePodcast from './ImagePodcast';
+import {useContentView} from '@util';
+import {EContentType} from '@constant';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -33,12 +37,13 @@ const ItemVideo = (props: ItemVideoProps) => {
     PLAYER_STATES.PLAYING,
   );
   const {state, setState} = useVideo();
-  // useContentView(
-  //   props.item.contentid,
-  //   props.item.content_type == 'podcast'
-  //     ? EContentType.PODCAST
-  //     : EContentType.VIDEO,
-  // );
+  useContentViewFeed(
+    props.item.contentid,
+    props.item.content_type == 'podcast'
+      ? EContentType.PODCAST
+      : EContentType.VIDEO,
+    props.isFocused,
+  );
   const videoPlayer = useRef<Video>();
   const onReset = () => {
     videoPlayer.current?.seek(0);
@@ -128,11 +133,14 @@ const ItemVideo = (props: ItemVideoProps) => {
                   ...StyleSheet.absoluteFillObject,
                 }}
               />
-              <FastImage
-                source={{uri: props.item.image}}
-                style={styles.imgPodcast}
+              <ImagePodcast
+                item={props.item}
+                isPause={
+                  props.isPause ||
+                  (playerState == PLAYER_STATES.PAUSED && props.isFocused) ||
+                  !props.isFocused
+                }
               />
-              <View style={styles.dot} />
             </ImageBackground>
           )}
           {!!getUrl() && (
@@ -191,7 +199,7 @@ const ItemVideo = (props: ItemVideoProps) => {
   );
 };
 
-export default ItemVideo;
+export default React.memo(ItemVideo);
 
 const styles = StyleSheet.create({
   loading: {
@@ -212,7 +220,7 @@ const styles = StyleSheet.create({
   imgBackground: {
     width: widthScreen,
     aspectRatio: Platform.select({
-      android: widthScreen / (heightScreen - 33),
+      android: widthScreen / (heightScreen - 34),
       ios: widthScreen / (heightScreen - 71),
     }),
     alignItems: 'center',

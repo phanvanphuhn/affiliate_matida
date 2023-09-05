@@ -75,7 +75,7 @@ const ItemComment = (props: ItemCommentProps) => {
   );
 };
 
-export default ItemComment;
+export default React.memo(ItemComment);
 
 const styles = StyleSheet.create({
   container: {

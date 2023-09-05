@@ -4,7 +4,7 @@ import {GlobalService, getTestDetailById, postSubmitTest} from '@services';
 import {widthScreen} from '@stylesCommon';
 import {event, trackingAppEvent, useUXCam} from '@util';
 import {Formik, FormikProps} from 'formik';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {ViewLoading} from '../MomPrepTest/components';
@@ -31,7 +31,7 @@ const initFormik: IFormik = {
 export const TestDetail = () => {
   const navigation = useNavigation();
   const route = useRoute<any>();
-  const {quiz} = route?.params ?? {};
+  const {quiz, next_question, answer} = route?.params ?? {};
 
   const lang = useSelector((state: any) => state.auth.lang);
 
@@ -52,6 +52,15 @@ export const TestDetail = () => {
     getData();
     trackingAppEvent(event.SCREEN.TEST_DETAIL, {});
   }, []);
+  const nextQuestion = useCallback(() => {
+    if (!!next_question || next_question == 0) {
+      flatRef.current?.scrollToIndex({index: next_question, animated: true});
+      formRef.current?.setValues({
+        answer: [answer],
+        current: next_question,
+      });
+    }
+  }, [next_question, answer, flatRef.current]);
 
   const getData = async () => {
     try {
@@ -125,6 +134,7 @@ export const TestDetail = () => {
                 <FlatList
                   ref={flatRef}
                   data={data}
+                  onLayout={nextQuestion}
                   renderItem={renderItem}
                   contentContainerStyle={{flexGrow: 1}}
                   horizontal

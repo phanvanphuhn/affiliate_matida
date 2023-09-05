@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ROUTE_NAME} from './routeName';
-import {screens} from '../screens';
-import RNBootSplash from 'react-native-bootsplash';
-import {useDispatch, useSelector} from 'react-redux';
-import StackTab from './StackTab';
-import {AppSocket} from '@util';
-import {StatusBar, Platform} from 'react-native';
-import {RootState} from 'src/redux/rootReducer';
-import InAppReview from 'react-native-in-app-review';
 import {saveIsReview} from '@redux';
+import {AppSocket} from '@util';
+import * as React from 'react';
+import {Platform} from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
+import InAppReview from 'react-native-in-app-review';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from 'src/redux/rootReducer';
+import {screens} from '../screens';
+import StackTab from './StackTab';
+import {ROUTE_NAME} from './routeName';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -34,14 +34,14 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   );
   const isReview = useSelector((state: RootState) => state?.auth?.isReview);
 
-  // React.useEffect(() => {
-  //   if (token) {
-  //     init(token);
-  //     return () => {
-  //       endConnect();
-  //     };
-  //   }
-  // }, [token]);
+  React.useEffect(() => {
+    if (token) {
+      init(token);
+      return () => {
+        endConnect();
+      };
+    }
+  }, [token]);
 
   React.useEffect(() => {
     if (

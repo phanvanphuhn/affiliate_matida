@@ -1,167 +1,120 @@
-import {LazyImage} from '@component/LazyImage';
-import {SvgEye, iconClock, imageNameAppPink} from '@images';
-import {useNavigation} from '@react-navigation/native';
+import {EPreRoute} from '@constant';
+import {navigate} from '@navigation';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {colors, scaler} from '@stylesCommon';
-import React from 'react';
+import {event, trackingAppEvent} from '@util';
+import React, {useCallback, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  FlatList,
-  Image,
-  ListRenderItem,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {FlatList, ListRenderItem, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import useDetailFeed, {SIZE_DEFAULT} from '../../DetailFeed/useDetailFeed';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
 import DailyQuiz from './dailyQuiz';
+import MomPrepTest from './momPrepTest';
+import ItemFeed from './ItemFeed';
+import useListFeed from '../useListFeed';
+import {produce} from 'immer';
+import {IAnswer} from '../../MomTest/TestDetail/components';
+import {ListPackage} from '../../DetailFeed/components/Container';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
-
-  const {state, onPageSelected, handleLoadMore, handleLoadLess} =
-    useDetailFeed();
+  const flatlistRef = useRef<FlatList>();
+  const {state, setState, onReload, handleLoadMore, onRefresh} = useListFeed();
   const navigation = useNavigation<any>();
   const lang = useSelector((state: any) => state.auth.lang);
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     if (flatlistRef?.current && state?.data?.length) {
+  //       flatlistRef.current?.scrollToIndex({index: 0});
+  //     }
+  //     onRefresh();
+  //   }, []),
+  // );
+  const onDetailClick = (index: number, item: IDataListFeed) => {
+    console.log('=>(ListFeed.tsx:47) item', item);
+    if (item?.content_type == 'package_quizz') {
+      if (+item?.maxScore === +item?.total_questions) {
+        trackingAppEvent(event.MOM_TEST.START, {content: item?.id});
+        navigate(ROUTE_NAME.TEST_RESULT, {
+          id: item?.id,
+          redoTest: () => {},
+          preRoute: EPreRoute.PERIODIC,
+        });
+      } else {
+        trackingAppEvent(event.MOM_TEST.START, {content: item});
+        navigate(ROUTE_NAME.TEST_DETAIL, {
+          quiz: item,
+          onComplete: (result: any) => {
+            if (result.maxScore <= item.maxScore) {
+              return;
+            }
+            const newItem = produce(state.data, (draft: IDataListFeed[]) => {
+              draft[index] = {
+                ...item,
+                maxScore: result.maxScore,
+              };
+            });
+            setState({data: newItem});
+          },
+        });
+      }
+    } else {
+      navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
+        id: item.contentid,
+        content_type: item.content_type,
+        onComplete: (results: ListPackage[]) => {
+          if (results?.length) {
+            let newItem = [...state?.data];
+            results.forEach(result => {
+              let i = state?.data?.findIndex(
+                el =>
+                  el.contentid == result.id &&
+                  el.content_type == result.content_type,
+              );
 
-  const onDetailClick = (index: number) => {
-    console.log(
-      '=>(ListFeed.tsx:36) Math.ceil((index + 1) / SIZE_DEFAULT)',
-      Math.ceil((index + 1) / SIZE_DEFAULT),
-    );
-    navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
-      index,
-      currentPage: Math.ceil((index + 1) / SIZE_DEFAULT),
-    });
-  };
-  const getTotalView = (item: IDataListFeed) => {
-    let totalView = 0;
-    switch (item.content_type) {
-      case 'article':
-      case 'video':
-        totalView = item.views;
-        break;
-      case 'podcast':
-        totalView = item.total_views;
-        break;
-    }
-    return totalView;
-  };
-  const getThumbnail = (item: IDataListFeed) => {
-    let url = '';
-    switch (item.content_type) {
-      case 'video':
-        url = item.thumbnail || '';
-        break;
-      case 'article':
-      case 'podcast':
-      case 'package_quizz':
-        url = item.image || '';
-        break;
-    }
-    return url;
-  };
-  const renderTag = (item: IDataListFeed) => {
-    switch (item.content_type) {
-      case 'daily_quizz':
-        return 'Daily Quiz';
-      case 'package_quizz':
-        return 'Mom prep test';
-      default:
-        return item.content_type?.replace(
-          /^./,
-          item.content_type[0]?.toUpperCase(),
-        );
+              if (i == -1) {
+                return;
+              }
+              if (result.maxScore <= state?.data?.[i]?.maxScore) {
+                return;
+              }
+              newItem[i] = produce(newItem[i], (draft: IDataListFeed) => {
+                draft.maxScore = result.maxScore;
+              });
+            });
+            setState({data: newItem});
+          }
+        },
+      });
     }
   };
+
   const renderItem: ListRenderItem<IDataListFeed> = ({item, index}) => {
     if (item.content_type == 'daily_quizz') {
-      return <DailyQuiz item={item} index={index} />;
+      return <DailyQuiz item={item} index={index} onPress={onDetailClick} />;
+    } else if (item.content_type == 'package_quizz') {
+      return <MomPrepTest item={item} index={index} onPress={onDetailClick} />;
     }
-    return (
-      <TouchableOpacity
-        onPress={() => onDetailClick(index)}
-        style={styles.itemContainer}>
-        <View>
-          <View style={styles.tag}>
-            <Text style={styles.tagTitle}>{renderTag(item)}</Text>
-          </View>
-          <LazyImage
-            source={{
-              uri: getThumbnail(item),
-            }}
-            fastImage={true}
-            style={styles.image}
-          />
-          {(item.content_type == 'video' || item.content_type == 'podcast') && (
-            <View style={styles.leftDescription}>
-              <Image source={iconClock} />
-
-              <Text style={styles.description} numberOfLines={1}>
-                {item.durations ? item.durations : '0'} {t('feed.min')}
-              </Text>
-            </View>
-          )}
-          <View
-            style={[
-              styles.rightDescription,
-              item.content_type == 'article'
-                ? {
-                    left: scaler(8),
-                  }
-                : {
-                    right: scaler(8),
-                  },
-            ]}>
-            <SvgEye stroke={colors.borderColor} />
-
-            <Text style={styles.description} numberOfLines={1}>
-              {getTotalView(item)} {t('feed.views')}
-            </Text>
-          </View>
-        </View>
-        <Text style={styles.title}>
-          {item.content_type == 'package_quizz'
-            ? lang === 1
-              ? item?.name_en
-              : item?.name_vi
-            : item.title}
-        </Text>
-        <View style={styles.wrapAvatarContainer}>
-          <FastImage
-            source={item.image ? {uri: item.image} : imageNameAppPink}
-            style={styles.imageAvatar}
-            resizeMode="contain"
-          />
-
-          <Text style={styles.subTitle}>
-            {t('feed.by')}{' '}
-            <Text style={{color: colors.success_message}}>
-              {item.speaker_name ? item.speaker_name : 'Matida'}
-            </Text>
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
+    return <ItemFeed item={item} onDetailClick={onDetailClick} index={index} />;
   };
 
   return (
     <View style={styles.container}>
       <FlatList
         data={state.data}
+        ref={flatlistRef}
         renderItem={renderItem}
         keyExtractor={(item, index) => index?.toString()}
         numColumns={2}
-        initialNumToRender={4}
+        initialNumToRender={6}
         maxToRenderPerBatch={8}
         windowSize={10}
+        onRefresh={onRefresh}
+        refreshing={state.refreshing}
         removeClippedSubviews
         onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.4}
+        onEndReachedThreshold={0.1}
         showsVerticalScrollIndicator={false}
         columnWrapperStyle={{justifyContent: 'space-between'}}
       />

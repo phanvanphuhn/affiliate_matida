@@ -1,80 +1,79 @@
 import {Header} from '@component';
-import {SvgArrowLeft, SvgSearch} from '@images';
+import {SvgArrowLeft, SvgClose, SvgSearch} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import React, {useState} from 'react';
+import React, {useRef} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import PagerView from 'react-native-pager-view';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useEvent,
+  useHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
+import {IStateSearchFeed} from '../type';
+import useSearchFeed from '../useSearchFeed';
+import ListSearchFeed from './ListSearchFeed';
+const AnimatedPagerView = Animated.createAnimatedComponent(PagerView);
+function usePageScrollHandler(handlers: any, dependencies: any[]) {
+  const {context, doDependenciesDiffer} = useHandler(handlers, dependencies);
+  const subscribeForEvents = ['onPageScroll'];
+
+  return useEvent(
+    (event: any) => {
+      'worklet';
+      const {onPageScroll} = handlers;
+      if (onPageScroll && event.eventName.endsWith('onPageScroll')) {
+        onPageScroll(event, context);
+      }
+    },
+    subscribeForEvents,
+    doDependenciesDiffer,
+  );
+}
 
 const SearchFeed = () => {
   const {t} = useTranslation();
+  const pagerViewRef = useRef<PagerView>();
+  const offset = useSharedValue(0);
+  const {state, setState} = useSearchFeed();
 
-  const [searchValue, setSearchValue] = useState<string>('');
-
-  const dataRecent = [
-    {
-      id: 1,
-      avatar:
-        'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
-      name: 'abc',
-    },
-    {
-      id: 2,
-      avatar:
-        'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
-      name: 'def',
-    },
-  ];
-
-  const dataHotTopic = [
-    {
-      id: 1,
-      avatar:
-        'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
-      name: 'abc',
-    },
-    {
-      id: 2,
-      avatar:
-        'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
-      name: 'def',
-    },
-    {
-      id: 3,
-      avatar:
-        'https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg',
-      name: 'xyz',
-    },
-  ];
-
-  const renderDataRecent = ({item}: any) => {
-    return (
-      <View style={styles.wrapRecentItem}>
-        <FastImage
-          source={{uri: item.avatar}}
-          style={styles.imageRecentAvatar}
-        />
-
-        <Text style={styles.recentItemTitle} numberOfLines={1}>
-          {item.name}
-        </Text>
-      </View>
-    );
+  const onPageHandler = (event: NativeSyntheticEvent<any>) => {
+    const currentPage = event.nativeEvent.position;
+    setState({currentIndex: currentPage});
   };
-
-  const renderDataHotTopic = ({item}: any) => {
-    return (
-      <View style={styles.wrapHotTopicItem}>
-        <FastImage
-          source={{uri: item.avatar}}
-          style={styles.imageHotTopicAvatar}
-        />
-
-        <Text style={styles.recentItemTitle}>{item.name}</Text>
-      </View>
-    );
+  const handleNextTab = (index: number) => () => {
+    pagerViewRef.current?.setPage(index);
   };
-
+  const pageScrollHandler = usePageScrollHandler(
+    {
+      onPageScroll: (e: any) => {
+        'worklet';
+        offset.value = e.position;
+        console.log(e.offset, e.position);
+      },
+    },
+    [],
+  );
+  const colorStyle = useAnimatedStyle(() => {
+    return {
+      color: interpolateColor(
+        offset.value,
+        [0, 1, 2, 3],
+        [colors.textColor, colors.red50, colors.red50, colors.red50],
+      ),
+    };
+  }, []);
+  const onRemoveText = () => {
+    setState({keyword: ''});
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -89,30 +88,104 @@ const SearchFeed = () => {
           <SvgSearch color={'#CCD2E3'} />
         </View>
         <TextInput
-          onChangeText={text => setSearchValue(text)}
+          onChangeText={text => setState({keyword: text})}
           placeholder={t('feed.search') || ''}
           numberOfLines={1}
+          value={state.keyword}
           selectionColor={colors.black}
           style={{width: '80%'}}
+          autoFocus={true}
         />
+        {!!state.keyword && (
+          <TouchableOpacity
+            onPress={onRemoveText}
+            style={styles.wrapIconTextInput}>
+            <SvgClose width={18} height={18} />
+          </TouchableOpacity>
+        )}
       </View>
-
-      <View style={styles.wrapContainer}>
-        <Text style={[styles.title, {marginBottom: scaler(12)}]}>Recent</Text>
-
-        <FlatList data={dataRecent} renderItem={renderDataRecent} />
-      </View>
-
-      <View style={styles.wrapContainer}>
-        <Text style={[styles.title, {marginBottom: scaler(8)}]}>Hot Topic</Text>
-
-        <FlatList data={dataHotTopic} renderItem={renderDataHotTopic} />
-      </View>
+      {/* <View style={styles.containerButtonTab}>
+        <TouchableOpacity onPress={handleNextTab(0)} style={styles.buttonTab}>
+          <Text
+            style={
+              state.currentIndex == 0 ? styles.focused : styles.notFocused
+            }>
+            All {state.dataAll.length ? `(${state.dataAll.length})` : ''}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNextTab(1)} style={styles.buttonTab}>
+          <Text
+            style={
+              state.currentIndex == 1 ? styles.focused : styles.notFocused
+            }>
+            Video {state.dataVideo.length ? `(${state.dataVideo.length})` : ''}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNextTab(2)} style={styles.buttonTab}>
+          <Text
+            style={
+              state.currentIndex == 2 ? styles.focused : styles.notFocused
+            }>
+            Podcast{' '}
+            {state.dataPodcast.length ? `(${state.dataPodcast.length})` : ''}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNextTab(3)} style={styles.buttonTab}>
+          <Text
+            style={
+              state.currentIndex == 3 ? styles.focused : styles.notFocused
+            }>
+            Articles{' '}
+            {state.dataArticle.length ? `(${state.dataArticle.length})` : ''}
+          </Text>
+        </TouchableOpacity>
+      </View> */}
+      {/* <AnimatedPagerView
+        initialPage={state.currentIndex}
+        orientation={'horizontal'}
+        style={[styles.container]}
+        onPageSelected={onPageHandler}
+        onPageScroll={pageScrollHandler}
+        ref={pagerViewRef}>
+        {['dataAll', 'dataVideo', 'dataPodcast', 'dataArticle']?.map(
+          (item, index) => ( */}
+            <View style={styles.wrapContainer}>
+              <ListSearchFeed
+                data={state?.dataAll}
+                refreshing={state.refreshing}
+                onRefresh={() => {}}
+              />
+            </View>
+          {/* ),
+        )}
+      </AnimatedPagerView> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  focused: {
+    color: colors.red50,
+    fontWeight: '600',
+    fontSize: scaler(15),
+  },
+  notFocused: {
+    color: colors.textColor,
+    fontWeight: '400',
+    fontSize: scaler(15),
+  },
+  containerButtonTab: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: colors.gray,
+    borderBottomWidth: 1,
+  },
+  buttonTab: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: scaler(10),
+    paddingHorizontal: scaler(15),
+  },
   container: {
     flex: 1,
     backgroundColor: colors.white,
@@ -134,6 +207,8 @@ const styles = StyleSheet.create({
   wrapContainer: {
     paddingHorizontal: scaler(16),
     marginBottom: scaler(16),
+    marginTop: scaler(16),
+    flex: 1,
   },
   title: {
     color: colors.black,

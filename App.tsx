@@ -42,12 +42,13 @@ initI18n();
 
 import {StripeProvider} from '@stripe/stripe-react-native';
 import CodePush from 'react-native-code-push';
+import {CheckAppVersion} from '@component';
 
 const options = {
   // updateDialog: true,
   installMode: CodePush.InstallMode.IMMEDIATE,
   checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
-}
+};
 
 const setupPlayer = async (
   options: Parameters<typeof TrackPlayer.setupPlayer>[0],
@@ -280,7 +281,7 @@ const App = () => {
                 NavigationUtils.setTopLevelNavigator(navigatorRef)
               }
             />
-            <CheckAppVersion/>
+            <CheckAppVersion />
           </PersistGate>
         </Provider>
       </StripeProvider>

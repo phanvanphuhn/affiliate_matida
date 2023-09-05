@@ -1,12 +1,13 @@
 import {ic_back, ic_search} from '@images';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {heightScreen} from '@stylesCommon';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   Image,
   NativeSyntheticEvent,
   Platform,
+  RefreshControl,
   StyleSheet,
   View,
 } from 'react-native';
@@ -14,7 +15,7 @@ import {Drawer} from 'react-native-drawer-layout';
 import HeaderFeed from '../../../component/HeaderFeed';
 import {IDataListFeed} from '../Feed/type';
 import {SwiperFlatList} from './SwiperFlatlist/SwiperFlatList';
-import Container from './components/Container';
+import Container, {useVideo, VideoContext} from './components/Container';
 import DailyQuizFeed from './components/DailyQuizFeed';
 import DrawerFeed from './components/DrawerFeed';
 import FooterFeed from './components/FooterFeed';
@@ -23,69 +24,18 @@ import ItemPurchase from './components/ItemPurchase';
 import ItemVideo from './components/ItemVideo';
 import PackageQuizFeed from './components/PackageQuizFeed';
 import useDetailFeed from './useDetailFeed';
-import PagerView from 'react-native-pager-view';
+import Swiper from './SwiperFlatlist/Swiper';
+import ListFeedDetail from './components/ListFeedDetail';
+import {goBack} from '@navigation';
+
 interface DetailFeedProps {}
-const previewCount = 3;
-//to center items
-//the screen will show `previewCount` + 1/4 firstItemWidth + 1/4 lastItemWidth
-//so for example if previewCount = 3
-//itemWidth will be =>>> itemWidth = screenWidth / (3 + 1/4 + 1/4)
-const itemWidth = heightScreen / (previewCount + 0.5);
-//to center items you start from 3/4 firstItemWidth
-const startScroll = (itemWidth * 3) / 4;
 
 const DetailFeed = (props: DetailFeedProps) => {
-  const {state, onPageSelected, handleLoadMore, handleLoadLess} =
-    useDetailFeed();
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigation<any>();
-  const pagerViewRef = useRef<SwiperFlatList>();
-  const isFocused = useIsFocused();
-  const renderItem = (item: IDataListFeed, index: number) => {
-    switch (item.content_type) {
-      case 'video':
-      case 'podcast':
-        return (
-          <ItemVideo
-            item={item}
-            isPause={(open && state.currentIndex == index) || !isFocused}
-            isFocused={state.currentIndex == index}
-            isAudio={item.content_type == 'podcast'}
-          />
-        );
-      case 'daily_quizz':
-        return (
-          <DailyQuizFeed item={item} isFocused={state.currentIndex == index} />
-        );
-      case 'package_quizz':
-        return (
-          <PackageQuizFeed
-            item={item}
-            isFocused={state.currentIndex == index}
-          />
-        );
-      case 'article':
-        return (
-          <ItemArticle item={item} isFocused={state.currentIndex == index} />
-        );
-      default:
-        return null;
-    }
-  };
 
-  const onPageHandler = (event: NativeSyntheticEvent<any>) => {
-    const currentPage = event.nativeEvent.position;
-    onPageSelected(currentPage);
-  };
-  const onPageHandlerFlatlist = (item: {index: number; prevIndex: number}) => {
-    console.log('=>(index.tsx:81) item', item);
-    onPageSelected(item.index);
-  };
   const renderDrawer = () => {
     return <DrawerFeed />;
-  };
-  const renderPurchase = (item: IDataListFeed, index: number) => {
-    return <ItemPurchase item={item} />;
   };
   const onPressSearch = () => {
     navigation.navigate(ROUTE_NAME.SEARCH_FEED);
@@ -124,51 +74,15 @@ const DetailFeed = (props: DetailFeedProps) => {
       <Container>
         <HeaderFeed
           IconLeft={<Image source={ic_back} style={styles.iconHeader} />}
-          // onPressRight={onPressSearch}
+          onPressRight={onPressSearch}
           ComponentRight={
             <Image source={ic_search} style={styles.iconHeader} />
           }
         />
-        {!!state?.data.length && (
-          <PagerView
-            initialPage={state.currentIndex}
-            orientation={'vertical'}
-            style={[styles.pagerView]}
-            onPageSelected={onPageHandler}
-            ref={pagerViewRef}>
-            {state?.data?.map((item, index) => (
-              <View
-                style={[styles.pagerView]}
-                key={item?.content_type + item?.contentid}>
-                {renderItem(item, index)}
-              </View>
-            ))}
-          </PagerView>
-        )}
-        {/*<SwiperFlatList*/}
-        {/*  index={state.currentIndex}*/}
-        {/*  disableIntervalMomentum={true}*/}
-        {/*  decelerationRate={0}*/}
-        {/*  disableScrollViewPanResponder={true}*/}
-        {/*  data={state.data}*/}
-        {/*  onChangeIndex={onPageHandlerFlatlist}*/}
-        {/*  vertical={true}*/}
-        {/*  onEndReachedThreshold={1}*/}
-        {/*  onEndReached={handleLoadMore}*/}
-        {/*  getItemLayout={_getItemLayout}*/}
-        {/*  initialNumToRender={1}*/}
-        {/*  windowSize={10}*/}
-        {/*  removeClippedSubviews*/}
-        {/*  keyExtractor={item => item?.content_type + item?.contentid}*/}
-        {/*  renderItem={({item, index}) => {*/}
-        {/*    return (*/}
-        {/*      <View style={[styles.pagerView]}>{renderItem(item, index)}</View>*/}
-        {/*    );*/}
-        {/*  }}*/}
-        {/*  pagingEnabled={true}*/}
-        {/*/>*/}
-
-        <View style={{height: 65, zIndex: 999}}>{<FooterFeed />}</View>
+        <ListFeedDetail open={open} />
+        <View style={{height: 65, zIndex: 999}}>
+          <FooterFeed />
+        </View>
       </Container>
     </Drawer>
   );
@@ -184,11 +98,9 @@ const styles = StyleSheet.create({
   },
   pagerView: {
     flex: 1,
-    position: 'relative',
-
-    height: Platform.select({
-      ios: heightScreen - 65,
-      android: heightScreen - 25,
-    }),
+    // height: Platform.select({
+    //   ios: heightScreen - 65,
+    //   android: heightScreen - 25,
+    // }),
   },
 });

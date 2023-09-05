@@ -86,15 +86,9 @@ export const SwiperFlatList = React.forwardRef(
         index: number;
         prevIndex: number;
       }) => {
-        console.log('=>(SwiperFlatList.tsx:95) _index', _index);
-        console.log(
-          '=>(SwiperFlatList.tsx:90) _index!==_prevIndex',
-          _index !== _prevIndex,
-        );
-        console.log('=>(SwiperFlatList.tsx:94) _prevIndex', _prevIndex);
-        if (_index !== _prevIndex) {
-          onChangeIndex?.({index: _index, prevIndex: _prevIndex});
-        }
+        // if (_index !== _prevIndex) {
+        onChangeIndex?.({index: _index, prevIndex: _prevIndex});
+        // }
       },
       [onChangeIndex],
     );
@@ -138,10 +132,6 @@ export const SwiperFlatList = React.forwardRef(
         index: currentIndexes.index,
         prevIndex: currentIndexes.prevIndex,
       });
-      console.log(
-        '=>(SwiperFlatList.tsx:142) currentIndexes.index',
-        currentIndexes.index,
-      );
     }, [currentIndexes.index, currentIndexes.prevIndex]);
 
     React.useImperativeHandle(ref, () => ({

@@ -25,6 +25,7 @@ const FooterFeed = (props: FooterFeedProps) => {
       setState({
         is_liked: res?.data?.is_liked,
         totalComment: res?.data?.total_comments,
+        questions: res?.data?.questions || [],
       });
     }
   };
@@ -101,7 +102,7 @@ const FooterFeed = (props: FooterFeedProps) => {
   );
 };
 
-export default FooterFeed;
+export default React.memo(FooterFeed);
 
 const styles = StyleSheet.create({
   buttonFooter: {

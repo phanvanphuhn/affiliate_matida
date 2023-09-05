@@ -3,16 +3,25 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.backgroundDefault,
     // paddingBottom: scaler(240),
     padding: scaler(8),
     flex: 1,
   },
   itemContainer: {
-    flex: 0.5,
-    padding: scaler(8),
-    marginBottom: scaler(4),
+    flex: 0.48,
+    marginBottom: scaler(12),
     borderRadius: scaler(8),
+    backgroundColor: colors.backgroundFeed,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   image: {
     height: scaler(220),
@@ -58,10 +67,15 @@ const styles = StyleSheet.create({
     fontSize: scaler(12),
     ...stylesCommon.fontWeight500,
     marginTop: scaler(8),
+    paddingLeft: scaler(8),
+    paddingRight: scaler(8),
   },
   wrapAvatarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingLeft: scaler(8),
+    paddingRight: scaler(8),
+    paddingBottom: scaler(4),
   },
   subTitle: {
     color: colors.textSmallColor,

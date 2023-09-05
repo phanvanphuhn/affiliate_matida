@@ -1,36 +1,33 @@
-import {ViewTextSeeMore} from '@component';
-import {IconBackgroundImageHome, imageNameAppPink} from '@images';
+import {EPreRoute} from '@constant';
+import {SvgLogoDailyAffirmation} from '@images';
 import {navigate} from '@navigation';
-import {updateDataHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {GlobalService, answerDailyQuiz} from '@services';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {event, trackingAppEvent} from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {showMessage} from 'react-native-flash-message';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {IAnswers, IDataListFeed} from '../../Feed/type';
-import {useVideo} from './Container';
+import {
+  IAnswersPackage,
+  IDataListFeed,
+  IPackageQuizzList,
+} from '../../Feed/type';
+import {ListPackage, useVideo} from './Container';
+import ResultPackageQuiz from './ResultPackageQuiz';
+import {produce} from 'immer';
 
 interface PackageQuizFeedProps {
   item: IDataListFeed;
   isFocused: boolean;
 }
+
+const ListChar = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 const PackageQuizFeed = (props: PackageQuizFeedProps) => {
-  console.log('PackageQuizFeed: ', props);
-  const {setState} = useVideo();
-  const [answer, setAnswer] = useState<IAnswers>();
+  const {state, setState} = useVideo();
+  const [answer, setAnswer] = useState<IAnswersPackage>();
   const [isVisible, setIsvisible] = useState<boolean>(false);
-  const lang = useSelector((state: any) => state.auth.lang);
-  const data = useSelector((state: any) => state?.home?.data?.dailyQuizz);
+  const lang = useSelector((_state: any) => _state.auth.lang);
   const dispatch = useDispatch();
   const {t} = useTranslation();
 
@@ -41,153 +38,198 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
     }
     return () => {};
   }, [props.isFocused]);
-  const onAnswerQuiz = async (e: IAnswers) => {
-    try {
-      setAnswer(e);
-      let params = {
-        question_id: props.item.id,
-        answer_id: e.id,
-      };
-      GlobalService.showLoading();
-      const res = await answerDailyQuiz(params);
-      setIsvisible(true);
-      dispatch(
-        updateDataHome({
-          ...data,
-          dailyQuizz: {
-            ...data?.dailyQuizz,
-            ...res.data,
-          },
-        }),
-      );
-      GlobalService.hideLoading();
-    } catch (error) {
-      showMessage({message: error?.response?.data?.message, type: 'danger'});
-      GlobalService.hideLoading();
+  const onDoMomPrepTest = (question: IPackageQuizzList) => {
+    if (+props.item?.maxScore === +props.item?.total_questions) {
+      trackingAppEvent(event.MOM_TEST.START, {content: props.item?.id});
+      navigate(ROUTE_NAME.TEST_RESULT, {
+        id: props.item?.id,
+        redoTest: () => {},
+        preRoute: EPreRoute.PERIODIC,
+      });
+    } else {
+      trackingAppEvent(event.MOM_TEST.START, {content: props.item});
+      navigate(ROUTE_NAME.TEST_DETAIL, {
+        quiz: props.item,
+        next_question: 1,
+        answer: {
+          question_id: +question?.id,
+          answer_id: +(answer?.id || ''),
+        },
+        onComplete: (result: any) => {
+          if (result.maxScore <= props.item.maxScore) {
+            return;
+          }
+          const newItem = produce(state.data, (draft: IDataListFeed[]) => {
+            draft[state.currentIndex] = {
+              ...props.item,
+              maxScore: result.maxScore,
+            };
+          });
+          const newPackage = produce(
+            state?.listPackage,
+            (draft: ListPackage[]) => {
+              const todo = draft.find(
+                el =>
+                  el.id === props.item?.id &&
+                  props.item?.content_type == el.content_type,
+              );
+              if (todo) {
+                todo.maxScore = result.maxScore;
+              } else {
+                draft.push({
+                  id: props.item?.contentid,
+                  content_type: props.item?.content_type,
+                  maxScore: result.maxScore,
+                });
+              }
+            },
+          );
+          console.log('=>(PackageQuizFeed.tsx:103) newPackage', newPackage);
+          setState({data: newItem, listPackage: newPackage});
+        },
+      });
     }
   };
-
-  const renderViewResult = () => {
-    // if (data?.percent_diff_answer || data?.percent_same_answer) {
-    //   return <ResultQuizFeed />;
-    // } else {
+  const renderViewResult = (item: IPackageQuizzList) => {
     return (
-      <View style={styles.viewResult}>
-        <Text
-          style={{
-            ...stylesCommon.fontPlus600,
-            fontSize: scaler(24),
-            color: '#FFFFFF',
-            textAlign: 'center',
-            marginBottom: scaler(24),
-          }}>
-          {t('feed.todayQuestion')}
-        </Text>
-        <View style={styles.viewTitle}>
-          <ViewTextSeeMore
-            heightMax={110}
-            text={lang === 1 ? props?.item?.name_en : props?.item?.name_vi}
-            style={styles.txtTitleContent}
-            numberOfLines={3}
-          />
+      <View style={styles.containerResult}>
+        <View style={styles.viewResult}>
+          <View style={styles.viewQuestion}>
+            <SvgLogoDailyAffirmation
+              color={colors.white}
+              style={{
+                position: 'absolute',
+                top: scaler(15),
+                right: -scaler(60),
+              }}
+            />
+            <View style={styles.viewIndexQuestion}>
+              {props?.item?.total_questions ? (
+                <Text style={styles.textIndexQuestion}>
+                  {1}/{props?.item?.total_questions}
+                </Text>
+              ) : null}
+            </View>
+            <Text style={styles.textQuestion}>{item?.question}</Text>
+          </View>
+          {item.answers?.map((e, i) => {
+            return renderItemAnswer(e, i);
+          })}
         </View>
-        <View>
-          <FastImage
-            source={
-              props?.item?.image ? {uri: props?.item?.image} : imageNameAppPink
-            }
-            style={styles.imageAvatar}
-          />
-        </View>
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={() => navigate(ROUTE_NAME.MOM_PREP_TEST)}>
-          <Text style={styles.txtBottom}>{t('feed.enterTest')}</Text>
-        </TouchableOpacity>
-        {/* <View style={{flexDirection: 'row'}}>
-            {!!props.item?.answers?.length &&
-              props.item?.answers?.map((answer, i) => {
-                return renderItemAnswer(answer, i);
-              })}
-          </View> */}
+        {!!answer && (
+          <TouchableOpacity
+            style={styles.buttonTest}
+            onPress={() => onDoMomPrepTest(item)}>
+            <Text style={styles.txtBottom}>{t('feed.enterTest')}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
-    // }
   };
 
-  const renderItemAnswer = (item: IAnswers, index: number) => {
+  const renderItemAnswer = (item: IAnswersPackage, index: number) => {
     return (
       <TouchableOpacity
         key={item?.id?.toString()}
         activeOpacity={0.9}
         style={[
-          // styles.buttonAnswer,
-          {
-            backgroundColor: '#FFFFFF',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: scaler(8),
-            padding: scaler(12),
-            width: (widthScreen - scaler(24) * 4) / 2 - scaler(8),
-          },
-          {
-            marginRight: index === 0 ? scaler(8) : 0,
-            marginLeft: index === 0 ? 0 : scaler(8),
-          },
+          styles.buttonAnswer,
+          item.id == answer?.id ? styles.buttonSelected : null,
         ]}
         onPress={() => {
-          onAnswerQuiz(item);
+          setAnswer(item);
         }}>
-        <Text style={styles.txtTrueFalse}>
-          {lang === 1 ? item?.answer_en : item?.answer_vi}
+        <Text
+          style={[
+            styles.txtTrueFalse,
+            item.id == answer?.id ? styles.txtSelected : null,
+          ]}>
+          {ListChar[index]}. {item?.answer}
         </Text>
       </TouchableOpacity>
     );
   };
 
+  if (!props.isFocused) {
+    return <View style={{flex: 1, backgroundColor: colors.white}} />;
+  }
   return (
-    <View
-      style={{
-        backgroundColor: colors.white,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      {data ? (
-        <View style={styles.container}>
-          <ImageBackground
-            source={IconBackgroundImageHome}
-            style={styles.viewContent}>
-            {renderViewResult()}
-          </ImageBackground>
-        </View>
-      ) : null}
+    <View style={styles.container}>
+      {+props.item?.maxScore != +props.item?.total_questions ? (
+        !!state?.questions?.length && (
+          <View style={styles.viewContent}>
+            {renderViewResult(state?.questions?.[0])}
+          </View>
+        )
+      ) : (
+        <ResultPackageQuiz item={props.item} />
+      )}
     </View>
   );
 };
 
-export default PackageQuizFeed;
+export default React.memo(PackageQuizFeed);
 
 const styles = StyleSheet.create({
+  viewQuestion: {
+    padding: scaler(24),
+    backgroundColor: colors.purple,
+    borderRadius: scaler(16),
+    alignItems: 'flex-start',
+    marginBottom: scaler(25),
+  },
+  viewIndexQuestion: {
+    borderRadius: scaler(200),
+    backgroundColor: colors.purple100,
+    // width: scaler(46),
+    height: scaler(46),
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: scaler(6),
+  },
+  textIndexQuestion: {
+    fontSize: scaler(16),
+    ...stylesCommon.fontWeight600,
+    color: colors.white,
+  },
+  textQuestion: {
+    fontSize: scaler(24),
+    ...stylesCommon.fontPlus600,
+    color: colors.white,
+    marginTop: scaler(32),
+  },
+  txtQuestion: {
+    ...stylesCommon.fontWeight400,
+    fontSize: scaler(20),
+    color: colors.textColor,
+    marginBottom: scaler(10),
+  },
   container: {
-    paddingHorizontal: scaler(24),
-    marginBottom: scaler(40),
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.gray250,
   },
   viewContent: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#654AC9',
-    borderRadius: scaler(16),
-    paddingVertical: scaler(24),
+    paddingTop: 40,
+    paddingHorizontal: scaler(20),
   },
   imageBackground: {
     width: scaler(134),
     height: scaler(249),
   },
+  containerResult: {
+    justifyContent: 'space-between',
+    flex: 1,
+    paddingVertical: scaler(10),
+    paddingTop: '18%',
+  },
   viewResult: {
-    paddingHorizontal: scaler(24),
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderRadius: scaler(16),
+    paddingTop: scaler(16),
+    paddingBottom: scaler(16),
   },
   viewTitle: {
     padding: scaler(16),
@@ -200,7 +242,7 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontPlus600,
     fontSize: scaler(18),
     lineHeight: scaler(33),
-    color: '#FFFFFF',
+    color: colors.textColor,
     textAlign: 'center',
   },
   viewRow: {
@@ -218,14 +260,14 @@ const styles = StyleSheet.create({
     height: scaler(45),
   },
   buttonAnswer: {
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colors.white,
     borderRadius: scaler(8),
-    flex: 1,
     padding: scaler(12),
-    // height: '100%',
+    borderColor: colors.gray,
+    borderWidth: 1,
+    marginBottom: scaler(10),
   },
+  buttonSelected: {borderColor: colors.purple},
   iconIconResult: {
     width: scaler(64),
     height: scaler(64),
@@ -257,21 +299,30 @@ const styles = StyleSheet.create({
   },
   txtBottom: {
     fontSize: scaler(14),
-    color: '#FFFFFF',
+    color: colors.white,
     ...stylesCommon.fontWeight600,
     lineHeight: scaler(21),
-    marginTop: scaler(43),
-    textDecorationLine: 'underline',
+  },
+  buttonTest: {
+    backgroundColor: colors.red50,
+    borderRadius: scaler(8),
+    paddingVertical: scaler(10),
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: scaler(10),
   },
   txtTrueFalse: {
-    fontSize: scaler(14),
+    fontSize: scaler(16),
     color: colors.textColor,
-    ...stylesCommon.fontWeight600,
-    textAlign: 'center',
+    lineHeight: scaler(24),
+  },
+  txtSelected: {
+    color: colors.purple,
   },
   imageAvatar: {
     marginTop: scaler(6),
-    width: widthScreen - scaler(128),
-    height: scaler(150),
+    width: '100%',
+    height: widthScreen - scaler(150),
+    borderRadius: scaler(32),
   },
 });

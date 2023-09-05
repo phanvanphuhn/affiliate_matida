@@ -17,7 +17,7 @@ export interface IDataListFeed
   is_payment: string;
   lang: 'vi';
   price_vn: number;
-  id: number;
+  id: string;
   rank: number;
   image?: string;
   trimester: string;
@@ -36,6 +36,7 @@ export interface IPodcastFeed {
   speaker_bio: string;
   speaker_name: string;
   total_views: number;
+  durationsString: string;
   url?: string;
 }
 export interface IDailyQuizz {
@@ -46,6 +47,13 @@ export interface IDailyQuizz {
   question_en: string;
   question_vi: string;
   type: number;
+}
+export interface IPackageQuizzList {
+  answers: IAnswersPackage[];
+  id: number;
+  is_answered: boolean;
+  is_correct: boolean;
+  question: string;
 }
 export interface IArticleFeed {
   content: string;
@@ -61,6 +69,8 @@ export interface IVideoFeed {
   expert_image?: string;
   expert_name?: string;
   thumbnail?: string;
+  thumbnails?: string[];
+  durationsString: string;
   views: number;
 }
 export interface IPackageQuizz {
@@ -96,4 +106,25 @@ export interface IAnswers {
   is_correct: boolean;
   question_id: number;
   updated_at: string;
+}
+export interface IAnswersPackage {
+  answer: string;
+  id: number;
+  is_correct: boolean;
+  selected: boolean;
+}
+
+export interface IStateSearchFeed {
+  dataAll: IDataListFeed[];
+  dataVideo: IDataListFeed[];
+  dataPodcast: IDataListFeed[];
+  dataArticle: IDataListFeed[];
+  currentIndex: number;
+  page: number;
+  size: number;
+  total: number;
+  keyword?: string;
+  refreshing: boolean;
+  isLoading: boolean;
+  isLoadMore?: boolean;
 }
