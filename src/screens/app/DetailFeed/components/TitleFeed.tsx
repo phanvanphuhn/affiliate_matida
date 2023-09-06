@@ -80,6 +80,7 @@ const TitleFeed = (props: TitleFeedProps) => {
           <ScrollView
             style={{maxHeight: '100%'}}
             showsVerticalScrollIndicator={false}
+            nestedScrollEnabled={true}
             scrollEnabled={textShown}>
             <RenderHtml
               contentWidth={100}

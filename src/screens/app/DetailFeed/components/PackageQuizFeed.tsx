@@ -84,7 +84,6 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
               }
             },
           );
-          console.log('=>(PackageQuizFeed.tsx:103) newPackage', newPackage);
           setState({data: newItem, listPackage: newPackage});
         },
       });
