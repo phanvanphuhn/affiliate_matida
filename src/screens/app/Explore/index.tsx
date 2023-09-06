@@ -5,7 +5,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {changePageExplore} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -182,7 +182,7 @@ const Explore = () => {
 
   const handleCallBack = () => {
     pageRef.current = 1;
-    trackingAppEvent(event.EXPLORE.CLICK_EXPLORE, {});
+    trackingAppEvent(event.EXPLORE.CLICK_EXPLORE, {}, eventType.AFF_FLYER);
   };
 
   const getLoadingPage = () => {

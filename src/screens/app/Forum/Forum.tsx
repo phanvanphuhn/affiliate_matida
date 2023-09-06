@@ -2,7 +2,7 @@ import {AppTabBar, FLoatingAIButton} from '@component';
 import {getListTabForum} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, View, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,7 +20,7 @@ export const Forum = () => {
   const [tab, setTab] = useState(0);
 
   useEffect(() => {
-    trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {});
+    trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {}, eventType.AFF_FLYER);
   }, []);
 
   useUXCam(ROUTE_NAME.TAB_COMMUNITY);

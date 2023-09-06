@@ -28,7 +28,7 @@ import {
   Option,
   Page,
 } from '@redux';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import {useTranslation} from 'react-i18next';
 
 const width = Dimensions.get('window').width;
@@ -80,19 +80,19 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const trackingTab = (value: any) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
-        trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {});
+        trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_FEED:
-        trackingAppEvent(event.TAB.CLICK_TAB_FEED, {});
+        trackingAppEvent(event.TAB.CLICK_TAB_FEED, {},eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_HOME:
-        trackingAppEvent(event.TAB.CLICK_TAB_HOME, {});
+        trackingAppEvent(event.TAB.CLICK_TAB_HOME, {},eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_COMMUNITY:
-        trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {});
+        trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {},eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_LIVETALK:
-        trackingAppEvent(event.TAB.CLICK_TAB_LIVE_TALKS, {});
+        trackingAppEvent(event.TAB.CLICK_TAB_LIVE_TALKS, {},eventType.AFF_FLYER);
         break;
     }
   };

@@ -2,7 +2,7 @@ import {EPreRoute} from '@constant';
 import {navigate} from '@navigation';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import React, {useCallback, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, ListRenderItem, View} from 'react-native';
@@ -35,14 +35,14 @@ const ListFeed = (props: any) => {
     console.log('=>(ListFeed.tsx:47) item', item);
     if (item?.content_type == 'package_quizz') {
       if (+item?.maxScore === +item?.total_questions) {
-        trackingAppEvent(event.MOM_TEST.START, {content: item?.id});
+        trackingAppEvent(event.MOM_TEST.START, {content: item?.id}, eventType.MIX_PANEL);
         navigate(ROUTE_NAME.TEST_RESULT, {
           id: item?.id,
           redoTest: () => {},
           preRoute: EPreRoute.PERIODIC,
         });
       } else {
-        trackingAppEvent(event.MOM_TEST.START, {content: item});
+        trackingAppEvent(event.MOM_TEST.START, {content: item}, eventType.MIX_PANEL);
         navigate(ROUTE_NAME.TEST_DETAIL, {
           quiz: item,
           onComplete: (result: any) => {

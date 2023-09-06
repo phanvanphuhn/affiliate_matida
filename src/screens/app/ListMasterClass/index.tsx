@@ -16,7 +16,7 @@ import {Item} from './component/Item';
 import {getListClass} from '@services';
 import {useTranslation} from 'react-i18next';
 import {useFocusEffect} from '@react-navigation/native';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {ROUTE_NAME} from '@routeName';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {goBack} from '@navigation';
@@ -26,7 +26,7 @@ const ListMasterClass = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.MASTER_CLASS, {});
+      trackingAppEvent(event.SCREEN.MASTER_CLASS, {}, eventType.AFF_FLYER);
     }, []),
   );
 

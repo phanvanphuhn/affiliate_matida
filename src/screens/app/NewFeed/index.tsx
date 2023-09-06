@@ -17,7 +17,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {AllPostComponent} from './component/AllPostComponent';
 import {MyNewFeed} from '../MyNewFeed';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 
 const NewFeed = () => {
   const {t} = useTranslation();
@@ -29,7 +29,7 @@ const NewFeed = () => {
   useUXCam(ROUTE_NAME.NEW_FEED);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.NEW_FEED, {});
+    trackingAppEvent(event.SCREEN.NEW_FEED, {}, eventType.AFF_FLYER);
   }, []);
 
   const listButton = [

@@ -2,7 +2,7 @@ import {AppCameraModal2, AppImage, HeaderDetailChat} from '@component';
 import {iconClose, iconSend, iconUploadImageChat, SvgArrowLeft} from '@images';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useCallback, useEffect} from 'react';
 import {Image, Platform, TouchableOpacity, View} from 'react-native';
 import {Actions, GiftedChat, Send} from 'react-native-gifted-chat';
@@ -39,7 +39,7 @@ const DetailChat = (props: any) => {
   } = useFunction(props);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.DETAIL_CHAT, {});
+    trackingAppEvent(event.SCREEN.DETAIL_CHAT, {}, eventType.AFF_FLYER);
   }, []);
 
   useUXCam(ROUTE_NAME.DETAIL_CHAT);

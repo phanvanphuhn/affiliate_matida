@@ -18,7 +18,7 @@ import {listUserBlockApi} from '@services';
 import {showMessage} from 'react-native-flash-message';
 import {useFocusEffect} from '@react-navigation/native';
 import {GlobalService, blockUserApi} from '@services';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
 
 const BlockUser = () => {
@@ -36,7 +36,7 @@ const BlockUser = () => {
   useFocusEffect(
     React.useCallback(() => {
       getDataRefresh();
-      trackingAppEvent(event.SCREEN.LIST_BLOCKED_USER, {});
+      trackingAppEvent(event.SCREEN.LIST_BLOCKED_USER, {}, eventType.AFF_FLYER);
       return () => setPage(1);
     }, []),
   );

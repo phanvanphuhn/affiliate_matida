@@ -60,6 +60,7 @@ import {
   APP_SIGN_ZEGO_KEY,
   handleDeepLink,
   useUXCam,
+  eventType,
 } from '@util';
 import {t} from 'i18next';
 import {ListPostComponent} from './ListPostComponent';
@@ -138,7 +139,8 @@ const Home = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.HOME, {});
+      trackingAppEvent(event.SCREEN.HOME, {}, eventType.AFF_FLYER);
+      trackingAppEvent(event.SYSTEM.START, {}, eventType.MIX_PANEL, user);
       if (Platform.OS === 'android') {
       }
       firstRef.current = false;

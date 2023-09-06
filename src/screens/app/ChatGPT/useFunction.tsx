@@ -4,7 +4,7 @@ import {
   saveSuggestMessageId,
 } from '@redux';
 import {GlobalService, sendMessageGPTApi, uploadImage} from '@services';
-import {event, hasWhiteSpace, trackingAppEvent} from '@util';
+import {event, eventType, hasWhiteSpace, trackingAppEvent} from '@util';
 import moment from 'moment';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Platform} from 'react-native';
@@ -108,7 +108,7 @@ export const useFunction = (props: any) => {
       updated_at: moment(),
       user_id: user_id,
     };
-    trackingAppEvent(event.TIDA.TIDA_ASK, {content: dataAdd});
+    trackingAppEvent(event.TIDA.TIDA_ASK, {content: dataAdd}, eventType.MIX_PANEL);
     dispatch(addMessageToListChatGPT([{...dataAdd}]));
     try {
       setShowViewSelect(true);

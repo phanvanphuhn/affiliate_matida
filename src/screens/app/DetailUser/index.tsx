@@ -24,7 +24,7 @@ import {ViewRoomCall} from './component/ViewRoomCall';
 import {useNavigation} from '@react-navigation/native';
 import {getDetailPost, getListCommentAction} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {useDispatch, useSelector} from 'react-redux';
 import {ListPost} from './component/ListPost';
 
@@ -121,7 +121,7 @@ const DetaiUser = (props: any) => {
   };
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.DETAIL_USER, {});
+    trackingAppEvent(event.SCREEN.DETAIL_USER, {}, eventType.AFF_FLYER);
     getData();
     getLiveTalk();
     getLiveExpert();

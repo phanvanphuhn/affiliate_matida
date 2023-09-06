@@ -71,7 +71,7 @@ const DetailVideo = (props: any) => {
   useEffect(() => {
     getData();
     postAddView();
-    trackingAppEvent(event.SCREEN.DETAIL_VIDEO, {});
+    trackingAppEvent(event.SCREEN.DETAIL_VIDEO, {}, eventType.AFF_FLYER);
     return () => {
       setPaused(true);
     };

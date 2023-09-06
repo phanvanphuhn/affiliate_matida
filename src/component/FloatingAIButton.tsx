@@ -2,7 +2,7 @@ import {floating_button} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {scaler} from '@stylesCommon';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 
@@ -10,7 +10,7 @@ export const FLoatingAIButton = () => {
   const navigation = useNavigation<any>();
 
   const onNnavigateChatAPI = () => {
-    trackingAppEvent(event.TIDA.TIDA_OPEN, {});
+    trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
     navigation.navigate(ROUTE_NAME.CHAT_GPT);
   };
   return (

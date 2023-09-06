@@ -5,7 +5,7 @@ import {changeOption, getListUserChat} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {getListUserApi} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, View} from 'react-native';
@@ -23,7 +23,7 @@ export const ListMessage = () => {
 
   useEffect(() => {
     dispatch(changeOption(EChatOption.CHAT));
-    trackingAppEvent(event.SCREEN.LIST_MESSAGE, {});
+    trackingAppEvent(event.SCREEN.LIST_MESSAGE, {}, eventType.AFF_FLYER);
     getDataUser();
     return () => {
       dispatch(changeOption(EChatOption.CHAT));

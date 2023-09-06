@@ -16,7 +16,7 @@ import {
   View,
 } from 'react-native';
 import {ItemNotification, ViewButtonHeader} from './components';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
 
 export const NotificationList = () => {
@@ -40,7 +40,7 @@ export const NotificationList = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.NOTIFICATION_LIST, {});
+      trackingAppEvent(event.SCREEN.NOTIFICATION_LIST, {}, eventType.AFF_FLYER);
       refPageAll.current = 1;
       refPageUnread.current = 1;
       getData();

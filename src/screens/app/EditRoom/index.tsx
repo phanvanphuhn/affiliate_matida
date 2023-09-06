@@ -15,7 +15,7 @@ import {SvgArrowLeft} from '@images';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {GlobalService, putUpdateRoom} from '@services';
 import {colors, heightScreen, scaler} from '@stylesCommon';
-import {useUXCam, validateForm, validateFormVN} from '@util';
+import {eventType, useUXCam, validateForm, validateFormVN} from '@util';
 import {Formik} from 'formik';
 import moment from 'moment';
 import React, {useState, useEffect} from 'react';
@@ -47,7 +47,7 @@ export const EditRoom = () => {
   useUXCam(ROUTE_NAME.EDIT_ROOM);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.EDIT_ROOM, {});
+    trackingAppEvent(event.SCREEN.EDIT_ROOM, {}, eventType.AFF_FLYER);
   }, []);
 
   const [typeRoom, setTypeRoom] = useState<any>(
