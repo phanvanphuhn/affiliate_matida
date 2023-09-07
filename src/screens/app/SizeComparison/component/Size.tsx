@@ -59,20 +59,20 @@ const Size = React.memo((props: any) => {
           </View>
         );
       }}
-      ListHeaderComponent={() => {
-        return (
-          <View style={styles.containerSwipe}>
-            <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
-              {data?.image?.length > 0 &&
-                data?.image?.map((item: any, index: any) => {
-                  return (
-                    <AppImage uri={item} style={styles.image} key={index} />
-                  );
-                })}
-            </Swiper>
-          </View>
-        );
-      }}
+      // ListHeaderComponent={() => {
+      //   return (
+      //     <View style={styles.containerSwipe}>
+      //       <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
+      //         {data?.image?.length > 0 &&
+      //           data?.image?.map((item: any, index: any) => {
+      //             return (
+      //               <AppImage uri={item} style={styles.image} key={index} />
+      //             );
+      //           })}
+      //       </Swiper>
+      //     </View>
+      //   );
+      // }}
     />
   );
 });

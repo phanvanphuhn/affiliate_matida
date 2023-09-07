@@ -10,6 +10,7 @@ import {
   answerDailyQuiz,
   getSizeComparison,
   getValueTimeLine,
+  getCalendarCheckup,
 } from '@services';
 import {colors} from '@stylesCommon';
 import {event, trackingAppEvent, useUXCam} from '@util';
@@ -29,6 +30,7 @@ import {ViewSelectType} from './component/ViewSelectType';
 import {Timeline} from './component/TImeLine';
 import {CheckupCalendar} from './component/CheckupCalendar';
 import {RootState} from 'src/redux/rootReducer';
+import reactotron from 'reactotron-react-native';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -71,6 +73,8 @@ const SizeComparison = () => {
       setListImage(image ?? []);
       const resTimeline = await getValueTimeLine(value);
       setDataTimeline(resTimeline?.data?.data);
+      const calendarCheckup = await getCalendarCheckup(weekSelected);
+      reactotron.log?.('CALENDAR CHECKUP', calendarCheckup);
     } catch (error) {
     } finally {
       GlobalService.hideLoading();
@@ -106,26 +110,26 @@ const SizeComparison = () => {
       case 1:
         return (
           <>
-            {/* <Embryo
+            <Embryo
               data={data?.baby}
               week={selectedWeek}
               listImage={listImage ?? []}
-            /> */}
+            />
             <Size data={data?.baby_size} week={selectedWeek} />
-            {/* <Body data={data?.mom} week={selectedWeek} /> */}
+            <Body data={data?.mom} week={selectedWeek} />
           </>
         );
       case 2:
-        // return <CheckupCalendar />;
-        return (
-          <Embryo
-            data={data?.baby}
-            week={selectedWeek}
-            listImage={listImage ?? []}
-          />
-        );
-      case 3:
-        return <Body data={data?.mom} week={selectedWeek} />;
+        return <CheckupCalendar />;
+      // return (
+      //   <Embryo
+      //     data={data?.baby}
+      //     week={selectedWeek}
+      //     listImage={listImage ?? []}
+      //   />
+      // );
+      // case 3:
+      //   return <Body data={data?.mom} week={selectedWeek} />;
       default:
         return null;
     }
@@ -135,28 +139,28 @@ const SizeComparison = () => {
       <View>
         {renderBodyByStatus()}
 
-        {/* {status === 1 && ( */}
-        <>
-          <ListPostByWeek
-            week={weekSelected}
-            cardBorderStyle={{
-              borderWidth: 1,
-              borderColor: '#F5F5F5',
-            }}
-          />
-          <TouchableOpacity
-            style={styles.createPostButton}
-            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
-            <SvgMessages3 />
-            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
-          </TouchableOpacity>
-          {homeData?.data?.dailyQuizz ? (
-            <ViewQuiz onAnswer={onAnswerQuiz} />
-          ) : null}
-          {/* <BannerTestQuiz /> */}
-          <ListArticle week={weekSelected} />
-        </>
-        {/* )} */}
+        {status === 1 && (
+          <>
+            <ListPostByWeek
+              week={weekSelected}
+              cardBorderStyle={{
+                borderWidth: 1,
+                borderColor: '#F5F5F5',
+              }}
+            />
+            <TouchableOpacity
+              style={styles.createPostButton}
+              onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+              <SvgMessages3 />
+              <Text style={styles.titleButton}>{t('home.createPost')}</Text>
+            </TouchableOpacity>
+            {homeData?.data?.dailyQuizz ? (
+              <ViewQuiz onAnswer={onAnswerQuiz} />
+            ) : null}
+            {/* <BannerTestQuiz /> */}
+            <ListArticle week={weekSelected} />
+          </>
+        )}
       </View>
     );
   };
@@ -182,15 +186,15 @@ const SizeComparison = () => {
         ref={flatListRef}
         renderItem={() => {
           return (
-            <ViewButton
-              onChangeState={(value: any) => setStatus(value)}
-              data={data}
-              option={option}
-            />
-            // <ViewSelectType
-            //   onChaneStatus={value => setStatus(value)}
-            //   status={status}
+            // <ViewButton
+            //   onChangeState={(value: any) => setStatus(value)}
+            //   data={data}
+            //   option={option}
             // />
+            <ViewSelectType
+              onChaneStatus={value => setStatus(value)}
+              status={status}
+            />
           );
         }}
         bounces={false}
