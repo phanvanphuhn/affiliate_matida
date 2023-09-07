@@ -1,9 +1,25 @@
 {
-    "cSpell.words": [
-        "Matida",
-        "NEWFEED",
-        "Noti",
-        "Tida",
-        "Zalo"
-    ]
+    "prettier.tabWidth": 4,
+    "editor.insertSpaces": false,
+    "prettier.useTabs": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": true
+        // "source.organizeImports": true
+    },
+    "eslint.format.enable": true,
+    "prettier.singleQuote": true,
+    "editor.snippetSuggestions": "top",
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

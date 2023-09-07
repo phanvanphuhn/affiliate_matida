@@ -16,7 +16,7 @@ import {
 import Toast from 'react-native-toast-message';
 import {useSelector} from 'react-redux';
 import {Item} from './component/Item';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
 
 const SaveArticles = () => {
@@ -30,7 +30,7 @@ const SaveArticles = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.SAVED_ARTICLES, {});
+      trackingAppEvent(event.SCREEN.SAVED_ARTICLES, {}, eventType.AFF_FLYER);
       getListSaveArticle();
     }, []),
   );

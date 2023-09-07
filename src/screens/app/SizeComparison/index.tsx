@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {FLoatingAIButton, Header, PickerWeek, ViewButton} from '@component';
@@ -6,31 +7,27 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {saveIsDoneDaily, updateDataHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
-  GlobalService,
   answerDailyQuiz,
+  getCalendarCheckup,
   getSizeComparison,
   getValueTimeLine,
-  getCalendarCheckup,
+  GlobalService,
 } from '@services';
 import {colors} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {ListPostComponent} from '../Home/ListPostComponent';
+import reactotron from 'reactotron-react-native';
+import {RootState} from 'src/redux/rootReducer';
 import {ViewQuiz} from '../Home/components';
 import {Body} from './component/Body';
 import {Embryo} from './component/Embryo';
+import {ListArticle} from './component/ListArticle';
+import {ListPostByWeek} from './component/ListPostByWeek';
 import {Size} from './component/Size';
 import {styles} from './styles';
-import {ListPostByWeek} from './component/ListPostByWeek';
-import {ListArticle} from './component/ListArticle';
-import {ViewSelectType} from './component/ViewSelectType';
-import {Timeline} from './component/TImeLine';
-import {CheckupCalendar} from './component/CheckupCalendar';
-import {RootState} from 'src/redux/rootReducer';
-import reactotron from 'reactotron-react-native';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -44,6 +41,8 @@ const SizeComparison = () => {
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   const week = weekNotifi ? weekNotifi : weekPregnant;
 
   const {t} = useTranslation();
@@ -73,8 +72,8 @@ const SizeComparison = () => {
       setListImage(image ?? []);
       const resTimeline = await getValueTimeLine(value);
       setDataTimeline(resTimeline?.data?.data);
-      const calendarCheckup = await getCalendarCheckup(weekSelected);
-      reactotron.log?.('CALENDAR CHECKUP', calendarCheckup);
+      const calendarCheckup = await getCalendarCheckup(value);
+      reactotron.log?.('CALENDAR CHECKUP', calendarCheckup, value);
     } catch (error) {
     } finally {
       GlobalService.hideLoading();
@@ -100,7 +99,7 @@ const SizeComparison = () => {
     }
   };
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {});
+    trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {}, eventType.AFF_FLYER);
     if (week) {
       getData(week);
     }
@@ -110,26 +109,26 @@ const SizeComparison = () => {
       case 1:
         return (
           <>
-            <Embryo
+            {/* <Embryo
               data={data?.baby}
               week={selectedWeek}
               listImage={listImage ?? []}
-            />
+            /> */}
             <Size data={data?.baby_size} week={selectedWeek} />
-            <Body data={data?.mom} week={selectedWeek} />
+            {/* <Body data={data?.mom} week={selectedWeek} /> */}
           </>
         );
       case 2:
-        return <CheckupCalendar />;
-      // return (
-      //   <Embryo
-      //     data={data?.baby}
-      //     week={selectedWeek}
-      //     listImage={listImage ?? []}
-      //   />
-      // );
-      // case 3:
-      //   return <Body data={data?.mom} week={selectedWeek} />;
+        // return <CheckupCalendar />;
+        return (
+          <Embryo
+            data={data?.baby}
+            week={selectedWeek}
+            listImage={listImage ?? []}
+          />
+        );
+      case 3:
+        return <Body data={data?.mom} week={selectedWeek} />;
       default:
         return null;
     }
@@ -139,28 +138,28 @@ const SizeComparison = () => {
       <View>
         {renderBodyByStatus()}
 
-        {status === 1 && (
-          <>
-            <ListPostByWeek
-              week={weekSelected}
-              cardBorderStyle={{
-                borderWidth: 1,
-                borderColor: '#F5F5F5',
-              }}
-            />
-            <TouchableOpacity
-              style={styles.createPostButton}
-              onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
-              <SvgMessages3 />
-              <Text style={styles.titleButton}>{t('home.createPost')}</Text>
-            </TouchableOpacity>
-            {homeData?.data?.dailyQuizz ? (
-              <ViewQuiz onAnswer={onAnswerQuiz} />
-            ) : null}
-            {/* <BannerTestQuiz /> */}
-            <ListArticle week={weekSelected} />
-          </>
-        )}
+        {/* {status === 1 && ( */}
+        <>
+          <ListPostByWeek
+            week={weekSelected}
+            cardBorderStyle={{
+              borderWidth: 1,
+              borderColor: '#F5F5F5',
+            }}
+          />
+          <TouchableOpacity
+            style={styles.createPostButton}
+            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+            <SvgMessages3 />
+            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
+          </TouchableOpacity>
+          {homeData?.data?.dailyQuizz ? (
+            <ViewQuiz onAnswer={onAnswerQuiz} />
+          ) : null}
+          {/* <BannerTestQuiz /> */}
+          <ListArticle week={weekSelected} />
+        </>
+        {/* )} */}
       </View>
     );
   };
@@ -173,9 +172,13 @@ const SizeComparison = () => {
       <PickerWeek
         customStyleContainer={styles.containerPicker}
         onSelect={(value: any) => {
-          trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_CHANGE_WEEK, {
-            content: value,
-          });
+          trackingAppEvent(
+            event.BABY_TRACKER.BABY_TRACKER_CHANGE_WEEK,
+            {
+              content: value,
+            },
+            eventType.AFF_FLYER,
+          );
           getData(value);
           setWeek(value);
         }}
@@ -186,21 +189,21 @@ const SizeComparison = () => {
         ref={flatListRef}
         renderItem={() => {
           return (
-            // <ViewButton
-            //   onChangeState={(value: any) => setStatus(value)}
-            //   data={data}
-            //   option={option}
-            // />
-            <ViewSelectType
-              onChaneStatus={value => setStatus(value)}
-              status={status}
+            <ViewButton
+              onChangeState={(value: any) => setStatus(value)}
+              data={data}
+              option={option}
             />
+            // <ViewSelectType
+            //   onChaneStatus={value => setStatus(value)}
+            //   status={status}
+            // />
           );
         }}
         bounces={false}
         ListFooterComponent={renderView}
       />
-      <FLoatingAIButton />
+      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
     </View>
   );
 };

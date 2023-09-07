@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
-import {styles} from './styles';
 import {FLoatingAIButton, Header, PickerWeek} from '@component';
 import {SvgArrowLeft} from '@images';
-import {colors, scaler} from '@stylesCommon';
-import {useTranslation} from 'react-i18next';
-import {getValueTimeLine, GlobalService} from '@services';
-import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {useUXCam} from '@util';
-import {trackingAppEvent, event} from '@util';
+import {GlobalService, getValueTimeLine} from '@services';
+import {colors, scaler} from '@stylesCommon';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
+import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {styles} from './styles';
 
 const TimeLine = () => {
   const {t} = useTranslation();
@@ -20,6 +19,7 @@ const TimeLine = () => {
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [data, setData] = useState([]);
   const [weekLocal, setWeekLocal] = useState(null);
@@ -41,7 +41,7 @@ const TimeLine = () => {
   };
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.TIME_LINE, {});
+    trackingAppEvent(event.SCREEN.TIME_LINE, {}, eventType.AFF_FLYER);
     if (week) {
       callApiGetValueTimeLine(week);
     }
@@ -171,7 +171,7 @@ const TimeLine = () => {
           keyExtractor={(item: any) => item?.id}
         />
       </View>
-      <FLoatingAIButton />
+      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
     </View>
   );
 };

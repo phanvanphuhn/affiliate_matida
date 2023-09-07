@@ -17,7 +17,7 @@ import {GlobalService, loginApple, loginFacebook, loginZalo} from '@services';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {appleAuth} from '@invertase/react-native-apple-authentication';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import {Constants, login as LoginWithZalo} from 'react-native-zalo-kit';
 
@@ -89,12 +89,12 @@ const Intro = () => {
           dispatch(saveDataLoginFacebook(res?.data));
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
-            trackingAppEvent(event.AUTH.CLICK_LOGIN, {});
+            trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
           } else {
             const eventParams = {
               af_registration_method: 'Facebook',
             };
-            trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams);
+            trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
           GlobalService.hideLoading();
@@ -115,12 +115,12 @@ const Intro = () => {
           dispatch(saveDataLoginFacebook(res?.data));
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
-            trackingAppEvent(event.AUTH.CLICK_LOGIN, {});
+            trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
           } else {
             const eventParams = {
               af_registration_method: 'Zalo',
             };
-            trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams);
+            trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
         }
@@ -132,12 +132,12 @@ const Intro = () => {
         dispatch(saveDataLoginFacebook(res?.data));
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
-          trackingAppEvent(event.AUTH.CLICK_LOGIN, {});
+          trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
         } else {
           const eventParams = {
             af_registration_method: 'Zalo',
           };
-          trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams);
+          trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       }
@@ -155,12 +155,12 @@ const Intro = () => {
         dispatch(saveDataLoginFacebook(res?.data));
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
-          trackingAppEvent(event.AUTH.CLICK_LOGIN, {});
+          trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
         } else {
           const eventParams = {
             af_registration_method: 'Apple',
           };
-          trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams);
+          trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       } else {

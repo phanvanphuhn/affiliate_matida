@@ -1,21 +1,11 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  FlatList,
-} from 'react-native';
-import {scaler, widthScreen, stylesCommon, colors} from '@stylesCommon';
-import {ViewBackgroundText} from './ViewBackgroundText';
-import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
-import {ViewProgress, AppImage} from '@component';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {AppImage} from '@component';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {Footer} from './Footer';
-import {systemFonts, tagsStyles} from './settingHTML';
-import RenderHtml from 'react-native-render-html';
+import {useSelector} from 'react-redux';
 const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
   const {data, week, listImage} = props;
   const lang = useSelector((state: any) => state?.auth?.lang);
@@ -56,26 +46,12 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
           </View>
         );
       }}
-      ListHeaderComponent={() => {
-        return (
-          <View style={styles.containerSwipe}>
-            <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
-              {listImage.length > 0 &&
-                listImage.map((item: any, index: any) => {
-                  return (
-                    <AppImage uri={item} style={styles.image} key={index} />
-                  );
-                })}
-            </Swiper>
-          </View>
-        );
-      }}
       // ListHeaderComponent={() => {
       //   return (
       //     <View style={styles.containerSwipe}>
       //       <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
-      //         {data?.image?.length > 0 &&
-      //           data?.image?.map((item: any, index: any) => {
+      //         {listImage.length > 0 &&
+      //           listImage.map((item: any, index: any) => {
       //             return (
       //               <AppImage uri={item} style={styles.image} key={index} />
       //             );
@@ -84,6 +60,20 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
       //     </View>
       //   );
       // }}
+      ListHeaderComponent={() => {
+        return (
+          <View style={styles.containerSwipe}>
+            <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
+              {data?.image?.length > 0 &&
+                data?.image?.map((item: any, index: any) => {
+                  return (
+                    <AppImage uri={item} style={styles.image} key={index} />
+                  );
+                })}
+            </Swiper>
+          </View>
+        );
+      }}
     />
   );
 });

@@ -3,7 +3,7 @@ import {TYPE_LIST_TEST} from '@constant';
 import {SvgArrowLeft} from '@images';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, View} from 'react-native';
@@ -33,7 +33,7 @@ export const MomPrepTest = () => {
   useUXCam(ROUTE_NAME.MOM_PREP_TEST);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.MOM_PREP_TEST, {});
+    trackingAppEvent(event.SCREEN.MOM_PREP_TEST, {}, eventType.AFF_FLYER);
   }, []);
 
   return (

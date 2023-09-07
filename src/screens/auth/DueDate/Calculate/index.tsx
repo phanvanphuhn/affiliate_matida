@@ -16,7 +16,7 @@ import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {getCycleLength, getIVFdays, getMethod, IItem} from './handle';
 import {CalculationMethod} from './_type';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {calculateDate, GlobalService} from '@services';
 import moment from 'moment';
 
@@ -34,7 +34,7 @@ const CalculateDueDateScreen = () => {
   useUXCam(ROUTE_NAME.CALCULATE_DUE_DATE);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.CALCULATE_DUE_DATE, {});
+    trackingAppEvent(event.SCREEN.CALCULATE_DUE_DATE, {}, eventType.AFF_FLYER);
   }, []);
 
   const handlePressButton = async () => {

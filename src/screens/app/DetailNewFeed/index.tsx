@@ -56,7 +56,7 @@ import {
   saveIsSeenComment,
 } from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {AppSocket, event, trackingAppEvent, useUXCam} from '@util';
+import {AppSocket, event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch} from 'react-redux';
 import {ETypeUser} from '@constant';
@@ -171,7 +171,7 @@ const DetailNewFeed = (props: any) => {
   );
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.DETAIL_NEWFEED, {});
+    trackingAppEvent(event.SCREEN.DETAIL_NEWFEED, {}, eventType.AFF_FLYER);
     socket.emit('joinPost', {
       postId: id,
       userId: user?.id,
@@ -243,7 +243,7 @@ const DetailNewFeed = (props: any) => {
           comment_id: dataReply?.id,
           content: text,
         };
-        trackingAppEvent(event.FORUM.REPLY, {content: body});
+        trackingAppEvent(event.FORUM.REPLY, {content: body}, eventType.AFF_FLYER);
         const res = await createReplyComment(body);
         dispatch(
           addReplyCommentToList({data: [{...res?.data}], idCmt: dataReply?.id}),
@@ -257,7 +257,7 @@ const DetailNewFeed = (props: any) => {
         });
       } else {
         const body = {post_id: id, content: text};
-        trackingAppEvent(event.FORUM.COMMENT, {content: body});
+        trackingAppEvent(event.FORUM.COMMENT, {content: body}, eventType.AFF_FLYER);
         const res = await addCommentApi(body);
         dispatch(addCommentToList([{...res?.data}]));
         socket.emit('commentPost', {

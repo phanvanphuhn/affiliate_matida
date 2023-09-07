@@ -28,7 +28,7 @@ interface IState extends IStateVideo {
   feed?: IDataListFeed;
   comment?: IDataComment;
   questions?: IPackageQuizzList[];
-  listPackage: ListPackage[];
+  listPackage?: ListPackage[];
   duration?: number;
   totalComment?: number;
   isShowComment?: boolean;
@@ -61,6 +61,7 @@ export const VideoContext = React.createContext<IVideoContext>({
     size: SIZE_DEFAULT,
     total: 0,
     currentIndex: undefined,
+    index: undefined,
     refreshing: false,
     isOpen: false,
     isLoading: false,
@@ -98,6 +99,7 @@ const Container: React.FC<ContainerProps> = props => {
       size: SIZE_DEFAULT,
       total: 0,
       currentIndex: undefined,
+      index: undefined,
       refreshing: false,
       isOpen: false,
       isLoading: false,

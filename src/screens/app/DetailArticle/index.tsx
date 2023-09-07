@@ -1,5 +1,5 @@
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {event, trackingAppEvent, useContentView, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useContentView, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, ScrollView, StyleSheet, Text, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';
@@ -66,7 +66,7 @@ export const DetailArticle = () => {
   useContentView(id, EContentType.ARTICLE);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.DETAIL_ARTICLE, {});
+    trackingAppEvent(event.SCREEN.DETAIL_ARTICLE, {}, eventType.AFF_FLYER);
     if (!isTimeline) {
       getArticlesDetail();
       getDataMoreArticles();

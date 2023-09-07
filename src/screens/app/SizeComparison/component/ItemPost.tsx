@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {AppImage} from '@component';
 import {avatarDefault, iconDelete, iconEdit, SvgDotsThree} from '@images';
 import {navigate} from '@navigation';
@@ -6,11 +8,10 @@ import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import moment from 'moment';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
 import {InteractiveView} from './InteractiveView';
-import reactotron from 'reactotron-react-native';
 export const DiscussionPost = ({
   post,
   callBackData,
@@ -41,8 +42,6 @@ export const DiscussionPost = ({
   };
 
   const imageAvatar = user_avatar ?? avatar;
-
-  reactotron.log?.('NAME', name, post, user_avatar ?? avatar);
 
   return (
     <TouchableOpacity

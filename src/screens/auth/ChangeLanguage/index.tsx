@@ -18,7 +18,7 @@ import {ROUTE_NAME} from '@routeName';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {saveLang} from '@redux';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 
 const ChangeLanguage = () => {
   const {t} = useTranslation();
@@ -66,7 +66,7 @@ const ChangeLanguage = () => {
   }, [lang]);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.CHANGE_LANGUAGE, {});
+    trackingAppEvent(event.SCREEN.CHANGE_LANGUAGE, {}, eventType.AFF_FLYER);
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor('transparent');
       StatusBar.setBarStyle('dark-content');

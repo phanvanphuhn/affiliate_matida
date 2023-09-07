@@ -6,19 +6,11 @@ import {
   RefreshControl,
   ScrollView,
   StatusBar,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {
-  AppHeader,
-  FLoatingAIButton,
-  HorizontalList,
-  NewArticles,
-} from '@component';
-import {navigate} from '@navigation';
+import {AppHeader, FLoatingAIButton} from '@component';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {
   clearDataChat,
@@ -38,38 +30,30 @@ import {
 } from '@services';
 import {scaler} from '@stylesCommon';
 import {
-  BannerTestQuiz,
-  ChatGPTComponent,
-  DailyAffirmation,
-  ItemMasterClass,
-  ItemTalks,
-  PodcastItem,
   PregnancyProgress,
   SizeComparisonComponent,
   ViewQuiz,
   WeeksPregnant,
-  WeekVideo,
 } from './components';
 import {styles} from './styles';
 import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
 
-import {imageBackgroundOpacity, SvgMessages3} from '@images';
+import {imageBackgroundOpacity} from '@images';
 import {
+  APP_SIGN_ZEGO_KEY,
   APPID_ZEGO_KEY,
   AppNotification,
-  APP_SIGN_ZEGO_KEY,
+  eventType,
   handleDeepLink,
   useUXCam,
 } from '@util';
-import {t} from 'i18next';
-import {ListPostComponent} from './ListPostComponent';
 //@ts-ignore
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {event, trackingAppEvent} from '@util';
 //@ts-ignore
+import {EVideoType} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
-import {EVideoType} from '@constant';
 import {RootState} from 'src/redux/rootReducer';
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -138,7 +122,8 @@ const Home = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.HOME, {});
+      trackingAppEvent(event.SCREEN.HOME, {}, eventType.AFF_FLYER);
+      trackingAppEvent(event.SYSTEM.START, {}, eventType.MIX_PANEL, user);
       if (Platform.OS === 'android') {
       }
       firstRef.current = false;
@@ -363,7 +348,9 @@ const Home = () => {
           </TouchableOpacity>
         </View> */}
 
-        {data?.dailyQuizz ? <ViewQuiz onAnswer={onAnswerQuiz} /> : null}
+        {data?.dailyQuizz && user?.id !== 18257 && user?.id !== 89 ? (
+          <ViewQuiz onAnswer={onAnswerQuiz} />
+        ) : null}
         {/*
         <BannerTestQuiz />
 
@@ -441,7 +428,7 @@ const Home = () => {
 
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
-      <FLoatingAIButton />
+      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
     </View>
   );
 };

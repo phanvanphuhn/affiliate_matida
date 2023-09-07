@@ -247,6 +247,7 @@ export default class Swiper extends PureComponent<IProps, IState> {
     if (nextProps.index === this.props.index) {
       return;
     }
+    console.log('=>(Swiper.tsx:244) nextProps', nextProps);
     this.setState(
       this.initState(nextProps, this.props.index !== nextProps.index),
     );
@@ -263,8 +264,6 @@ export default class Swiper extends PureComponent<IProps, IState> {
 
   UNSAFE_componentWillUpdate(nextProps: IProps, nextState: IState) {
     // If the index has changed, we notify the parent via the onIndexChanged callback
-    console.log('=>(Swiper.tsx:266) nextState.index', nextState.index);
-    console.log('=>(Swiper.tsx:267) this.state.index', this.state.index);
     if (this.state.index !== nextState.index) {
       this.props.onIndexChanged(nextState.index);
     }
@@ -279,9 +278,10 @@ export default class Swiper extends PureComponent<IProps, IState> {
       if (this.props.loadMinimal && Platform.OS === 'ios') {
         this.setState({...this.props, index: this.state.index});
       } else {
-        this.setState(
-          this.initState({...this.props, index: this.state.index}, true),
-        );
+        this.setState({...this.props, index: this.state.index});
+        // this.setState(
+        //   this.initState({...this.props, index: this.state.index}, true),
+        // );
       }
     }
   }
@@ -470,10 +470,6 @@ export default class Swiper extends PureComponent<IProps, IState> {
         };
       }
     }
-    console.log(
-      '=>(Swiper.tsx:477) e.nativeEvent.contentOffset',
-      e.nativeEvent.contentOffset,
-    );
 
     this.updateIndex(e.nativeEvent.contentOffset, this.state.dir, () => {
       this.autoplay();

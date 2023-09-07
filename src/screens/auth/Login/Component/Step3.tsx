@@ -2,7 +2,7 @@ import {AppButton} from '@component';
 import {saveLoginInfo} from '@redux';
 import {GlobalService, resendCode, verifyLogin} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
@@ -59,7 +59,7 @@ const Step3 = React.memo((props: any) => {
         type: 'default',
         backgroundColor: colors.success_message,
       });
-      trackingAppEvent(event.AUTH.CLICK_LOGIN, {});
+      trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
       dispatch(saveLoginInfo(res?.data));
       onChangeStep(res?.data);
       GlobalService.hideLoading();

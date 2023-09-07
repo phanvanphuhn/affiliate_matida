@@ -22,7 +22,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {imageUpload} from '@images';
 import FastImage from 'react-native-fast-image';
 import {showMessage} from 'react-native-flash-message';
-import {hasWhiteSpace, useUXCam} from '@util';
+import {eventType, hasWhiteSpace, useUXCam} from '@util';
 import {ROUTE_NAME} from '@routeName';
 import {getPostInfo} from '@services';
 import {trackingAppEvent, event} from '@util';
@@ -110,7 +110,7 @@ const EditPost = (props: any) => {
 
   useEffect(() => {
     getDataDetail();
-    trackingAppEvent(event.SCREEN.EDIT_POST, {});
+    trackingAppEvent(event.SCREEN.EDIT_POST, {}, eventType.AFF_FLYER);
   }, []);
 
   return (

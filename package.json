@@ -107,7 +107,7 @@
     "react-native-switch-toggle": "^2.2.1",
     "react-native-toast-message": "^2.1.6",
     "react-native-track-player": "^3.2.0",
-    "react-native-ux-cam": "^5.4.6",
+    "react-native-ux-cam": "5.4.10",
     "react-native-video": "^5.2.1",
     "react-native-webview": "^11.26.1",
     "react-native-zalo-kit": "^4.0.3",

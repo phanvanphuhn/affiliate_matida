@@ -15,7 +15,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {ModalConfirm, ViewButtonChange} from '@component';
 import {GlobalService} from '@services';
 import {getListMyPost, deleteListUserPost} from '@redux';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
 
 const MyNewFeed = (props: any) => {
@@ -77,7 +77,7 @@ const MyNewFeed = (props: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.MY_NEWFEED, {});
+      trackingAppEvent(event.SCREEN.MY_NEWFEED, {}, eventType.AFF_FLYER);
       setIndexButton(1);
       getDataRefresh();
       return () => setPage(1);

@@ -8,7 +8,7 @@ import {stylesScreen} from './styles';
 
 import {changeStatusLogin} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 
@@ -21,7 +21,7 @@ const ResultDueDateScreen = (props: any) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.RESULT_DUE_DATE, {});
+    trackingAppEvent(event.SCREEN.RESULT_DUE_DATE, {}, eventType.AFF_FLYER);
   }, []);
 
   useUXCam(ROUTE_NAME.RESULT_DUE_DATE);

@@ -17,7 +17,7 @@ import {
   YourReward,
 } from './components';
 import {styles} from './style';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 
 export const TestResult = () => {
   const route = useRoute<any>();
@@ -34,7 +34,7 @@ export const TestResult = () => {
 
   useEffect(() => {
     getData();
-    trackingAppEvent(event.SCREEN.TEST_RESULT, {});
+    trackingAppEvent(event.SCREEN.TEST_RESULT, {}, eventType.AFF_FLYER);
   }, []);
 
   const getData = async () => {
