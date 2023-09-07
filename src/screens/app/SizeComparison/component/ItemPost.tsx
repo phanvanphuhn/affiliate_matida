@@ -10,6 +10,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {InteractiveView} from './InteractiveView';
+import reactotron from 'reactotron-react-native';
 export const DiscussionPost = ({
   post,
   callBackData,
@@ -21,7 +22,16 @@ export const DiscussionPost = ({
   const {t} = useTranslation();
 
   const userInfo = useSelector((state: any) => state?.auth?.userInfo);
-  const {content, user_name, user_avatar, name, created_at, image, user} = post;
+  const {
+    content,
+    user_name,
+    user_avatar,
+    avatar,
+    name,
+    created_at,
+    image,
+    user,
+  } = post;
   const handleShow = () => navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: post?.id});
   const onNavigateEdit = () => {
     navigation.navigate(ROUTE_NAME.EDIT_POST, {id: post?.id});
@@ -29,6 +39,10 @@ export const DiscussionPost = ({
   const handlePostSettings = () => {
     onPressOption(post?.id ?? 0, post);
   };
+
+  const imageAvatar = user_avatar ?? avatar;
+
+  reactotron.log?.('NAME', name, post, user_avatar ?? avatar);
 
   return (
     <TouchableOpacity
@@ -45,8 +59,8 @@ export const DiscussionPost = ({
           }}>
           <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
             {/* //Change according to api response  post?.isPrivate*/}
-            {user_avatar ? (
-              <AppImage user style={styles.image} uri={user_avatar} />
+            {imageAvatar ? (
+              <AppImage user style={styles.image} uri={imageAvatar} />
             ) : (
               <Image style={styles.image} source={avatarDefault} />
             )}
@@ -61,7 +75,7 @@ export const DiscussionPost = ({
                   ? post?.is_anonymous
                     ? ` ${t('post.me')} (${t('post.postedInAnonymus')})`
                     : `${t('post.me')}`
-                  : user?.name}
+                  : user?.name ?? name}
               </Text>
               {created_at ? (
                 <Text style={styles.textTime}>
@@ -128,7 +142,7 @@ const styles = StyleSheet.create({
     marginTop: scaler(16),
   },
   textPost: {
-    ...stylesCommon.fontWeight500,
+    ...stylesCommon.fontWeight400,
     fontSize: scaler(14),
     lineHeight: scaler(24),
     color: colors.textColor,

@@ -23,7 +23,8 @@ export const SizeComparisonComponent = () => {
   const handlePress = () => {
     trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_OPEN, {});
     navigate(ROUTE_NAME.SIZE_COMPARISON, {
-      option: OptionComparison.EMBRYO,
+      // option: OptionComparison.EMBRYO,
+      option: 1,
     });
   };
 

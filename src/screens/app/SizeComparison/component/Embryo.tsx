@@ -42,7 +42,7 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
             /> */}
             {/* <Footer week={week} title={data?.remaining_week} /> */}
             <View style={{marginTop: scaler(12)}}>
-              <RenderHtml
+              {/* <RenderHtml
                 contentWidth={widthScreen}
                 systemFonts={systemFonts}
                 tagsStyles={{...tagsStyles}}
@@ -50,7 +50,8 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
                 enableExperimentalMarginCollapsing={true}
                 enableExperimentalBRCollapsing={true}
                 enableExperimentalGhostLinesPrevention={true}
-              />
+              /> */}
+              <Text style={styles.txtContent}>{data?.content}</Text>
             </View>
           </View>
         );

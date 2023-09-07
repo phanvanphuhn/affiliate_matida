@@ -40,7 +40,7 @@ const Size = React.memo((props: any) => {
             <ViewBackgroundText title={data?.baby_size} />
             {/* <Text style={styles.txtContent}>{data?.content}</Text> */}
             <View style={{marginTop: scaler(12)}}>
-              <RenderHtml
+              {/* <RenderHtml
                 contentWidth={widthScreen}
                 systemFonts={systemFonts}
                 tagsStyles={{...tagsStyles}}
@@ -48,7 +48,8 @@ const Size = React.memo((props: any) => {
                 enableExperimentalMarginCollapsing={true}
                 enableExperimentalBRCollapsing={true}
                 enableExperimentalGhostLinesPrevention={true}
-              />
+              /> */}
+              <Text style={styles.txtContent}>{data?.content}</Text>
             </View>
             {/* <ViewProgress
               title={data?.remaining_week}

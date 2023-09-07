@@ -18,6 +18,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 import {DiscussionPost} from './ItemPost';
 type Props = {
   // callBackData: () => void;

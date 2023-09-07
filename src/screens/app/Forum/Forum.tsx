@@ -38,7 +38,7 @@ export const Forum = () => {
   return (
     <View style={{flex: 1, backgroundColor: colors.white}}>
       <HeaderForum />
-      <FlatList
+      {/* <FlatList
         data={[{}]}
         ListHeaderComponent={
           <ForumTab tab={tab} onChange={(item, index) => setTab(index)} />
@@ -50,7 +50,7 @@ export const Forum = () => {
             <ListPostHorizontal />
           </>
         )}
-      />
+      /> */}
       {loading ? (
         <View style={styles.viewLoadMore}>
           <ActivityIndicator color={colors.primary} size="small" />

@@ -36,7 +36,7 @@ const Body = React.memo((props: any) => {
             /> */}
             {/* <Footer week={week} title={data?.remaining_week} /> */}
             <View style={{marginTop: scaler(12)}}>
-              <RenderHtml
+              {/* <RenderHtml
                 contentWidth={widthScreen}
                 systemFonts={systemFonts}
                 tagsStyles={{...tagsStyles}}
@@ -44,7 +44,8 @@ const Body = React.memo((props: any) => {
                 enableExperimentalMarginCollapsing={true}
                 enableExperimentalBRCollapsing={true}
                 enableExperimentalGhostLinesPrevention={true}
-              />
+              /> */}
+              <Text style={styles.txtContent}>{data?.content}</Text>
             </View>
           </View>
         );
