@@ -75,6 +75,12 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
         article: {id: arrayParamsLink[1], topic: [], mood: []},
       });
       break;
+    case TypeDeepLink.FEED:
+      navigate(ROUTE_NAME.DETAIL_FEED, {
+        id: arrayParamsLink[2],
+        content_type: arrayParamsLink[1],
+      });
+      break;
     case TypeDeepLink.ROOM:
       navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {
         id: arrayParamsLink[1],
