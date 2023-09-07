@@ -1,12 +1,12 @@
 import {AppHeader, FLoatingAIButton, ItemArticles, ItemVideo} from '@component';
 import {SvgArticleExplore, SvgMediaExplore, SvgPodcastExplore} from '@images';
 import {navigate} from '@navigation';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {changePageExplore} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {event, eventType, trackingAppEvent, useUXCam} from '@util';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   ActivityIndicator,
@@ -35,6 +35,7 @@ const Explore = () => {
   const filter = useSelector((state: any) => state?.explore?.filter);
   const loadMoreRedux = useSelector((state: any) => state?.explore?.loadMore);
   const isFocus = useSelector((state: any) => state?.tab?.explore);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const pageExplore = explore?.pageExplore;
 
@@ -304,7 +305,7 @@ const Explore = () => {
           </>
         }
       />
-      <FLoatingAIButton />
+      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
     </View>
   );
 };

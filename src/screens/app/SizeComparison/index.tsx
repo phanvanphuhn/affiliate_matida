@@ -17,18 +17,14 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {ListPostComponent} from '../Home/ListPostComponent';
+import {RootState} from 'src/redux/rootReducer';
 import {ViewQuiz} from '../Home/components';
 import {Body} from './component/Body';
 import {Embryo} from './component/Embryo';
+import {ListArticle} from './component/ListArticle';
+import {ListPostByWeek} from './component/ListPostByWeek';
 import {Size} from './component/Size';
 import {styles} from './styles';
-import {ListPostByWeek} from './component/ListPostByWeek';
-import {ListArticle} from './component/ListArticle';
-import {ViewSelectType} from './component/ViewSelectType';
-import {Timeline} from './component/TImeLine';
-import {CheckupCalendar} from './component/CheckupCalendar';
-import {RootState} from 'src/redux/rootReducer';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -42,6 +38,8 @@ const SizeComparison = () => {
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   const week = weekNotifi ? weekNotifi : weekPregnant;
 
   const {t} = useTranslation();
@@ -169,9 +167,13 @@ const SizeComparison = () => {
       <PickerWeek
         customStyleContainer={styles.containerPicker}
         onSelect={(value: any) => {
-          trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_CHANGE_WEEK, {
-            content: value,
-          }, eventType.AFF_FLYER);
+          trackingAppEvent(
+            event.BABY_TRACKER.BABY_TRACKER_CHANGE_WEEK,
+            {
+              content: value,
+            },
+            eventType.AFF_FLYER,
+          );
           getData(value);
           setWeek(value);
         }}
@@ -196,7 +198,7 @@ const SizeComparison = () => {
         bounces={false}
         ListFooterComponent={renderView}
       />
-      <FLoatingAIButton />
+      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
     </View>
   );
 };
