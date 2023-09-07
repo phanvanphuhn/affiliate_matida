@@ -91,7 +91,7 @@ const DailyQuizFeed = (props: DailyQuizFeedProps) => {
             />
           </View>
           <View style={{flexDirection: 'row'}}>
-            {props.item?.answers?.map((answer, i) => {
+            {props.item?.answers?.map?.((answer, i) => {
               return renderItemAnswer(answer, i);
             })}
           </View>
