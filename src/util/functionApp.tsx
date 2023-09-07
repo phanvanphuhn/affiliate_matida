@@ -1,10 +1,10 @@
-import {WEEK_MAX} from '@constant';
+import { WEEK_MAX } from '@constant';
 import dayjs from 'dayjs';
-import {t} from 'i18next';
-import {Mixpanel} from 'mixpanel-react-native';
-import {ColorValue} from 'react-native';
+import { t } from 'i18next';
+import { Mixpanel } from 'mixpanel-react-native';
+import { ColorValue } from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
-import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
+import branch, { BranchEvent, BranchEventParams } from 'react-native-branch';
 import reactotron from 'reactotron-react-native';
 import { event } from './eventTracking';
 
@@ -17,10 +17,19 @@ const mixpanel = new Mixpanel(
   trackAutomaticEvents,
 );
 
+export const isShowForReviewer =  (user: any) => {
+   const {id} = user;
+  if (id == 89 || id == 18257) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
 export const eventType = {
   MIX_PANEL: 'mix_panel',
   AFF_FLYER: 'aff_flyer',
-  BRANCH_IO: 'branch_io'
+  BRANCH_IO: 'branch_io',
 };
 
 export const hasWhiteSpace = (s: any) => {
@@ -163,15 +172,20 @@ export function convertArrUnique(arr: any, comp: any) {
   return unique;
 }
 
-export const trackingAppEvent = async (eventName: any, eventParams: any, type: string, user?: any) => {
+export const trackingAppEvent = async (
+  eventName: any,
+  eventParams: any,
+  type: string,
+  user?: any,
+) => {
   try {
     switch (type) {
       case eventType.MIX_PANEL:
-        if(user){
-          mixpanel.identify(user.id)
+        if (user) {
+          mixpanel.identify(user.id);
         }
-        if(eventName == event.SYSTEM.LOG_OUT){
-          mixpanel.reset()
+        if (eventName == event.SYSTEM.LOG_OUT) {
+          mixpanel.reset();
         }
         mixpanel.track(eventName, eventParams);
         break;
@@ -187,20 +201,20 @@ export const trackingAppEvent = async (eventName: any, eventParams: any, type: s
           },
         );
         break;
-      default: 
+      default:
         trackEventBranch(eventName, eventParams);
         break;
     }
-  //     mixpanel.identify(id)
-  // mixpanel.set({
-  //   '$first_name': user.first_name,
-  //   '$last_name': user.last_name,
-  //   'FB Gender': user.gender,
-  //   'FB Locale': user.locale,
-  //   'FB Timezone': user.timezone,
-  //   '$email': user.email,
-  //   'Last Login': now,
-  // });
+    //     mixpanel.identify(id)
+    // mixpanel.set({
+    //   '$first_name': user.first_name,
+    //   '$last_name': user.last_name,
+    //   'FB Gender': user.gender,
+    //   'FB Locale': user.locale,
+    //   'FB Timezone': user.timezone,
+    //   '$email': user.email,
+    //   'Last Login': now,
+    // });
   } catch (error) {}
 };
 

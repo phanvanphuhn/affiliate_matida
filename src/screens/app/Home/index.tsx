@@ -1,5 +1,5 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Platform,
@@ -8,10 +8,10 @@ import {
   StatusBar,
   View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {AppHeader, FLoatingAIButton} from '@component';
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import { AppHeader, FLoatingAIButton } from '@component';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import {
   clearDataChat,
   getCheckingPaymentRedux,
@@ -21,40 +21,42 @@ import {
   updateDataHome,
   updateStatusDeepLink,
 } from '@redux';
-import {ROUTE_NAME} from '@routeName';
+import { ROUTE_NAME } from '@routeName';
 import {
+  GlobalService,
   answerDailyQuiz,
   getUserInfoApi,
-  GlobalService,
   updateUserInfo,
 } from '@services';
-import {scaler} from '@stylesCommon';
+import { scaler } from '@stylesCommon';
 import {
   PregnancyProgress,
   SizeComparisonComponent,
   ViewQuiz,
   WeeksPregnant,
 } from './components';
-import {styles} from './styles';
-import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
+import { styles } from './styles';
+import { IArticles, IBabyProgress, IPosts, IQuote, IVideo } from './types';
 
-import {imageBackgroundOpacity} from '@images';
+import { imageBackgroundOpacity } from '@images';
 import {
-  APP_SIGN_ZEGO_KEY,
   APPID_ZEGO_KEY,
+  APP_SIGN_ZEGO_KEY,
   AppNotification,
   eventType,
   handleDeepLink,
+  isShowForReviewer,
   useUXCam,
 } from '@util';
 //@ts-ignore
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import {event, trackingAppEvent} from '@util';
+import { event, trackingAppEvent } from '@util';
 //@ts-ignore
-import {EVideoType} from '@constant';
+import { EVideoType } from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
-import {RootState} from 'src/redux/rootReducer';
+import { RootState } from 'src/redux/rootReducer';
+
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
@@ -321,17 +323,17 @@ const Home = () => {
           paddingBottom: scaler(30),
           paddingTop: scaler(18),
         }}>
-        {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
+        {!!user?.is_skip || weekPregnant?.days < 0 ? null  : (
           <>
             <View>
-              <WeeksPregnant />
+              {isShowForReviewer(user) && <WeeksPregnant />}
             </View>
             <View
               style={{
                 paddingHorizontal: scaler(20),
                 marginBottom: scaler(30),
               }}>
-              <SizeComparisonComponent />
+              {isShowForReviewer(user) && <SizeComparisonComponent />}
               <PregnancyProgress />
             </View>
           </>
@@ -348,7 +350,7 @@ const Home = () => {
           </TouchableOpacity>
         </View> */}
 
-        {data?.dailyQuizz && user?.id !== 18257 && user?.id !== 89 ? (
+        {data?.dailyQuizz && isShowForReviewer(user) ? (
           <ViewQuiz onAnswer={onAnswerQuiz} />
         ) : null}
         {/*
@@ -428,9 +430,10 @@ const Home = () => {
 
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
-      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
+      {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
 };
 
-export {Home};
+export { Home };
+
