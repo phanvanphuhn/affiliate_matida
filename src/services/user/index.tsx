@@ -16,7 +16,7 @@ const GET_VIDEO_OF_WEEK = '/videos';
 const GET_DATA_SIZE_COMPARISON = 'size-comparison/get-by-week';
 const GET_TIME_LINE = 'checkups/timeline';
 const DELETE_ACCOUNT = 'user';
-const GET_CALENDAR_CHECKUP = 'calendar-checkups/';
+const GET_CALENDAR_CHECKUP = 'calendar-checkups';
 
 const BLOCK_USER = 'block-user';
 const LIST_USER_BLOCK = 'block-user';
@@ -107,8 +107,8 @@ export const getSizeComparison: any = async (data: any) => {
   return response;
 };
 
-export const getCalendarCheckup: any = async (data: any) => {
-  const response = await api.get(`${GET_CALENDAR_CHECKUP}${data}`);
+export const getCalendarCheckup: any = async () => {
+  const response = await api.get(`${GET_CALENDAR_CHECKUP}`);
   return response;
 };
 

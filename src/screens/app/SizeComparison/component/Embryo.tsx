@@ -46,26 +46,12 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
           </View>
         );
       }}
-      // ListHeaderComponent={() => {
-      //   return (
-      //     <View style={styles.containerSwipe}>
-      //       <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
-      //         {listImage.length > 0 &&
-      //           listImage.map((item: any, index: any) => {
-      //             return (
-      //               <AppImage uri={item} style={styles.image} key={index} />
-      //             );
-      //           })}
-      //       </Swiper>
-      //     </View>
-      //   );
-      // }}
       ListHeaderComponent={() => {
         return (
           <View style={styles.containerSwipe}>
             <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
-              {data?.image?.length > 0 &&
-                data?.image?.map((item: any, index: any) => {
+              {listImage.length > 0 &&
+                listImage.map((item: any, index: any) => {
                   return (
                     <AppImage uri={item} style={styles.image} key={index} />
                   );
@@ -74,6 +60,20 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
           </View>
         );
       }}
+      // ListHeaderComponent={() => {
+      //   return (
+      //     <View style={styles.containerSwipe}>
+      //       <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
+      //         {data?.image?.length > 0 &&
+      //           data?.image?.map((item: any, index: any) => {
+      //             return (
+      //               <AppImage uri={item} style={styles.image} key={index} />
+      //             );
+      //           })}
+      //       </Swiper>
+      //     </View>
+      //   );
+      // }}
     />
   );
 });

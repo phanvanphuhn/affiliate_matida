@@ -27,17 +27,6 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>branch_key</key>
-	<dict>
-			<key>live</key>
-			<string>key_live_ovhk6O9nO0H4a2kWA1JocejpEsoO1M7i</string>
-		</dict>
-	<key>branch_universal_link_domains</key>
-		<array>
-			<string>matida.app.link</string>
-			<string>matida-alternate.app.link</string>
-			<string>matida.test.app.link</string>
-		</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -47,15 +36,15 @@
 			</array>
 		</dict>
 		<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>matida</string>
-				</array>
-				<key>CFBundleURLName</key>
-				<string>com.growth.levers.matida</string>
-			</dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.growth.levers.matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida</string>
+			</array>
+		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -96,16 +85,31 @@
 				<string>com.growth.levers.matida</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.growth.levers.matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida.app.link</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.growth.levers.matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida-alternate.app.link</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CodePushDeploymentKey</key>
-	<!-- PRODUCT -->
 	<string>KMAL5G75tak3x4qyPCIahmzWFugl38rFT8Aii</string>
-	<!-- STAGGING -->
-	<!-- <string>VxBWiTOax_Xi1voP-41-nI-E6vW7b_kAZ_zYY</string> -->
-	<!-- Testing -->
-	<!-- <string>GGK8l1OTBPmIGo0QBh6Bch175ua2EsGM8gsrG</string> -->
 	<key>FacebookAppID</key>
 	<string>1325262418044786</string>
 	<key>FacebookClientToken</key>
@@ -186,6 +190,17 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_ovhk6O9nO0H4a2kWA1JocejpEsoO1M7i</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>matida.app.link</string>
+		<string>matida-alternate.app.link</string>
+		<string>matida.test.app.link</string>
+	</array>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
 		<string>merchant.com.growth.levers.matida</string>

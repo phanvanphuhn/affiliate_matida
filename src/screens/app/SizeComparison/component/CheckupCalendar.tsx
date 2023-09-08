@@ -1,26 +1,47 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {scaler, stylesCommon} from '@stylesCommon';
 import {t} from 'i18next';
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {LayoutChangeEvent, StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-export const CheckupCalendar = () => {
+type Props = {
+  data: any;
+  weekSelected: number;
+  onLayoutItem: (top: number, index: number) => void;
+  onRendered: () => void;
+};
+
+export const CheckupCalendar = (props: Props) => {
+  const {data, weekSelected, onLayoutItem, onRendered} = props;
+
   const insets = useSafeAreaInsets();
 
+  const listData = Object.values(data);
+  const listPosition = useRef([0, 0, 0, 0, 0, 0, 0]);
+
+  useEffect(() => {
+    onRendered();
+  }, []);
+
   const LineView = ({
-    leftContent,
-    rightContent,
+    content,
+    isRightContent,
     isHeader,
     lastLine,
+    onLayout,
   }: {
-    leftContent?: any;
-    rightContent?: any;
+    content?: any;
+    isRightContent?: boolean;
     isHeader?: boolean;
     lastLine?: boolean;
+    onLayout?: (event: LayoutChangeEvent) => void;
   }) => {
     return (
       <View
+        onLayout={onLayout}
         style={[
           styles.lineContainer,
           lastLine && {paddingBottom: insets.bottom},
@@ -31,11 +52,11 @@ export const CheckupCalendar = () => {
             {
               // borderRightWidth: scaler(1),
               paddingRight: scaler(20),
-              opacity: leftContent ? 1 : 0,
+              opacity: !isRightContent ? 1 : 0,
             },
           ]}>
-          {leftContent}
-          {leftContent && !isHeader && <View style={styles.dot} />}
+          {content}
+          {!isRightContent && !isHeader && <View style={styles.dot} />}
         </View>
         <View
           style={{
@@ -51,11 +72,11 @@ export const CheckupCalendar = () => {
             {
               // borderLeftWidth: scaler(1),
               paddingLeft: scaler(20),
-              opacity: rightContent ? 1 : 0,
+              opacity: isRightContent ? 1 : 0,
             },
           ]}>
-          {rightContent}
-          {rightContent && !isHeader && <View style={styles.dotRight} />}
+          {content}
+          {isRightContent && !isHeader && <View style={styles.dotRight} />}
         </View>
       </View>
     );
@@ -74,68 +95,75 @@ export const CheckupCalendar = () => {
     rangeDate,
     rangeWeek,
   }: {
-    rangeDate: {start?: string; end?: string};
-    rangeWeek: {start?: string; end?: string};
+    rangeDate: {start?: string; end?: string; range?: string};
+    rangeWeek: {start?: string; end?: string; range?: string};
   }) => {
     return (
       <View>
         <Text style={styles.txtWeek}>{`${rangeWeek.start}-${rangeWeek.end} ${t(
           'home.sizeComparison.weeks',
         )}`}</Text>
-        <Text
-          style={
-            styles.txtContent
-          }>{`${rangeDate.start}-${rangeDate.end}`}</Text>
+        <Text style={styles.txtContent}>
+          {rangeDate?.range
+            ? rangeDate?.range
+            : `${rangeDate.start}-${rangeDate.end}`}
+        </Text>
       </View>
     );
   };
 
+  const ItemGroups = useCallback(
+    ({groups, indexGroups}: {groups: any; indexGroups: number}) => {
+      const period = groups?.contents[0]?.period_number ?? [];
+      return (
+        <>
+          <LineView
+            onLayout={e => {
+              const top = e.nativeEvent.layout.y;
+              if (top > 0) {
+                listPosition.current[indexGroups] = top;
+              }
+              onLayoutItem(top, indexGroups);
+            }}
+            content={
+              <Week
+                rangeDate={{
+                  range: groups?.dateRange,
+                }}
+                rangeWeek={{end: period[1] ?? '0', start: period[0] ?? '0'}}
+              />
+            }
+            isHeader
+          />
+          {groups?.contents?.map((week: any, index: number) => {
+            return (
+              <LineView
+                content={
+                  <Section
+                    title={week?.title}
+                    content={week?.description ?? ''}
+                  />
+                }
+                lastLine={
+                  indexGroups === listData?.length - 1 &&
+                  index === groups?.length - 1
+                }
+                isRightContent={week?.position === 'right'}
+              />
+            );
+          })}
+        </>
+      );
+    },
+    [],
+  );
+
   return (
     <View style={[styles.container]}>
-      <LineView
-        leftContent={
-          <Section
-            title="Test for antibodies"
-            content={
-              "Your body in week 15 At 15 weeks, you may be boasting a belly that's clearly pregnant"
-            }
-          />
-        }
-      />
-      <LineView
-        leftContent={
-          <Week
-            rangeDate={{
-              end: '30/08/2023',
-              start: '18/07/2023',
-            }}
-            rangeWeek={{end: '25', start: '20'}}
-          />
-        }
-        isHeader
-      />
-      <LineView
-        rightContent={
-          <Section
-            title="Changes of your body in
-            week 20"
-            content={
-              "Your body in week 15 At 15 weeks, you may be boasting a belly that's clearly pregnant. It's different for every woman, though. If you're a first-time mom, you'll probably start showing later since your abdominal and uterine muscles haven't been stretched by a previous pregnancy."
-            }
-          />
-        }
-      />
-      <LineView
-        leftContent={
-          <Section
-            title="Nuchal Translucency (NT) Screening"
-            content={
-              "Your body in week 15 At 15 weeks, you may be boasting a belly that's clearly pregnant"
-            }
-          />
-        }
-        lastLine
-      />
+      {listData?.length > 0 &&
+        listData?.map((groups: any, indexGroups: number) => {
+          return <ItemGroups groups={groups} indexGroups={indexGroups} />;
+        })}
     </View>
   );
 };

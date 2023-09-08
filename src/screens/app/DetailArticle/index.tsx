@@ -1,5 +1,14 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {event, eventType, trackingAppEvent, useContentView, useUXCam} from '@util';
+import {
+  event,
+  eventType,
+  trackingAppEvent,
+  useContentView,
+  useUXCam,
+} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, ScrollView, StyleSheet, Text, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';

@@ -4,7 +4,6 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 
 import {AppImage} from '@component';
-import {OptionComparison} from '@constant';
 import {iconNext} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
@@ -27,8 +26,8 @@ export const SizeComparisonComponent = () => {
       eventType.AFF_FLYER,
     );
     navigate(ROUTE_NAME.SIZE_COMPARISON, {
-      option: OptionComparison.EMBRYO,
-      // option: 1,
+      // option: OptionComparison.EMBRYO,
+      option: 1,
     });
   };
 
