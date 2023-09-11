@@ -18,9 +18,9 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
   event,
   eventType,
+  logoutWebEngage,
   trackingAppEvent,
   useUXCam,
-  VERSION_APP,
   VERSION_CODE_PUSH,
 } from '@util';
 import React, {useEffect, useState} from 'react';
@@ -54,7 +54,8 @@ const Setting = () => {
         backgroundColor: 'transparent',
       });
     } finally {
-      trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL)
+      trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL);
+      logoutWebEngage();
       dispatch(logOut());
       dispatch(clearListChat());
       dispatch(cleanHome());
@@ -169,7 +170,9 @@ const Setting = () => {
       })}
       <View style={styles.viewBottom}>
         <Text style={styles.txtBottom}>
-          {`${t('setting.version')}${DeviceInfo?.getVersion()} - ${VERSION_CODE_PUSH}`}
+          {`${t(
+            'setting.version',
+          )}${DeviceInfo?.getVersion()} - ${VERSION_CODE_PUSH}`}
         </Text>
       </View>
       <ModalConfirm

@@ -1,13 +1,15 @@
-import { WEEK_MAX } from '@constant';
+import {WEEK_MAX} from '@constant';
 import dayjs from 'dayjs';
-import { t } from 'i18next';
-import { Mixpanel } from 'mixpanel-react-native';
-import { ColorValue } from 'react-native';
+import {t} from 'i18next';
+import {Mixpanel} from 'mixpanel-react-native';
+import {ColorValue} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
-import branch, { BranchEvent, BranchEventParams } from 'react-native-branch';
+import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
+// @ts-ignore
+import WebEngage from 'react-native-webengage';
 import reactotron from 'reactotron-react-native';
-import { event } from './eventTracking';
-
+import {event} from './eventTracking';
+var webengage = new WebEngage();
 let buoApp: any = null;
 
 const validTag = /^<\/?[A-Za-z]+>$/;
@@ -17,8 +19,17 @@ const mixpanel = new Mixpanel(
   trackAutomaticEvents,
 );
 
-export const isShowForReviewer =  (user: any) => {
-   const {id} = user;
+//WebEngage
+export const loginWebEngage = (identify: string) => {
+  webengage?.user?.login(identify);
+};
+
+export const logoutWebEngage = () => {
+  webengage?.user?.logout();
+};
+
+export const isShowForReviewer = (user: any) => {
+  const {id} = user;
   if (id == 89 || id == 18257) {
     return false;
   } else {
@@ -203,6 +214,7 @@ export const trackingAppEvent = async (
         break;
       default:
         trackEventBranch(eventName, eventParams);
+        trackWebEngage(eventName, eventParams);
         break;
     }
     //     mixpanel.identify(id)
@@ -246,6 +258,14 @@ export const trackEventBranch = async (
     reactotron.log?.('LOG EVENT', eventName);
   } catch (error) {
     reactotron.log?.('ERROR LOG EVENT', eventName);
+  }
+};
+
+const trackWebEngage = (eventName: any, eventParams: any) => {
+  try {
+    webengage.track(eventName, eventParams);
+  } catch (error) {
+    reactotron.log?.('ERROR LOG EVENT WEBENGAGE', eventName);
   }
 };
 

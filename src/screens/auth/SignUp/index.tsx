@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 
-import {event, trackingAppEvent, eventType} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import {Step1} from './Component/Step1';
 import {Step2} from './Component/Step2';
 import {Step3} from './Component/Step3';

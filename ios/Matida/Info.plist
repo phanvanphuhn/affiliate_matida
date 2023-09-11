@@ -190,6 +190,26 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+
+	<key>WEGLicenseCode</key>
+	<string>0123456</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
+	<key>WEGEnableLocationAuthorizationRequest</key>
+	<string>ALWAYS</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>ALWAYS DESCRIPTION</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location in Use</string>
+	<key>WEGLogLevel</key>
+	<string>DEFAULT</string>
+	<key>WEGEnvironment</key>
+	<string>DEFAULT</string>
+	<key>WEGAlternateAppSupport</key>
+	<string>NO</string>
+
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>com.apple.developer.in-app-payments</key>

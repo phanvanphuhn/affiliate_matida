@@ -5,6 +5,7 @@
 #import <ZaloSDK/ZaloSDK.h>
 #import <AppsFlyerLib/AppsFlyerLib.h>
 #import <RNBranch/RNBranch.h>
+#import <WebEngage/WebEngage.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -12,6 +13,7 @@
 
 #import <React/RCTAppSetupUtils.h>
 #import <CodePush/CodePush.h>
+
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -76,6 +78,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [self.window makeKeyAndVisible];
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
   [[ZaloSDK sharedInstance] initializeWithAppId:@"2775448152357876593"];
+
+    [[WebEngage sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
   return YES;
 }
 

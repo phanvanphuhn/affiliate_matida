@@ -302,6 +302,9 @@ dependencies {
     implementation 'com.stripe:stripe-android:20.25.8'
     implementation 'com.google.android.gms:play-services-wallet:19.2.0-beta01'
 
+    implementation 'com.webengage:android-sdk:4.+'
+    implementation 'com.android.installreferrer:installreferrer:1.1.1'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
     }

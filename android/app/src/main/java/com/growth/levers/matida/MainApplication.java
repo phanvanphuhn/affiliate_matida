@@ -15,6 +15,9 @@ import com.microsoft.codepush.react.CodePush;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import io.branch.rnbranch.RNBranchModule;
+import com.webengage.sdk.android.WebEngageConfig;
+import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
+import com.webengage.WebengageBridge;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -66,6 +69,12 @@ public class MainApplication extends Application implements ReactApplication {
     RNBranchModule.enableLogging();
   
     RNBranchModule.getAutoInstance(this);
+    WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
+              .setWebEngageKey("")
+              .setDebugMode(true) // only in development mode
+              .build();
+  registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this, webEngageConfig));
+  WebengageBridge.getInstance();
     // initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
