@@ -2,7 +2,7 @@ import {WEEK_MAX} from '@constant';
 import dayjs from 'dayjs';
 import {t} from 'i18next';
 import {Mixpanel} from 'mixpanel-react-native';
-import {ColorValue} from 'react-native';
+import {ColorValue, Linking} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
 import reactotron from 'reactotron-react-native';
@@ -259,3 +259,16 @@ export function isSameDay(currentMessage: any, diffMessage: any) {
   }
   return currentCreatedAt.isSame(diffCreatedAt, 'day');
 }
+
+export const openUrl = (url: string) => {
+  try {
+    Linking.canOpenURL(url).then(result => {
+      if (result) {
+        reactotron.log?.('OPENING' + url);
+        Linking.openURL(url);
+      }
+    });
+  } catch (error) {
+    console.log('OPEN URL FAILED');
+  }
+};

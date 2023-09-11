@@ -51,12 +51,14 @@ export const DetailArticle = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
-  const {article} = route?.params;
-  const {id, isTimeline = false} = article;
+  const {article, idArticle} = route?.params;
+  // const {id, isTimeline = false} = article;
+  const id = article?.id ?? idArticle;
+  const isTimeline = article?.isTimeline;
   const [listRelated, setListRelated] = useState<any[]>([]);
   const [articleDetail, setArticleDetail] = useState<any>(article);
   const [bookmark, setBookMark] = useState<boolean>(
-    articleDetail.is_saved === 1 ? true : false,
+    articleDetail?.is_saved === 1 ? true : false,
   );
 
   const [paused, setPaused] = useState(true);
@@ -100,7 +102,7 @@ export const DetailArticle = () => {
   const getArticlesDetail = async () => {
     try {
       GlobalService.showLoading();
-      const res = await getArticleDetail(id ?? 1);
+      const res = await getArticleDetail(id ? id : idArticle ?? 1);
       setArticleDetail(res?.data);
       setBookMark(res?.data?.is_saved === 1 ? true : false);
       refBookmark.current = res?.data?.is_saved === 1 ? true : false;

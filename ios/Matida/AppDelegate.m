@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import <React/RCTLinkingManager.h>
 #import <Firebase.h>
 #import "RNBootSplash.h"
 #import <FBSDKCoreKit/FBSDKCoreKit-swift.h>
@@ -91,12 +92,14 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
                                                                openURL:url
                                                                options:options];
   
-  return handledF || handledZ;
+  return handledF || handledZ || [RCTLinkingManager application:app openURL:url options:options];
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
    [RNBranch continueUserActivity:userActivity];
-   return YES;
+   return [RCTLinkingManager application:application
+                  continueUserActivity:userActivity
+                    restorationHandler:restorationHandler];
 }
 
 // AppsFlyerLib

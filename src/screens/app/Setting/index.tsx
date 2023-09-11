@@ -10,6 +10,7 @@ import {
   SvgPrivacy,
   SvgProfileUser,
 } from '@images';
+import {goBack} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
 import {cleanHome, clearExplore, clearListChat, logOut} from '@redux';
 import {ROUTE_NAME} from '@routeName';
@@ -20,7 +21,6 @@ import {
   eventType,
   trackingAppEvent,
   useUXCam,
-  VERSION_APP,
   VERSION_CODE_PUSH,
 } from '@util';
 import React, {useEffect, useState} from 'react';
@@ -54,7 +54,7 @@ const Setting = () => {
         backgroundColor: 'transparent',
       });
     } finally {
-      trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL)
+      trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL);
       dispatch(logOut());
       dispatch(clearListChat());
       dispatch(cleanHome());
@@ -152,7 +152,11 @@ const Setting = () => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() => {
+            // navigation.goBack();
+            goBack();
+          }}>
           <Image source={iconClose} />
         </TouchableOpacity>
       </View>
@@ -169,7 +173,9 @@ const Setting = () => {
       })}
       <View style={styles.viewBottom}>
         <Text style={styles.txtBottom}>
-          {`${t('setting.version')}${DeviceInfo?.getVersion()} - ${VERSION_CODE_PUSH}`}
+          {`${t(
+            'setting.version',
+          )}${DeviceInfo?.getVersion()} - ${VERSION_CODE_PUSH}`}
         </Text>
       </View>
       <ModalConfirm

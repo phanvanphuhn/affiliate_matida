@@ -40,11 +40,12 @@ import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
 
 import {imageBackgroundOpacity} from '@images';
 import {
-  APP_SIGN_ZEGO_KEY,
   APPID_ZEGO_KEY,
   AppNotification,
+  APP_SIGN_ZEGO_KEY,
   eventType,
   handleDeepLink,
+  openUrl,
   useUXCam,
 } from '@util';
 //@ts-ignore
@@ -199,7 +200,8 @@ const Home = () => {
   };
 
   const navigateSetting = () => {
-    navigation.navigate(ROUTE_NAME.SETTING_SCREEN);
+    // navigation.navigate(ROUTE_NAME.SETTING_SCREEN);
+    openUrl('matida://app/article/258');
   };
 
   const navigateNotification = () => {

@@ -11,6 +11,7 @@ import InAppReview from 'react-native-in-app-review';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'src/redux/rootReducer';
 import {screens} from '../screens';
+import {linking} from './Linking';
 import {ROUTE_NAME} from './routeName';
 import StackTab from './StackTab';
 
@@ -33,20 +34,6 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
     (state: RootState) => state?.auth?.isSeenComment,
   );
   const isReview = useSelector((state: RootState) => state?.auth?.isReview);
-
-  //   React.useEffect(() => {
-  //     LinkingService.getInitialURL().then(url => {
-  //       if (url) {
-  //         handleURL({url});
-  //       }
-  //     });
-  //
-  //     const subListener = LinkingService.addLinkingListener(handleURL);
-  //
-  //     return () => {
-  //       LinkingService.removeLinkingListener(subListener);
-  //     };
-  //   }, []);
 
   // React.useEffect(() => {
   //   if (token) {
@@ -372,7 +359,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   return (
     <NavigationContainer
       ref={ref}
-      // linking={linking}
+      linking={linking}
       onReady={() => RNBootSplash.hide({fade: true, duration: 500})}>
       {renderScreenSigned()}
     </NavigationContainer>

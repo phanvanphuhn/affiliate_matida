@@ -10,7 +10,6 @@ import {
   answerDailyQuiz,
   getCalendarCheckup,
   getSizeComparison,
-  getValueTimeLine,
   GlobalService,
 } from '@services';
 import {colors} from '@stylesCommon';
@@ -34,7 +33,7 @@ const SizeComparison = () => {
   const dispatch = useDispatch();
 
   const route = useRoute<any>();
-  const {option} = route?.params;
+  const {option = 1} = route?.params;
   const weekNotifi = route?.params?.week;
   const homeData = useSelector((state: any) => state?.home);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
@@ -75,8 +74,8 @@ const SizeComparison = () => {
         .concat(res?.data?.baby_size?.image)
         .concat(res?.data?.mom?.image);
       setListImage(image ?? []);
-      const resTimeline = await getValueTimeLine(value);
-      setDataTimeline(resTimeline?.data?.data);
+      // const resTimeline = await getValueTimeLine(value);
+      // setDataTimeline(resTimeline?.data?.data);
     } catch (error) {
     } finally {
       GlobalService.hideLoading();
