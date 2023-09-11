@@ -1,12 +1,12 @@
-import { WEEK_MAX } from '@constant';
+import {WEEK_MAX} from '@constant';
 import dayjs from 'dayjs';
-import { t } from 'i18next';
-import { Mixpanel } from 'mixpanel-react-native';
-import { ColorValue } from 'react-native';
+import {t} from 'i18next';
+import {Mixpanel} from 'mixpanel-react-native';
+import {ColorValue} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
-import branch, { BranchEvent, BranchEventParams } from 'react-native-branch';
+import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
 import reactotron from 'reactotron-react-native';
-import { event } from './eventTracking';
+import {event} from './eventTracking';
 
 let buoApp: any = null;
 
@@ -18,12 +18,12 @@ const mixpanel = new Mixpanel(
 );
 
 export const isShowForReviewer = (user: any) => {
-  if(user?.id == 18257 && user?.id == 89){
-    return false
-  }else{
-    return true
+  if (user?.id == 18257 || user?.id == 89) {
+    return false;
+  } else {
+    return true;
   }
-}
+};
 
 export const eventType = {
   MIX_PANEL: 'mix_panel',
