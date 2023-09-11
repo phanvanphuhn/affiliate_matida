@@ -17,14 +17,13 @@ const mixpanel = new Mixpanel(
   trackAutomaticEvents,
 );
 
-export const isShowForReviewer =  (user: any) => {
-   const {id} = user;
-  if (id == 89 || id == 18257) {
-    return false;
-  } else {
-    return true;
+export const isShowForReviewer = (user: any) => {
+  if(user?.id == 18257 && user?.id == 89){
+    return false
+  }else{
+    return true
   }
-};
+}
 
 export const eventType = {
   MIX_PANEL: 'mix_panel',
