@@ -17,7 +17,7 @@ export const MERCHANT_IDENTIFIER = 'merchant.com.growth.levers.matida';
 const environment: EEnvironment = EEnvironment.PRODUCT;
 
 export const VERSION_APP = '1.1.9';
-export const VERSION_CODE_PUSH = `v6.1${
+export const VERSION_CODE_PUSH = `v6.5${
   environment === EEnvironment.PRODUCT ? '' : '(staging)'
 }`;
 
@@ -35,7 +35,7 @@ export const BASEURL =
     : 'https://api.matida.dev/api/'; //DOMAIN DEV
 export const socketURL =
   environment === EEnvironment.PRODUCT
-    ? 'https://api.matida.app' //SOCKET product
+    ? 'https://socket.matida.app' //SOCKET product
     : 'https://api.matida.dev'; //SOCKET DEV
 export const KEY_UXCAM = 'ayds69vc0q4shqf';
 export const STRIPE_KEY =
