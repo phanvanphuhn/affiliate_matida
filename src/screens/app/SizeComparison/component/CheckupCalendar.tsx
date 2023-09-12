@@ -94,15 +94,21 @@ export const CheckupCalendar = (props: Props) => {
   const Week = ({
     rangeDate,
     rangeWeek,
+    afterBirth,
   }: {
     rangeDate: {start?: string; end?: string; range?: string};
     rangeWeek: {start?: string; end?: string; range?: string};
+    afterBirth?: boolean;
   }) => {
     return (
       <View>
-        <Text style={styles.txtWeek}>{`${rangeWeek.start}-${rangeWeek.end} ${t(
-          'home.sizeComparison.weeks',
-        )}`}</Text>
+        <Text style={styles.txtWeek}>
+          {afterBirth
+            ? t('sizeComparison.afterBirth')
+            : `${rangeWeek.start}-${rangeWeek.end} ${t(
+                'home.sizeComparison.weeks',
+              )}`}
+        </Text>
         <Text style={styles.txtContent}>
           {rangeDate?.range
             ? rangeDate?.range
@@ -131,6 +137,7 @@ export const CheckupCalendar = (props: Props) => {
                   range: groups?.dateRange,
                 }}
                 rangeWeek={{end: period[1] ?? '0', start: period[0] ?? '0'}}
+                afterBirth={indexGroups === 6}
               />
             }
             isHeader
@@ -146,7 +153,7 @@ export const CheckupCalendar = (props: Props) => {
                 }
                 lastLine={
                   indexGroups === listData?.length - 1 &&
-                  index === groups?.length - 1
+                  index === groups?.contents?.length - 1
                 }
                 isRightContent={week?.position === 'right'}
               />
