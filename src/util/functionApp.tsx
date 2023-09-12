@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import {t} from 'i18next';
 import {Mixpanel} from 'mixpanel-react-native';
 import {ColorValue} from 'react-native';
-import appsFlyer from 'react-native-appsflyer';
 import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
 import reactotron from 'reactotron-react-native';
 import {event} from './eventTracking';
@@ -178,42 +177,8 @@ export const trackingAppEvent = async (
   user?: any,
 ) => {
   try {
-    switch (type) {
-      case eventType.MIX_PANEL:
-        if (user) {
-          mixpanel.identify(user.id);
-        }
-        if (eventName == event.SYSTEM.LOG_OUT) {
-          mixpanel.reset();
-        }
-        mixpanel.track(eventName, eventParams);
-        break;
-      case eventType.AFF_FLYER:
-        appsFlyer.logEvent(
-          eventName,
-          eventParams,
-          res => {
-            console.log('TrackingEvent', eventName, eventParams, res);
-          },
-          err => {
-            console.error('TrackingEvent', eventName, eventParams, err);
-          },
-        );
-        break;
-      default:
-        trackEventBranch(eventName, eventParams);
-        break;
-    }
-    //     mixpanel.identify(id)
-    // mixpanel.set({
-    //   '$first_name': user.first_name,
-    //   '$last_name': user.last_name,
-    //   'FB Gender': user.gender,
-    //   'FB Locale': user.locale,
-    //   'FB Timezone': user.timezone,
-    //   '$email': user.email,
-    //   'Last Login': now,
-    // });
+    trackEventMixpanel(eventName, eventParams, user);
+    trackEventBranch(eventName, eventParams);
   } catch (error) {}
 };
 
@@ -223,6 +188,20 @@ export const createBranchUniversalObject = async (
 ) => {
   const result = await branch.createBranchUniversalObject(identifier, options);
   buoApp = result;
+};
+
+export const trackEventMixpanel = (
+  eventName: any,
+  eventParams: any,
+  user?: any,
+) => {
+  if (user) {
+    mixpanel.identify(user.id);
+  }
+  if (eventName === event.SYSTEM.LOG_OUT) {
+    mixpanel.reset();
+  }
+  mixpanel.track(eventName, eventParams);
 };
 
 export const trackEventBranch = async (
@@ -238,10 +217,10 @@ export const trackEventBranch = async (
     // buoApp?.logEvent(eventName, {
     //   customData: params,
     // });
-    const event = new BranchEvent(eventName, null, {
+    const eventLog = new BranchEvent(eventName, null, {
       customData: params,
     });
-    event.logEvent();
+    eventLog.logEvent();
     reactotron.log?.('LOG EVENT', eventName);
   } catch (error) {
     reactotron.log?.('ERROR LOG EVENT', eventName);
