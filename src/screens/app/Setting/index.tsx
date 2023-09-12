@@ -30,13 +30,26 @@ import DeviceInfo from 'react-native-device-info';
 import {showMessage} from 'react-native-flash-message';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
+import CodePush from 'react-native-code-push';
+
+interface Version {
+  label: string | undefined,
+  version: string | undefined
+}
 
 const Setting = () => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [version, setVersion] = useState<Version>({label: '1.1.1', version: 'v1.1'})
   const {t} = useTranslation();
+
+  useEffect(()=>{
+    CodePush.getUpdateMetadata().then(info => {
+      setVersion({label: info?.label, version: info?.appVersion})
+    })
+  },[])
 
   useEffect(() => {
     trackingAppEvent(event.SCREEN.SETTING_SCREEN, {}, eventType.AFF_FLYER);
@@ -169,7 +182,7 @@ const Setting = () => {
       })}
       <View style={styles.viewBottom}>
         <Text style={styles.txtBottom}>
-          {`${t('setting.version')}${DeviceInfo?.getVersion()} - ${VERSION_CODE_PUSH}`}
+        {`${t('setting.version')}${version.version} - ${version.label}`}
         </Text>
       </View>
       <ModalConfirm
