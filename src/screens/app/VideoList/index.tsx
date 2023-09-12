@@ -4,7 +4,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {getListVideoOfWeek, GlobalService} from '@services';
 import {colors} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -41,7 +41,7 @@ const VideoList = () => {
   useFocusEffect(
     React.useCallback(() => {
       refPage.current = 1;
-      trackingAppEvent(event.SCREEN.VIDEO_LIST, {});
+      trackingAppEvent(event.SCREEN.VIDEO_LIST, {}, eventType.AFF_FLYER);
       getListVideo(refWeek.current);
     }, [week]),
   );

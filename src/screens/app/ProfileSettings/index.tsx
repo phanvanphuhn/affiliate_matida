@@ -15,6 +15,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {colors, scaler, widthScreen} from '@stylesCommon';
 import {
   event,
+  eventType,
   trackingAppEvent,
   useUXCam,
   validateForm,
@@ -131,7 +132,7 @@ const ProfileSettingsScreen = () => {
   );
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.PROFILE_SETTINGS, {});
+    trackingAppEvent(event.SCREEN.PROFILE_SETTINGS, {}, eventType.AFF_FLYER);
     if (user) {
       if (user?.calling_code) {
         setPhoneCode(user?.calling_code?.replace('+', ''));

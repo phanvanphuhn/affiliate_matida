@@ -15,6 +15,7 @@ const Step2 = React.memo((props: any) => {
   const {onChangeStep} = props;
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const [errMsg, setErrMsg] = React.useState<string | null>();
 
   const formInitialValues = {
     phoneNumber: '',
@@ -51,6 +52,9 @@ const Step2 = React.memo((props: any) => {
       );
       GlobalService.hideLoading();
     } catch (error) {
+      lang === 2
+        ? setErrMsg('Số điện thoại không hợp lệ')
+        : setErrMsg('Phone number is invalid');
       GlobalService.hideLoading();
     }
   };
@@ -78,7 +82,7 @@ const Step2 = React.memo((props: any) => {
                   label={`${t('signUp.phoneNumber')}`}
                   value={props.values.phoneNumber}
                   onValueChange={props.handleChange('phoneNumber')}
-                  error={props.errors.phoneNumber}
+                  error={errMsg ? errMsg : props.errors.phoneNumber}
                   style={styles.customInput}
                   keyboardType="numeric"
                 />

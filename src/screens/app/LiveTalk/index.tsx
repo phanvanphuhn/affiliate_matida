@@ -12,10 +12,10 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {getListBannerApi, getLiveTalk} from '@services';
 import {colors, scaler, widthScreen} from '@stylesCommon';
+import {isShowForReviewer, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
-  FlatList,
   Image,
   RefreshControl,
   ScrollView,
@@ -25,7 +25,6 @@ import {
 import Swiper from 'react-native-swiper';
 import {useDispatch, useSelector} from 'react-redux';
 import {styles} from './styles';
-import {trackingAppEvent, event, useUXCam} from '@util';
 
 type IData = {
   momLiveTalks: any[];
@@ -42,6 +41,7 @@ const initData: IData = {
 const LiveTalk = () => {
   const dispatch = useDispatch();
   const isFocus = useSelector((state: any) => state?.tab?.liveTalk);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
@@ -262,7 +262,7 @@ const LiveTalk = () => {
         </ScrollView>
       </View>
       <ButtonCreateTalk />
-      <FLoatingAIButton />
+      {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
 };

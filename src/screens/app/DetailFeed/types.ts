@@ -9,6 +9,7 @@ export interface IStateVideo {
   size?: number;
   total?: number;
   currentIndex?: number;
+  index?: number;
   refreshing?: boolean;
   isOpen?: boolean;
   isLoading?: boolean;

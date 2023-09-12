@@ -11,7 +11,6 @@ const useDetailFeed = () => {
   const route = useRoute<any>();
 
   const {state, setState} = useVideo();
-  console.log('=>(useDetailFeed.ts:14) state', state);
 
   const getIndex = (index: number, page: number) => {
     return index >= SIZE_DEFAULT ? index - (page - 1) * SIZE_DEFAULT : index;
@@ -25,24 +24,20 @@ const useDetailFeed = () => {
       route.params?.id,
     );
     if (res.success) {
-      console.log('=>(useCommentFeed.ts:49) res', res);
       let page = Math.ceil((res?.data?.feed_detail?.index + 1) / SIZE_DEFAULT);
-      let currentIndex = getIndex(res?.data?.feed_detail?.index, page);
-      console.log('=>(useDetailFeed.ts:31) currentIndex', currentIndex);
-      console.log('=>(useDetailFeed.ts:27) page', page);
+      let index = getIndex(res?.data?.feed_detail?.index, page);
       setState({
         is_liked: res?.data?.is_liked,
         totalComment: res?.data?.total_comments,
         page,
-        currentIndex,
+        index,
+        currentIndex: index,
       });
     }
   };
 
   useEffect(() => {
     getDetail();
-
-    console.log('=>(useDetailFeed.ts:37) route.params', route.params);
   }, [route.params?.id, route.params?.content_type]);
 
   // useEffect(() => {
@@ -61,15 +56,9 @@ const useDetailFeed = () => {
       setState({isLoadMore: false, refreshing: false});
     } catch (error: any) {
       setState({isLoadMore: false, refreshing: false});
-
-      console.log('=>(useDetailFeed.ts:65) error', error);
     }
   };
   const handlerData = (arr: IDataListFeed[]) => {
-    console.log(
-      '=>(useDetailFeed.ts:65) route.params?.currentPage',
-      route.params?.currentPage,
-    );
     if (arr?.length == 0) {
       if (state.page == 1 && route.params?.currentPage == 1) {
         setState({data: []});
@@ -106,7 +95,7 @@ const useDetailFeed = () => {
     }
   };
   const handleLoadLess = () => {
-    if (route.params?.currentPage > 1 && state.page > 1) {
+    if (route.params?.currentPage > 1 && state.page && state.page > 1) {
       setState({
         page: state.page - 1,
         isLoadMore: false,
@@ -116,7 +105,7 @@ const useDetailFeed = () => {
   };
   const onPageSelected = (pageNumber: number) => {
     const firstSlide = pageNumber == 0;
-    const lastSlide = pageNumber == state.data.length - 1;
+    const lastSlide = pageNumber == (state.data?.length || 0) - 1;
     if (firstSlide) {
       // handleLoadLess();
     } else if (lastSlide) {
@@ -135,8 +124,6 @@ const useDetailFeed = () => {
     }
   }, [state.refreshing]);
   useEffect(() => {
-    console.log('=>(useDetailFeed.ts:136) state.refreshing', state.refreshing);
-    console.log('=>(useDetailFeed.ts:137) state.page', state.page);
     if (!state.refreshing && state.page) {
       getListVideo();
     }

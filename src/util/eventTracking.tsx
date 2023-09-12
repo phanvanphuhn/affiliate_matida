@@ -93,4 +93,8 @@ export const event = {
     START: 'MOM_TEST_START',
     DO: 'MOM_DO_DAILY_QUIZ',
   },
+  SYSTEM: {
+    START: 'APP_LAUNCH',
+    LOG_OUT: 'LOG_OUT'
+  }
 };

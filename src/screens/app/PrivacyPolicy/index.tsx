@@ -6,7 +6,7 @@ import React, {useEffect} from 'react';
 import {ActivityIndicator, Text, View} from 'react-native';
 import WebView from 'react-native-webview';
 import {useSelector} from 'react-redux';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
 
 export const PrivacyPolicy = () => {
@@ -15,7 +15,7 @@ export const PrivacyPolicy = () => {
   const uri = `https://admin.matida.app/privacy-policy${ending}`;
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.PRIVACY_POLICY, {});
+    trackingAppEvent(event.SCREEN.PRIVACY_POLICY, {}, eventType.AFF_FLYER);
   }, []);
 
   useUXCam(ROUTE_NAME.PRIVACY_POLICY);

@@ -2,7 +2,7 @@ import {AppCameraModal2, HeaderChatGPT} from '@component';
 import {SvgArrowLeft, iconSend} from '@images';
 import {ROUTE_NAME} from '@routeName';
 import {colors} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useCallback, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ActivityIndicator, Image, Platform, Text, View} from 'react-native';
@@ -39,7 +39,7 @@ const ChatGPT = (props: any) => {
   useUXCam(ROUTE_NAME.CHAT_GPT);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.CHAT_GPT, {});
+    trackingAppEvent(event.SCREEN.CHAT_GPT, {}, eventType.AFF_FLYER);
   }, []);
 
   const renderMessage = useCallback((props: any) => {

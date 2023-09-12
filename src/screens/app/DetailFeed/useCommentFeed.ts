@@ -60,7 +60,6 @@ const useCommentFeed = () => {
       if (res.success) {
         let i = state.data.findIndex(e => e.id === item.id);
         let data = [...state.data];
-        console.log('=>(useCommentFeed.ts:63) data', data);
         data[i].is_liked = res.data.is_liked;
         if (res.data.is_liked) {
           data[i].total_likes += 1;
@@ -124,11 +123,11 @@ const useCommentFeed = () => {
   };
   const handlerData = (arr: IDataComment[]) => {
     if (arr?.length == 0) {
-      if (state.page == 1 && route.params?.currentPage == 1) {
+      if (state.page == 1) {
         setState({data: []});
       }
     } else {
-      if (state.page == 1 && route.params?.currentPage == 1) {
+      if (state.page == 1) {
         setState({data: arr});
       } else {
         setState({

@@ -10,7 +10,7 @@ import {styles} from '../styles';
 
 import {saveDataUser} from '@redux';
 import {GlobalService, selectDueDate, updateUserInfo} from '@services';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {showMessage} from 'react-native-flash-message';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -23,7 +23,7 @@ const ChooseDueDateScreen = () => {
   useUXCam(ROUTE_NAME.CHOOSE_DUE_DATE);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.CHOOSE_DUE_DATE, {});
+    trackingAppEvent(event.SCREEN.CHOOSE_DUE_DATE, {}, eventType.AFF_FLYER);
   }, []);
 
   const handlePressButton = async () => {

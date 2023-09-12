@@ -3,7 +3,7 @@ import {SvgLogoDailyAffirmation} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -40,14 +40,14 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
   }, [props.isFocused]);
   const onDoMomPrepTest = (question: IPackageQuizzList) => {
     if (+props.item?.maxScore === +props.item?.total_questions) {
-      trackingAppEvent(event.MOM_TEST.START, {content: props.item?.id});
+      trackingAppEvent(event.MOM_TEST.START, {content: props.item?.id}, eventType.MIX_PANEL);
       navigate(ROUTE_NAME.TEST_RESULT, {
         id: props.item?.id,
         redoTest: () => {},
         preRoute: EPreRoute.PERIODIC,
       });
     } else {
-      trackingAppEvent(event.MOM_TEST.START, {content: props.item});
+      trackingAppEvent(event.MOM_TEST.START, {content: props.item}, eventType.MIX_PANEL);
       navigate(ROUTE_NAME.TEST_DETAIL, {
         quiz: props.item,
         next_question: 1,
@@ -84,7 +84,6 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
               }
             },
           );
-          console.log('=>(PackageQuizFeed.tsx:103) newPackage', newPackage);
           setState({data: newItem, listPackage: newPackage});
         },
       });

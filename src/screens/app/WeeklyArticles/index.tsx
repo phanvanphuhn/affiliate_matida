@@ -14,7 +14,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {RefreshControl, ScrollView, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {styles} from './styles';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 
 export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
   const navigation = useNavigation<any>();
@@ -48,7 +48,7 @@ export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
   // }, [weeks]);
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.WEEKLY_ARTICLES, {});
+      trackingAppEvent(event.SCREEN.WEEKLY_ARTICLES, {}, eventType.AFF_FLYER);
       setTimeout(() => {
         scrollRef?.current?.scrollTo({x: 0, y: 0, animated: true});
       }, 50);

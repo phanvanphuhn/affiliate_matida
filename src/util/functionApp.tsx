@@ -6,6 +6,7 @@ import {ColorValue} from 'react-native';
 import appsFlyer from 'react-native-appsflyer';
 import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
 import reactotron from 'reactotron-react-native';
+import {event} from './eventTracking';
 
 let buoApp: any = null;
 
@@ -16,9 +17,18 @@ const mixpanel = new Mixpanel(
   trackAutomaticEvents,
 );
 
-const eventType = {
+export const isShowForReviewer = (user: any) => {
+  if (user?.id == 18257 || user?.id == 89) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+export const eventType = {
   MIX_PANEL: 'mix_panel',
   AFF_FLYER: 'aff_flyer',
+  BRANCH_IO: 'branch_io',
 };
 
 export const hasWhiteSpace = (s: any) => {
@@ -161,24 +171,49 @@ export function convertArrUnique(arr: any, comp: any) {
   return unique;
 }
 
-export const trackingAppEvent = async (eventName: any, eventParams: any) => {
+export const trackingAppEvent = async (
+  eventName: any,
+  eventParams: any,
+  type: string,
+  user?: any,
+) => {
   try {
-    //MixPanel
-    mixpanel.track(eventName, eventParams);
-    //Branch
-
-    trackEventBranch(eventName, eventParams);
-    //AppFlyer
-    appsFlyer.logEvent(
-      eventName,
-      eventParams,
-      res => {
-        console.log('TrackingEvent', eventName, eventParams, res);
-      },
-      err => {
-        console.error('TrackingEvent', eventName, eventParams, err);
-      },
-    );
+    switch (type) {
+      case eventType.MIX_PANEL:
+        if (user) {
+          mixpanel.identify(user.id);
+        }
+        if (eventName == event.SYSTEM.LOG_OUT) {
+          mixpanel.reset();
+        }
+        mixpanel.track(eventName, eventParams);
+        break;
+      case eventType.AFF_FLYER:
+        appsFlyer.logEvent(
+          eventName,
+          eventParams,
+          res => {
+            console.log('TrackingEvent', eventName, eventParams, res);
+          },
+          err => {
+            console.error('TrackingEvent', eventName, eventParams, err);
+          },
+        );
+        break;
+      default:
+        trackEventBranch(eventName, eventParams);
+        break;
+    }
+    //     mixpanel.identify(id)
+    // mixpanel.set({
+    //   '$first_name': user.first_name,
+    //   '$last_name': user.last_name,
+    //   'FB Gender': user.gender,
+    //   'FB Locale': user.locale,
+    //   'FB Timezone': user.timezone,
+    //   '$email': user.email,
+    //   'Last Login': now,
+    // });
   } catch (error) {}
 };
 

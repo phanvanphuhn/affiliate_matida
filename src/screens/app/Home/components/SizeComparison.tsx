@@ -8,7 +8,7 @@ import {iconNext} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {event, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import {OptionComparison} from '@constant';
 
 export const SizeComparisonComponent = () => {
@@ -21,7 +21,7 @@ export const SizeComparisonComponent = () => {
     : '';
 
   const handlePress = () => {
-    trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_OPEN, {});
+    trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_OPEN, {}, eventType.AFF_FLYER);
     navigate(ROUTE_NAME.SIZE_COMPARISON, {
       option: OptionComparison.EMBRYO,
     });

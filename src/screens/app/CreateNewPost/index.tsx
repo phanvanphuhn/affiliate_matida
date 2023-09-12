@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {GlobalService, createPostApi, uploadImage} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, hasWhiteSpace, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, hasWhiteSpace, trackingAppEvent, useUXCam} from '@util';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -49,7 +49,7 @@ const CreateNewPost = (props: {
   useUXCam(ROUTE_NAME.CREATE_NEWPOST);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.CREATE_NEWPOST, {});
+    trackingAppEvent(event.SCREEN.CREATE_NEWPOST, {}, eventType.AFF_FLYER);
   }, []);
 
   const createPost = async () => {
@@ -62,7 +62,7 @@ const CreateNewPost = (props: {
         image: imageUrlApi,
         is_anonymous: isAnonymous,
       };
-      trackingAppEvent(event.FORUM.POST_IN_FORUM, {content: body});
+      trackingAppEvent(event.FORUM.POST_IN_FORUM, {content: body}, eventType.AFF_FLYER);
       const res = await createPostApi(body);
       showMessage({
         message: t('post.message_success_post'),

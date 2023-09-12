@@ -2,7 +2,7 @@ import {ButtonCreateTalk, Header} from '@component';
 import {SvgArrowLeft} from '@images';
 import {useFocusEffect} from '@react-navigation/native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -35,7 +35,7 @@ const AllMeetingRoom = () => {
   useUXCam(ROUTE_NAME.ALL_MEETING_ROOM);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.ALL_MEETING_ROOM, {});
+    trackingAppEvent(event.SCREEN.ALL_MEETING_ROOM, {}, eventType.AFF_FLYER);
   }, []);
 
   useFocusEffect(

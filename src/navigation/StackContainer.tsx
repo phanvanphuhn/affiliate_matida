@@ -34,14 +34,14 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   );
   const isReview = useSelector((state: RootState) => state?.auth?.isReview);
 
-  React.useEffect(() => {
-    if (token) {
-      init(token);
-      return () => {
-        endConnect();
-      };
-    }
-  }, [token]);
+  // React.useEffect(() => {
+  //   if (token) {
+  //     init(token);
+  //     return () => {
+  //       endConnect();
+  //     };
+  //   }
+  // }, [token]);
 
   React.useEffect(() => {
     if (

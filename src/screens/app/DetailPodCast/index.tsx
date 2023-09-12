@@ -11,7 +11,7 @@ import {goBack} from '@navigation';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {getPodcastDetail, likePodCast, unlikePodCast} from '@services';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {convertLangMonth, useContentView, useUXCam} from '@util';
+import {convertLangMonth, eventType, useContentView, useUXCam} from '@util';
 import {t} from 'i18next';
 import moment from 'moment';
 import React, {useEffect, useRef, useState} from 'react';
@@ -67,7 +67,7 @@ export const DetailPodCast = () => {
 
   useEffect(() => {
     getData();
-    trackingAppEvent(event.SCREEN.DETAIL_PODCAST, {});
+    trackingAppEvent(event.SCREEN.DETAIL_PODCAST, {}, eventType.AFF_FLYER);
   }, []);
 
   useEffect(() => {

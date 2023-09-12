@@ -25,7 +25,6 @@ const ItemArticle = (props: ItemArticleProps) => {
   );
   useEffect(() => {
     if (props.isFocused) {
-      console.log('=>(ItemArticle.tsx:19) props.item', props.item);
       setState({feed: props.item});
     } else {
     }

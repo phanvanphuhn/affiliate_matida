@@ -62,7 +62,6 @@ const ListFeedDetail = (props: ListFeedProps) => {
     onPageSelected(currentPage);
   };
   const onPageHandlerFlatlist = (item: {index: number; prevIndex: number}) => {
-    console.log('=>(index.tsx:81) item', item);
     onPageSelected(item.index);
   };
   const onPageHandlerSwiper = (index: number) => {
@@ -75,12 +74,13 @@ const ListFeedDetail = (props: ListFeedProps) => {
     <>
       {!!state?.data?.length && (
         <Swiper
-          index={state.currentIndex}
+          index={state.index}
           horizontal={false}
           loop={false}
           removeClippedSubviews={true}
           loadMinimal={true}
-          loadMinimalSize={4}
+          loadMinimalSize={10}
+          nestedScrollEnabled={true}
           bounces={true}
           refreshControl={
             <RefreshControl

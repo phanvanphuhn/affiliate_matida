@@ -18,7 +18,7 @@ import {
   stylesCommon,
   widthScreen,
 } from '@stylesCommon';
-import {event, trackingAppEvent, useContentView, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useContentView, useUXCam} from '@util';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
@@ -71,7 +71,7 @@ const DetailVideo = (props: any) => {
   useEffect(() => {
     getData();
     postAddView();
-    trackingAppEvent(event.SCREEN.DETAIL_VIDEO, {});
+    trackingAppEvent(event.SCREEN.DETAIL_VIDEO, {}, eventType.AFF_FLYER);
     return () => {
       setPaused(true);
     };

@@ -11,7 +11,7 @@ import {payMasterClassHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {getMasterClassDetail, GlobalService} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ScrollView, StyleSheet, View} from 'react-native';
@@ -35,7 +35,7 @@ const MasterClass = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.MASTER_CLASS, {});
+      trackingAppEvent(event.SCREEN.MASTER_CLASS, {}, eventType.AFF_FLYER);
     }, []),
   );
 

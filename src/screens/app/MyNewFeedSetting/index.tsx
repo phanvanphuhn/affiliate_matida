@@ -16,7 +16,7 @@ import {useTranslation} from 'react-i18next';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {MyNewFeed} from '../MyNewFeed';
-import {trackingAppEvent, event, useUXCam} from '@util';
+import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 
 const MyNewFeedSetting = () => {
   const {t} = useTranslation();
@@ -25,7 +25,7 @@ const MyNewFeedSetting = () => {
   useUXCam(ROUTE_NAME.MY_NEWFEED_SETTING);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.MY_NEWFEED_SETTING, {});
+    trackingAppEvent(event.SCREEN.MY_NEWFEED_SETTING, {}, eventType.AFF_FLYER);
   }, []);
 
   return (

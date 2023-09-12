@@ -17,6 +17,7 @@ import {GlobalService, postCreateRoom} from '@services';
 import {colors, scaler} from '@stylesCommon';
 import {
   event,
+  eventType,
   trackingAppEvent,
   useUXCam,
   validateForm,
@@ -83,7 +84,7 @@ export const CreateRoom = () => {
   useUXCam(ROUTE_NAME.CREATE_ROOM);
 
   useEffect(() => {
-    trackingAppEvent(event.SCREEN.CREATE_ROOM, {});
+    trackingAppEvent(event.SCREEN.CREATE_ROOM, {}, eventType.AFF_FLYER);
   }, []);
 
   const handleCreateRoom = async (values: IFormik) => {
@@ -116,7 +117,7 @@ export const CreateRoom = () => {
         backgroundColor: colors.success_message,
         color: '#FFFFFF',
       });
-      trackingAppEvent(event.LIVE_ROOM.CLICK_CREATE_NEW_ROOM_SUCCESS, {});
+      trackingAppEvent(event.LIVE_ROOM.CLICK_CREATE_NEW_ROOM_SUCCESS, {}, eventType.AFF_FLYER);
       goBack();
     } catch (error) {
     } finally {

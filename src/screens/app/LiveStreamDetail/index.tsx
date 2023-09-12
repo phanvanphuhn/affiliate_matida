@@ -8,6 +8,7 @@ import ZegoUIKitPrebuiltLiveStreaming, {
 import {
   APPID_ZEGO_KEY_LIVESTREAM,
   APP_SIGN_ZEGO_KEY_LIVESTREAM,
+  eventType,
   useUXCam,
 } from '@util';
 import {useSelector} from 'react-redux';
@@ -65,7 +66,7 @@ const LiveStreamDetail = (props: any) => {
     socket.emit('add-user', {
       userId: me,
     });
-    trackingAppEvent(event.SCREEN.LIVE_STREAM, {});
+    trackingAppEvent(event.SCREEN.LIVE_STREAM, {}, eventType.AFF_FLYER);
     return () => {
       socket.emit('leaveRoom', {
         roomId: idRoom,

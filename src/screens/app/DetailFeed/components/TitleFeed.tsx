@@ -1,7 +1,13 @@
 import {colors, heightScreen, scaler} from '@stylesCommon';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IDataListFeed} from '../../Feed/type';
@@ -60,11 +66,20 @@ const TitleFeed = (props: TitleFeedProps) => {
           ? {
               top: 0,
               bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
               paddingTop: insets.top + scaler(150),
             }
           : {},
       ]}>
+      {!!textShown && (
+        <TouchableWithoutFeedback onPress={() => setTextShown(false)}>
+          <View
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              ...StyleSheet.absoluteFillObject,
+            }}
+          />
+        </TouchableWithoutFeedback>
+      )}
       <View
         style={{
           padding: 16,
@@ -80,6 +95,7 @@ const TitleFeed = (props: TitleFeedProps) => {
           <ScrollView
             style={{maxHeight: '100%'}}
             showsVerticalScrollIndicator={false}
+            nestedScrollEnabled={true}
             scrollEnabled={textShown}>
             <RenderHtml
               contentWidth={100}

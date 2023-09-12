@@ -90,6 +90,15 @@
         android:name="com.facebook.FacebookContentProvider"
         android:exported="true"
       />
+      <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.provider"
+        android:grantUriPermissions="true"
+        android:exported="false">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:value="@xml/filepaths" />
+      </provider>
       <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_ovhk6O9nO0H4a2kWA1JocejpEsoO1M7i" />
         <!-- <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_hlxrWC5Zx16DkYmWu4AHiimdqugRYMr" /> -->
         <meta-data android:name="io.branch.sdk.TestMode" android:value="false" /> 

@@ -28,6 +28,7 @@ export enum EStatusShareArticleUser {
 
 export enum TypeDeepLink {
   ARTICLE = 'article',
+  FEED = 'feed',
   ROOM = 'room',
 }
 
