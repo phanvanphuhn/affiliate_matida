@@ -33,7 +33,10 @@ const Login = (props: any) => {
         return (
           <Step1
             onOpenSignUp={onOpenSignUp}
-            onChangeStep={() => setStep(2)}
+            onChangeStep={() => {
+              trackingAppEvent(event.LOGIN.PHONE_NUMBER, {}, eventType.MIX_PANEL);
+              setStep(2)
+            }}
             loginSocial={(value: any) => {
               closeModal();
               loginSocial(value);

@@ -1,6 +1,7 @@
 import {AppButton} from '@component';
 import {iconApple, iconPhone, SvgIconFacebook, SvgIconZalo} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
+import { event, eventType, trackingAppEvent } from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Platform, StyleSheet, Text} from 'react-native';
@@ -26,13 +27,19 @@ const Step1 = React.memo((props: any) => {
         titleButton={t('login.continueFace')}
         customStyleButton={[styles.customButton, styles.customButtonFace]}
         icon={<SvgIconFacebook />}
-        onClick={() => loginSocial('Facebook')}
+        onClick={() => {
+          trackingAppEvent(event.LOGIN.FACEBOOK, {}, eventType.MIX_PANEL);
+          loginSocial('Facebook')
+        }}
       />
       <AppButton
         titleButton={t('login.continueZalo')}
         customStyleButton={[styles.customButton, styles.customButtonZalo]}
         icon={<SvgIconZalo />}
-        onClick={() => loginSocial('Zalo')}
+        onClick={() => {
+          trackingAppEvent(event.LOGIN.ZALO, {}, eventType.MIX_PANEL);
+          loginSocial('Zalo')
+        }}
       />
       {Platform?.OS === 'ios' ? (
         <AppButton
@@ -40,7 +47,10 @@ const Step1 = React.memo((props: any) => {
           customStyleButton={[styles.customButton, styles.customButtonApple]}
           sourceIcon={iconApple}
           customStyleIcon={styles.customIconButton}
-          onClick={() => loginSocial('Apple')}
+          onClick={() => {
+            trackingAppEvent(event.LOGIN.APPLE, {}, eventType.MIX_PANEL);
+            loginSocial('Apple')
+          }}
         />
       ) : null}
       <Text style={styles.txtBottom}>

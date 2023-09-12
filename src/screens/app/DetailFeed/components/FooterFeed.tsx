@@ -18,6 +18,7 @@ import {buildDeepLink} from '@util';
 import {DEEP_LINK, GlobalService} from '@services';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {ContentTypeFeed} from '../../Feed/type';
+import { event, eventType, trackingAppEvent } from '@util';
 
 interface FooterFeedProps {}
 
@@ -57,6 +58,17 @@ const FooterFeed = (props: FooterFeedProps) => {
         setState({
           is_liked: res.data?.is_liked,
         });
+      }
+      switch (state.feed?.content_type) {
+        case 'podcast':
+          trackingAppEvent(event.FEED.FEED_LIKE_PODCAST, {content_id: state.feed?.contentid}, eventType.MIX_PANEL)
+          break;
+        case 'video':
+          trackingAppEvent(event.FEED.FEED_LIKE_VIDEO, {content_id: state.feed?.contentid}, eventType.MIX_PANEL)
+          break;
+        default:
+          trackingAppEvent(event.FEED.FEED_LIKE_ARTICLE, {content_id: state.feed?.contentid}, eventType.MIX_PANEL)
+          break;
       }
     } catch (error: any) {}
   };
