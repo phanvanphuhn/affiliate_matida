@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image, Linking} from 'react-native';
 import {AppImage} from '@component';
 import {ic_comment, SvgHeart, SvgHearted} from '@images';
 import {IDataComment} from '../types';
 import {useTranslation} from 'react-i18next';
 import {useVideo} from './Container';
-
+import Hyperlink from 'react-native-hyperlink'
+import { colors } from '@stylesCommon';
 interface ItemCommentProps {
   item: IDataComment;
   onLiked: (item: IDataComment) => void;
@@ -17,15 +18,25 @@ interface ItemCommentProps {
 const ItemComment = (props: ItemCommentProps) => {
   const {t} = useTranslation();
   const {state, setState} = useVideo();
-
   const [isShowComment, setIsShowComment] = useState<boolean>(false);
+
+  const onPressHyperLink = (url: string) =>{
+    Linking.openURL(url)
+  }
+
   return (
     <View>
       <View style={styles.container}>
         <AppImage uri={props?.item?.user?.avatar} style={styles.imgAvatar} />
         <View style={styles.container2}>
           <Text style={styles.txtUserName}>{props?.item?.user?.name}</Text>
-          <Text style={styles.txtContent}>{props?.item.content}</Text>
+          <Hyperlink 
+            linkDefault={ true } 
+            onPress={ (url) => onPressHyperLink(url) } 
+            linkStyle={{color: colors.facebook, textDecorationLine: 'underline'}}
+          >
+            <Text style={styles.txtContent}>{props?.item.content}</Text>
+          </Hyperlink>
           <View style={{flexDirection: 'row', marginTop: 10}}>
             <TouchableOpacity
               onPress={() => props?.onLiked && props.onLiked(props.item)}

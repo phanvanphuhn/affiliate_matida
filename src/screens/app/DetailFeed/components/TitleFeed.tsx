@@ -14,7 +14,7 @@ import {IDataListFeed} from '../../Feed/type';
 import {useVideo} from './Container';
 import CustomImageRenderer from './CustomImageRenderer';
 import clip from './clip';
-
+import { tagsStyles } from './settingsHtml';
 interface TitleFeedProps {
   item: IDataListFeed;
 }
@@ -119,6 +119,7 @@ const TitleFeed = (props: TitleFeedProps) => {
                   color: textShown ? colors.textColor : colors.white,
                 },
               }}
+              tagsStyles={{...tagsStyles}}
             />
           </ScrollView>
         )}
