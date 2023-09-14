@@ -4,7 +4,13 @@ import {TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 
 import {ROUTE_NAME} from '@routeName';
-import {event, eventType, trackingAppEvent, useUXCam} from '@util';
+import {
+  event,
+  eventType,
+  trackEventBranch,
+  trackingAppEvent,
+  useUXCam,
+} from '@util';
 import {Step1} from './Component/Step1';
 import {Step2} from './Component/Step2';
 import {Step3} from './Component/Step3';
@@ -24,6 +30,7 @@ const Login = (props: any) => {
       setStep(1);
     } else {
       trackingAppEvent(event.SCREEN.LOGIN, {}, eventType.AFF_FLYER);
+      trackEventBranch(event.BRANCH.LOGIN, {});
     }
   }, [visible]);
 

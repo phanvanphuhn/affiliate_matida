@@ -1,7 +1,7 @@
 import {AppButton} from '@component';
 import {iconApple, SvgIconFacebook, SvgIconZalo} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, eventType, trackingAppEvent} from '@util';
+import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Platform, StyleSheet, Text} from 'react-native';
@@ -33,7 +33,12 @@ const Step1 = React.memo((props: any) => {
           const params = {
             af_registration_method: 'Facebook',
           };
-          trackingAppEvent(event.AUTH.CLICK_SIGN_UP, params, eventType.AFF_FLYER);
+          trackingAppEvent(
+            event.AUTH.CLICK_SIGN_UP,
+            params,
+            eventType.AFF_FLYER,
+          );
+          trackEventBranch(event.BRANCH.CLICK_SIGN_UP_FB, {});
         }}
       />
       <AppButton
@@ -45,7 +50,12 @@ const Step1 = React.memo((props: any) => {
           const params = {
             af_registration_method: 'Zalo',
           };
-          trackingAppEvent(event.AUTH.CLICK_SIGN_UP, params, eventType.AFF_FLYER);
+          trackingAppEvent(
+            event.AUTH.CLICK_SIGN_UP,
+            params,
+            eventType.AFF_FLYER,
+          );
+          trackEventBranch(event.BRANCH.CLICK_SIGN_UP_ZALO, {});
         }}
       />
       {Platform?.OS === 'ios' ? (
@@ -59,7 +69,12 @@ const Step1 = React.memo((props: any) => {
             const params = {
               af_registration_method: 'Apple',
             };
-            trackingAppEvent(event.AUTH.CLICK_SIGN_UP, params, eventType.AFF_FLYER);
+            trackingAppEvent(
+              event.AUTH.CLICK_SIGN_UP,
+              params,
+              eventType.AFF_FLYER,
+            );
+            trackEventBranch(event.BRANCH.CLICK_SIGN_UP_APPLE, {});
           }}
         />
       ) : null}
