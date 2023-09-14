@@ -16,6 +16,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import {heightScreen} from '@stylesCommon';
 
 /**
  * Default styles
@@ -116,6 +117,8 @@ interface IProps extends ScrollViewProps {
   autoplay?: boolean;
   autoplayTimeout: number;
   autoplayDirection?: boolean;
+  lockScrollTimeoutDuration?: number;
+  lockScrollWhileSnapping?: boolean;
   index: number;
   /**
    * Called when the index has changed because the user swiped.
@@ -130,6 +133,7 @@ interface IOffset {
 }
 interface IState {
   autoplayEnd: boolean;
+  isScroll: boolean;
   children?: React.ReactNode[];
   loopJump?: boolean;
   offset: IOffset | object;
@@ -216,6 +220,8 @@ export default class Swiper extends PureComponent<IProps, IState> {
     autoplay: false,
     autoplayTimeout: 2.5,
     autoplayDirection: true,
+    lockScrollWhileSnapping: true,
+    lockScrollTimeoutDuration: 1000,
     index: 0,
     onIndexChanged: () => null,
   };
@@ -295,6 +301,7 @@ export default class Swiper extends PureComponent<IProps, IState> {
       children: null,
       loopJump: false,
       offset: {},
+      isScroll: true,
     };
 
     // Support Optional render page
@@ -456,8 +463,9 @@ export default class Swiper extends PureComponent<IProps, IState> {
    */
   onScrollEnd = (e: any) => {
     // update scroll state
-    this.internals.isScrolling = false;
+    this.setState({isScroll: true});
 
+    this.internals.isScrolling = false;
     // making our events coming from android compatible to updateIndex logic
     if (!e.nativeEvent.contentOffset) {
       if (this.state.dir === 'x') {
@@ -496,6 +504,15 @@ export default class Swiper extends PureComponent<IProps, IState> {
       (index === 0 || index === children.length - 1)
     ) {
       this.internals.isScrolling = false;
+    }
+    if (
+      this.props.lockScrollTimeoutDuration &&
+      this.props.lockScrollWhileSnapping
+    ) {
+      this.setState({isScroll: false});
+      setTimeout(() => {
+        this.setState({isScroll: true});
+      }, this.props.lockScrollTimeoutDuration);
     }
   };
 
@@ -700,6 +717,7 @@ export default class Swiper extends PureComponent<IProps, IState> {
         onScrollBeginDrag={this.onScrollBegin}
         onMomentumScrollEnd={this.onScrollEnd}
         onScrollEndDrag={this.onScrollEndDrag}
+        scrollEnabled={this.state.isScroll}
         style={this.props.scrollViewStyle}>
         {pages}
       </ScrollView>
