@@ -75,7 +75,7 @@ export const event = {
     REPLY: 'post_reply',
     CREATE_NEW_POST_PAGE: 'post_create_new_post_page',
     POST_IN_FORUM: 'post_in_forum',
-    POST_ANONYMOUSLY: 'post_click_post_anonymously'
+    POST_ANONYMOUSLY: 'post_click_post_anonymously',
   },
   TIDA: {
     TIDA_OPEN: 'tida_open',
@@ -96,18 +96,30 @@ export const event = {
   },
   SYSTEM: {
     START: 'APP_LAUNCH',
-    LOG_OUT: 'LOG_OUT'
+    LOG_OUT: 'LOG_OUT',
   },
-  LOGIN:{
+  BRANCH: {
+    CLICK_DEEPLINK: 'CLICK_DEEPLINK',
+    INSTALL_APP: 'INSTALL _APP',
+    LOGIN: 'LOGIN',
+    SIGNUP: 'SIGNUP',
+    SIGN_OUT: 'SIGN_OUT',
+    CLICK_LOGIN: 'CLICK_LOGIN',
+    CLICK_SIGN_UP_SUCCESS: 'CLICK_SIGN_UP_SUCCESS',
+    CLICK_SIGN_UP_ZALO: 'CLICK_SIGN_UP_ZALO',
+    CLICK_SIGN_UP_FB: 'CLICK_SIGN_UP_FB',
+    CLICK_SIGN_UP_APPLE: 'CLICK_SIGN_UP_APPLE',
+  },
+  LOGIN: {
     FACEBOOK: 'login_with_facebook',
     ZALO: 'login_with_zalo',
     APPLE: 'login_with_apple',
     PHONE_NUMBER: 'login_with_phone_number',
     SELECT_DUE_DATE: 'onboarding_select_due_date',
     CONTINUE: 'onboarding_tell_me_more',
-    SKIP: 'onboarding_click_skip'
+    SKIP: 'onboarding_click_skip',
   },
-  FEED:{
+  FEED: {
     SCROLL: 'feed_scroll',
     FEED_COMMENT_PODCAST: 'feed_comment_podcast',
     FEED_COMMENT_VIDEO: 'feed_comment_video',
@@ -119,5 +131,5 @@ export const event = {
     FEED_MOM_TEST: 'feed_mom_test',
     FEED_FINISH_QUIZ: 'feed_finish_quiz',
     FEED_DO_MOMTEST: 'feed_do_momtest',
-  }
+  },
 };

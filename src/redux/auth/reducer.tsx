@@ -1,5 +1,5 @@
-import {typeAuth} from './type';
 import {AuthState, INITIAL_STATE_AUTH} from './state';
+import {typeAuth} from './type';
 
 export default function authReducer(
   state = INITIAL_STATE_AUTH,
@@ -69,6 +69,11 @@ export default function authReducer(
       return {
         ...state,
         isReview: action.payload,
+      };
+    case typeAuth.IS_FROM_BRANCH:
+      return {
+        ...state,
+        isFromBranch: action.payload,
       };
     default:
       return state;

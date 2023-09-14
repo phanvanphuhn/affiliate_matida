@@ -13,6 +13,7 @@
     "postinstall": "npx patch-package",
     "build-ios": "npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios/assets",
     "project:clean": "rm -rf yarn.lock package-lock.json node_modules ios/Pods ios/Podfile.lock android/app/build && yarn && cd ios && pod update && cd .. && npm start -- --reset-cache",
+    "project:clean-lib": "rm -rf node_modules ios/Pods && yarn && cd ios && pod update && cd ..",
     "push-ip": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida -d Production",
     "push-is": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida -d Staging",
     "push-ap": "appcenter codepush release-react -a cao.tran-adamosoft.com/Matida-1 -d Production",

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 
-import {event, trackingAppEvent, eventType} from '@util';
+import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
 import {Step1} from './Component/Step1';
 import {Step2} from './Component/Step2';
 import {Step3} from './Component/Step3';
@@ -20,6 +20,7 @@ const SignUp = (props: any) => {
     if (visible === false) {
     } else {
       trackingAppEvent(event.SCREEN.SIGN_UP, {}, eventType.AFF_FLYER);
+      trackEventBranch(event.BRANCH.SIGNUP, {});
     }
   }, [visible]);
 

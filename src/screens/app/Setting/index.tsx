@@ -18,23 +18,21 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
   event,
   eventType,
+  trackEventBranch,
   trackingAppEvent,
   useUXCam,
-  VERSION_APP,
-  VERSION_CODE_PUSH,
 } from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import CodePush from 'react-native-code-push';
 import {showMessage} from 'react-native-flash-message';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
-import CodePush from 'react-native-code-push';
 
 interface Version {
-  label: string | undefined,
-  version: string | undefined
+  label: string | undefined;
+  version: string | undefined;
 }
 
 const Setting = () => {
@@ -42,15 +40,18 @@ const Setting = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [version, setVersion] = useState<Version>({label: '1.1.1', version: 'v1.1'})
+  const [version, setVersion] = useState<Version>({
+    label: '1.1.1',
+    version: 'v1.1',
+  });
   const {t} = useTranslation();
 
-  useEffect(()=>{
+  useEffect(() => {
     CodePush.getUpdateMetadata().then(info => {
-      setVersion({label: info?.label, version: info?.appVersion})
-    })
-  },[])
-  
+      setVersion({label: info?.label, version: info?.appVersion});
+    });
+  }, []);
+
   useEffect(() => {
     trackingAppEvent(event.SCREEN.SETTING_SCREEN, {}, eventType.AFF_FLYER);
   }, []);
@@ -67,7 +68,8 @@ const Setting = () => {
         backgroundColor: 'transparent',
       });
     } finally {
-      trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL)
+      trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL);
+      trackEventBranch(event.BRANCH.SIGN_OUT, {});
       dispatch(logOut());
       dispatch(clearListChat());
       dispatch(cleanHome());
@@ -182,7 +184,9 @@ const Setting = () => {
       })}
       <View style={styles.viewBottom}>
         <Text style={styles.txtBottom}>
-        {`${t('setting.version')}${version.version ? version.version : DeviceInfo.getVersion() } - ${version.label ? version.label: VERSION_CODE_PUSH}`}
+          {`${t('setting.version')}${
+            version.version ? version.version : DeviceInfo.getVersion()
+          } - ${version.label ? version.label : VERSION_CODE_PUSH}`}
         </Text>
       </View>
       <ModalConfirm

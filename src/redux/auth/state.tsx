@@ -6,6 +6,7 @@ export type AuthState = {
   isDoneDaily: boolean;
   isSeenComment: boolean;
   isReview: boolean;
+  isFromBranch: boolean;
 };
 
 export const INITIAL_STATE_AUTH: AuthState = {
@@ -16,4 +17,5 @@ export const INITIAL_STATE_AUTH: AuthState = {
   isDoneDaily: false,
   isSeenComment: false,
   isReview: false,
+  isFromBranch: false,
 };
