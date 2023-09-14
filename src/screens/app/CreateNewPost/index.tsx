@@ -160,7 +160,10 @@ const CreateNewPost = (props: {
               active={isAnonymous}
               // title="Post anonymously in forum"
               title={t('post.anonymous')}
-              onPress={() => setIsAnonymous(!isAnonymous)}
+              onPress={() => {
+                trackingAppEvent(event.FORUM.POST_ANONYMOUSLY, {}, eventType.MIX_PANEL)
+                setIsAnonymous(!isAnonymous)
+              }}
             />
             {/* <Text>Post anonymously in forum</Text> */}
           </View>

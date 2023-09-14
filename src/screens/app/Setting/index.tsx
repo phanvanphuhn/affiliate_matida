@@ -184,7 +184,9 @@ const Setting = () => {
       })}
       <View style={styles.viewBottom}>
         <Text style={styles.txtBottom}>
-          {`${t('setting.version')}${version.version} - ${version.label}`}
+          {`${t('setting.version')}${
+            version.version ? version.version : DeviceInfo.getVersion()
+          } - ${version.label ? version.label : VERSION_CODE_PUSH}`}
         </Text>
       </View>
       <ModalConfirm
