@@ -20,8 +20,13 @@ const mixpanel = new Mixpanel(
 );
 
 //WebEngage
+export const initWebEngage = () => {
+  webengage?.user?.setDevicePushOptIn(true);
+};
+
 export const loginWebEngage = (identify: string) => {
   webengage?.user?.login(identify);
+  webengage?.user?.setDevicePushOptIn(true);
 };
 
 export const logoutWebEngage = () => {
