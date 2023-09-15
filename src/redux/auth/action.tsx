@@ -54,3 +54,8 @@ export const saveIsReview = (payload: boolean) => ({
   type: typeAuth.iS_REVIEW,
   payload,
 });
+
+export const setIsFromBranch = (payload: boolean) => ({
+  type: typeAuth.IS_FROM_BRANCH,
+  payload,
+});

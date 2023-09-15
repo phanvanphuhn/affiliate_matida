@@ -9,6 +9,7 @@ import {
 } from '../../../services/feed';
 import {useVideo} from './components/Container';
 import {IDataComment, IStateComment} from './types';
+import { event, eventType, trackingAppEvent } from '@util';
 
 const useCommentFeed = () => {
   const route = useRoute<any>();
@@ -51,6 +52,17 @@ const useCommentFeed = () => {
         setTimeout(() => {
           flatlitRef.current?.scrollToEnd();
         }, 300);
+      }
+      switch (stateFeed.feed?.content_type) {
+        case 'podcast':
+          trackingAppEvent(event.FEED.FEED_LIKE_PODCAST, {id: stateFeed.feed?.id,}, eventType.MIX_PANEL)
+          break;
+        case 'video':
+          trackingAppEvent(event.FEED.FEED_LIKE_VIDEO, {id: stateFeed.feed?.id,}, eventType.MIX_PANEL)
+          break;
+        default:
+          trackingAppEvent(event.FEED.FEED_LIKE_ARTICLE, {id: stateFeed.feed?.id,}, eventType.MIX_PANEL)
+          break;
       }
     } catch (error: any) {}
   };

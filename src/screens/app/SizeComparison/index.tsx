@@ -12,7 +12,7 @@ import {
   getValueTimeLine,
 } from '@services';
 import {colors} from '@stylesCommon';
-import {event, eventType, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, isShowForReviewer, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
@@ -198,7 +198,7 @@ const SizeComparison = () => {
         bounces={false}
         ListFooterComponent={renderView}
       />
-      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
+      {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
 };

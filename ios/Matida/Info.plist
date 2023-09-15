@@ -27,17 +27,6 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>branch_key</key>
-	<dict>
-			<key>live</key>
-			<string>key_live_ovhk6O9nO0H4a2kWA1JocejpEsoO1M7i</string>
-		</dict>
-	<key>branch_universal_link_domains</key>
-		<array>
-			<string>matida.app.link</string>
-			<string>matida-alternate.app.link</string>
-			<string>matida.test.app.link</string>
-		</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -47,15 +36,15 @@
 			</array>
 		</dict>
 		<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>matida</string>
-				</array>
-				<key>CFBundleURLName</key>
-				<string>com.growth.levers.matida</string>
-			</dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.growth.levers.matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida</string>
+			</array>
+		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -100,12 +89,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CodePushDeploymentKey</key>
-	<!-- PRODUCT -->
 	<string>KMAL5G75tak3x4qyPCIahmzWFugl38rFT8Aii</string>
-	<!-- STAGGING -->
-	<!-- <string>VxBWiTOax_Xi1voP-41-nI-E6vW7b_kAZ_zYY</string> -->
-	<!-- Testing -->
-	<!-- <string>GGK8l1OTBPmIGo0QBh6Bch175ua2EsGM8gsrG</string> -->
 	<key>FacebookAppID</key>
 	<string>1325262418044786</string>
 	<key>FacebookClientToken</key>
@@ -116,12 +100,12 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-    <string>whatsapp</string>
-    <string>mailto</string>
-    <string>instagram</string>
-    <string>instagram-stories</string>
-    <string>fb</string>
-    <string>facebook-stories</string>
+		<string>whatsapp</string>
+		<string>mailto</string>
+		<string>instagram</string>
+		<string>instagram-stories</string>
+		<string>fb</string>
+		<string>facebook-stories</string>
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
 	</array>
@@ -140,8 +124,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Need to access your camera to capture a photo add and update profile picture.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>ALWAYS DESCRIPTION</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Location in Use</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need to use the microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -167,9 +153,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
 		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
@@ -190,28 +174,29 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-
-	<key>WEGLicenseCode</key>
-	<string>0123456</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-	</array>
-	<key>WEGEnableLocationAuthorizationRequest</key>
-	<string>ALWAYS</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>ALWAYS DESCRIPTION</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location in Use</string>
-	<key>WEGLogLevel</key>
-	<string>DEFAULT</string>
-	<key>WEGEnvironment</key>
-	<string>DEFAULT</string>
-	<key>WEGAlternateAppSupport</key>
-	<string>NO</string>
-
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>WEGAlternateAppSupport</key>
+	<string>NO</string>
+	<key>WEGEnableLocationAuthorizationRequest</key>
+	<string>ALWAYS</string>
+	<key>WEGEnvironment</key>
+	<string>DEFAULT</string>
+	<key>WEGLicenseCode</key>
+	<string>0123456</string>
+	<key>WEGLogLevel</key>
+	<string>DEFAULT</string>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_ovhk6O9nO0H4a2kWA1JocejpEsoO1M7i</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>matida.app.link</string>
+		<string>matida-alternate.app.link</string>
+		<string>matida.test.app.link</string>
+	</array>
 	<key>com.apple.developer.in-app-payments</key>
 	<array>
 		<string>merchant.com.growth.levers.matida</string>

@@ -1,10 +1,29 @@
-import {State, TapGestureHandler} from 'react-native-gesture-handler';
 import React, {useRef} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  PanResponder,
+  StyleSheet,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {getPlayerStateIcon} from '../../../../lib/react-native-media-controls/src/utils';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
 import {useVideo} from './Container';
 import {likeFeedApi} from '../../../../services/feed';
+import {
+  Directions,
+  Gesture,
+  GestureDetector,
+} from 'react-native-gesture-handler';
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import {heightScreen} from '@stylesCommon';
+
 interface DoubleClick {
   isShowButtonPlay?: boolean;
   children: React.ReactNode;
@@ -17,51 +36,48 @@ const DoubleClick = ({
   onSingleClick,
   isShowButtonPlay,
 }: DoubleClick) => {
-  const doubleTapRef = useRef(null);
   const {state, setState} = useVideo();
-
-  const onSingleTapEvent = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      onSingleClick && onSingleClick();
-    }
+  const clickCount = useRef<number>(0);
+  const singleClickTimer = useRef<any>();
+  const onDoubleTapEvent = async () => {
+    try {
+      if (!state.feed || state.is_liked) {
+        return;
+      }
+      const res = await likeFeedApi(state.feed?.content_type, state.feed?.id);
+      if (res.success) {
+        setState({
+          is_liked: res.data?.is_liked,
+        });
+      }
+    } catch (error: any) {}
   };
-
-  const onDoubleTapEvent = async (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      try {
-        if (!state.feed || state.is_liked) {
-          return;
-        }
-        const res = await likeFeedApi(state.feed?.content_type, state.feed?.id);
-        if (res.success) {
-          setState({
-            is_liked: res.data?.is_liked,
-          });
-        }
-      } catch (error: any) {}
+  function handleClicks() {
+    clickCount.current++;
+    if (clickCount.current === 1) {
+      singleClickTimer.current = setTimeout(function () {
+        clickCount.current = 0;
+        onSingleClick && onSingleClick();
+      }, 300);
+    } else if (clickCount.current === 2) {
+      clearTimeout(singleClickTimer.current);
+      clickCount.current = 0;
+      onDoubleTapEvent();
     }
-  };
-
+  }
   return (
-    <TapGestureHandler
-      onHandlerStateChange={onSingleTapEvent}
-      waitFor={doubleTapRef}>
-      <TapGestureHandler
-        ref={doubleTapRef}
-        onHandlerStateChange={onDoubleTapEvent}
-        numberOfTaps={2}>
-        <View style={{flex: 1, zIndex: 999}}>
-          {children}
-          {!!isShowButtonPlay && playerState == PLAYER_STATES.PAUSED && (
-            <View style={styles.containerPlay}>
-              <View style={styles.buttonPlay}>
-                <Image source={getPlayerStateIcon(playerState)} />
-              </View>
+    <TouchableWithoutFeedback onPress={handleClicks}>
+      <View style={{flex: 1}}>
+        {children}
+        {!!isShowButtonPlay && playerState == PLAYER_STATES.PAUSED && (
+          <View style={styles.containerPlay}>
+            <View style={styles.buttonPlay}>
+              <Image source={getPlayerStateIcon(playerState)} />
             </View>
-          )}
-        </View>
-      </TapGestureHandler>
-    </TapGestureHandler>
+          </View>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 export default React.memo(DoubleClick);

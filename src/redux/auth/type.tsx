@@ -10,6 +10,7 @@ const typeAuth = {
   IS_DONE_DAILY: 'IS_DONE_DAILY',
   IS_SEEN_COMMENT: 'IS_SEEN_COMMENT',
   iS_REVIEW: 'IS_REVIEW',
+  IS_FROM_BRANCH: 'IS_FROM_BRANCH',
 };
 
 export {typeAuth};

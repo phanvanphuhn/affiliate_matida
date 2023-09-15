@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {changePageExplore} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, eventType, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, isShowForReviewer, trackingAppEvent, useUXCam} from '@util';
 import React, {useCallback, useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -305,7 +305,7 @@ const Explore = () => {
           </>
         }
       />
-      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
+      {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
 };

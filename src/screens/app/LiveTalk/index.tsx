@@ -12,7 +12,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {getListBannerApi, getLiveTalk} from '@services';
 import {colors, scaler, widthScreen} from '@stylesCommon';
-import {useUXCam} from '@util';
+import {isShowForReviewer, useUXCam} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -262,7 +262,7 @@ const LiveTalk = () => {
         </ScrollView>
       </View>
       <ButtonCreateTalk />
-      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
+      {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
 };

@@ -325,9 +325,9 @@ const Home = () => {
         }}>
         {!!user?.is_skip || weekPregnant?.days < 0 ? null  : (
           <>
-            <View>
-              {isShowForReviewer(user) && <WeeksPregnant />}
-            </View>
+            {isShowForReviewer(user) && <View>
+              <WeeksPregnant />
+            </View>}
             <View
               style={{
                 paddingHorizontal: scaler(20),

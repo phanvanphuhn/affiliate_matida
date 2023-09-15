@@ -4,12 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, AppState, Platform, StatusBar} from 'react-native';
 import NavigationApp from './src/navigation/StackContainer';
 
-import {
-  CheckAppVersion,
-  GlobalUI,
-  ToastCustom,
-  ToastCustomPost,
-} from '@component';
+import {GlobalUI, ToastCustom, ToastCustomPost} from '@component';
 import {NavigationUtils} from '@navigation';
 import {clearDataLiveTalk} from '@redux';
 import {ROUTE_NAME} from '@routeName';
@@ -27,7 +22,12 @@ import '@images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 import {heightScreen, scaler, widthScreen} from '@stylesCommon';
-import {KEY_UXCAM, MERCHANT_IDENTIFIER, STRIPE_KEY} from '@util';
+import {
+  initBranchEvent,
+  KEY_UXCAM,
+  MERCHANT_IDENTIFIER,
+  STRIPE_KEY,
+} from '@util';
 import {Mixpanel} from 'mixpanel-react-native';
 import KeepAwake from 'react-native-keep-awake';
 import Toast, {
@@ -114,6 +114,7 @@ const App = () => {
       },
     );
     initWebEngage();
+    initBranchEvent();
   };
 
   const saveDataStartTracking = async () => {
@@ -287,7 +288,7 @@ const App = () => {
                 NavigationUtils.setTopLevelNavigator(navigatorRef)
               }
             />
-            <CheckAppVersion />
+            {/* <CheckAppVersion /> */}
           </PersistGate>
         </Provider>
       </StripeProvider>
