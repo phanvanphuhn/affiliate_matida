@@ -2,7 +2,7 @@ import {AppButton} from '@component';
 import {saveLoginInfo} from '@redux';
 import {GlobalService, resendCode, verifyPhone} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, eventType, trackingAppEvent} from '@util';
+import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, View} from 'react-native';
@@ -61,7 +61,12 @@ const Step3 = React.memo((props: any) => {
       const eventParams = {
         af_registration_method: 'Phone number',
       };
-      trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
+      trackingAppEvent(
+        event.AUTH.CLICK_SIGN_UP_SUCCESS,
+        eventParams,
+        eventType.AFF_FLYER,
+      );
+      trackEventBranch(event.BRANCH.CLICK_SIGN_UP_SUCCESS, {});
       dispatch(saveLoginInfo(res?.data));
       onChangeStep(res?.data);
       GlobalService.hideLoading();

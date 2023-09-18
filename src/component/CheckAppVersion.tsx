@@ -67,15 +67,15 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
 
   const getVersion = async () => {
     const res = await getVersionApp();
-    if (res.success) {
+    if (res.success && !!res?.data[Platform.OS]) {
       let ver = DeviceInfo.getVersion();
-      let versions = ver.split('.');
-      let versionsRemote = res?.data[Platform.OS].split('.');
-      versions.pop();
-      versionsRemote.pop();
+      let versions = ver?.split('.');
+      let versionsRemote = res?.data[Platform.OS]?.split('.');
+      versions?.pop();
+      versionsRemote?.pop();
       let compare = compareVersion(
-        versionsRemote.join('.'),
-        versions.join('.'),
+        versionsRemote?.join('.'),
+        versions?.join('.'),
       );
       if (compare == 1) {
         setIsVisible(true);
@@ -88,26 +88,23 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
   }, []);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener(
-        'change',
-        (nextAppState) => {
-            if (
-                appState.current.match(/inactive|background/) &&
-                nextAppState === 'active'
-            ) {
-                console.log('App has come to the foreground!');
-            }
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
+      }
 
-            appState.current = nextAppState;
-            setAppStateVisible(appState.current);
-            getVersion()
-        }
-    );
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      getVersion();
+    });
 
     return () => {
-        subscription.remove();
+      subscription.remove();
     };
-}, []);
+  }, []);
 
   const onUpdate = async () => {
     try {
@@ -146,7 +143,7 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
         <Text
           style={{
             fontSize: scaler(14),
-            textAlign: 'center'
+            textAlign: 'center',
           }}>
           {t('appUpdate.desc')}
         </Text>

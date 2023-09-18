@@ -31,6 +31,7 @@ const useDetailFeed = () => {
         totalComment: res?.data?.total_comments,
         page,
         index,
+        currentIndex: index,
       });
     }
   };

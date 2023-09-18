@@ -1,11 +1,12 @@
 import {WEEK_MAX} from '@constant';
+import {setIsFromBranch} from '@redux';
 import dayjs from 'dayjs';
 import {t} from 'i18next';
 import {Mixpanel} from 'mixpanel-react-native';
 import {ColorValue, Linking} from 'react-native';
-import appsFlyer from 'react-native-appsflyer';
-import branch, {BranchEvent, BranchEventParams} from 'react-native-branch';
+import branch, {BranchEvent} from 'react-native-branch';
 import reactotron from 'reactotron-react-native';
+import {store} from '../redux/store';
 import {event} from './eventTracking';
 
 let buoApp: any = null;
@@ -16,6 +17,14 @@ const mixpanel = new Mixpanel(
   'da7e3368476b1df669b65f4a887ccaaa',
   trackAutomaticEvents,
 );
+
+export const isShowForReviewer = (user: any) => {
+  if (user?.id == 18257 || user?.id == 89) {
+    return false;
+  } else {
+    return true;
+  }
+};
 
 export const eventType = {
   MIX_PANEL: 'mix_panel',
@@ -170,42 +179,8 @@ export const trackingAppEvent = async (
   user?: any,
 ) => {
   try {
-    switch (type) {
-      case eventType.MIX_PANEL:
-        if (user) {
-          mixpanel.identify(user.id);
-        }
-        if (eventName == event.SYSTEM.LOG_OUT) {
-          mixpanel.reset();
-        }
-        mixpanel.track(eventName, eventParams);
-        break;
-      case eventType.AFF_FLYER:
-        appsFlyer.logEvent(
-          eventName,
-          eventParams,
-          res => {
-            console.log('TrackingEvent', eventName, eventParams, res);
-          },
-          err => {
-            console.error('TrackingEvent', eventName, eventParams, err);
-          },
-        );
-        break;
-      default:
-        trackEventBranch(eventName, eventParams);
-        break;
-    }
-    //     mixpanel.identify(id)
-    // mixpanel.set({
-    //   '$first_name': user.first_name,
-    //   '$last_name': user.last_name,
-    //   'FB Gender': user.gender,
-    //   'FB Locale': user.locale,
-    //   'FB Timezone': user.timezone,
-    //   '$email': user.email,
-    //   'Last Login': now,
-    // });
+    trackEventMixpanel(eventName, eventParams, user);
+    // trackEventBranch(eventName, eventParams);
   } catch (error) {}
 };
 
@@ -217,26 +192,84 @@ export const createBranchUniversalObject = async (
   buoApp = result;
 };
 
+export const trackEventMixpanel = (
+  eventName: any,
+  eventParams: any,
+  user?: any,
+) => {
+  if (user) {
+    mixpanel.identify(user.id);
+  }
+  if (eventName === event.SYSTEM.LOG_OUT) {
+    mixpanel.reset();
+  }
+  mixpanel.track(eventName, eventParams);
+};
+
 export const trackEventBranch = async (
   eventName: string,
-  params: BranchEventParams,
+  params: any,
+  ignoreBranchState?: boolean,
 ) => {
   try {
-    // if (!buoApp) {
-    //   await createBranchUniversalObject('Matida', {
-    //     title: 'Matida',
-    //   });
-    // }
-    // buoApp?.logEvent(eventName, {
-    //   customData: params,
-    // });
-    const event = new BranchEvent(eventName, null, {
-      customData: params,
-    });
-    event.logEvent();
-    reactotron.log?.('LOG EVENT', eventName);
+    const branchState = store.getState().auth.isFromBranch;
+    if (branchState || ignoreBranchState) {
+      const eventLog = new BranchEvent(eventName, null, {
+        customData: params,
+      });
+      eventLog.logEvent();
+      reactotron.log?.('LOG EVENT', eventName);
+    }
   } catch (error) {
     reactotron.log?.('ERROR LOG EVENT', eventName);
+  }
+};
+
+export const initBranchEvent = async () => {
+  branch.subscribe({
+    onOpenStart: ({uri, cachedInitialEvent}) => {
+      // reactotron.log?.(
+      //   'subscribe onOpenStart, will open ' +
+      //     uri +
+      //     ' cachedInitialEvent is ' +
+      //     cachedInitialEvent,
+      // );
+    },
+    onOpenComplete: ({error, params, uri}) => {
+      if (error) {
+        reactotron.log?.('ERROR', error);
+        return;
+      } else if (params) {
+        if (!params['+clicked_branch_link']) {
+          if (params['+non_branch_link']) {
+            // reactotron.log?.('non_branch_link: ' + uri);
+            // Route based on non-Branch links
+            return;
+          }
+        } else {
+          // Handle params
+          let deepLinkPath = params.$deeplink_path as string;
+          let canonicalUrl = params.$canonical_url as string;
+          // Route based on Branch link data
+          trackEventBranch(
+            event.BRANCH.CLICK_DEEPLINK,
+            {
+              deepLinkPath,
+              canonicalUrl,
+            },
+            true,
+          );
+          return;
+        }
+      }
+    },
+  });
+
+  let installParams = await branch.getFirstReferringParams(); // Params from original install
+  if (Object.keys(installParams).length > 0) {
+    //sau khi install
+    store.dispatch(setIsFromBranch(true));
+    trackEventBranch(event.BRANCH.INSTALL_APP, installParams, true);
   }
 };
 

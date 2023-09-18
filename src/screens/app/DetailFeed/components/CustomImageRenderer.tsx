@@ -20,15 +20,16 @@ function IMGElementContentLoading({dimensions, altColor}: IMGElementState) {
   );
 }
 function IMGElementContentSuccess({source}: IMGElementState) {
+  const {uri} = source
   return (
-    <Image
-      source={source}
-      style={{
-        width: '100%',
-        aspectRatio: 1,
-        resizeMode: 'contain',
-      }}
-    />
+      <Image
+        source={{uri}}
+        style={{
+          width: '100%',
+          height: 150,
+          resizeMode: 'center'
+        }}
+      />
   );
 }
 

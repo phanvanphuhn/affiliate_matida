@@ -14,6 +14,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3D1BFDF66A104A2C8A0F78CF /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A0AF255CABE4759915955D8 /* Inter-Bold.ttf */; };
+		3D27EB502AAA2AAB0083327A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27EB4F2AAA2AAB0083327A /* Social.framework */; };
+		3D27EB522AAA2AB50083327A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27EB512AAA2AB50083327A /* MessageUI.framework */; };
 		52478658B8AB42E1832BB9B8 /* PlusJakartaSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B73B9B3C41B24F0B978464AD /* PlusJakartaSans-SemiBold.ttf */; };
 		61683EAEF83B35232C86C873 /* Pods_Matida_MatidaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61435ED4604F2D1C9259BC80 /* Pods_Matida_MatidaTests.framework */; };
 		65774292E6B74F25A91C9325 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D07EC33364E418EABED233F /* Inter-Thin.ttf */; };
@@ -56,6 +58,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Matida/main.m; sourceTree = "<group>"; };
 		13EE43ABFD6C474BA9026D7F /* PPFragment-TextRegular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PPFragment-TextRegular.otf"; path = "../src/assets/fonts/PPFragment-TextRegular.otf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Matida.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matida.debug.xcconfig"; path = "Target Support Files/Pods-Matida/Pods-Matida.debug.xcconfig"; sourceTree = "<group>"; };
+		3D27EB4F2AAA2AAB0083327A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		3D27EB512AAA2AB50083327A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5709B34CF0A7D63546082F79 /* Pods-Matida.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matida.release.xcconfig"; path = "Target Support Files/Pods-Matida/Pods-Matida.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Matida-MatidaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matida-MatidaTests.debug.xcconfig"; path = "Target Support Files/Pods-Matida-MatidaTests/Pods-Matida-MatidaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		61435ED4604F2D1C9259BC80 /* Pods_Matida_MatidaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Matida_MatidaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +99,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F876178EECE4D4E063631B50 /* Pods_Matida.framework in Frameworks */,
+				3D27EB502AAA2AAB0083327A /* Social.framework in Frameworks */,
+				3D27EB522AAA2AB50083327A /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +145,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D27EB512AAA2AB50083327A /* MessageUI.framework */,
+				3D27EB4F2AAA2AAB0083327A /* Social.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				9F8D72160F01B8DC15440EC4 /* Pods_Matida.framework */,
 				61435ED4604F2D1C9259BC80 /* Pods_Matida_MatidaTests.framework */,
@@ -582,7 +590,7 @@
 				CODE_SIGN_ENTITLEMENTS = Matida/MatidaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = GBB9254WZA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Matida/Info.plist;
@@ -592,7 +600,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -621,7 +629,7 @@
 				CODE_SIGN_ENTITLEMENTS = Matida/Matida.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = GBB9254WZA;
 				INFOPLIST_FILE = Matida/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Matida;
@@ -630,7 +638,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

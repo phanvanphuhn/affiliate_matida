@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {GlobalService, getValueTimeLine} from '@services';
 import {colors, scaler} from '@stylesCommon';
-import {event, eventType, trackingAppEvent, useUXCam} from '@util';
+import {event, eventType, isShowForReviewer, trackingAppEvent, useUXCam} from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
@@ -171,7 +171,7 @@ const TimeLine = () => {
           keyExtractor={(item: any) => item?.id}
         />
       </View>
-      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
+      {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
 };

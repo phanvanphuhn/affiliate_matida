@@ -45,6 +45,7 @@ import {
   APP_SIGN_ZEGO_KEY,
   eventType,
   handleDeepLink,
+  isShowForReviewer,
   openUrl,
   useUXCam,
 } from '@util';
@@ -56,6 +57,7 @@ import {EVideoType} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
+
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
@@ -325,15 +327,17 @@ const Home = () => {
         }}>
         {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
           <>
-            <View>
-              <WeeksPregnant />
-            </View>
+            {isShowForReviewer(user) && (
+              <View>
+                <WeeksPregnant />
+              </View>
+            )}
             <View
               style={{
                 paddingHorizontal: scaler(20),
                 marginBottom: scaler(30),
               }}>
-              <SizeComparisonComponent />
+              {isShowForReviewer(user) && <SizeComparisonComponent />}
               <PregnancyProgress />
             </View>
           </>
@@ -350,7 +354,7 @@ const Home = () => {
           </TouchableOpacity>
         </View> */}
 
-        {data?.dailyQuizz && user?.id !== 18257 && user?.id !== 89 ? (
+        {data?.dailyQuizz && isShowForReviewer(user) ? (
           <ViewQuiz onAnswer={onAnswerQuiz} />
         ) : null}
         {/*
@@ -430,7 +434,7 @@ const Home = () => {
 
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
-      {user?.id !== 18257 && user?.id !== 89 && <FLoatingAIButton />}
+      {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
 };
