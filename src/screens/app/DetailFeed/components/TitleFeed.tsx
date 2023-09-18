@@ -136,32 +136,37 @@ const TitleFeed = (props: TitleFeedProps) => {
             style={{maxHeight: '100%'}}
             showsVerticalScrollIndicator={false}
             nestedScrollEnabled={true}
-            scrollEnabled={textShown}>
-            <RenderHtml
-              contentWidth={100}
-              renderers={{
-                img: CustomImageRenderer,
-              }}
-              renderersProps={renderersProps}
-              source={{
-                html: `<div>${
-                  textShown ? getFullDescription() : getDescription(150)
-                }</div>`,
-              }}
-              baseStyle={styles.description}
-              enableExperimentalMarginCollapsing={true}
-              enableExperimentalBRCollapsing={true}
-              enableExperimentalGhostLinesPrevention={true}
-              defaultTextProps={{
-                // numberOfLines: textShown ? undefined : 4,
-                // onTextLayout: onTextLayout,
-                style: {
-                  ...styles.description,
-                  color: textShown ? colors.textColor : colors.white,
-                },
-              }}
-              tagsStyles={{...tagsStyles}}
-            />
+            scrollEnabled={textShown}
+            >
+              <TouchableWithoutFeedback >
+                <View>
+                  <RenderHtml
+                    contentWidth={100}
+                    renderers={{
+                      img: CustomImageRenderer,
+                    }}
+                    renderersProps={renderersProps}
+                    source={{
+                      html: `<div>${
+                        textShown ? getFullDescription() : getDescription(150)
+                      }</div>`,
+                    }}
+                    baseStyle={styles.description}
+                    enableExperimentalMarginCollapsing={true}
+                    enableExperimentalBRCollapsing={true}
+                    enableExperimentalGhostLinesPrevention={true}
+                    defaultTextProps={{
+                      // numberOfLines: textShown ? undefined : 4,
+                      // onTextLayout: onTextLayout,
+                      style: {
+                        ...styles.description,
+                        color: textShown ? colors.textColor : colors.white,
+                      },
+                    }}
+                    tagsStyles={{...tagsStyles}}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
           </ScrollView>
         )}
         {getDescription(150)?.length < getFullDescription()?.length ? (

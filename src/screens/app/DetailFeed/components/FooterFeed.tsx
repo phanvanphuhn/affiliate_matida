@@ -1,24 +1,15 @@
 import {SvgHeart, SvgHearted, ic_comment, ic_menu, ic_share} from '@images';
 import {navigate} from '@navigation';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {ROUTE_NAME} from '@routeName';
+import {DEEP_LINK, GlobalService} from '@services';
 import {colors} from '@stylesCommon';
+import {event, eventType, trackingAppEvent} from '@util';
 import React, {useEffect} from 'react';
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import Share from 'react-native-share';
 import {getDetailFeedApi, likeFeedApi} from '../../../../services/feed';
 import {useVideo} from './Container';
-import Share from 'react-native-share';
-import {buildDeepLink} from '@util';
-import {DEEP_LINK, GlobalService} from '@services';
-import dynamicLinks from '@react-native-firebase/dynamic-links';
-import {ContentTypeFeed} from '../../Feed/type';
-import { event, eventType, trackingAppEvent } from '@util';
 
 interface FooterFeedProps {}
 
@@ -61,13 +52,25 @@ const FooterFeed = (props: FooterFeedProps) => {
       }
       switch (state.feed?.content_type) {
         case 'podcast':
-          trackingAppEvent(event.FEED.FEED_LIKE_PODCAST, {content_id: state.feed?.contentid}, eventType.MIX_PANEL)
+          trackingAppEvent(
+            event.FEED.FEED_LIKE_PODCAST,
+            {content_id: state.feed?.contentid},
+            eventType.MIX_PANEL,
+          );
           break;
         case 'video':
-          trackingAppEvent(event.FEED.FEED_LIKE_VIDEO, {content_id: state.feed?.contentid}, eventType.MIX_PANEL)
+          trackingAppEvent(
+            event.FEED.FEED_LIKE_VIDEO,
+            {content_id: state.feed?.contentid},
+            eventType.MIX_PANEL,
+          );
           break;
         default:
-          trackingAppEvent(event.FEED.FEED_LIKE_ARTICLE, {content_id: state.feed?.contentid}, eventType.MIX_PANEL)
+          trackingAppEvent(
+            event.FEED.FEED_LIKE_ARTICLE,
+            {content_id: state.feed?.contentid},
+            eventType.MIX_PANEL,
+          );
           break;
       }
     } catch (error: any) {}
@@ -115,8 +118,8 @@ const FooterFeed = (props: FooterFeedProps) => {
             fallbackUrl:
               'https://apps.apple.com/vn/app/matida-app-theo-d%C3%B5i-thai-k%E1%BB%B3/id1671957732?l=vi',
           },
-          otherPlatform:{
-            fallbackUrl: 'https://www.matida.app/'
+          otherPlatform: {
+            fallbackUrl: 'https://www.matida.app/',
           },
           social: {
             title: state.feed.title,
@@ -163,12 +166,9 @@ const FooterFeed = (props: FooterFeedProps) => {
           <SvgStar />
         )}
       </TouchableOpacity> */}
-      {state?.feed?.content_type != 'package_quizz' &&
-        state?.feed?.content_type != 'daily_quizz' && (
-          <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
-            <Image source={ic_share} />
-          </TouchableOpacity>
-        )}
+      <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
+        <Image source={ic_share} />
+      </TouchableOpacity>
       <TouchableOpacity style={styles.buttonFooter} onPress={onMenu}>
         <Image source={ic_menu} />
       </TouchableOpacity>
