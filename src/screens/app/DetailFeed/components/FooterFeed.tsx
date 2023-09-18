@@ -115,8 +115,12 @@ const FooterFeed = (props: FooterFeedProps) => {
             fallbackUrl:
               'https://apps.apple.com/vn/app/matida-app-theo-d%C3%B5i-thai-k%E1%BB%B3/id1671957732?l=vi',
           },
+          otherPlatform:{
+            fallbackUrl: 'https://www.matida.app/'
+          },
           social: {
             title: state.feed.title,
+            descriptionText: 'Matida - Ứng dụng đồng hành cùng Mẹ bầu hiện đại',
             imageUrl: getThumbnail(),
           },
         },
