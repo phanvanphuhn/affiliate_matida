@@ -29,6 +29,7 @@ import {payArticleExplore, payArticleHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
   getArticleDetail,
+  getCheckupsDetail,
   getListArticlesRelated,
   GlobalService,
   postSaveArticles,
@@ -37,6 +38,7 @@ import {
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {t} from 'i18next';
 import {useDispatch} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 import {IArticles} from '../Home/types';
 import {
   BannerDetailArticle,
@@ -51,10 +53,11 @@ export const DetailArticle = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
-  const {article, idArticle} = route?.params;
+  const {article, idArticle, type} = route?.params;
   // const {id, isTimeline = false} = article;
   const id = article?.id ?? idArticle;
-  const isTimeline = article?.isTimeline;
+  const isTimeline = article?.isTimeline || type === 'checkup';
+  reactotron.log?.(type, article?.isTimeline);
   const [listRelated, setListRelated] = useState<any[]>([]);
   const [articleDetail, setArticleDetail] = useState<any>(article);
   const [bookmark, setBookMark] = useState<boolean>(
@@ -81,6 +84,8 @@ export const DetailArticle = () => {
     if (!isTimeline) {
       getArticlesDetail();
       getDataMoreArticles();
+    } else {
+      getCheckupsDetailData();
     }
   }, []);
 
@@ -96,6 +101,17 @@ export const DetailArticle = () => {
   const onPressBookMark = () => {
     if (refBookmark.current !== bookmark) {
       bookmark ? handleSaveArticle() : handleUnSaveArticle();
+    }
+  };
+
+  const getCheckupsDetailData = async () => {
+    try {
+      GlobalService.showLoading();
+      const res = await getCheckupsDetail(idArticle ?? 1);
+      setArticleDetail(res?.data);
+    } catch (error) {
+    } finally {
+      GlobalService.hideLoading();
     }
   };
 

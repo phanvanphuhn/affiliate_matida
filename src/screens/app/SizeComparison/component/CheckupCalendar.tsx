@@ -2,9 +2,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {scaler, stylesCommon} from '@stylesCommon';
+import {openUrl} from '@util';
 import {t} from 'i18next';
 import React, {useCallback, useEffect, useRef} from 'react';
-import {LayoutChangeEvent, StyleSheet, Text, View} from 'react-native';
+import {
+  LayoutChangeEvent,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type Props = {
@@ -15,7 +22,7 @@ type Props = {
 };
 
 export const CheckupCalendar = (props: Props) => {
-  const {data, weekSelected, onLayoutItem, onRendered} = props;
+  const {data = {}, weekSelected, onLayoutItem, onRendered} = props;
 
   const insets = useSafeAreaInsets();
 
@@ -32,12 +39,14 @@ export const CheckupCalendar = (props: Props) => {
     isHeader,
     lastLine,
     onLayout,
+    onPress,
   }: {
     content?: any;
     isRightContent?: boolean;
     isHeader?: boolean;
     lastLine?: boolean;
     onLayout?: (event: LayoutChangeEvent) => void;
+    onPress?: () => void;
   }) => {
     return (
       <View
@@ -46,7 +55,9 @@ export const CheckupCalendar = (props: Props) => {
           styles.lineContainer,
           lastLine && {paddingBottom: insets.bottom},
         ]}>
-        <View
+        <TouchableOpacity
+          disabled={isRightContent || !onPress}
+          onPress={onPress}
           style={[
             styles.contentContainer,
             {
@@ -57,7 +68,7 @@ export const CheckupCalendar = (props: Props) => {
           ]}>
           {content}
           {!isRightContent && !isHeader && <View style={styles.dot} />}
-        </View>
+        </TouchableOpacity>
         <View
           style={{
             height: '100%',
@@ -66,7 +77,9 @@ export const CheckupCalendar = (props: Props) => {
             zIndex: -50,
           }}
         />
-        <View
+        <TouchableOpacity
+          disabled={!isRightContent || !onPress}
+          onPress={onPress}
           style={[
             styles.contentContainer,
             {
@@ -77,7 +90,7 @@ export const CheckupCalendar = (props: Props) => {
           ]}>
           {content}
           {isRightContent && !isHeader && <View style={styles.dotRight} />}
-        </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -156,6 +169,12 @@ export const CheckupCalendar = (props: Props) => {
                   index === groups?.contents?.length - 1
                 }
                 isRightContent={week?.position === 'right'}
+                onPress={
+                  week?.url &&
+                  (() => {
+                    openUrl(week?.url);
+                  })
+                }
               />
             );
           })}

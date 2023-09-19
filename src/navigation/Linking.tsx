@@ -48,13 +48,16 @@ const config = {
       path: '/setting',
     },
     [ROUTE_NAME.DETAIL_ARTICLE]: {
-      path: '/article/:idArticle',
+      path: '/article/:idArticle/:type?',
     },
     [ROUTE_NAME.SIZE_COMPARISON]: {
       path: '/size-comparison',
     },
     [ROUTE_NAME.TIME_LINE]: {
       path: '/timeline',
+    },
+    [ROUTE_NAME.DETAIL_FEED]: {
+      path: 'feed/:content_type/:id',
     },
   },
 };
@@ -63,6 +66,8 @@ export const linking = {
   prefixes: [
     'matida://app',
     'https://matida.app.link',
+    'https://matida.page.link',
+    'https://matida1.page.link',
     'https://matida-alternate.app.link',
   ],
   config,

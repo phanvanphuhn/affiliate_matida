@@ -46,7 +46,6 @@ import {
   eventType,
   handleDeepLink,
   isShowForReviewer,
-  openUrl,
   useUXCam,
 } from '@util';
 //@ts-ignore
@@ -202,8 +201,7 @@ const Home = () => {
   };
 
   const navigateSetting = () => {
-    // navigation.navigate(ROUTE_NAME.SETTING_SCREEN);
-    openUrl('matida://app/article/258');
+    navigation.navigate(ROUTE_NAME.SETTING_SCREEN);
   };
 
   const navigateNotification = () => {
