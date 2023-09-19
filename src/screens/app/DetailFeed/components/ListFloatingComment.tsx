@@ -8,11 +8,35 @@ import {
   FlatList,
 } from 'react-native';
 import ItemFloatingComment from './ItemFloatingComment';
+import {useVideo} from './Container';
+import useCommentFeed from '../useCommentFeed';
+import BottomSheet from '@gorhom/bottom-sheet';
+import {get} from 'lodash';
 
 const ListFloatingComment = (props: any) => {
   const [arr, setArr] = useState([]);
   const scrollRef = useRef<ScrollView>(null);
   const intervalRef = useRef<number>();
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const {state, setState} = useVideo();
+  const {
+    state: stateComment,
+    handleLoadMore,
+    actionComment,
+    setState: setStateComment,
+    flatlitRef,
+    actionLikeComment,
+    actionReliesComment,
+    actionLikeRepliesComment,
+  } = useCommentFeed();
+  useEffect(() => {
+    setState({isGetComment: !state.isGetComment});
+  }, []);
+  console.log('stateComment: ', stateComment);
+
+  const message = stateComment && stateComment.data?.map(item => item.content);
+  console.log('message: ', message);
+
   const dataMessage = useRef([
     {
       id: 1,

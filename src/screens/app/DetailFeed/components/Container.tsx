@@ -1,18 +1,14 @@
-import React, {useContext, useEffect, useReducer} from 'react';
+import {useRoute} from '@react-navigation/native';
+import React, {useContext, useReducer} from 'react';
 import {StyleSheet, View} from 'react-native';
-import FooterFeed from './FooterFeed';
-import SliderFeed from './SliderFeed';
-import {IDataComment, IStateVideo} from '../types';
 import {
   ContentTypeFeed,
-  IAnswers,
   IDataListFeed,
   IPackageQuizzList,
 } from '../../Feed/type';
-import CommentFeed from './CommentFeed';
-import KeyboardShift from './KeyboardShift';
+import {IDataComment, IStateVideo} from '../types';
 import {SIZE_DEFAULT} from '../useDetailFeed';
-import {useRoute} from '@react-navigation/native';
+import CommentFeed from './CommentFeed';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -31,6 +27,8 @@ interface IState extends IStateVideo {
   listPackage?: ListPackage[];
   duration?: number;
   totalComment?: number;
+  isShowComment?: boolean;
+  isGetComment?: boolean;
   is_liked?: boolean;
   total_favorites?: number;
   total_likes?: number;
@@ -56,6 +54,7 @@ export const VideoContext = React.createContext<IVideoContext>({
     questions: undefined,
     comment: undefined,
     isShowComment: false,
+    isGetComment: false,
     is_liked: false,
     is_favorite: false,
     progressStatus: undefined,
@@ -96,6 +95,7 @@ const Container: React.FC<ContainerProps> = props => {
       comment: undefined,
       progressStatus: undefined,
       isShowComment: false,
+      isGetComment: false,
       is_liked: false,
       is_favorite: false,
       total_favorites: 0,
