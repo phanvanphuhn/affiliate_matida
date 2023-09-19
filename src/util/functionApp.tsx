@@ -24,7 +24,9 @@ const mixpanel = new Mixpanel(
 
 //WebEngage
 export const initWebEngage = () => {
-  webengage?.user?.setDevicePushOptIn(true);
+  if (webengage?.user) {
+    webengage?.user?.setDevicePushOptIn(true);
+  }
 };
 
 export const loginWebEngage = (identify: string) => {

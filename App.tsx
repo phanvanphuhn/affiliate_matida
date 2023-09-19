@@ -46,7 +46,6 @@ LogBox.ignoreAllLogs();
 initI18n();
 
 import {StripeProvider} from '@stripe/stripe-react-native';
-import {initWebEngage} from '@util';
 import CodePush from 'react-native-code-push';
 
 const options = {
@@ -113,7 +112,7 @@ const App = () => {
         console.error(error);
       },
     );
-    initWebEngage();
+    // initWebEngage();
     initBranchEvent();
   };
 
