@@ -1,17 +1,11 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {scaler, widthScreen, stylesCommon, colors} from '@stylesCommon';
-import {ViewBackgroundText} from './ViewBackgroundText';
-import FastImage from 'react-native-fast-image';
-import {useSelector} from 'react-redux';
-import {ViewProgress, AppImage} from '@component';
-import {useTranslation} from 'react-i18next';
-import Swiper from 'react-native-swiper';
-import {ROUTE_NAME} from '@routeName';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {useNavigation} from '@react-navigation/native';
-import {Footer} from './Footer';
-import RenderHtml from 'react-native-render-html';
-import {systemFonts, tagsStyles} from './settingHTML';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {ViewBackgroundText} from './ViewBackgroundText';
 
 const url =
   'https://baotramblog.com/wp-content/uploads/2022/03/hanh-trinh-mang-thai-hoc-lam-me.jpg?is-pending-load=1';
@@ -40,7 +34,7 @@ const Size = React.memo((props: any) => {
             <ViewBackgroundText title={data?.baby_size} />
             {/* <Text style={styles.txtContent}>{data?.content}</Text> */}
             <View style={{marginTop: scaler(12)}}>
-              <RenderHtml
+              {/* <RenderHtml
                 contentWidth={widthScreen}
                 systemFonts={systemFonts}
                 tagsStyles={{...tagsStyles}}
@@ -48,7 +42,8 @@ const Size = React.memo((props: any) => {
                 enableExperimentalMarginCollapsing={true}
                 enableExperimentalBRCollapsing={true}
                 enableExperimentalGhostLinesPrevention={true}
-              />
+              /> */}
+              <Text style={styles.txtContent}>{data?.content}</Text>
             </View>
             {/* <ViewProgress
               title={data?.remaining_week}
@@ -59,20 +54,20 @@ const Size = React.memo((props: any) => {
           </View>
         );
       }}
-      ListHeaderComponent={() => {
-        return (
-          <View style={styles.containerSwipe}>
-            <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
-              {data?.image?.length > 0 &&
-                data?.image?.map((item: any, index: any) => {
-                  return (
-                    <AppImage uri={item} style={styles.image} key={index} />
-                  );
-                })}
-            </Swiper>
-          </View>
-        );
-      }}
+      // ListHeaderComponent={() => {
+      //   return (
+      //     <View style={styles.containerSwipe}>
+      //       <Swiper dotStyle={styles.dot} activeDotStyle={styles.activeDot}>
+      //         {data?.image?.length > 0 &&
+      //           data?.image?.map((item: any, index: any) => {
+      //             return (
+      //               <AppImage uri={item} style={styles.image} key={index} />
+      //             );
+      //           })}
+      //       </Swiper>
+      //     </View>
+      //   );
+      // }}
     />
   );
 });

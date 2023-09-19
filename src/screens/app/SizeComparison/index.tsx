@@ -1,36 +1,45 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {FLoatingAIButton, Header, PickerWeek, ViewButton} from '@component';
+import {FLoatingAIButton, Header, PickerWeek} from '@component';
 import {SvgArrowLeft, SvgMessages3} from '@images';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {saveIsDoneDaily, updateDataHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
-  GlobalService,
   answerDailyQuiz,
+  getCalendarCheckup,
   getSizeComparison,
-  getValueTimeLine,
+  GlobalService,
 } from '@services';
 import {colors} from '@stylesCommon';
-import {event, eventType, isShowForReviewer, trackingAppEvent, useUXCam} from '@util';
-import React, {useEffect, useRef, useState} from 'react';
+import {
+  event,
+  eventType,
+  isShowForReviewer,
+  trackingAppEvent,
+  useUXCam,
+} from '@util';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'src/redux/rootReducer';
 import {ViewQuiz} from '../Home/components';
 import {Body} from './component/Body';
+import {CheckupCalendar} from './component/CheckupCalendar';
 import {Embryo} from './component/Embryo';
 import {ListArticle} from './component/ListArticle';
 import {ListPostByWeek} from './component/ListPostByWeek';
 import {Size} from './component/Size';
+import {ViewSelectType} from './component/ViewSelectType';
 import {styles} from './styles';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
 
   const route = useRoute<any>();
-  const {option} = route?.params;
+  const {option = 1} = route?.params;
   const weekNotifi = route?.params?.week;
   const homeData = useSelector((state: any) => state?.home);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
@@ -41,6 +50,7 @@ const SizeComparison = () => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const week = weekNotifi ? weekNotifi : weekPregnant;
+  const listPosition = useRef([0, 0, 0, 0, 0, 0, 0]);
 
   const {t} = useTranslation();
   const [status, setStatus] = useState(option);
@@ -48,10 +58,13 @@ const SizeComparison = () => {
   const [dataTimeline, setDataTimeline] = useState([]);
   const [listImage, setListImage] = useState<any[]>([]);
   const [weekSelected, setWeek] = useState(week);
+  const [calendarCheckupData, setCalendarCheckupData] = useState();
 
   const [selectedWeek, setSelectedWeek] = useState(null);
   const flatListRef = useRef<FlatList>(null);
   const navigation = useNavigation<any>();
+  const statusView = useRef(1);
+  const [isRendered, setRendered] = useState(false);
 
   useUXCam(ROUTE_NAME.SIZE_COMPARISON);
   const getData = async (value: any) => {
@@ -67,8 +80,8 @@ const SizeComparison = () => {
         .concat(res?.data?.baby_size?.image)
         .concat(res?.data?.mom?.image);
       setListImage(image ?? []);
-      const resTimeline = await getValueTimeLine(value);
-      setDataTimeline(resTimeline?.data?.data);
+      // const resTimeline = await getValueTimeLine(value);
+      // setDataTimeline(resTimeline?.data?.data);
     } catch (error) {
     } finally {
       GlobalService.hideLoading();
@@ -95,35 +108,60 @@ const SizeComparison = () => {
   };
   useEffect(() => {
     trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {}, eventType.AFF_FLYER);
-    if (week) {
+    if (week && status === 1) {
       getData(week);
+    } else {
+      setTimeout(() => {
+        flatListRef.current?.scrollToOffset({
+          offset: listPosition.current[Math.floor(weekSelected / 7)],
+        });
+      }, 400);
     }
-  }, [week]);
+  }, [week, status]);
+
+  const getDataCalendarCheckup = useCallback(async () => {
+    try {
+      const calendarCheckup = await getCalendarCheckup();
+      setCalendarCheckupData(calendarCheckup?.data);
+    } catch (error) {
+    } finally {
+    }
+  }, []);
+
+  useEffect(() => {
+    getDataCalendarCheckup();
+  }, []);
+  const Calendar = useCallback(
+    () => (
+      <CheckupCalendar
+        data={calendarCheckupData}
+        weekSelected={weekSelected}
+        onLayoutItem={(top, index) => {
+          listPosition.current[index] = top;
+        }}
+        onRendered={() => {
+          setRendered(true);
+        }}
+      />
+    ),
+    [calendarCheckupData, status],
+  );
   const renderBodyByStatus = () => {
     switch (status) {
       case 1:
         return (
           <>
-            {/* <Embryo
+            <Embryo
               data={data?.baby}
               week={selectedWeek}
               listImage={listImage ?? []}
-            /> */}
+            />
             <Size data={data?.baby_size} week={selectedWeek} />
-            {/* <Body data={data?.mom} week={selectedWeek} /> */}
+            <Body data={data?.mom} week={selectedWeek} />
           </>
         );
       case 2:
-        // return <CheckupCalendar />;
-        return (
-          <Embryo
-            data={data?.baby}
-            week={selectedWeek}
-            listImage={listImage ?? []}
-          />
-        );
-      case 3:
-        return <Body data={data?.mom} week={selectedWeek} />;
+        return <Calendar />;
       default:
         return null;
     }
@@ -133,31 +171,32 @@ const SizeComparison = () => {
       <View>
         {renderBodyByStatus()}
 
-        {/* {status === 1 && ( */}
-        <>
-          <ListPostByWeek
-            week={weekSelected}
-            cardBorderStyle={{
-              borderWidth: 1,
-              borderColor: '#F5F5F5',
-            }}
-          />
-          <TouchableOpacity
-            style={styles.createPostButton}
-            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
-            <SvgMessages3 />
-            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
-          </TouchableOpacity>
-          {homeData?.data?.dailyQuizz ? (
-            <ViewQuiz onAnswer={onAnswerQuiz} />
-          ) : null}
-          {/* <BannerTestQuiz /> */}
-          <ListArticle week={weekSelected} />
-        </>
-        {/* )} */}
+        {status === 1 && (
+          <>
+            <ListPostByWeek
+              week={weekSelected}
+              cardBorderStyle={{
+                borderWidth: 1,
+                borderColor: '#F5F5F5',
+              }}
+            />
+            <TouchableOpacity
+              style={styles.createPostButton}
+              onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+              <SvgMessages3 />
+              <Text style={styles.titleButton}>{t('home.createPost')}</Text>
+            </TouchableOpacity>
+            {homeData?.data?.dailyQuizz ? (
+              <ViewQuiz onAnswer={onAnswerQuiz} />
+            ) : null}
+            {/* <BannerTestQuiz /> */}
+            <ListArticle week={weekSelected} />
+          </>
+        )}
       </View>
     );
   };
+
   return (
     <View style={styles.container}>
       <Header
@@ -174,8 +213,14 @@ const SizeComparison = () => {
             },
             eventType.AFF_FLYER,
           );
-          getData(value);
           setWeek(value);
+          if (statusView.current === 1) {
+            getData(value);
+          } else {
+            flatListRef.current?.scrollToOffset({
+              offset: listPosition.current[Math.floor(value / 7)],
+            });
+          }
         }}
         weekNotifi={week}
       />
@@ -184,15 +229,16 @@ const SizeComparison = () => {
         ref={flatListRef}
         renderItem={() => {
           return (
-            <ViewButton
-              onChangeState={(value: any) => setStatus(value)}
-              data={data}
-              option={option}
+            <ViewSelectType
+              onChaneStatus={value => {
+                setStatus(value);
+                statusView.current = value;
+                if (value === 1) {
+                  setRendered(false);
+                }
+              }}
+              status={status}
             />
-            // <ViewSelectType
-            //   onChaneStatus={value => setStatus(value)}
-            //   status={status}
-            // />
           );
         }}
         bounces={false}

@@ -188,6 +188,7 @@ export const en = {
     week: 'Week',
     titleHeader: 'Week by Week',
     titleProgress: 'weeks to go!',
+    afterBirth: 'After Birth',
   },
   videoList: {
     titleHeader: 'Videos for you',
@@ -619,9 +620,9 @@ export const en = {
     article: 'Article',
     dailyQuiz: 'Daily quiz',
   },
-  appUpdate:{
+  appUpdate: {
     welcome: 'Welcome',
     desc: 'Please update the app to continue',
-    update: 'Update'
-  }
+    update: 'Update',
+  },
 };

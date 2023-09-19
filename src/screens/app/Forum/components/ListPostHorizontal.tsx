@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
     marginVertical: scaler(16),
   },
   listContentContainer: {
-    paddingHorizontal: scaler(16),
+    paddingLeft: scaler(16),
   },
 });

@@ -3,7 +3,7 @@ import {setIsFromBranch} from '@redux';
 import dayjs from 'dayjs';
 import {t} from 'i18next';
 import {Mixpanel} from 'mixpanel-react-native';
-import {ColorValue} from 'react-native';
+import {ColorValue, Linking} from 'react-native';
 import branch, {BranchEvent} from 'react-native-branch';
 import reactotron from 'reactotron-react-native';
 import {store} from '../redux/store';
@@ -292,3 +292,18 @@ export function isSameDay(currentMessage: any, diffMessage: any) {
   }
   return currentCreatedAt.isSame(diffCreatedAt, 'day');
 }
+
+export const openUrl = async (url: string) => {
+  try {
+    Linking.canOpenURL(url).then(result => {
+      if (result) {
+        reactotron.log?.('OPENING ' + url);
+        Linking.openURL(url);
+      } else {
+        reactotron.log?.('CANNOT OPEN ' + url);
+      }
+    });
+  } catch (error) {
+    reactotron.log?.('CANNOT OPEN ' + url);
+  }
+};

@@ -10,6 +10,7 @@ import {
   SvgPrivacy,
   SvgProfileUser,
 } from '@images';
+import {goBack} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
 import {cleanHome, clearExplore, clearListChat, logOut} from '@redux';
 import {ROUTE_NAME} from '@routeName';
@@ -21,11 +22,13 @@ import {
   trackEventBranch,
   trackingAppEvent,
   useUXCam,
+  VERSION_CODE_PUSH,
 } from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CodePush from 'react-native-code-push';
+import DeviceInfo from 'react-native-device-info';
 import {showMessage} from 'react-native-flash-message';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -167,7 +170,11 @@ const Setting = () => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() => {
+            // navigation.goBack();
+            goBack();
+          }}>
           <Image source={iconClose} />
         </TouchableOpacity>
       </View>

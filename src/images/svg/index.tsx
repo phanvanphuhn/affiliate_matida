@@ -581,7 +581,7 @@ function SvgHearted(props: any) {
       {...props}>
       <Path
         d="M8.414 13.873c-.227.08-.6.08-.827 0-1.933-.66-6.253-3.413-6.253-8.08 0-2.06 1.66-3.726 3.707-3.726 1.213 0 2.286.586 2.96 1.493a3.687 3.687 0 012.96-1.493c2.046 0 3.706 1.666 3.706 3.726 0 4.667-4.32 7.42-6.253 8.08z"
-        fill="#E86C6C"
+        fill={props?.color ? props.color : '#E86C6C'}
       />
     </Svg>
   );
@@ -598,7 +598,7 @@ function SvgHeart(props: any) {
       {...props}>
       <Path
         d="M8.414 13.873c-.227.08-.6.08-.827 0-1.933-.66-6.253-3.413-6.253-8.08 0-2.06 1.66-3.726 3.707-3.726 1.213 0 2.286.586 2.96 1.493a3.687 3.687 0 012.96-1.493c2.046 0 3.706 1.666 3.706 3.726 0 4.667-4.32 7.42-6.253 8.08z"
-        stroke="#A8A8A8"
+        stroke={props?.color ? props.color : '#A8A8A8'}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -617,11 +617,11 @@ function SvgComment(props: any) {
       {...props}>
       <Path
         d="M8 15.207c-.46 0-.893-.234-1.2-.64l-1-1.334c-.02-.026-.1-.06-.133-.066h-.333c-2.78 0-4.5-.754-4.5-4.5V5.333c0-2.946 1.553-4.5 4.5-4.5h5.333c2.947 0 4.5 1.554 4.5 4.5v3.334c0 2.946-1.553 4.5-4.5 4.5h-.333c-.053 0-.1.026-.133.066l-1 1.334c-.307.406-.74.64-1.2.64zM5.335 1.833c-2.387 0-3.5 1.114-3.5 3.5v3.334c0 3.013 1.033 3.5 3.5 3.5h.333c.34 0 .727.193.934.466l1 1.334c.233.306.566.306.8 0l1-1.334c.22-.293.566-.466.933-.466h.333c2.387 0 3.5-1.114 3.5-3.5V5.333c0-2.386-1.113-3.5-3.5-3.5H5.334z"
-        fill="#A8A8A8"
+        fill={props?.color ? props.color : '#A8A8A8'}
       />
       <Path
         d="M11.333 5.833H4.666a.504.504 0 01-.5-.5c0-.273.227-.5.5-.5h6.667c.273 0 .5.227.5.5 0 .274-.227.5-.5.5zM8.666 9.167h-4a.504.504 0 01-.5-.5c0-.274.227-.5.5-.5h4c.273 0 .5.226.5.5 0 .273-.227.5-.5.5z"
-        fill="#A8A8A8"
+        fill={props?.color ? props.color : '#A8A8A8'}
       />
     </Svg>
   );
@@ -1864,17 +1864,18 @@ function SvgUser(props: any) {
 }
 
 function SvgPlus(props: any) {
+  const {color, size} = props;
   return (
     <Svg
-      width={16}
-      height={17}
+      width={size ? size : 16}
+      height={size ? size : 16}
       viewBox="0 0 16 17"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
       <Path
         d="M8 3.167v10.666M13.334 8.5H2.667"
-        stroke="#fff"
+        stroke={color ? color : '#fff'}
         strokeWidth={2}
         strokeLinecap="round"
         strokeLinejoin="round"

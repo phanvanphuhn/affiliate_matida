@@ -1,7 +1,7 @@
+import {t} from 'i18next';
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {t} from 'i18next';
 
 import {AppImage} from '@component';
 import {iconNext} from '@images';
@@ -9,7 +9,6 @@ import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {event, eventType, trackingAppEvent} from '@util';
-import {OptionComparison} from '@constant';
 
 export const SizeComparisonComponent = () => {
   const data = useSelector((state: any) => state?.home?.data);
@@ -21,9 +20,14 @@ export const SizeComparisonComponent = () => {
     : '';
 
   const handlePress = () => {
-    trackingAppEvent(event.BABY_TRACKER.BABY_TRACKER_OPEN, {}, eventType.AFF_FLYER);
+    trackingAppEvent(
+      event.BABY_TRACKER.BABY_TRACKER_OPEN,
+      {},
+      eventType.AFF_FLYER,
+    );
     navigate(ROUTE_NAME.SIZE_COMPARISON, {
-      option: OptionComparison.EMBRYO,
+      // option: OptionComparison.EMBRYO,
+      option: 1,
     });
   };
 

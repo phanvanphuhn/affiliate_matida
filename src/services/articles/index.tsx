@@ -7,6 +7,7 @@ const ARTICLES_RELATED = 'articles/related';
 const SAVE_ARTICLES = 'user/save-article';
 const UN_SAVE_ARTICLES = 'user/unsave-article';
 const ARTICLES = 'articles';
+const CHECKUPS = 'checkups';
 const ARTICLES_MOST_POPULAR = 'articles/most-popular';
 const CONTENT_VIEWS = 'content-views';
 const GET_ARTICLE_BY_WEEK = 'articles/week';
@@ -74,6 +75,11 @@ export const postUnSaveArticles: any = async (id: number) => {
 
 export const getArticleDetail: any = async (id: number) => {
   const response = await api.get(`${ARTICLES}/${id}`);
+  return response;
+};
+
+export const getCheckupsDetail: any = async (id: number) => {
+  const response = await api.get(`${CHECKUPS}/${id}`);
   return response;
 };
 

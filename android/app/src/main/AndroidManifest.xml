@@ -60,7 +60,8 @@
         </intent-filter>
         <intent-filter>
                 <!-- If utilizing $deeplink_path please explicitly declare your hosts, or utilize a wildcard(*) -->
-                <data android:scheme="matida" android:host="open" />
+                <!-- <data android:scheme="matida" android:host="open" /> -->
+                <data android:scheme="matida" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

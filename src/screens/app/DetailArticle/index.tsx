@@ -1,5 +1,14 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {event, eventType, trackingAppEvent, useContentView, useUXCam} from '@util';
+import {
+  event,
+  eventType,
+  trackingAppEvent,
+  useContentView,
+  useUXCam,
+} from '@util';
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, ScrollView, StyleSheet, Text, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';
@@ -20,6 +29,7 @@ import {payArticleExplore, payArticleHome} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
   getArticleDetail,
+  getCheckupsDetail,
   getListArticlesRelated,
   GlobalService,
   postSaveArticles,
@@ -28,6 +38,7 @@ import {
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {t} from 'i18next';
 import {useDispatch} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 import {IArticles} from '../Home/types';
 import {
   BannerDetailArticle,
@@ -42,12 +53,15 @@ export const DetailArticle = () => {
   const navigation = useNavigation<any>();
   const dispatch = useDispatch();
 
-  const {article} = route?.params;
-  const {id, isTimeline = false} = article;
+  const {article, idArticle, type} = route?.params;
+  // const {id, isTimeline = false} = article;
+  const id = article?.id ?? idArticle;
+  const isTimeline = article?.isTimeline || type === 'checkup';
+  reactotron.log?.(type, article?.isTimeline);
   const [listRelated, setListRelated] = useState<any[]>([]);
   const [articleDetail, setArticleDetail] = useState<any>(article);
   const [bookmark, setBookMark] = useState<boolean>(
-    articleDetail.is_saved === 1 ? true : false,
+    articleDetail?.is_saved === 1 ? true : false,
   );
 
   const [paused, setPaused] = useState(true);
@@ -70,6 +84,8 @@ export const DetailArticle = () => {
     if (!isTimeline) {
       getArticlesDetail();
       getDataMoreArticles();
+    } else {
+      getCheckupsDetailData();
     }
   }, []);
 
@@ -88,10 +104,21 @@ export const DetailArticle = () => {
     }
   };
 
+  const getCheckupsDetailData = async () => {
+    try {
+      GlobalService.showLoading();
+      const res = await getCheckupsDetail(idArticle ?? 1);
+      setArticleDetail(res?.data);
+    } catch (error) {
+    } finally {
+      GlobalService.hideLoading();
+    }
+  };
+
   const getArticlesDetail = async () => {
     try {
       GlobalService.showLoading();
-      const res = await getArticleDetail(id ?? 1);
+      const res = await getArticleDetail(id ? id : idArticle ?? 1);
       setArticleDetail(res?.data);
       setBookMark(res?.data?.is_saved === 1 ? true : false);
       refBookmark.current = res?.data?.is_saved === 1 ? true : false;

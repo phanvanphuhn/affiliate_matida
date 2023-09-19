@@ -192,6 +192,7 @@ export const vi = {
     week: 'Tuần',
     titleHeader: 'Thông tin theo tuần thai',
     titleProgress: 'Tuần nữa!',
+    afterBirth: 'Sau sinh',
   },
   videoList: {
     titleHeader: 'Video cho bạn',
@@ -623,9 +624,9 @@ export const vi = {
     article: 'Bài viết',
     dailyQuiz: 'Câu hỏi hôm nay',
   },
-  appUpdate:{
+  appUpdate: {
     welcome: 'Chào bạn, Matida đây!',
     desc: 'Cập nhật app ngay để trải nghiệm những tính năng tuyệt vời nhất',
-    update: 'Cập nhật'
-  }
+    update: 'Cập nhật',
+  },
 };
