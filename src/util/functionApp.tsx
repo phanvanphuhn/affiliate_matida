@@ -293,15 +293,17 @@ export function isSameDay(currentMessage: any, diffMessage: any) {
   return currentCreatedAt.isSame(diffCreatedAt, 'day');
 }
 
-export const openUrl = (url: string) => {
+export const openUrl = async (url: string) => {
   try {
     Linking.canOpenURL(url).then(result => {
       if (result) {
-        reactotron.log?.('OPENING' + url);
+        reactotron.log?.('OPENING ' + url);
         Linking.openURL(url);
+      } else {
+        reactotron.log?.('CANNOT OPEN ' + url);
       }
     });
   } catch (error) {
-    console.log('OPEN URL FAILED');
+    reactotron.log?.('CANNOT OPEN ' + url);
   }
 };
