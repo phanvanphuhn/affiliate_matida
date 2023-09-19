@@ -1,9 +1,8 @@
-import React from 'react'
-import { View, Text, Animated, StyleSheet } from 'react-native'
+import {colors} from '@stylesCommon';
+import React from 'react';
+import {View, Text, Animated, StyleSheet} from 'react-native';
 
-const ItemFloatingComment = React.forwardRef((props: any, ref) => {
-  const {data} = props
-  console.log('index: ',ref)
+const ItemFloatingComment = (props: any) => {
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
@@ -24,39 +23,48 @@ const ItemFloatingComment = React.forwardRef((props: any, ref) => {
     }).start();
   };
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     fadeIn();
 
     const tout = setTimeout(() => {
       clearTimeout(tout);
       fadeOut();
-    }, 2000);
-  },[])
+    }, 3000);
 
-  return(
-        <Animated.View
-         style={[
-           styles.fadingContainer,
-           {
-              //Bind opacity to animated value
-             opacity: fadeAnim,
-           },
-         ]}>
-          {data.map(item => {
-          return <Text style={styles.fadingText}>{item.user}:{item.content}</Text>
-          })}
-       </Animated.View>
-  )
-})
+    return () => fadeOut();
+  }, []);
+
+  return (
+    <Animated.View
+      style={[
+        styles.fadingContainer,
+        {
+          //Bind opacity to animated value
+          opacity: fadeAnim,
+        },
+      ]}>
+      <Text style={styles.title}>{props.item.user}</Text>
+      <Text style={styles.description}>{props.item.content}</Text>
+    </Animated.View>
+  );
+};
 
 const styles = StyleSheet.create({
   fadingContainer: {
     padding: 20,
-    backgroundColor: 'powderblue',
+    flexDirection: 'row',
   },
-  fadingText: {
-    fontSize: 28,
+  title: {
+    fontSize: 12,
+    color: colors.white,
+    fontWeight: '700',
+    marginRight: 12,
   },
-})
+  description: {
+    fontWeight: '400',
+    fontSize: 12,
+    color: colors.white,
+  },
+});
 
 export default ItemFloatingComment;

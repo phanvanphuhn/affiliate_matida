@@ -11,6 +11,7 @@ import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
 import FooterFeed from './FooterFeed';
 import InputItem from './InputItem';
+import ListFloatingComment from './ListFloatingComment';
 import TitleFeed from './TitleFeed';
 
 interface ItemArticleProps {
@@ -42,9 +43,6 @@ const ItemArticle = (props: ItemArticleProps) => {
           fastImage={true}
           style={styles.fullScreen}
         />
-        {/* <View style={styles.floatingContainer}>
-          <ListFloatingComment isFocused={props.isFocused}/>
-        </View> */}
         <LinearGradient
           colors={['#00000000', '#00000090']}
           style={{
@@ -63,6 +61,7 @@ const ItemArticle = (props: ItemArticleProps) => {
           }}>
           <InputItem />
         </View>
+        {!!props.isFocused && <ListFloatingComment />}
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>
@@ -79,7 +78,6 @@ const styles = StyleSheet.create({
   },
   floatingContainer: {
     position: 'absolute',
-    zIndex: 999,
     top: '40%',
     width: '100%',
   },

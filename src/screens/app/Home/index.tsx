@@ -124,8 +124,8 @@ const Home = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      trackingAppEvent(event.SCREEN.HOME, {}, eventType.AFF_FLYER);
       trackingAppEvent(event.SYSTEM.START, {}, eventType.MIX_PANEL, user);
+      trackingAppEvent(event.SCREEN.HOME, {}, eventType.AFF_FLYER);
       if (Platform.OS === 'android') {
       }
       firstRef.current = false;
