@@ -1,6 +1,6 @@
 import {EContentType} from '@constant';
 import {colors, widthScreen} from '@stylesCommon';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
@@ -115,6 +115,11 @@ const ItemVideo = (props: ItemVideoProps) => {
     }
     return url;
   };
+
+  const floatingComment = useMemo(() => {
+    return props.item;
+  }, [props.item]);
+
   return (
     <DoubleClick
       onSingleClick={onPause}
@@ -214,6 +219,7 @@ const ItemVideo = (props: ItemVideoProps) => {
           <InputItem />
         </View>
         {!!props.isFocused && <ListFloatingComment />}
+        {!!props.isFocused && <ListFloatingComment item={floatingComment} />}
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>

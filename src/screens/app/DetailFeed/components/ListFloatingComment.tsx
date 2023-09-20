@@ -8,80 +8,48 @@ import {
   FlatList,
 } from 'react-native';
 import ItemFloatingComment from './ItemFloatingComment';
-import {useVideo} from './Container';
-import useCommentFeed from '../useCommentFeed';
-import BottomSheet from '@gorhom/bottom-sheet';
-import {get} from 'lodash';
+import {getListCommentFeedApi} from '@services';
 
 const ListFloatingComment = (props: any) => {
-  const [arr, setArr] = useState([]);
+  const [arr, setArr] = useState<Array<{}>>([]);
   const scrollRef = useRef<ScrollView>(null);
   const intervalRef = useRef<number>();
-  const bottomSheetRef = useRef<BottomSheet>(null);
-  const {state, setState} = useVideo();
-  const {
-    state: stateComment,
-    handleLoadMore,
-    actionComment,
-    setState: setStateComment,
-    flatlitRef,
-    actionLikeComment,
-    actionReliesComment,
-    actionLikeRepliesComment,
-  } = useCommentFeed();
+  const floatingCommentRef = useRef([]);
+
+  const getFloatingComment = async () => {
+    try {
+      const res = await getListCommentFeedApi(
+        props?.item?.content_type,
+        props?.item?.contentid,
+        1,
+        5,
+      );
+      if (res.success) {
+        let data = res?.data?.comments;
+        floatingCommentRef.current = data;
+      }
+    } catch (error: any) {}
+  };
+
   useEffect(() => {
-    setState({isGetComment: !state.isGetComment});
+    getFloatingComment();
   }, []);
-  console.log('stateComment: ', stateComment);
-
-  const message = stateComment && stateComment.data?.map(item => item.content);
-  console.log('message: ', message);
-
-  const dataMessage = useRef([
-    {
-      id: 1,
-      user: 'Phu',
-      content: 'Hello',
-    },
-    {
-      id: 2,
-      user: 'Phu',
-      content: 'Hello2',
-    },
-    {
-      id: 3,
-      user: 'Phu',
-      content: 'Hello3',
-    },
-    {
-      id: 4,
-      user: 'Phu',
-      content: 'Hello4',
-    },
-    {
-      id: 5,
-      user: 'Phu',
-      content: 'Hello5',
-    },
-  ]);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      console.log('interval: ', intervalRef.current);
-      if (arr.filter(item => !item.id).length === 3) {
-        console.log('here');
+      if (arr.filter(item => !item?.id).length === 3) {
         if (intervalRef.current) {
           clearInterval(intervalRef.current);
         }
         return;
       }
-      if (dataMessage.current.length === 0) {
+      if (floatingCommentRef.current.length === 0) {
         let newArr = [...arr];
         newArr.push({});
         setArr(newArr);
       } else {
         let newArr = [...arr];
-        newArr.push(dataMessage.current.shift());
+        newArr.push(floatingCommentRef.current?.shift());
         setArr(newArr);
       }
     }, 1000);
@@ -107,7 +75,7 @@ const ListFloatingComment = (props: any) => {
         ref={scrollRef}
         scrollEnabled={false}>
         {arr.map(item => {
-          return item.id ? (
+          return item?.id ? (
             <ItemFloatingComment item={item} />
           ) : (
             <View style={{height: 50}}></View>
@@ -128,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListFloatingComment;
+export default React.memo(ListFloatingComment);

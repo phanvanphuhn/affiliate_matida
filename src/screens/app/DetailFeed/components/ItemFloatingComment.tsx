@@ -43,8 +43,8 @@ const ItemFloatingComment = (props: any) => {
           opacity: fadeAnim,
         },
       ]}>
-      <Text style={styles.title}>{props.item.user}</Text>
-      <Text style={styles.description}>{props.item.content}</Text>
+      <Text style={styles.title}>{props?.item?.user.name}</Text>
+      <Text style={styles.description}>{props?.item?.content}</Text>
     </Animated.View>
   );
 };
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontSize: 12,
     color: colors.white,
+    flex: 1,
   },
 });
 

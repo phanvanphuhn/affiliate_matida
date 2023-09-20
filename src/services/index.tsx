@@ -15,3 +15,4 @@ export * from './quiz';
 export * from './masterClass';
 export * from './pay';
 export * from './forum';
+export * from './feed';
