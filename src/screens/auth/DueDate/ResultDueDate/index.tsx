@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Image, Text, View} from 'react-native';
 
 import {AppButton, Header} from '@component';
@@ -6,7 +6,6 @@ import {useNavigation} from '@react-navigation/native';
 import {styles} from '../styles';
 import {stylesScreen} from './styles';
 
-import {changeStatusLogin} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {useTranslation} from 'react-i18next';
@@ -28,7 +27,7 @@ const ResultDueDateScreen = (props: any) => {
 
   const handlePressButton = () => {
     // dispatch(changeStatusLogin(true));
-    navigation.navigate(ROUTE_NAME.SELECT_DOB);
+    navigation.navigate(ROUTE_NAME.SLIDE_INTRO);
   };
 
   return (
