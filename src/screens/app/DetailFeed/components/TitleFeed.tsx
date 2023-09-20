@@ -21,6 +21,7 @@ import {useVideo} from './Container';
 import CustomImageRenderer from './CustomImageRenderer';
 import clip from './clip';
 import {tagsStyles} from './settingsHtml';
+import {heightFullScreen} from '../useDetailFeed';
 
 interface TitleFeedProps {
   item: IDataListFeed;
@@ -88,7 +89,7 @@ const TitleFeed = (props: TitleFeedProps) => {
           ? {
               top: 0,
               bottom: 0,
-              paddingTop: insets.top + scaler(150),
+              paddingTop: insets.top + scaler(170),
             }
           : {},
       ]}>
@@ -124,9 +125,21 @@ const TitleFeed = (props: TitleFeedProps) => {
             style={styles.imageAvatar}
             resizeMode="contain"
           />
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
             <Text style={styles.subTitle}>{t('feed.by')}</Text>
-            <Text style={{color: colors.success_message, marginLeft: 8}}>
+            <Text
+              style={[
+                {
+                  color: colors.success_message,
+                  marginLeft: 8,
+                  flex: 1,
+                },
+                textShown
+                  ? {}
+                  : {
+                      paddingRight: 20,
+                    },
+              ]}>
               {props.item.expert_name ? props.item.expert_name : 'Matida'}
             </Text>
           </View>
@@ -136,37 +149,37 @@ const TitleFeed = (props: TitleFeedProps) => {
             style={{maxHeight: '100%'}}
             showsVerticalScrollIndicator={false}
             nestedScrollEnabled={true}
-            scrollEnabled={textShown}
-            >
-              <TouchableWithoutFeedback >
-                <View>
-                  <RenderHtml
-                    contentWidth={100}
-                    renderers={{
-                      img: CustomImageRenderer,
-                    }}
-                    renderersProps={renderersProps}
-                    source={{
-                      html: `<div>${
-                        textShown ? getFullDescription() : getDescription(150)
-                      }</div>`,
-                    }}
-                    baseStyle={styles.description}
-                    enableExperimentalMarginCollapsing={true}
-                    enableExperimentalBRCollapsing={true}
-                    enableExperimentalGhostLinesPrevention={true}
-                    defaultTextProps={{
-                      // numberOfLines: textShown ? undefined : 4,
-                      // onTextLayout: onTextLayout,
-                      style: {
-                        ...styles.description,
-                        color: textShown ? colors.textColor : colors.white,
-                      },
-                    }}
-                    tagsStyles={{...tagsStyles}}
-                  />
-                </View>
-              </TouchableWithoutFeedback>
+            scrollEnabled={textShown}>
+            <TouchableWithoutFeedback>
+              <View>
+                <RenderHtml
+                  contentWidth={100}
+                  renderers={{
+                    img: CustomImageRenderer,
+                  }}
+                  renderersProps={renderersProps}
+                  source={{
+                    html: `<div>${
+                      textShown ? getFullDescription() : getDescription(150)
+                    }</div>`,
+                  }}
+                  baseStyle={styles.description}
+                  enableExperimentalMarginCollapsing={true}
+                  enableExperimentalBRCollapsing={true}
+                  enableExperimentalGhostLinesPrevention={true}
+                  defaultTextProps={{
+                    // numberOfLines: textShown ? undefined : 4,
+                    // onTextLayout: onTextLayout,
+                    style: {
+                      ...styles.description,
+                      color: textShown ? colors.textColor : colors.white,
+                      paddingRight: textShown ? 0 : 25,
+                    },
+                  }}
+                  tagsStyles={{...tagsStyles}}
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </ScrollView>
         )}
         {getDescription(150)?.length < getFullDescription()?.length ? (
@@ -205,16 +218,19 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontWeight: '600',
     paddingBottom: 10,
+    paddingRight: 20,
   },
   container: {
     position: 'absolute',
-    bottom: 0,
-    maxHeight: heightScreen,
+    bottom: 70,
+    maxHeight: heightFullScreen,
     justifyContent: 'flex-end',
+    zIndex: 9999,
   },
   wrapAvatarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingBottom: 10,
   },
   imageAvatar: {
     height: 20,

@@ -86,11 +86,11 @@ function SvgCalendar(props: any) {
 }
 
 function SvgStar(props: any) {
-  const {color} = props;
+  const {color, fill, strokeWidth} = props;
   return (
     <Svg
-      width={16}
-      height={16}
+      width={20}
+      height={20}
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@ function SvgStar(props: any) {
       <Path
         d="M7.662 1.81a.375.375 0 01.674 0l1.782 3.611c.055.111.16.188.283.206l3.986.579c.308.045.431.423.208.64l-2.884 2.812a.375.375 0 00-.108.332l.68 3.97a.375.375 0 01-.544.396l-3.565-1.874a.375.375 0 00-.35 0L4.26 14.356a.375.375 0 01-.545-.396l.681-3.97a.375.375 0 00-.108-.332L1.403 6.846a.375.375 0 01.208-.64l3.986-.58a.375.375 0 00.283-.205L7.662 1.81z"
         stroke={color || '#B6A8ED'}
-        strokeWidth={1.5}
+        strokeWidth={strokeWidth || 1.5}
         strokeLinejoin="round"
       />
     </Svg>
@@ -582,6 +582,7 @@ function SvgHearted(props: any) {
       <Path
         d="M8.414 13.873c-.227.08-.6.08-.827 0-1.933-.66-6.253-3.413-6.253-8.08 0-2.06 1.66-3.726 3.707-3.726 1.213 0 2.286.586 2.96 1.493a3.687 3.687 0 012.96-1.493c2.046 0 3.706 1.666 3.706 3.726 0 4.667-4.32 7.42-6.253 8.08z"
         fill={props?.color ? props.color : '#E86C6C'}
+        stroke={props?.color ? props.color : '#A8A8A8'}
       />
     </Svg>
   );

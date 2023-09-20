@@ -5,7 +5,9 @@ import {IDataListFeed} from '../Feed/type';
 import {IStateVideo} from './types';
 import Swiper from './SwiperFlatlist/Swiper';
 import {useVideo} from './components/Container';
-
+import {Dimensions} from 'react-native';
+export const widthFullScreen = Dimensions.get('screen').width;
+export const heightFullScreen = Dimensions.get('screen').height;
 export const SIZE_DEFAULT = 20;
 const useDetailFeed = () => {
   const route = useRoute<any>();

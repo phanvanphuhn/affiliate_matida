@@ -31,9 +31,12 @@ interface IState extends IStateVideo {
   listPackage?: ListPackage[];
   duration?: number;
   totalComment?: number;
-  isShowComment?: boolean;
   is_liked?: boolean;
-  is_rated?: boolean;
+  total_favorites?: number;
+  total_likes?: number;
+  is_favorite?: boolean;
+  isShowComment?: boolean;
+  isShowInput?: boolean;
   progressStatus?: 'SEEKING' | 'DONE';
 }
 
@@ -48,12 +51,13 @@ export const VideoContext = React.createContext<IVideoContext>({
     progressChange: 0,
     duration: 0,
     totalComment: 0,
+    total_likes: 0,
     feed: undefined,
     questions: undefined,
     comment: undefined,
     isShowComment: false,
     is_liked: false,
-    is_rated: false,
+    is_favorite: false,
     progressStatus: undefined,
     data: [],
     listPackage: [],
@@ -65,6 +69,7 @@ export const VideoContext = React.createContext<IVideoContext>({
     refreshing: false,
     isOpen: false,
     isLoading: false,
+    isShowInput: false,
     isLoadMore: undefined,
     isLoadLess: undefined,
   },
@@ -92,7 +97,9 @@ const Container: React.FC<ContainerProps> = props => {
       progressStatus: undefined,
       isShowComment: false,
       is_liked: false,
-      is_rated: false,
+      is_favorite: false,
+      total_favorites: 0,
+      total_likes: 0,
       data: [],
       listPackage: [],
       page: undefined,
@@ -101,6 +108,7 @@ const Container: React.FC<ContainerProps> = props => {
       currentIndex: undefined,
       index: undefined,
       refreshing: false,
+      isShowInput: false,
       isOpen: false,
       isLoading: false,
       isLoadMore: undefined,

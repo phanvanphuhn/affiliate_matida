@@ -2,7 +2,7 @@
 import {LazyImage} from '@component';
 import {heightScreen, widthScreen} from '@stylesCommon';
 import React, {useEffect} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IDataListFeed} from '../../Feed/type';
 import {useVideo} from './Container';
@@ -11,6 +11,10 @@ import TitleFeed from './TitleFeed';
 import {useContentView} from '@util';
 import {EContentType} from '@constant';
 import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
+import FooterFeed from './FooterFeed';
+import KeyboardShift from './KeyboardShift';
+import InputItem from './InputItem';
+import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -39,13 +43,7 @@ const ItemArticle = (props: ItemArticleProps) => {
           }}
           resizeMode={'cover'}
           fastImage={true}
-          style={{
-            width: widthScreen,
-            aspectRatio: Platform.select({
-              android: widthScreen / (heightScreen - 27),
-              ios: widthScreen / (heightScreen - 65),
-            }),
-          }}
+          style={styles.fullScreen}
         />
         <LinearGradient
           colors={['#00000000', '#00000090']}
@@ -55,6 +53,16 @@ const ItemArticle = (props: ItemArticleProps) => {
             position: 'absolute',
           }}
         />
+        {!!props.isFocused && <FooterFeed item={props.item} />}
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}>
+          <InputItem />
+        </View>
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>
@@ -65,4 +73,8 @@ export default React.memo(ItemArticle);
 
 const styles = StyleSheet.create({
   container: {},
+  fullScreen: {
+    width: widthFullScreen,
+    height: heightFullScreen,
+  },
 });

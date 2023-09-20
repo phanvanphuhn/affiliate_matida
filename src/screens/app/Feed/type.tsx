@@ -26,8 +26,10 @@ export interface IDataListFeed
   topic: string;
   expert_id?: string;
   expert_name?: string;
-  expert_image?: string
+  expert_image?: string;
   is_liked?: boolean;
+  total_favorites?: number;
+  is_favorite?: boolean;
   total_comments?: number;
 }
 

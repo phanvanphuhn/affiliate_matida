@@ -1,74 +1,104 @@
-import {SvgHeart, SvgHearted, ic_comment, ic_menu, ic_share} from '@images';
-import {navigate} from '@navigation';
+import {
+  ic_comment,
+  ic_eye,
+  ic_share,
+  SvgHeart,
+  SvgHearted,
+  SvgStar,
+} from '@images';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import {ROUTE_NAME} from '@routeName';
 import {DEEP_LINK, GlobalService} from '@services';
 import {colors} from '@stylesCommon';
 import {event, eventType, trackingAppEvent} from '@util';
 import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Share from 'react-native-share';
-import {getDetailFeedApi, likeFeedApi} from '../../../../services/feed';
+import {
+  favoriteFeedApi,
+  getDetailFeedApi,
+  likeFeedApi,
+} from '../../../../services/feed';
 import {useVideo} from './Container';
+import {IDataListFeed} from '../../Feed/type';
+import Animated, {
+  Extrapolation,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-interface FooterFeedProps {}
+interface FooterFeedProps {
+  item: IDataListFeed;
+}
 
 const FooterFeed = (props: FooterFeedProps) => {
   const {state, setState} = useVideo();
-
+  const anim = useSharedValue(0);
+  const opacityStyles = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(anim.value, [0, 1], [0, 1], Extrapolation.CLAMP),
+    };
+  }, []);
   const getDetail = async () => {
-    if (!state.feed) {
+    if (!props.item) {
       return;
     }
     const res = await getDetailFeedApi(
-      state.feed?.content_type,
-      state.feed?.contentid,
+      props.item?.content_type,
+      props.item?.contentid,
     );
     if (res.success) {
       setState({
         is_liked: res?.data?.is_liked,
+        total_likes: res?.data?.total_likes,
+        is_favorite: res?.data?.is_favorite,
+        total_favorites: res?.data?.total_favorites,
         totalComment: res?.data?.total_comments,
         questions: res?.data?.questions || [],
+      });
+      anim.value = withTiming(1, {
+        duration: 500,
       });
     }
   };
 
   useEffect(() => {
     getDetail();
-  }, [state.feed?.contentid, state.feed?.content_type]);
+  }, [props.item?.contentid, props.item?.content_type]);
   const onLike = async () => {
     try {
-      if (!state.feed) {
+      if (!props.item) {
         return;
       }
       const res = await likeFeedApi(
-        state.feed?.content_type,
-        state.feed?.contentid,
+        props.item?.content_type,
+        props.item?.contentid,
       );
       if (res.success) {
         setState({
           is_liked: res.data?.is_liked,
         });
       }
-      switch (state.feed?.content_type) {
+      switch (props.item?.content_type) {
         case 'podcast':
           trackingAppEvent(
             event.FEED.FEED_LIKE_PODCAST,
-            {content_id: state.feed?.contentid},
+            {content_id: props.item?.contentid},
             eventType.MIX_PANEL,
           );
           break;
         case 'video':
           trackingAppEvent(
             event.FEED.FEED_LIKE_VIDEO,
-            {content_id: state.feed?.contentid},
+            {content_id: props.item?.contentid},
             eventType.MIX_PANEL,
           );
           break;
         default:
           trackingAppEvent(
             event.FEED.FEED_LIKE_ARTICLE,
-            {content_id: state.feed?.contentid},
+            {content_id: props.item?.contentid},
             eventType.MIX_PANEL,
           );
           break;
@@ -78,34 +108,43 @@ const FooterFeed = (props: FooterFeedProps) => {
   const onComment = () => {
     setState({isShowComment: true});
   };
-  const onRate = () => {
-    setState({
-      feed: {...state.feed, is_rated: !state.feed?.is_rated},
-    });
+  const onRate = async () => {
+    try {
+      if (!props.item) {
+        return;
+      }
+      const res = await favoriteFeedApi(
+        props.item?.content_type,
+        props.item?.contentid,
+      );
+      if (res.success) {
+        setState({is_favorite: res.data?.is_favorite});
+      }
+    } catch (error: any) {}
   };
   const getThumbnail = () => {
     let url = '';
-    switch (state.feed?.content_type) {
+    switch (props.item?.content_type) {
       case 'video':
-        url = state.feed?.thumbnail || '';
+        url = props.item?.thumbnail || '';
         break;
       case 'podcast':
       case 'article':
-        url = state.feed?.image || '';
+        url = props.item?.image || '';
         break;
     }
     return url;
   };
   const onShare = async () => {
     try {
-      if (!state.feed?.content_type || !state.feed?.contentid) {
+      if (!props.item?.content_type || !props.item?.contentid) {
         return;
       }
       GlobalService.showLoading();
 
       const link = await dynamicLinks().buildShortLink(
         {
-          link: `${DEEP_LINK}/feed/${state.feed.content_type}/${state.feed.contentid}`,
+          link: `${DEEP_LINK}/feed/${props.item.content_type}/${props.item.contentid}`,
           domainUriPrefix: DEEP_LINK,
           android: {
             packageName: 'com.growth.levers.matida',
@@ -122,15 +161,15 @@ const FooterFeed = (props: FooterFeedProps) => {
             fallbackUrl: 'https://www.matida.app/',
           },
           social: {
-            title: state.feed.title,
+            title: props.item.title,
             descriptionText: 'Matida - Ứng dụng đồng hành cùng Mẹ bầu hiện đại',
             imageUrl: getThumbnail(),
           },
         },
         dynamicLinks.ShortLinkType.UNGUESSABLE,
       );
-      const shareResponse = await Share.open({
-        title: state.feed?.title,
+      await Share.open({
+        title: props.item?.title,
         url: link,
       });
     } catch (error: any) {
@@ -138,58 +177,71 @@ const FooterFeed = (props: FooterFeedProps) => {
       GlobalService.hideLoading();
     }
   };
-  const onMenu = () => {
-    navigate(ROUTE_NAME.MOM_PREP_TEST);
-  };
+  // const onMenu = () => {
+  //   navigate(ROUTE_NAME.MOM_PREP_TEST);
+  // };
   return (
-    <View style={[styles.containerFooter]}>
-      <TouchableOpacity onPress={onLike} style={styles.buttonFooter}>
-        {state?.is_liked ? <SvgHearted /> : <SvgHeart />}
+    <Animated.View style={[styles.containerFooter, opacityStyles]}>
+      <TouchableOpacity onPress={onComment} style={[styles.buttonFooter]}>
+        <Image source={ic_comment} style={{tintColor: colors.white}} />
+        {!!state.totalComment && (
+          <Text style={styles.textTotal}>{state.totalComment}</Text>
+        )}
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onComment}
-        style={[
-          styles.buttonFooter,
-          {flexDirection: 'row', alignItems: 'center'},
-        ]}>
-        <Image source={ic_comment} />
-        {!!state.totalComment && (
-          <Text style={{color: colors.white, fontSize: 12, marginLeft: 5}}>
-            {state.totalComment}
-          </Text>
-        )}
-      </TouchableOpacity>
-      {/* <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
-        {state.feed?.is_rated ? (
-          <SvgStar fill={colors.yellow} color={colors.yellow} />
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+        onPress={onLike}
+        style={styles.buttonFooter}>
+        {state?.is_liked ? (
+          <SvgHearted strokeWidth={0.5} />
         ) : (
-          <SvgStar />
+          <SvgHeart color={colors.white} strokeWidth={0.5} />
         )}
-      </TouchableOpacity> */}
+        {!!state.total_likes && (
+          <Text style={styles.textTotal}>{state.total_likes}</Text>
+        )}
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
+        {state?.is_favorite ? (
+          <SvgStar
+            fill={colors.yellow}
+            color={colors.white}
+            strokeWidth={0.5}
+          />
+        ) : (
+          <SvgStar color={colors.white} strokeWidth={0.5} />
+        )}
+      </TouchableOpacity>
       <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
-        <Image source={ic_share} />
+        <Image source={ic_share} style={{tintColor: colors.white}} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonFooter} onPress={onMenu}>
-        <Image source={ic_menu} />
-      </TouchableOpacity>
-    </View>
+      <View style={styles.buttonFooter}>
+        <Image source={ic_eye} style={{tintColor: colors.white}} />
+        {!!props.item?.total_views ||
+          (props.item?.views && (
+            <Text style={styles.textTotal}>
+              {props.item?.total_views || props.item?.views}
+            </Text>
+          ))}
+      </View>
+    </Animated.View>
   );
 };
 
 export default React.memo(FooterFeed);
 
 const styles = StyleSheet.create({
+  textTotal: {color: colors.white, fontSize: 12, marginTop: 5},
   buttonFooter: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
-    paddingTop: 15,
-    paddingBottom: 25,
+    paddingVertical: 12,
   },
   containerFooter: {
-    flexDirection: 'row',
-    backgroundColor: '#141414',
-    height: '100%',
+    position: 'absolute',
+    right: 10,
+    bottom: 80,
+    zIndex: 999,
   },
 });

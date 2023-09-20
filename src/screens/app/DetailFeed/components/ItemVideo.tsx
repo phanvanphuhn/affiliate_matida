@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   ImageBackground,
   Platform,
+  StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
@@ -19,6 +20,10 @@ import ImagePodcast from './ImagePodcast';
 import {useContentView} from '@util';
 import {EContentType} from '@constant';
 import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
+import LinearGradient from 'react-native-linear-gradient';
+import FooterFeed from './FooterFeed';
+import InputItem from './InputItem';
+import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -124,7 +129,7 @@ const ItemVideo = (props: ItemVideoProps) => {
             <ImageBackground
               source={{uri: props.item.image}}
               blurRadius={10}
-              style={styles.imgBackground}>
+              style={[styles.imgBackground, styles.fullScreen]}>
               <View
                 style={{
                   backgroundColor: '#00000070',
@@ -146,7 +151,7 @@ const ItemVideo = (props: ItemVideoProps) => {
           {!!getUrl() && (
             <Video
               source={{uri: getUrl()}}
-              style={styles.video}
+              style={[styles.video, styles.fullScreen]}
               resizeMode="contain"
               // @ts-ignore
               ref={videoPlayer}
@@ -186,15 +191,33 @@ const ItemVideo = (props: ItemVideoProps) => {
             </View>
           )}
         </View>
+        <LinearGradient
+          colors={['#00000000', '#00000090']}
+          style={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+          }}
+        />
+        {!!props.isFocused && <FooterFeed item={props.item} />}
 
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}>
+          <SliderFeed
+            progress={progress || 0}
+            duration={duration || 0}
+            onSeek={onSeek}
+            onSeeking={onSeeking}
+          />
+          <InputItem />
+        </View>
         <TitleFeed item={props.item} />
       </View>
-      <SliderFeed
-        progress={progress || 0}
-        duration={duration || 0}
-        onSeek={onSeek}
-        onSeeking={onSeeking}
-      />
     </DoubleClick>
   );
 };
@@ -202,6 +225,10 @@ const ItemVideo = (props: ItemVideoProps) => {
 export default React.memo(ItemVideo);
 
 const styles = StyleSheet.create({
+  fullScreen: {
+    width: widthFullScreen,
+    height: heightFullScreen,
+  },
   loading: {
     position: 'absolute',
     alignItems: 'center',
@@ -218,11 +245,6 @@ const styles = StyleSheet.create({
     borderRadius: widthScreen,
   },
   imgBackground: {
-    width: widthScreen,
-    aspectRatio: Platform.select({
-      android: widthScreen / (heightScreen - 34),
-      ios: widthScreen / (heightScreen - 71),
-    }),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -237,13 +259,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   video: {
-    aspectRatio: Platform.select({
-      android: widthScreen / (heightScreen - 27),
-      ios: widthScreen / (heightScreen - 65),
-    }),
-    width: widthScreen,
     ...StyleSheet.absoluteFillObject,
-    top: 45,
     bottom: 0,
     left: 0,
     right: 0,

@@ -56,6 +56,8 @@ const ic_send = require('./ic_send.png');
 const DailyQuiz = require('./dailyQuiz.png');
 const DailyQuizBackground = require('./dailyQuizzBackground.png');
 const ic_gemstone = require('./ic_gemstone.png');
+const ic_eye = require('./ic_eye.png');
+const ic_send_opacity = require('./ic_send_opacity.png');
 
 export {
   DailyQuiz,
@@ -114,4 +116,6 @@ export {
   slideIntro5,
   slideIntro5en,
   ic_gemstone,
+  ic_eye,
+  ic_send_opacity,
 };

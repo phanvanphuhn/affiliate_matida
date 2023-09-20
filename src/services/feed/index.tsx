@@ -49,6 +49,15 @@ export const likeFeedApi: any = async (feed_type: string, feed_id: string) => {
   );
   return response;
 };
+export const favoriteFeedApi: any = async (
+  feed_type: string,
+  feed_id: string,
+) => {
+  const response = await api.put(
+    `${GET_LIST_FEED}/${feed_type}/${feed_id}/favorite`,
+  );
+  return response;
+};
 export const repliesCommentFeedApi: any = async (
   comment_id: number,
   content: string,
