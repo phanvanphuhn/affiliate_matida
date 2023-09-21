@@ -52,7 +52,7 @@ const ListFloatingComment = (props: any) => {
         newArr.push(floatingCommentRef.current?.shift());
         setArr(newArr);
       }
-    }, 1000);
+    }, 2000);
 
     return () => {
       if (intervalRef.current) {
@@ -63,13 +63,15 @@ const ListFloatingComment = (props: any) => {
 
   return (
     <View
-      style={{
-        position: 'absolute',
-        width: '100%',
-        bottom: '30%',
-        justifyContent: 'flex-end',
-        maxHeight: 250,
-      }}>
+      style={[
+        {
+          position: 'absolute',
+          width: '100%',
+          bottom: '30%',
+          justifyContent: 'flex-end',
+          height: 200,
+        },
+      ]}>
       <ScrollView
         onContentSizeChange={() => scrollRef.current?.scrollToEnd()}
         ref={scrollRef}

@@ -51,7 +51,9 @@ const ItemFloatingComment = (props: any) => {
 
 const styles = StyleSheet.create({
   fadingContainer: {
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 8,
     flexDirection: 'row',
   },
   title: {
