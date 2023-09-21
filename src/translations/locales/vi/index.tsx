@@ -193,6 +193,7 @@ export const vi = {
     titleHeader: 'Thông tin theo tuần thai',
     titleProgress: 'Tuần nữa!',
     afterBirth: 'Sau sinh',
+    weeks: '%start - %end tuần',
   },
   videoList: {
     titleHeader: 'Video cho bạn',

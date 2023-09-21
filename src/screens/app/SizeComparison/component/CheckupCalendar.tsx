@@ -95,11 +95,40 @@ export const CheckupCalendar = (props: Props) => {
     );
   };
 
-  const Section = ({content, title}: {title: string; content: string}) => {
+  const Section = ({
+    content,
+    title,
+    left,
+  }: {
+    title: string;
+    content: string;
+    left?: boolean;
+  }) => {
     return (
-      <View>
-        <Text style={styles.txtTitle}>{title}</Text>
-        <Text style={styles.txtContent}>{content}</Text>
+      <View
+        style={
+          left && {
+            alignItems: 'flex-end',
+          }
+        }>
+        <Text
+          style={[
+            styles.txtTitle,
+            left && {
+              textAlign: 'right',
+            },
+          ]}>
+          {title}
+        </Text>
+        <Text
+          style={[
+            styles.txtContent,
+            left && {
+              textAlign: 'right',
+            },
+          ]}>
+          {content}
+        </Text>
       </View>
     );
   };
@@ -118,14 +147,14 @@ export const CheckupCalendar = (props: Props) => {
         <Text style={styles.txtWeek}>
           {afterBirth
             ? t('sizeComparison.afterBirth')
-            : `${rangeWeek.start}-${rangeWeek.end} ${t(
-                'home.sizeComparison.weeks',
-              )}`}
+            : `${t('sizeComparison.weeks')
+                .replace('%start', rangeWeek?.start ?? '')
+                .replace('%end', rangeWeek?.end ?? '')}`}
         </Text>
         <Text style={styles.txtContent}>
           {rangeDate?.range
             ? rangeDate?.range
-            : `${rangeDate.start}-${rangeDate.end}`}
+            : `${rangeDate.start} - ${rangeDate.end}`}
         </Text>
       </View>
     );
@@ -135,7 +164,13 @@ export const CheckupCalendar = (props: Props) => {
     ({groups, indexGroups}: {groups: any; indexGroups: number}) => {
       const period = groups?.contents[0]?.period_number ?? [];
       return (
-        <>
+        <View
+          style={[
+            {
+              paddingHorizontal: scaler(12),
+            },
+            indexGroups % 2 ? {backgroundColor: '#FFF8F8'} : undefined,
+          ]}>
           <LineView
             onLayout={e => {
               const top = e.nativeEvent.layout.y;
@@ -150,18 +185,19 @@ export const CheckupCalendar = (props: Props) => {
                   range: groups?.dateRange,
                 }}
                 rangeWeek={{end: period[1] ?? '0', start: period[0] ?? '0'}}
-                afterBirth={indexGroups === 6}
+                afterBirth={indexGroups === listData.length - 1}
               />
             }
             isHeader
           />
           {groups?.contents?.map((week: any, index: number) => {
-            return (
+            return week?.url ? (
               <LineView
                 content={
                   <Section
                     title={week?.title}
                     content={week?.description ?? ''}
+                    left={week?.position === 'left'}
                   />
                 }
                 lastLine={
@@ -176,9 +212,9 @@ export const CheckupCalendar = (props: Props) => {
                   })
                 }
               />
-            );
+            ) : null;
           })}
-        </>
+        </View>
       );
     },
     [],
@@ -197,7 +233,7 @@ export const CheckupCalendar = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: scaler(12),
+    // paddingHorizontal: scaler(12),
     borderTopWidth: scaler(1),
     borderColor: '#E9E9E9',
   },

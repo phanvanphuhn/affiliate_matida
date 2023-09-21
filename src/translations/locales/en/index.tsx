@@ -152,7 +152,7 @@ export const en = {
       babySize: "Baby's size",
       embryo: 'Embryo',
       mom: 'Mom',
-      sympton: 'Advise & Symptoms',
+      sympton: 'Screenings and Symptoms',
       weeks: 'weeks',
     },
     pregnancy: {
@@ -189,6 +189,7 @@ export const en = {
     titleHeader: 'Week by Week',
     titleProgress: 'weeks to go!',
     afterBirth: 'After Birth',
+    weeks: 'Week %start - %end',
   },
   videoList: {
     titleHeader: 'Videos for you',
