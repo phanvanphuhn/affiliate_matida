@@ -17,6 +17,7 @@ import {ROUTE_NAME} from '@routeName';
 import {deleteUserDevice} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
+  VERSION_CODE_PUSH,
   event,
   eventType,
   trackEventBranch,

@@ -1,20 +1,18 @@
 // import {LazyImage} from '@component';
 import {LazyImage} from '@component';
-import {heightScreen, widthScreen} from '@stylesCommon';
+import {EContentType} from '@constant';
 import React, {useEffect} from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 import {IDataListFeed} from '../../Feed/type';
+import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
-import TitleFeed from './TitleFeed';
-import {useContentView} from '@util';
-import {EContentType} from '@constant';
-import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 import FooterFeed from './FooterFeed';
-import KeyboardShift from './KeyboardShift';
 import InputItem from './InputItem';
-import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
+import ListFloatingComment from './ListFloatingComment';
+import TitleFeed from './TitleFeed';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -63,6 +61,8 @@ const ItemArticle = (props: ItemArticleProps) => {
           }}>
           <InputItem />
         </View>
+        {!!props.isFocused && <ListFloatingComment />}
+        {!!props.isFocused && <ListFloatingComment item={props?.item} />}
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>
@@ -76,5 +76,10 @@ const styles = StyleSheet.create({
   fullScreen: {
     width: widthFullScreen,
     height: heightFullScreen,
+  },
+  floatingContainer: {
+    position: 'absolute',
+    top: '40%',
+    width: '100%',
   },
 });

@@ -1,7 +1,7 @@
 import {LogoApp} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {colors, heightScreen, scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -17,11 +17,11 @@ import FastImage from 'react-native-fast-image';
 import RenderHtml from 'react-native-render-html';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {IDataListFeed} from '../../Feed/type';
+import {heightFullScreen} from '../useDetailFeed';
 import {useVideo} from './Container';
 import CustomImageRenderer from './CustomImageRenderer';
 import clip from './clip';
 import {tagsStyles} from './settingsHtml';
-import {heightFullScreen} from '../useDetailFeed';
 
 interface TitleFeedProps {
   item: IDataListFeed;

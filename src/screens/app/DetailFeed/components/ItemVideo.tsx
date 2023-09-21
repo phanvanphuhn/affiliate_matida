@@ -1,29 +1,26 @@
-import {colors, heightScreen, widthScreen} from '@stylesCommon';
-import React, {useEffect, useRef, useState} from 'react';
+import {EContentType} from '@constant';
+import {colors, widthScreen} from '@stylesCommon';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
-  Platform,
-  StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 import Video, {OnProgressData} from 'react-native-video';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 import {IDataListFeed} from '../../Feed/type';
+import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
+import FooterFeed from './FooterFeed';
+import ImagePodcast from './ImagePodcast';
+import InputItem from './InputItem';
+import ListFloatingComment from './ListFloatingComment';
 import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
-import ImagePodcast from './ImagePodcast';
-import {useContentView} from '@util';
-import {EContentType} from '@constant';
-import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
-import LinearGradient from 'react-native-linear-gradient';
-import FooterFeed from './FooterFeed';
-import InputItem from './InputItem';
-import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -118,6 +115,11 @@ const ItemVideo = (props: ItemVideoProps) => {
     }
     return url;
   };
+
+  const floatingComment = useMemo(() => {
+    return props.item;
+  }, [props.item]);
+
   return (
     <DoubleClick
       onSingleClick={onPause}
@@ -216,6 +218,8 @@ const ItemVideo = (props: ItemVideoProps) => {
           />
           <InputItem />
         </View>
+        {!!props.isFocused && <ListFloatingComment />}
+        {!!props.isFocused && <ListFloatingComment item={floatingComment} />}
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>
@@ -263,5 +267,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  floatingContainer: {
+    position: 'absolute',
+    top: '40%',
+    width: '100%',
   },
 });
