@@ -10,11 +10,13 @@ import {
 import {ic_send, ic_send_opacity} from '@images';
 import {useVideo} from './Container';
 import {colors} from '@stylesCommon';
+import {useTranslation} from 'react-i18next';
 
 interface InputItemProps {}
 
 const InputItem = (props: InputItemProps) => {
   const {state, setState} = useVideo();
+  const {t} = useTranslation();
   const onShowComment = () => {
     setState({isShowComment: true, isShowInput: true});
   };
@@ -28,7 +30,7 @@ const InputItem = (props: InputItemProps) => {
       ]}>
       <TextInput
         style={styles.input}
-        placeholder={'Comment'}
+        placeholder={t('feed.comment')}
         placeholderTextColor={'#AAA'}
         onFocus={onShowComment}
       />
