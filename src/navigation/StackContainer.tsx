@@ -11,8 +11,9 @@ import InAppReview from 'react-native-in-app-review';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'src/redux/rootReducer';
 import {screens} from '../screens';
-import StackTab from './StackTab';
+import {linking} from './Linking';
 import {ROUTE_NAME} from './routeName';
+import StackTab from './StackTab';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -358,6 +359,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
   return (
     <NavigationContainer
       ref={ref}
+      linking={linking}
       onReady={() => RNBootSplash.hide({fade: true, duration: 500})}>
       {renderScreenSigned()}
     </NavigationContainer>

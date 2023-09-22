@@ -74,9 +74,9 @@ export const LikeView = (props: any) => {
           onPress={handlePressLike}
           activeOpacity={0.8}>
           {isLike ? (
-            <SvgHearted color={'white'} />
+            <SvgHearted color={color && '#FFFFFF'} />
           ) : (
-            <SvgHeart color={'white'} />
+            <SvgHeart color={color && '#FFFFFF'} />
           )}
           <Text
             style={[
@@ -92,7 +92,7 @@ export const LikeView = (props: any) => {
           style={{flexDirection: 'row', alignItems: 'center'}}
           activeOpacity={0.8}
           onPress={onNavigate}>
-          <SvgComment />
+          <SvgComment color={color && '#FFFFFF'} />
           <Text
             style={[
               styles.text,

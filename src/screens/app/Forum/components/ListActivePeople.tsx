@@ -1,6 +1,7 @@
-import {scaler} from '@stylesCommon';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 const exampleList = new Array(10);
 
@@ -14,30 +15,38 @@ export const ListActivePeople = () => {
   };
 
   return (
-    <FlatList
-      data={exampleList}
-      renderItem={renderItem}
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-    />
+    <View style={styles.container}>
+      <Text style={styles.text}>
+        Who's Online? You can start chatting with people now
+      </Text>
+      <FlatList
+        data={exampleList}
+        renderItem={renderItem}
+        contentContainerStyle={styles.contentContainer}
+        horizontal
+        style={styles.listContainer}
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: scaler(10),
     marginTop: scaler(12),
     marginBottom: scaler(16),
+    marginHorizontal: scaler(16),
+    backgroundColor: '#F8F8F8',
+    borderRadius: 16,
+    paddingVertical: scaler(6),
+  },
+  listContainer: {
     flexGrow: 0,
   },
   contentContainer: {
     alignItems: 'center',
-    backgroundColor: '#F8F8F8',
     height: scaler(60),
-    paddingHorizontal: scaler(12),
-    borderRadius: 40,
+    paddingLeft: scaler(12),
   },
   item: {
     height: scaler(40),
@@ -56,5 +65,12 @@ const styles = StyleSheet.create({
     bottom: scaler(1),
     right: scaler(3),
     backgroundColor: '#63D761',
+  },
+  text: {
+    ...stylesCommon.fontWeight400,
+    fontSize: scaler(10),
+    color: colors.textColor,
+    marginBottom: scaler(9),
+    paddingHorizontal: scaler(12),
   },
 });

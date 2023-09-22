@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Animated,
   Dimensions,
@@ -30,13 +30,15 @@ interface Props extends ViewProps {
   onChangeText: (value: string) => void;
   onComment: () => void;
   value: string;
+  isShowInput?: boolean;
 }
 
 function KeyboardShift(props: Props) {
   const insets = useSafeAreaInsets();
   const {t} = useTranslation();
-
+  const inputRef = useRef<TextInput>();
   const user = useSelector((state: any) => state.auth.userInfo);
+  const {state, setState} = useVideo();
 
   const [isKeyBoardShow, setIsKeyBoardShow] = useState<boolean>(false);
   useEffect(() => {
@@ -70,8 +72,13 @@ function KeyboardShift(props: Props) {
 
   const handleKeyboardWillHide = () => {
     setIsKeyBoardShow(false);
+    setState({isShowInput: false});
   };
-  const {state, setState} = useVideo();
+  useEffect(() => {
+    if (state.isShowInput) {
+      inputRef.current?.focus();
+    }
+  }, [state.isShowInput]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -120,6 +127,7 @@ function KeyboardShift(props: Props) {
             <TextInput
               style={styles.input}
               placeholder={'Comment'}
+              ref={inputRef}
               value={props?.value || ''}
               onChangeText={props.onChangeText}
             />

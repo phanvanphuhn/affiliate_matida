@@ -10,12 +10,14 @@ import {
   SvgPrivacy,
   SvgProfileUser,
 } from '@images';
+import {goBack} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
 import {cleanHome, clearExplore, clearListChat, logOut} from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {deleteUserDevice} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
+  VERSION_CODE_PUSH,
   event,
   eventType,
   logoutWebEngage,
@@ -171,7 +173,11 @@ const Setting = () => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() => {
+            // navigation.goBack();
+            goBack();
+          }}>
           <Image source={iconClose} />
         </TouchableOpacity>
       </View>

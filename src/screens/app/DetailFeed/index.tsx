@@ -80,9 +80,6 @@ const DetailFeed = (props: DetailFeedProps) => {
           }
         />
         <ListFeedDetail open={open} />
-        <View style={{height: 65, zIndex: 999}}>
-          <FooterFeed />
-        </View>
       </Container>
     </Drawer>
   );

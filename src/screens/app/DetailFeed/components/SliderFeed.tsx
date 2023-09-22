@@ -31,6 +31,7 @@ const SliderFeed = (props: SliderFeedProps) => {
         value={props.progress}
         trackStyle={[styles.track]}
         thumbStyle={[styles.thumb]}
+        style={{height: 20}}
         minimumTrackTintColor={colors.red50}
         maximumTrackTintColor={'#141414'}
         onSlidingComplete={onSeekData}
@@ -45,7 +46,6 @@ export default React.memo(SliderFeed);
 const styles = StyleSheet.create({
   container: {
     zIndex: 9999,
-    bottom: Platform.select({android: -12, ios: -14}),
     width: '100%',
   },
   thumb: {

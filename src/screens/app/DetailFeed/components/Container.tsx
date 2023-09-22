@@ -1,18 +1,14 @@
-import React, {useContext, useEffect, useReducer} from 'react';
+import {useRoute} from '@react-navigation/native';
+import React, {useContext, useReducer} from 'react';
 import {StyleSheet, View} from 'react-native';
-import FooterFeed from './FooterFeed';
-import SliderFeed from './SliderFeed';
-import {IDataComment, IStateVideo} from '../types';
 import {
   ContentTypeFeed,
-  IAnswers,
   IDataListFeed,
   IPackageQuizzList,
 } from '../../Feed/type';
-import CommentFeed from './CommentFeed';
-import KeyboardShift from './KeyboardShift';
+import {IDataComment, IStateVideo} from '../types';
 import {SIZE_DEFAULT} from '../useDetailFeed';
-import {useRoute} from '@react-navigation/native';
+import CommentFeed from './CommentFeed';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -32,8 +28,13 @@ interface IState extends IStateVideo {
   duration?: number;
   totalComment?: number;
   isShowComment?: boolean;
+  isGetComment?: boolean;
   is_liked?: boolean;
-  is_rated?: boolean;
+  total_favorites?: number;
+  total_likes?: number;
+  is_favorite?: boolean;
+  isShowComment?: boolean;
+  isShowInput?: boolean;
   progressStatus?: 'SEEKING' | 'DONE';
 }
 
@@ -48,12 +49,14 @@ export const VideoContext = React.createContext<IVideoContext>({
     progressChange: 0,
     duration: 0,
     totalComment: 0,
+    total_likes: 0,
     feed: undefined,
     questions: undefined,
     comment: undefined,
     isShowComment: false,
+    isGetComment: false,
     is_liked: false,
-    is_rated: false,
+    is_favorite: false,
     progressStatus: undefined,
     data: [],
     listPackage: [],
@@ -65,6 +68,7 @@ export const VideoContext = React.createContext<IVideoContext>({
     refreshing: false,
     isOpen: false,
     isLoading: false,
+    isShowInput: false,
     isLoadMore: undefined,
     isLoadLess: undefined,
   },
@@ -91,8 +95,11 @@ const Container: React.FC<ContainerProps> = props => {
       comment: undefined,
       progressStatus: undefined,
       isShowComment: false,
+      isGetComment: false,
       is_liked: false,
-      is_rated: false,
+      is_favorite: false,
+      total_favorites: 0,
+      total_likes: 0,
       data: [],
       listPackage: [],
       page: undefined,
@@ -101,6 +108,7 @@ const Container: React.FC<ContainerProps> = props => {
       currentIndex: undefined,
       index: undefined,
       refreshing: false,
+      isShowInput: false,
       isOpen: false,
       isLoading: false,
       isLoadMore: undefined,

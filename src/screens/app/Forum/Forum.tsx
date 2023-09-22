@@ -1,3 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {FLoatingAIButton} from '@component';
 import {getListTabForum} from '@redux';
 import {ROUTE_NAME} from '@routeName';
@@ -6,8 +9,8 @@ import {event, eventType, isShowForReviewer, trackingAppEvent, useUXCam} from '@
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {styles} from './Forum.style';
 import {HeaderForum, ListPost, ListTopTab} from './components';
+import {styles} from './Forum.style';
 
 export const Forum = () => {
   const dispatch = useDispatch();
@@ -33,9 +36,19 @@ export const Forum = () => {
   return (
     <View style={{flex: 1, backgroundColor: colors.white}}>
       <HeaderForum />
-      {/* <ForumTab tab={tab} onChange={(item, index) => setTab(index)} />
-      <ListActivePeople />
-      <ListPostHorizontal /> */}
+      {/* <FlatList
+        data={[{}]}
+        ListHeaderComponent={
+          <ForumTab tab={tab} onChange={(item, index) => setTab(index)} />
+        }
+        stickyHeaderIndices={[0]}
+        renderItem={() => (
+          <>
+            <ListActivePeople />
+            <ListPostHorizontal />
+          </>
+        )}
+      /> */}
       {loading ? (
         <View style={styles.viewLoadMore}>
           <ActivityIndicator color={colors.primary} size="small" />

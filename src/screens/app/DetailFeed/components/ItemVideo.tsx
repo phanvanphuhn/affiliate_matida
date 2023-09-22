@@ -1,24 +1,26 @@
-import {colors, heightScreen, widthScreen} from '@stylesCommon';
-import React, {useEffect, useRef, useState} from 'react';
+import {EContentType} from '@constant';
+import {colors, widthScreen} from '@stylesCommon';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
-  Platform,
   StyleSheet,
   View,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 import Video, {OnProgressData} from 'react-native-video';
 import {PLAYER_STATES} from '../../../../lib/react-native-media-controls';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 import {IDataListFeed} from '../../Feed/type';
+import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
+import FooterFeed from './FooterFeed';
+import ImagePodcast from './ImagePodcast';
+import InputItem from './InputItem';
+import ListFloatingComment from './ListFloatingComment';
 import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
-import ImagePodcast from './ImagePodcast';
-import {useContentView} from '@util';
-import {EContentType} from '@constant';
-import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -113,6 +115,11 @@ const ItemVideo = (props: ItemVideoProps) => {
     }
     return url;
   };
+
+  const floatingComment = useMemo(() => {
+    return props.item;
+  }, [props.item]);
+
   return (
     <DoubleClick
       onSingleClick={onPause}
@@ -124,7 +131,7 @@ const ItemVideo = (props: ItemVideoProps) => {
             <ImageBackground
               source={{uri: props.item.image}}
               blurRadius={10}
-              style={styles.imgBackground}>
+              style={[styles.imgBackground, styles.fullScreen]}>
               <View
                 style={{
                   backgroundColor: '#00000070',
@@ -146,7 +153,7 @@ const ItemVideo = (props: ItemVideoProps) => {
           {!!getUrl() && (
             <Video
               source={{uri: getUrl()}}
-              style={styles.video}
+              style={[styles.video, styles.fullScreen]}
               resizeMode="contain"
               // @ts-ignore
               ref={videoPlayer}
@@ -186,15 +193,35 @@ const ItemVideo = (props: ItemVideoProps) => {
             </View>
           )}
         </View>
+        <LinearGradient
+          colors={['#00000000', '#00000090']}
+          style={{
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+          }}
+        />
+        {!!props.isFocused && <FooterFeed item={props.item} />}
 
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}>
+          <SliderFeed
+            progress={progress || 0}
+            duration={duration || 0}
+            onSeek={onSeek}
+            onSeeking={onSeeking}
+          />
+          <InputItem />
+        </View>
+        {!!props.isFocused && <ListFloatingComment />}
+        {!!props.isFocused && <ListFloatingComment item={floatingComment} />}
         <TitleFeed item={props.item} />
       </View>
-      <SliderFeed
-        progress={progress || 0}
-        duration={duration || 0}
-        onSeek={onSeek}
-        onSeeking={onSeeking}
-      />
     </DoubleClick>
   );
 };
@@ -202,6 +229,10 @@ const ItemVideo = (props: ItemVideoProps) => {
 export default React.memo(ItemVideo);
 
 const styles = StyleSheet.create({
+  fullScreen: {
+    width: widthFullScreen,
+    height: heightFullScreen,
+  },
   loading: {
     position: 'absolute',
     alignItems: 'center',
@@ -218,11 +249,6 @@ const styles = StyleSheet.create({
     borderRadius: widthScreen,
   },
   imgBackground: {
-    width: widthScreen,
-    aspectRatio: Platform.select({
-      android: widthScreen / (heightScreen - 34),
-      ios: widthScreen / (heightScreen - 71),
-    }),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -237,15 +263,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   video: {
-    aspectRatio: Platform.select({
-      android: widthScreen / (heightScreen - 27),
-      ios: widthScreen / (heightScreen - 65),
-    }),
-    width: widthScreen,
     ...StyleSheet.absoluteFillObject,
-    top: 45,
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  floatingContainer: {
+    position: 'absolute',
+    top: '40%',
+    width: '100%',
   },
 });

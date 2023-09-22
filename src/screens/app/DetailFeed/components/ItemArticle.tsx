@@ -1,16 +1,18 @@
 // import {LazyImage} from '@component';
 import {LazyImage} from '@component';
-import {heightScreen, widthScreen} from '@stylesCommon';
+import {EContentType} from '@constant';
 import React, {useEffect} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 import {IDataListFeed} from '../../Feed/type';
+import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 import {useVideo} from './Container';
 import DoubleClick from './DoubleClick';
+import FooterFeed from './FooterFeed';
+import InputItem from './InputItem';
+import ListFloatingComment from './ListFloatingComment';
 import TitleFeed from './TitleFeed';
-import {useContentView} from '@util';
-import {EContentType} from '@constant';
-import {useContentViewFeed} from '../../../../util/hooks/useContentViewFeed';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -39,13 +41,7 @@ const ItemArticle = (props: ItemArticleProps) => {
           }}
           resizeMode={'cover'}
           fastImage={true}
-          style={{
-            width: widthScreen,
-            aspectRatio: Platform.select({
-              android: widthScreen / (heightScreen - 27),
-              ios: widthScreen / (heightScreen - 65),
-            }),
-          }}
+          style={styles.fullScreen}
         />
         <LinearGradient
           colors={['#00000000', '#00000090']}
@@ -55,6 +51,18 @@ const ItemArticle = (props: ItemArticleProps) => {
             position: 'absolute',
           }}
         />
+        {!!props.isFocused && <FooterFeed item={props.item} />}
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}>
+          <InputItem />
+        </View>
+        {!!props.isFocused && <ListFloatingComment />}
+        {!!props.isFocused && <ListFloatingComment item={props?.item} />}
         <TitleFeed item={props.item} />
       </View>
     </DoubleClick>
@@ -65,4 +73,13 @@ export default React.memo(ItemArticle);
 
 const styles = StyleSheet.create({
   container: {},
+  fullScreen: {
+    width: widthFullScreen,
+    height: heightFullScreen,
+  },
+  floatingContainer: {
+    position: 'absolute',
+    top: '40%',
+    width: '100%',
+  },
 });

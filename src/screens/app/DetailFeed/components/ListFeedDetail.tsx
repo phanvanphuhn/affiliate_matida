@@ -14,8 +14,9 @@ import DailyQuizFeed from './DailyQuizFeed';
 import PackageQuizFeed from './PackageQuizFeed';
 import ItemArticle from './ItemArticle';
 import ItemPurchase from './ItemPurchase';
-import useDetailFeed from '../useDetailFeed';
+import useDetailFeed, {heightFullScreen} from '../useDetailFeed';
 import {useVideo} from './Container';
+import {heightScreen} from '@stylesCommon';
 
 interface ListFeedProps {
   open: boolean;
@@ -112,9 +113,5 @@ const styles = StyleSheet.create({
   container: {},
   pagerView: {
     flex: 1,
-    // height: Platform.select({
-    //   ios: heightScreen - 65,
-    //   android: heightScreen - 25,
-    // }),
   },
 });

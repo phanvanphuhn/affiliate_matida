@@ -1,4 +1,7 @@
 import {CommonActions, StackActions} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
+import reactotron from 'reactotron-react-native';
+import {store} from '../redux/store';
 
 let _navigator: any; // eslint-disable-line
 
@@ -16,8 +19,16 @@ export function navigate(routeName: any, params?: any) {
 }
 
 export function goBack() {
+  const isLogin = store.getState().auth.statusLogin;
+  reactotron.log?.(_navigator.canGoBack(), isLogin);
   if (_navigator.canGoBack()) {
     _navigator.dispatch(CommonActions.goBack());
+  } else {
+    if (isLogin) {
+      reset(ROUTE_NAME.SCREEN_TAB);
+    } else {
+      reset(ROUTE_NAME.INTRO);
+    }
   }
 }
 

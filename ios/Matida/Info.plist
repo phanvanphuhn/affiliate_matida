@@ -85,6 +85,36 @@
 				<string>com.growth.levers.matida</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.growth.levers.matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida.app.link</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.growth.levers.matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida-alternate.app.link</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>matida</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>matida</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
