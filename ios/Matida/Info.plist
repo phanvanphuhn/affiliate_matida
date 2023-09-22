@@ -152,6 +152,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location will be used while you are using the app to show you where the closest restaurants are.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Need to access your camera to capture a photo add and update profile picture.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
