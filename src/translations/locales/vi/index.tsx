@@ -150,7 +150,7 @@ export const vi = {
     weeks: 'Tuần {{weeks}}',
     sizeComparison: {
       babySize: 'Kích thước',
-      embryo: 'Bé yêu',
+      embryo: 'Mẹ và bé',
       mom: 'Mẹ',
       sympton: 'Lời khuyên và triệu chứng',
       weeks: 'tuần',

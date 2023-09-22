@@ -610,7 +610,7 @@ export const en = {
     seeLess: 'See less',
     by: 'by',
     min: 'mins watch',
-    view: 'views',
+    views: 'views',
     like: 'Like',
     comment: 'Comment',
     noComment: 'No comments',

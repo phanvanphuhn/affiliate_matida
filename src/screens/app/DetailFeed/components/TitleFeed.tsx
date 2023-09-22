@@ -91,7 +91,7 @@ const TitleFeed = (props: TitleFeedProps) => {
               bottom: 0,
               paddingTop: insets.top + scaler(170),
             }
-          : {},
+          : {marginRight: 25},
       ]}>
       {!!textShown && (
         <TouchableWithoutFeedback onPress={() => setTextShown(false)}>
@@ -173,7 +173,6 @@ const TitleFeed = (props: TitleFeedProps) => {
                     style: {
                       ...styles.description,
                       color: textShown ? colors.textColor : colors.white,
-                      paddingRight: textShown ? 0 : 25,
                     },
                   }}
                   tagsStyles={{...tagsStyles}}

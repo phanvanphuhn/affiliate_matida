@@ -182,7 +182,10 @@ const FooterFeed = (props: FooterFeedProps) => {
   // };
   return (
     <Animated.View style={[styles.containerFooter, opacityStyles]}>
-      <TouchableOpacity onPress={onComment} style={[styles.buttonFooter]}>
+      <TouchableOpacity
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+        onPress={onComment}
+        style={[styles.buttonFooter]}>
         <Image source={ic_comment} style={{tintColor: colors.white}} />
         {!!state.totalComment && (
           <Text style={styles.textTotal}>{state.totalComment}</Text>
@@ -201,7 +204,10 @@ const FooterFeed = (props: FooterFeedProps) => {
           <Text style={styles.textTotal}>{state.total_likes}</Text>
         )}
       </TouchableOpacity>
-      <TouchableOpacity onPress={onRate} style={styles.buttonFooter}>
+      <TouchableOpacity
+        onPress={onRate}
+        style={styles.buttonFooter}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
         {state?.is_favorite ? (
           <SvgStar
             fill={colors.yellow}
@@ -212,7 +218,10 @@ const FooterFeed = (props: FooterFeedProps) => {
           <SvgStar color={colors.white} strokeWidth={0.5} />
         )}
       </TouchableOpacity>
-      <TouchableOpacity onPress={onShare} style={styles.buttonFooter}>
+      <TouchableOpacity
+        onPress={onShare}
+        style={styles.buttonFooter}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
         <Image source={ic_share} style={{tintColor: colors.white}} />
       </TouchableOpacity>
       <View style={styles.buttonFooter}>
