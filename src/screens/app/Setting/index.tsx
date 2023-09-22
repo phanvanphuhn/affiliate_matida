@@ -24,7 +24,6 @@ import {
   trackEventBranch,
   trackingAppEvent,
   useUXCam,
-  VERSION_CODE_PUSH,
 } from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
