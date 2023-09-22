@@ -20,6 +20,7 @@ import {
   VERSION_CODE_PUSH,
   event,
   eventType,
+  logoutWebEngage,
   trackEventBranch,
   trackingAppEvent,
   useUXCam,
@@ -73,6 +74,7 @@ const Setting = () => {
       });
     } finally {
       trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL);
+      logoutWebEngage();
       trackEventBranch(event.BRANCH.SIGN_OUT, {});
       dispatch(logOut());
       dispatch(clearListChat());

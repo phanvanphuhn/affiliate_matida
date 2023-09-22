@@ -15,6 +15,12 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.webengage.sdk.android.WebEngage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+import androidx.annotation.NonNull;
+
 import io.branch.rnbranch.*;
 
 import com.zoontek.rnbootsplash.RNBootSplash;
@@ -56,6 +62,21 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
     RNBootSplash.init(this); // <- initialize the splash screen
     super.onCreate(savedInstanceState); // or super.onCreate(null) with react-native-screens
+    try {
+      FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+          @Override
+          public void onComplete(@NonNull Task<String> task) {
+              try {
+                  String token = task.getResult();
+                  WebEngage.get().setRegistrationID(token);
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+          }
+      });
+    } catch (Exception e) {
+      // Handle exception
+    }
   }
 
   /**

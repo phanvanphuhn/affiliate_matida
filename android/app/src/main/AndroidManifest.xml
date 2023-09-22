@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
       android:name=".MainApplication"
@@ -28,6 +29,7 @@
     >
       <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
       <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+      <meta-data android:name="com.webengage.sdk.android.environment" android:value="us" />
       <meta-data
         android:name="com.zing.zalo.zalosdk.appID"
         android:value="@string/appID"
@@ -36,6 +38,11 @@
       <meta-data
         android:name="com.google.android.gms.wallet.api.enabled"
         android:value="true" />
+        <service android:exported="false" android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
       <activity android:name="com.zing.zalo.zalosdk.oauth.BrowserLoginActivity" android:exported="true">
           <intent-filter>
               <action android:name="android.intent.action.VIEW" />

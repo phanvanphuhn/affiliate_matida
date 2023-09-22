@@ -17,9 +17,16 @@ import {GlobalService, loginApple, loginFacebook, loginZalo} from '@services';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {appleAuth} from '@invertase/react-native-apple-authentication';
-import {event, eventType, trackingAppEvent, useUXCam} from '@util';
+import {
+  event,
+  eventType,
+  loginWebEngage,
+  trackingAppEvent,
+  useUXCam,
+} from '@util';
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import {Constants, login as LoginWithZalo} from 'react-native-zalo-kit';
+import reactotron from 'reactotron-react-native';
 
 const Intro = () => {
   const {t} = useTranslation();
@@ -59,6 +66,7 @@ const Intro = () => {
   };
 
   const onSuccess = (value: any) => {
+    loginWebEngage(`${value?.user?.id}Phone`);
     if (value?.user?.due_date) {
       dispatch(changeStatusLogin(true));
     } else {
@@ -87,6 +95,8 @@ const Intro = () => {
         if (data?.accessToken) {
           const res = await loginFacebook(data?.accessToken);
           dispatch(saveDataLoginFacebook(res?.data));
+          reactotron.log?.('LOGIN FB', res);
+          loginWebEngage(`${res?.data?.data?.id}Facebook`);
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -94,7 +104,11 @@ const Intro = () => {
             const eventParams = {
               af_registration_method: 'Facebook',
             };
-            trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
+            trackingAppEvent(
+              event.AUTH.CLICK_SIGN_UP_SUCCESS,
+              eventParams,
+              eventType.AFF_FLYER,
+            );
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
           GlobalService.hideLoading();
@@ -113,6 +127,7 @@ const Intro = () => {
           const res = await loginZalo(oauthCode?.accessToken);
           refCheckLoginZalo.current = false;
           dispatch(saveDataLoginFacebook(res?.data));
+          loginWebEngage(`${res?.data?.data?.id}ZALO-android`);
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -120,7 +135,11 @@ const Intro = () => {
             const eventParams = {
               af_registration_method: 'Zalo',
             };
-            trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
+            trackingAppEvent(
+              event.AUTH.CLICK_SIGN_UP_SUCCESS,
+              eventParams,
+              eventType.AFF_FLYER,
+            );
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
         }
@@ -130,6 +149,7 @@ const Intro = () => {
         );
         const res = await loginZalo(oauthCode?.accessToken);
         dispatch(saveDataLoginFacebook(res?.data));
+        loginWebEngage(`${res?.data?.data?.id}Zalo-ios`);
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
           trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -137,7 +157,11 @@ const Intro = () => {
           const eventParams = {
             af_registration_method: 'Zalo',
           };
-          trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
+          trackingAppEvent(
+            event.AUTH.CLICK_SIGN_UP_SUCCESS,
+            eventParams,
+            eventType.AFF_FLYER,
+          );
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       }
@@ -153,6 +177,8 @@ const Intro = () => {
       if (credentialState === appleAuth.State.AUTHORIZED) {
         const res = await loginApple(appleAuthRequestResponse?.identityToken);
         dispatch(saveDataLoginFacebook(res?.data));
+        reactotron.log?.('LOGIN APPLE', res);
+        loginWebEngage(`${res?.data?.data?.id}Apple`);
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
           trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -160,7 +186,11 @@ const Intro = () => {
           const eventParams = {
             af_registration_method: 'Apple',
           };
-          trackingAppEvent(event.AUTH.CLICK_SIGN_UP_SUCCESS, eventParams, eventType.AFF_FLYER);
+          trackingAppEvent(
+            event.AUTH.CLICK_SIGN_UP_SUCCESS,
+            eventParams,
+            eventType.AFF_FLYER,
+          );
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       } else {

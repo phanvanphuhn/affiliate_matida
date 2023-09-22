@@ -117,6 +117,7 @@ const App = () => {
         console.error(error);
       },
     );
+    // initWebEngage();
     initBranchEvent();
   };
 

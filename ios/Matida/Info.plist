@@ -130,12 +130,12 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-    <string>whatsapp</string>
-    <string>mailto</string>
-    <string>instagram</string>
-    <string>instagram-stories</string>
-    <string>fb</string>
-    <string>facebook-stories</string>
+		<string>whatsapp</string>
+		<string>mailto</string>
+		<string>instagram</string>
+		<string>instagram-stories</string>
+		<string>fb</string>
+		<string>facebook-stories</string>
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
 	</array>
@@ -154,8 +154,10 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Need to access your camera to capture a photo add and update profile picture.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>ALWAYS DESCRIPTION</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Location in Use</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need to use the microphone</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -181,9 +183,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
 		<string>fetch</string>
-		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
@@ -206,6 +206,16 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>WEGAlternateAppSupport</key>
+	<string>NO</string>
+	<key>WEGEnableLocationAuthorizationRequest</key>
+	<string>ALWAYS</string>
+	<key>WEGEnvironment</key>
+	<string>DEFAULT</string>
+	<key>WEGLicenseCode</key>
+	<string>0123456</string>
+	<key>WEGLogLevel</key>
+	<string>DEFAULT</string>
 	<key>branch_key</key>
 	<dict>
 		<key>live</key>

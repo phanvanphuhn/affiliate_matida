@@ -5,9 +5,13 @@ import {t} from 'i18next';
 import {Mixpanel} from 'mixpanel-react-native';
 import {ColorValue, Linking} from 'react-native';
 import branch, {BranchEvent} from 'react-native-branch';
+// @ts-ignore
 import reactotron from 'reactotron-react-native';
 import {store} from '../redux/store';
 import {event} from './eventTracking';
+//@ts-ignore
+import WebEngage from 'react-native-webengage';
+var webengage = new WebEngage();
 
 let buoApp: any = null;
 
@@ -18,8 +22,25 @@ const mixpanel = new Mixpanel(
   trackAutomaticEvents,
 );
 
+//WebEngage
+export const initWebEngage = () => {
+  if (webengage?.user) {
+    webengage?.user?.setDevicePushOptIn(true);
+  }
+};
+
+export const loginWebEngage = (identify: string) => {
+  webengage?.user?.login(identify);
+  webengage?.user?.setDevicePushOptIn(true);
+};
+
+export const logoutWebEngage = () => {
+  webengage?.user?.logout();
+};
+
 export const isShowForReviewer = (user: any) => {
-  if (user?.id == 18257 || user?.id == 89) {
+  const {id} = user;
+  if (id == 89 || id == 18257) {
     return false;
   } else {
     return true;
@@ -222,6 +243,14 @@ export const trackEventBranch = async (
     }
   } catch (error) {
     reactotron.log?.('ERROR LOG EVENT', eventName);
+  }
+};
+
+export const trackWebEngage = (eventName: any, eventParams: any) => {
+  try {
+    webengage.track(eventName, eventParams);
+  } catch (error) {
+    reactotron.log?.('ERROR LOG EVENT WEBENGAGE', eventName);
   }
 };
 
