@@ -1,4 +1,4 @@
-import {WEEK_MAX} from '@constant';
+import {IS_ANDROID, WEEK_MAX} from '@constant';
 import {setIsFromBranch} from '@redux';
 import dayjs from 'dayjs';
 import {t} from 'i18next';
@@ -25,13 +25,15 @@ const mixpanel = new Mixpanel(
 //WebEngage
 export const initWebEngage = () => {
   if (webengage?.user) {
-    webengage?.user?.setDevicePushOptIn(true);
+    IS_ANDROID && webengage?.user?.setDevicePushOptIn(true);
   }
 };
 
 export const loginWebEngage = (identify: string) => {
-  webengage?.user?.login(identify);
-  webengage?.user?.setDevicePushOptIn(true);
+  if (webengage?.user) {
+    webengage?.user?.login(identify);
+    IS_ANDROID && webengage?.user?.setDevicePushOptIn(true);
+  }
 };
 
 export const logoutWebEngage = () => {

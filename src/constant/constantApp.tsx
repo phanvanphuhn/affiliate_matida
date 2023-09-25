@@ -1,5 +1,8 @@
+import {Platform} from 'react-native';
+
 const WEEK_MAX = 42;
 export {WEEK_MAX};
+export {lengthListPreAnswer};
 export const listPreAnswer = [
   'A',
   'B',
@@ -18,6 +21,8 @@ export const listPreAnswer = [
 ];
 
 const lengthListPreAnswer = listPreAnswer.length;
-export {lengthListPreAnswer};
+
+export const IS_ANDROID = Platform.OS === 'android';
+export const IS_IOS = Platform.OS === 'ios';
 
 export const VERSION_APP = '1.1.5';
