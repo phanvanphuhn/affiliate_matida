@@ -165,6 +165,13 @@ export const CheckupCalendar = (props: Props) => {
       const period = groups?.contents[0]?.period_number ?? [];
       return (
         <View
+          onLayout={e => {
+            const top = e.nativeEvent.layout.y;
+            if (top > 0) {
+              listPosition.current[indexGroups] = top;
+            }
+            onLayoutItem(top, indexGroups);
+          }}
           style={[
             {
               paddingHorizontal: scaler(12),
@@ -172,13 +179,6 @@ export const CheckupCalendar = (props: Props) => {
             indexGroups % 2 ? {backgroundColor: '#FFF8F8'} : undefined,
           ]}>
           <LineView
-            onLayout={e => {
-              const top = e.nativeEvent.layout.y;
-              if (top > 0) {
-                listPosition.current[indexGroups] = top;
-              }
-              onLayoutItem(top, indexGroups);
-            }}
             content={
               <Week
                 rangeDate={{
