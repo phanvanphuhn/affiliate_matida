@@ -30,8 +30,10 @@ export const initWebEngage = () => {
 };
 
 export const loginWebEngage = (identify: string) => {
-  webengage?.user?.login(identify);
-  IS_ANDROID && webengage?.user?.setDevicePushOptIn(true);
+  if (webengage?.user) {
+    webengage?.user?.login(identify);
+    IS_ANDROID && webengage?.user?.setDevicePushOptIn(true);
+  }
 };
 
 export const logoutWebEngage = () => {

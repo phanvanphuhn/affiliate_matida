@@ -1,4 +1,7 @@
+import {getVersionApp} from '@services';
+import {colors, scaler} from '@stylesCommon';
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   AppState,
   Linking,
@@ -8,11 +11,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Modal from 'react-native-modal';
-import {colors, scaler} from '@stylesCommon';
-import {getVersionApp} from '@services';
 import DeviceInfo from 'react-native-device-info';
-import {useTranslation} from 'react-i18next';
+import Modal from 'react-native-modal';
 
 /**
  *
