@@ -10,15 +10,14 @@ import {
 } from '@component';
 import {SvgFlag, SvgProhibit} from '@images';
 import {navigate} from '@navigation';
-import {deleteListUserPost, getDataHomeByWeek} from '@redux';
+import {deleteListUserPost} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {GlobalService, blockUserApi, getPostByWeek} from '@services';
+import {blockUserApi, getPostByWeek, GlobalService} from '@services';
 import {colors, scaler, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {showMessage} from 'react-native-flash-message';
-import {useDispatch, useSelector} from 'react-redux';
-import reactotron from 'reactotron-react-native';
+import {useDispatch} from 'react-redux';
 import {DiscussionPost} from './ItemPost';
 type Props = {
   // callBackData: () => void;

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {scaler, stylesCommon} from '@stylesCommon';
-import {openUrl} from '@util';
+import {event, eventType, openUrl, trackingAppEvent} from '@util';
 import {t} from 'i18next';
 import React, {useCallback, useEffect, useRef} from 'react';
 import {
@@ -31,6 +31,11 @@ export const CheckupCalendar = (props: Props) => {
 
   useEffect(() => {
     onRendered();
+    trackingAppEvent(
+      event.BABY_TRACKER.CHANGE_TO_CALENDAR,
+      {},
+      eventType.MIX_PANEL,
+    );
   }, []);
 
   const LineView = ({
@@ -165,6 +170,13 @@ export const CheckupCalendar = (props: Props) => {
       const period = groups?.contents[0]?.period_number ?? [];
       return (
         <View
+          onLayout={e => {
+            const top = e.nativeEvent.layout.y;
+            if (top > 0) {
+              listPosition.current[indexGroups] = top;
+            }
+            onLayoutItem(top, indexGroups);
+          }}
           style={[
             {
               paddingHorizontal: scaler(12),
@@ -172,13 +184,6 @@ export const CheckupCalendar = (props: Props) => {
             indexGroups % 2 ? {backgroundColor: '#FFF8F8'} : undefined,
           ]}>
           <LineView
-            onLayout={e => {
-              const top = e.nativeEvent.layout.y;
-              if (top > 0) {
-                listPosition.current[indexGroups] = top;
-              }
-              onLayoutItem(top, indexGroups);
-            }}
             content={
               <Week
                 rangeDate={{
@@ -208,6 +213,15 @@ export const CheckupCalendar = (props: Props) => {
                 onPress={
                   week?.url &&
                   (() => {
+                    trackingAppEvent(
+                      event.BABY_TRACKER.OPEN_ARTICLE,
+                      {
+                        url: week?.url,
+                        period: week?.period_number,
+                        title: week?.title,
+                      },
+                      eventType.MIX_PANEL,
+                    );
                     openUrl(week?.url);
                   })
                 }

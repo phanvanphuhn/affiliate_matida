@@ -89,6 +89,9 @@ export const event = {
     PODCAST_SCROLL: 'podcast_scroll',
     VIDEO_SCROLL: 'video_scroll',
     ARTICLE_SCROLL: 'article_scroll',
+    CHANGE_TO_CALENDAR: 'click_tab_calendar',
+    OPEN_ARTICLE: 'open_calendar_article',
+    CLICK_POST_FORUM: 'tida_click_post_in_forum',
   },
   MOM_TEST: {
     START: 'MOM_TEST_START',

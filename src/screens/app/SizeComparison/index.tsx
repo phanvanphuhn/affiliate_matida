@@ -182,7 +182,14 @@ const SizeComparison = () => {
             />
             <TouchableOpacity
               style={styles.createPostButton}
-              onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+              onPress={() => {
+                trackingAppEvent(
+                  event.BABY_TRACKER.CLICK_POST_FORUM,
+                  {},
+                  eventType.MIX_PANEL,
+                );
+                navigation.navigate(ROUTE_NAME.CREATE_NEWPOST);
+              }}>
               <SvgMessages3 />
               <Text style={styles.titleButton}>{t('home.createPost')}</Text>
             </TouchableOpacity>
