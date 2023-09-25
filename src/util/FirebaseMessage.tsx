@@ -34,6 +34,7 @@ export enum NOTIFICATION {
   REMINDER_ROOM = 9,
   INVITE_TO_ROOM = 10,
   REQUEST_TO_ROOM = 11,
+  TIDA_CHAT = 12,
 }
 
 function createAppNotification() {
@@ -192,6 +193,9 @@ function createAppNotification() {
           break;
         case NOTIFICATION.LIST_ARTICLE:
           handleNotificationArticle(message);
+          break;
+        case NOTIFICATION.TIDA_CHAT:
+          handleNotificationChatAPI();
           break;
         default:
           return;
@@ -380,6 +384,10 @@ function createAppNotification() {
     setTimeout(() => {
       navigate(ROUTE_NAME.WEEKLY_ARTICLES);
     }, 100);
+  };
+
+  const handleNotificationChatAPI = () => {
+    navigate(ROUTE_NAME.CHAT_GPT);
   };
 
   const saveDeviceToken = async (newFcmToken: string) => {
