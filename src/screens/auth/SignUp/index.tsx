@@ -20,7 +20,6 @@ const SignUp = (props: any) => {
     if (visible === false) {
     } else {
       trackingAppEvent(event.SCREEN.SIGN_UP, {}, eventType.AFF_FLYER);
-      trackEventBranch(event.BRANCH.SIGNUP, {});
     }
   }, [visible]);
 
@@ -34,6 +33,7 @@ const SignUp = (props: any) => {
             loginSocial={(value: any) => {
               closeModal();
               loginSocial(value);
+              trackEventBranch(event.BRANCH.SIGNUP, {}, true);
             }}
           />
         );

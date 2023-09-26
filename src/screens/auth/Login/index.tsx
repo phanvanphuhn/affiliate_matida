@@ -41,12 +41,17 @@ const Login = (props: any) => {
           <Step1
             onOpenSignUp={onOpenSignUp}
             onChangeStep={() => {
-              trackingAppEvent(event.LOGIN.PHONE_NUMBER, {}, eventType.MIX_PANEL);
-              setStep(2)
+              trackingAppEvent(
+                event.LOGIN.PHONE_NUMBER,
+                {},
+                eventType.MIX_PANEL,
+              );
+              setStep(2);
             }}
             loginSocial={(value: any) => {
               closeModal();
               loginSocial(value);
+              trackEventBranch(event.BRANCH.LOGIN, {}, true);
             }}
           />
         );
