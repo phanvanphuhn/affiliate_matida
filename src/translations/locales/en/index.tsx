@@ -152,7 +152,7 @@ export const en = {
       babySize: "Baby's size",
       embryo: 'Mom & baby',
       mom: 'Mom',
-      sympton: 'Tipps & Symptoms',
+      sympton: 'Tips & Symptoms',
       weeks: 'weeks',
     },
     pregnancy: {
