@@ -4,12 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, AppState, Platform, StatusBar} from 'react-native';
 import NavigationApp from './src/navigation/StackContainer';
 
-import {
-  CheckAppVersion,
-  GlobalUI,
-  ToastCustom,
-  ToastCustomPost,
-} from '@component';
+import {GlobalUI, ToastCustom, ToastCustomPost} from '@component';
 import {NavigationUtils} from '@navigation';
 import {clearDataLiveTalk} from '@redux';
 import {ROUTE_NAME} from '@routeName';
@@ -292,7 +287,7 @@ const App = () => {
                 NavigationUtils.setTopLevelNavigator(navigatorRef)
               }
             />
-            <CheckAppVersion />
+            {/* <CheckAppVersion /> */}
           </PersistGate>
         </Provider>
       </StripeProvider>

@@ -23,6 +23,7 @@ const COMMENT_INFO = 'comments';
 const EDIT_POST = 'posts';
 const REPORT_POST = 'reports';
 const GET_POST = 'posts';
+const GET_POST_ALL = 'posts/home';
 
 export const getListPostApi: any = async (page: any) => {
   const response = await api.get(`${GET_LIST_POST}?page=${page}`);
@@ -63,6 +64,11 @@ export const getPostByWeek = async (params: TGetPostByWeekParams) => {
   const response = await api.get(`${GET_POST}`, {
     params,
   });
+  return response;
+};
+
+export const getPostAllTab = async () => {
+  const response = await api.get(`${GET_POST_ALL}`);
   return response;
 };
 

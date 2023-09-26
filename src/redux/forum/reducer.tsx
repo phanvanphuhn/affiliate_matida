@@ -16,12 +16,16 @@ export default function forumReducer(state = INITIAL_STATE_FORUM, action: any) {
 
     case typeForum.GET_FORUM_BY_TAB_SUCCESS:
       return produce(state, (draft: ForumState) => {
-        if (action.payload?.page === 1) {
-          draft.forum = action.payload?.result?.posts;
+        if (action?.payload?.isAll) {
+          draft.forum = action.payload?.result;
         } else {
-          draft.forum = draft.forum?.concat(action.payload?.result?.posts);
+          if (action.payload?.page === 1) {
+            draft.forum = action.payload?.result?.posts;
+          } else {
+            draft.forum = draft.forum?.concat(action.payload?.result?.posts);
+          }
+          draft.total = action.payload?.result?.total;
         }
-        draft.total = action.payload?.result?.total;
       });
 
     case typeForum.LOADING_FORUM_DONE:

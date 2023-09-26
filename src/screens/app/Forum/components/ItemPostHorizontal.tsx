@@ -1,11 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
+import {colorRoom} from '@constant';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React, {useCallback} from 'react';
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {LikeView} from './LikeView';
 
 const itemWidth = (widthScreen - scaler(48)) / 2;
@@ -16,22 +23,17 @@ const contextHeight = (129 * contextWidth) / 155;
 
 type Props = {
   item: any;
-  isImage?: boolean;
+  index: number;
 };
 
 export const ItemPostHorizontal = (props: Props) => {
-  const {item, isImage} = props;
+  const {item, index} = props;
   const navigation = useNavigation<any>();
 
+  const image = item?.image;
   const onNavigate = () => {
-    navigation.navigate(
-      ROUTE_NAME.DETAIL_NEWFEED,
-      // {id: item?.id}
-    );
+    navigation.navigate(ROUTE_NAME.DETAIL_NEWFEED, {id: item?.id});
   };
-
-  const image =
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Oat_milk_glass_and_bottles.jpg/640px-Oat_milk_glass_and_bottles.jpg';
 
   const Content = useCallback(({isImageView}: {isImageView?: boolean}) => {
     return (
@@ -44,17 +46,16 @@ export const ItemPostHorizontal = (props: Props) => {
               fontSize: scaler(12),
             },
           ]}>
-          {
-            'Ba họ Trần, mẹ họ Nguyễn thì nên đặt tên con là gì nhỉ các mẹ? Bé em là bé gái. Có mẹ nào đặt tên con theo thần số học không'
-          }
+          {item?.content}
         </Text>
-        <LikeView onNavigate={onNavigate} color={!isImageView} />
+        <LikeView onNavigate={onNavigate} data={item} color={!isImageView} />
       </>
     );
   }, []);
 
-  return isImage ? (
-    <View
+  return image ? (
+    <TouchableOpacity
+      onPress={onNavigate}
       style={[
         styles.container,
         {
@@ -65,16 +66,24 @@ export const ItemPostHorizontal = (props: Props) => {
         source={{uri: image}}
         style={[styles.imageBackground, styles.content]}
         imageStyle={{borderRadius: scaler(8)}}
-        resizeMode={'cover'}>
+        resizeMode={'stretch'}>
         <View style={styles.context}>
           <Content isImageView />
         </View>
       </ImageBackground>
-    </View>
+    </TouchableOpacity>
   ) : (
-    <View style={[styles.container, styles.content]}>
+    <TouchableOpacity
+      onPress={onNavigate}
+      style={[
+        styles.container,
+        styles.content,
+        {
+          backgroundColor: colorRoom[index],
+        },
+      ]}>
       <Content />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -84,7 +93,7 @@ const styles = StyleSheet.create({
     height: itemHeight,
     borderRadius: scaler(8),
     marginRight: scaler(16),
-    backgroundColor: 'blue',
+    backgroundColor: '#29B4AF',
   },
   txtContent: {
     ...stylesCommon.fontWeight600,

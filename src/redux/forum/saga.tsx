@@ -1,4 +1,4 @@
-import {getApiListForumByTab, getListTopTab, getVideoMost} from '@services';
+import {getApiListForumByTab, getListTopTab, getPostAllTab} from '@services';
 import {put, takeEvery} from 'redux-saga/effects';
 import {
   changeStatusLoadListForum,
@@ -24,11 +24,17 @@ export function* getForumByTabSaga(action: any) {
     yield put(changeStatusLoadListForum(true));
   }
   try {
-    const res: ResponseGenerator = yield getApiListForumByTab(short_code, page);
+    let res: ResponseGenerator;
+    if (short_code === 'all') {
+      res = yield getPostAllTab();
+    } else {
+      res = yield getApiListForumByTab(short_code, page);
+    }
     yield put(
       getForumByTabSuccess({
         result: res?.data,
         page: page,
+        isAll: short_code === 'all',
       }),
     );
     //posts, total

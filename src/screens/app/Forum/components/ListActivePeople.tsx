@@ -34,11 +34,11 @@ export const ListActivePeople = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: scaler(12),
-    marginBottom: scaler(16),
-    marginHorizontal: scaler(16),
+    // marginBottom: scaler(16),
+    // paddingHorizontal: scaler(16),
     backgroundColor: '#F8F8F8',
     borderRadius: 16,
-    paddingVertical: scaler(6),
+    // paddingVertical: scaler(6),
   },
   listContainer: {
     flexGrow: 0,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
     height: scaler(60),
-    paddingLeft: scaler(12),
+    paddingLeft: scaler(16),
   },
   item: {
     height: scaler(40),
@@ -72,5 +72,6 @@ const styles = StyleSheet.create({
     color: colors.textColor,
     marginBottom: scaler(9),
     paddingHorizontal: scaler(12),
+    marginLeft: scaler(16),
   },
 });

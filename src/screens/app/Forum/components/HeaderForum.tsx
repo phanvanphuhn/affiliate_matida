@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {AppImage} from '@component';
+import {SvgMessage, SvgPlus} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
@@ -32,12 +33,12 @@ export const HeaderForum = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {/* <View style={{marginRight: scaler(12)}}>
+          <View style={{marginRight: scaler(12)}}>
             <SvgMessage color={'#8D8D8D'} />
           </View>
           <View>
             <SvgPlus color={'#8D8D8D'} />
-          </View> */}
+          </View>
         </View>
       </View>
     </SafeAreaView>

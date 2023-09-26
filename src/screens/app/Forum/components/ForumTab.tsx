@@ -1,48 +1,62 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
+import {changeTabForum} from '@redux';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import React, {useRef} from 'react';
-import {
-  FlatList,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {IItemTab} from '../Forum.props';
 
 type Props = {
-  onChange: (item: any, index: number) => void;
-  tab: number;
+  onChange?: (item: any, index: number) => void;
 };
 
 export const ForumTab = (props: Props) => {
-  const {onChange, tab} = props;
+  const dispatch = useDispatch();
+  const {onChange} = props;
+
+  const listTab: IItemTab[] = useSelector(
+    (state: any) => state?.forum?.listTab,
+  );
+  const lang = useSelector((state: any) => state?.auth?.lang);
+  const tab: IItemTab | null = useSelector((state: any) => state?.forum?.tab);
 
   const listRef = useRef<FlatList>(null);
 
-  const onChangeTab = (item: any, index: number) => {
-    onChange && onChange(item, index);
+  useEffect(() => {
+    const index = listTab?.findIndex(val => val?.id === tab?.id);
     listRef.current?.scrollToIndex({
-      index: index,
+      index: index >= 0 ? index : 0,
       viewPosition: 0.5,
     });
+  }, [tab]);
+
+  const onChangeTab = (item: any, index: number) => {
+    onChange && onChange(item, index);
+    dispatch(changeTabForum(item));
+    // listRef.current?.scrollToIndex({
+    //   index: index,
+    //   viewPosition: 0.5,
+    // });
   };
 
-  const renderItem = ({item, index}: {item: any; index: number}) => {
+  const renderItem = ({item, index}: {item: IItemTab; index: number}) => {
+    const isFocus = tab?.short_code === item?.short_code;
     return (
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => onChangeTab(item, index)}
         key={index}
-        disabled={tab === index}
+        disabled={isFocus}
         style={[
           styles.itemTab,
-          tab !== index ? styles.itemInActive : styles.itemActive,
+          !isFocus ? styles.itemInActive : styles.itemActive,
         ]}>
-        <Text style={[styles.textItem, tab !== index && styles.textInActive]}>
-          {item}
+        <Text style={[styles.textItem, !isFocus && styles.textInActive]}>
+          {lang === 2 ? item?.name_vi : item?.name_en}
         </Text>
-        <Text style={[styles.txtCount, tab !== index && styles.textInActive]}>
+        <Text style={[styles.txtCount, !isFocus && styles.textInActive]}>
           {'20'}
         </Text>
       </TouchableOpacity>
@@ -51,16 +65,7 @@ export const ForumTab = (props: Props) => {
 
   return (
     <FlatList
-      data={[
-        'All',
-        'Nutrition',
-        'Week 1-13',
-        'Week 14-27',
-        'Week 28-42',
-        'Baby',
-        'Shopping',
-        'Mental Health',
-      ]}
+      data={listTab}
       renderItem={renderItem}
       horizontal
       ref={listRef}
