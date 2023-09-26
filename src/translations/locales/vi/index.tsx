@@ -152,7 +152,7 @@ export const vi = {
       babySize: 'Kích thước',
       embryo: 'Mẹ và bé',
       mom: 'Mẹ',
-      sympton: 'Lời khuyên và triệu chứng',
+      sympton: 'Lịch thai kỳ',
       weeks: 'tuần',
     },
     pregnancy: {
