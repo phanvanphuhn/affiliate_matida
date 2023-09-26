@@ -206,7 +206,11 @@ export const ViewQuiz = React.memo((props: any) => {
             question_id: data?.id,
             answer_id: item?.id,
           };
-          trackingAppEvent(event.BABY_TRACKER.DAILY_QUIZ, {content: body}, eventType.MIX_PANEL);
+          trackingAppEvent(
+            event.BABY_TRACKER.DAILY_QUIZ,
+            {content: body},
+            eventType.MIX_PANEL,
+          );
           onAnswer(body);
         }}>
         <Text style={styles.txtTrueFalse}>
@@ -218,6 +222,7 @@ export const ViewQuiz = React.memo((props: any) => {
 
   return (
     <>
+      <Text style={styles.textTitle}>{t('sizeComparison.titleQuiz')}</Text>
       {data ? (
         <View style={styles.container}>
           <View style={styles.viewContent}>
@@ -339,5 +344,15 @@ const styles = StyleSheet.create({
     color: colors.textColor,
     ...stylesCommon.fontWeight600,
     textAlign: 'center',
+  },
+  textTitle: {
+    ...stylesCommon.fontWeight700,
+    fontSize: scaler(20),
+    lineHeight: scaler(28),
+    color: colors.textColor,
+    // marginLeft: scaler(8),
+    maxWidth: scaler(widthScreen - 150),
+    marginBottom: scaler(16),
+    marginLeft: scaler(16),
   },
 });
