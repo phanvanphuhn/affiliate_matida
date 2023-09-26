@@ -218,7 +218,6 @@ const ItemVideo = (props: ItemVideoProps) => {
           />
           <InputItem />
         </View>
-        {!!props.isFocused && <ListFloatingComment />}
         {!!props.isFocused && <ListFloatingComment item={floatingComment} />}
         <TitleFeed item={props.item} />
       </View>
