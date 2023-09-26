@@ -1,5 +1,5 @@
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {StyleSheet} from 'react-native';
-import {scaler, colors, stylesCommon} from '@stylesCommon';
 const styles = StyleSheet.create({
   container: {
     ...stylesCommon.viewContainer,
@@ -30,6 +30,17 @@ const styles = StyleSheet.create({
   viewLoadmore: {
     alignItems: 'center',
     marginBottom: scaler(8),
+  },
+
+  textTitle: {
+    ...stylesCommon.fontWeight700,
+    fontSize: scaler(20),
+    lineHeight: scaler(28),
+    color: colors.textColor,
+    // marginLeft: scaler(8),
+    maxWidth: scaler(widthScreen - 150),
+    marginBottom: scaler(16),
+    marginLeft: scaler(16),
   },
 });
 export {styles};

@@ -194,7 +194,12 @@ const SizeComparison = () => {
               <Text style={styles.titleButton}>{t('home.createPost')}</Text>
             </TouchableOpacity>
             {homeData?.data?.dailyQuizz ? (
-              <ViewQuiz onAnswer={onAnswerQuiz} />
+              <>
+                <Text style={styles.textTitle}>
+                  {t('sizeComparison.titleQuiz')}
+                </Text>
+                <ViewQuiz onAnswer={onAnswerQuiz} />
+              </>
             ) : null}
             {/* <BannerTestQuiz /> */}
             <ListArticle week={weekSelected} />
