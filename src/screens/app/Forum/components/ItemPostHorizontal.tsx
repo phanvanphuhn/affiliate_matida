@@ -6,13 +6,8 @@ import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React, {useCallback} from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {LikeView} from './LikeView';
 
 const itemWidth = (widthScreen - scaler(48)) / 2;
@@ -62,7 +57,7 @@ export const ItemPostHorizontal = (props: Props) => {
           backgroundColor: 'transparent',
         },
       ]}>
-      <ImageBackground
+      {/* <ImageBackground
         source={{uri: image}}
         style={[styles.imageBackground, styles.content]}
         imageStyle={{borderRadius: scaler(8)}}
@@ -70,7 +65,22 @@ export const ItemPostHorizontal = (props: Props) => {
         <View style={styles.context}>
           <Content isImageView />
         </View>
-      </ImageBackground>
+      </ImageBackground> */}
+      <FastImage
+        source={{uri: image}}
+        style={{
+          width: itemWidth,
+          height: itemHeight,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: -1000,
+        }}
+        resizeMode={'stretch'}
+      />
+      <View style={styles.context}>
+        <Content isImageView />
+      </View>
     </TouchableOpacity>
   ) : (
     <TouchableOpacity
