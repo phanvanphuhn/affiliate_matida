@@ -39,7 +39,7 @@ export const ListPostHorizontal = (props: Props) => {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={data?.posts ?? []}
+        data={data?.posts ?? [1, 1, 1, 1, 1, 1]}
         renderItem={renderItem}
         horizontal
         showsHorizontalScrollIndicator={false}

@@ -2,6 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import {AppImage} from '@component';
 import {SvgMessage, SvgPlus} from '@images';
+import {navigate} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
@@ -36,9 +37,13 @@ export const HeaderForum = () => {
           <View style={{marginRight: scaler(12)}}>
             <SvgMessage color={'#8D8D8D'} />
           </View>
-          <View>
+          <TouchableOpacity
+            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+            onPress={() => {
+              navigate(ROUTE_NAME.CREATE_NEWPOST);
+            }}>
             <SvgPlus color={'#8D8D8D'} />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

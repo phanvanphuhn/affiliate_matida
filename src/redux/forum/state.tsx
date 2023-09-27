@@ -13,6 +13,7 @@ export type IItemTab = {
   short_code: string;
   ranking: number;
   type: string;
+  total: number;
 };
 export type ForumState = {
   listTab: IItemTab[];

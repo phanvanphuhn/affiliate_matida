@@ -1,11 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import {changeTabForum} from '@redux';
+import {
+  changeStatusLoadListForum,
+  changeTabForum,
+  getListTabForum,
+} from '@redux';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useEffect, useRef} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import reactotron from 'reactotron-react-native';
 import {IItemTab} from '../Forum.props';
 
 type Props = {
@@ -25,16 +30,21 @@ export const ForumTab = (props: Props) => {
   const listRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    const index = listTab?.findIndex(val => val?.id === tab?.id);
+    const index = listTab?.findIndex(
+      val => val?.short_code === tab?.short_code,
+    );
     listRef.current?.scrollToIndex({
       index: index >= 0 ? index : 0,
       viewPosition: 0.5,
     });
+    reactotron.log?.('CHANGE TAB');
+    dispatch(getListTabForum({reload: true}));
   }, [tab]);
 
   const onChangeTab = (item: any, index: number) => {
     onChange && onChange(item, index);
     dispatch(changeTabForum(item));
+    dispatch(changeStatusLoadListForum(true));
     // listRef.current?.scrollToIndex({
     //   index: index,
     //   viewPosition: 0.5,
@@ -57,7 +67,7 @@ export const ForumTab = (props: Props) => {
           {lang === 2 ? item?.name_vi : item?.name_en}
         </Text>
         <Text style={[styles.txtCount, !isFocus && styles.textInActive]}>
-          {'20'}
+          {item?.total ?? 0}
         </Text>
       </TouchableOpacity>
     );

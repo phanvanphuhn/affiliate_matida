@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
+import {AppImage} from '@component';
 import {colorRoom} from '@constant';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import FastImage from 'react-native-fast-image';
 import {LikeView} from './LikeView';
 
 const itemWidth = (widthScreen - scaler(48)) / 2;
@@ -55,7 +55,9 @@ export const ItemPostHorizontal = (props: Props) => {
         styles.container,
         {
           backgroundColor: 'transparent',
+          justifyContent: 'flex-end',
         },
+        styles.content,
       ]}>
       {/* <ImageBackground
         source={{uri: image}}
@@ -66,8 +68,8 @@ export const ItemPostHorizontal = (props: Props) => {
           <Content isImageView />
         </View>
       </ImageBackground> */}
-      <FastImage
-        source={{uri: image}}
+      <AppImage
+        uri={image}
         style={{
           width: itemWidth,
           height: itemHeight,
@@ -76,6 +78,7 @@ export const ItemPostHorizontal = (props: Props) => {
           left: 0,
           zIndex: -1000,
         }}
+        log={item}
         resizeMode={'stretch'}
       />
       <View style={styles.context}>

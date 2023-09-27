@@ -9,6 +9,13 @@ export default function forumReducer(state = INITIAL_STATE_FORUM, action: any) {
         draft.listTab = action.payload;
       });
 
+    case typeForum.RELOAD_LIST_TAB_SUCCESS:
+      return produce(state, (draft: ForumState) => {
+        draft.listTab.forEach((val, i) => {
+          draft.listTab[i].total = action.payload[i].total;
+        });
+      });
+
     case typeForum.CHANGE_TAB_FORUM:
       return produce(state, (draft: ForumState) => {
         draft.tab = action.payload;

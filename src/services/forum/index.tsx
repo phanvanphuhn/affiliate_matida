@@ -2,7 +2,7 @@ import api from '../api';
 
 const CATEGORIES = 'categories';
 const POSTS = 'posts';
-const USER_ONLINE = 'user/onlines?limit=7';
+const USER_ONLINE = 'user/onlines?limit=10';
 
 export const getListTopTab: any = async () => {
   const response = await api.get(CATEGORIES);
