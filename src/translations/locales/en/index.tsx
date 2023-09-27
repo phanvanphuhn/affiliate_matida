@@ -150,7 +150,7 @@ export const en = {
     weeks: 'Week {{weeks}}',
     sizeComparison: {
       babySize: "Baby's size",
-      embryo: 'Embryo',
+      embryo: 'Mom & baby',
       mom: 'Mom',
       sympton: 'Tips & Symptoms',
       weeks: 'weeks',
@@ -186,10 +186,11 @@ export const en = {
   },
   sizeComparison: {
     week: 'Week',
-    titleHeader: 'Week by Week',
+    titleHeader: 'Pregnancy tracker',
     titleProgress: 'weeks to go!',
     afterBirth: 'After Birth',
     weeks: 'Week %start - %end',
+    titleQuiz: 'Daily quiz',
   },
   videoList: {
     titleHeader: 'Videos for you',

@@ -7,7 +7,7 @@ import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {LikeViewComment} from './LikeViewComment';
 import {LikeViewReply} from './LikeViewReply';
-
+import {event, eventType, trackingAppEvent} from '@util';
 import {getDataReply} from '@redux';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -32,18 +32,26 @@ const ItemListComment = React.memo((props: any) => {
     }
   };
 
+  const onNavigateChatAPI = () => {
+    trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
+    navigation.navigate(ROUTE_NAME.CHAT_GPT);
+  };
+
   return (
     <>
       <View style={styles.viewContent}>
         <View style={styles.viewAvatar}>
           <TouchableOpacity
             onPress={() => {
-              if (detail?.is_anonymous) {
+              if (item?.user?.id == 121) {
+                onNavigateChatAPI();
+              } else if (detail?.is_anonymous) {
                 return;
+              } else {
+                navigation.navigate(ROUTE_NAME.DETAIL_USER, {
+                  id: item?.user?.id,
+                });
               }
-              navigation.navigate(ROUTE_NAME.DETAIL_USER, {
-                id: item?.user?.id,
-              });
             }}>
             {item?.user?.avatar?.length > 0 ? (
               <AppImage user uri={item?.user?.avatar} style={styles.image} />

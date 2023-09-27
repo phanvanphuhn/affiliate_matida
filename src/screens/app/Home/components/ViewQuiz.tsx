@@ -206,7 +206,11 @@ export const ViewQuiz = React.memo((props: any) => {
             question_id: data?.id,
             answer_id: item?.id,
           };
-          trackingAppEvent(event.BABY_TRACKER.DAILY_QUIZ, {content: body}, eventType.MIX_PANEL);
+          trackingAppEvent(
+            event.BABY_TRACKER.DAILY_QUIZ,
+            {content: body},
+            eventType.MIX_PANEL,
+          );
           onAnswer(body);
         }}>
         <Text style={styles.txtTrueFalse}>

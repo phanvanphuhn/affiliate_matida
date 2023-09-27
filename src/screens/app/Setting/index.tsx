@@ -17,13 +17,13 @@ import {ROUTE_NAME} from '@routeName';
 import {deleteUserDevice} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
-  VERSION_CODE_PUSH,
   event,
   eventType,
   logoutWebEngage,
   trackEventBranch,
   trackingAppEvent,
   useUXCam,
+  VERSION_CODE_PUSH,
 } from '@util';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -74,7 +74,7 @@ const Setting = () => {
     } finally {
       trackingAppEvent(event.SYSTEM.LOG_OUT, {}, eventType.MIX_PANEL);
       logoutWebEngage();
-      trackEventBranch(event.BRANCH.SIGN_OUT, {});
+      trackEventBranch(event.BRANCH.SIGN_OUT, {}, true);
       dispatch(logOut());
       dispatch(clearListChat());
       dispatch(cleanHome());

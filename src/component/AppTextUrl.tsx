@@ -10,7 +10,6 @@ import ParsedText from 'react-native-parsed-text';
 //@ts-ignore
 import {DEEP_LINK, OLD_DEEP_LINK} from '@services';
 import {handleDeepLink} from '@util';
-import reactotron from 'reactotron-react-native';
 interface Props extends TextProps {
   children: string;
   style?: StyleProp<TextStyle>;

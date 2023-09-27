@@ -76,11 +76,11 @@ const ListFloatingComment = (props: any) => {
         onContentSizeChange={() => scrollRef.current?.scrollToEnd()}
         ref={scrollRef}
         scrollEnabled={false}>
-        {arr.map(item => {
+        {arr.map((item, i) => {
           return item?.id ? (
-            <ItemFloatingComment item={item} />
+            <ItemFloatingComment key={i} item={item} />
           ) : (
-            <View style={{height: 50}}></View>
+            <View style={{height: 50}} key={i} />
           );
         })}
       </ScrollView>

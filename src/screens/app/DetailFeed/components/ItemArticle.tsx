@@ -61,7 +61,6 @@ const ItemArticle = (props: ItemArticleProps) => {
           }}>
           <InputItem />
         </View>
-        {!!props.isFocused && <ListFloatingComment />}
         {!!props.isFocused && <ListFloatingComment item={props?.item} />}
         <TitleFeed item={props.item} />
       </View>

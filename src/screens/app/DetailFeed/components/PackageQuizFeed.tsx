@@ -16,6 +16,8 @@ import {
 import {ListPackage, useVideo} from './Container';
 import ResultPackageQuiz from './ResultPackageQuiz';
 import {produce} from 'immer';
+import {getDetailFeedApi} from '@services';
+import {withTiming} from 'react-native-reanimated';
 
 interface PackageQuizFeedProps {
   item: IDataListFeed;
@@ -34,20 +36,50 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
   useEffect(() => {
     if (props.isFocused) {
       setState({feed: props.item});
+      getDetail();
     } else {
     }
     return () => {};
   }, [props.isFocused]);
+
+  const getDetail = async () => {
+    if (!props.item) {
+      return;
+    }
+    const res = await getDetailFeedApi(
+      props.item?.content_type,
+      props.item?.contentid,
+    );
+    if (res.success) {
+      setState({
+        is_liked: res?.data?.is_liked,
+        total_likes: res?.data?.total_likes,
+        is_favorite: res?.data?.is_favorite,
+        total_favorites: res?.data?.total_favorites,
+        totalComment: res?.data?.total_comments,
+        questions: res?.data?.questions || [],
+      });
+    }
+  };
+
   const onDoMomPrepTest = (question: IPackageQuizzList) => {
     if (+props.item?.maxScore === +props.item?.total_questions) {
-      trackingAppEvent(event.MOM_TEST.START, {content: props.item?.id}, eventType.MIX_PANEL);
+      trackingAppEvent(
+        event.MOM_TEST.START,
+        {content: props.item?.id},
+        eventType.MIX_PANEL,
+      );
       navigate(ROUTE_NAME.TEST_RESULT, {
         id: props.item?.id,
         redoTest: () => {},
         preRoute: EPreRoute.PERIODIC,
       });
     } else {
-      trackingAppEvent(event.MOM_TEST.START, {content: props.item}, eventType.MIX_PANEL);
+      trackingAppEvent(
+        event.MOM_TEST.START,
+        {content: props.item},
+        eventType.MIX_PANEL,
+      );
       navigate(ROUTE_NAME.TEST_DETAIL, {
         quiz: props.item,
         next_question: 1,
@@ -154,7 +186,7 @@ const PackageQuizFeed = (props: PackageQuizFeedProps) => {
   }
   return (
     <View style={styles.container}>
-      {+props.item?.maxScore != +props.item?.total_questions ? (
+      {props.item?.maxScore != props.item?.total_questions ? (
         !!state?.questions?.length && (
           <View style={styles.viewContent}>
             {renderViewResult(state?.questions?.[0])}
@@ -309,6 +341,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: scaler(10),
+    marginBottom: scaler(10),
   },
   txtTrueFalse: {
     fontSize: scaler(16),

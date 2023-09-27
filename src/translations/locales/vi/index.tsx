@@ -194,6 +194,7 @@ export const vi = {
     titleProgress: 'Tuần nữa!',
     afterBirth: 'Sau sinh',
     weeks: '%start - %end tuần',
+    titleQuiz: 'Câu hỏi hôm nay',
   },
   videoList: {
     titleHeader: 'Video cho bạn',

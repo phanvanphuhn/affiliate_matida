@@ -64,7 +64,11 @@ const ResultPackageQuiz = (props: ResultPackageQuizProps) => {
   };
 
   const onReTest = () => {
-    trackingAppEvent(event.MOM_TEST.START, {content: props.item}, eventType.MIX_PANEL);
+    trackingAppEvent(
+      event.MOM_TEST.START,
+      {content: props.item},
+      eventType.MIX_PANEL,
+    );
     navigate(ROUTE_NAME.TEST_DETAIL, {
       quiz: props.item,
     });
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: scaler(8),
     marginVertical: scaler(10),
     marginHorizontal: scaler(20),
+    marginBottom: scaler(20),
   },
   textReDoTest: {
     fontSize: scaler(14),
