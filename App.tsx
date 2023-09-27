@@ -7,7 +7,8 @@ import NavigationApp from './src/navigation/StackContainer';
 import {
   GlobalUI,
   ToastCustom,
-  ToastCustomPost
+  ToastCustomPost,
+  CheckAppVersion,
 } from '@component';
 import {NavigationUtils} from '@navigation';
 import {clearDataLiveTalk} from '@redux';
@@ -30,18 +31,18 @@ import {
   initBranchEvent,
   KEY_UXCAM,
   MERCHANT_IDENTIFIER,
-  STRIPE_KEY
+  STRIPE_KEY,
 } from '@util';
 import {Mixpanel} from 'mixpanel-react-native';
 import KeepAwake from 'react-native-keep-awake';
 import Toast, {
   ToastConfig,
-  ToastConfigParams
+  ToastConfigParams,
 } from 'react-native-toast-message';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
-  RepeatMode
+  RepeatMode,
 } from 'react-native-track-player';
 import RNUxcam from 'react-native-ux-cam';
 
@@ -291,7 +292,7 @@ const App = () => {
                 NavigationUtils.setTopLevelNavigator(navigatorRef)
               }
             />
-            {/* <CheckAppVersion /> */}
+            <CheckAppVersion />
           </PersistGate>
         </Provider>
       </StripeProvider>
