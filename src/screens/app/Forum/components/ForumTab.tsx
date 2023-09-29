@@ -1,16 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import {
-  changeStatusLoadListForum,
-  changeTabForum,
-  getListTabForum,
-} from '@redux';
+import {changeTabForum, getListTabForum} from '@redux';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useEffect, useRef} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import reactotron from 'reactotron-react-native';
 import {IItemTab} from '../Forum.props';
 
 type Props = {
@@ -37,14 +32,12 @@ export const ForumTab = (props: Props) => {
       index: index >= 0 ? index : 0,
       viewPosition: 0.5,
     });
-    reactotron.log?.('CHANGE TAB');
     dispatch(getListTabForum({reload: true}));
   }, [tab]);
 
   const onChangeTab = (item: any, index: number) => {
     onChange && onChange(item, index);
     dispatch(changeTabForum(item));
-    dispatch(changeStatusLoadListForum(true));
     // listRef.current?.scrollToIndex({
     //   index: index,
     //   viewPosition: 0.5,

@@ -149,7 +149,7 @@ export const ListPost = () => {
     <>
       <View style={{flex: 1}}>
         <FlatList
-          data={forum}
+          data={loadList ? [] : forum}
           renderItem={renderItem}
           // ListHeaderComponent={<ListTopTab />}
           style={{backgroundColor: colors.gray250}}

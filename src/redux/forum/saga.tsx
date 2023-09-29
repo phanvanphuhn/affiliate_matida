@@ -1,4 +1,5 @@
 import {getApiListForumByTab, getListTotalPost, getPostAllTab} from '@services';
+import reactotron from 'reactotron-react-native';
 import {put, takeEvery} from 'redux-saga/effects';
 import {
   changeStatusLoadListForum,
@@ -22,6 +23,7 @@ export function* getForumByTabSaga(action: any) {
 
   yield put(changeStatusLoadMoreForum(false));
   if (+page === 1) {
+    reactotron.log?.('LOADING');
     yield put(changeStatusLoadListForum(true));
   }
   try {
