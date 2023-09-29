@@ -150,7 +150,7 @@ export const en = {
     weeks: 'Week {{weeks}}',
     sizeComparison: {
       babySize: "Baby's size",
-      embryo: 'Mom & baby',
+      embryo: 'Mom & Baby',
       mom: 'Mom',
       sympton: 'Tips & Symptoms',
       weeks: 'weeks',
