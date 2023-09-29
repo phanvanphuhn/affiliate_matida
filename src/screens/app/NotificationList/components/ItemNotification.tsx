@@ -97,22 +97,36 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
   const handleNotificationBroadCast = () => {
     switch (+item?.model_type) {
       case ETypeRedirectBroadcast.PODCAST:
-        handleBroadCastPodCast();
-        break;
       case ETypeRedirectBroadcast.VIDEO:
-        handleBroadCastVideo(false);
+      case ETypeRedirectBroadcast.ARTICLE:
+        handleNavigateToDetailFeed();
         break;
       case ETypeRedirectBroadcast.ROOM:
         handleCreateNewTalk();
-        break;
-      case ETypeRedirectBroadcast.ARTICLE:
-        handleBroadCastArticle();
         break;
       case ETypeRedirectBroadcast.RECORD_ROOM:
         handleBroadCastVideo(true);
         break;
       default:
         break;
+    }
+  };
+
+  const handleNavigateToDetailFeed = () => {
+    let contentType = '';
+    switch (item.model_type) {
+      case 1:
+        contentType = 'podcast';
+      case 2:
+        contentType = 'video';
+      case 4:
+        contentType = 'article';
+    }
+    if (item) {
+      navigate(ROUTE_NAME.DETAIL_FEED, {
+        id: item?.model_id,
+        content_type: contentType,
+      });
     }
   };
 
