@@ -5,10 +5,10 @@ import {ActivityIndicator, AppState, Platform, StatusBar} from 'react-native';
 import NavigationApp from './src/navigation/StackContainer';
 
 import {
+  CheckAppVersion,
   GlobalUI,
   ToastCustom,
   ToastCustomPost,
-  CheckAppVersion,
 } from '@component';
 import {NavigationUtils} from '@navigation';
 import {clearDataLiveTalk} from '@redux';

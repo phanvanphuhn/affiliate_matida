@@ -27,7 +27,11 @@ export const PregnancyProgress = () => {
   const trimester = getTrimester(weekPregnant?.weeks ?? week);
 
   const onNavigateSize = useCallback(() => {
-    navigation.navigate(ROUTE_NAME.TIME_LINE);
+    // navigation.navigate(ROUTE_NAME.TIME_LINE);
+    navigation.navigate(ROUTE_NAME.SIZE_COMPARISON, {
+      // option: OptionComparison.EMBRYO,
+      option: 2,
+    });
   }, []);
 
   return (
