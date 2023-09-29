@@ -51,7 +51,6 @@ const Login = (props: any) => {
             loginSocial={(value: any) => {
               closeModal();
               loginSocial(value);
-              trackEventBranch(event.BRANCH.LOGIN, {}, true);
             }}
           />
         );
