@@ -29,7 +29,7 @@ export const ViewSelectType = (props: Props) => {
           },
         ]}>
         <View style={styles.icon}>
-          <SvgIconBaby size={status === 1 ? 72 : 54} />
+          <SvgIconBaby size={72} />
         </View>
         <Text style={styles.txtAT}>{t('home.sizeComparison.embryo')}</Text>
       </TouchableOpacity>
@@ -50,8 +50,8 @@ export const ViewSelectType = (props: Props) => {
             source={iconCalendarCheckup}
             style={[
               {
-                width: status === 2 ? 72 : 54,
-                height: status === 2 ? 72 : 54,
+                width: 72,
+                height: 72,
               },
             ]}
           />
