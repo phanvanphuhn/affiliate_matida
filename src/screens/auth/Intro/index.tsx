@@ -21,6 +21,7 @@ import {
   event,
   eventType,
   loginWebEngage,
+  trackEventBranch,
   trackingAppEvent,
   useUXCam,
 } from '@util';
@@ -100,6 +101,7 @@ const Intro = () => {
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
+            trackEventBranch(event.BRANCH.LOGIN, {}, true);
           } else {
             const eventParams = {
               af_registration_method: 'Facebook',
@@ -109,6 +111,7 @@ const Intro = () => {
               eventParams,
               eventType.AFF_FLYER,
             );
+            trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
           GlobalService.hideLoading();
@@ -131,6 +134,7 @@ const Intro = () => {
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
+            trackEventBranch(event.BRANCH.LOGIN, {}, true);
           } else {
             const eventParams = {
               af_registration_method: 'Zalo',
@@ -140,6 +144,7 @@ const Intro = () => {
               eventParams,
               eventType.AFF_FLYER,
             );
+            trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
         }
@@ -153,6 +158,7 @@ const Intro = () => {
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
           trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
+          trackEventBranch(event.BRANCH.LOGIN, {}, true);
         } else {
           const eventParams = {
             af_registration_method: 'Zalo',
@@ -162,6 +168,7 @@ const Intro = () => {
             eventParams,
             eventType.AFF_FLYER,
           );
+          trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       }
@@ -182,6 +189,7 @@ const Intro = () => {
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
           trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
+          trackEventBranch(event.BRANCH.LOGIN, {}, true);
         } else {
           const eventParams = {
             af_registration_method: 'Apple',
@@ -191,6 +199,7 @@ const Intro = () => {
             eventParams,
             eventType.AFF_FLYER,
           );
+          trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       } else {
