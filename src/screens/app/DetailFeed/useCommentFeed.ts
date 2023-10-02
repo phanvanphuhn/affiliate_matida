@@ -174,9 +174,9 @@ const useCommentFeed = () => {
       getListComment();
     }
   }, [state.page, stateFeed.feed, stateFeed.isShowComment]);
-  useEffect(() => {
-    getListComment();
-  }, [stateFeed.isGetComment]);
+  // useEffect(() => {
+  //   getListComment();
+  // }, [stateFeed.isGetComment]);
   return {
     state,
     setState,

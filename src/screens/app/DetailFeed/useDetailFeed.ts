@@ -33,6 +33,7 @@ const useDetailFeed = () => {
         totalComment: res?.data?.total_comments,
         page,
         index,
+        total: res?.data?.feed_detail?.total,
         currentIndex: index,
       });
     }
