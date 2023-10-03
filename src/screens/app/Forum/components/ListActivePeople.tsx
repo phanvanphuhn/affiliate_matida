@@ -1,16 +1,78 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import {AppImage} from '@component';
+import {createTopic, getListUserOnline} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+//@ts-ignore
+import {navigate} from '@navigation';
+import {ROUTE_NAME} from '@routeName';
+import {debounce} from 'lodash';
+import {showMessage} from 'react-native-flash-message';
 
 const exampleList = new Array(10);
 
 export const ListActivePeople = () => {
+  const [data, setData] = useState<any[]>([]);
+  const reload = useRef(true);
+
+  const getData = async () => {
+    try {
+      const res = await getListUserOnline();
+      setDebounce(res?.data?.userOnlines ?? []);
+      if (reload.current) {
+        setTimeout(() => {
+          getData();
+        }, 5000);
+      }
+    } catch (error) {}
+  };
+
+  const setDebounce = useMemo(
+    () =>
+      debounce((value: any) => {
+        setData(value);
+      }, 500),
+    [],
+  );
+
+  useEffect(() => {
+    getData();
+    // setInterval(() => {
+    //   getData();
+    // }, 5000);
+    return () => {
+      reload.current = false;
+    };
+  }, []);
+
+  const handlePress = async (item: any) => {
+    try {
+      const res = await createTopic(item?.id);
+      navigate(ROUTE_NAME.DETAIL_CHAT, {
+        topic_id: res?.data?.topic_id,
+        receiver_id: item?.id,
+      });
+    } catch (e) {
+      showMessage({
+        message: '',
+        type: 'default',
+        backgroundColor: 'transparent',
+      });
+    } finally {
+    }
+  };
+
   const renderItem = ({item, index}: {item: any; index: number}) => {
     return (
-      <View style={styles.item}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => handlePress(item)}
+        style={styles.item}>
+        <AppImage user uri={item?.avatar} style={styles.image} />
         <View style={styles.active} />
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -20,7 +82,7 @@ export const ListActivePeople = () => {
         Who's Online? You can start chatting with people now
       </Text>
       <FlatList
-        data={exampleList}
+        data={data}
         renderItem={renderItem}
         contentContainerStyle={styles.contentContainer}
         horizontal
@@ -34,11 +96,11 @@ export const ListActivePeople = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: scaler(12),
-    marginBottom: scaler(16),
-    marginHorizontal: scaler(16),
+    // marginBottom: scaler(16),
+    // paddingHorizontal: scaler(16),
     backgroundColor: '#F8F8F8',
     borderRadius: 16,
-    paddingVertical: scaler(6),
+    // paddingVertical: scaler(6),
   },
   listContainer: {
     flexGrow: 0,
@@ -46,14 +108,18 @@ const styles = StyleSheet.create({
   contentContainer: {
     alignItems: 'center',
     height: scaler(60),
-    paddingLeft: scaler(12),
+    paddingLeft: scaler(16),
   },
   item: {
     height: scaler(40),
     width: scaler(40),
     borderRadius: scaler(25),
     marginRight: scaler(12),
-    backgroundColor: 'blue',
+  },
+  image: {
+    height: scaler(40),
+    width: scaler(40),
+    borderRadius: scaler(25),
   },
   active: {
     height: scaler(8),
@@ -72,5 +138,6 @@ const styles = StyleSheet.create({
     color: colors.textColor,
     marginBottom: scaler(9),
     paddingHorizontal: scaler(12),
+    marginLeft: scaler(16),
   },
 });
