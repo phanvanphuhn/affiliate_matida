@@ -89,14 +89,14 @@ const useDetailFeed = () => {
     }
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = (pageNumber: number) => {
     if (state.page * state.size < state.total) {
       setState({
         page: state.page + 1,
         isLoadMore: true,
         isLoadLess: false,
       });
-    } else if (state.index + (state.page - 1) * state.size == state.total - 1) {
+    } else if (pageNumber + (state.page - 1) * state.size == state.total - 1) {
       setState({
         page: 1,
         isLoadMore: true,
@@ -119,7 +119,7 @@ const useDetailFeed = () => {
     if (firstSlide) {
       // handleLoadLess();
     } else if (lastSlide) {
-      handleLoadMore();
+      handleLoadMore(pageNumber);
     }
     setState({
       currentIndex: pageNumber,
