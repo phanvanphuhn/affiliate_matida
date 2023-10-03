@@ -23,7 +23,8 @@ import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {styles} from '../Forum.style';
 import {ItemPost} from './ItemPost';
-import {ListTopTab} from './ListTopTab';
+import {ListActivePeople} from './ListActivePeople';
+import {ListPostHorizontal} from './ListPostHorizontal';
 
 export const ListPost = () => {
   const {t} = useTranslation();
@@ -126,15 +127,17 @@ export const ListPost = () => {
   };
 
   const handleLoadMore = () => {
-    if (forum?.length < total && loadMoreRedux) {
+    if (forum?.length < total && loadMoreRedux && short_code !== 'all') {
       refPage.current++;
       setLoadMore(true);
       getData();
     }
   };
 
-  const renderItem = ({item}: any) => {
-    return (
+  const renderItem = ({item, index}: any) => {
+    return short_code === 'all' ? (
+      <ListPostHorizontal data={item} index={index} />
+    ) : (
       <ItemPost
         item={item}
         onDelete={() => deleteItem(item)}
@@ -146,7 +149,7 @@ export const ListPost = () => {
     <>
       <View style={{flex: 1}}>
         <FlatList
-          data={forum}
+          data={loadList ? [] : forum}
           renderItem={renderItem}
           // ListHeaderComponent={<ListTopTab />}
           style={{backgroundColor: colors.gray250}}
@@ -181,6 +184,7 @@ export const ListPost = () => {
               ) : null}
             </>
           }
+          ListHeaderComponent={<ListActivePeople />}
           keyExtractor={(item: any) => item?.id}
         />
       </View>

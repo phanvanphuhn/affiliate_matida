@@ -5,10 +5,10 @@ import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import moment from 'moment';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {LikeView} from './LikeView';
-import {useTranslation} from 'react-i18next';
 
 const ItemPost = React.memo((props: any) => {
   const {

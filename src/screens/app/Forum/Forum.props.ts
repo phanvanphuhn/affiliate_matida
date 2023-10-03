@@ -1,18 +1,18 @@
-import { ETabForum } from "@constant";
+import {ETabForum} from '@constant';
 
 export type IItemTopTab = {
-    id: number,
-    label: string,
-    value: ETabForum
-}
+  id: number;
+  label: string;
+  value: ETabForum;
+};
 
 export type IItemTopTabSize = {
-    x: number;
-    width: number
-}
+  x: number;
+  width: number;
+};
 
 export type IItemTab = {
-    id: number;
+  id: number;
   created_at: string;
   updated_at: string;
   name_en: string;
@@ -20,4 +20,5 @@ export type IItemTab = {
   short_code: string;
   ranking: number;
   type: string;
-}
+  total?: number;
+};

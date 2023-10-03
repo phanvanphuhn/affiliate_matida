@@ -1,16 +1,11 @@
 import {changeTabForum} from '@redux';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useRef} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {IItemTab} from '../Forum.props';
 import {CreateNewPostComponent} from './CreateNewPostComponent';
+import {ForumTab} from './ForumTab';
 
 export const ListTopTab = () => {
   const dispatch = useDispatch();
@@ -28,7 +23,7 @@ export const ListTopTab = () => {
   };
   return (
     <View style={styles.container}>
-      <ScrollView
+      {/* <ScrollView
         ref={scrollRef}
         bounces={false}
         horizontal
@@ -52,7 +47,8 @@ export const ListTopTab = () => {
             </TouchableOpacity>
           );
         })}
-      </ScrollView>
+      </ScrollView> */}
+      <ForumTab />
       <CreateNewPostComponent />
     </View>
   );

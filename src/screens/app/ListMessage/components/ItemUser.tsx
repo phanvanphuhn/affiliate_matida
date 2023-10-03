@@ -6,6 +6,7 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {showMessage} from 'react-native-flash-message';
+import reactotron from 'reactotron-react-native';
 
 type Props = {
   item: any;
@@ -16,7 +17,7 @@ export const ItemUser = ({item}: Props) => {
   const handlePress = async () => {
     try {
       GlobalService.showLoading();
-
+      reactotron.log?.('ITEM', item);
       const res = await createTopic(item?.id);
       navigation.navigate(ROUTE_NAME.DETAIL_CHAT, {
         topic_id: res?.data?.topic_id,
