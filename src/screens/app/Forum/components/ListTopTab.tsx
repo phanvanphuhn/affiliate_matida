@@ -4,6 +4,7 @@ import React, {useRef} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {IItemTab} from '../Forum.props';
+import {CreateNewPostComponent} from './CreateNewPostComponent';
 import {ForumTab} from './ForumTab';
 
 export const ListTopTab = () => {
@@ -48,7 +49,7 @@ export const ListTopTab = () => {
         })}
       </ScrollView> */}
       <ForumTab />
-      {/* <CreateNewPostComponent /> */}
+      <CreateNewPostComponent />
     </View>
   );
 };
