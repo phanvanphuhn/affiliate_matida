@@ -40,8 +40,8 @@ const MomPrepTest = ({item, index, onPress}: any) => {
       </Text>
       <View style={styles.trackContainer}>
         <RNSlider
-          maximumValue={Number(item.total_questions)}
-          value={Number(item.maxScore)}
+          maximumValue={Number(item.total_questions || '0')}
+          value={Number(item.maxScore || '0')}
           trackStyle={[styles.track]}
           thumbStyle={[styles.thumb]}
           minimumTrackTintColor={'#28B4AE'}

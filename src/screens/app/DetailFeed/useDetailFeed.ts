@@ -70,7 +70,8 @@ const useDetailFeed = () => {
       if (
         state.page == 1 &&
         (route.params?.currentPage == undefined ||
-          route.params?.currentPage == 1)
+          route.params?.currentPage == 1) &&
+        state.refreshing
       ) {
         setState({data: arr});
       } else {
@@ -89,9 +90,15 @@ const useDetailFeed = () => {
   };
 
   const handleLoadMore = () => {
-    if (state.page * state.size <= state.total) {
+    if (state.page * state.size < state.total) {
       setState({
         page: state.page + 1,
+        isLoadMore: true,
+        isLoadLess: false,
+      });
+    } else if (state.index + (state.page - 1) * state.size == state.total - 1) {
+      setState({
+        page: 1,
         isLoadMore: true,
         isLoadLess: false,
       });
