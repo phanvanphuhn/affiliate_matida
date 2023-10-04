@@ -36,7 +36,7 @@ export const FLoatingAIButton = () => {
     const tout = setTimeout(() => {
       clearTimeout(tout);
       setShowQuestion(true);
-    }, 2000);
+    }, 700);
   };
 
   const getData = async () => {
@@ -55,12 +55,12 @@ export const FLoatingAIButton = () => {
     const tout = setTimeout(() => {
       clearTimeout(tout);
       fadeOut();
-    }, 6500);
+    }, 10000);
   }, []);
 
   const onNnavigateChatAPI = () => {
     trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
-    navigation.navigate(ROUTE_NAME.CHAT_GPT);
+    navigation.navigate(ROUTE_NAME.CHAT_GPT, {data: data});
   };
   return (
     <View style={styles.container}>

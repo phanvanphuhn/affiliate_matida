@@ -3,7 +3,12 @@ import {
   getListChatGPT,
   saveSuggestMessageId,
 } from '@redux';
-import {GlobalService, sendMessageGPTApi, uploadImage} from '@services';
+import {
+  GlobalService,
+  postDailyQuestion,
+  sendMessageGPTApi,
+  uploadImage,
+} from '@services';
 import {event, eventType, hasWhiteSpace, trackingAppEvent} from '@util';
 import moment from 'moment';
 import {useCallback, useEffect, useMemo, useState} from 'react';
@@ -60,6 +65,10 @@ export const useFunction = (props: any) => {
     dispatch(getListChatGPT({page: page}));
   }, [page]);
 
+  const getRecommendTida = async () => {
+    const res = await postDailyQuestion(route?.params?.data);
+  };
+
   const onLoadMore = useCallback(() => {
     if (page !== pagging?.last_page) {
       setPage((prevPage: any) => prevPage + 1);
@@ -70,6 +79,7 @@ export const useFunction = (props: any) => {
 
   useEffect(() => {
     getData();
+    getRecommendTida();
   }, [page]);
 
   const handleChangeAvatar = async (response: any) => {
@@ -108,7 +118,11 @@ export const useFunction = (props: any) => {
       updated_at: moment(),
       user_id: user_id,
     };
-    trackingAppEvent(event.TIDA.TIDA_ASK, {content: dataAdd}, eventType.MIX_PANEL);
+    trackingAppEvent(
+      event.TIDA.TIDA_ASK,
+      {content: dataAdd},
+      eventType.MIX_PANEL,
+    );
     dispatch(addMessageToListChatGPT([{...dataAdd}]));
     try {
       setShowViewSelect(true);

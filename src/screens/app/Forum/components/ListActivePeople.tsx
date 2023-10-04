@@ -10,12 +10,14 @@ import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {debounce} from 'lodash';
 import {showMessage} from 'react-native-flash-message';
+import {useTranslation} from 'react-i18next';
 
 const exampleList = new Array(10);
 
 export const ListActivePeople = () => {
   const [data, setData] = useState<any[]>([]);
   const reload = useRef(true);
+  const {t} = useTranslation();
 
   const getData = async () => {
     try {
@@ -50,9 +52,8 @@ export const ListActivePeople = () => {
   const handlePress = async (item: any) => {
     try {
       const res = await createTopic(item?.id);
-      navigate(ROUTE_NAME.DETAIL_CHAT, {
-        topic_id: res?.data?.topic_id,
-        receiver_id: item?.id,
+      navigate(ROUTE_NAME.DETAIL_USER, {
+        id: item?.id,
       });
     } catch (e) {
       showMessage({
@@ -78,9 +79,7 @@ export const ListActivePeople = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        Who's Online? You can start chatting with people now
-      </Text>
+      <Text style={styles.text}>{t('post.whoOnline')}</Text>
       <FlatList
         data={data}
         renderItem={renderItem}

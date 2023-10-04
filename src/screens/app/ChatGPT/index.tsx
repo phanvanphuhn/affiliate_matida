@@ -32,6 +32,7 @@ const ChatGPT = (props: any) => {
     modalSuggest,
     setModalSuggest,
     onClickSuggest,
+    data,
   } = useFunction(props);
 
   const {t} = useTranslation();

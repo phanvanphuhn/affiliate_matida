@@ -23,6 +23,14 @@ export const getListSuggestGPT: any = async () => {
 };
 
 export const getDailyQuestion: any = async () => {
-  const respond = await api.get(GET_DAILY_QUESTION);
-  return respond;
+  const response = await api.get(GET_DAILY_QUESTION);
+  return response;
+};
+
+export const postDailyQuestion: any = async (body: any) => {
+  const params = {
+    message: body,
+  };
+  const response = await api.post(GET_DAILY_QUESTION, params);
+  return response;
 };
