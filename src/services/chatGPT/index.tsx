@@ -3,6 +3,7 @@ import api from '../api';
 const GET_LIST_SUGGEST = '/chat-gpt/questions';
 const SEND_MESSAGE_GPT = '/chat-gpt/send-message';
 const GET_LIST_MESSAGE_GPT = '/chat-gpt';
+const GET_DAILY_QUESTION = '/chat-gpt/ask-user';
 
 export const getListMessageGPTApi: any = async (page: any) => {
   const response = await api.get(
@@ -19,4 +20,9 @@ export const sendMessageGPTApi: any = async (body: any) => {
 export const getListSuggestGPT: any = async () => {
   const response = await api.get(`${GET_LIST_SUGGEST}?page=1&limit=50`);
   return response;
+};
+
+export const getDailyQuestion: any = async () => {
+  const respond = await api.get(GET_DAILY_QUESTION);
+  return respond;
 };
