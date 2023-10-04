@@ -300,7 +300,7 @@ const App = () => {
         position="top"
         floating={true}
         hideStatusBar={false}
-        style={{marginTop: Platform.OS === 'ios' ? 0 : scaler(16)}}
+        style={{marginTop: Platform.OS === 'ios' ? 32 : scaler(16)}}
       />
       <Toast
         position="bottom"
