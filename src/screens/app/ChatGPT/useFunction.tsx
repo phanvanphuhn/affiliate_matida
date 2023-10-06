@@ -67,6 +67,9 @@ export const useFunction = (props: any) => {
 
   const getRecommendTida = async () => {
     const res = await postDailyQuestion(route?.params?.data);
+    if (res?.success) {
+      getData();
+    }
   };
 
   const onLoadMore = useCallback(() => {
@@ -78,7 +81,6 @@ export const useFunction = (props: any) => {
   }, [page, pagging]);
 
   useEffect(() => {
-    getData();
     getRecommendTida();
   }, [page]);
 

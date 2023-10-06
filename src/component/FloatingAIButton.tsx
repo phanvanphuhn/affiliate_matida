@@ -32,17 +32,13 @@ export const FLoatingAIButton = () => {
     }).start();
   };
 
-  const isShowTidaQuestion = () => {
-    const tout = setTimeout(() => {
-      clearTimeout(tout);
-      setShowQuestion(true);
-    }, 700);
-  };
-
   const getData = async () => {
     try {
       const res = await getDailyQuestion();
-      setData(res?.data);
+      if (res?.success) {
+        setData(res?.data);
+        setShowQuestion(true);
+      }
     } catch (error) {
       console.log('error: ', error);
     }
@@ -50,7 +46,6 @@ export const FLoatingAIButton = () => {
 
   React.useEffect(() => {
     getData();
-    isShowTidaQuestion();
 
     const tout = setTimeout(() => {
       clearTimeout(tout);
