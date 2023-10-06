@@ -6,6 +6,8 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'src/redux/rootReducer';
 import {ItemPostHorizontal} from './ItemPostHorizontal';
+import {navigate} from '@navigation';
+import {ROUTE_NAME} from '@routeName';
 
 type Props = {
   data: any;
@@ -25,7 +27,11 @@ export const ListPostHorizontal = (props: Props) => {
   };
 
   const onPressSeeMore = () => {
-    dispatch(changeTabForum(itemTab));
+    const params = {
+      data: data,
+      index: index,
+    };
+    navigate(ROUTE_NAME.LIST_DETAIL_POST, params);
   };
 
   return (
@@ -67,7 +73,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-end',
     paddingHorizontal: scaler(16),
-    marginTop: scaler(10),
   },
   list: {
     flexGrow: 0,

@@ -37,7 +37,7 @@ export const LikeView = (props: any) => {
   const handleEventLike = async () => {
     if (isLike !== !!data?.is_liked) {
       const body = {
-        post_id: id,
+        post_id: data.id,
       };
       try {
         isLike ? await addLikePost(body) : await addUnLikePost(id);

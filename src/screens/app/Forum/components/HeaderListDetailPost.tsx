@@ -1,51 +1,44 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {AppImage} from '@component';
-import {SvgMessage} from '@images';
+import {SvgArrowLeft, SvgMessage} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
+import {goBack} from '@navigation';
+import {CreateNewPostComponent} from './CreateNewPostComponent';
+import {iconEdit} from '@images';
 
-export const HeaderForum = () => {
-  const navigation = useNavigation<any>();
-  const {t} = useTranslation();
+export type Props = {
+  title: string;
+};
 
-  const user = useSelector((state: any) => state.auth.userInfo);
+const HeaderListDetailPost = (props: Props) => {
+  const {title} = props;
 
   const handlePressAvatar = () => {
-    navigation.navigate(ROUTE_NAME.PROFILE_SETTINGS);
+    goBack();
   };
 
   return (
     <SafeAreaView edges={['top']}>
       <View style={styles.container}>
         <TouchableOpacity onPress={handlePressAvatar} style={styles.btnAvatar}>
-          <AppImage uri={user?.avatar} style={styles.avatarImage} user />
+          <SvgArrowLeft stroke={colors.textColor} />
         </TouchableOpacity>
-        <Text style={styles.text}>{t('bottomTab.community')}</Text>
+        <Text style={styles.text}>{title}</Text>
         <View
           style={{
             width: scaler(72),
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
-          {/* <View style={{marginRight: scaler(12)}}>
-            <SvgMessage color={'#8D8D8D'} />
-          </View> */}
-          {/* <TouchableOpacity
-            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-            onPress={() => {
-              navigate(ROUTE_NAME.CREATE_NEWPOST);
-            }}>
-            <SvgPlus color={'#8D8D8D'} />
-          </TouchableOpacity> */}
-        </View>
+          }}></View>
       </View>
     </SafeAreaView>
   );
@@ -75,3 +68,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default HeaderListDetailPost;

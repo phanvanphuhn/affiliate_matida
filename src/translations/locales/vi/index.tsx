@@ -217,7 +217,7 @@ export const vi = {
     feed: 'Khám phá',
     liveTalks: 'Trò chuyện',
     home: 'Theo dõi thai kỳ',
-    community: 'Kết nối',
+    community: 'Forum',
   },
   popularArticles: 'Đọc nhiều hơn',
   seeMore: 'Xem thêm',

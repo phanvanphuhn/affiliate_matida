@@ -48,7 +48,7 @@ export const ListTopTab = () => {
           );
         })}
       </ScrollView> */}
-      <ForumTab />
+      {/* <ForumTab /> */}
       <CreateNewPostComponent />
     </View>
   );
