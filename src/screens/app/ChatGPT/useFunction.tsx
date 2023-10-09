@@ -65,12 +65,12 @@ export const useFunction = (props: any) => {
     dispatch(getListChatGPT({page: page}));
   }, [page]);
 
-  const getRecommendTida = async () => {
+  const getRecommendTida = useCallback(async () => {
     const res = await postDailyQuestion(route?.params?.data);
     if (res?.success) {
       getData();
     }
-  };
+  }, [route?.params?.data]);
 
   const onLoadMore = useCallback(() => {
     if (page !== pagging?.last_page) {

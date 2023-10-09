@@ -335,7 +335,7 @@ export const en = {
     ano: 'Anonymous',
     me: 'Me',
     postedInAnonymus: 'Posted in Anonymous',
-    whoOnline: "Who's Online? You can start chatting with people now",
+    whoOnline: 'other moms is online',
   },
   podcast: {
     headerList: 'Podcasts',

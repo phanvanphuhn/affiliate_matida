@@ -79,7 +79,9 @@ export const ListActivePeople = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{t('post.whoOnline')}</Text>
+      <Text style={styles.text}>
+        {data?.length + ' ' + t('post.whoOnline')}
+      </Text>
       <FlatList
         data={data}
         renderItem={renderItem}
@@ -137,6 +139,5 @@ const styles = StyleSheet.create({
     color: colors.textColor,
     marginBottom: scaler(9),
     paddingHorizontal: scaler(12),
-    marginLeft: scaler(16),
   },
 });
