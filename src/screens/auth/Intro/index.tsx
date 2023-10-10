@@ -27,6 +27,7 @@ import {
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import {Constants, login as LoginWithZalo} from 'react-native-zalo-kit';
 import reactotron from 'reactotron-react-native';
+import {trackUser} from '@services/webengageManager.tsx';
 
 const Intro = () => {
   const {t} = useTranslation();
@@ -67,6 +68,7 @@ const Intro = () => {
 
   const onSuccess = (value: any) => {
     loginWebEngage(`${value?.user?.id}Phone`);
+    trackUser(value?.user);
     if (value?.user?.due_date) {
       dispatch(changeStatusLogin(true));
     } else {
@@ -95,8 +97,8 @@ const Intro = () => {
         if (data?.accessToken) {
           const res = await loginFacebook(data?.accessToken);
           dispatch(saveDataLoginFacebook(res?.data));
-          reactotron.log?.('LOGIN FB', res);
-          loginWebEngage(`${res?.data?.data?.id}Facebook`);
+         loginWebEngage(`${res?.data?.data?.id}Facebook`);
+         trackUser(res?.data?.data);
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -128,6 +130,7 @@ const Intro = () => {
           refCheckLoginZalo.current = false;
           dispatch(saveDataLoginFacebook(res?.data));
           loginWebEngage(`${res?.data?.data?.id}ZALO-android`);
+          trackUser(res?.data?.data);
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -150,6 +153,7 @@ const Intro = () => {
         const res = await loginZalo(oauthCode?.accessToken);
         dispatch(saveDataLoginFacebook(res?.data));
         loginWebEngage(`${res?.data?.data?.id}Zalo-ios`);
+        trackUser(res?.data?.data);
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
           trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -179,6 +183,7 @@ const Intro = () => {
         dispatch(saveDataLoginFacebook(res?.data));
         reactotron.log?.('LOGIN APPLE', res);
         loginWebEngage(`${res?.data?.data?.id}Apple`);
+        trackUser(res?.data?.data);
         if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
           dispatch(changeStatusLogin(true));
           trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);

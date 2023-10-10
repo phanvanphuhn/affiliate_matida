@@ -15,6 +15,7 @@ import {
   getDetailUser,
 } from '@services';
 import {AppSocket, hasWhiteSpace} from '@util';
+import {trackMessageShared} from '@services/webengageManager.tsx';
 
 export const useFunction = (props: any) => {
   const {route} = props;
@@ -149,6 +150,7 @@ export const useFunction = (props: any) => {
         receiverId: receiver_id,
         messageId: res?.data?.id,
       });
+      trackMessageShared(dataUser.name, receiver_id, text?.length > 0 && !hasWhiteSpace(text) ? text : null);
     } catch (error) {}
   };
 

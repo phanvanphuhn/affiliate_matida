@@ -6,6 +6,7 @@ import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import {styles} from '../style';
+import {trackQuizChallengeClicked} from '@services/webengageManager.tsx';
 export type IAnswer = {
   question_id: number;
   answer_id: number;
@@ -29,6 +30,7 @@ export const ItemAnswer = ({index, answerCurrent, item, idQuestion}: Props) => {
         answer_id: +item?.id,
       };
     });
+    trackQuizChallengeClicked(item?.id,idQuestion);
     setValue(newAnswer);
   };
   const isSelected = +answerCurrent?.answer_id === +item?.id;

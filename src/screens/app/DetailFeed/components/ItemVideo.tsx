@@ -21,6 +21,7 @@ import InputItem from './InputItem';
 import ListFloatingComment from './ListFloatingComment';
 import SliderFeed from './SliderFeed';
 import TitleFeed from './TitleFeed';
+import{trackArticleViewed} from '@services/webengageManager.tsx';
 
 interface ItemVideoProps {
   item: IDataListFeed;
@@ -57,6 +58,7 @@ const ItemVideo = (props: ItemVideoProps) => {
     if (!props.isFocused) {
       onReset();
     } else {
+    trackArticleViewed(props.item.title);
       setState({feed: props.item});
     }
     return () => {

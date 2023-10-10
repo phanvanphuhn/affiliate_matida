@@ -10,6 +10,7 @@ import {ROUTE_NAME} from '@routeName';
 import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
+import {trackTellMeMoreClicked} from '@services/webengageManager.tsx';
 
 const ResultDueDateScreen = (props: any) => {
   const {t} = useTranslation();
@@ -27,6 +28,7 @@ const ResultDueDateScreen = (props: any) => {
 
   const handlePressButton = () => {
     // dispatch(changeStatusLogin(true));
+    trackTellMeMoreClicked();
     navigation.navigate(ROUTE_NAME.SLIDE_INTRO);
   };
 

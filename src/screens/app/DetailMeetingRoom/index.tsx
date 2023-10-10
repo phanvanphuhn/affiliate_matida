@@ -52,6 +52,7 @@ import {ReminderTime} from './component/ReminderTime';
 import {TicketPrice} from './component/TicketPrice';
 import {ViewInfoHost} from './component/ViewInfoHost';
 import {styles} from './styles';
+import {trackExpertWorkshop, trackMomsTalk} from '@services/webengageManager.tsx';
 
 const DetailMeetingRoom = (props: any) => {
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ const DetailMeetingRoom = (props: any) => {
 
   const isCanEdit = infoRoom?.host?.id === user?.id;
   const heightMax = 31;
+  var isEventTracked = false; // to tackle refreshing of screen twice or thrice
 
   useUXCam(ROUTE_NAME.DETAIL_MEETING_ROOM);
 
@@ -124,6 +126,15 @@ const DetailMeetingRoom = (props: any) => {
   const handleLayout = (event: LayoutChangeEvent) => {
     const layoutItem: number = event?.nativeEvent?.layout?.height || 0;
     setHeightText(layoutItem);
+    console.log("#!# infoRoom type : ",infoRoom?.room?.media_type);
+    if(!isEventTracked){
+    if(infoRoom?.room?.media_type == 1){
+    trackMomsTalk(infoRoom?.room?.title);
+    }else if (infoRoom?.room?.media_type == 2){
+    trackExpertWorkshop(infoRoom?.room?.title,infoRoom?.room?.start_time);
+    }
+    isEventTracked = true;
+    }
   };
 
   const onKickUser = (user: any) => {

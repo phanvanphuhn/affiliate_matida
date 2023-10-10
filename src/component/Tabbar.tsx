@@ -18,6 +18,7 @@ import {
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
 import {ROUTE_NAME} from '../navigation/routeName';
+import { trackScreenViewedEvent } from '@services/webengageManager.tsx';
 // import {t} from 'i18next';
 import {
   changePageExplore,
@@ -80,18 +81,23 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const trackingTab = (value: any) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
+      trackScreenViewedEvent("Explore");
         trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_FEED:
+      trackScreenViewedEvent("Feed");
         trackingAppEvent(event.TAB.CLICK_TAB_FEED, {},eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_HOME:
+      trackScreenViewedEvent("Home");
         trackingAppEvent(event.TAB.CLICK_TAB_HOME, {},eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_COMMUNITY:
+      trackScreenViewedEvent("Community");
         trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {},eventType.AFF_FLYER);
         break;
       case ROUTE_NAME.TAB_LIVETALK:
+      trackScreenViewedEvent("Livetalk");
         trackingAppEvent(event.TAB.CLICK_TAB_LIVE_TALKS, {},eventType.AFF_FLYER);
         break;
     }

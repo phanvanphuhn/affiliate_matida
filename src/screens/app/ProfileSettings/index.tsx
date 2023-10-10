@@ -46,6 +46,7 @@ import {
   uploadImage,
 } from '@services';
 import * as yup from 'yup';
+import {trackUser} from '@services/webengageManager.tsx';
 
 const ProfileSettingsScreen = () => {
   const navigation = useNavigation<any>();
@@ -192,6 +193,7 @@ const ProfileSettingsScreen = () => {
         const res: any = await updateUserInfo(
           user?.facebook_id || user?.zalo_id || user?.apple_id ? body2 : body,
         );
+        trackUser(values);
         dispatch(saveDataUser(res?.data?.user));
         showMessage({
           message: res?.data?.message,
@@ -223,6 +225,7 @@ const ProfileSettingsScreen = () => {
         const res: any = await updateUserInfo(
           user?.facebook_id || user?.zalo_id || user?.apple_id ? body2 : body,
         );
+        trackUser(values);
         dispatch(saveDataUser(res?.data?.user));
         showMessage({
           message: res?.data?.message,

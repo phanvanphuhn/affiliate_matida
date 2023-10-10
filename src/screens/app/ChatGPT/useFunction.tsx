@@ -9,6 +9,7 @@ import moment from 'moment';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Platform} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {trackChatBotClickedEvent} from '@services/webengageManager.tsx';
 
 export const useFunction = (props: any) => {
   const {route} = props;
@@ -115,6 +116,7 @@ export const useFunction = (props: any) => {
       const body = {
         prompt: text?.length > 0 && !hasWhiteSpace(text) ? text : null,
       };
+      trackChatBotClickedEvent(text?.length > 0 && !hasWhiteSpace(text) ? text : null);
       const res = await sendMessageGPTApi(body);
       setText('');
       setShowViewSelect(false);
@@ -143,6 +145,7 @@ export const useFunction = (props: any) => {
         prompt: value,
       };
       const res = await sendMessageGPTApi(body);
+      trackChatBotClickedEvent(value);
       setIsSendMessageSuggest(true);
       setText('');
       setShowViewSelect(false);

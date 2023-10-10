@@ -14,6 +14,7 @@ import {event, eventType, trackingAppEvent, useUXCam} from '@util';
 import {showMessage} from 'react-native-flash-message';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
+import {trackChildsBirthdate} from '@services/webengageManager.tsx';
 
 const ChooseDueDateScreen = () => {
   const {t} = useTranslation();
@@ -32,6 +33,7 @@ const ChooseDueDateScreen = () => {
       const res = await selectDueDate({
         due_date: moment(date).format('MM/DD/YYYY'),
       });
+      trackChildsBirthdate(moment(date).format('MM/DD/YYYY'),false);
       trackingAppEvent(event.LOGIN.CONTINUE, {}, eventType.MIX_PANEL)
       showMessage({
         message: res?.data?.message,
@@ -46,6 +48,7 @@ const ChooseDueDateScreen = () => {
   };
 
   const navigateToCalculate = () => {
+    trackChildsBirthdate("Don't know",true);
     navigate(ROUTE_NAME.CALCULATE_DUE_DATE);
     // navigate(ROUTE_NAME.ON_BOARDING);
   };

@@ -24,6 +24,7 @@ import FastImage from 'react-native-fast-image';
 import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSelector} from 'react-redux';
+import { trackAskAQuestionClicked } from '@services/webengageManager.tsx';
 
 const CreateNewPost = (props: {
   route: {
@@ -161,6 +162,7 @@ const CreateNewPost = (props: {
               // title="Post anonymously in forum"
               title={t('post.anonymous')}
               onPress={() => {
+              trackAskAQuestionClicked(true,user?.name)
                 trackingAppEvent(event.FORUM.POST_ANONYMOUSLY, {}, eventType.MIX_PANEL)
                 setIsAnonymous(!isAnonymous)
               }}

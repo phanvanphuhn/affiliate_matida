@@ -13,6 +13,7 @@ import FooterFeed from './FooterFeed';
 import InputItem from './InputItem';
 import ListFloatingComment from './ListFloatingComment';
 import TitleFeed from './TitleFeed';
+import{trackArticleViewed} from '@services/webengageManager.tsx';
 
 interface ItemArticleProps {
   item: IDataListFeed;
@@ -27,6 +28,7 @@ const ItemArticle = (props: ItemArticleProps) => {
   );
   useEffect(() => {
     if (props.isFocused) {
+    trackArticleViewed(props.item.title);
       setState({feed: props.item});
     } else {
     }

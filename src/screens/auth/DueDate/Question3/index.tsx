@@ -6,6 +6,7 @@ import {t} from 'i18next';
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {ItemQuestion} from './ItemQuestion';
+import {trackLifestyleDuringPregnancy} from '@services/webengageManager.tsx';
 
 export const Question3 = () => {
   const [indexSelected, setIndexSelected] = useState<undefined | number>();
@@ -45,6 +46,7 @@ export const Question3 = () => {
                 active={indexSelected === question.id}
                 text={question.value}
                 onPress={() => {
+                    trackLifestyleDuringPregnancy(question.value);
                   setIndexSelected(question.id);
                 }}
               />

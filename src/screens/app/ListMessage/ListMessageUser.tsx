@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {ItemUser} from './components';
+import {trackMessagesTab} from '@services/webengageManager.tsx';
 
 export const ListMessageUser = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ export const ListMessageUser = () => {
       refLoadMore.current = false;
       if (refPage.current === 1) {
         setLoading(true);
+      }
+      if (search !== '') {
+      trackMessagesTab(search,'Yes');
       }
       const res = await getListUserApi(search, refPage.current);
       dispatch(getListUserChat({page: refPage.current, data: res?.data?.data}));

@@ -70,7 +70,7 @@ public class MainApplication extends Application implements ReactApplication {
   
     RNBranchModule.getAutoInstance(this);
     WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
-              .setWebEngageKey("14507d159")
+              .setWebEngageKey("76aaaa5")
               // .setDebugMode(true) // only in development mode
               .setAutoGCMRegistrationFlag(false)
               .build();

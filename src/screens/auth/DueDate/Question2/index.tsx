@@ -6,9 +6,11 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {t} from 'i18next';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {trackTellMeMoreClicked} from '@services/webengageManager.tsx';
 
 export const Question2 = () => {
   const handlePressButton = () => {
+    trackHowDidYouHear();
     navigate(ROUTE_NAME.QUESTION3_ONBOARDING);
   };
 

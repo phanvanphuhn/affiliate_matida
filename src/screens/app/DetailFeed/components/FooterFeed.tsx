@@ -10,7 +10,7 @@ import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {DEEP_LINK, GlobalService} from '@services';
 import {colors} from '@stylesCommon';
 import {event, eventType, trackingAppEvent} from '@util';
-import React, {useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Share from 'react-native-share';
 import {
@@ -27,12 +27,14 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {trackArticleInteraction} from '@services/webengageManager.tsx';
 
 interface FooterFeedProps {
   item: IDataListFeed;
 }
 
 const FooterFeed = (props: FooterFeedProps) => {
+const [isFav, setIsFav] = useState(false);
   const {state, setState} = useVideo();
   const anim = useSharedValue(0);
   const opacityStyles = useAnimatedStyle(() => {
@@ -118,6 +120,10 @@ const FooterFeed = (props: FooterFeedProps) => {
         props.item?.contentid,
       );
       if (res.success) {
+          setIsFav(res.data?.is_favorite);
+          if(res.data?.is_favorite){
+          trackArticleInteraction(props.item?.title,true,false);
+          }
         setState({is_favorite: res.data?.is_favorite});
       }
     } catch (error: any) {}
@@ -141,7 +147,7 @@ const FooterFeed = (props: FooterFeedProps) => {
         return;
       }
       GlobalService.showLoading();
-
+      trackArticleInteraction(props.item?.title,isFav,true);
       const link = await dynamicLinks().buildShortLink(
         {
           link: `${DEEP_LINK}/feed/${props.item.content_type}/${props.item.contentid}`,
