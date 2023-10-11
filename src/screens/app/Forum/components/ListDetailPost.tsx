@@ -16,6 +16,7 @@ const ListDetailPost = (props: any) => {
         item={item}
         key={item?.id}
         index={route?.params.index}
+        mgb={scaler(16)}
       />
     );
   };

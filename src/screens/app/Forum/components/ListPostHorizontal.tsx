@@ -45,7 +45,9 @@ export const ListPostHorizontal = (props: Props) => {
             <Text style={styles.txtSeemore}>{t('home.seeMore')}</Text>
           </TouchableOpacity>
         </View>
-      ) : null}
+      ) : (
+        <View style={{marginBottom: scaler(-32)}} />
+      )}
       <FlatList
         data={data?.posts ?? [1, 1, 1, 1, 1, 1]}
         renderItem={renderItem}

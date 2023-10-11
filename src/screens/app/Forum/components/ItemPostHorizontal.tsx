@@ -19,6 +19,7 @@ const contextHeight = (129 * contextWidth) / 155;
 type Props = {
   item: any;
   index: number;
+  mgb?: number;
 };
 
 export const ItemPostHorizontal = (props: Props) => {
@@ -93,6 +94,7 @@ export const ItemPostHorizontal = (props: Props) => {
         styles.content,
         {
           backgroundColor: colorRoom[index],
+          marginBottom: props?.mgb ? props?.mgb : 0,
         },
       ]}>
       <Content />
