@@ -89,7 +89,9 @@ export const ListActivePeople = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{userOnline + ' ' + t('post.whoOnline')}</Text>
+      <Text style={[styles.text, {paddingLeft: scaler(18)}]}>
+        {userOnline + ' ' + t('post.whoOnline')}
+      </Text>
       <FlatList
         data={data}
         renderItem={renderItem}

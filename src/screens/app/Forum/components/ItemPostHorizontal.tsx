@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
     borderRadius: scaler(8),
     marginRight: scaler(16),
     backgroundColor: '#29B4AF',
-    marginBottom: scaler(16),
   },
   txtContent: {
     ...stylesCommon.fontWeight600,
