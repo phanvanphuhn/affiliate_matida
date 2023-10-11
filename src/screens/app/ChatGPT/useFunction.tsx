@@ -66,8 +66,12 @@ export const useFunction = (props: any) => {
   }, [page]);
 
   const getRecommendTida = useCallback(async () => {
-    const res = await postDailyQuestion(route?.params?.data);
-    if (res?.success) {
+    if (route?.params?.data?.length > 0) {
+      const res = await postDailyQuestion(route?.params?.data);
+      if (res?.success) {
+        getData();
+      }
+    } else {
       getData();
     }
   }, [route?.params?.data]);

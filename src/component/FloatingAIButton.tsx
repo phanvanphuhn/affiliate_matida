@@ -25,6 +25,8 @@ export const FLoatingAIButton = () => {
   const fadeAnim = React.useRef(new Animated.Value(1)).current;
 
   const fadeOut = () => {
+    setData('');
+
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 700,
@@ -55,11 +57,14 @@ export const FLoatingAIButton = () => {
 
   const onNnavigateChatAPI = () => {
     trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
-    navigation.navigate(ROUTE_NAME.CHAT_GPT, {data: data});
+    navigation.navigate(
+      ROUTE_NAME.CHAT_GPT,
+      // , {data: data}
+    );
   };
   return (
     <View style={styles.container}>
-      <Animated.View
+      {/* <Animated.View
         style={[
           styles.contentContainer,
           {
@@ -72,7 +77,7 @@ export const FLoatingAIButton = () => {
         ) : (
           <ThreeDotLoading />
         )}
-      </Animated.View>
+      </Animated.View> */}
       <TouchableOpacity
         style={styles.wrapButtonContainer}
         onPress={onNnavigateChatAPI}>
@@ -89,8 +94,9 @@ const styles = StyleSheet.create({
     bottom: scaler(15),
     zIndex: 1000,
     alignItems: 'center',
-    flex: 1,
-    width: '100%',
+    right: scaler(8),
+    // flex: 1,
+    // width: '100%',
     justifyContent: 'flex-end',
     paddingHorizontal: scaler(8),
   },
