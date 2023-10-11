@@ -150,6 +150,7 @@ const LiveTalk = () => {
         onPressNotification={navigateNotification}
         onPressMessage={navigationMessage}
         onPressLogo={handlePressLogo}
+        bgc="white"
       />
       <View style={{flex: 1}}>
         <ScrollView
