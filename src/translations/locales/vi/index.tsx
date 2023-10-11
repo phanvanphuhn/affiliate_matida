@@ -338,7 +338,7 @@ export const vi = {
     ano: 'Ẩn danh',
     me: 'Tôi',
     postedInAnonymus: 'Đăng bài ẩn danh',
-    whoOnline: 'thành viên khác khác đang online',
+    whoOnline: 'mẹ bầu khác đang online. Mẹ có muốn tâm sự không?',
   },
   podcast: {
     headerList: 'Podcasts',

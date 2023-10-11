@@ -16,12 +16,14 @@ const exampleList = new Array(10);
 
 export const ListActivePeople = () => {
   const [data, setData] = useState<any[]>([]);
+  const [userOnline, setUserOnline] = useState<String>('');
   const reload = useRef(true);
   const {t} = useTranslation();
 
   const getData = async () => {
     try {
       const res = await getListUserOnline();
+      setDebounceUserOnline(res?.data?.total ?? '');
       setDebounce(res?.data?.userOnlines ?? []);
       if (reload.current) {
         setTimeout(() => {
@@ -30,6 +32,14 @@ export const ListActivePeople = () => {
       }
     } catch (error) {}
   };
+
+  const setDebounceUserOnline = useMemo(
+    () =>
+      debounce((value: any) => {
+        setUserOnline(value);
+      }, 500),
+    [],
+  );
 
   const setDebounce = useMemo(
     () =>
@@ -79,9 +89,7 @@ export const ListActivePeople = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        {data?.length + ' ' + t('post.whoOnline')}
-      </Text>
+      <Text style={styles.text}>{userOnline + ' ' + t('post.whoOnline')}</Text>
       <FlatList
         data={data}
         renderItem={renderItem}

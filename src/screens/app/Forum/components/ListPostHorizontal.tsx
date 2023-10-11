@@ -36,14 +36,16 @@ export const ListPostHorizontal = (props: Props) => {
 
   return (
     <View>
-      <View style={styles.viewTitle}>
-        <Text style={styles.txtTitle}>
-          {lang === 2 ? data?.name_vi : data?.name_en}
-        </Text>
-        <TouchableOpacity onPress={onPressSeeMore}>
-          <Text style={styles.txtSeemore}>{t('home.seeMore')}</Text>
-        </TouchableOpacity>
-      </View>
+      {data?.posts.length > 0 ? (
+        <View style={styles.viewTitle}>
+          <Text style={styles.txtTitle}>
+            {lang === 2 ? data?.name_vi : data?.name_en}
+          </Text>
+          <TouchableOpacity onPress={onPressSeeMore}>
+            <Text style={styles.txtSeemore}>{t('home.seeMore')}</Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
       <FlatList
         data={data?.posts ?? [1, 1, 1, 1, 1, 1]}
         renderItem={renderItem}
