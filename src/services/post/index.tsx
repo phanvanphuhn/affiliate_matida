@@ -25,6 +25,7 @@ const REPORT_POST = 'reports';
 const GET_POST = 'posts';
 const GET_POST_ALL = 'posts/home';
 const GET_TOTAL_POST = 'posts/summary';
+const GET_DETAIL_LIST_POST = 'posts?label';
 
 export const getListPostApi: any = async (page: any) => {
   const response = await api.get(`${GET_LIST_POST}?page=${page}`);
@@ -147,5 +148,13 @@ export const editPostApi: any = async (id: any, data: any) => {
 
 export const reportPostApi: any = async (data: any) => {
   const response = await api.post(REPORT_POST, data);
+  return response;
+};
+
+export const getDetailListPost: any = async (params: any) => {
+  const {label, page} = params;
+  const response = await api.get(
+    `${GET_DETAIL_LIST_POST}=${label}&page=${page?.toString()}&limit=10`,
+  );
   return response;
 };
