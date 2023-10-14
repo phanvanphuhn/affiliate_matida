@@ -7,7 +7,13 @@ import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {GlobalService, createPostApi, uploadImage} from '@services';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {event, eventType, hasWhiteSpace, trackingAppEvent, useUXCam} from '@util';
+import {
+  event,
+  eventType,
+  hasWhiteSpace,
+  trackingAppEvent,
+  useUXCam,
+} from '@util';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -23,6 +29,7 @@ import {
 import FastImage from 'react-native-fast-image';
 import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import Toast from 'react-native-toast-message';
 import {useSelector} from 'react-redux';
 
 const CreateNewPost = (props: {
@@ -62,7 +69,11 @@ const CreateNewPost = (props: {
         image: imageUrlApi,
         is_anonymous: isAnonymous,
       };
-      trackingAppEvent(event.FORUM.POST_IN_FORUM, {content: body}, eventType.AFF_FLYER);
+      trackingAppEvent(
+        event.FORUM.POST_IN_FORUM,
+        {content: body},
+        eventType.AFF_FLYER,
+      );
       const res = await createPostApi(body);
       showMessage({
         message: t('post.message_success_post'),
@@ -95,6 +106,11 @@ const CreateNewPost = (props: {
       setImageUrlApi(res?.data?.url);
       GlobalService.hideLoading();
     } catch (error) {
+      Toast.show({
+        visibilityTime: 4000,
+        text1: 'Cannot upload image! Please try again',
+        position: 'top',
+      });
       GlobalService.hideLoading();
     }
   };
@@ -161,8 +177,12 @@ const CreateNewPost = (props: {
               // title="Post anonymously in forum"
               title={t('post.anonymous')}
               onPress={() => {
-                trackingAppEvent(event.FORUM.POST_ANONYMOUSLY, {}, eventType.MIX_PANEL)
-                setIsAnonymous(!isAnonymous)
+                trackingAppEvent(
+                  event.FORUM.POST_ANONYMOUSLY,
+                  {},
+                  eventType.MIX_PANEL,
+                );
+                setIsAnonymous(!isAnonymous);
               }}
             />
             {/* <Text>Post anonymously in forum</Text> */}
