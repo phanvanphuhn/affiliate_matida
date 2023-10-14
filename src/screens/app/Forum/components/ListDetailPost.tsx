@@ -22,9 +22,10 @@ const ListDetailPost = (props: any) => {
   const getData = async () => {
     GlobalService.showLoading();
     setState({loading: true});
+    const label = route?.params?.data.short_code;
     const params = {
       page: state.page?.toString(),
-      label: route?.params?.data.short_code,
+      label: label.includes('&') ? 'mind_%26_body&_body' : label,
     };
     try {
       const res = await getDetailListPost(params);
