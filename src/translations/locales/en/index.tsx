@@ -628,4 +628,7 @@ export const en = {
     desc: 'Please update the app to continue',
     update: 'Update',
   },
+  error: {
+    uploadImageFail: 'Please select a smaller size image',
+  },
 };

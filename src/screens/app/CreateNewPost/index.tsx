@@ -108,7 +108,8 @@ const CreateNewPost = (props: {
     } catch (error) {
       Toast.show({
         visibilityTime: 4000,
-        text1: 'Cannot upload image! Please try again',
+        text1: t('error.uploadImageFail'),
+        text1NumberOfLines: 2,
         position: 'top',
       });
       GlobalService.hideLoading();

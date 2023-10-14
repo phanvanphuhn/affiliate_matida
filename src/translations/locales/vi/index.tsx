@@ -632,4 +632,7 @@ export const vi = {
     desc: 'Cập nhật app ngay để trải nghiệm những tính năng tuyệt vời nhất',
     update: 'Cập nhật',
   },
+  error: {
+    uploadImageFail: 'Mẹ thử chọn ảnh có size nhỏ hơn nhé',
+  },
 };
