@@ -20,6 +20,7 @@ type Props = {
   item: any;
   index: number;
   mgb?: number;
+  isListPost?: boolean;
 };
 
 export const ItemPostHorizontal = (props: Props) => {
@@ -95,6 +96,7 @@ export const ItemPostHorizontal = (props: Props) => {
         {
           backgroundColor: colorRoom[index],
           marginBottom: props?.mgb ? props?.mgb : 0,
+          width: props?.isListPost ? itemWidth * 0.9 : itemWidth,
         },
       ]}>
       <Content />

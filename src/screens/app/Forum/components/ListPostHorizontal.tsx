@@ -23,7 +23,14 @@ export const ListPostHorizontal = (props: Props) => {
   const itemTab = listTab.find(val => val?.short_code === data?.short_code);
 
   const renderItem = ({item}: {item: any; index: number}) => {
-    return <ItemPostHorizontal item={item} key={item?.id} index={index} />;
+    return (
+      <ItemPostHorizontal
+        item={item}
+        key={item?.id}
+        index={index}
+        isListPost={true}
+      />
+    );
   };
 
   const onPressSeeMore = () => {
