@@ -13,14 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const DailyQuestionTidaAi = ({data}: any) => {
-  const navigation = useNavigation();
-
-  const onNnavigateChatAPI = () => {
-    trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
-    navigation.navigate(ROUTE_NAME.CHAT_GPT, {data: data});
-  };
-
+const DailyQuestionTidaAi = ({data, onNnavigateChatAPI}: any) => {
   return (
     <ScrollView
       contentContainerStyle={styles.container}

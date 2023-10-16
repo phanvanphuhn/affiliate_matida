@@ -2,7 +2,7 @@ import {floating_button} from '@images';
 import {BaseNavigationContainer, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
-import {event, eventType, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent, useCounter} from '@util';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -22,7 +22,7 @@ export const FLoatingAIButton = () => {
 
   const [showQuestion, setShowQuestion] = useState<boolean>(false);
   const [data, setData] = useState<String>();
-  const fadeAnim = React.useRef(new Animated.Value(1)).current;
+  const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
   const fadeOut = () => {
     setData('');
@@ -34,50 +34,68 @@ export const FLoatingAIButton = () => {
     }).start();
   };
 
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  };
+
   const getData = async () => {
     try {
       const res = await getDailyQuestion();
       if (res?.success) {
         setData(res?.data);
-        setShowQuestion(true);
       }
     } catch (error) {
       console.log('error: ', error);
     }
   };
 
-  React.useEffect(() => {
-    getData();
-
+  useEffect(() => {
     const tout = setTimeout(() => {
       clearTimeout(tout);
+      fadeIn();
+      setShowQuestion(true);
+    }, 45000);
+
+    const tout2 = setTimeout(() => {
+      clearTimeout(tout2);
       fadeOut();
-    }, 10000);
+      setShowQuestion(false);
+    }, 60000);
+  }, []);
+
+  React.useEffect(() => {
+    getData();
   }, []);
 
   const onNnavigateChatAPI = () => {
+    setData('');
+    fadeOut();
+    setShowQuestion(false);
     trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
-    navigation.navigate(
-      ROUTE_NAME.CHAT_GPT,
-      // , {data: data}
-    );
+    navigation.navigate(ROUTE_NAME.CHAT_GPT, {data: data});
   };
   return (
     <View style={styles.container}>
-      {/* <Animated.View
-        style={[
-          styles.contentContainer,
-          {
-            //Bind opacity to animated value
-            opacity: fadeAnim,
-          },
-        ]}>
-        {showQuestion ? (
-          <DailyQuestionTidaAi data={data} />
-        ) : (
-          <ThreeDotLoading />
-        )}
-      </Animated.View> */}
+      {showQuestion && (
+        <Animated.View
+          style={[
+            styles.contentContainer,
+            {
+              //Bind opacity to animated value
+              opacity: fadeAnim,
+            },
+          ]}>
+          <DailyQuestionTidaAi
+            data={data}
+            onNnavigateChatAPI={onNnavigateChatAPI}
+          />
+        </Animated.View>
+      )}
       <TouchableOpacity
         style={styles.wrapButtonContainer}
         onPress={onNnavigateChatAPI}>
@@ -92,7 +110,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     bottom: scaler(15),
-    zIndex: 1000,
     alignItems: 'center',
     right: scaler(8),
     // flex: 1,
@@ -111,6 +128,7 @@ const styles = StyleSheet.create({
     borderColor: colors.white,
     justifyContent: 'center',
     flex: 1,
+    marginLeft: scaler(16),
   },
   wrapButtonContainer: {},
   button: {

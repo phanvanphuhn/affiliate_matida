@@ -13,7 +13,11 @@ type Props = {
 };
 export const ButtonCreateTalk = ({
   onPress = () => {
-    trackingAppEvent(event.LIVE_ROOM.CLICK_CREATE_NEW_ROOM, {},eventType.AFF_FLYER);
+    trackingAppEvent(
+      event.LIVE_ROOM.CLICK_CREATE_NEW_ROOM,
+      {},
+      eventType.AFF_FLYER,
+    );
     navigate(ROUTE_NAME.CREATE_ROOM);
   },
   bottom = getBottomSpace() + scaler(16),
