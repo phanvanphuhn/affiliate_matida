@@ -85,7 +85,7 @@ export const useFunction = (props: any) => {
   }, [page, pagging]);
 
   useEffect(() => {
-    getRecommendTida();
+    getData();
   }, [page]);
 
   const handleChangeAvatar = async (response: any) => {
