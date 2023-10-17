@@ -15,19 +15,19 @@ import {
 
 const DailyQuestionTidaAi = ({data, onNnavigateChatAPI}: any) => {
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={onNnavigateChatAPI}>
-        <Text style={styles.title}>{data}</Text>
+        <Text style={styles.title} numberOfLines={2}>
+          {data}
+        </Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: scaler(4),
+    paddingVertical: scaler(6),
   },
   title: {
     color: colors.black,
