@@ -24,7 +24,7 @@ export const ButtonCreateTalk = ({
 }: Props) => {
   const {t} = useTranslation();
   return (
-    <View style={[s.container, {bottom: bottom}]}>
+    <View style={[s.container, {bottom: bottom, zIndex: 999}]}>
       <TouchableOpacity activeOpacity={1} style={s.button} onPress={onPress}>
         <SvgPlus />
         <Text style={s.text}>{t('talk.titleCreate')}</Text>

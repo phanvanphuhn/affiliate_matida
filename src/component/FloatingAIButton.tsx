@@ -47,6 +47,7 @@ export const FLoatingAIButton = () => {
       const res = await getDailyQuestion();
       if (res?.success) {
         setData(res?.data);
+        fadeIn();
       }
     } catch (error) {
       console.log('error: ', error);
@@ -57,8 +58,7 @@ export const FLoatingAIButton = () => {
     const tout = setTimeout(() => {
       clearTimeout(tout);
       getData();
-      fadeIn();
-    }, 45000);
+    }, 5000);
 
     const tout2 = setTimeout(() => {
       clearTimeout(tout2);
@@ -73,7 +73,7 @@ export const FLoatingAIButton = () => {
     navigation.navigate(ROUTE_NAME.CHAT_GPT, {data: data});
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {zIndex: data ? 999 : 0}]}>
       <Animated.View
         style={[
           styles.contentContainer,
