@@ -2,7 +2,7 @@ import {floating_button} from '@images';
 import {BaseNavigationContainer, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
-import {event, eventType, trackingAppEvent, useCounter} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -20,7 +20,6 @@ import {getDailyQuestion} from '@services';
 export const FLoatingAIButton = () => {
   const navigation = useNavigation<any>();
 
-  const [showQuestion, setShowQuestion] = useState<boolean>(false);
   const [data, setData] = useState<String>();
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
@@ -57,45 +56,37 @@ export const FLoatingAIButton = () => {
   useEffect(() => {
     const tout = setTimeout(() => {
       clearTimeout(tout);
+      getData();
       fadeIn();
-      setShowQuestion(true);
     }, 45000);
 
     const tout2 = setTimeout(() => {
       clearTimeout(tout2);
       fadeOut();
-      setShowQuestion(false);
     }, 60000);
-  }, []);
-
-  React.useEffect(() => {
-    getData();
   }, []);
 
   const onNnavigateChatAPI = () => {
     setData('');
     fadeOut();
-    setShowQuestion(false);
     trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
     navigation.navigate(ROUTE_NAME.CHAT_GPT, {data: data});
   };
   return (
     <View style={styles.container}>
-      {showQuestion && (
-        <Animated.View
-          style={[
-            styles.contentContainer,
-            {
-              //Bind opacity to animated value
-              opacity: fadeAnim,
-            },
-          ]}>
-          <DailyQuestionTidaAi
-            data={data}
-            onNnavigateChatAPI={onNnavigateChatAPI}
-          />
-        </Animated.View>
-      )}
+      <Animated.View
+        style={[
+          styles.contentContainer,
+          {
+            //Bind opacity to animated value
+            opacity: fadeAnim,
+          },
+        ]}>
+        <DailyQuestionTidaAi
+          data={data}
+          onNnavigateChatAPI={onNnavigateChatAPI}
+        />
+      </Animated.View>
       <TouchableOpacity
         style={styles.wrapButtonContainer}
         onPress={onNnavigateChatAPI}>
