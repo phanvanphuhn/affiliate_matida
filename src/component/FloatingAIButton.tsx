@@ -58,7 +58,7 @@ export const FLoatingAIButton = () => {
     const tout = setTimeout(() => {
       clearTimeout(tout);
       getData();
-    }, 5000);
+    }, 45000);
 
     const tout2 = setTimeout(() => {
       clearTimeout(tout2);
