@@ -63,7 +63,7 @@ export const FLoatingAIButton = () => {
     const tout2 = setTimeout(() => {
       clearTimeout(tout2);
       fadeOut();
-    }, 60000);
+    }, 75000);
   }, []);
 
   const onNnavigateChatAPI = () => {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: scaler(15),
+    bottom: scaler(50),
     alignItems: 'center',
     right: scaler(8),
     // flex: 1,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'row',
-    backgroundColor: colors.brandMainPinkRed,
+    backgroundColor: colors.pink150,
     borderRadius: scaler(20),
     height: scaler(60),
     alignItems: 'center',

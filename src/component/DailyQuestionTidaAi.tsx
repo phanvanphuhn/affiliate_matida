@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     paddingVertical: scaler(4),
   },
   title: {
-    color: colors.white,
+    color: colors.black,
     fontSize: scaler(14),
     fontWeight: '400',
   },
