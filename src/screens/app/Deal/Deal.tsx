@@ -90,7 +90,7 @@ const Deal = () => {
         onPressLogo={handlePressLogo}
         bgc="white"
       />
-      <View style={{flex: 1}}>
+      <View style={styles.wrapContainer}>
         <ListDeal data={mockData} />
       </View>
     </View>
@@ -100,7 +100,13 @@ const Deal = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+  },
+  wrapContainer: {
+    flex: 1,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
+    backgroundColor: colors.gray,
   },
 });
 
