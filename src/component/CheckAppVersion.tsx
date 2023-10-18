@@ -107,6 +107,8 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
   }, []);
 
   const onUpdate = async () => {
+          setIsVisible(false);
+          return;
     try {
       let packageName = 'com.growth.levers.matida';
       let id = '1671957732';
@@ -117,7 +119,7 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
           : `https://apps.apple.com/vn/app/matida-app-theo-d%C3%B5i-thai-k%E1%BB%B3/id${id}?l=vi`;
       let response = await Linking.canOpenURL(url);
       if (response) {
-        Linking.openURL(url);
+//         Linking.openURL(url);
         setIsVisible(false);
       }
     } catch (err) {}
@@ -129,7 +131,7 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
       hideModalContentWhileAnimating
       backdropTransitionOutTiming={0}
       backdropOpacity={0.7}
-      // onBackdropPress={() => setIsVisible(false)}
+      onBackdropPress={() => setIsVisible(false)}
       isVisible={isVisible}>
       <View style={styles.viewContent}>
         <Text

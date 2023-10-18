@@ -67,10 +67,10 @@ public class MainApplication extends Application implements ReactApplication {
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
     RNBranchModule.enableLogging();
-  
+
     RNBranchModule.getAutoInstance(this);
     WebEngageConfig webEngageConfig = new WebEngageConfig.Builder()
-              .setWebEngageKey("76aaaa5")
+              .setWebEngageKey("58add5d1")
               // .setDebugMode(true) // only in development mode
               .setAutoGCMRegistrationFlag(false)
               .build();

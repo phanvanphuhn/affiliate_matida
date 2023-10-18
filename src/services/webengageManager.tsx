@@ -81,16 +81,6 @@ export const trackArticleInteraction = (articleTitle, articleSaved, clickedOnSha
   webengage.track('Article Interaction', eventDetails);
 };
 
-/* export const trackQuizChallengeClicked = (test, testQuestion, testAnswerClicked, questionNumber) => {
-  const eventDetails = {
-    'Quiz Challenge Clicked': true,
-    'Test Clicked': test,
-    'Test Question': testQuestion,
-    'Test Answer Clicked': testAnswerClicked,
-    'Question Number': questionNumber,
-  };
-  webengage.track('Quiz Challenge Clicked', eventDetails);
-}; */
 export const trackQuizChallengeClicked = (testAnswerClicked, questionNumber) => {
   const eventDetails = {
     'Test Answer Clicked': testAnswerClicked,
@@ -141,11 +131,9 @@ export const trackRecordedLivestream = (title) => {
   webengage.track('Recorded Livestream', eventDetails);
 };
 
-// export const trackExpertWorkshop = (name, slotsLeft, schedule) => {
 export const trackExpertWorkshop = (name, schedule) => {
   const eventDetails = {
     'Name': name,
-//     'Slots Left': slotsLeft,
     'Schedule': schedule.toString(),
   };
   webengage.track('Expert Workshop', eventDetails);
@@ -154,7 +142,6 @@ export const trackExpertWorkshop = (name, schedule) => {
 export const trackMomsTalk = (title) => {
   const eventDetails = {
     'Title': title,
-//     'Slots Left': slotsLeft,
   };
   webengage.track("Mom's Talk", eventDetails);
 };
