@@ -76,6 +76,7 @@ export const event = {
     CREATE_NEW_POST_PAGE: 'post_create_new_post_page',
     POST_IN_FORUM: 'post_in_forum',
     POST_ANONYMOUSLY: 'post_click_post_anonymously',
+    CLICK_SEE_MORE: 'forum_click_see_more_',
   },
   TIDA: {
     TIDA_OPEN: 'tida_open',

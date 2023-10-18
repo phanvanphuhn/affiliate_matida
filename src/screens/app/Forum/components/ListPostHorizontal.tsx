@@ -8,6 +8,7 @@ import {RootState} from 'src/redux/rootReducer';
 import {ItemPostHorizontal} from './ItemPostHorizontal';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
+import {event, eventType, trackingAppEvent} from '@util';
 
 type Props = {
   data: any;
@@ -38,6 +39,11 @@ export const ListPostHorizontal = (props: Props) => {
       data: data,
       index: index,
     };
+    trackingAppEvent(
+      event.FORUM.CLICK_SEE_MORE,
+      {data: data.short_code},
+      eventType.MIX_PANEL,
+    );
     navigate(ROUTE_NAME.LIST_DETAIL_POST, params);
   };
 
