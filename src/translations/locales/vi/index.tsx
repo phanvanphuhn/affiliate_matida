@@ -218,6 +218,7 @@ export const vi = {
     liveTalks: 'Trò chuyện',
     home: 'Theo dõi thai kỳ',
     community: 'Forum',
+    deal: 'Deals',
   },
   popularArticles: 'Đọc nhiều hơn',
   seeMore: 'Xem thêm',

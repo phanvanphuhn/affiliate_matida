@@ -214,6 +214,7 @@ export const en = {
     liveTalks: 'Live Talks',
     home: 'Pregnancy tracker',
     community: 'Community',
+    deal: 'Deals',
   },
   popularArticles: 'More to read',
   seeMore: 'See more',
