@@ -1,4 +1,4 @@
-import {AppImage} from '@component';
+import {AppImage, AppTextUrl} from '@component';
 import {icon_PostForum, TidaAIWhite} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
@@ -97,7 +97,7 @@ const ItemMessage = React.memo((props: any) => {
                 <>
                   {text?.length > 0 ? (
                     <View style={styles.viewMessage}>
-                      <Text style={styles.txtMsg}>{text}</Text>
+                      <AppTextUrl style={styles.txtMsg}>{text}</AppTextUrl>
                     </View>
                   ) : (
                     <>
