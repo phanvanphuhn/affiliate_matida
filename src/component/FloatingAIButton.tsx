@@ -58,11 +58,11 @@ export const FLoatingAIButton = () => {
     const tout = setTimeout(() => {
       clearTimeout(tout);
       getData();
-    }, 45000);
+    }, 1000);
 
     const tout2 = setTimeout(() => {
       clearTimeout(tout2);
-      fadeOut();
+      // fadeOut();
     }, 75000);
   }, []);
 
@@ -72,21 +72,34 @@ export const FLoatingAIButton = () => {
     trackingAppEvent(event.TIDA.TIDA_OPEN, {}, eventType.MIX_PANEL);
     navigation.navigate(ROUTE_NAME.CHAT_GPT, {data: data});
   };
+
+  const onCloseTidaQuestion = () => {
+    setData('');
+    fadeOut();
+  };
+
   return (
     <View style={[styles.container, {zIndex: data ? 999 : 0}]}>
-      <Animated.View
-        style={[
-          styles.contentContainer,
-          {
-            //Bind opacity to animated value
-            opacity: fadeAnim,
-          },
-        ]}>
-        <DailyQuestionTidaAi
-          data={data}
-          onNnavigateChatAPI={onNnavigateChatAPI}
-        />
-      </Animated.View>
+      {data && (
+        <Animated.View
+          style={[
+            styles.contentContainer,
+            {
+              //Bind opacity to animated value
+              opacity: fadeAnim,
+            },
+          ]}>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={onCloseTidaQuestion}>
+            <Text style={styles.buttonText}>x</Text>
+          </TouchableOpacity>
+          <DailyQuestionTidaAi
+            data={data}
+            onNnavigateChatAPI={onNnavigateChatAPI}
+          />
+        </Animated.View>
+      )}
       <TouchableOpacity
         style={styles.wrapButtonContainer}
         onPress={onNnavigateChatAPI}>
@@ -120,6 +133,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     marginLeft: scaler(16),
+  },
+  buttonContainer: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    backgroundColor: colors.pink150,
+    height: 24,
+    width: 24,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 14,
+    fontWeight: '400',
   },
   wrapButtonContainer: {},
   button: {
