@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {colors} from '@stylesCommon';
+import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {
   View,
@@ -29,14 +29,37 @@ const ListDeal = (props: TPros[]) => {
       navigation.navigate(ROUTE_NAME.DETAIL_DEAL, {data: item});
     };
 
+    let imageUrl;
+
+    switch (item.author) {
+      case 'Vinaquick':
+        imageUrl = require('../../../../images/image/vinaQuick.jpeg');
+        break;
+      case 'Happy Parent':
+        imageUrl = require('../../../../images/image/happyParenting.jpeg');
+        break;
+      case 'Spa Vuông Tròn':
+        imageUrl = require('../../../../images/image/happyParenting.jpeg');
+        break;
+      case 'Piny Studio':
+        imageUrl = require('../../../../images/image/pinyStudio.jpg');
+        break;
+      case 'The Idyl':
+        imageUrl = require('../../../../images/image/idyl.jpeg');
+        break;
+      default:
+        imageUrl = {
+          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrVSkmNOQ6abMCc5e6R2r7VwRZDkBHFTyzAg&usqp=CAU',
+        };
+        break;
+    }
+
     return (
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={onNavigateToDetailDeal}>
         <Image
-          source={{
-            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrVSkmNOQ6abMCc5e6R2r7VwRZDkBHFTyzAg&usqp=CAU',
-          }}
+          source={imageUrl}
           style={{
             width: '100%',
             height: 220,
@@ -45,7 +68,9 @@ const ListDeal = (props: TPros[]) => {
           }}
         />
         <View style={styles.bottomItemContainer}>
-          <Text numberOfLines={2}>{item.title}</Text>
+          <Text numberOfLines={2} style={{fontSize: 12}}>
+            {item.title}
+          </Text>
 
           <View style={styles.wrapBottomItemContainer}>
             <Image
@@ -58,11 +83,15 @@ const ListDeal = (props: TPros[]) => {
                 borderRadius: 99,
               }}
             />
-
-            <Text style={{color: colors.textSmallColor}}>
-              {` by`}{' '}
-              <Text style={{color: colors.success_message}}>{item.author}</Text>
-            </Text>
+            <View style={{justifyContent: 'center'}}>
+              <Text
+                style={{color: colors.textSmallColor, fontSize: scaler(10)}}>
+                {` by`}{' '}
+                <Text style={{color: colors.success_message}}>
+                  {item.author}
+                </Text>
+              </Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
