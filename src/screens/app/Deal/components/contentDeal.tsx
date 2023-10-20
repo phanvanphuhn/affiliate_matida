@@ -1,15 +1,33 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {heightFullScreen} from '../../DetailFeed/useDetailFeed';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {colors, scaler} from '@stylesCommon';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {showMessage} from 'react-native-flash-message';
+import {useTranslation} from 'react-i18next';
 
 const ContentDeal = props => {
   const {data} = props;
+  const {t} = useTranslation();
 
-  const onPressGetDeal = () => {};
+  const onPressGetDeal = () => {
+    Clipboard.setString('123');
+    showMessage({
+      message: t('articles.successShare'),
+      type: 'default',
+      backgroundColor: colors.success_message,
+      color: '#FFFFFF',
+    });
+  };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>{data.title}</Text>
       <View style={styles.wrapSubTitle}>
         <Image
@@ -17,13 +35,14 @@ const ContentDeal = props => {
             uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrVSkmNOQ6abMCc5e6R2r7VwRZDkBHFTyzAg&usqp=CAU',
           }}
           style={{
-            width: 16,
-            height: 16,
+            width: scaler(16),
+            height: scaler(16),
             borderRadius: 99,
+            marginRight: scaler(4),
           }}
         />
         <Text style={{color: colors.textSmallColor}}>
-          {` by`}{' '}
+          {t('deal.by')}{' '}
           <Text style={{color: colors.success_message}}>{data.author}</Text>
         </Text>
       </View>
@@ -38,29 +57,27 @@ const ContentDeal = props => {
         laborum dicta. Quis, consequuntur. Eaque error neque, facere
         reprehenderit ullam dolores iusto repudiandae!
       </Text>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    bottom: 70,
-    maxHeight: heightFullScreen,
-    justifyContent: 'flex-end',
-    zIndex: 9999,
+    flex: 1,
     paddingLeft: scaler(16),
     paddingRight: scaler(16),
   },
   title: {
-    color: colors.white,
+    color: colors.black,
     fontSize: 18,
     fontWeight: '700',
+    marginTop: scaler(16),
   },
   wrapSubTitle: {
     flexDirection: 'row',
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: scaler(4),
+    paddingBottom: scaler(4),
+    marginTop: scaler(16),
   },
   wrapButtonContainer: {
     width: scaler(98),
@@ -69,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: scaler(8),
-    marginTop: scaler(4),
+    marginTop: scaler(8),
     marginBottom: scaler(4),
   },
   buttonTitle: {
@@ -79,7 +96,8 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: scaler(14),
-    color: colors.white,
+    color: colors.black,
+    marginTop: scaler(8),
   },
 });
 

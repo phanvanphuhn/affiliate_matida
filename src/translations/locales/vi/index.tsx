@@ -636,4 +636,7 @@ export const vi = {
   error: {
     uploadImageFail: 'Mẹ thử chọn ảnh có size nhỏ hơn nhé',
   },
+  deal: {
+    by: 'bởi',
+  },
 };

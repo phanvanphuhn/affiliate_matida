@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   View,
   Text,
@@ -23,6 +24,7 @@ type TPros = {
 const ListDeal = (props: TPros[]) => {
   const {data} = props;
   const navigation = useNavigation();
+  const {t} = useTranslation();
 
   const renderItem = ({item, index}: any) => {
     const onNavigateToDetailDeal = () => {
@@ -62,9 +64,9 @@ const ListDeal = (props: TPros[]) => {
           source={imageUrl}
           style={{
             width: '100%',
-            height: 220,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
+            height: scaler(220),
+            borderTopLeftRadius: scaler(16),
+            borderTopRightRadius: scaler(16),
           }}
         />
         <View style={styles.bottomItemContainer}>
@@ -78,15 +80,16 @@ const ListDeal = (props: TPros[]) => {
                 uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrVSkmNOQ6abMCc5e6R2r7VwRZDkBHFTyzAg&usqp=CAU',
               }}
               style={{
-                width: 16,
-                height: 16,
+                width: scaler(16),
+                height: scaler(16),
                 borderRadius: 99,
+                marginRight: scaler(4),
               }}
             />
             <View style={{justifyContent: 'center'}}>
               <Text
                 style={{color: colors.textSmallColor, fontSize: scaler(10)}}>
-                {` by`}{' '}
+                {t('deal.by')}{' '}
                 <Text style={{color: colors.success_message}}>
                   {item.author}
                 </Text>
@@ -112,10 +115,10 @@ const ListDeal = (props: TPros[]) => {
 const styles = StyleSheet.create({
   itemContainer: {
     width: '47%',
-    marginBottom: 16,
-    marginRight: 16,
-    height: 290,
-    borderRadius: 16,
+    marginBottom: scaler(16),
+    marginRight: scaler(16),
+    height: scaler(290),
+    borderRadius: scaler(16),
     backgroundColor: colors.white,
   },
   bottomItemContainer: {

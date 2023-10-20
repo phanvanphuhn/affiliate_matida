@@ -28,14 +28,14 @@ const DetailDeal = props => {
         fastImage={true}
         style={styles.fullScreen}
       />
-      <LinearGradient
+      {/* <LinearGradient
         colors={['#00000000', '#00000090']}
         style={{
           height: '100%',
           width: '100%',
           position: 'absolute',
         }}
-      />
+      /> */}
       <ContentDeal data={route?.params?.data} />
     </View>
   );
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   container: {},
   fullScreen: {
     width: widthFullScreen,
-    height: heightFullScreen,
+    height: heightFullScreen / 2.5,
   },
   floatingContainer: {
     position: 'absolute',

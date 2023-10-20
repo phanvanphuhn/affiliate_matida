@@ -632,4 +632,7 @@ export const en = {
   error: {
     uploadImageFail: 'Please select a smaller size image',
   },
+  deal: {
+    by: 'bởi',
+  },
 };
