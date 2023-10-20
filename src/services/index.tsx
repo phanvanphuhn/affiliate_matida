@@ -16,3 +16,4 @@ export * from './masterClass';
 export * from './pay';
 export * from './forum';
 export * from './feed';
+export * from './deal';

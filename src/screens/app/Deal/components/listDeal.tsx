@@ -11,6 +11,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 type TPros = {
   id: number;
@@ -21,8 +22,9 @@ type TPros = {
   data: Object;
 };
 
-const ListDeal = (props: TPros[]) => {
+const ListDeal = (props: any) => {
   const {data} = props;
+  const lang = useSelector((state: any) => state?.auth?.lang);
   const navigation = useNavigation();
   const {t} = useTranslation();
 
@@ -31,37 +33,14 @@ const ListDeal = (props: TPros[]) => {
       navigation.navigate(ROUTE_NAME.DETAIL_DEAL, {data: item});
     };
 
-    let imageUrl;
-
-    switch (item.author) {
-      case 'Vinaquick':
-        imageUrl = require('../../../../images/image/vinaQuick.jpeg');
-        break;
-      case 'Happy Parent':
-        imageUrl = require('../../../../images/image/happyParenting.jpeg');
-        break;
-      case 'Spa Vuông Tròn':
-        imageUrl = require('../../../../images/image/happyParenting.jpeg');
-        break;
-      case 'Piny Studio':
-        imageUrl = require('../../../../images/image/pinyStudio.jpg');
-        break;
-      case 'The Idyl':
-        imageUrl = require('../../../../images/image/idyl.jpeg');
-        break;
-      default:
-        imageUrl = {
-          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrVSkmNOQ6abMCc5e6R2r7VwRZDkBHFTyzAg&usqp=CAU',
-        };
-        break;
-    }
-
     return (
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={onNavigateToDetailDeal}>
         <Image
-          source={imageUrl}
+          source={{
+            uri: item.thumbnails['3x4'],
+          }}
           style={{
             width: '100%',
             height: scaler(220),
@@ -71,13 +50,13 @@ const ListDeal = (props: TPros[]) => {
         />
         <View style={styles.bottomItemContainer}>
           <Text numberOfLines={2} style={{fontSize: 12}}>
-            {item.title}
+            {lang == 2 ? item.name_vi : item.name_en}
           </Text>
 
           <View style={styles.wrapBottomItemContainer}>
             <Image
               source={{
-                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrVSkmNOQ6abMCc5e6R2r7VwRZDkBHFTyzAg&usqp=CAU',
+                uri: item.provider.avatar,
               }}
               style={{
                 width: scaler(16),
@@ -91,7 +70,7 @@ const ListDeal = (props: TPros[]) => {
                 style={{color: colors.textSmallColor, fontSize: scaler(10)}}>
                 {t('deal.by')}{' '}
                 <Text style={{color: colors.success_message}}>
-                  {item.author}
+                  {item.provider.name}
                 </Text>
               </Text>
             </View>
@@ -120,6 +99,15 @@ const styles = StyleSheet.create({
     height: scaler(290),
     borderRadius: scaler(16),
     backgroundColor: colors.white,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   bottomItemContainer: {
     flex: 1,

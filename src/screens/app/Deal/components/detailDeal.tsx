@@ -11,20 +11,21 @@ import {
 import {ic_back} from '@images';
 import HeaderFeed from '@component/HeaderFeed';
 import ContentDeal from './contentDeal';
+import {colors} from '@stylesCommon';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-const DetailDeal = props => {
+const DetailDeal = (props: any) => {
   const {route} = props;
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={styles.container}>
       <HeaderFeed
         IconLeft={<Image source={ic_back} style={styles.iconHeader} />}
       />
       <LazyImage
         source={{
-          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrVSkmNOQ6abMCc5e6R2r7VwRZDkBHFTyzAg&usqp=CAU',
+          uri: route?.params.data.thumbnails['6x4'],
         }}
-        resizeMode={'cover'}
         fastImage={true}
         style={styles.fullScreen}
       />
@@ -37,17 +38,20 @@ const DetailDeal = props => {
         }}
       /> */}
       <ContentDeal data={route?.params?.data} />
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default React.memo(DetailDeal);
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+  },
   fullScreen: {
     width: widthFullScreen,
-    height: heightFullScreen / 2.5,
+    height: heightFullScreen / 5,
   },
   floatingContainer: {
     position: 'absolute',
