@@ -214,6 +214,7 @@ export const en = {
     liveTalks: 'Live Talks',
     home: 'Pregnancy tracker',
     community: 'Community',
+    deal: 'Deals',
   },
   popularArticles: 'More to read',
   seeMore: 'See more',
@@ -630,5 +631,12 @@ export const en = {
   },
   error: {
     uploadImageFail: 'Please select a smaller size image',
+  },
+  deal: {
+    by: 'by',
+    getDeal: 'Get Deal',
+    copyCode: 'Copy code & go to website',
+    cancel: 'Cancel',
+    dealCode: 'Deal code',
   },
 };

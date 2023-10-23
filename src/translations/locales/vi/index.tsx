@@ -216,8 +216,9 @@ export const vi = {
     explore: 'Khám phá',
     feed: 'Khám phá',
     liveTalks: 'Trò chuyện',
-    home: 'Theo dõi thai kỳ',
+    home: 'Theo dõi',
     community: 'Forum',
+    deal: 'Ưu đãi',
   },
   popularArticles: 'Đọc nhiều hơn',
   seeMore: 'Xem thêm',
@@ -634,5 +635,12 @@ export const vi = {
   },
   error: {
     uploadImageFail: 'Mẹ thử chọn ảnh có size nhỏ hơn nhé',
+  },
+  deal: {
+    by: 'bởi',
+    getDeal: 'Thu thập',
+    copyCode: 'Sao chép mã và sử dụng',
+    cancel: 'Huỷ',
+    dealCode: 'Deal code',
   },
 };

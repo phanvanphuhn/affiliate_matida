@@ -310,6 +310,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.LIST_DETAIL_POST}
             component={screens.ListDetailPost}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.DETAIL_DEAL}
+            component={screens.DetailDeal}
+          />
         </Stack.Navigator>
       );
     } else {

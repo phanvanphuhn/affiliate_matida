@@ -1,5 +1,6 @@
 import {
   iconCommunity,
+  iconTabDeal,
   iconTabExplore,
   iconTabFeed,
   iconTabHome,
@@ -21,6 +22,7 @@ import {ROUTE_NAME} from '../navigation/routeName';
 // import {t} from 'i18next';
 import {
   changePageExplore,
+  focusDealTab,
   focusExploreTab,
   focusFeedTab,
   focusHomeTab,
@@ -58,6 +60,8 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         return t('bottomTab.home');
       case ROUTE_NAME.TAB_COMMUNITY:
         return t('bottomTab.community');
+      case ROUTE_NAME.TAB_DEAL:
+        return t('bottomTab.deal');
       case ROUTE_NAME.TAB_LIVETALK:
         return t('bottomTab.liveTalks');
     }
@@ -74,25 +78,38 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         return iconCommunity;
       case ROUTE_NAME.TAB_LIVETALK:
         return iconTabLiveTalk;
+      case ROUTE_NAME.TAB_DEAL:
+        return iconTabDeal;
     }
   };
 
   const trackingTab = (value: any) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
-        trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.AFF_FLYER);
+        trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_FEED:
-        trackingAppEvent(event.TAB.CLICK_TAB_FEED, {},eventType.AFF_FLYER);
+        trackingAppEvent(event.TAB.CLICK_TAB_FEED, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_HOME:
-        trackingAppEvent(event.TAB.CLICK_TAB_HOME, {},eventType.AFF_FLYER);
+        trackingAppEvent(event.TAB.CLICK_TAB_HOME, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_COMMUNITY:
-        trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {},eventType.AFF_FLYER);
+        trackingAppEvent(
+          event.TAB.CLICK_TAB_COMMUNITY,
+          {},
+          eventType.MIX_PANEL,
+        );
         break;
       case ROUTE_NAME.TAB_LIVETALK:
-        trackingAppEvent(event.TAB.CLICK_TAB_LIVE_TALKS, {},eventType.AFF_FLYER);
+        trackingAppEvent(
+          event.TAB.CLICK_TAB_LIVE_TALKS,
+          {},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case ROUTE_NAME.TAB_DEAL:
+        trackingAppEvent(event.TAB.CLICK_TAB_DEAL, {}, eventType.MIX_PANEL);
         break;
     }
   };
@@ -137,6 +154,9 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
                 break;
               case ROUTE_NAME.TAB_FEED:
                 dispatch(focusFeedTab());
+                break;
+              case ROUTE_NAME.TAB_DEAL:
+                dispatch(focusDealTab());
                 break;
               default:
                 return;
