@@ -137,4 +137,10 @@ export const event = {
     FEED_FINISH_QUIZ: 'feed_finish_quiz',
     FEED_DO_MOMTEST: 'feed_do_momtest',
   },
+  DEAL: {
+    CLICK_DEAL: 'click_deal',
+    CLICK_BUTTON_GET_DEAL: 'click_button_get_deal',
+    CLICK_BUTTON_COPY_CODE: 'click_button_copy_code',
+    CLICK_BUTTON_CANCEL: 'click_button_cancel',
+  },
 };

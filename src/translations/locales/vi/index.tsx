@@ -216,9 +216,9 @@ export const vi = {
     explore: 'Khám phá',
     feed: 'Khám phá',
     liveTalks: 'Trò chuyện',
-    home: 'Theo dõi thai kỳ',
+    home: 'Theo dõi',
     community: 'Forum',
-    deal: 'Deals',
+    deal: 'Ưu đãi',
   },
   popularArticles: 'Đọc nhiều hơn',
   seeMore: 'Xem thêm',
@@ -638,5 +638,9 @@ export const vi = {
   },
   deal: {
     by: 'bởi',
+    getDeal: 'Thu thập',
+    copyCode: 'Sao chép mã và sử dụng',
+    cancel: 'Huỷ',
+    dealCode: 'Deal code',
   },
 };

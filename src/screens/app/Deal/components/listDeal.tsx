@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
+import {event, eventType, trackingAppEvent} from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -30,6 +31,11 @@ const ListDeal = (props: any) => {
 
   const renderItem = ({item, index}: any) => {
     const onNavigateToDetailDeal = () => {
+      trackingAppEvent(
+        event.DEAL.CLICK_DEAL,
+        {params: item.code},
+        eventType.MIX_PANEL,
+      );
       navigation.navigate(ROUTE_NAME.DETAIL_DEAL, {data: item});
     };
 

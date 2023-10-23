@@ -19,6 +19,7 @@ import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {useSelector} from 'react-redux';
 import ModalGetDeal from './modalGetDeal';
 import CustomImageRenderer from '../../DetailFeed/components/CustomImageRenderer';
+import {event, eventType, trackingAppEvent} from '@util';
 
 const ContentDeal = (props: any) => {
   const {data} = props;
@@ -29,10 +30,29 @@ const ContentDeal = (props: any) => {
 
   const onShowModal = () => {
     setIsShowModal(true);
+    trackingAppEvent(
+      event.DEAL.CLICK_BUTTON_GET_DEAL,
+      {params: data?.code},
+      eventType.MIX_PANEL,
+    );
+  };
+
+  const onCloseModal = () => {
+    setIsShowModal(false);
+    trackingAppEvent(
+      event.DEAL.CLICK_BUTTON_CANCEL,
+      {params: data?.code},
+      eventType.MIX_PANEL,
+    );
   };
 
   const onPressGetDeal = () => {
     setIsShowModal(false);
+    trackingAppEvent(
+      event.DEAL.CLICK_BUTTON_COPY_CODE,
+      {params: data?.code},
+      eventType.MIX_PANEL,
+    );
     Clipboard.setString(data?.code);
     Linking.openURL(data?.link);
     showMessage({
@@ -70,7 +90,7 @@ const ContentDeal = (props: any) => {
       <TouchableOpacity
         style={styles.wrapButtonContainer}
         onPress={onShowModal}>
-        <Text style={styles.buttonTitle}>Get deal</Text>
+        <Text style={styles.buttonTitle}>{t('deal.getDeal')}</Text>
       </TouchableOpacity>
       <ScrollView
         style={{maxHeight: '100%', marginBottom: 16}}
@@ -97,7 +117,7 @@ const ContentDeal = (props: any) => {
         </TouchableWithoutFeedback>
       </ScrollView>
       <ModalGetDeal
-        onCancel={() => setIsShowModal(false)}
+        onCancel={onCloseModal}
         onConfirm={onPressGetDeal}
         visible={isShowModal}
         dealCode={data?.code}

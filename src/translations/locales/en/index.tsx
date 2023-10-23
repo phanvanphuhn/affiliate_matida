@@ -633,6 +633,10 @@ export const en = {
     uploadImageFail: 'Please select a smaller size image',
   },
   deal: {
-    by: 'bởi',
+    by: 'by',
+    getDeal: 'Get Deal',
+    copyCode: 'Copy code & go to website',
+    cancel: 'Cancel',
+    dealCode: 'Deal code',
   },
 };

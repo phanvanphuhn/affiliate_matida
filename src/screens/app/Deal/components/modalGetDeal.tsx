@@ -1,9 +1,11 @@
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
+import {useTranslation} from 'react-i18next';
 
 const ModalGetDeal = (props: any) => {
   const {visible, onCancel, onConfirm, dealCode} = props;
+  const {t} = useTranslation();
 
   const closeModal = () => {
     onCancel();
@@ -23,21 +25,19 @@ const ModalGetDeal = (props: any) => {
           onStartShouldSetResponder={closeModal}
         />
         <View style={styles.container}>
-          <Text style={styles.title}>Deal Code</Text>
+          <Text style={styles.title}>{t('deal.dealCode')}</Text>
           <View style={styles.wrapDesc}>
             <Text style={styles.desc}>{dealCode}</Text>
           </View>
           <TouchableOpacity
             style={styles.wrapConfirmButton}
             onPress={onConfirm}>
-            <Text style={styles.confirmButtonTitle}>
-              Copy code & go to website
-            </Text>
+            <Text style={styles.confirmButtonTitle}>{t('deal.copyCode')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.wrapCancelButton}
             onPress={closeModal}>
-            <Text style={styles.cancelButtonTitle}>Cancel</Text>
+            <Text style={styles.cancelButtonTitle}>{t('deal.cancel')}</Text>
           </TouchableOpacity>
         </View>
       </View>
