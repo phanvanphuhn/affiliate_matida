@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Modal,
+  Linking,
 } from 'react-native';
 import {colors, scaler} from '@stylesCommon';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -17,10 +18,10 @@ import RenderHtml from 'react-native-render-html';
 import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {useSelector} from 'react-redux';
 import ModalGetDeal from './modalGetDeal';
+import CustomImageRenderer from '../../DetailFeed/components/CustomImageRenderer';
 
 const ContentDeal = (props: any) => {
   const {data} = props;
-
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
 
@@ -33,6 +34,7 @@ const ContentDeal = (props: any) => {
   const onPressGetDeal = () => {
     setIsShowModal(false);
     Clipboard.setString(data?.code);
+    Linking.openURL(data?.link);
     showMessage({
       message: t('articles.successShare'),
       type: 'default',
@@ -79,10 +81,9 @@ const ContentDeal = (props: any) => {
           <View>
             <RenderHtml
               contentWidth={100}
-              // renderers={{
-              //   img: CustomImageRenderer,
-              // }}
-              // renderersProps={renderersProps}
+              renderers={{
+                img: CustomImageRenderer,
+              }}
               source={{
                 html: `<div>${data?.content_vi}</div>`,
               }}
@@ -90,16 +91,6 @@ const ContentDeal = (props: any) => {
               enableExperimentalMarginCollapsing={true}
               enableExperimentalBRCollapsing={true}
               enableExperimentalGhostLinesPrevention={true}
-              defaultTextProps={
-                {
-                  // numberOfLines: textShown ? undefined : 4,
-                  // onTextLayout: onTextLayout,
-                  // style: {
-                  //   ...styles.description,
-                  //   color: textShown ? colors.textColor : colors.white,
-                  // },
-                }
-              }
               tagsStyles={{...tagsStyles}}
             />
           </View>
