@@ -26,6 +26,7 @@ type TPros = {
 const ListDeal = (props: any) => {
   const {data} = props;
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
   const navigation = useNavigation();
   const {t} = useTranslation();
 
@@ -33,7 +34,14 @@ const ListDeal = (props: any) => {
     const onNavigateToDetailDeal = () => {
       trackingAppEvent(
         event.DEAL.CLICK_DEAL,
-        {params: item.code},
+        {
+          params: {
+            userId: user.id,
+            dealName: item.name_vi,
+            dealCode: item.code,
+            providerName: item.provider.name,
+          },
+        },
         eventType.MIX_PANEL,
       );
       navigation.navigate(ROUTE_NAME.DETAIL_DEAL, {data: item});

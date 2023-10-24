@@ -25,6 +25,7 @@ const ContentDeal = (props: any) => {
   const {data} = props;
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
 
@@ -32,7 +33,14 @@ const ContentDeal = (props: any) => {
     setIsShowModal(true);
     trackingAppEvent(
       event.DEAL.CLICK_BUTTON_GET_DEAL,
-      {params: data?.code},
+      {
+        params: {
+          userId: user.id,
+          dealName: data.name_vi,
+          dealCode: data.code,
+          providerName: data.provider.name,
+        },
+      },
       eventType.MIX_PANEL,
     );
   };
@@ -41,7 +49,14 @@ const ContentDeal = (props: any) => {
     setIsShowModal(false);
     trackingAppEvent(
       event.DEAL.CLICK_BUTTON_CANCEL,
-      {params: data?.code},
+      {
+        params: {
+          userId: user.id,
+          dealName: data.name_vi,
+          dealCode: data.code,
+          providerName: data.provider.name,
+        },
+      },
       eventType.MIX_PANEL,
     );
   };
@@ -50,7 +65,14 @@ const ContentDeal = (props: any) => {
     setIsShowModal(false);
     trackingAppEvent(
       event.DEAL.CLICK_BUTTON_COPY_CODE,
-      {params: data?.code},
+      {
+        params: {
+          userId: user.id,
+          dealName: data.name_vi,
+          dealCode: data.code,
+          providerName: data.provider.name,
+        },
+      },
       eventType.MIX_PANEL,
     );
     Clipboard.setString(data?.code);
@@ -105,7 +127,9 @@ const ContentDeal = (props: any) => {
                 img: CustomImageRenderer,
               }}
               source={{
-                html: `<div>${data?.content_vi}</div>`,
+                html: `<div>${
+                  lang == 2 ? data?.content_vi : data?.content_en
+                }</div>`,
               }}
               baseStyle={styles.description}
               enableExperimentalMarginCollapsing={true}
