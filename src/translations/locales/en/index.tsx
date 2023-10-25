@@ -638,5 +638,11 @@ export const en = {
     copyCode: 'Copy code & go to website',
     cancel: 'Cancel',
     dealCode: 'Deal code',
+    name: 'Name',
+    address: 'Address',
+    email: 'Email',
+    phoneNumber: 'Phone Number',
+    getOffer: 'Contact form',
+    submit: 'Submit',
   },
 };

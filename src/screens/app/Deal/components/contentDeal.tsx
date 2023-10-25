@@ -20,6 +20,8 @@ import {useSelector} from 'react-redux';
 import ModalGetDeal from './modalGetDeal';
 import CustomImageRenderer from '../../DetailFeed/components/CustomImageRenderer';
 import {event, eventType, trackingAppEvent} from '@util';
+import useDetailPost from '../../Forum/components/useDetailPost';
+import {submitDeal} from '@services';
 
 const ContentDeal = (props: any) => {
   const {data} = props;
@@ -28,6 +30,71 @@ const ContentDeal = (props: any) => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [state, setState] = useDetailPost({
+    name: '',
+    email: '',
+    address: '',
+    phoneNumber: '',
+  });
+
+  const onChangeText = (value: String, item: String) => {
+    switch (item) {
+      case 'name':
+        setState({name: value});
+        break;
+      case 'email':
+        setState({email: value});
+        break;
+      case 'address':
+        setState({address: value});
+        break;
+      case 'phoneNumber':
+        setState({phoneNumber: value});
+        break;
+    }
+  };
+
+  const onSubmit = async () => {
+    setIsShowModal(false);
+    trackingAppEvent(
+      event.DEAL.CLICK_BUTTON_COPY_CODE,
+      {
+        params: {
+          userId: user.id,
+          dealName: data.name_vi,
+          dealCode: data.code,
+          providerName: data.provider.name,
+          dealDetail: state,
+        },
+      },
+      eventType.MIX_PANEL,
+    );
+    try {
+      const res = await submitDeal(state);
+      if (res?.success) {
+        showMessage({
+          message: 'Submit deal success',
+          type: 'default',
+          backgroundColor: colors.success_message,
+          color: '#FFFFFF',
+        });
+      } else {
+        showMessage({
+          message: 'Submit deal failed',
+          type: 'default',
+          backgroundColor: colors.error_message,
+          color: '#FFFFFF',
+        });
+      }
+    } catch (error) {
+      showMessage({
+        message: 'Submit deal failed',
+        type: 'default',
+        backgroundColor: colors.error_message,
+        color: '#FFFFFF',
+      });
+    }
+  };
 
   const onShowModal = () => {
     setIsShowModal(true);
@@ -142,9 +209,12 @@ const ContentDeal = (props: any) => {
       </ScrollView>
       <ModalGetDeal
         onCancel={onCloseModal}
+        // onConfirm={data?.required_data ? onSubmit : onPressGetDeal}
         onConfirm={onPressGetDeal}
         visible={isShowModal}
         dealCode={data?.code}
+        // requiredData={data?.required_data}
+        onChangeText={onChangeText}
       />
     </View>
   );

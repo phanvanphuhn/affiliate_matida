@@ -1,14 +1,35 @@
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
-import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 const ModalGetDeal = (props: any) => {
-  const {visible, onCancel, onConfirm, dealCode} = props;
+  const {visible, onCancel, onConfirm, dealCode, requiredData, onChangeText} =
+    props;
   const {t} = useTranslation();
 
   const closeModal = () => {
     onCancel();
+  };
+
+  const renderTitle = (item: String) => {
+    switch (item) {
+      case 'name':
+        return t('deal.name');
+      case 'email':
+        return t('deal.email');
+      case 'address':
+        return t('deal.address');
+      case 'phoneNumber':
+        return t('deal.phoneNumber');
+    }
   };
 
   return (
@@ -19,27 +40,68 @@ const ModalGetDeal = (props: any) => {
       onRequestClose={() => {}}
       animationType="fade">
       <View style={styles.modalContainer}>
-        <View
-          style={styles.viewOut}
-          //@ts-ignore
-          onStartShouldSetResponder={closeModal}
-        />
-        <View style={styles.container}>
-          <Text style={styles.title}>{t('deal.dealCode')}</Text>
-          <View style={styles.wrapDesc}>
-            <Text style={styles.desc}>{dealCode}</Text>
-          </View>
-          <TouchableOpacity
-            style={styles.wrapConfirmButton}
-            onPress={onConfirm}>
-            <Text style={styles.confirmButtonTitle}>{t('deal.copyCode')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.wrapCancelButton}
-            onPress={closeModal}>
-            <Text style={styles.cancelButtonTitle}>{t('deal.cancel')}</Text>
-          </TouchableOpacity>
-        </View>
+        {requiredData ? (
+          <>
+            <View
+              style={styles.viewOut}
+              //@ts-ignore
+              onStartShouldSetResponder={closeModal}
+            />
+            <View style={[styles.container, {top: '20%'}]}>
+              <Text style={styles.title}>{t('deal.getOffer')}</Text>
+              {requiredData.map((item: String) => {
+                return (
+                  <View style={styles.wrapTexInputContainer}>
+                    <Text style={styles.textInputTitle}>
+                      {renderTitle(item)}
+                    </Text>
+                    <TextInput
+                      onChangeText={value => onChangeText(value, item)}
+                    />
+                  </View>
+                );
+              })}
+              <TouchableOpacity
+                style={[styles.wrapConfirmButton, {marginTop: scaler(24)}]}
+                onPress={onConfirm}>
+                <Text style={styles.confirmButtonTitle}>
+                  {t('deal.submit')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.wrapCancelButton}
+                onPress={closeModal}>
+                <Text style={styles.cancelButtonTitle}>{t('deal.cancel')}</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        ) : (
+          <>
+            <View
+              style={styles.viewOut}
+              //@ts-ignore
+              onStartShouldSetResponder={closeModal}
+            />
+            <View style={styles.container}>
+              <Text style={styles.title}>{t('deal.dealCode')}</Text>
+              <View style={styles.wrapDesc}>
+                <Text style={styles.desc}>{dealCode}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.wrapConfirmButton}
+                onPress={onConfirm}>
+                <Text style={styles.confirmButtonTitle}>
+                  {t('deal.copyCode')}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.wrapCancelButton}
+                onPress={closeModal}>
+                <Text style={styles.cancelButtonTitle}>{t('deal.cancel')}</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
       </View>
     </Modal>
   );
@@ -111,6 +173,20 @@ const styles = StyleSheet.create({
     fontSize: scaler(16),
     color: colors.brandMainPinkRed,
     fontWeight: '500',
+  },
+  wrapTexInputContainer: {
+    width: '100%',
+    backgroundColor: colors.gray100,
+    marginTop: scaler(12),
+    padding: scaler(8),
+    borderRadius: scaler(16),
+    height: scaler(54),
+  },
+  textInputTitle: {
+    fontSize: scaler(12),
+    fontWeight: '400',
+    color: colors.textSmallColor,
+    marginBottom: scaler(4),
   },
 });
 

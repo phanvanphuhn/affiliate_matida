@@ -642,5 +642,11 @@ export const vi = {
     copyCode: 'Sao chép mã và sử dụng',
     cancel: 'Huỷ',
     dealCode: 'Mã ưu đãi',
+    name: 'Họ & tên',
+    address: 'Địa chỉ',
+    email: 'Email',
+    phoneNumber: 'Số điện thoại',
+    getOffer: 'Nhận ưu đãi',
+    submit: 'submit',
   },
 };
