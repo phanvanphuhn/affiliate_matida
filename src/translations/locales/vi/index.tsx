@@ -641,6 +641,6 @@ export const vi = {
     getDeal: 'Thu thập',
     copyCode: 'Sao chép mã và sử dụng',
     cancel: 'Huỷ',
-    dealCode: 'Deal code',
+    dealCode: 'Mã ưu đãi',
   },
 };
