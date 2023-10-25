@@ -439,7 +439,7 @@ const Home = () => {
 
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
-      {isShowForReviewer(user) && <FLoatingAIButton />}
+      {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
     </View>
   );
 };
