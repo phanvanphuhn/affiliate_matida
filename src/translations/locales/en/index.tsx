@@ -212,7 +212,7 @@ export const en = {
     explore: 'Explore',
     feed: 'Explore',
     liveTalks: 'Live Talks',
-    home: 'Pregnancy tracker',
+    home: 'Tracker',
     community: 'Community',
     deal: 'Deals',
   },
