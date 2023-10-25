@@ -9,6 +9,8 @@ import useDetailPost from '../Forum/components/useDetailPost';
 import {getListDeal} from '@services/deal';
 import {useSelector} from 'react-redux';
 import {GlobalService} from '@services';
+import {event, eventType, isShowForReviewer, trackingAppEvent} from '@util';
+import {FLoatingAIButton} from '@component';
 
 type TMockData = {
   id: number;
@@ -20,6 +22,8 @@ type TMockData = {
 };
 
 const Deal = () => {
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   const [data, setData] = useState<any>();
 
   const getListDealFromApi = async () => {
@@ -76,6 +80,7 @@ const Deal = () => {
       />
       <View style={styles.wrapContainer}>
         <ListDeal data={data} />
+        {isShowForReviewer(user) && <FLoatingAIButton />}
       </View>
     </View>
   );
