@@ -34,6 +34,7 @@ import {ListPostByWeek} from './component/ListPostByWeek';
 import {Size} from './component/Size';
 import {ViewSelectType} from './component/ViewSelectType';
 import {styles} from './styles';
+import {trackClickedOnPregnancyTracker} from '@services/webengageManager.tsx';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const SizeComparison = () => {
   useUXCam(ROUTE_NAME.SIZE_COMPARISON);
   const getData = async (value: any) => {
     setSelectedWeek(value);
+    trackClickedOnPregnancyTracker(value,status);
     try {
       GlobalService.showLoading();
       setTimeout(() => {
@@ -250,6 +252,7 @@ const SizeComparison = () => {
           return (
             <ViewSelectType
               onChaneStatus={value => {
+              trackClickedOnPregnancyTracker(weekSelected,value);
                 setStatus(value);
                 statusView.current = value;
                 if (value === 1) {

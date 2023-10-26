@@ -11,6 +11,7 @@ import {useSelector} from 'react-redux';
 import {trackingAppEvent, event, useUXCam} from '@util';
 import {selectDueDate, GlobalService} from '@services';
 import {showMessage} from 'react-native-flash-message';
+import {trackBirthdateEvent} from '@services/webengageManager.tsx';
 
 const ChooseDueDateScreenApp = (props: any) => {
   const {t} = useTranslation();
@@ -25,6 +26,7 @@ const ChooseDueDateScreenApp = (props: any) => {
       const res = await selectDueDate({
         due_date: moment(date).format('MM/DD/YYYY'),
       });
+      trackBirthdateEvent(moment(date).format('MM/DD/YYYY'),false);
       showMessage({
         message: res?.data?.message,
         type: 'default',
@@ -47,6 +49,7 @@ const ChooseDueDateScreenApp = (props: any) => {
   }, [user]);
 
   const navigateToCalculate = () => {
+    trackBirthdateEvent("Don't know",true);
     navigate(ROUTE_NAME.CALCULATE_DUE_DATE_APP);
   };
 

@@ -19,6 +19,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {saveLang} from '@redux';
 import {trackingAppEvent, event, useUXCam, eventType} from '@util';
+import {trackLanguageChosen} from '@services/webengageManager.tsx';
 
 const ChangeLanguage = () => {
   const {t} = useTranslation();
@@ -39,8 +40,10 @@ const ChangeLanguage = () => {
 
   const onChangeLang = useCallback(async () => {
     if (lang === 1) {
+    trackLanguageChosen("Tiếng Việt");
       setLang(2);
     } else {
+    trackLanguageChosen("English");
       setLang(1);
     }
   }, [lang]);

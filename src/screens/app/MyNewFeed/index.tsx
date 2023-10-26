@@ -17,6 +17,7 @@ import {GlobalService} from '@services';
 import {getListMyPost, deleteListUserPost} from '@redux';
 import {trackingAppEvent, event, useUXCam, eventType} from '@util';
 import {ROUTE_NAME} from '@routeName';
+import {trackMyPostsClicked} from '@services/webengageManager.tsx';
 
 const MyNewFeed = (props: any) => {
   const {statusRefresh} = props;
@@ -77,6 +78,7 @@ const MyNewFeed = (props: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      trackMyPostsClicked(1); // most recent is 1
       trackingAppEvent(event.SCREEN.MY_NEWFEED, {}, eventType.AFF_FLYER);
       setIndexButton(1);
       getDataRefresh();
@@ -137,6 +139,7 @@ const MyNewFeed = (props: any) => {
   };
 
   const handlePressButton = (value: number) => {
+    trackMyPostsClicked(value);
     GlobalService.showLoading();
     setIndexButton(value);
     dispatch(getListMyPost({userId: user?.id, page: page, typePost: value}));

@@ -10,6 +10,7 @@ import {ROUTE_NAME} from '@routeName';
 import {useUXCam} from '@util';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
+import {trackTellMeMoreClicked} from '@services/webengageManager.tsx';
 
 const ResultDueDateScreenApp = (props: any) => {
   const {t} = useTranslation();
@@ -38,6 +39,7 @@ const ResultDueDateScreenApp = (props: any) => {
   }, []);
 
   const handlePressButton = () => {
+  trackTellMeMoreClicked();
     if (type === 'Choose') {
       navigation.pop(2);
       // navigation.navigate(ROUTE_NAME.SELECT_DOB);

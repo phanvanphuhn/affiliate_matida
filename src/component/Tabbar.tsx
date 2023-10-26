@@ -6,6 +6,7 @@ import {
   iconTabHome,
   iconTabLiveTalk,
 } from '@images';
+import {trackScreenViewedEvent} from '@services/webengageManager.tsx';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useRef} from 'react';
 import {
@@ -86,15 +87,19 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const trackingTab = (value: any) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
+        trackScreenViewedEvent('Explore');
         trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_FEED:
+        trackScreenViewedEvent('Feed');
         trackingAppEvent(event.TAB.CLICK_TAB_FEED, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_HOME:
+        trackScreenViewedEvent('Home');
         trackingAppEvent(event.TAB.CLICK_TAB_HOME, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_COMMUNITY:
+        trackScreenViewedEvent('Community');
         trackingAppEvent(
           event.TAB.CLICK_TAB_COMMUNITY,
           {},
@@ -102,6 +107,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         );
         break;
       case ROUTE_NAME.TAB_LIVETALK:
+        trackScreenViewedEvent('Livetalk');
         trackingAppEvent(
           event.TAB.CLICK_TAB_LIVE_TALKS,
           {},
@@ -109,6 +115,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         );
         break;
       case ROUTE_NAME.TAB_DEAL:
+        trackScreenViewedEvent('Deal');
         trackingAppEvent(event.TAB.CLICK_TAB_DEAL, {}, eventType.MIX_PANEL);
         break;
     }

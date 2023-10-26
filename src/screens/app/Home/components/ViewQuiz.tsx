@@ -22,6 +22,7 @@ import {
   View,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import {trackTestYourKnowledgeClicked} from '@services/webengageManager.tsx';
 
 export const ViewQuiz = React.memo((props: any) => {
   const {onAnswer} = props;
@@ -212,6 +213,7 @@ export const ViewQuiz = React.memo((props: any) => {
             eventType.MIX_PANEL,
           );
           onAnswer(body);
+          trackTestYourKnowledgeClicked(data?.question_en,item?.answer_en);
         }}>
         <Text style={styles.txtTrueFalse}>
           {lang === 1 ? item?.answer_en : item?.answer_vi}

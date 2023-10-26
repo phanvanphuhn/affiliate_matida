@@ -215,9 +215,9 @@
 	<key>WEGEnvironment</key>
 	<string>DEFAULT</string>
 	<key>WEGLicenseCode</key>
-	<string>0123456</string>
+	<string>58add5d1</string>
 	<key>WEGLogLevel</key>
-	<string>DEFAULT</string>
+	<string>VERBOSE</string>
 	<key>branch_key</key>
 	<dict>
 		<key>live</key>

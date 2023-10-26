@@ -6,6 +6,7 @@ import {SvgArrowLeft, avatarDefault, imageUpload} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {GlobalService, createPostApi, uploadImage} from '@services';
+import {trackAskAQuestionClicked} from '@services/webengageManager.tsx';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
   event,
@@ -178,6 +179,7 @@ const CreateNewPost = (props: {
               // title="Post anonymously in forum"
               title={t('post.anonymous')}
               onPress={() => {
+                trackAskAQuestionClicked(true, user?.name);
                 trackingAppEvent(
                   event.FORUM.POST_ANONYMOUSLY,
                   {},

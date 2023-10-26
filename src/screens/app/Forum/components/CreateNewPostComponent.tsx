@@ -5,6 +5,7 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { trackCommunityTab } from '@services/webengageManager.tsx';
 
 export const CreateNewPostComponent = () => {
   const {t} = useTranslation();
@@ -13,7 +14,9 @@ export const CreateNewPostComponent = () => {
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.9}
-        onPress={() => navigate(ROUTE_NAME.CREATE_NEWPOST)}>
+        onPress={() => {
+        trackCommunityTab(true);
+        navigate(ROUTE_NAME.CREATE_NEWPOST)}}>
         <Image source={iconEdit} />
         <Text style={styles.text}>{t('post.create_new')}</Text>
       </TouchableOpacity>

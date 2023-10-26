@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {saveLang} from '@redux';
 import {useUXCam} from '@util';
+import {trackLanguageChosen} from '@services/webengageManager.tsx';
 
 const ChangeLanguageAuth = () => {
   const {t} = useTranslation();
@@ -46,9 +47,11 @@ const ChangeLanguageAuth = () => {
   const navigateToIntro = async () => {
     if (lang === 1) {
       let data = await AsyncStorage.setItem('LANGUAGE', 'en');
+      trackLanguageChosen("English");
       initI18n();
     } else {
       let data = await AsyncStorage.setItem('LANGUAGE', 'vi');
+      trackLanguageChosen("Tiếng Việt");
       initI18n();
     }
     dispatch(saveLang(lang));

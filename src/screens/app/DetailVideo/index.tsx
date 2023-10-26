@@ -27,7 +27,7 @@ import Video from 'react-native-video';
 import {useDispatch, useSelector} from 'react-redux';
 import MediaControls from '../../../lib/react-native-media-controls';
 import {TextDescriptionVideo} from './component';
-
+import {trackRecordedLivestream} from '@services/webengageManager.tsx';
 const PLAYER_STATES = {
   PLAYING: 0,
   PAUSED: 1,
@@ -81,6 +81,7 @@ const DetailVideo = (props: any) => {
     try {
       const res = await getSwitchVideo();
       setData(res?.data);
+      trackRecordedLivestream(res?.data?.title_en);
     } catch (e) {
       console.log('e');
     }
