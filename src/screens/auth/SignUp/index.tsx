@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 
-import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
+import {event, eventType, trackingAppEvent} from '@util';
 import {Step1} from './Component/Step1';
 import {Step2} from './Component/Step2';
 import {Step3} from './Component/Step3';
@@ -33,7 +33,6 @@ const SignUp = (props: any) => {
             loginSocial={(value: any) => {
               closeModal();
               loginSocial(value);
-              trackEventBranch(event.BRANCH.SIGNUP, {}, true);
             }}
           />
         );

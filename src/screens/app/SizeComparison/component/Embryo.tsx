@@ -6,11 +6,14 @@ import {useTranslation} from 'react-i18next';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {useSelector} from 'react-redux';
+import RenderHtml from 'react-native-render-html';
+import {tagsStyles} from './settingHTML';
+
 const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
   const {data, week, listImage} = props;
   const lang = useSelector((state: any) => state?.auth?.lang);
   const {t} = useTranslation();
-
+  console.log('data?.content: ', data?.content);
   return (
     <FlatList
       data={[1]}
@@ -32,16 +35,17 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
             /> */}
             {/* <Footer week={week} title={data?.remaining_week} /> */}
             <View style={{marginTop: scaler(12)}}>
-              {/* <RenderHtml
-                contentWidth={widthScreen}
-                systemFonts={systemFonts}
-                tagsStyles={{...tagsStyles}}
-                source={{html: data?.content}}
+              <RenderHtml
+                source={{
+                  html: `<div>${data?.content}</div>`,
+                }}
+                baseStyle={styles.description}
                 enableExperimentalMarginCollapsing={true}
                 enableExperimentalBRCollapsing={true}
                 enableExperimentalGhostLinesPrevention={true}
-              /> */}
-              <Text style={styles.txtContent}>{data?.content}</Text>
+                tagsStyles={{...tagsStyles}}
+              />
+              {/* <Text style={styles.txtContent}>{data?.content}</Text> */}
             </View>
           </View>
         );
@@ -138,6 +142,13 @@ const styles = StyleSheet.create({
     height: scaler(6),
     borderRadius: scaler(20),
     backgroundColor: colors.primary,
+  },
+  description: {
+    ...stylesCommon.fontWeight400,
+    fontSize: scaler(14),
+    lineHeight: scaler(21),
+    color: '#515151',
+    marginTop: scaler(12),
   },
 });
 

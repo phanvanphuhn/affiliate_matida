@@ -237,6 +237,7 @@ export default class Swiper extends PureComponent<IProps, IState> {
    * @type {bool}
    */
   initialRender: boolean = true;
+  contentChange: boolean = false;
 
   /**
    * autoplay timer
@@ -253,7 +254,6 @@ export default class Swiper extends PureComponent<IProps, IState> {
     if (nextProps.index === this.props.index) {
       return;
     }
-    console.log('=>(Swiper.tsx:244) nextProps', nextProps);
     this.setState(
       this.initState(nextProps, this.props.index !== nextProps.index),
     );
@@ -714,6 +714,12 @@ export default class Swiper extends PureComponent<IProps, IState> {
         {...this.scrollViewPropOverrides()}
         contentContainerStyle={[styles.wrapperIOS, this.props.style]}
         contentOffset={this.state.offset}
+        onContentSizeChange={() => {
+          if (!this.contentChange) {
+            this.props.onIndexChanged(this.state.index);
+            this.contentChange = true;
+          }
+        }}
         onScrollBeginDrag={this.onScrollBegin}
         onMomentumScrollEnd={this.onScrollEnd}
         onScrollEndDrag={this.onScrollEndDrag}

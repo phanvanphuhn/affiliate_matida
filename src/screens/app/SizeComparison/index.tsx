@@ -64,7 +64,7 @@ const SizeComparison = () => {
   const [selectedWeek, setSelectedWeek] = useState(null);
   const flatListRef = useRef<FlatList>(null);
   const navigation = useNavigation<any>();
-  const statusView = useRef(1);
+  const statusView = useRef(option);
   const [isRendered, setRendered] = useState(false);
 
   useUXCam(ROUTE_NAME.SIZE_COMPARISON);
@@ -125,6 +125,13 @@ const SizeComparison = () => {
     try {
       const calendarCheckup = await getCalendarCheckup();
       setCalendarCheckupData(calendarCheckup?.data);
+      if (option === 2) {
+        setTimeout(() => {
+          flatListRef.current?.scrollToOffset({
+            offset: listPosition.current[Math.floor(weekSelected / 7)],
+          });
+        }, 400);
+      }
     } catch (error) {
     } finally {
     }

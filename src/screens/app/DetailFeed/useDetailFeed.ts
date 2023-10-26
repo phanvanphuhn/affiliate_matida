@@ -33,6 +33,7 @@ const useDetailFeed = () => {
         totalComment: res?.data?.total_comments,
         page,
         index,
+        total: res?.data?.feed_detail?.total,
         currentIndex: index,
       });
     }
@@ -69,7 +70,8 @@ const useDetailFeed = () => {
       if (
         state.page == 1 &&
         (route.params?.currentPage == undefined ||
-          route.params?.currentPage == 1)
+          route.params?.currentPage == 1) &&
+        state.refreshing
       ) {
         setState({data: arr});
       } else {
@@ -87,10 +89,16 @@ const useDetailFeed = () => {
     }
   };
 
-  const handleLoadMore = () => {
-    if (state.page * state.size <= state.total) {
+  const handleLoadMore = (pageNumber: number) => {
+    if (state.page * state.size < state.total) {
       setState({
         page: state.page + 1,
+        isLoadMore: true,
+        isLoadLess: false,
+      });
+    } else if (pageNumber + (state.page - 1) * state.size == state.total - 1) {
+      setState({
+        page: 1,
         isLoadMore: true,
         isLoadLess: false,
       });
@@ -111,7 +119,7 @@ const useDetailFeed = () => {
     if (firstSlide) {
       // handleLoadLess();
     } else if (lastSlide) {
-      handleLoadMore();
+      handleLoadMore(pageNumber);
     }
     setState({
       currentIndex: pageNumber,

@@ -13,11 +13,13 @@ export type IItemTab = {
   short_code: string;
   ranking: number;
   type: string;
+  total: number;
 };
 export type ForumState = {
   listTab: IItemTab[];
   tab: IItemTab | null;
   forum: any[];
+  tabAll: any[];
   loading: boolean;
   loadMore: boolean;
   loadList: boolean;
@@ -28,6 +30,7 @@ export const INITIAL_STATE_FORUM: ForumState = {
   listTab: [],
   tab: null,
   forum: [],
+  tabAll: [],
   loading: true,
   loadMore: true,
   loadList: true,

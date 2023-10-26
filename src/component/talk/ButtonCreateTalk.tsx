@@ -13,14 +13,18 @@ type Props = {
 };
 export const ButtonCreateTalk = ({
   onPress = () => {
-    trackingAppEvent(event.LIVE_ROOM.CLICK_CREATE_NEW_ROOM, {},eventType.AFF_FLYER);
+    trackingAppEvent(
+      event.LIVE_ROOM.CLICK_CREATE_NEW_ROOM,
+      {},
+      eventType.AFF_FLYER,
+    );
     navigate(ROUTE_NAME.CREATE_ROOM);
   },
   bottom = getBottomSpace() + scaler(16),
 }: Props) => {
   const {t} = useTranslation();
   return (
-    <View style={[s.container, {bottom: bottom}]}>
+    <View style={[s.container, {bottom: bottom, zIndex: 999}]}>
       <TouchableOpacity activeOpacity={1} style={s.button} onPress={onPress}>
         <SvgPlus />
         <Text style={s.text}>{t('talk.titleCreate')}</Text>

@@ -235,7 +235,15 @@ const ProfileSettingsScreen = () => {
         navigation.goBack();
         GlobalService.hideLoading();
       }
-    } catch (error: any) {}
+    } catch (error: any) {
+      showMessage({
+        message: error?.message,
+        type: 'default',
+        backgroundColor: colors.error_message,
+      });
+      navigation.goBack();
+      GlobalService.hideLoading();
+    }
   };
 
   const handleChangeAvatar = async (response: any) => {

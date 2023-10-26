@@ -58,13 +58,6 @@ const ListFeedDetail = (props: ListFeedProps) => {
     }
   };
 
-  const onPageHandler = (event: NativeSyntheticEvent<any>) => {
-    const currentPage = event.nativeEvent.position;
-    onPageSelected(currentPage);
-  };
-  const onPageHandlerFlatlist = (item: {index: number; prevIndex: number}) => {
-    onPageSelected(item.index);
-  };
   const onPageHandlerSwiper = (index: number) => {
     onPageSelected(index);
   };

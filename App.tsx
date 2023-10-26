@@ -5,10 +5,10 @@ import {ActivityIndicator, AppState, Platform, StatusBar} from 'react-native';
 import NavigationApp from './src/navigation/StackContainer';
 
 import {
+  CheckAppVersion,
   GlobalUI,
   ToastCustom,
   ToastCustomPost,
-  CheckAppVersion,
 } from '@component';
 import {NavigationUtils} from '@navigation';
 import {clearDataLiveTalk} from '@redux';
@@ -300,7 +300,7 @@ const App = () => {
         position="top"
         floating={true}
         hideStatusBar={false}
-        style={{marginTop: Platform.OS === 'ios' ? 0 : scaler(16)}}
+        style={{marginTop: Platform.OS === 'ios' ? 32 : scaler(16)}}
       />
       <Toast
         position="bottom"

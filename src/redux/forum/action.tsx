@@ -10,12 +10,22 @@ export const getDataSuccess = (payload: any) => ({
   payload,
 });
 
-export const getListTabForum = () => ({
+export const getListTabForum = (payload?: any) => ({
   type: typeForum.GET_LIST_TAB_FORUM,
+  payload,
 });
 
 export const getListTabForumSuccess = (payload: any) => ({
   type: typeForum.GET_LIST_TAB_FORUM_SUCCESS,
+  payload,
+});
+
+export const reloadListTab = () => ({
+  type: typeForum.RELOAD_LIST_TAB,
+});
+
+export const reloadListTabSuccess = (payload: any) => ({
+  type: typeForum.RELOAD_LIST_TAB_SUCCESS,
   payload,
 });
 

@@ -14,6 +14,10 @@ const Feed = () => {
     navigation.navigate(ROUTE_NAME.PROFILE_SETTINGS);
   };
 
+  const navigateSetting = () => {
+    navigation.navigate(ROUTE_NAME.SETTING_SCREEN);
+  };
+
   const handlePressLogo = () => {
     setTimeout(() => {
       refFlatList?.current?.scrollToOffset({animated: true, offset: 0});
@@ -27,6 +31,7 @@ const Feed = () => {
   return (
     <View style={{backgroundColor: colors.white, flex: 1}}>
       <AppHeader
+        onPressMenu={navigateSetting}
         onPressAvatar={navigateUser}
         onPressLogo={handlePressLogo}
         onPressSearch={onPressSearch}

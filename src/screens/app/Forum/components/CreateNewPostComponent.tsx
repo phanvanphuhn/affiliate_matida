@@ -27,7 +27,7 @@ export const CreateNewPostComponent = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: scaler(16),
-    marginTop: scaler(12),
+    // marginTop: scaler(12),
   },
   button: {
     width: '100%',

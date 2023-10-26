@@ -111,7 +111,7 @@ export const AppHeader = ({
               paddingLeft: scaler(16),
               paddingVertical: scaler(10),
             }}>
-            <SvgMenu />
+            <SvgMenu color={bgc ? 'black' : 'white'} />
           </TouchableOpacity>
         )}
         <TouchableOpacity
@@ -156,7 +156,7 @@ export const AppHeader = ({
               paddingRight: scaler(20),
               paddingVertical: scaler(10),
             }}>
-            {IconNotification}
+            {<SvgNotification color={bgc ? 'black' : 'white'} />}
             {!!totalUnreadNotification && (
               <View
                 style={[
@@ -188,14 +188,25 @@ export const AppHeader = ({
           <TouchableOpacity
             onPress={onPressMessage}
             style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
-            {IconMessage}
-            {dot && <View style={styles.dotMessage} />}
+            {<SvgMessage color={bgc ? 'black' : 'white'} />}
+            {dot && (
+              <View
+                style={[
+                  styles.dotMessage,
+                  bgc ? {backgroundColor: 'black'} : {},
+                ]}
+              />
+            )}
           </TouchableOpacity>
         )}
         {onPressSearch ? (
           <TouchableOpacity
             onPress={onPressSearch}
-            style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
+            style={{
+              paddingVertical: scaler(10),
+              paddingRight: scaler(16),
+              marginLeft: scaler(44),
+            }}>
             <SvgSearch color={bgc ? colors.black : colors.white} />
           </TouchableOpacity>
         ) : isFeed ? (

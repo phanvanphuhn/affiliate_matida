@@ -162,7 +162,7 @@ const ItemVideo = (props: ItemVideoProps) => {
               audioOnly={props.isAudio}
               preferredForwardBufferDuration={1}
               poster={isVisible && !props.isAudio ? getThumbnail() : undefined}
-              playInBackground={props.isAudio}
+              playInBackground={true}
               reportBandwidth={true}
               onReadyForDisplay={() => {
                 setIsLoading(false);

@@ -30,6 +30,7 @@ import {
 } from '@services';
 import {scaler} from '@stylesCommon';
 import {
+  ChatGPTComponent,
   PregnancyProgress,
   SizeComparisonComponent,
   ViewQuiz,
@@ -332,11 +333,18 @@ const Home = () => {
             )}
             <View
               style={{
-                paddingHorizontal: scaler(20),
+                // paddingHorizontal: scaler(20),
                 marginBottom: scaler(30),
               }}>
               {isShowForReviewer(user) && <SizeComparisonComponent />}
-              <PregnancyProgress />
+              <ChatGPTComponent />
+
+              <View
+                style={{
+                  paddingHorizontal: scaler(20),
+                }}>
+                <PregnancyProgress />
+              </View>
             </View>
           </>
         )}
@@ -355,10 +363,9 @@ const Home = () => {
         {data?.dailyQuizz && isShowForReviewer(user) ? (
           <ViewQuiz onAnswer={onAnswerQuiz} />
         ) : null}
-        {/*
-        <BannerTestQuiz />
 
-        <ChatGPTComponent /> */}
+        {/* <BannerTestQuiz /> */}
+
         {/*
         <HorizontalList
           loading={loading}
@@ -432,7 +439,7 @@ const Home = () => {
 
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
-      {isShowForReviewer(user) && <FLoatingAIButton />}
+      {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
     </View>
   );
 };

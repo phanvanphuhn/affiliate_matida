@@ -150,6 +150,7 @@ const LiveTalk = () => {
         onPressNotification={navigateNotification}
         onPressMessage={navigationMessage}
         onPressLogo={handlePressLogo}
+        bgc="white"
       />
       <View style={{flex: 1}}>
         <ScrollView
@@ -215,7 +216,7 @@ const LiveTalk = () => {
             </Swiper>
           ) : null}
           {/* <Image source={LogoApp} style={styles.banner} /> */}
-          <HorizontalList
+          {/* <HorizontalList
             loading={loading}
             title={t('talk.momTalk')}
             contentContainerStyle={{
@@ -232,7 +233,7 @@ const LiveTalk = () => {
             {data?.momLiveTalks?.map((item, index) => (
               <MomsTalkItem item={item} index={index} key={index} />
             ))}
-          </HorizontalList>
+          </HorizontalList> */}
           <HorizontalList
             loading={loading}
             title={t('talk.expertWorkshops')}

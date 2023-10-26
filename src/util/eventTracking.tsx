@@ -5,6 +5,7 @@ export const event = {
     CLICK_TAB_FEED: 'CLICK_TAB_FEED',
     CLICK_TAB_COMMUNITY: 'CLICK_TAB_COMMUNITY',
     CLICK_TAB_LIVE_TALKS: 'CLICK_TAB_LIVE_TALKS',
+    CLICK_TAB_DEAL: 'CLICK_TAB_DEAL',
   },
   AUTH: {
     CLICK_SIGN_UP: 'signup',
@@ -76,6 +77,7 @@ export const event = {
     CREATE_NEW_POST_PAGE: 'post_create_new_post_page',
     POST_IN_FORUM: 'post_in_forum',
     POST_ANONYMOUSLY: 'post_click_post_anonymously',
+    CLICK_SEE_MORE: 'forum_click_see_more_',
   },
   TIDA: {
     TIDA_OPEN: 'tida_open',
@@ -134,5 +136,11 @@ export const event = {
     FEED_MOM_TEST: 'feed_mom_test',
     FEED_FINISH_QUIZ: 'feed_finish_quiz',
     FEED_DO_MOMTEST: 'feed_do_momtest',
+  },
+  DEAL: {
+    CLICK_DEAL: 'click_deal',
+    CLICK_BUTTON_GET_DEAL: 'click_button_get_deal',
+    CLICK_BUTTON_COPY_CODE: 'click_button_copy_code',
+    CLICK_BUTTON_CANCEL: 'click_button_cancel',
   },
 };

@@ -1,8 +1,9 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ActivityIndicator, Image} from 'react-native';
-import FastImage from 'react-native-fast-image';
-import {colors} from '@stylesCommon';
 import {avatarDefault, LogoApp} from '@images';
+import {colors} from '@stylesCommon';
+import React, {useCallback, useState} from 'react';
+import {ActivityIndicator, Image, StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
+import reactotron from 'reactotron-react-native';
 
 const AppImage = React.memo((props: any) => {
   const {
@@ -11,10 +12,13 @@ const AppImage = React.memo((props: any) => {
     resizeMode,
     onLoadCallBack = () => {},
     user = false,
+    log = false,
   } = props;
 
   const [loading, setLoading] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
+
+  log && reactotron.log?.('URL', uri, log);
 
   const onLoadStart = useCallback(() => {
     setLoading(true);

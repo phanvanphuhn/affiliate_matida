@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {AppImage} from '@component';
+import {SvgMessage} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
 
 export const HeaderForum = () => {
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
 
   const user = useSelector((state: any) => state.auth.userInfo);
 
@@ -24,7 +27,7 @@ export const HeaderForum = () => {
         <TouchableOpacity onPress={handlePressAvatar} style={styles.btnAvatar}>
           <AppImage uri={user?.avatar} style={styles.avatarImage} user />
         </TouchableOpacity>
-        <Text style={styles.text}>Community</Text>
+        <Text style={styles.text}>{t('bottomTab.community')}</Text>
         <View
           style={{
             width: scaler(72),
@@ -34,10 +37,14 @@ export const HeaderForum = () => {
           }}>
           {/* <View style={{marginRight: scaler(12)}}>
             <SvgMessage color={'#8D8D8D'} />
-          </View>
-          <View>
-            <SvgPlus color={'#8D8D8D'} />
           </View> */}
+          {/* <TouchableOpacity
+            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+            onPress={() => {
+              navigate(ROUTE_NAME.CREATE_NEWPOST);
+            }}>
+            <SvgPlus color={'#8D8D8D'} />
+          </TouchableOpacity> */}
         </View>
       </View>
     </SafeAreaView>

@@ -1,10 +1,12 @@
 import {
   iconCommunity,
+  iconTabDeal,
   iconTabExplore,
   iconTabFeed,
   iconTabHome,
   iconTabLiveTalk,
 } from '@images';
+import {trackScreenViewedEvent} from '@services/webengageManager.tsx';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useRef} from 'react';
 import {
@@ -18,10 +20,10 @@ import {
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
 import {ROUTE_NAME} from '../navigation/routeName';
-import { trackScreenViewedEvent } from '@services/webengageManager.tsx';
 // import {t} from 'i18next';
 import {
   changePageExplore,
+  focusDealTab,
   focusExploreTab,
   focusFeedTab,
   focusHomeTab,
@@ -59,6 +61,8 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         return t('bottomTab.home');
       case ROUTE_NAME.TAB_COMMUNITY:
         return t('bottomTab.community');
+      case ROUTE_NAME.TAB_DEAL:
+        return t('bottomTab.deal');
       case ROUTE_NAME.TAB_LIVETALK:
         return t('bottomTab.liveTalks');
     }
@@ -75,30 +79,44 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         return iconCommunity;
       case ROUTE_NAME.TAB_LIVETALK:
         return iconTabLiveTalk;
+      case ROUTE_NAME.TAB_DEAL:
+        return iconTabDeal;
     }
   };
 
   const trackingTab = (value: any) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
-      trackScreenViewedEvent("Explore");
-        trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.AFF_FLYER);
+        trackScreenViewedEvent('Explore');
+        trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_FEED:
-      trackScreenViewedEvent("Feed");
-        trackingAppEvent(event.TAB.CLICK_TAB_FEED, {},eventType.AFF_FLYER);
+        trackScreenViewedEvent('Feed');
+        trackingAppEvent(event.TAB.CLICK_TAB_FEED, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_HOME:
-      trackScreenViewedEvent("Home");
-        trackingAppEvent(event.TAB.CLICK_TAB_HOME, {},eventType.AFF_FLYER);
+        trackScreenViewedEvent('Home');
+        trackingAppEvent(event.TAB.CLICK_TAB_HOME, {}, eventType.MIX_PANEL);
         break;
       case ROUTE_NAME.TAB_COMMUNITY:
-      trackScreenViewedEvent("Community");
-        trackingAppEvent(event.TAB.CLICK_TAB_COMMUNITY, {},eventType.AFF_FLYER);
+        trackScreenViewedEvent('Community');
+        trackingAppEvent(
+          event.TAB.CLICK_TAB_COMMUNITY,
+          {},
+          eventType.MIX_PANEL,
+        );
         break;
       case ROUTE_NAME.TAB_LIVETALK:
-      trackScreenViewedEvent("Livetalk");
-        trackingAppEvent(event.TAB.CLICK_TAB_LIVE_TALKS, {},eventType.AFF_FLYER);
+        trackScreenViewedEvent('Livetalk');
+        trackingAppEvent(
+          event.TAB.CLICK_TAB_LIVE_TALKS,
+          {},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case ROUTE_NAME.TAB_DEAL:
+        trackScreenViewedEvent('Deal');
+        trackingAppEvent(event.TAB.CLICK_TAB_DEAL, {}, eventType.MIX_PANEL);
         break;
     }
   };
@@ -143,6 +161,9 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
                 break;
               case ROUTE_NAME.TAB_FEED:
                 dispatch(focusFeedTab());
+                break;
+              case ROUTE_NAME.TAB_DEAL:
+                dispatch(focusDealTab());
                 break;
               default:
                 return;

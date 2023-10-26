@@ -55,12 +55,15 @@ import {ListRecord} from './app/ListRecord';
 import {MasterClass} from './app/MasterClass';
 import {ListMasterClass} from './app/ListMasterClass';
 import {Forum} from './app/Forum';
-import Feed from './app/Feed'
+import Feed from './app/Feed';
 import SearchFeed from './app/Feed/components/SearchFeed';
 import DetailFeed from './app/DetailFeed';
 import {SelectDOB} from './auth/DueDate/SelectDOB';
 import {Question2} from './auth/DueDate/Question2';
 import {Question3} from './auth/DueDate/Question3';
+import ListDetailPost from './app/Forum/components/ListDetailPost';
+import Deal from './app/Deal/Deal';
+import DetailDeal from './app/Deal/components/detailDeal';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -126,6 +129,9 @@ const screens = {
   SelectDOB,
   Question2,
   Question3,
+  ListDetailPost,
+  Deal,
+  DetailDeal,
 };
 
 export {screens};
