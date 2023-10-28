@@ -53,7 +53,10 @@ import {ReminderTime} from './component/ReminderTime';
 import {TicketPrice} from './component/TicketPrice';
 import {ViewInfoHost} from './component/ViewInfoHost';
 import {styles} from './styles';
-import {trackExpertWorkshop, trackMomsTalk} from '@services/webengageManager.tsx';
+import {
+  trackExpertWorkshop,
+  trackMomsTalk,
+} from '@services/webengageManager.tsx';
 
 const DetailMeetingRoom = (props: any) => {
   const dispatch = useDispatch();
@@ -127,14 +130,14 @@ const DetailMeetingRoom = (props: any) => {
   const handleLayout = (event: LayoutChangeEvent) => {
     const layoutItem: number = event?.nativeEvent?.layout?.height || 0;
     setHeightText(layoutItem);
-    console.log("#!# infoRoom type : ",infoRoom?.room?.media_type);
-    if(!isEventTracked){
-    if(infoRoom?.room?.media_type == 1){
-    trackMomsTalk(infoRoom?.room?.title);
-    }else if (infoRoom?.room?.media_type == 2){
-    trackExpertWorkshop(infoRoom?.room?.title,infoRoom?.room?.start_time);
-    }
-    isEventTracked = true;
+    console.log('#!# infoRoom type : ', infoRoom?.room?.media_type);
+    if (!isEventTracked) {
+      if (infoRoom?.room?.media_type == 1) {
+        trackMomsTalk(infoRoom?.room?.title);
+      } else if (infoRoom?.room?.media_type == 2) {
+        trackExpertWorkshop(infoRoom?.room?.title, infoRoom?.room?.start_time);
+      }
+      isEventTracked = true;
     }
   };
 
@@ -373,13 +376,13 @@ const DetailMeetingRoom = (props: any) => {
             isHost: user?.id === infoRoom?.host?.id ? true : false,
           });
         } else {
-          Linking.openURL(
-            'https://www.tiktok.com/@matida.app?_t=8gp1GoMZytu&_r=1',
-          );
-          // navigation.navigate(ROUTE_NAME.LIVE_STREAM, {
-          //   idRoom: id,
-          //   isHost: user?.id === infoRoom?.host?.id ? true : false,
-          // });
+          // Linking.openURL(
+          //   'https://www.tiktok.com/@matida.app?_t=8gp1GoMZytu&_r=1',
+          // );
+          navigation.navigate(ROUTE_NAME.LIVE_STREAM, {
+            idRoom: id,
+            isHost: user?.id === infoRoom?.host?.id ? true : false,
+          });
         }
         GlobalService.hideLoading();
       } catch (error) {
