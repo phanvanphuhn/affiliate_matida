@@ -82,6 +82,7 @@ export const event = {
   TIDA: {
     TIDA_OPEN: 'tida_open',
     TIDA_ASK: 'tida_ask_questions',
+    TIDA_OPEN_HOMEPAGE: 'tida_ask_homepage_button',
   },
   BABY_TRACKER: {
     BABY_TRACKER_OPEN: 'baby_tracker_open',
