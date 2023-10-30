@@ -16,6 +16,7 @@ import {useTranslation} from 'react-i18next';
 import {AppButton} from '@component';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
+import {event, eventType, trackingAppEvent} from '@util';
 
 export const ChatGPTComponent = React.memo(() => {
   const navigation = useNavigation<any>();
@@ -56,6 +57,11 @@ export const ChatGPTComponent = React.memo(() => {
         <TouchableOpacity
           style={styles.btn}
           onPress={() => {
+            trackingAppEvent(
+              event.TIDA.TIDA_OPEN_HOMEPAGE,
+              {},
+              eventType.MIX_PANEL,
+            );
             navigation.navigate(ROUTE_NAME.CHAT_GPT);
           }}>
           <SvgSparkle />
