@@ -638,7 +638,7 @@ export const vi = {
   },
   deal: {
     by: 'bởi',
-    getDeal: 'Thu thập',
+    getDeal: 'Lấy mã',
     copyCode: 'Sao chép mã và sử dụng',
     cancel: 'Huỷ',
     dealCode: 'Mã ưu đãi',
