@@ -68,3 +68,4 @@ export * from './FloatingAIButton';
 export * from './AppPictureInPicture';
 export * from './talk';
 export * from './CheckAppVersion';
+export * from './FloatingNewBornButton';

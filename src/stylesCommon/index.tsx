@@ -62,6 +62,8 @@ const colors = {
   success_message: '#28B4AE',
   error_message: '#A67481',
   transparent: 'transparent',
+  primaryBackground: '#EE6566',
+  cancelBackground: '#F8F7F8',
 };
 
 //Font chữ được sử dụng trong app

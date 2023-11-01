@@ -4,6 +4,7 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
@@ -19,6 +20,9 @@ interface AppDatePickerProps {
   minimumDate?: any;
   dataDate?: any;
   style?: StyleProp<ViewStyle>;
+  textColor?: string;
+  mode?: 'date' | 'time' | 'datetime';
+  is24hourSource?: 'locale' | 'device';
 }
 
 export const AppDatePicker = ({
@@ -27,6 +31,9 @@ export const AppDatePicker = ({
   minimumDate,
   dataDate,
   style,
+  textColor,
+  mode,
+  is24hourSource,
 }: AppDatePickerProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const [date, setDate] = useState(new Date());
@@ -55,8 +62,8 @@ export const AppDatePicker = ({
             setDate(date);
             onChange(date);
           }}
-          mode="date"
-          textColor={colors.white}
+          mode={mode ? mode : 'date'}
+          textColor={textColor ? textColor : colors.white}
           maximumDate={new Date('2100-12-31')}
           minimumDate={minimumDate}
           androidVariant="iosClone"
@@ -67,6 +74,7 @@ export const AppDatePicker = ({
             flex: 1,
           }}
           locale={lang === 1 ? 'en' : 'vi'}
+          is24hourSource={is24hourSource}
         />
       </View>
     </View>

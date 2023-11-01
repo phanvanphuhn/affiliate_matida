@@ -57,6 +57,7 @@ import {EVideoType} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
+import {FloatingNewBornButton} from '@component/FloatingNewBornButton';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -440,6 +441,7 @@ const Home = () => {
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
       {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
+      {isShowForReviewer(user) && <FloatingNewBornButton />}
     </View>
   );
 };

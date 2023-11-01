@@ -129,7 +129,7 @@ export const CheckAppVersion = (props: CheckAppVersionProps) => {
       hideModalContentWhileAnimating
       backdropTransitionOutTiming={0}
       backdropOpacity={0.7}
-      // onBackdropPress={() => setIsVisible(false)}
+      onBackdropPress={() => setIsVisible(false)}
       isVisible={isVisible}>
       <View style={styles.viewContent}>
         <Text

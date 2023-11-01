@@ -64,6 +64,7 @@ import {Question3} from './auth/DueDate/Question3';
 import ListDetailPost from './app/Forum/components/ListDetailPost';
 import Deal from './app/Deal/Deal';
 import DetailDeal from './app/Deal/components/detailDeal';
+import NewBornScreen from './app/NewBorn';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -132,6 +133,7 @@ const screens = {
   ListDetailPost,
   Deal,
   DetailDeal,
+  NewBornScreen,
 };
 
 export {screens};
