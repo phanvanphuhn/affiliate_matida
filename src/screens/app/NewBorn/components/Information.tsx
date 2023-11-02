@@ -11,6 +11,7 @@ import {
 import {CalculationMethod} from '../../DueDate/Calculate/_type';
 import PickerOption from './Picker';
 import ImageOption from './ImageOption';
+import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
 
 export type TPickerOption = {
   id: number;
@@ -56,6 +57,7 @@ const Information = (props: TProps) => {
               textColor={colors.black}
               style={{backgroundColor: colors.white}}
               maximumDate={new Date()}
+              width={SCREEN_WIDTH}
             />
           </View>
         );
@@ -68,6 +70,7 @@ const Information = (props: TProps) => {
               textColor={colors.black}
               mode={'time'}
               style={{backgroundColor: colors.white}}
+              width={SCREEN_WIDTH}
             />
           </View>
         );

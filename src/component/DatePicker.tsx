@@ -13,6 +13,7 @@ import {DefaultTFuncReturn} from 'i18next';
 import {useSelector} from 'react-redux';
 
 import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
 
 interface AppDatePickerProps {
   title?: string | DefaultTFuncReturn;
@@ -24,6 +25,7 @@ interface AppDatePickerProps {
   mode?: 'date' | 'time' | 'datetime';
   is24hourSource?: 'locale' | 'device';
   maximumDate?: any;
+  width?: number;
 }
 
 export const AppDatePicker = ({
@@ -36,6 +38,7 @@ export const AppDatePicker = ({
   mode,
   is24hourSource,
   maximumDate,
+  width,
 }: AppDatePickerProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const [date, setDate] = useState(new Date());
@@ -57,7 +60,7 @@ export const AppDatePicker = ({
         style,
       ]}>
       {!!title && <Text style={styles.textTitle}>{title}</Text>}
-      <View style={[styles.viewDatePicker]}>
+      <View style={[styles.viewDatePicker, width ? {width: width} : {}]}>
         <DatePicker
           date={dataDate ? dataDate : date}
           onDateChange={date => {

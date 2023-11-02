@@ -1,4 +1,4 @@
-import {AppCameraModal2} from '@component';
+import {AppCameraModal, AppCameraModal2} from '@component';
 import {SvgIconDelete, iconAddImage} from '@images';
 import {colors, scaler} from '@stylesCommon';
 import React, {useState} from 'react';
@@ -49,7 +49,7 @@ const ImageOption = (props: TProps) => {
           />
         </TouchableOpacity>
       )}
-      <AppCameraModal2
+      <AppCameraModal
         visible={visible}
         setVisible={setVisible}
         onPress={handleChangeAvatar}
