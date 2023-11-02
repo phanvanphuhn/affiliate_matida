@@ -1,6 +1,6 @@
 import {AppCameraModal2} from '@component';
-import {iconAddImage} from '@images';
-import {scaler} from '@stylesCommon';
+import {SvgIconDelete, iconAddImage} from '@images';
+import {colors, scaler} from '@stylesCommon';
 import React, {useState} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {TState} from './Information';
@@ -21,18 +21,25 @@ const ImageOption = (props: TProps) => {
     setState({image: value.sourceURL});
   };
 
+  const onDeleteImage = () => {
+    setState({image: []});
+  };
+
   return (
     <>
       {state.image?.length > 0 ? (
-        <TouchableOpacity
-          style={{padding: scaler(32)}}
-          onPress={() => setVisible(true)}>
+        <TouchableOpacity onPress={() => setVisible(true)}>
           <FastImage
-            style={{flex: 1, width: SCREEN_WIDTH - 32}}
+            style={{height: scaler(120), width: scaler(120), borderRadius: 99}}
             source={{
               uri: `${state.image}`,
             }}
           />
+          <TouchableOpacity
+            style={styles.wrapDeleteContainer}
+            onPress={onDeleteImage}>
+            <SvgIconDelete fill={colors.red} />
+          </TouchableOpacity>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity onPress={() => setVisible(true)}>
@@ -51,6 +58,18 @@ const ImageOption = (props: TProps) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  wrapDeleteContainer: {
+    position: 'absolute',
+    top: scaler(4),
+    right: scaler(16),
+    height: scaler(12),
+    width: scaler(12),
+    backgroundColor: colors.red,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 99,
+  },
+});
 
 export default ImageOption;

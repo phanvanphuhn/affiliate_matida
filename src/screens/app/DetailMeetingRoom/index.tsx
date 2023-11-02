@@ -376,13 +376,13 @@ const DetailMeetingRoom = (props: any) => {
             isHost: user?.id === infoRoom?.host?.id ? true : false,
           });
         } else {
-          // Linking.openURL(
-          //   'https://www.tiktok.com/@matida.app?_t=8gp1GoMZytu&_r=1',
-          // );
-          navigation.navigate(ROUTE_NAME.LIVE_STREAM, {
-            idRoom: id,
-            isHost: user?.id === infoRoom?.host?.id ? true : false,
-          });
+          Linking.openURL(
+            'https://www.tiktok.com/@matida.app?_t=8gp1GoMZytu&_r=1',
+          );
+          // navigation.navigate(ROUTE_NAME.LIVE_STREAM, {
+          //   idRoom: id,
+          //   isHost: user?.id === infoRoom?.host?.id ? true : false,
+          // });
         }
         GlobalService.hideLoading();
       } catch (error) {

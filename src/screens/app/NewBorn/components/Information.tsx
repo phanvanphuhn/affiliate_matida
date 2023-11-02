@@ -21,13 +21,13 @@ export type TPickerOption = {
 export type TState = {
   page: number;
   isShowTidaSuggestion: boolean;
-  dmy: String;
-  hour: String;
-  name: String;
-  sex: String;
-  deliver: String;
-  weight: String;
-  height: String;
+  dmy: string;
+  hour: string;
+  name: string;
+  sex: string;
+  deliver: string;
+  weight: string;
+  height: string;
   image: [];
 };
 
@@ -55,6 +55,7 @@ const Information = (props: TProps) => {
               dataDate={state.dmy}
               textColor={colors.black}
               style={{backgroundColor: colors.white}}
+              maximumDate={new Date()}
             />
           </View>
         );
@@ -63,7 +64,7 @@ const Information = (props: TProps) => {
           <View style={styles.container}>
             <AppDatePicker
               onChange={(time: any) => setState({hour: time})}
-              dataDate={state.dmy}
+              dataDate={state.hour}
               textColor={colors.black}
               mode={'time'}
               style={{backgroundColor: colors.white}}
@@ -75,6 +76,7 @@ const Information = (props: TProps) => {
           <View style={styles.container}>
             <TextInput
               placeholder={"Baby's name"}
+              value={state.name}
               style={styles.wrapInputContainer}
               autoFocus={true}
               onChangeText={text => {
@@ -109,6 +111,7 @@ const Information = (props: TProps) => {
         return (
           <View style={styles.container}>
             <TextInput
+              value={state.weight}
               placeholder={"Baby's weight"}
               style={styles.wrapInputContainer}
               autoFocus={true}
@@ -122,6 +125,7 @@ const Information = (props: TProps) => {
         return (
           <View style={styles.container}>
             <TextInput
+              value={state.height}
               placeholder={"Baby's height"}
               style={styles.wrapInputContainer}
               autoFocus={true}

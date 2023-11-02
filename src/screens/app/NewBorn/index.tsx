@@ -1,5 +1,5 @@
 import {colors, scaler} from '@stylesCommon';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -72,7 +72,11 @@ const NewBornScreen = () => {
   ];
 
   const onNewBornTida = () => {
-    setState({isShowTidaSuggestion: !state.isShowTidaSuggestion});
+    setState({isShowTidaSuggestion: true});
+    const tout = setTimeout(() => {
+      clearTimeout(tout);
+      setState({isShowTidaSuggestion: false});
+    }, 5000);
   };
 
   const onNextPage = () => {
@@ -90,6 +94,10 @@ const NewBornScreen = () => {
   const onDone = () => {
     navigation.navigate(ROUTE_NAME.SCREEN_TAB);
   };
+
+  useEffect(() => {
+    setState({isShowTidaSuggestion: false});
+  }, [state.page]);
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
@@ -125,7 +133,11 @@ const NewBornScreen = () => {
 
         <View style={styles.wrapBottomContainer}>
           {state.page > 0 && state.page < 9 && (
-            <Button onNextPage={onNextPage} onPreviousPage={onPreviousPage} />
+            <Button
+              onNextPage={onNextPage}
+              onPreviousPage={onPreviousPage}
+              state={state}
+            />
           )}
 
           <TouchableOpacity onPress={onNewBornTida} activeOpacity={0.9}>

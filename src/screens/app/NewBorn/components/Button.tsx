@@ -7,14 +7,29 @@ import {
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {TState} from './Information';
 
 type TProps = {
   onNextPage: () => void;
   onPreviousPage: () => void;
+  state: TState;
 };
 
 const Button = (props: TProps) => {
-  const {onNextPage, onPreviousPage} = props;
+  const {onNextPage, onPreviousPage, state} = props;
+
+  const disableNextBtn = () => {
+    if (state.name.length < 1 && state.page == 3) {
+      return true;
+    } else if (state.weight.length < 1 && state.page == 6) {
+      return true;
+    } else if (state.height.length < 1 && state.page == 7) {
+      return true;
+    } else {
+      false;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.nextButton} onPress={onPreviousPage}>
@@ -23,12 +38,17 @@ const Button = (props: TProps) => {
           style={{height: scaler(48), width: scaler(48)}}
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.nextButton} onPress={onNextPage}>
-        <Image
-          source={iconNextNewBorn}
-          style={{height: scaler(48), width: scaler(48)}}
-        />
-      </TouchableOpacity>
+      {!disableNextBtn() && (
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={onNextPage}
+          disabled={disableNextBtn()}>
+          <Image
+            source={iconNextNewBorn}
+            style={{height: scaler(48), width: scaler(48)}}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -23,6 +23,7 @@ interface AppDatePickerProps {
   textColor?: string;
   mode?: 'date' | 'time' | 'datetime';
   is24hourSource?: 'locale' | 'device';
+  maximumDate?: any;
 }
 
 export const AppDatePicker = ({
@@ -34,6 +35,7 @@ export const AppDatePicker = ({
   textColor,
   mode,
   is24hourSource,
+  maximumDate,
 }: AppDatePickerProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const [date, setDate] = useState(new Date());
@@ -64,7 +66,7 @@ export const AppDatePicker = ({
           }}
           mode={mode ? mode : 'date'}
           textColor={textColor ? textColor : colors.white}
-          maximumDate={new Date('2100-12-31')}
+          maximumDate={maximumDate ? maximumDate : new Date('2100-12-31')}
           minimumDate={minimumDate}
           androidVariant="iosClone"
           fadeToColor="none"

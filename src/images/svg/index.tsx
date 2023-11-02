@@ -917,6 +917,7 @@ function SvgNotResult(props: any) {
 }
 
 function SvgIconDelete(props: any) {
+  const {fill} = props;
   return (
     <Svg
       width={20}
@@ -925,7 +926,7 @@ function SvgIconDelete(props: any) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
-      <Rect width={20} height={20} rx={10} fill="#D3D3D3" />
+      <Rect width={20} height={20} rx={10} fill={fill ? fill : '#D3D3D3'} />
       <Path
         d="M13.375 6.625l-6.75 6.75M13.375 13.375l-6.75-6.75"
         stroke="#fff"
