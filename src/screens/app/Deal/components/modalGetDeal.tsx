@@ -27,7 +27,7 @@ const ModalGetDeal = (props: any) => {
         return t('deal.email');
       case 'address':
         return t('deal.address');
-      case 'phoneNumber':
+      case 'phone_number':
         return t('deal.phoneNumber');
     }
   };
