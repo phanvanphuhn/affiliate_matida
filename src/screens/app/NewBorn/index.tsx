@@ -21,11 +21,13 @@ import Title from './components/Title';
 import {ROUTE_NAME} from '@routeName';
 import KeyboardShift from '../DetailFeed/components/KeyboardShift';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useTranslation} from 'react-i18next';
 
 const screenWidth = Dimensions.get('screen').width;
 
 const NewBornScreen = () => {
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
 
   const [state, setState] = useDetailPost({
     page: 0,
@@ -145,8 +147,7 @@ const NewBornScreen = () => {
               <View style={styles.wrapSuggestion}>
                 <Image source={iconCloudSuggestion} style={styles.suggestion} />
                 <Text style={styles.suggestionTitle}>
-                  Tida will be your personal assistant. Feel free to reach me
-                  out anytime if you have any question.
+                  {t('newBorn.tidaDesc')}
                 </Text>
               </View>
             ) : null}

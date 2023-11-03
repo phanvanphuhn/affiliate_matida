@@ -12,6 +12,7 @@ import {CalculationMethod} from '../../DueDate/Calculate/_type';
 import PickerOption from './Picker';
 import ImageOption from './ImageOption';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
+import {useTranslation} from 'react-i18next';
 
 export type TPickerOption = {
   id: number;
@@ -45,6 +46,7 @@ type TProps = {
 const Information = (props: TProps) => {
   const {state, setState, onNextPage, onPreviousPage, onDone, sex, deliver} =
     props;
+  const {t} = useTranslation();
 
   const renderData = () => {
     switch (state.page) {
@@ -78,7 +80,7 @@ const Information = (props: TProps) => {
         return (
           <View style={styles.container}>
             <TextInput
-              placeholder={"Baby's name"}
+              placeholder={t('newBorn.babyName')}
               value={state.name}
               style={styles.wrapInputContainer}
               autoFocus={true}
@@ -115,7 +117,7 @@ const Information = (props: TProps) => {
           <View style={styles.container}>
             <TextInput
               value={state.weight}
-              placeholder={"Baby's weight"}
+              placeholder={t('newBorn.babyWeight')}
               style={styles.wrapInputContainer}
               autoFocus={true}
               onChangeText={text => {
@@ -129,7 +131,7 @@ const Information = (props: TProps) => {
           <View style={styles.container}>
             <TextInput
               value={state.height}
-              placeholder={"Baby's height"}
+              placeholder={t('newBorn.babyHeight')}
               style={styles.wrapInputContainer}
               autoFocus={true}
               onChangeText={text => {
@@ -150,7 +152,7 @@ const Information = (props: TProps) => {
             <TouchableOpacity
               onPress={onDone}
               style={styles.wrapNextButtonContainer}>
-              <Text style={styles.nextButtonTitle}>Done</Text>
+              <Text style={styles.nextButtonTitle}>{t('newBorn.done')}</Text>
             </TouchableOpacity>
           </View>
         );
@@ -160,12 +162,12 @@ const Information = (props: TProps) => {
             <TouchableOpacity
               onPress={onNextPage}
               style={styles.wrapNextButtonContainer}>
-              <Text style={styles.nextButtonTitle}>Yes</Text>
+              <Text style={styles.nextButtonTitle}>{t('newBorn.yes')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={onPreviousPage}
               style={styles.wrapPreviousButtonContainer}>
-              <Text style={styles.previousButtonTitle}>No</Text>
+              <Text style={styles.previousButtonTitle}>{t('newBorn.no')}</Text>
             </TouchableOpacity>
           </View>
         );

@@ -4,6 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {scaler} from '@stylesCommon';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
 import {TPickerOption, TState} from './Information';
+import {useTranslation} from 'react-i18next';
 
 type TProps = {
   data: TPickerOption[];
@@ -15,6 +16,22 @@ type TProps = {
 const PickerOption = (props: TProps) => {
   const {data, setState, state, type} = props;
   const pickerRef = useRef<any>(null);
+  const {t} = useTranslation();
+
+  const renderLabel = (value: string) => {
+    switch (value) {
+      case 'male':
+        return t('newBorn.male');
+      case 'female':
+        return t('newBorn.female');
+      case 'notToSay':
+        return t('newBorn.notToSay');
+      case 'naturalBirth':
+        return t('newBorn.naturalBirth');
+      case 'cSection':
+        return t('newBorn.cSection');
+    }
+  };
 
   return (
     <Picker
@@ -29,7 +46,9 @@ const PickerOption = (props: TProps) => {
       }}
       style={{flex: 1, width: '100%'}}>
       {data.map(item => {
-        return <Picker.Item label={item.title} value={item.value} />;
+        return (
+          <Picker.Item label={renderLabel(item.value)} value={item.value} />
+        );
       })}
     </Picker>
   );

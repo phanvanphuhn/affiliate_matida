@@ -1,5 +1,6 @@
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -10,6 +11,7 @@ type TProps = {
 
 const ProcessBar = (props: TProps) => {
   const {page} = props;
+  const {t} = useTranslation();
   return (
     <View style={styles.container}>
       <View style={styles.processBar}>
@@ -24,7 +26,7 @@ const ProcessBar = (props: TProps) => {
       </View>
       <View style={styles.wrapProcessContent}>
         <Text style={styles.title}>{page?.toString()}/8</Text>
-        <Text style={styles.title}>Finish</Text>
+        <Text style={styles.title}>{t('newBorn.finish')}</Text>
       </View>
     </View>
   );
