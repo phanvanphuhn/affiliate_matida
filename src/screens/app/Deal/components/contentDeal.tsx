@@ -34,7 +34,7 @@ const ContentDeal = (props: any) => {
     name: '',
     email: '',
     address: '',
-    phoneNumber: '',
+    phone_number: '',
   });
 
   const onChangeText = (value: String, item: String) => {
@@ -48,8 +48,8 @@ const ContentDeal = (props: any) => {
       case 'address':
         setState({address: value});
         break;
-      case 'phoneNumber':
-        setState({phoneNumber: value});
+      case 'phone_number':
+        setState({phone_number: value});
         break;
     }
   };
@@ -69,8 +69,12 @@ const ContentDeal = (props: any) => {
       },
       eventType.MIX_PANEL,
     );
+    const params = {
+      state,
+      id: data?.id,
+    };
     try {
-      const res = await submitDeal(state);
+      const res = await submitDeal(params);
       if (res?.success) {
         showMessage({
           message: 'Submit deal success',
@@ -209,11 +213,10 @@ const ContentDeal = (props: any) => {
       </ScrollView>
       <ModalGetDeal
         onCancel={onCloseModal}
-        // onConfirm={data?.required_data ? onSubmit : onPressGetDeal}
-        onConfirm={onPressGetDeal}
+        onConfirm={data?.required_data ? onSubmit : onPressGetDeal}
         visible={isShowModal}
         dealCode={data?.code}
-        // requiredData={data?.required_data}
+        requiredData={data?.required_data}
         onChangeText={onChangeText}
       />
     </View>

@@ -647,7 +647,7 @@ export const vi = {
     email: 'Email',
     phoneNumber: 'Số điện thoại',
     getOffer: 'Nhận ưu đãi',
-    submit: 'submit',
+    submit: 'Nhận tư vấn',
   },
   newBorn: {
     hi: 'Chào mẹ,',
