@@ -1,4 +1,4 @@
-import {SvgSearch, imageNameApp, imageNameAppPink} from '@images';
+import {SvgCaretDown, SvgSearch, imageNameApp, imageNameAppPink} from '@images';
 import React, {useCallback, useState} from 'react';
 import {
   ActivityIndicator,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableOpacityBase,
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -21,7 +22,7 @@ import {AppImage} from './AppImage';
 
 interface IProps {
   onPressMenu?: () => void;
-  onPressAvatar: () => void;
+  onPressAvatar?: () => void;
   onPressNotification?: () => void;
   onPressMessage?: () => void;
   onPressLogo: () => void;
@@ -30,6 +31,8 @@ interface IProps {
   IconMessage?: JSX.Element;
   bgc?: string;
   isFeed?: boolean;
+  rightNoti?: () => void;
+  openNewBorn?: () => void;
 }
 export const AppHeader = ({
   onPressMenu,
@@ -42,6 +45,8 @@ export const AppHeader = ({
   IconMessage = <SvgMessage />,
   bgc,
   isFeed,
+  rightNoti,
+  openNewBorn,
 }: IProps) => {
   const user = useSelector((state: any) => state.auth.userInfo);
   // const dataListChat = useSelector((state: any) => state?.listChat?.list);
@@ -114,10 +119,45 @@ export const AppHeader = ({
             <SvgMenu color={bgc ? 'black' : 'white'} />
           </TouchableOpacity>
         )}
-        <TouchableOpacity
-          onPress={onPressAvatar}
-          style={{marginLeft: scaler(20)}}>
-          {/* {user?.avatar?.length > 0 ? (
+        {rightNoti ? (
+          <TouchableOpacity
+            onPress={onPressNotification}
+            style={{
+              paddingVertical: scaler(10),
+              marginLeft: scaler(18),
+              marginRight: scaler(2),
+            }}>
+            {<SvgNotification color={bgc ? 'black' : 'white'} />}
+            {!!totalUnreadNotification && (
+              <View
+                style={[
+                  styles.viewIndexNoti,
+                  +totalUnreadNotification < 10 && {
+                    paddingHorizontal: scaler(5),
+                  },
+                ]}>
+                <Text style={styles.textIndexNoti}>
+                  {+totalUnreadNotification > 99 ? 99 : totalUnreadNotification}
+                </Text>
+                {+totalUnreadNotification > 99 && (
+                  <Text
+                    style={[
+                      {
+                        textAlignVertical: 'top',
+                      },
+                      styles.textIndexNoti,
+                    ]}>
+                    +
+                  </Text>
+                )}
+              </View>
+            )}
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={onPressAvatar}
+            style={{marginLeft: scaler(20)}}>
+            {/* {user?.avatar?.length > 0 ? (
             <>
               <FastImage
                 style={styles.avatarImage}
@@ -133,13 +173,14 @@ export const AppHeader = ({
           ) : (
             <Image source={avatarDefault} style={styles.avatarImage} />
           )} */}
-          <AppImage uri={user?.avatar} style={styles.avatarImage} user />
-          {loading === true ? (
-            <View style={styles.viewLoading}>
-              <ActivityIndicator color={colors.primary} size="small" />
-            </View>
-          ) : null}
-        </TouchableOpacity>
+            <AppImage uri={user?.avatar} style={styles.avatarImage} user />
+            {loading === true ? (
+              <View style={styles.viewLoading}>
+                <ActivityIndicator color={colors.primary} size="small" />
+              </View>
+            ) : null}
+          </TouchableOpacity>
+        )}
       </View>
       <TouchableOpacity onPress={onPressLogo} activeOpacity={0.9}>
         {/* <Text style={styles.textLogo}>Matida</Text> */}
@@ -149,7 +190,19 @@ export const AppHeader = ({
         />
       </TouchableOpacity>
       <View style={styles.row}>
-        {onPressNotification && (
+        {openNewBorn && (
+          <TouchableOpacity
+            style={{flexDirection: 'row', marginRight: scaler(16)}}
+            onPress={openNewBorn}>
+            <View style={{marginRight: scaler(4)}}>
+              <Text>Bear</Text>
+            </View>
+            <View>
+              <SvgCaretDown stroke={bgc ? colors.black : 'white'} />
+            </View>
+          </TouchableOpacity>
+        )}
+        {onPressNotification && !rightNoti && (
           <TouchableOpacity
             onPress={onPressNotification}
             style={{
@@ -274,8 +327,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    right: scaler(14),
-    top: scaler(6),
+    left: scaler(12),
+    top: scaler(4),
     padding: scaler(2),
     flexDirection: 'row',
   },

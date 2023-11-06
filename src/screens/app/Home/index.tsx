@@ -1,11 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import {
   Animated,
   Platform,
   RefreshControl,
   ScrollView,
   StatusBar,
+  Text,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -28,7 +29,7 @@ import {
   GlobalService,
   updateUserInfo,
 } from '@services';
-import {scaler} from '@stylesCommon';
+import {colors, scaler} from '@stylesCommon';
 import {
   ChatGPTComponent,
   PregnancyProgress,
@@ -58,6 +59,12 @@ import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
 import {FloatingNewBornButton} from '@component/FloatingNewBornButton';
+import ListMonth from './components/ListMonth';
+import useDetailFeed from '../DetailFeed/useDetailFeed';
+import useDetailPost from '../Forum/components/useDetailPost';
+import NewBornBottomSheet from './components/NewBornBottomSheet';
+import BottomSheet from '@gorhom/bottom-sheet';
+import NewBornContainer from './components/NewBornContainer';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -71,6 +78,10 @@ type IData = {
   rooms: any[];
   dailyQuizz: any | undefined;
   masterClasses: any[];
+};
+
+export type TState = {
+  filter: string;
 };
 
 const Home = () => {
@@ -88,10 +99,16 @@ const Home = () => {
   }
 
   const [refreshing, setRefreshing] = useState(false);
+  const [state, setState] = useDetailPost({
+    filter: 'w1',
+  });
   // const [loading, setLoading] = useState<boolean>(true);
 
   const scrollRef = useRef<ScrollView>(null);
   const firstRef = useRef(false);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const snapPoints = useMemo(() => ['30%'], []);
 
   const isFocus = useSelector((state: any) => state?.tab?.home);
   const lang = useSelector((state: any) => state?.auth?.lang);
@@ -224,6 +241,8 @@ const Home = () => {
     });
   };
 
+  const openNewBorn = () => {};
+
   const handlePressItemArticle = (article: IArticles) => {
     navigation.navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
   };
@@ -278,9 +297,13 @@ const Home = () => {
     }
   };
 
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Animated.Image
+      {/* <Animated.Image
         source={imageBackgroundOpacity}
         style={[
           styles.circleBackground,
@@ -293,14 +316,24 @@ const Home = () => {
             ],
           },
         ]}
-      />
+      /> */}
       <AppHeader
         onPressMenu={navigateSetting}
-        onPressAvatar={navigateUser}
         onPressNotification={navigateNotification}
-        onPressMessage={navigationMessage}
         onPressLogo={handlePressLogo}
+        bgc={colors.white}
+        rightNoti={navigateNotification}
+        openNewBorn={openNewBorn}
       />
+
+      <View
+        style={{
+          backgroundColor: colors.white,
+          paddingBottom: scaler(16),
+          paddingHorizontal: scaler(16),
+        }}>
+        <ListMonth state={state} setState={setState} />
+      </View>
 
       <ScrollView
         ref={scrollRef}
@@ -325,7 +358,23 @@ const Home = () => {
           paddingBottom: scaler(30),
           paddingTop: scaler(18),
         }}>
-        {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
+        <View
+          style={{
+            // paddingHorizontal: scaler(20),
+            marginBottom: scaler(16),
+          }}>
+          <ChatGPTComponent />
+        </View>
+
+        <View
+          style={{
+            // paddingHorizontal: scaler(20),
+            marginBottom: scaler(16),
+          }}>
+          <NewBornContainer />
+        </View>
+
+        {/* {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
           <>
             {isShowForReviewer(user) && (
               <View>
@@ -348,7 +397,7 @@ const Home = () => {
               </View>
             </View>
           </>
-        )}
+        )} */}
 
         {/* <View>
           <ListPostComponent posts={data?.posts} />
@@ -442,6 +491,21 @@ const Home = () => {
       </ScrollView>
       {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
       {isShowForReviewer(user) && <FloatingNewBornButton />}
+      {/* {isShowForReviewer(user) && (
+        <View style={{flex: 1, padding: 24, backgroundColor: 'grey'}}>
+          <BottomSheet
+            ref={bottomSheetRef}
+            index={-1}
+            // enablePanDownToClose={true}
+            // backdropComponent={renderBackdrop}
+            snapPoints={snapPoints}
+            onChange={handleSheetChanges}>
+            <View style={{flex: 1}}>
+              <Text>Bottom sheet</Text>
+            </View>
+          </BottomSheet>
+        </View>
+      )} */}
     </View>
   );
 };

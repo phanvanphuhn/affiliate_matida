@@ -23,6 +23,7 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {trackTestYourKnowledgeClicked} from '@services/webengageManager.tsx';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const ViewQuiz = React.memo((props: any) => {
   const {onAnswer} = props;
@@ -64,7 +65,7 @@ export const ViewQuiz = React.memo((props: any) => {
   const renderViewResult = () => {
     if (data?.percent_diff_answer || data?.percent_same_answer) {
       return (
-        <View style={styles.viewResult}>
+        <View style={[styles.viewResult, {alignItems: 'center'}]}>
           {/* <Image
             source={data?.is_correct === true ? iconSuccessQuiz : iconFalseQuiz}
             style={[styles.iconIconResult, {}]}
@@ -125,11 +126,9 @@ export const ViewQuiz = React.memo((props: any) => {
         <View style={styles.viewResult}>
           <Text
             style={{
-              ...stylesCommon.fontPlus600,
-              fontSize: scaler(24),
+              ...stylesCommon.fontWeight500,
+              fontSize: scaler(11),
               color: '#FFFFFF',
-              textAlign: 'center',
-              marginBottom: scaler(24),
             }}>
             {t('home.testKnowledge')}
           </Text>
@@ -171,7 +170,6 @@ export const ViewQuiz = React.memo((props: any) => {
           </View> */}
           <FlatList
             data={data?.answers}
-            horizontal
             bounces={false}
             scrollEnabled={false}
             keyExtractor={(item: any) => item.id}
@@ -191,15 +189,10 @@ export const ViewQuiz = React.memo((props: any) => {
           // styles.buttonAnswer,
           {
             backgroundColor: '#FFFFFF',
-            justifyContent: 'center',
-            alignItems: 'center',
             borderRadius: scaler(8),
             padding: scaler(12),
-            width: (widthScreen - scaler(24) * 4) / 2 - scaler(8),
-          },
-          {
-            marginRight: index === 0 ? scaler(8) : 0,
-            marginLeft: index === 0 ? 0 : scaler(8),
+            width: '100%',
+            marginBottom: scaler(12),
           },
         ]}
         onPress={() => {
@@ -213,9 +206,10 @@ export const ViewQuiz = React.memo((props: any) => {
             eventType.MIX_PANEL,
           );
           onAnswer(body);
-          trackTestYourKnowledgeClicked(data?.question_en,item?.answer_en);
+          trackTestYourKnowledgeClicked(data?.question_en, item?.answer_en);
         }}>
         <Text style={styles.txtTrueFalse}>
+          {index == 0 ? 'A. ' : 'B. '}{' '}
           {lang === 1 ? item?.answer_en : item?.answer_vi}
         </Text>
       </TouchableOpacity>
@@ -226,13 +220,15 @@ export const ViewQuiz = React.memo((props: any) => {
     <>
       {data ? (
         <View style={styles.container}>
-          <View style={styles.viewContent}>
+          <LinearGradient
+            colors={['rgb(134, 85, 255)', '#EE6566']}
+            style={styles.viewContent}>
             <Image
               source={IconBackgroundImageHome}
               style={styles.imageBackground}
             />
             {renderViewResult()}
-          </View>
+          </LinearGradient>
         </View>
       ) : null}
     </>
@@ -242,7 +238,7 @@ export const ViewQuiz = React.memo((props: any) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingHorizontal: scaler(24),
+    paddingHorizontal: scaler(16),
     marginBottom: scaler(40),
   },
   viewContent: {
@@ -257,28 +253,22 @@ const styles = StyleSheet.create({
     height: scaler(249),
     position: 'absolute',
     right: 0,
-    bottom: scaler(8),
+    top: scaler(-100),
   },
   viewResult: {
     flex: 1,
-    paddingHorizontal: scaler(24),
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: scaler(16),
   },
   viewTitle: {
     width: '100%',
-    padding: scaler(16),
-    backgroundColor: 'rgba(85, 60, 180, 0.8)',
     borderRadius: scaler(8),
-    alignItems: 'center',
-    marginBottom: scaler(40),
+    marginBottom: scaler(24),
   },
   txtTitleContent: {
     ...stylesCommon.fontPlus600,
     fontSize: scaler(18),
     lineHeight: scaler(33),
     color: '#FFFFFF',
-    textAlign: 'center',
   },
   viewRow: {
     width: '100%',
@@ -344,6 +334,5 @@ const styles = StyleSheet.create({
     fontSize: scaler(14),
     color: colors.textColor,
     ...stylesCommon.fontWeight600,
-    textAlign: 'center',
   },
 });

@@ -28,6 +28,8 @@ const iconCloudSuggestion = require('./cloudSuggestion.png');
 const iconGoBackNewBorn = require('./icGoBack.png');
 const iconNextNewBorn = require('./icNext.png');
 const iconAddImage = require('./icAddImage.png');
+const chatGPTbackground = require('./chatGPTbackground.png');
+const tailArrowRight = require('./arrow-right.png');
 
 export {
   iconFlagVn,
@@ -60,4 +62,6 @@ export {
   iconGoBackNewBorn,
   iconNextNewBorn,
   iconAddImage,
+  chatGPTbackground,
+  tailArrowRight,
 };

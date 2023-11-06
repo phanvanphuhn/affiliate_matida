@@ -70,7 +70,7 @@ const SizeComparison = () => {
   useUXCam(ROUTE_NAME.SIZE_COMPARISON);
   const getData = async (value: any) => {
     setSelectedWeek(value);
-    trackClickedOnPregnancyTracker(value,status);
+    trackClickedOnPregnancyTracker(value, status);
     try {
       GlobalService.showLoading();
       setTimeout(() => {
@@ -252,7 +252,7 @@ const SizeComparison = () => {
           return (
             <ViewSelectType
               onChaneStatus={value => {
-              trackClickedOnPregnancyTracker(weekSelected,value);
+                trackClickedOnPregnancyTracker(weekSelected, value);
                 setStatus(value);
                 statusView.current = value;
                 if (value === 1) {
