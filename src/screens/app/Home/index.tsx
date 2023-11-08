@@ -57,6 +57,7 @@ import {EVideoType} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
+import {trackCustomEvent} from '@services/webengageManager';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -100,6 +101,33 @@ const Home = () => {
   const loading = useSelector((state: any) => state?.home?.loading);
   const deepLink = useSelector((state: any) => state?.check?.deepLink);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
+
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+
+  function formatDate(date) {
+    return (
+      [
+        date.getFullYear(),
+        padTo2Digits(date.getMonth() + 1),
+        padTo2Digits(date.getDate()),
+      ].join('-') +
+      ' ' +
+      [
+        padTo2Digits(date.getHours()),
+        padTo2Digits(date.getMinutes()),
+        padTo2Digits(date.getSeconds()),
+      ].join(':')
+    );
+  }
+
+  useEffect(() => {
+    trackCustomEvent('User_Info', {
+      info: user,
+      due_date: formatDate(new Date()),
+    });
+  }, []);
 
   useUXCam(ROUTE_NAME.HOME);
 
