@@ -30,6 +30,9 @@ const iconNextNewBorn = require('./icNext.png');
 const iconAddImage = require('./icAddImage.png');
 const chatGPTbackground = require('./chatGPTbackground.png');
 const tailArrowRight = require('./arrow-right.png');
+const iconPregnant = require('./pregnant.png');
+const iconArrowRightGrey = require('./arrowRightGrey.png');
+const iconPlusCircle = require('./plus-circle.png');
 
 export {
   iconFlagVn,
@@ -64,4 +67,7 @@ export {
   iconAddImage,
   chatGPTbackground,
   tailArrowRight,
+  iconPregnant,
+  iconArrowRightGrey,
+  iconPlusCircle,
 };

@@ -3,7 +3,13 @@ import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 
-const NewBornContainer = () => {
+type TProps = {
+  onPress: () => void;
+};
+
+const NewBornContainer = (props: TProps) => {
+  const {onPress} = props;
+
   return (
     <View style={styles.container}>
       <View style={[styles.wrapContentContainer, {marginBottom: scaler(32)}]}>
@@ -62,7 +68,7 @@ const NewBornContainer = () => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.wrapBtnContainer}>
+        <TouchableOpacity style={styles.wrapBtnContainer} onPress={onPress}>
           <Text style={styles.btnTitle}>View more</Text>
           <Image
             source={tailArrowRight}

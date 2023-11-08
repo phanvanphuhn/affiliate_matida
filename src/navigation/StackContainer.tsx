@@ -318,6 +318,14 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.NEW_BORN}
             component={screens.NewBornScreen}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.DETAIL_NEW_BORN}
+            component={screens.DetailNewBorn}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.EDIT_NEW_BORN}
+            component={screens.EditNewBorn}
+          />
         </Stack.Navigator>
       );
     } else {

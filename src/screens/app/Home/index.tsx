@@ -62,9 +62,11 @@ import {FloatingNewBornButton} from '@component/FloatingNewBornButton';
 import ListMonth from './components/ListMonth';
 import useDetailFeed from '../DetailFeed/useDetailFeed';
 import useDetailPost from '../Forum/components/useDetailPost';
-import NewBornBottomSheet from './components/NewBornBottomSheet';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheetModal from '@component/BottomSheetModal';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import NewBornContainer from './components/NewBornContainer';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import BottomSheetNewBorn from './components/BottomSheetNewBorn';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -101,6 +103,7 @@ const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [state, setState] = useDetailPost({
     filter: 'w1',
+    isShowNewBorn: false,
   });
   // const [loading, setLoading] = useState<boolean>(true);
 
@@ -108,7 +111,7 @@ const Home = () => {
   const firstRef = useRef(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const snapPoints = useMemo(() => ['30%'], []);
+  const snapPoints = useMemo(() => ['20%', '50%'], []);
 
   const isFocus = useSelector((state: any) => state?.tab?.home);
   const lang = useSelector((state: any) => state?.auth?.lang);
@@ -241,7 +244,27 @@ const Home = () => {
     });
   };
 
-  const openNewBorn = () => {};
+  const onNavigateNewBorn = () => {
+    handleCloseScheduleOrderBottomSheet();
+    navigation.navigate(ROUTE_NAME.NEW_BORN);
+  };
+
+  const onNavigateDetailNewBorn = () => {
+    handleCloseScheduleOrderBottomSheet();
+    navigation.navigate(ROUTE_NAME.DETAIL_NEW_BORN);
+  };
+
+  const openNewBorn = useCallback(() => {
+    handleScheduleOrderSheetChanges(0);
+  }, []);
+
+  const handleScheduleOrderSheetChanges = useCallback((index: number) => {
+    bottomSheetRef.current?.collapse();
+  }, []);
+
+  const handleCloseScheduleOrderBottomSheet = () => {
+    bottomSheetRef.current?.close();
+  };
 
   const handlePressItemArticle = (article: IArticles) => {
     navigation.navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
@@ -297,12 +320,8 @@ const Home = () => {
     }
   };
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       {/* <Animated.Image
         source={imageBackgroundOpacity}
         style={[
@@ -371,7 +390,7 @@ const Home = () => {
             // paddingHorizontal: scaler(20),
             marginBottom: scaler(16),
           }}>
-          <NewBornContainer />
+          <NewBornContainer onPress={onNavigateDetailNewBorn} />
         </View>
 
         {/* {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
@@ -490,23 +509,24 @@ const Home = () => {
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
       {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
-      {isShowForReviewer(user) && <FloatingNewBornButton />}
-      {/* {isShowForReviewer(user) && (
-        <View style={{flex: 1, padding: 24, backgroundColor: 'grey'}}>
-          <BottomSheet
-            ref={bottomSheetRef}
-            index={-1}
-            // enablePanDownToClose={true}
-            // backdropComponent={renderBackdrop}
-            snapPoints={snapPoints}
-            onChange={handleSheetChanges}>
-            <View style={{flex: 1}}>
-              <Text>Bottom sheet</Text>
-            </View>
-          </BottomSheet>
-        </View>
-      )} */}
-    </View>
+      {isShowForReviewer(user) && (
+        <FloatingNewBornButton onPress={onNavigateNewBorn} />
+      )}
+      {isShowForReviewer(user) && (
+        <BottomSheetModal
+          ref={bottomSheetRef}
+          snapPoints={snapPoints}
+          onChange={handleScheduleOrderSheetChanges}
+          animateOnMount={false}
+          onClose={handleCloseScheduleOrderBottomSheet}
+          enablePanDownToClose={true}>
+          <BottomSheetNewBorn
+            onPress={onNavigateNewBorn}
+            onNavigateDetailNewBorn={onNavigateDetailNewBorn}
+          />
+        </BottomSheetModal>
+      )}
+    </GestureHandlerRootView>
   );
 };
 

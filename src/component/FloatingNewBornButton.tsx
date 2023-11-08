@@ -5,18 +5,16 @@ import {iconNewBorn} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 
-export const FloatingNewBornButton = () => {
-  const navigation = useNavigation<any>();
+type TProps = {
+  onPress: () => void;
+};
 
-  const onNavigateNewBorn = () => {
-    navigation.navigate(ROUTE_NAME.NEW_BORN);
-  };
+export const FloatingNewBornButton = (props: TProps) => {
+  const {onPress} = props;
 
   return (
     <View style={[styles.container]}>
-      <TouchableOpacity
-        style={styles.wrapButtonContainer}
-        onPress={onNavigateNewBorn}>
+      <TouchableOpacity style={styles.wrapButtonContainer} onPress={onPress}>
         <Image source={iconNewBorn} style={styles.button} />
       </TouchableOpacity>
     </View>
