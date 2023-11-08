@@ -648,5 +648,6 @@ export const vi = {
     phoneNumber: 'Số điện thoại',
     getOffer: 'Nhận ưu đãi',
     submit: 'Nhận tư vấn',
+    contactForm: 'Nhận tư vấn',
   },
 };

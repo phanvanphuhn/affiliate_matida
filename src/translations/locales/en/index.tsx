@@ -644,5 +644,6 @@ export const en = {
     phoneNumber: 'Phone Number',
     getOffer: 'Contact form',
     submit: 'Submit',
+    contactForm: 'Contact Form',
   },
 };
