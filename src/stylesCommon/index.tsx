@@ -64,6 +64,7 @@ const colors = {
   transparent: 'transparent',
   primaryBackground: '#EE6566',
   cancelBackground: '#F8F7F8',
+  labelColor: '#39383D',
 };
 
 //Font chữ được sử dụng trong app
