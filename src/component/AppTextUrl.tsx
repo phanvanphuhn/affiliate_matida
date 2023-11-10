@@ -31,7 +31,10 @@ export const AppTextUrl = ({
       afterLink = url.replace(new RegExp(`^${DEEP_LINK}/`), '');
     } else if (url.startsWith(OLD_DEEP_LINK)) {
       afterLink = url.replace(new RegExp(`^${OLD_DEEP_LINK}/`), '');
+    } else {
+      Linking.openURL(url);
     }
+
     const arrayParamsLink = afterLink.split('/');
 
     if (arrayParamsLink?.length > 2) {
@@ -42,8 +45,6 @@ export const AppTextUrl = ({
         handleDeepLink(link?.url, true);
       }
       // handleDeepLink(url, true);
-    } else {
-      Linking.openURL(url);
     }
     !!onCallback && onCallback();
   };
