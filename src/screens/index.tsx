@@ -67,6 +67,8 @@ import DetailDeal from './app/Deal/components/detailDeal';
 import NewBornScreen from './app/NewBorn';
 import DetailNewBorn from './app/NewBorn/components/DetailNewBorn';
 import EditNewBorn from './app/NewBorn/components/EditNewBorn';
+import AddBaby from './app/AddBaby';
+import AddNewBaby from './app/AddBaby/components/AddNewBaby';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -138,6 +140,8 @@ const screens = {
   NewBornScreen,
   DetailNewBorn,
   EditNewBorn,
+  AddBaby,
+  AddNewBaby,
 };
 
 export {screens};

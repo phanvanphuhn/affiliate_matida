@@ -35,6 +35,7 @@ const iconArrowRightGrey = require('./arrowRightGrey.png');
 const iconPlusCircle = require('./plus-circle.png');
 const iconEditGrey = require('./iconEditGrey.png');
 const iconChevronDown = require('./chevronDown.png');
+const iconCalendarGrey = require('./calendarGrey.png');
 
 export {
   iconFlagVn,
@@ -74,4 +75,5 @@ export {
   iconPlusCircle,
   iconEditGrey,
   iconChevronDown,
+  iconCalendarGrey,
 };

@@ -25,7 +25,15 @@ import {useTranslation} from 'react-i18next';
 
 const screenWidth = Dimensions.get('screen').width;
 
-const NewBornScreen = () => {
+type TProps = {
+  route: any;
+  params?: {
+    isAddBaby?: boolean;
+  };
+};
+
+const NewBornScreen = (props: TProps) => {
+  const {route} = props;
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
 

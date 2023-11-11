@@ -67,6 +67,7 @@ import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import NewBornContainer from './components/NewBornContainer';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheetNewBorn from './components/BottomSheetNewBorn';
+import {navigate} from '@navigation';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -245,7 +246,6 @@ const Home = () => {
   };
 
   const onNavigateNewBorn = () => {
-    handleCloseScheduleOrderBottomSheet();
     navigation.navigate(ROUTE_NAME.NEW_BORN);
   };
 
@@ -264,6 +264,11 @@ const Home = () => {
 
   const handleCloseScheduleOrderBottomSheet = () => {
     bottomSheetRef.current?.close();
+  };
+
+  const onNavigateAddBaby = () => {
+    handleCloseScheduleOrderBottomSheet();
+    navigate(ROUTE_NAME.ADD_BABY);
   };
 
   const handlePressItemArticle = (article: IArticles) => {
@@ -521,7 +526,7 @@ const Home = () => {
           onClose={handleCloseScheduleOrderBottomSheet}
           enablePanDownToClose={true}>
           <BottomSheetNewBorn
-            onPress={onNavigateNewBorn}
+            onPress={onNavigateAddBaby}
             onNavigateDetailNewBorn={onNavigateDetailNewBorn}
           />
         </BottomSheetModal>
