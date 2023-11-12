@@ -334,6 +334,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.ADD_NEW_BABY}
             component={screens.AddNewBaby}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.NEW_BORN_TRACKER}
+            component={screens.NewBornTracker}
+          />
         </Stack.Navigator>
       );
     } else {

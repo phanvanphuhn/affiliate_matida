@@ -254,6 +254,10 @@ const Home = () => {
     navigation.navigate(ROUTE_NAME.DETAIL_NEW_BORN);
   };
 
+  const onPressNewBornTracker = () => {
+    navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER);
+  };
+
   const openNewBorn = useCallback(() => {
     handleScheduleOrderSheetChanges(0);
   }, []);
@@ -395,7 +399,7 @@ const Home = () => {
             // paddingHorizontal: scaler(20),
             marginBottom: scaler(16),
           }}>
-          <NewBornContainer onPress={onNavigateDetailNewBorn} />
+          <NewBornContainer onPress={onPressNewBornTracker} />
         </View>
 
         {/* {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
