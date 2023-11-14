@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import {styles} from '../styles';
 import {AppButton, Header, AppDatePicker} from '@component';
 import {useTranslation} from 'react-i18next';
-import {navigate} from '@navigation';
+import {goBack, navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {scaler, colors} from '@stylesCommon';
 import moment from 'moment';
@@ -14,6 +14,7 @@ import {showMessage} from 'react-native-flash-message';
 import {trackBirthdateEvent} from '@services/webengageManager.tsx';
 
 const ChooseDueDateScreenApp = (props: any) => {
+  const {route} = props;
   const {t} = useTranslation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const [date, setDate] = useState<any>(new Date());
@@ -21,24 +22,29 @@ const ChooseDueDateScreenApp = (props: any) => {
   useUXCam(ROUTE_NAME.CHOOSE_DUE_DATE_APP);
 
   const handlePressButton = async () => {
-    try {
-      GlobalService.showLoading();
-      const res = await selectDueDate({
-        due_date: moment(date).format('MM/DD/YYYY'),
-      });
-      trackBirthdateEvent(moment(date).format('MM/DD/YYYY'),false);
-      showMessage({
-        message: res?.data?.message,
-        type: 'default',
-        backgroundColor: colors.success_message,
-      });
-      navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
-        data: res?.data,
-        type: 'Choose',
-      });
-      GlobalService.hideLoading();
-    } catch (error) {
-      GlobalService.hideLoading();
+    if (route?.params?.isAddNewBaby) {
+      route?.params?.setState({due_date: moment(date).format('MM/DD/YYYY')});
+      navigate(ROUTE_NAME.ADD_NEW_BABY);
+    } else {
+      try {
+        GlobalService.showLoading();
+        const res = await selectDueDate({
+          due_date: moment(date).format('MM/DD/YYYY'),
+        });
+        trackBirthdateEvent(moment(date).format('MM/DD/YYYY'), false);
+        showMessage({
+          message: res?.data?.message,
+          type: 'default',
+          backgroundColor: colors.success_message,
+        });
+        navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
+          data: res?.data,
+          type: 'Choose',
+        });
+        GlobalService.hideLoading();
+      } catch (error) {
+        GlobalService.hideLoading();
+      }
     }
   };
 
@@ -49,8 +55,12 @@ const ChooseDueDateScreenApp = (props: any) => {
   }, [user]);
 
   const navigateToCalculate = () => {
-    trackBirthdateEvent("Don't know",true);
-    navigate(ROUTE_NAME.CALCULATE_DUE_DATE_APP);
+    trackBirthdateEvent("Don't know", true);
+    const params = {
+      isAddNewBaby: route?.params?.isAddNewBaby,
+      setState: route?.params?.setState,
+    };
+    navigate(ROUTE_NAME.CALCULATE_DUE_DATE_APP, params);
   };
 
   return (

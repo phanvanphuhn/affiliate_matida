@@ -19,8 +19,10 @@ import {CalculationMethod} from './_type';
 import {trackingAppEvent, event, useUXCam} from '@util';
 import {calculateDate, GlobalService} from '@services';
 import moment from 'moment';
+import {navigate} from '@navigation';
 
-const CalculateDueDateScreenApp = () => {
+const CalculateDueDateScreenApp = (props: any) => {
+  const {route} = props;
   const listMethod = getMethod();
   const listCycleLength = getCycleLength();
   const listIVFdays = getIVFdays();
@@ -35,28 +37,40 @@ const CalculateDueDateScreenApp = () => {
   useUXCam(ROUTE_NAME.CALCULATE_DUE_DATE_APP);
 
   const handlePressButton = async () => {
-    try {
-      GlobalService.showLoading();
-      const body = {
-        calc_method: 0,
-        date: moment(date).format('MM/DD/YYYY'),
-        cycle_length: cycleLength,
-      };
-      const body2 = {
-        calc_method: 1,
-        date: moment(date).format('MM/DD/YYYY'),
-        ivf_day: daysIVF,
-      };
-      const res = await calculateDate(
-        method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
-      );
-      navigation.navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
-        data: res?.data,
+    GlobalService.showLoading();
+    const body = {
+      calc_method: 0,
+      date: moment(date).format('MM/DD/YYYY'),
+      cycle_length: cycleLength,
+    };
+    const body2 = {
+      calc_method: 1,
+      date: moment(date).format('MM/DD/YYYY'),
+      ivf_day: daysIVF,
+    };
+
+    if (route?.params?.isAddNewBaby) {
+      route?.params?.setState({
+        due_date: moment(date).format('MM/DD/YYYY'),
+        body: method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
+      });
+      navigate(ROUTE_NAME.ADD_NEW_BABY, {
         type: 'Caculate',
       });
       GlobalService.hideLoading();
-    } catch (error) {
-      GlobalService.hideLoading();
+    } else {
+      try {
+        const res = await calculateDate(
+          method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
+        );
+        navigation.navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
+          data: res?.data,
+          type: 'Caculate',
+        });
+        GlobalService.hideLoading();
+      } catch (error) {
+        GlobalService.hideLoading();
+      }
     }
   };
 

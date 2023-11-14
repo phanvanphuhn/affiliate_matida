@@ -2,37 +2,62 @@ import {AppCameraModal, AppCameraModal2} from '@component';
 import {SvgIconDelete, iconAddImage} from '@images';
 import {colors, scaler} from '@stylesCommon';
 import React, {useState} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import {TState} from './Information';
 import FastImage from 'react-native-fast-image';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
+import {GlobalService, uploadImage} from '@services';
 
 type TProps = {
   setState: ({}) => void;
-  state: TState;
+  state: any;
 };
 
 const ImageOption = (props: TProps) => {
   const {setState, state} = props;
   const [visible, setVisible] = useState<boolean>(false);
 
-  const handleChangeAvatar = (value: any) => {
+  const handleChangeAvatar = async (response: any) => {
     setVisible(false);
-    setState({image: value.sourceURL});
+    GlobalService.showLoading();
+    try {
+      const data = new FormData();
+      const imageUpload = {
+        uri:
+          Platform.OS === 'ios'
+            ? response?.path.replace('file://', '')
+            : response?.path,
+        type: 'image/jpeg',
+        name: response?.fileName ? response?.fileName : response?.path,
+      };
+      data.append('file', imageUpload);
+      const res = await uploadImage(data);
+      setState({avatar: res?.data?.url});
+      GlobalService.hideLoading();
+    } catch (error) {
+      GlobalService.hideLoading();
+    }
   };
 
   const onDeleteImage = () => {
-    setState({image: []});
+    setState({avatar: ''});
   };
 
   return (
     <>
-      {state.image?.length > 0 ? (
+      {state.avatar?.length > 0 ? (
         <TouchableOpacity onPress={() => setVisible(true)}>
           <FastImage
             style={{height: scaler(120), width: scaler(120), borderRadius: 99}}
             source={{
-              uri: `${state.image}`,
+              uri: state.avatar,
             }}
           />
           <TouchableOpacity

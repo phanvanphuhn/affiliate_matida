@@ -11,6 +11,7 @@ import home from './home/reducer';
 import explore from './explore/reducer';
 import check from './check/reducer';
 import forum from './forum/reducer';
+import newBorn from './newBorn/reducer';
 
 //Khai báo các root reducer ở đây
 const appReducer = combineReducers({
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
   explore,
   check,
   forum,
+  newBorn,
 });
 
 export type RootState = ReturnType<typeof appReducer>;

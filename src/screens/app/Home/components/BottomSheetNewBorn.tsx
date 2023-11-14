@@ -8,55 +8,89 @@ import {
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '@redux/rootReducer';
+import moment from 'moment';
 
 type TProps = {
   onPress: () => void;
-  onNavigateDetailNewBorn: () => void;
+  onNavigateDetailNewBorn: ({}) => void;
+};
+
+export type TBaby = {
+  avatar: string;
+  created_at: string;
+  date_of_birth: string | null;
+  due_date: string | null;
+  gender: string | null;
+  id: number;
+  name: string | null;
+  pregnant_type: string;
+  selected: boolean;
+  type: string;
+  updated_at: string;
+  user_id: number;
 };
 
 const BottomSheetNewBorn = (props: TProps) => {
   const {onPress, onNavigateDetailNewBorn} = props;
-
+  const newBorn = useSelector((state: RootState) => state.newBorn.list);
   return (
-    <View style={styles.container}>
+    <>
+      {newBorn?.map((item: TBaby) => {
+        return (
+          <View style={styles.container}>
+            <TouchableOpacity
+              onPress={() => onNavigateDetailNewBorn(item)}
+              style={[
+                styles.wrapContainer,
+                {
+                  justifyContent: 'space-between',
+                  borderBottomColor: colors.gray,
+                  borderBottomWidth: 1,
+                  paddingBottom: scaler(16),
+                },
+              ]}>
+              <View style={styles.wrapContainer}>
+                <Image
+                  source={item?.avatar ? {uri: item?.avatar} : iconPregnant}
+                  style={{
+                    height: scaler(24),
+                    width: scaler(24),
+                    marginRight: scaler(8),
+                    borderRadius: scaler(99),
+                  }}
+                  resizeMode="contain"
+                />
+                <Text style={styles.title}>
+                  {item?.name
+                    ? item?.name
+                    : `Baby ${newBorn.indexOf(item) + 1}`}
+                </Text>
+              </View>
+              <View style={styles.wrapContainer}>
+                <Text style={styles.desc}>
+                  {moment(item.due_date).format('DD/MM/YYYY')}
+                </Text>
+                <Image
+                  source={iconArrowRightGrey}
+                  style={{
+                    height: scaler(24),
+                    width: scaler(24),
+                    marginLeft: scaler(8),
+                  }}
+                  resizeMode="contain"
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        );
+      })}
       <TouchableOpacity
-        onPress={onNavigateDetailNewBorn}
         style={[
           styles.wrapContainer,
-          {
-            justifyContent: 'space-between',
-            paddingVertical: scaler(16),
-            borderBottomColor: colors.gray,
-            borderBottomWidth: 1,
-          },
-        ]}>
-        <View style={styles.wrapContainer}>
-          <Image
-            source={iconPregnant}
-            style={{
-              height: scaler(24),
-              width: scaler(24),
-              marginRight: scaler(8),
-            }}
-            resizeMode="contain"
-          />
-          <Text style={styles.title}>Baby Bear</Text>
-        </View>
-        <View style={styles.wrapContainer}>
-          <Text style={styles.desc}>23/06/2023</Text>
-          <Image
-            source={iconArrowRightGrey}
-            style={{
-              height: scaler(24),
-              width: scaler(24),
-              marginLeft: scaler(8),
-            }}
-            resizeMode="contain"
-          />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.wrapContainer, {paddingVertical: scaler(16)}]}
+          {paddingHorizontal: scaler(16), marginBottom: scaler(16)},
+        ]}
         onPress={onPress}>
         <Image
           source={iconPlusCircle}
@@ -69,7 +103,7 @@ const BottomSheetNewBorn = (props: TProps) => {
         />
         <Text style={[styles.title, {color: '#A3A1AB'}]}>Add baby</Text>
       </TouchableOpacity>
-    </View>
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ import {homeSaga} from './home';
 import {exploreSaga} from './explore';
 import {checkSaga} from './check';
 import {forumSaga} from './forum';
+import {newBornSaga} from './newBorn';
 
 //Khai báo các root saga ở đây
 function* rootSaga() {
@@ -22,6 +23,7 @@ function* rootSaga() {
     fork(exploreSaga),
     fork(checkSaga),
     fork(forumSaga),
+    fork(newBornSaga),
   ]);
 }
 

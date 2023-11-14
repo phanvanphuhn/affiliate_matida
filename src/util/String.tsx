@@ -13,8 +13,8 @@ export const APPID_ZEGO_KEY_AUDIOLIVE = 74380430;
 
 export const MERCHANT_IDENTIFIER = 'merchant.com.growth.levers.matida';
 
-// const environment: EEnvironment = EEnvironment.DEVERLOPMENT;
-const environment: EEnvironment = EEnvironment.PRODUCT;
+const environment: EEnvironment = EEnvironment.DEVERLOPMENT;
+// const environment: EEnvironment = EEnvironment.PRODUCT;
 
 export const VERSION_APP = '1.1.9';
 export const VERSION_CODE_PUSH = `v6.5${

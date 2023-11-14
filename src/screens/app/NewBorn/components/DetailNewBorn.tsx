@@ -13,15 +13,18 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {TBaby} from '../../Home/components/BottomSheetNewBorn';
 
-const DetailNewBorn = () => {
+const DetailNewBorn = (props: any) => {
+  const {route} = props;
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => goBack()}>
           <SvgArrowBackLogin />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigate(ROUTE_NAME.EDIT_NEW_BORN)}>
+        <TouchableOpacity
+          onPress={() => navigate(ROUTE_NAME.EDIT_NEW_BORN, route?.params)}>
           <Image
             source={iconEditGrey}
             style={{
@@ -36,14 +39,18 @@ const DetailNewBorn = () => {
       <View style={styles.bodyContainer}>
         <View style={styles.wrapImageContainer}>
           <FastImage
-            source={LogoApp}
+            source={
+              route?.params?.avatar ? {uri: route?.params?.avatar} : LogoApp
+            }
             style={styles.image}
             resizeMode="contain"
           />
         </View>
         <View style={styles.wrapContentContainer}>
           <View style={{alignItems: 'center', marginBottom: scaler(24)}}>
-            <Text style={styles.title}>Baby Bear</Text>
+            <Text style={styles.title}>
+              {route?.params?.name ? route?.params?.name : 'Baby Bear 1'}
+            </Text>
             <Text
               style={[
                 styles.label,
@@ -76,7 +83,11 @@ const DetailNewBorn = () => {
                 ]}>
                 Date of birth
               </Text>
-              <Text style={styles.text}>10/05/2023</Text>
+              <Text style={styles.text}>
+                {route?.params?.date_of_birth
+                  ? route?.params?.date_of_birth
+                  : 'DD/MM/YYYY'}
+              </Text>
             </View>
 
             <View
@@ -93,7 +104,11 @@ const DetailNewBorn = () => {
                 ]}>
                 Time of birth
               </Text>
-              <Text style={styles.text}>10:10 am</Text>
+              <Text style={styles.text}>
+                {route?.params?.time_of_birth
+                  ? route?.params?.time_of_birth
+                  : 'HH:MM am'}
+              </Text>
             </View>
 
             <View style={{alignItems: 'center', paddingRight: scaler(16)}}>
@@ -104,7 +119,7 @@ const DetailNewBorn = () => {
                 ]}>
                 Gender
               </Text>
-              <Text style={styles.text}>Female</Text>
+              <Text style={styles.text}>{route?.params?.gender}</Text>
             </View>
           </View>
 
@@ -113,21 +128,26 @@ const DetailNewBorn = () => {
               style={[styles.label, {fontSize: scaler(12), color: '#8B8484'}]}>
               Birth experience
             </Text>
-            <Text style={styles.text}>Natural</Text>
+            <Text style={styles.text}>
+              {route?.params?.pregnant_type.replace(
+                /^./,
+                route?.params?.pregnant_type[0].toUpperCase(),
+              )}
+            </Text>
           </View>
           <View style={styles.wrapDescription}>
             <Text
               style={[styles.label, {fontSize: scaler(12), color: '#8B8484'}]}>
               Birth weight
             </Text>
-            <Text style={styles.text}>3.0 kg</Text>
+            <Text style={styles.text}>{route?.params.weight}</Text>
           </View>
           <View style={styles.wrapDescription}>
             <Text
               style={[styles.label, {fontSize: scaler(12), color: '#8B8484'}]}>
               Birth height
             </Text>
-            <Text style={styles.text}>80 cm</Text>
+            <Text style={styles.text}>{route?.params.height}</Text>
           </View>
         </View>
       </View>

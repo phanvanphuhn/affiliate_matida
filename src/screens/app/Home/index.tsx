@@ -21,12 +21,14 @@ import {
   saveIsDoneDaily,
   updateDataHome,
   updateStatusDeepLink,
+  getListBaby,
 } from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
   answerDailyQuiz,
   getUserInfoApi,
   GlobalService,
+  updateBaby,
   updateUserInfo,
 } from '@services';
 import {colors, scaler} from '@stylesCommon';
@@ -66,7 +68,7 @@ import BottomSheetModal from '@component/BottomSheetModal';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import NewBornContainer from './components/NewBornContainer';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import BottomSheetNewBorn from './components/BottomSheetNewBorn';
+import BottomSheetNewBorn, {TBaby} from './components/BottomSheetNewBorn';
 import {navigate} from '@navigation';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
@@ -112,7 +114,7 @@ const Home = () => {
   const firstRef = useRef(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const snapPoints = useMemo(() => ['20%', '50%'], []);
+  const snapPoints = useMemo(() => ['30%', '50%'], []);
 
   const isFocus = useSelector((state: any) => state?.tab?.home);
   const lang = useSelector((state: any) => state?.auth?.lang);
@@ -122,6 +124,7 @@ const Home = () => {
   const loading = useSelector((state: any) => state?.home?.loading);
   const deepLink = useSelector((state: any) => state?.check?.deepLink);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
+  const newBorn = useSelector((state: RootState) => state.newBorn.list);
 
   useUXCam(ROUTE_NAME.HOME);
 
@@ -213,6 +216,7 @@ const Home = () => {
   const getData = async () => {
     try {
       dispatch(getDataHome());
+      dispatch(getListBaby());
     } catch (error) {
     } finally {
       setRefreshing(false);
@@ -249,9 +253,22 @@ const Home = () => {
     navigation.navigate(ROUTE_NAME.NEW_BORN);
   };
 
-  const onNavigateDetailNewBorn = () => {
+  const onNavigateDetailNewBorn = async (item: TBaby) => {
     handleCloseScheduleOrderBottomSheet();
-    navigation.navigate(ROUTE_NAME.DETAIL_NEW_BORN);
+    const params = {
+      id: item.id,
+      body: {selected: true},
+    };
+    try {
+      const res = await updateBaby(params);
+      if (res.success) {
+        getData();
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const onPressNewBornTracker = () => {

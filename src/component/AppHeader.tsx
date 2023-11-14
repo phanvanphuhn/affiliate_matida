@@ -19,6 +19,7 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppImage} from './AppImage';
+import {RootState} from '@redux/rootReducer';
 
 interface IProps {
   onPressMenu?: () => void;
@@ -51,9 +52,11 @@ export const AppHeader = ({
   const user = useSelector((state: any) => state.auth.userInfo);
   // const dataListChat = useSelector((state: any) => state?.listChat?.list);
   const totalUnread = useSelector((state: any) => state?.unread?.unread);
+  const newBorn = useSelector((state: RootState) => state.newBorn.list);
   const totalUnreadNotification = useSelector(
     (state: any) => state?.unread?.unread_notification,
   );
+  const selectedNewBorn = newBorn.filter(item => item.selected == true);
 
   const dot = +totalUnread > 0;
   const dispatch = useDispatch();
@@ -195,7 +198,7 @@ export const AppHeader = ({
             style={{flexDirection: 'row', marginRight: scaler(16)}}
             onPress={openNewBorn}>
             <View style={{marginRight: scaler(4)}}>
-              <Text>Bear</Text>
+              <Text>{selectedNewBorn[0]?.name || 'Baby 1'}</Text>
             </View>
             <View>
               <SvgCaretDown stroke={bgc ? colors.black : 'white'} />

@@ -11,11 +11,13 @@ import {useUXCam} from '@util';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {trackTellMeMoreClicked} from '@services/webengageManager.tsx';
+import {navigate} from '@navigation';
 
 const ResultDueDateScreenApp = (props: any) => {
   const {t} = useTranslation();
   const {route} = props;
   const {data, type} = route?.params;
+  console.log('data: ', data, type);
   const navigation = useNavigation<any>();
   const [detail, setDetail] = useState<any>(null);
 
@@ -39,8 +41,10 @@ const ResultDueDateScreenApp = (props: any) => {
   }, []);
 
   const handlePressButton = () => {
-  trackTellMeMoreClicked();
-    if (type === 'Choose') {
+    trackTellMeMoreClicked();
+    if (route?.params?.isAddNewBaby) {
+      navigate(ROUTE_NAME.TAB_HOME);
+    } else if (type === 'Choose') {
       navigation.pop(2);
       // navigation.navigate(ROUTE_NAME.SELECT_DOB);
     } else {
