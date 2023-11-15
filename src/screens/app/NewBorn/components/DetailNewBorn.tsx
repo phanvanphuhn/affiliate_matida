@@ -14,9 +14,13 @@ import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TBaby} from '../../Home/components/BottomSheetNewBorn';
+import {useTranslation} from 'react-i18next';
+import moment from 'moment';
+import {birth_experience} from './EditNewBorn';
 
 const DetailNewBorn = (props: any) => {
   const {route} = props;
+  const {t} = useTranslation();
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.headerContainer}>
@@ -81,11 +85,11 @@ const DetailNewBorn = (props: any) => {
                   styles.label,
                   {fontSize: scaler(12), color: '#8B8484'},
                 ]}>
-                Date of birth
+                {t('newBorn.dob')}
               </Text>
               <Text style={styles.text}>
                 {route?.params?.date_of_birth
-                  ? route?.params?.date_of_birth
+                  ? moment(route?.params?.date_of_birth).format('DD/MM/YYYY')
                   : 'DD/MM/YYYY'}
               </Text>
             </View>
@@ -102,7 +106,7 @@ const DetailNewBorn = (props: any) => {
                   styles.label,
                   {fontSize: scaler(12), color: '#8B8484'},
                 ]}>
-                Time of birth
+                {t('newBorn.tob')}
               </Text>
               <Text style={styles.text}>
                 {route?.params?.time_of_birth
@@ -117,7 +121,7 @@ const DetailNewBorn = (props: any) => {
                   styles.label,
                   {fontSize: scaler(12), color: '#8B8484'},
                 ]}>
-                Gender
+                {t('newBorn.gender')}
               </Text>
               <Text style={styles.text}>{route?.params?.gender}</Text>
             </View>
@@ -126,28 +130,29 @@ const DetailNewBorn = (props: any) => {
           <View style={[styles.wrapDescription, {marginTop: scaler(16)}]}>
             <Text
               style={[styles.label, {fontSize: scaler(12), color: '#8B8484'}]}>
-              Birth experience
+              {t('newBorn.birthExperience')}
             </Text>
             <Text style={styles.text}>
-              {route?.params?.pregnant_type.replace(
-                /^./,
-                route?.params?.pregnant_type[0].toUpperCase(),
-              )}
+              {
+                birth_experience.filter(
+                  item => item.value == route?.params?.birth_experience,
+                )[0].label
+              }
             </Text>
           </View>
           <View style={styles.wrapDescription}>
             <Text
               style={[styles.label, {fontSize: scaler(12), color: '#8B8484'}]}>
-              Birth weight
+              {t('newBorn.babyWeight')}
             </Text>
-            <Text style={styles.text}>{route?.params.weight}</Text>
+            <Text style={styles.text}>{route?.params.weight / 1000} kg</Text>
           </View>
           <View style={styles.wrapDescription}>
             <Text
               style={[styles.label, {fontSize: scaler(12), color: '#8B8484'}]}>
-              Birth height
+              {t('newBorn.babyHeight')}
             </Text>
-            <Text style={styles.text}>{route?.params.height}</Text>
+            <Text style={styles.text}>{route?.params.height} cm</Text>
           </View>
         </View>
       </View>

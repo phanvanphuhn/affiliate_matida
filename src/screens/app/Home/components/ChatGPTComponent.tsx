@@ -60,11 +60,11 @@ export const ChatGPTComponent = React.memo(() => {
         <View style={styles.wrapContainer}>
           <View style={styles.wrapContentContainer}>
             <Text style={[styles.textTitle, {color: styleOfWeek.colorTitle}]}>
-              {"Hi new mommy,\nit's normal to have tons of questions."}
+              {t('newBornTida.hi')}
             </Text>
-            <Text style={styles.description}>Tida is here for you!</Text>
+            <Text style={styles.description}>{t('newBornTida.tidaHere')}</Text>
             <View style={styles.btn}>
-              <Text style={styles.textBody}>Ask Tida now</Text>
+              <Text style={styles.textBody}>{t('newBornTida.askNow')}</Text>
             </View>
           </View>
 

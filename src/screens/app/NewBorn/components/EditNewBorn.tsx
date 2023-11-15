@@ -29,50 +29,49 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheetModal from '@component/BottomSheetModal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
+export const birth_experience = [
+  {
+    label: 'Natural birth',
+    value: 'natural_birth',
+  },
+  {
+    label: 'C section',
+    value: 'c_section',
+  },
+];
+
+export const gender = [
+  {
+    label: 'Female',
+    value: 'female',
+  },
+  {
+    label: 'Male',
+    value: 'male',
+  },
+];
+
 const EditNewBorn = (props: any) => {
   const {route} = props;
-
   const {t} = useTranslation();
   const snapPoints = useMemo(() => ['30%', '50%'], []);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const gender = [
-    {
-      label: 'Female',
-      value: 'female',
-    },
-    {
-      label: 'Male',
-      value: 'male',
-    },
-  ];
-
-  const birth_experience = [
-    {
-      label: 'Natural birth',
-      value: 'natural_birth',
-    },
-    {
-      label: 'C section',
-      value: 'c_section',
-    },
-  ];
-
   const [state, setState] = useDetailPost({
     name: route?.params?.name ? route?.params?.name : '',
-    gender: route?.params?.gender ? route?.params?.gender : '',
+    gender: route?.params?.gender ? route?.params?.gender : 'male',
     birth_experience: route?.params?.pregnant_type
       ? route?.params?.pregnant_type
-      : '',
+      : 'c_section',
     dob: route?.params?.date_of_birth ? route?.params?.date_of_birth : '',
     tob: route?.params?.time_of_birth ? route?.params?.time_of_birth : '',
-    weight: route?.params?.weight ? route?.params?.weight : '',
-    height: route?.params?.height ? route?.params?.height : '',
+    weight: route?.params?.weight
+      ? (route?.params?.weight / 1000).toString()
+      : '',
+    height: route?.params?.height ? route?.params?.height.toString() : '',
     avatar: route?.params?.avatar ? route?.params?.avatar : '',
     typeBottomSheet: '',
   });
-  console.log('state: ', state, state.typeBottomSheet);
-
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
   }, []);
@@ -119,8 +118,8 @@ const EditNewBorn = (props: any) => {
         birth_experience: state.birth_experience,
         date_of_birth: state.dob,
         tob: state.tob,
-        weight: state.weight,
-        height: state.height,
+        weight: Number(state.weight * 1000),
+        height: Number(state.height),
         avatar: state.avatar,
       },
     };
@@ -138,6 +137,11 @@ const EditNewBorn = (props: any) => {
     // navigate(ROUTE_NAME.DETAIL_NEW_BORN);
   };
 
+  console.log(
+    'gender.filter(item => item.value == state.gender): ',
+    gender.filter(item => item.value == state.gender)[0],
+  );
+
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <SafeAreaView style={styles.container} edges={['top']}>
@@ -145,22 +149,24 @@ const EditNewBorn = (props: any) => {
           contentContainerStyle={{flex: 1, backgroundColor: colors.white}}>
           <View style={styles.wrapContainer}>
             <View style={{alignItems: 'center', marginTop: scaler(56)}}>
-              <Text style={styles.title}>Happy parenting!</Text>
+              <Text style={[styles.title, {marginBottom: scaler(8)}]}>
+                {t('newBorn.happyParenting')}
+              </Text>
               <Text style={[styles.content, {fontWeight: '400'}]}>
-                Tell me more about your little one
+                {t('newBorn.tellMeMore')}
               </Text>
 
               <View style={{marginTop: scaler(32), alignItems: 'center'}}>
                 <ImageOption state={state} setState={setState} />
-                <Text style={[styles.label, {marginTop: scaler(4)}]}>
-                  Baby's pictures
+                <Text style={[styles.label, {marginTop: scaler(16)}]}>
+                  {t('newBorn.babyPicture')}
                 </Text>
               </View>
             </View>
 
             <View>
               <View style={styles.wrapContent}>
-                <Text style={styles.label}>Name</Text>
+                <Text style={styles.label}>{t('newBorn.babyName')}</Text>
                 <TextInput
                   style={[styles.content, {fontWeight: '500'}]}
                   placeholder="Bear"
@@ -172,7 +178,7 @@ const EditNewBorn = (props: any) => {
               </View>
 
               <View style={styles.wrapContent}>
-                <Text style={styles.label}>Gender</Text>
+                <Text style={styles.label}>{t('newBorn.gender')}</Text>
                 <TouchableOpacity
                   onPress={() => onOpenBottomSheet('gender')}
                   style={{
@@ -180,29 +186,8 @@ const EditNewBorn = (props: any) => {
                     justifyContent: 'space-between',
                   }}>
                   <Text style={[styles.content, {fontWeight: '500'}]}>
-                    {state.gender || 'Female'}
-                  </Text>
-
-                  <Image
-                    source={iconChevronDown}
-                    style={{
-                      height: scaler(24),
-                      width: scaler(24),
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.wrapContent}>
-                <Text style={styles.label}>Birth experience</Text>
-                <TouchableOpacity
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                  onPress={() => onOpenBottomSheet('birth_experience')}>
-                  <Text style={[styles.content, {fontWeight: '500'}]}>
-                    {state.birth_experience || 'Natural birth'}
+                    {gender.filter(item => item.value == state.gender)[0]
+                      ?.label || 'Female'}
                   </Text>
 
                   <Image
@@ -221,7 +206,7 @@ const EditNewBorn = (props: any) => {
                   {flexDirection: 'row', justifyContent: 'space-between'},
                 ]}>
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>Date of birth</Text>
+                  <Text style={styles.label}>{t('newBorn.dob')}</Text>
                   <TouchableOpacity
                     onPress={() => onOpenBottomSheet('dob')}
                     style={{
@@ -238,7 +223,7 @@ const EditNewBorn = (props: any) => {
                             }
                           : {color: colors.borderColor},
                       ]}>
-                      {state.dob ? state.dob : 'MM/DD/YYYY'}
+                      {state.dob ? state.dob : t('newBorn.selectDate')}
                     </Text>
 
                     <Image
@@ -253,7 +238,7 @@ const EditNewBorn = (props: any) => {
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>Time of birth</Text>
+                  <Text style={styles.label}>{t('newBorn.tob')}</Text>
                   <TouchableOpacity
                     onPress={() => onOpenBottomSheet('tob')}
                     style={{
@@ -270,7 +255,7 @@ const EditNewBorn = (props: any) => {
                             }
                           : {color: colors.borderColor},
                       ]}>
-                      {state.tob ? state.tob : 'HH:mm'}
+                      {state.tob ? state.tob : t('newBorn.selectTime')}
                     </Text>
 
                     <Image
@@ -290,7 +275,7 @@ const EditNewBorn = (props: any) => {
                   {flexDirection: 'row', justifyContent: 'space-between'},
                 ]}>
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>Birth weight</Text>
+                  <Text style={styles.label}>{t('newBorn.babyWeight')}</Text>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -305,14 +290,18 @@ const EditNewBorn = (props: any) => {
                       }}
                       keyboardType="numeric"
                     />
-                    <Text style={[styles.content, {marginRight: scaler(20)}]}>
+                    <Text
+                      style={[
+                        styles.label,
+                        {marginRight: scaler(20), fontSize: scaler(14)},
+                      ]}>
                       kg
                     </Text>
                   </View>
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>Birth height</Text>
+                  <Text style={styles.label}>{t('newBorn.babyHeight')}</Text>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -327,9 +316,35 @@ const EditNewBorn = (props: any) => {
                       }}
                       keyboardType="numeric"
                     />
-                    <Text style={styles.content}>cm</Text>
+                    <Text style={[styles.label, {fontSize: scaler(14)}]}>
+                      cm
+                    </Text>
                   </View>
                 </View>
+              </View>
+
+              <View style={styles.wrapContent}>
+                <Text style={styles.label}>{t('newBorn.birthExperience')}</Text>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
+                  onPress={() => onOpenBottomSheet('birth_experience')}>
+                  <Text style={[styles.content, {fontWeight: '500'}]}>
+                    {birth_experience.filter(
+                      item => item == state.birth_experience,
+                    )[0]?.label || 'Natural birth'}
+                  </Text>
+
+                  <Image
+                    source={iconChevronDown}
+                    style={{
+                      height: scaler(24),
+                      width: scaler(24),
+                    }}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -337,10 +352,10 @@ const EditNewBorn = (props: any) => {
             <TouchableOpacity
               style={styles.wrapCancelButton}
               onPress={() => goBack()}>
-              <Text>Cancel</Text>
+              <Text>{t('newBorn.cancel')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.wrapSaveButton} onPress={onSave}>
-              <Text style={{color: colors.white}}>Save</Text>
+              <Text style={{color: colors.white}}>{t('newBorn.save')}</Text>
             </TouchableOpacity>
           </View>
           <BottomSheetModalProvider>

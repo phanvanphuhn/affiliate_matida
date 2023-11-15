@@ -11,6 +11,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RootState} from '@redux/rootReducer';
 import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 
 type TProps = {
   onPress: () => void;
@@ -35,6 +36,7 @@ export type TBaby = {
 const BottomSheetNewBorn = (props: TProps) => {
   const {onPress, onNavigateDetailNewBorn} = props;
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
+  const {t} = useTranslation();
   return (
     <>
       {newBorn?.map((item: TBaby) => {
@@ -101,7 +103,9 @@ const BottomSheetNewBorn = (props: TProps) => {
           }}
           resizeMode="contain"
         />
-        <Text style={[styles.title, {color: '#A3A1AB'}]}>Add baby</Text>
+        <Text style={[styles.title, {color: '#A3A1AB'}]}>
+          {t('newBorn.addBaby')}
+        </Text>
       </TouchableOpacity>
     </>
   );

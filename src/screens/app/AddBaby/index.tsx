@@ -2,11 +2,14 @@ import {iconClose} from '@images';
 import {goBack, navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
-import React from 'react';
+import React, {useTransition} from 'react';
+import {useTranslation} from 'react-i18next';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AddBaby = () => {
+  const {t} = useTranslation();
+
   const onNavigateEditNewBorn = () => {
     navigate(ROUTE_NAME.EDIT_NEW_BORN);
   };
@@ -22,7 +25,9 @@ const AddBaby = () => {
         style={styles.headerButtonContainer}>
         <Image source={iconClose} style={{tintColor: colors.textColor}} />
       </TouchableOpacity>
-      <Text style={styles.title}>Hi Mom</Text>
+      <Text style={[styles.title, {marginBottom: scaler(8)}]}>
+        {t('newBorn.hi')}
+      </Text>
       <Text
         style={[
           styles.desc,
@@ -30,18 +35,20 @@ const AddBaby = () => {
             marginBottom: scaler(56),
           },
         ]}>
-        Has your baby been born yet?
+        {t('newBorn.hasBaby')}
       </Text>
 
       <TouchableOpacity
         style={styles.wrapButtonContainer}
         onPress={onNavigateEditNewBorn}>
-        <Text style={[styles.desc, {color: colors.white}]}>Yes</Text>
+        <Text style={[styles.desc, {color: colors.white}]}>
+          {t('newBorn.yes')}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.wrapButtonContainer, {backgroundColor: colors.gray350}]}
         onPress={onNavigateAddNewBaby}>
-        <Text>No</Text>
+        <Text>{t('newBorn.no')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

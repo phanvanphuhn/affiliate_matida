@@ -202,7 +202,9 @@ const Setting = () => {
         </TouchableOpacity>
       </View>
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <Text style={styles.title}>Babies</Text>
+        <Text style={[styles.title, {marginTop: scaler(16)}]}>
+          {t('setting.baby')}
+        </Text>
         {newBorn?.map((item: any) => {
           return (
             <View>
@@ -272,9 +274,11 @@ const Setting = () => {
             }}
             resizeMode="contain"
           />
-          <Text style={[styles.title, {color: '#A3A1AB'}]}>Add baby</Text>
+          <Text style={[styles.title, {color: '#A3A1AB'}]}>
+            {t('newBorn.addBaby')}
+          </Text>
         </TouchableOpacity>
-        <Text style={styles.title}>Mom</Text>
+        <Text style={styles.title}>{t('setting.mom')}</Text>
         {data?.map((item: any) => {
           return (
             <TouchableOpacity

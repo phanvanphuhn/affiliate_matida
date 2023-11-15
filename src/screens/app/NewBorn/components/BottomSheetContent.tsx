@@ -38,9 +38,7 @@ const BottomSheetContent = (props: any) => {
         justifyContent: 'center',
       }}>
       <AppDatePicker
-        onChange={(time: any) =>
-          setState({tob: moment(time).format('DD/MM/YYYY')})
-        }
+        onChange={(time: any) => setState({tob: moment(time).format('HH:mm')})}
         // dataDate={state.tob}
         textColor={colors.black}
         mode={'time'}
@@ -56,7 +54,7 @@ const BottomSheetContent = (props: any) => {
       return (
         <TouchableOpacity
           style={styles.container}
-          onPress={() => onPress(item.label)}>
+          onPress={() => onPress(item.value)}>
           <Text>{item.label}</Text>
         </TouchableOpacity>
       );
