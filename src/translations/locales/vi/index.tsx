@@ -637,6 +637,7 @@ export const vi = {
   },
   error: {
     uploadImageFail: 'Mẹ thử chọn ảnh có size nhỏ hơn nhé',
+    addNewBornFail: 'Thêm em bé không thành công',
   },
   deal: {
     by: 'bởi',
@@ -691,6 +692,7 @@ export const vi = {
     babyPicture: 'Ảnh của con',
     selectDate: 'Chọn ngày sinh',
     selectTime: 'Chọn giờ sinh',
+    happyPreggy: 'Chào mẹ,',
   },
   newBornTida: {
     hi: 'Chào mẹ,\ncó nhiều thắc mắc là chuyện bình thường.',

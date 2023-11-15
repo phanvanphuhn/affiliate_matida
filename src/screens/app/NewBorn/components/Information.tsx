@@ -123,6 +123,7 @@ const Information = (props: TProps) => {
               onChangeText={text => {
                 setState({weight: text});
               }}
+              keyboardType="numeric"
             />
           </View>
         );
@@ -137,6 +138,7 @@ const Information = (props: TProps) => {
               onChangeText={text => {
                 setState({height: text});
               }}
+              keyboardType="numeric"
             />
           </View>
         );

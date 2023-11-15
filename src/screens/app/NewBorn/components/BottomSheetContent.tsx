@@ -2,11 +2,15 @@ import {AppDatePicker} from '@component';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
 import {colors, scaler} from '@stylesCommon';
 import moment from 'moment';
-import React from 'react';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 const BottomSheetContent = (props: any) => {
   const {onPress, data, type, state, setState} = props;
+  const {t} = useTranslation();
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
   return type == 'dob' ? (
     <View
       style={{
@@ -16,17 +20,19 @@ const BottomSheetContent = (props: any) => {
         justifyContent: 'center',
       }}>
       <AppDatePicker
-        onChange={(date: any) =>
-          setState({dob: moment(date).format('DD/MM/YYYY')})
-        }
+        onChange={(date: any) => {
+          setDate(date);
+          setState({dob: date});
+        }}
         // dataDate={state.dob}
         textColor={colors.black}
         style={{backgroundColor: colors.white}}
-        maximumDate={new Date()}
         width={SCREEN_WIDTH}
       />
-      <TouchableOpacity style={styles.wrapSaveButton} onPress={onPress}>
-        <Text style={{color: colors.white}}>Save</Text>
+      <TouchableOpacity
+        style={styles.wrapSaveButton}
+        onPress={() => onPress(date)}>
+        <Text style={{color: colors.white}}>{t('newBorn.save')}</Text>
       </TouchableOpacity>
     </View>
   ) : type == 'tob' ? (
@@ -38,15 +44,20 @@ const BottomSheetContent = (props: any) => {
         justifyContent: 'center',
       }}>
       <AppDatePicker
-        onChange={(time: any) => setState({tob: moment(time).format('HH:mm')})}
+        onChange={(time: any) => {
+          setTime(time);
+          setState({tob: time});
+        }}
         // dataDate={state.tob}
         textColor={colors.black}
         mode={'time'}
         style={{backgroundColor: colors.white}}
         width={SCREEN_WIDTH}
       />
-      <TouchableOpacity style={styles.wrapSaveButton} onPress={onPress}>
-        <Text style={{color: colors.white}}>Save</Text>
+      <TouchableOpacity
+        style={styles.wrapSaveButton}
+        onPress={() => onPress(time)}>
+        <Text style={{color: colors.white}}>{t('newBorn.save')}</Text>
       </TouchableOpacity>
     </View>
   ) : (

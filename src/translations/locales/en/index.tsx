@@ -633,6 +633,7 @@ export const en = {
   },
   error: {
     uploadImageFail: 'Please select a smaller size image',
+    addNewBornFail: 'Add new born fail',
   },
   deal: {
     by: 'by',
@@ -687,6 +688,7 @@ export const en = {
     babyPicture: "Baby's pictures",
     selectDate: 'Select date',
     selectTime: 'Select time',
+    happyPreggy: 'Happy Preggy!',
   },
   newBornTida: {
     hi: "Hi new mommy,\nit's normal to have tons of questions.",

@@ -108,27 +108,33 @@ const AddNewBaby = (props: any) => {
             styles.title,
             {marginTop: scaler(48), marginBottom: scaler(16)},
           ]}>
-          Happy Preggy!
+          {t('newBorn.happyPreggy')}
         </Text>
         <Text style={[styles.desc, {marginBottom: scaler(32)}]}>
-          Tell me more about your little one
+          {t('newBorn.tellMeMore')}
         </Text>
         <ImageOption state={state} setState={setState} />
-        <Text style={[styles.label, {marginBottom: scaler(24)}]}>
-          Baby's pictures
+        <Text
+          style={[
+            styles.label,
+            {marginBottom: scaler(24), marginTop: scaler(16)},
+          ]}>
+          {t('newBorn.babyPicture')}
         </Text>
 
         <View style={[styles.wrapContent, {marginBottom: scaler(24)}]}>
-          <Text style={[styles.label, {marginBottom: scaler(8)}]}>Name</Text>
+          <Text style={[styles.label, {marginBottom: scaler(8)}]}>
+            {t('newBorn.babyName')}
+          </Text>
           <TextInput
-            placeholder="Baby's name"
+            placeholder={t('newBorn.babyName')}
             value={state.name}
             onChangeText={text => setState({name: text})}
           />
         </View>
         <View style={styles.wrapContent}>
           <Text style={[styles.label, {marginBottom: scaler(8)}]}>
-            Due date
+            {t('profileSettings.dueDate')}
           </Text>
           <TouchableOpacity
             style={styles.wrapContentContainer}
@@ -146,7 +152,7 @@ const AddNewBaby = (props: any) => {
               ]}>
               {state.due_date.length > 0
                 ? moment(state.due_date).format('DD/MM/YYYY')
-                : 'Add due date'}
+                : t('newBorn.whichDate')}
             </Text>
             <Image
               source={iconCalendarGrey}

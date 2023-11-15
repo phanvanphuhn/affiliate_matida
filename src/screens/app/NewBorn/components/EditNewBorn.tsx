@@ -9,6 +9,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useDetailPost from '../../Forum/components/useDetailPost';
@@ -28,6 +29,7 @@ import BottomSheetContent from './BottomSheetContent';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheetModal from '@component/BottomSheetModal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import moment from 'moment';
 
 export const birth_experience = [
   {
@@ -71,7 +73,11 @@ const EditNewBorn = (props: any) => {
     height: route?.params?.height ? route?.params?.height.toString() : '',
     avatar: route?.params?.avatar ? route?.params?.avatar : '',
     typeBottomSheet: '',
+    error: {},
   });
+
+  console.log('state: ', state);
+
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
   }, []);
@@ -94,6 +100,12 @@ const EditNewBorn = (props: any) => {
       case 'birth_experience':
         setState({birth_experience: value});
         break;
+      case 'dob':
+        setState({dob: value});
+        break;
+      case 'tob':
+        setState({tob: value});
+        break;
     }
   };
 
@@ -109,9 +121,48 @@ const EditNewBorn = (props: any) => {
     }
   };
 
+  const onValidateForm = () => {
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const formErrors: any = {};
+    let formIsValid = true;
+
+    if (state.name.length < 1) {
+      formIsValid = false;
+      formErrors['name'] = 'Please input name of baby';
+    }
+
+    if (state.name.length && specialChars.test(state.name)) {
+      formIsValid = false;
+      formErrors['name'] = 'Name cannot contains special characters';
+    }
+
+    if (state.dob.length < 1) {
+      formIsValid = false;
+      formErrors['dob'] = 'Please input date of birth of baby';
+    }
+
+    if (state.tob.length < 1) {
+      formIsValid = false;
+      formErrors['tob'] = 'Please input time of birth of baby';
+    }
+
+    if (state.weight.length < 1) {
+      formIsValid = false;
+      formErrors['weight'] = 'Please input weight of baby';
+    }
+
+    if (state.height.length < 1) {
+      formIsValid = false;
+      formErrors['height'] = 'Please input height of baby';
+    }
+
+    setState({error: formErrors});
+    return formIsValid;
+  };
+
   const onSave = async () => {
     const params = {
-      id: route?.params.id,
+      // id: route?.params.id,
       body: {
         name: state.name,
         gender: state.gender.toLowerCase(),
@@ -123,24 +174,28 @@ const EditNewBorn = (props: any) => {
         avatar: state.avatar,
       },
     };
-    try {
-      const res = await updateBaby(params);
-      console.log('res: ', res);
-    } catch (error) {
+    if (onValidateForm()) {
+      try {
+        const res = await updateBaby(params);
+      } catch (error) {
+        Toast.show({
+          visibilityTime: 4000,
+          text1: t('error.addNewBornFail'),
+          text1NumberOfLines: 2,
+          position: 'top',
+        });
+      }
+    } else {
       Toast.show({
         visibilityTime: 4000,
-        text1: t('error.uploadImageFail'),
+        text1: t('error.addNewBornFail'),
         text1NumberOfLines: 2,
         position: 'top',
       });
     }
+
     // navigate(ROUTE_NAME.DETAIL_NEW_BORN);
   };
-
-  console.log(
-    'gender.filter(item => item.value == state.gender): ',
-    gender.filter(item => item.value == state.gender)[0],
-  );
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
@@ -164,9 +219,15 @@ const EditNewBorn = (props: any) => {
               </View>
             </View>
 
-            <View>
+            <ScrollView>
               <View style={styles.wrapContent}>
-                <Text style={styles.label}>{t('newBorn.babyName')}</Text>
+                <Text
+                  style={[
+                    styles.label,
+                    state.error.name ? {color: colors.red50} : {},
+                  ]}>
+                  {t('newBorn.babyName')}
+                </Text>
                 <TextInput
                   style={[styles.content, {fontWeight: '500'}]}
                   placeholder="Bear"
@@ -175,6 +236,9 @@ const EditNewBorn = (props: any) => {
                     setState({name: text});
                   }}
                 />
+                {state?.error?.name?.length > 0 && (
+                  <Text style={styles.errorMsg}>{state.error.name}</Text>
+                )}
               </View>
 
               <View style={styles.wrapContent}>
@@ -186,8 +250,10 @@ const EditNewBorn = (props: any) => {
                     justifyContent: 'space-between',
                   }}>
                   <Text style={[styles.content, {fontWeight: '500'}]}>
-                    {gender.filter(item => item.value == state.gender)[0]
-                      ?.label || 'Female'}
+                    {
+                      gender.filter(item => item.value == state.gender)[0]
+                        ?.label
+                    }
                   </Text>
 
                   <Image
@@ -206,7 +272,13 @@ const EditNewBorn = (props: any) => {
                   {flexDirection: 'row', justifyContent: 'space-between'},
                 ]}>
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>{t('newBorn.dob')}</Text>
+                  <Text
+                    style={[
+                      styles.label,
+                      state.error.dob ? {color: colors.red50} : {},
+                    ]}>
+                    {t('newBorn.dob')}
+                  </Text>
                   <TouchableOpacity
                     onPress={() => onOpenBottomSheet('dob')}
                     style={{
@@ -217,13 +289,15 @@ const EditNewBorn = (props: any) => {
                       style={[
                         styles.content,
                         {fontWeight: '500'},
-                        state.dob?.length > 0
+                        state.dob
                           ? {
-                              color: colors.labelColor,
+                              color: colors.black,
                             }
                           : {color: colors.borderColor},
                       ]}>
-                      {state.dob ? state.dob : t('newBorn.selectDate')}
+                      {state.dob
+                        ? moment(state.dob).format('DD/MM/YYYY')
+                        : t('newBorn.selectDate')}
                     </Text>
 
                     <Image
@@ -235,10 +309,19 @@ const EditNewBorn = (props: any) => {
                       }}
                     />
                   </TouchableOpacity>
+                  {state?.error?.dob?.length > 0 && (
+                    <Text style={styles.errorMsg}>{state.error.dob}</Text>
+                  )}
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>{t('newBorn.tob')}</Text>
+                  <Text
+                    style={[
+                      styles.label,
+                      state.error.tob ? {color: colors.red50} : {},
+                    ]}>
+                    {t('newBorn.tob')}
+                  </Text>
                   <TouchableOpacity
                     onPress={() => onOpenBottomSheet('tob')}
                     style={{
@@ -249,13 +332,15 @@ const EditNewBorn = (props: any) => {
                       style={[
                         styles.content,
                         {fontWeight: '500'},
-                        state.tob?.length > 0
+                        state.tob
                           ? {
                               color: colors.labelColor,
                             }
                           : {color: colors.borderColor},
                       ]}>
-                      {state.tob ? state.tob : t('newBorn.selectTime')}
+                      {state.tob
+                        ? moment(state.tob).format('HH:mm')
+                        : t('newBorn.selectTime')}
                     </Text>
 
                     <Image
@@ -266,6 +351,9 @@ const EditNewBorn = (props: any) => {
                       }}
                     />
                   </TouchableOpacity>
+                  {state?.error?.tob?.length > 0 && (
+                    <Text style={styles.errorMsg}>{state.error.tob}</Text>
+                  )}
                 </View>
               </View>
 
@@ -275,7 +363,13 @@ const EditNewBorn = (props: any) => {
                   {flexDirection: 'row', justifyContent: 'space-between'},
                 ]}>
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>{t('newBorn.babyWeight')}</Text>
+                  <Text
+                    style={[
+                      styles.label,
+                      state.error.weight ? {color: colors.red50} : {},
+                    ]}>
+                    {t('newBorn.babyWeight')}
+                  </Text>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -298,10 +392,19 @@ const EditNewBorn = (props: any) => {
                       kg
                     </Text>
                   </View>
+                  {state?.error?.weight?.length > 0 && (
+                    <Text style={styles.errorMsg}>{state.error.weight}</Text>
+                  )}
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Text style={styles.label}>{t('newBorn.babyHeight')}</Text>
+                  <Text
+                    style={[
+                      styles.label,
+                      state.error.height ? {color: colors.red50} : {},
+                    ]}>
+                    {t('newBorn.babyHeight')}
+                  </Text>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -320,6 +423,9 @@ const EditNewBorn = (props: any) => {
                       cm
                     </Text>
                   </View>
+                  {state?.error?.weight?.length > 0 && (
+                    <Text style={styles.errorMsg}>{state.error.weight}</Text>
+                  )}
                 </View>
               </View>
 
@@ -332,9 +438,11 @@ const EditNewBorn = (props: any) => {
                   }}
                   onPress={() => onOpenBottomSheet('birth_experience')}>
                   <Text style={[styles.content, {fontWeight: '500'}]}>
-                    {birth_experience.filter(
-                      item => item == state.birth_experience,
-                    )[0]?.label || 'Natural birth'}
+                    {
+                      birth_experience.filter(
+                        item => item.value == state.birth_experience,
+                      )[0]?.label
+                    }
                   </Text>
 
                   <Image
@@ -346,7 +454,7 @@ const EditNewBorn = (props: any) => {
                   />
                 </TouchableOpacity>
               </View>
-            </View>
+            </ScrollView>
           </View>
           <View style={styles.wrapButtonContainer}>
             <TouchableOpacity
@@ -425,6 +533,12 @@ const styles = StyleSheet.create({
     width: '48%',
     alignItems: 'center',
     borderRadius: scaler(40),
+  },
+  errorMsg: {
+    fontSize: scaler(12),
+    fontWeight: '400',
+    color: colors.red50,
+    marginTop: scaler(8),
   },
 });
 

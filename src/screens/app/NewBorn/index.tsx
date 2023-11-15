@@ -22,6 +22,9 @@ import {ROUTE_NAME} from '@routeName';
 import KeyboardShift from '../DetailFeed/components/KeyboardShift';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useTranslation} from 'react-i18next';
+import {updateBaby} from '@services';
+import Toast from 'react-native-toast-message';
+import {navigate} from '@navigation';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -101,8 +104,40 @@ const NewBornScreen = (props: TProps) => {
     }
   };
 
-  const onDone = () => {
-    navigation.navigate(ROUTE_NAME.SCREEN_TAB);
+  const onDone = async () => {
+    const params = {
+      // id: route?.params.id,
+      body: {
+        name: state.name,
+        gender: state.sex.toLowerCase(),
+        birth_experience: state.deliver,
+        date_of_birth: state.dmy,
+        tob: state.hour,
+        weight: Number(state.weight * 1000),
+        height: Number(state.height),
+        avatar: state.image,
+      },
+    };
+    try {
+      const res = await updateBaby(params);
+      if (res.success) {
+        navigate(ROUTE_NAME.TAB_HOME);
+      } else {
+        Toast.show({
+          visibilityTime: 4000,
+          text1: t('error.addNewBornFail'),
+          text1NumberOfLines: 2,
+          position: 'top',
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        visibilityTime: 4000,
+        text1: t('error.addNewBornFail'),
+        text1NumberOfLines: 2,
+        position: 'top',
+      });
+    }
   };
 
   useEffect(() => {
