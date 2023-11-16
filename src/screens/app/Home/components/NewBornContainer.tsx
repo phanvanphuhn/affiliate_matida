@@ -2,18 +2,25 @@ import {iconArrowRight, newBornBaby, tailArrowRight} from '@images';
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import RenderHtml from 'react-native-render-html';
+import {tagsStyles} from '../../DetailArticle/settingHTML';
+import {useSelector} from 'react-redux';
 
 type TProps = {
   onPress: () => void;
+  data: any;
 };
 
 const NewBornContainer = (props: TProps) => {
-  const {onPress} = props;
+  const {onPress, data} = props;
+  const {baby} = data;
+
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   return (
     <View style={styles.container}>
       <View style={[styles.wrapContentContainer, {marginBottom: scaler(32)}]}>
-        <Text style={styles.title}>5 month</Text>
+        <Text style={styles.title}>months</Text>
 
         <Text style={styles.title}>born on</Text>
       </View>
@@ -21,25 +28,23 @@ const NewBornContainer = (props: TProps) => {
         <View
           style={{flexDirection: 'column', justifyContent: 'space-between'}}>
           <View>
-            <Text style={{fontSize: 14, fontWeight: '500'}}>
-              Baby may develop
-            </Text>
-            <Text style={{fontSize: 20, fontWeight: '600'}}>first flexes</Text>
-            <Text style={{fontSize: 12, fontWeight: '400'}}>
-              startles, suckles, burps, ...
-            </Text>
-          </View>
-
-          <View>
-            <Text style={{fontSize: 12, fontWeight: '500'}}>
-              ~ 1.2 kg & 0.5 cm
-            </Text>
+            <RenderHtml
+              contentWidth={100}
+              source={{
+                html: `<div>${lang == 2 ? baby?.name_vn : baby?.name_en}</div>`,
+              }}
+              baseStyle={styles.description}
+              enableExperimentalMarginCollapsing={true}
+              enableExperimentalBRCollapsing={true}
+              enableExperimentalGhostLinesPrevention={true}
+              tagsStyles={{...tagsStyles}}
+            />
           </View>
         </View>
 
         <View>
           <Image
-            source={newBornBaby}
+            source={baby?.image ? {uri: baby?.image[0]} : newBornBaby}
             style={{
               width: scaler(155),
               height: scaler(116),
@@ -112,6 +117,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
     color: colors.primaryBackground,
+  },
+  description: {
+    fontSize: scaler(14),
+    color: colors.black,
+    marginTop: scaler(8),
   },
 });
 

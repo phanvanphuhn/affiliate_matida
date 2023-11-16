@@ -416,7 +416,10 @@ const Home = () => {
             // paddingHorizontal: scaler(20),
             marginBottom: scaler(16),
           }}>
-          <NewBornContainer onPress={onPressNewBornTracker} />
+          <NewBornContainer
+            onPress={onPressNewBornTracker}
+            data={data?.babyProgress}
+          />
         </View>
 
         {/* {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
