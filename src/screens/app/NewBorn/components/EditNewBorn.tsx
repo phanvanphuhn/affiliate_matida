@@ -70,8 +70,8 @@ const EditNewBorn = (props: any) => {
   const [state, setState] = useDetailPost({
     name: route?.params?.name ? route?.params?.name : '',
     gender: route?.params?.gender ? route?.params?.gender : 'male',
-    birth_experience: route?.params?.pregnant_type
-      ? route?.params?.pregnant_type
+    birth_experience: route?.params?.birth_experience
+      ? route?.params?.birth_experience
       : 'c_section',
     dob: route?.params?.date_of_birth ? route?.params?.date_of_birth : '',
     tob: route?.params?.time_of_birth ? route?.params?.time_of_birth : '',

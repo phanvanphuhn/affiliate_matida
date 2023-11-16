@@ -16,11 +16,14 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {TBaby} from '../../Home/components/BottomSheetNewBorn';
 import {useTranslation} from 'react-i18next';
 import moment from 'moment';
-import {birth_experience} from './EditNewBorn';
+import {birth_experience, gender} from './EditNewBorn';
+import {useSelector} from 'react-redux';
 
 const DetailNewBorn = (props: any) => {
   const {route} = props;
   const {t} = useTranslation();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.headerContainer}>
@@ -123,7 +126,15 @@ const DetailNewBorn = (props: any) => {
                 ]}>
                 {t('newBorn.gender')}
               </Text>
-              <Text style={styles.text}>{route?.params?.gender}</Text>
+              <Text style={styles.text}>
+                {lang == 1
+                  ? gender.filter(
+                      item => item.value == route?.params?.gender,
+                    )[0]?.label
+                  : gender.filter(
+                      item => item.value == route?.params?.gender,
+                    )[0]?.labelVi}
+              </Text>
             </View>
           </View>
 
@@ -133,11 +144,13 @@ const DetailNewBorn = (props: any) => {
               {t('newBorn.birthExperience')}
             </Text>
             <Text style={styles.text}>
-              {
-                birth_experience.filter(
-                  item => item.value == route?.params?.birth_experience,
-                )[0].label
-              }
+              {lang == 1
+                ? birth_experience.filter(
+                    item => item.value == route?.params?.birth_experience,
+                  )[0].label
+                : birth_experience.filter(
+                    item => item.value == route?.params?.birth_experience,
+                  )[0].labelVi}
             </Text>
           </View>
           <View style={styles.wrapDescription}>
