@@ -5,10 +5,14 @@ import moment from 'moment';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const BottomSheetContent = (props: any) => {
   const {onPress, data, type, state, setState} = props;
+
   const {t} = useTranslation();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   return type == 'dob' ? (
@@ -67,7 +71,7 @@ const BottomSheetContent = (props: any) => {
         <TouchableOpacity
           style={styles.container}
           onPress={() => onPress(item.value)}>
-          <Text>{item.label}</Text>
+          <Text>{lang == 1 ? item.label : item.labelVi}</Text>
         </TouchableOpacity>
       );
     })

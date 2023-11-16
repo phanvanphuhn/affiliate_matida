@@ -700,4 +700,12 @@ export const vi = {
     askNow: 'Hỏi Tida ngay',
     reportBirth: 'Con đã ra đời',
   },
+  newBornErrorMsg: {
+    requireName: 'Hãy điền tên của bé',
+    specialName: 'Tên của bé không được chứa kí tự đặc biệt',
+    requireDob: 'Hãy điền ngày sinh của bé',
+    requireTob: 'Hãy điền giờ sinh của bé',
+    requireWeight: 'Hãy điền cân nặng của bé',
+    requireHeight: 'Hãy điền chiều cao của bé',
+  },
 };

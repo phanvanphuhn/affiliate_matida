@@ -25,8 +25,6 @@ const Button = (props: TProps) => {
       return true;
     } else if (state.height.length < 1 && state.page == 7) {
       return true;
-    } else if (state.avatar.length < 1 && state.page == 8) {
-      return true;
     } else {
       false;
     }

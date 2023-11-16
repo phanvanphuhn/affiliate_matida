@@ -26,6 +26,7 @@ import {createBaby, updateBaby} from '@services';
 import Toast from 'react-native-toast-message';
 import {navigate} from '@navigation';
 import {useSelector} from 'react-redux';
+import moment from 'moment';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -52,7 +53,7 @@ const NewBornScreen = (props: TProps) => {
     deliver: 'natural_birth',
     weight: '',
     height: '',
-    avatar: [],
+    avatar: '',
   });
 
   const sex = [
@@ -108,18 +109,17 @@ const NewBornScreen = (props: TProps) => {
 
   const onDone = async () => {
     const params = {
-      // id: route?.params.id,
-      body: {
-        user_id: user?.id,
-        name: state.name.toString(),
-        gender: state.sex.toLowerCase(),
-        birth_experience: state.deliver,
-        date_of_birth: state.dmy,
-        tob: state.hour,
-        weight: Number(state.weight * 1000),
-        height: Number(state.height),
-        avatar: state.avatar,
-      },
+      user_id: user?.id,
+      name: state.name.toString(),
+      gender: state.sex.toLowerCase(),
+      birth_experience: state.deliver,
+      date_of_birth:
+        moment(state.dmy).format('YYYY/MM/DD') +
+        ' ' +
+        moment(state.hour).format('HH:mm:ss'),
+      weight: Number(state.weight * 1000),
+      height: Number(state.height),
+      avatar: state.avatar,
     };
     try {
       const res = await createBaby(params);

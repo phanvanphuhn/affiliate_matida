@@ -114,7 +114,7 @@ const Information = (props: TProps) => {
         );
       case 6:
         return (
-          <View style={styles.container}>
+          <View style={[styles.container, {flexDirection: 'row'}]}>
             <TextInput
               value={state.weight}
               placeholder={t('newBorn.babyWeight')}
@@ -123,13 +123,14 @@ const Information = (props: TProps) => {
               onChangeText={text => {
                 setState({weight: text});
               }}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
             />
+            <Text>kg</Text>
           </View>
         );
       case 7:
         return (
-          <View style={styles.container}>
+          <View style={[styles.container, {flexDirection: 'row'}]}>
             <TextInput
               value={state.height}
               placeholder={t('newBorn.babyHeight')}
@@ -138,8 +139,9 @@ const Information = (props: TProps) => {
               onChangeText={text => {
                 setState({height: text});
               }}
-              keyboardType="numeric"
+              keyboardType="decimal-pad"
             />
+            <Text>cm</Text>
           </View>
         );
       case 8:

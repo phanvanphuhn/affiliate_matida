@@ -35,10 +35,12 @@ import {useSelector} from 'react-redux';
 export const birth_experience = [
   {
     label: 'Natural birth',
+    labelVi: 'Sinh thường',
     value: 'natural_birth',
   },
   {
     label: 'C section',
+    labelVi: 'Sinh mổ',
     value: 'c_section',
   },
 ];
@@ -46,10 +48,12 @@ export const birth_experience = [
 export const gender = [
   {
     label: 'Female',
+    labelVi: 'Bé gái',
     value: 'female',
   },
   {
     label: 'Male',
+    labelVi: 'Bé trai',
     value: 'male',
   },
 ];
@@ -61,6 +65,7 @@ const EditNewBorn = (props: any) => {
   const snapPoints = useMemo(() => ['30%', '50%'], []);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const [state, setState] = useDetailPost({
     name: route?.params?.name ? route?.params?.name : '',
@@ -129,32 +134,32 @@ const EditNewBorn = (props: any) => {
 
     if (state.name.length < 1) {
       formIsValid = false;
-      formErrors['name'] = 'Please input name of baby';
+      formErrors['name'] = t('newBornErrorMsg.requireName');
     }
 
     if (state.name.length && specialChars.test(state.name)) {
       formIsValid = false;
-      formErrors['name'] = 'Name cannot contains special characters';
+      formErrors['name'] = t('newBornErrorMsg.specialName');
     }
 
     if (state.dob.length < 1) {
       formIsValid = false;
-      formErrors['dob'] = 'Please input date of birth of baby';
+      formErrors['dob'] = t('newBornErrorMsg.requireDob');
     }
 
     if (state.tob.length < 1) {
       formIsValid = false;
-      formErrors['tob'] = 'Please input time of birth of baby';
+      formErrors['tob'] = t('newBornErrorMsg.requireTob');
     }
 
     if (state.weight.length < 1) {
       formIsValid = false;
-      formErrors['weight'] = 'Please input weight of baby';
+      formErrors['weight'] = t('newBornErrorMsg.requireWeight');
     }
 
     if (state.height.length < 1) {
       formIsValid = false;
-      formErrors['height'] = 'Please input height of baby';
+      formErrors['height'] = t('newBornErrorMsg.requireHeight');
     }
 
     setState({error: formErrors});
@@ -168,8 +173,10 @@ const EditNewBorn = (props: any) => {
         name: state.name,
         gender: state.gender.toLowerCase(),
         birth_experience: state.birth_experience,
-        date_of_birth: state.dob,
-        tob: state.tob,
+        date_of_birth:
+          moment(state.dob).format('YYYY/MM/DD') +
+          ' ' +
+          moment(state.tob).format('HH:mm:ss'),
         weight: Number(state.weight * 1000),
         height: Number(state.height),
         avatar: state.avatar,
@@ -180,7 +187,10 @@ const EditNewBorn = (props: any) => {
       name: state.name.toString(),
       gender: state.gender.toLowerCase(),
       birth_experience: state.birth_experience,
-      date_of_birth: moment(state.dob).format('YYYY/MM/DD'),
+      date_of_birth:
+        moment(state.dob).format('YYYY/MM/DD') +
+        ' ' +
+        moment(state.tob).format('HH:mm:ss'),
       weight: Number(state.weight * 1000),
       height: Number(state.height),
       avatar: state.avatar,
@@ -235,11 +245,7 @@ const EditNewBorn = (props: any) => {
 
             <ScrollView>
               <View style={styles.wrapContent}>
-                <Text
-                  style={[
-                    styles.label,
-                    state.error.name ? {color: colors.red50} : {},
-                  ]}>
+                <Text style={[styles.label, state.error.name ? {} : {}]}>
                   {t('newBorn.babyName')}
                 </Text>
                 <TextInput
@@ -264,10 +270,11 @@ const EditNewBorn = (props: any) => {
                     justifyContent: 'space-between',
                   }}>
                   <Text style={[styles.content, {fontWeight: '500'}]}>
-                    {
-                      gender.filter(item => item.value == state.gender)[0]
-                        ?.label
-                    }
+                    {lang == 1
+                      ? gender.filter(item => item.value == state.gender)[0]
+                          ?.label
+                      : gender.filter(item => item.value == state.gender)[0]
+                          ?.labelVi}
                   </Text>
 
                   <Image
@@ -286,11 +293,7 @@ const EditNewBorn = (props: any) => {
                   {flexDirection: 'row', justifyContent: 'space-between'},
                 ]}>
                 <View style={{flex: 1}}>
-                  <Text
-                    style={[
-                      styles.label,
-                      state.error.dob ? {color: colors.red50} : {},
-                    ]}>
+                  <Text style={[styles.label, state.error.dob ? {} : {}]}>
                     {t('newBorn.dob')}
                   </Text>
                   <TouchableOpacity
@@ -329,11 +332,7 @@ const EditNewBorn = (props: any) => {
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Text
-                    style={[
-                      styles.label,
-                      state.error.tob ? {color: colors.red50} : {},
-                    ]}>
+                  <Text style={[styles.label, state.error.tob ? {} : {}]}>
                     {t('newBorn.tob')}
                   </Text>
                   <TouchableOpacity
@@ -377,11 +376,7 @@ const EditNewBorn = (props: any) => {
                   {flexDirection: 'row', justifyContent: 'space-between'},
                 ]}>
                 <View style={{flex: 1}}>
-                  <Text
-                    style={[
-                      styles.label,
-                      state.error.weight ? {color: colors.red50} : {},
-                    ]}>
+                  <Text style={[styles.label, state.error.weight ? {} : {}]}>
                     {t('newBorn.babyWeight')}
                   </Text>
                   <View
@@ -412,11 +407,7 @@ const EditNewBorn = (props: any) => {
                 </View>
 
                 <View style={{flex: 1}}>
-                  <Text
-                    style={[
-                      styles.label,
-                      state.error.height ? {color: colors.red50} : {},
-                    ]}>
+                  <Text style={[styles.label, state.error.height ? {} : {}]}>
                     {t('newBorn.babyHeight')}
                   </Text>
                   <View
@@ -452,11 +443,13 @@ const EditNewBorn = (props: any) => {
                   }}
                   onPress={() => onOpenBottomSheet('birth_experience')}>
                   <Text style={[styles.content, {fontWeight: '500'}]}>
-                    {
-                      birth_experience.filter(
-                        item => item.value == state.birth_experience,
-                      )[0]?.label
-                    }
+                    {lang == 1
+                      ? birth_experience.filter(
+                          item => item.value == state.birth_experience,
+                        )[0]?.label
+                      : birth_experience.filter(
+                          item => item.value == state.birth_experience,
+                        )[0]?.labelVi}
                   </Text>
 
                   <Image

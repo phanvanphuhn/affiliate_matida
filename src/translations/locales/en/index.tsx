@@ -696,4 +696,12 @@ export const en = {
     askNow: 'Ask Tida now',
     reportBirth: 'Report birth',
   },
+  newBornErrorMsg: {
+    requireName: 'Please input name of baby',
+    specialName: 'Name cannot contains special characters',
+    requireDob: 'Please input date of birth of baby',
+    requireTob: 'Please input time of birth of baby',
+    requireWeight: 'Please input weight of baby',
+    requireHeight: 'Please input height of baby',
+  },
 };
