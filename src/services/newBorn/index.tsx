@@ -3,6 +3,7 @@ import api from '../api';
 const GET_LIST_BABY = 'babies';
 const CREATE_BABY = 'babies';
 const UPDATE_BABY = 'babies';
+const CALENDAR_CHECKUPS = 'calendar-checkups';
 
 export const getListBaby: any = async () => {
   const response = await api.get(`/${GET_LIST_BABY}`);
@@ -17,5 +18,10 @@ export const createBaby: any = async (params: string) => {
 export const updateBaby: any = async (params: any) => {
   const {id, body} = params;
   const response = await api.put(`${UPDATE_BABY}/${id}`, body);
+  return response;
+};
+
+export const calendarCheckups: any = async () => {
+  const response = await api.get(CALENDAR_CHECKUPS);
   return response;
 };

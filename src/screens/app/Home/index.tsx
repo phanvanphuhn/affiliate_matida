@@ -26,6 +26,7 @@ import {
 import {ROUTE_NAME} from '@routeName';
 import {
   answerDailyQuiz,
+  calendarCheckups,
   getUserInfoApi,
   GlobalService,
   updateBaby,
@@ -217,6 +218,7 @@ const Home = () => {
     try {
       dispatch(getDataHome());
       dispatch(getListBaby());
+      calendarCheckups();
     } catch (error) {
     } finally {
       setRefreshing(false);
@@ -289,7 +291,9 @@ const Home = () => {
 
   const onNavigateAddBaby = () => {
     handleCloseScheduleOrderBottomSheet();
-    navigate(ROUTE_NAME.ADD_BABY);
+    navigate(ROUTE_NAME.ADD_BABY, {
+      isAddNewBaby: true,
+    });
   };
 
   const handlePressItemArticle = (article: IArticles) => {

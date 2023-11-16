@@ -74,7 +74,7 @@ const EditNewBorn = (props: any) => {
       ? route?.params?.birth_experience
       : 'c_section',
     dob: route?.params?.date_of_birth ? route?.params?.date_of_birth : '',
-    tob: route?.params?.time_of_birth ? route?.params?.time_of_birth : '',
+    tob: route?.params?.date_of_birth ? route?.params?.date_of_birth : '',
     weight: route?.params?.weight
       ? (route?.params?.weight / 1000).toString()
       : '',
@@ -177,7 +177,11 @@ const EditNewBorn = (props: any) => {
           moment(state.dob).format('YYYY/MM/DD') +
           ' ' +
           moment(state.tob).format('HH:mm:ss'),
-        weight: Number(state.weight * 1000),
+        weight: Number(
+          state.weight.includes(',')
+            ? state.weight.replace(',', '.') * 1000
+            : state.weight * 1000,
+        ),
         height: Number(state.height),
         avatar: state.avatar,
       },
@@ -191,7 +195,11 @@ const EditNewBorn = (props: any) => {
         moment(state.dob).format('YYYY/MM/DD') +
         ' ' +
         moment(state.tob).format('HH:mm:ss'),
-      weight: Number(state.weight * 1000),
+      weight: Number(
+        state.weight.includes(',')
+          ? state.weight.replace(',', '.') * 1000
+          : state.weight * 1000,
+      ),
       height: Number(state.height),
       avatar: state.avatar,
       pregnant_type: 'singleton',
@@ -218,7 +226,6 @@ const EditNewBorn = (props: any) => {
         });
       }
     }
-    // navigate(ROUTE_NAME.DETAIL_NEW_BORN);
   };
 
   return (

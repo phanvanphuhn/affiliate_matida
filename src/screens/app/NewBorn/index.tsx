@@ -117,7 +117,11 @@ const NewBornScreen = (props: TProps) => {
         moment(state.dmy).format('YYYY/MM/DD') +
         ' ' +
         moment(state.hour).format('HH:mm:ss'),
-      weight: Number(state.weight * 1000),
+      weight: Number(
+        state.weight.includes(',')
+          ? state.weight.replace(',', '.') * 1000
+          : state.weight * 1000,
+      ),
       height: Number(state.height),
       avatar: state.avatar,
     };

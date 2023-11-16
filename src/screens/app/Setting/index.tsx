@@ -241,7 +241,7 @@ const Setting = () => {
                 </View>
                 <View style={styles.wrapContainer}>
                   <Text style={styles.desc}>
-                    {moment(item.due_date || item.date_of_birth).format(
+                    {moment(item.date_of_birth || item.due_date).format(
                       'DD/MM/YYYY',
                     )}
                   </Text>

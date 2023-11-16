@@ -21,6 +21,7 @@ import {useSelector} from 'react-redux';
 
 const DetailNewBorn = (props: any) => {
   const {route} = props;
+  console.log('route: ', route);
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
 
@@ -93,6 +94,8 @@ const DetailNewBorn = (props: any) => {
               <Text style={styles.text}>
                 {route?.params?.date_of_birth
                   ? moment(route?.params?.date_of_birth).format('DD/MM/YYYY')
+                  : route?.params?.due_date
+                  ? moment(route?.params?.due_date).format('DD/MM/YYYY')
                   : 'DD/MM/YYYY'}
               </Text>
             </View>
@@ -112,8 +115,10 @@ const DetailNewBorn = (props: any) => {
                 {t('newBorn.tob')}
               </Text>
               <Text style={styles.text}>
-                {route?.params?.time_of_birth
-                  ? route?.params?.time_of_birth
+                {route?.params?.date_of_birth
+                  ? moment(route?.params?.date_of_birth).format('HH:mm')
+                  : route?.params?.due_date
+                  ? moment(route?.params?.due_date).format('HH:mm')
                   : 'HH:MM am'}
               </Text>
             </View>

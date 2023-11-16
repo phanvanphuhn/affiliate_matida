@@ -72,7 +72,9 @@ const BottomSheetNewBorn = (props: TProps) => {
               </View>
               <View style={styles.wrapContainer}>
                 <Text style={styles.desc}>
-                  {moment(item.due_date).format('DD/MM/YYYY')}
+                  {moment(item.date_of_birth || item.due_date).format(
+                    'DD/MM/YYYY',
+                  )}
                 </Text>
                 <Image
                   source={iconArrowRightGrey}
