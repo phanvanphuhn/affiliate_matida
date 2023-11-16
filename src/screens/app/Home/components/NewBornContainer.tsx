@@ -5,24 +5,40 @@ import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {useSelector} from 'react-redux';
+import moment from 'moment';
 
 type TProps = {
   onPress: () => void;
   data: any;
+  user: any;
+  state: any;
 };
 
 const NewBornContainer = (props: TProps) => {
-  const {onPress, data} = props;
+  const {onPress, data, user, state} = props;
   const {baby} = data;
-
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   return (
     <View style={styles.container}>
       <View style={[styles.wrapContentContainer, {marginBottom: scaler(32)}]}>
-        <Text style={styles.title}>months</Text>
+        {user?.pregnantWeek?.weekPregnant && (
+          <Text style={styles.title}>
+            {user?.pregnantWeek?.weekPregnant.month > 0
+              ? user?.pregnantWeek?.weekPregnant.month + ' month'
+              : null}
+            {user?.pregnantWeek?.weekPregnant.weeks > 0
+              ? user?.pregnantWeek?.weekPregnant.weeks + ' weeks'
+              : null}
+          </Text>
+        )}
 
-        <Text style={styles.title}>born on</Text>
+        {(user?.due_date || user?.date_of_birth) && (
+          <Text style={styles.title}>
+            born on{' '}
+            {moment(user?.due_date || user?.date_of_birth).format('DD/MM/YYYY')}
+          </Text>
+        )}
       </View>
       <View style={[styles.wrapContentContainer, {marginBottom: scaler(32)}]}>
         <View
@@ -58,7 +74,7 @@ const NewBornContainer = (props: TProps) => {
       <View style={styles.wrapContentContainer}>
         <View style={{flexDirection: 'row'}}>
           <Image
-            source={newBornBaby}
+            source={user?.avatar ? {uri: user?.avatar} : newBornBaby}
             style={{
               width: scaler(28),
               height: scaler(28),
@@ -68,8 +84,10 @@ const NewBornContainer = (props: TProps) => {
             resizeMode="contain"
           />
           <View>
-            <Text style={{fontSize: 11, fontWeight: '500'}}>Baby Bear</Text>
-            <Text style={styles.title}>Libra girl</Text>
+            <Text style={{fontSize: 11, fontWeight: '500'}}>
+              {user?.baby_name}
+            </Text>
+            {/* <Text style={styles.title}>Libra girl</Text> */}
           </View>
         </View>
 

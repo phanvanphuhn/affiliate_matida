@@ -62,6 +62,7 @@ const Setting = () => {
   });
   const {t} = useTranslation();
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
+  console.log('newBorn: ,newBorn', newBorn);
 
   useEffect(() => {
     CodePush.getUpdateMetadata().then(info => {
@@ -222,7 +223,7 @@ const Setting = () => {
                     paddingLeft: scaler(16),
                   },
                 ]}>
-                <View style={styles.wrapContainer}>
+                <View style={[styles.wrapContainer, {flex: 1}]}>
                   <Image
                     source={item?.avatar ? {uri: item?.avatar} : iconPregnant}
                     style={{
@@ -233,17 +234,22 @@ const Setting = () => {
                     }}
                     resizeMode="contain"
                   />
-                  <Text style={styles.title}>
+                  <Text style={[styles.title, {flex: 1}]} numberOfLines={1}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Voluptatibus recusandae sapiente, nostrum delectus illum
+                    perferendis obcaecati consequatur, voluptates perspiciatis
+                    animi pariatur atque aperiam magnam ratione nobis molestiae
+                    vero doloribus beatae?
                     {item?.name
                       ? item?.name
                       : `Baby ${newBorn.indexOf(item) + 1}`}
                   </Text>
                 </View>
-                <View style={styles.wrapContainer}>
+                <View style={[styles.wrapContainer]}>
                   <Text style={styles.desc}>
-                    {moment(item.date_of_birth || item.due_date).format(
-                      'DD/MM/YYYY',
-                    )}
+                    {moment
+                      .utc(item.date_of_birth || item.due_date)
+                      .format('DD/MM/YYYY')}
                   </Text>
                   <Image
                     source={iconArrowRightGrey}
@@ -259,30 +265,34 @@ const Setting = () => {
             </View>
           );
         })}
-        <TouchableOpacity
-          style={[
-            styles.wrapContainer,
-            {
-              marginTop: scaler(16),
-              marginBottom: scaler(16),
-              marginLeft: scaler(16),
-            },
-          ]}
-          onPress={onNavigateAddBaby}>
-          <Image
-            source={iconPlusCircle}
-            style={{
-              height: scaler(24),
-              width: scaler(24),
-              marginRight: scaler(8),
-            }}
-            resizeMode="contain"
-          />
-          <Text style={[styles.title, {color: '#A3A1AB'}]}>
-            {t('newBorn.addBaby')}
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>{t('setting.mom')}</Text>
+        {newBorn.length < 10 && (
+          <TouchableOpacity
+            style={[
+              styles.wrapContainer,
+              {
+                marginTop: scaler(16),
+                marginBottom: scaler(16),
+                marginLeft: scaler(16),
+              },
+            ]}
+            onPress={onNavigateAddBaby}>
+            <Image
+              source={iconPlusCircle}
+              style={{
+                height: scaler(24),
+                width: scaler(24),
+                marginRight: scaler(8),
+              }}
+              resizeMode="contain"
+            />
+            <Text style={[styles.title, {color: '#A3A1AB'}]}>
+              {t('newBorn.addBaby')}
+            </Text>
+          </TouchableOpacity>
+        )}
+        <Text style={[styles.title, {marginTop: scaler(16)}]}>
+          {t('setting.mom')}
+        </Text>
         {data?.map((item: any) => {
           return (
             <TouchableOpacity

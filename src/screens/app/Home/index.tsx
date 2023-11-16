@@ -88,6 +88,8 @@ type IData = {
 
 export type TState = {
   filter: string;
+  data: any;
+  isShowNewBorn: boolean;
 };
 
 const Home = () => {
@@ -106,8 +108,10 @@ const Home = () => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [state, setState] = useDetailPost({
-    filter: 'w1',
+    filter: '',
     isShowNewBorn: false,
+    data: [],
+    isShowContent: [],
   });
   // const [loading, setLoading] = useState<boolean>(true);
 
@@ -218,7 +222,12 @@ const Home = () => {
     try {
       dispatch(getDataHome());
       dispatch(getListBaby());
-      calendarCheckups();
+      const res = await calendarCheckups();
+      setState({
+        data: res?.data,
+        filter: Object.keys(res?.data)[0],
+        isShowContent: [],
+      });
     } catch (error) {
     } finally {
       setRefreshing(false);
@@ -274,7 +283,10 @@ const Home = () => {
   };
 
   const onPressNewBornTracker = () => {
-    navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER);
+    navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER, {
+      state,
+      setState,
+    });
   };
 
   const openNewBorn = useCallback(() => {
@@ -423,6 +435,8 @@ const Home = () => {
           <NewBornContainer
             onPress={onPressNewBornTracker}
             data={data?.babyProgress}
+            user={data?.user}
+            state={state}
           />
         </View>
 

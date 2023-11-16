@@ -1,5 +1,5 @@
 import BottomSheet from '@gorhom/bottom-sheet';
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Image,
   Touchable,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BottomSheetNewBorn from './BottomSheetNewBorn';
@@ -26,6 +27,11 @@ import {
 } from '@images';
 import ListMonth from './ListMonth';
 import useDetailPost from '../../Forum/components/useDetailPost';
+import _ from 'lodash';
+import RenderHtml from 'react-native-render-html';
+import {useSelector} from 'react-redux';
+import {tagsStyles} from '../../DetailArticle/settingHTML';
+import {RootState} from 'src/redux/rootReducer';
 
 type TData = {
   index: number;
@@ -33,53 +39,28 @@ type TData = {
   content: String;
 };
 
-const NewBornTracker = () => {
-  const [state, setState] = useDetailPost({
-    filter: 'w1',
-    isShowContent: [],
-  });
+type TProps = {
+  route: any;
+};
 
-  const data: TData[] = [
-    {
-      index: 1,
-      label: 'Sleep',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, pariatur incidunt blanditiis tempore veritatis reiciendis doloribus est quos laborum harum repellendus, adipisci impedit quibusdam ratione nesciunt id animi maiores atque!',
-    },
-    {
-      index: 2,
-      label: 'Eat',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, pariatur incidunt blanditiis tempore veritatis reiciendis doloribus est quos laborum harum repellendus, adipisci impedit quibusdam ratione nesciunt id animi maiores atque!',
-    },
-    {
-      index: 3,
-      label: 'Drink',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, pariatur incidunt blanditiis tempore veritatis reiciendis doloribus est quos laborum harum repellendus, adipisci impedit quibusdam ratione nesciunt id animi maiores atque!',
-    },
-    {
-      index: 4,
-      label: 'Activities',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, pariatur incidunt blanditiis tempore veritatis reiciendis doloribus est quos laborum harum repellendus, adipisci impedit quibusdam ratione nesciunt id animi maiores atque!',
-    },
-  ];
+const NewBornTracker = (props: TProps) => {
+  const {route} = props;
+  const {params} = route;
 
-  const data1: TData[] = [
-    {
-      index: 1,
-      label: 'Baby tips',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, pariatur incidunt blanditiis tempore veritatis reiciendis doloribus est quos laborum harum repellendus, adipisci impedit quibusdam ratione nesciunt id animi maiores atque!',
-    },
-    {
-      index: 2,
-      label: 'Postpartum tips',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, pariatur incidunt blanditiis tempore veritatis reiciendis doloribus est quos laborum harum repellendus, adipisci impedit quibusdam ratione nesciunt id animi maiores atque!',
-    },
-  ];
+  const lang = useSelector((state: any) => state?.auth?.lang);
+  const newBorn = useSelector((state: RootState) => state.newBorn.list);
+
+  const selectedNewBorn = newBorn.filter(item => item.selected == true);
+  const filter = params?.state?.filter;
+  const dataFilter = _.get(params?.state.data, filter);
+  const dataFull = dataFilter?.contents?.filter(
+    (item: any) => item.style == 'full',
+  );
+  const dataCollapsible = dataFilter?.contents?.filter(
+    (item: any) => item.style == 'collapsible',
+  );
+
+  const [expandContent, setExpandContent] = useState([]);
 
   const bottomSheetRef = useRef<BottomSheet>();
 
@@ -104,38 +85,41 @@ const NewBornTracker = () => {
 
   const onNavigateDetailNewBorn = () => {
     handleCloseScheduleOrderBottomSheet();
-    navigate(ROUTE_NAME.DETAIL_NEW_BORN);
+    // navigate(ROUTE_NAME.DETAIL_NEW_BORN);
   };
 
-  const setShowContent = (item: TData) => {
-    let isShowContent = state.isShowContent;
-    if (state.isShowContent?.includes(item.label)) {
-      isShowContent.splice(state.isShowContent.indexOf(item.label), 1);
+  const setShowContent = (item: any) => {
+    let isShowContent = [expandContent];
+    if (expandContent?.includes(item.title)) {
+      isShowContent.splice(expandContent.indexOf(item.title), 1);
     } else {
-      isShowContent.push(item.label);
+      isShowContent.push(item.title);
     }
-    setState({isShowContent: isShowContent});
+    setExpandContent(isShowContent);
   };
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView edges={['top']} style={[styles.container]}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity style={{width: '15%'}} onPress={() => goBack()}>
+          <TouchableOpacity style={{width: '20%'}} onPress={() => goBack()}>
             <SvgArrowLeft stroke={colors.black} size={24} />
           </TouchableOpacity>
           <View>
             <Text>Newborn tracker</Text>
           </View>
           <TouchableOpacity
-            style={{flexDirection: 'row', width: '15%'}}
+            style={{flexDirection: 'row', width: '20%'}}
             onPress={openNewBorn}>
-            <Text style={{marginRight: scaler(4)}}>Bear</Text>
+            <Text style={{marginRight: scaler(4)}} numberOfLines={1}>
+              {' '}
+              {selectedNewBorn[0]?.name || 'Baby 1'}
+            </Text>
             <SvgCaretDown stroke={colors.black} />
           </TouchableOpacity>
         </View>
         <View style={{paddingHorizontal: scaler(16)}}>
-          <ListMonth state={state} setState={setState} />
+          <ListMonth state={params?.state} setState={params?.setState} />
         </View>
 
         <ScrollView style={styles.bodyContainer}>
@@ -158,14 +142,14 @@ const NewBornTracker = () => {
             </Text>
           </View>
           <View style={styles.wrapContentContainer}>
-            {data.map((item: TData) => {
+            {dataCollapsible.map((item: any) => {
               return (
                 <View
                   style={[
                     {
                       marginBottom: scaler(16),
                     },
-                    item.index == data.length
+                    item.index == dataCollapsible.length
                       ? {}
                       : {
                           borderBottomColor: colors.borderColor,
@@ -179,7 +163,7 @@ const NewBornTracker = () => {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                     }}>
-                    <Text style={styles.label}>{item.label}</Text>
+                    <Text style={styles.label}>{item.title}</Text>
 
                     <Image
                       source={iconChevronDown}
@@ -190,20 +174,34 @@ const NewBornTracker = () => {
                     />
                   </TouchableOpacity>
 
-                  {state.isShowContent?.includes(item.label) && (
-                    <Text style={styles.content}>{item.content}</Text>
+                  {expandContent?.includes(item.title) && (
+                    <TouchableWithoutFeedback>
+                      <View>
+                        <RenderHtml
+                          contentWidth={100}
+                          source={{
+                            html: `<div>${item.description}</div>`,
+                          }}
+                          // baseStyle={styles.description}
+                          enableExperimentalMarginCollapsing={true}
+                          enableExperimentalBRCollapsing={true}
+                          enableExperimentalGhostLinesPrevention={true}
+                          tagsStyles={{...tagsStyles}}
+                        />
+                      </View>
+                    </TouchableWithoutFeedback>
                   )}
                 </View>
               );
             })}
           </View>
           <View style={{paddingHorizontal: scaler(16)}}>
-            {data1.map((item: TData) => {
+            {dataFull.map((item: any) => {
               return (
                 <View
                   style={[
                     styles.wrapTipContainer,
-                    item.index == data1.length
+                    item.index == dataFull.length
                       ? {marginBottom: scaler(32)}
                       : {
                           borderBottomColor: colors.borderColor,
@@ -211,9 +209,23 @@ const NewBornTracker = () => {
                           paddingBottom: scaler(16),
                         },
                   ]}>
-                  <Text style={styles.label}>{item.label}</Text>
+                  <Text style={styles.label}>{item.title}</Text>
 
-                  <Text style={styles.content}>{item.content}</Text>
+                  <TouchableWithoutFeedback>
+                    <View>
+                      <RenderHtml
+                        contentWidth={100}
+                        source={{
+                          html: `<div>${item.description}</div>`,
+                        }}
+                        // baseStyle={styles.description}
+                        enableExperimentalMarginCollapsing={true}
+                        enableExperimentalBRCollapsing={true}
+                        enableExperimentalGhostLinesPrevention={true}
+                        tagsStyles={{...tagsStyles}}
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
                 </View>
               );
             })}

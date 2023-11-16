@@ -195,10 +195,19 @@ export const AppHeader = ({
       <View style={styles.row}>
         {openNewBorn && (
           <TouchableOpacity
-            style={{flexDirection: 'row', marginRight: scaler(16)}}
+            style={{
+              flexDirection: 'row',
+              marginRight: scaler(16),
+              width: scaler(48),
+            }}
             onPress={openNewBorn}>
-            <View style={{marginRight: scaler(4)}}>
-              <Text>{selectedNewBorn[0]?.name || 'Baby 1'}</Text>
+            <View
+              style={{
+                marginRight: scaler(4),
+              }}>
+              <Text numberOfLines={1}>
+                {selectedNewBorn[0]?.name || 'Baby 1'}
+              </Text>
             </View>
             <View>
               <SvgCaretDown stroke={bgc ? colors.black : 'white'} />

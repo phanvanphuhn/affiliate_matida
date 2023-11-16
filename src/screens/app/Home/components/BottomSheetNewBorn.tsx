@@ -72,9 +72,9 @@ const BottomSheetNewBorn = (props: TProps) => {
               </View>
               <View style={styles.wrapContainer}>
                 <Text style={styles.desc}>
-                  {moment(item.date_of_birth || item.due_date).format(
-                    'DD/MM/YYYY',
-                  )}
+                  {moment
+                    .utc(item.date_of_birth || item.due_date)
+                    .format('DD/MM/YYYY')}
                 </Text>
                 <Image
                   source={iconArrowRightGrey}
@@ -90,25 +90,27 @@ const BottomSheetNewBorn = (props: TProps) => {
           </View>
         );
       })}
-      <TouchableOpacity
-        style={[
-          styles.wrapContainer,
-          {paddingHorizontal: scaler(16), marginBottom: scaler(16)},
-        ]}
-        onPress={onPress}>
-        <Image
-          source={iconPlusCircle}
-          style={{
-            height: scaler(24),
-            width: scaler(24),
-            marginRight: scaler(8),
-          }}
-          resizeMode="contain"
-        />
-        <Text style={[styles.title, {color: '#A3A1AB'}]}>
-          {t('newBorn.addBaby')}
-        </Text>
-      </TouchableOpacity>
+      {newBorn?.length < 10 && (
+        <TouchableOpacity
+          style={[
+            styles.wrapContainer,
+            {paddingHorizontal: scaler(16), marginBottom: scaler(16)},
+          ]}
+          onPress={onPress}>
+          <Image
+            source={iconPlusCircle}
+            style={{
+              height: scaler(24),
+              width: scaler(24),
+              marginRight: scaler(8),
+            }}
+            resizeMode="contain"
+          />
+          <Text style={[styles.title, {color: '#A3A1AB'}]}>
+            {t('newBorn.addBaby')}
+          </Text>
+        </TouchableOpacity>
+      )}
     </>
   );
 };

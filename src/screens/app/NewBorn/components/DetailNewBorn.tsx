@@ -21,7 +21,6 @@ import {useSelector} from 'react-redux';
 
 const DetailNewBorn = (props: any) => {
   const {route} = props;
-  console.log('route: ', route);
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
 
@@ -93,9 +92,11 @@ const DetailNewBorn = (props: any) => {
               </Text>
               <Text style={styles.text}>
                 {route?.params?.date_of_birth
-                  ? moment(route?.params?.date_of_birth).format('DD/MM/YYYY')
+                  ? moment
+                      .utc(route?.params?.date_of_birth)
+                      .format('DD/MM/YYYY')
                   : route?.params?.due_date
-                  ? moment(route?.params?.due_date).format('DD/MM/YYYY')
+                  ? moment.utc(route?.params?.due_date).format('DD/MM/YYYY')
                   : 'DD/MM/YYYY'}
               </Text>
             </View>
@@ -116,9 +117,9 @@ const DetailNewBorn = (props: any) => {
               </Text>
               <Text style={styles.text}>
                 {route?.params?.date_of_birth
-                  ? moment(route?.params?.date_of_birth).format('HH:mm')
+                  ? moment.utc(route?.params?.date_of_birth).format('HH:mm')
                   : route?.params?.due_date
-                  ? moment(route?.params?.due_date).format('HH:mm')
+                  ? moment.utc(route?.params?.due_date).format('HH:mm')
                   : 'HH:MM am'}
               </Text>
             </View>
@@ -152,10 +153,10 @@ const DetailNewBorn = (props: any) => {
               {lang == 1
                 ? birth_experience.filter(
                     item => item.value == route?.params?.birth_experience,
-                  )[0].label
+                  )[0]?.label
                 : birth_experience.filter(
                     item => item.value == route?.params?.birth_experience,
-                  )[0].labelVi}
+                  )[0]?.labelVi}
             </Text>
           </View>
           <View style={styles.wrapDescription}>

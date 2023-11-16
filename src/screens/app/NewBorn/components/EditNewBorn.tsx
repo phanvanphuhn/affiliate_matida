@@ -182,7 +182,11 @@ const EditNewBorn = (props: any) => {
             ? state.weight.replace(',', '.') * 1000
             : state.weight * 1000,
         ),
-        height: Number(state.height),
+        height: Number(
+          state.height.includes(',')
+            ? state.height.replace(',', '.')
+            : state.height,
+        ),
         avatar: state.avatar,
       },
     };
@@ -200,9 +204,12 @@ const EditNewBorn = (props: any) => {
           ? state.weight.replace(',', '.') * 1000
           : state.weight * 1000,
       ),
-      height: Number(state.height),
+      height: Number(
+        state.height.includes(',')
+          ? state.height.replace(',', '.')
+          : state.height,
+      ),
       avatar: state.avatar,
-      pregnant_type: 'singleton',
     };
     if (onValidateForm()) {
       try {
@@ -320,7 +327,7 @@ const EditNewBorn = (props: any) => {
                           : {color: colors.borderColor},
                       ]}>
                       {state.dob
-                        ? moment(state.dob).format('DD/MM/YYYY')
+                        ? moment.utc(state.dob).format('DD/MM/YYYY')
                         : t('newBorn.selectDate')}
                     </Text>
 
@@ -359,7 +366,7 @@ const EditNewBorn = (props: any) => {
                           : {color: colors.borderColor},
                       ]}>
                       {state.tob
-                        ? moment(state.tob).format('HH:mm')
+                        ? moment.utc(state.tob).format('HH:mm')
                         : t('newBorn.selectTime')}
                     </Text>
 

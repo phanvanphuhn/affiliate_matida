@@ -17,68 +17,73 @@ const ListMonth = (props: TProps) => {
   const {state, setState} = props;
   const data: TData[] = [
     {
-      value: 'w1',
+      value: 'week_1',
       label: 'Week 1',
     },
     {
-      value: 'w2',
+      value: 'week_2',
       label: 'Week 2',
     },
     {
-      value: 'w3',
+      value: 'week_3',
       label: 'Week 3',
     },
     {
-      value: 'w4',
+      value: 'week_4',
       label: 'Week 4',
     },
     {
-      value: 'w5',
+      value: 'week_5',
       label: 'Week 5',
     },
     {
-      value: 'w6',
+      value: 'week_6',
       label: 'Week 6',
     },
     {
-      value: 'w7',
+      value: 'week_7',
       label: 'Week 7',
     },
     {
-      value: 'w8',
+      value: 'week_8',
       label: 'Week 8',
     },
     {
-      value: 'm3',
+      value: 'month_3',
       label: 'Month 3',
     },
     {
-      value: 'm4',
+      value: 'month_4',
       label: 'Month 4',
     },
     {
-      value: 'm5',
+      value: 'month_5',
       label: 'Month 5',
     },
     {
-      value: 'm6',
+      value: 'month_6',
       label: 'Month 6',
     },
     {
-      value: 'm7',
+      value: 'month_7',
       label: 'Month 7',
     },
     {
-      value: 'm8',
+      value: 'month_8',
       label: 'Month 8',
     },
     {
-      value: 'm9',
+      value: 'month_9',
       label: 'Month 9',
     },
   ];
 
+  const dataListMonth = data.filter(item =>
+    Object.keys(state.data)?.includes(item.value),
+  );
+
   const onSelectFilter = (item: TData) => {
+    console.log('state: ', state, item.value);
     setState({filter: item.value});
   };
 
@@ -91,7 +96,8 @@ const ListMonth = (props: TProps) => {
             ? {backgroundColor: '#FFEBEB'}
             : {backgroundColor: colors.white},
         ]}
-        onPress={() => onSelectFilter(item)}>
+        onPress={() => onSelectFilter(item)}
+        disabled={state?.filter == item.value}>
         <Text
           style={[
             styles.btnTitle,
@@ -107,7 +113,7 @@ const ListMonth = (props: TProps) => {
 
   return (
     <FlatList
-      data={data}
+      data={dataListMonth}
       renderItem={renderItem}
       horizontal={true}
       showsHorizontalScrollIndicator={false}

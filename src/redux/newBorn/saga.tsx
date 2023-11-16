@@ -12,7 +12,6 @@ interface ResponseGenerator {
 export function* getDataListBaby() {
   try {
     const res: ResponseGenerator = yield getListBaby();
-    console.log('res: ', res);
     yield put(getListBabySuccess(res?.data));
   } catch (e) {
   } finally {

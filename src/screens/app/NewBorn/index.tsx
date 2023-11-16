@@ -122,7 +122,11 @@ const NewBornScreen = (props: TProps) => {
           ? state.weight.replace(',', '.') * 1000
           : state.weight * 1000,
       ),
-      height: Number(state.height),
+      height: Number(
+        state.height.includes(',')
+          ? state.height.replace(',', '.')
+          : state.height,
+      ),
       avatar: state.avatar,
     };
     try {
