@@ -25,6 +25,7 @@ const BottomSheetContent = (props: any) => {
           setState({dob: date});
         }}
         // dataDate={state.dob}
+        maximumDate={new Date(new Date().setMonth(new Date().getMonth() + 9))}
         textColor={colors.black}
         style={{backgroundColor: colors.white}}
         width={SCREEN_WIDTH}
