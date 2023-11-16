@@ -172,7 +172,9 @@ const Setting = () => {
   };
 
   const onNavigateAddBaby = () => {
-    navigation.navigate(ROUTE_NAME.ADD_BABY);
+    navigation.navigate(ROUTE_NAME.ADD_BABY, {
+      isAddNewBaby: true,
+    });
   };
 
   return (
@@ -239,7 +241,9 @@ const Setting = () => {
                 </View>
                 <View style={styles.wrapContainer}>
                   <Text style={styles.desc}>
-                    {moment(item.due_date).format('DD/MM/YYYY')}
+                    {moment(item.due_date || item.date_of_birth).format(
+                      'DD/MM/YYYY',
+                    )}
                   </Text>
                   <Image
                     source={iconArrowRightGrey}

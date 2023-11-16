@@ -26,9 +26,9 @@ const PickerOption = (props: TProps) => {
         return t('newBorn.female');
       case 'notToSay':
         return t('newBorn.notToSay');
-      case 'naturalBirth':
+      case 'natural_birth':
         return t('newBorn.naturalBirth');
-      case 'cSection':
+      case 'c_section':
         return t('newBorn.cSection');
     }
   };

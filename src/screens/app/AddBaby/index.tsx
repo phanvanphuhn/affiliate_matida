@@ -7,11 +7,14 @@ import {useTranslation} from 'react-i18next';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const AddBaby = () => {
+const AddBaby = (props: any) => {
+  const {route} = props;
   const {t} = useTranslation();
 
   const onNavigateEditNewBorn = () => {
-    navigate(ROUTE_NAME.EDIT_NEW_BORN);
+    navigate(ROUTE_NAME.EDIT_NEW_BORN, {
+      isAddNewBaby: route?.params?.isAddNewBaby,
+    });
   };
 
   const onNavigateAddNewBaby = () => {

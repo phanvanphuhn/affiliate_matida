@@ -22,9 +22,10 @@ import {ROUTE_NAME} from '@routeName';
 import KeyboardShift from '../DetailFeed/components/KeyboardShift';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useTranslation} from 'react-i18next';
-import {updateBaby} from '@services';
+import {createBaby, updateBaby} from '@services';
 import Toast from 'react-native-toast-message';
 import {navigate} from '@navigation';
+import {useSelector} from 'react-redux';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -39,6 +40,7 @@ const NewBornScreen = (props: TProps) => {
   const {route} = props;
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [state, setState] = useDetailPost({
     page: 0,
@@ -47,10 +49,10 @@ const NewBornScreen = (props: TProps) => {
     hour: new Date(),
     name: '',
     sex: 'male',
-    deliver: 'naturalBirth',
+    deliver: 'natural_birth',
     weight: '',
     height: '',
-    image: [],
+    avatar: [],
   });
 
   const sex = [
@@ -64,22 +66,22 @@ const NewBornScreen = (props: TProps) => {
       value: 'female',
       title: 'Female',
     },
-    {
-      id: 3,
-      value: 'notToSay',
-      title: 'Prefer not to say',
-    },
+    // {
+    //   id: 3,
+    //   value: 'notToSay',
+    //   title: 'Prefer not to say',
+    // },
   ];
 
   const deliver = [
     {
       id: 1,
-      value: 'naturalBirth',
+      value: 'natural_birth',
       title: 'Natural birth',
     },
     {
       id: 2,
-      value: 'cSection',
+      value: 'c_section',
       title: 'C section',
     },
   ];
@@ -108,18 +110,19 @@ const NewBornScreen = (props: TProps) => {
     const params = {
       // id: route?.params.id,
       body: {
-        name: state.name,
+        user_id: user?.id,
+        name: state.name.toString(),
         gender: state.sex.toLowerCase(),
         birth_experience: state.deliver,
         date_of_birth: state.dmy,
         tob: state.hour,
         weight: Number(state.weight * 1000),
         height: Number(state.height),
-        avatar: state.image,
+        avatar: state.avatar,
       },
     };
     try {
-      const res = await updateBaby(params);
+      const res = await createBaby(params);
       if (res.success) {
         navigate(ROUTE_NAME.TAB_HOME);
       } else {

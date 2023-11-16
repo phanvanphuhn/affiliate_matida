@@ -30,7 +30,7 @@ export type TState = {
   deliver: string;
   weight: string;
   height: string;
-  image: [];
+  avatar: [];
 };
 
 type TProps = {

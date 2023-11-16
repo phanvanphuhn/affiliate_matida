@@ -24,12 +24,13 @@ import {ROUTE_NAME} from '@routeName';
 import {TBaby} from '../../Home/components/BottomSheetNewBorn';
 import Toast from 'react-native-toast-message';
 import {useTranslation} from 'react-i18next';
-import {updateBaby} from '@services';
+import {createBaby, updateBaby} from '@services';
 import BottomSheetContent from './BottomSheetContent';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheetModal from '@component/BottomSheetModal';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import moment from 'moment';
+import {useSelector} from 'react-redux';
 
 export const birth_experience = [
   {
@@ -55,9 +56,11 @@ export const gender = [
 
 const EditNewBorn = (props: any) => {
   const {route} = props;
+
   const {t} = useTranslation();
   const snapPoints = useMemo(() => ['30%', '50%'], []);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [state, setState] = useDetailPost({
     name: route?.params?.name ? route?.params?.name : '',
@@ -75,8 +78,6 @@ const EditNewBorn = (props: any) => {
     typeBottomSheet: '',
     error: {},
   });
-
-  console.log('state: ', state);
 
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
@@ -162,7 +163,7 @@ const EditNewBorn = (props: any) => {
 
   const onSave = async () => {
     const params = {
-      // id: route?.params.id,
+      id: route?.params.id,
       body: {
         name: state.name,
         gender: state.gender.toLowerCase(),
@@ -174,9 +175,30 @@ const EditNewBorn = (props: any) => {
         avatar: state.avatar,
       },
     };
+    const paramsAddBaby = {
+      user_id: user?.id,
+      name: state.name.toString(),
+      gender: state.gender.toLowerCase(),
+      birth_experience: state.birth_experience,
+      date_of_birth: moment(state.dob).format('YYYY/MM/DD'),
+      weight: Number(state.weight * 1000),
+      height: Number(state.height),
+      avatar: state.avatar,
+      pregnant_type: 'singleton',
+    };
     if (onValidateForm()) {
       try {
-        const res = await updateBaby(params);
+        if (route?.params?.isAddNewBaby) {
+          const res = await createBaby(paramsAddBaby);
+          if (res.success) {
+            navigate(ROUTE_NAME.TAB_HOME);
+          }
+        } else {
+          const res = await updateBaby(params);
+          if (res.success) {
+            navigate(ROUTE_NAME.TAB_HOME);
+          }
+        }
       } catch (error) {
         Toast.show({
           visibilityTime: 4000,
@@ -185,15 +207,7 @@ const EditNewBorn = (props: any) => {
           position: 'top',
         });
       }
-    } else {
-      Toast.show({
-        visibilityTime: 4000,
-        text1: t('error.addNewBornFail'),
-        text1NumberOfLines: 2,
-        position: 'top',
-      });
     }
-
     // navigate(ROUTE_NAME.DETAIL_NEW_BORN);
   };
 
