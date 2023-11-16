@@ -80,6 +80,9 @@ const ChooseDueDateScreenApp = (props: any) => {
               setDate(date);
             }}
             minimumDate={new Date()}
+            maximumDate={
+              new Date(new Date().setMonth(new Date().getMonth() + 9))
+            }
           />
           <AppButton
             titleButton={t('chooseDueDate.notKnowDueDate')}
