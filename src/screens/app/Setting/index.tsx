@@ -235,11 +235,6 @@ const Setting = () => {
                     resizeMode="contain"
                   />
                   <Text style={[styles.title, {flex: 1}]} numberOfLines={1}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Voluptatibus recusandae sapiente, nostrum delectus illum
-                    perferendis obcaecati consequatur, voluptates perspiciatis
-                    animi pariatur atque aperiam magnam ratione nobis molestiae
-                    vero doloribus beatae?
                     {item?.name
                       ? item?.name
                       : `Baby ${newBorn.indexOf(item) + 1}`}

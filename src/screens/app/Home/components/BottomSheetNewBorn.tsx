@@ -53,7 +53,7 @@ const BottomSheetNewBorn = (props: TProps) => {
                   paddingBottom: scaler(16),
                 },
               ]}>
-              <View style={styles.wrapContainer}>
+              <View style={[styles.wrapContainer, {flex: 1}]}>
                 <Image
                   source={item?.avatar ? {uri: item?.avatar} : iconPregnant}
                   style={{
@@ -64,7 +64,7 @@ const BottomSheetNewBorn = (props: TProps) => {
                   }}
                   resizeMode="contain"
                 />
-                <Text style={styles.title}>
+                <Text style={[styles.title, {flex: 1}]} numberOfLines={1}>
                   {item?.name
                     ? item?.name
                     : `Baby ${newBorn.indexOf(item) + 1}`}
