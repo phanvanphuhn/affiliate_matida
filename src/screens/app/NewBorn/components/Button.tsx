@@ -13,13 +13,16 @@ type TProps = {
   onNextPage: () => void;
   onPreviousPage: () => void;
   state: TState;
+  onValidate: () => boolean;
 };
 
 const Button = (props: TProps) => {
-  const {onNextPage, onPreviousPage, state} = props;
+  const {onNextPage, onPreviousPage, state, onValidate} = props;
 
   const disableNextBtn = () => {
     if (state.name.length < 1 && state.page == 3) {
+      return true;
+    } else if (onValidate()) {
       return true;
     } else if (state.weight.length < 1 && state.page == 6) {
       return true;

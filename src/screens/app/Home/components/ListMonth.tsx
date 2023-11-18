@@ -83,7 +83,6 @@ const ListMonth = (props: TProps) => {
   );
 
   const onSelectFilter = (item: TData) => {
-    console.log('state: ', state, item.value);
     setState({filter: item.value});
   };
 
@@ -113,7 +112,7 @@ const ListMonth = (props: TProps) => {
 
   return (
     <FlatList
-      data={dataListMonth}
+      data={data}
       renderItem={renderItem}
       horizontal={true}
       showsHorizontalScrollIndicator={false}

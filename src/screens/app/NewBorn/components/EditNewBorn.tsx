@@ -243,7 +243,9 @@ const EditNewBorn = (props: any) => {
       <SafeAreaView style={styles.container} edges={['top']}>
         <KeyboardAwareScrollView
           contentContainerStyle={{flex: 1, backgroundColor: colors.white}}>
-          <View style={styles.wrapContainer}>
+          <ScrollView
+            style={styles.wrapContainer}
+            showsVerticalScrollIndicator={false}>
             <View style={{alignItems: 'center', marginTop: scaler(56)}}>
               <Text style={[styles.title, {marginBottom: scaler(8)}]}>
                 {t('newBorn.happyParenting')}
@@ -260,7 +262,7 @@ const EditNewBorn = (props: any) => {
               </View>
             </View>
 
-            <ScrollView>
+            <View>
               <View style={styles.wrapContent}>
                 <Text style={[styles.label, state.error.name ? {} : {}]}>
                   {t('newBorn.name')}
@@ -439,7 +441,7 @@ const EditNewBorn = (props: any) => {
                       onChangeText={text => {
                         setState({height: text});
                       }}
-                      keyboardType="numeric"
+                      keyboardType="number-pad"
                     />
                     <Text style={[styles.label, {fontSize: scaler(14)}]}>
                       cm
@@ -478,18 +480,19 @@ const EditNewBorn = (props: any) => {
                   />
                 </TouchableOpacity>
               </View>
-            </ScrollView>
-          </View>
-          <View style={styles.wrapButtonContainer}>
-            <TouchableOpacity
-              style={styles.wrapCancelButton}
-              onPress={() => goBack()}>
-              <Text>{t('newBorn.cancel')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.wrapSaveButton} onPress={onSave}>
-              <Text style={{color: colors.white}}>{t('newBorn.save')}</Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+            <View style={styles.wrapButtonContainer}>
+              <TouchableOpacity
+                style={styles.wrapCancelButton}
+                onPress={() => goBack()}>
+                <Text>{t('newBorn.cancel')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.wrapSaveButton} onPress={onSave}>
+                <Text style={{color: colors.white}}>{t('newBorn.save')}</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+
           <BottomSheetModalProvider>
             <BottomSheetModal
               ref={bottomSheetRef}

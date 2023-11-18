@@ -107,6 +107,16 @@ const NewBornScreen = (props: TProps) => {
     }
   };
 
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+  const onValidate = () => {
+    if (state.name.length && specialChars.test(state.name)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const onDone = async () => {
     const params = {
       user_id: user?.id,
@@ -186,6 +196,7 @@ const NewBornScreen = (props: TProps) => {
             onDone={onDone}
             sex={sex}
             deliver={deliver}
+            onValidate={onValidate}
           />
         </View>
 
@@ -195,6 +206,7 @@ const NewBornScreen = (props: TProps) => {
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
               state={state}
+              onValidate={onValidate}
             />
           )}
 

@@ -197,16 +197,15 @@ export const AppHeader = ({
           <TouchableOpacity
             style={{
               flexDirection: 'row',
-              marginRight: scaler(16),
               width: scaler(48),
-              paddingRight: scaler(16),
+              marginRight: scaler(32),
             }}
             onPress={openNewBorn}>
             <View
               style={{
                 marginRight: scaler(4),
               }}>
-              <Text numberOfLines={1}>
+              <Text numberOfLines={1} style={{color: colors.black}}>
                 {selectedNewBorn[0]?.name || 'Baby 1'}
               </Text>
             </View>

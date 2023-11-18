@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useDetailPost from '../../Forum/components/useDetailPost';
@@ -26,6 +27,7 @@ import Toast from 'react-native-toast-message';
 import {useTranslation} from 'react-i18next';
 import {trackBirthdateEvent} from '@services/webengageManager';
 import {showMessage} from 'react-native-flash-message';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const AddNewBaby = (props: any) => {
   const {route} = props;
@@ -130,98 +132,110 @@ const AddNewBaby = (props: any) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <View style={styles.wrapContainer}>
-        <Text
-          style={[
-            styles.title,
-            {marginTop: scaler(48), marginBottom: scaler(16)},
-          ]}>
-          {t('newBorn.happyPreggy')}
-        </Text>
-        <Text style={[styles.desc, {marginBottom: scaler(32)}]}>
-          {t('newBorn.tellMeMore')}
-        </Text>
-        <ImageOption state={state} setState={setState} />
-        <Text
-          style={[
-            styles.label,
-            {marginBottom: scaler(24), marginTop: scaler(16)},
-          ]}>
-          {t('newBorn.babyPicture')}
-        </Text>
-
-        <View style={[styles.wrapContent, {marginBottom: scaler(24)}]}>
-          <Text style={[styles.label, {marginBottom: scaler(8)}]}>
-            {t('newBorn.name')}
-          </Text>
-          <TextInput
-            placeholder={t('newBorn.babyName')}
-            value={state.name}
-            onChangeText={text => setState({name: text})}
-          />
-          {state?.error?.name?.length > 0 && (
-            <Text style={styles.errorMsg}>{state.error.name}</Text>
-          )}
-        </View>
-
-        <View style={styles.wrapContent}>
-          <Text style={[styles.label, {marginBottom: scaler(8)}]}>
-            {t('newBorn.dueDate')}
-          </Text>
-          <TouchableOpacity
-            style={styles.wrapContentContainer}
-            onPress={onChooseDueDate}>
+      <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
+        <View style={{flex: 1}}>
+          <View style={[styles.wrapContainer]}>
+            <Text
+              style={[
+                styles.title,
+                {marginTop: scaler(48), marginBottom: scaler(16)},
+              ]}>
+              {t('newBorn.happyPreggy')}
+            </Text>
+            <Text style={[styles.desc, {marginBottom: scaler(32)}]}>
+              {t('newBorn.tellMeMore')}
+            </Text>
+            <ImageOption state={state} setState={setState} />
             <Text
               style={[
                 styles.label,
-                state.due_date.length > 0
-                  ? {
-                      fontSize: scaler(14),
-                      fontWeight: '400',
-                      color: colors.black,
-                    }
-                  : {fontSize: scaler(14), fontWeight: '400', color: '#A3A1AB'},
+                {marginBottom: scaler(24), marginTop: scaler(16)},
               ]}>
-              {state.due_date.length > 0
-                ? moment.utc(state.due_date).format('DD/MM/YYYY')
-                : t('newBorn.addDueDate')}
+              {t('newBorn.babyPicture')}
             </Text>
-            <Image
-              source={iconCalendarGrey}
-              style={{height: scaler(24), width: scaler(24)}}
-            />
-          </TouchableOpacity>
-          {state?.error?.due_date?.length > 0 && (
-            <Text style={styles.errorMsg}>{state.error.due_date}</Text>
-          )}
-        </View>
-      </View>
 
-      <View
-        style={[
-          styles.wrapContentContainer,
-          {
-            paddingTop: scaler(16),
-            paddingHorizontal: scaler(16),
-            paddingBottom: scaler(32),
-            borderTopWidth: 0.5,
-            borderColor: colors.borderColor,
-          },
-        ]}>
-        <TouchableOpacity style={styles.wrapButtonContainer} onPress={onCancel}>
-          <Text>Cancel</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.wrapButtonContainer,
-            {backgroundColor: colors.primary},
-          ]}
-          onPress={onSave}
-          // disabled={!state.name || !state.due_date}
-        >
-          <Text style={{color: colors.white, fontWeight: '500'}}>Save</Text>
-        </TouchableOpacity>
-      </View>
+            <View style={[styles.wrapContent, {marginBottom: scaler(24)}]}>
+              <Text style={[styles.label, {marginBottom: scaler(8)}]}>
+                {t('newBorn.name')}
+              </Text>
+              <TextInput
+                placeholder={t('newBorn.babyName')}
+                value={state.name}
+                onChangeText={text => setState({name: text})}
+              />
+              {state?.error?.name?.length > 0 && (
+                <Text style={styles.errorMsg}>{state.error.name}</Text>
+              )}
+            </View>
+
+            <View style={styles.wrapContent}>
+              <Text style={[styles.label, {marginBottom: scaler(8)}]}>
+                {t('newBorn.dueDate')}
+              </Text>
+              <TouchableOpacity
+                style={styles.wrapContentContainer}
+                onPress={onChooseDueDate}>
+                <Text
+                  style={[
+                    styles.label,
+                    state.due_date.length > 0
+                      ? {
+                          fontSize: scaler(14),
+                          fontWeight: '400',
+                          color: colors.black,
+                        }
+                      : {
+                          fontSize: scaler(14),
+                          fontWeight: '400',
+                          color: '#A3A1AB',
+                        },
+                  ]}>
+                  {state.due_date.length > 0
+                    ? moment
+                        .utc(state.due_date, 'MM/DD/YYYY')
+                        .format('DD/MM/YYYY')
+                    : t('newBorn.addDueDate')}
+                </Text>
+                <Image
+                  source={iconCalendarGrey}
+                  style={{height: scaler(24), width: scaler(24)}}
+                />
+              </TouchableOpacity>
+              {state?.error?.due_date?.length > 0 && (
+                <Text style={styles.errorMsg}>{state.error.due_date}</Text>
+              )}
+            </View>
+          </View>
+
+          <View
+            style={[
+              styles.wrapContentContainer,
+              {
+                paddingTop: scaler(16),
+                paddingHorizontal: scaler(16),
+                paddingBottom: scaler(32),
+                borderTopWidth: 0.5,
+                borderColor: colors.borderColor,
+              },
+            ]}>
+            <TouchableOpacity
+              style={styles.wrapButtonContainer}
+              onPress={onCancel}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.wrapButtonContainer,
+                {backgroundColor: colors.primary},
+              ]}
+              onPress={onSave}
+              // disabled={!state.name || !state.due_date}
+            >
+              <Text style={{color: colors.white, fontWeight: '500'}}>Save</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

@@ -41,11 +41,20 @@ type TProps = {
   onDone: () => void;
   sex: TPickerOption[];
   deliver: TPickerOption[];
+  onValidate: () => boolean;
 };
 
 const Information = (props: TProps) => {
-  const {state, setState, onNextPage, onPreviousPage, onDone, sex, deliver} =
-    props;
+  const {
+    state,
+    setState,
+    onNextPage,
+    onPreviousPage,
+    onDone,
+    sex,
+    deliver,
+    onValidate,
+  } = props;
   const {t} = useTranslation();
 
   const renderData = () => {
@@ -88,6 +97,11 @@ const Information = (props: TProps) => {
                 setState({name: text});
               }}
             />
+            {onValidate() && (
+              <Text style={styles.errorMsg}>
+                {t('newBornErrorMsg.specialName')}
+              </Text>
+            )}
           </View>
         );
       case 4:
@@ -227,6 +241,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     height: '50%',
+  },
+  errorMsg: {
+    fontSize: scaler(12),
+    fontWeight: '400',
+    color: colors.red50,
   },
 });
 
