@@ -33,8 +33,8 @@ const ChooseDueDateScreen = () => {
       const res = await selectDueDate({
         due_date: moment(date).format('MM/DD/YYYY'),
       });
-      trackChildsBirthdate(moment(date).format('MM/DD/YYYY'),false);
-      trackingAppEvent(event.LOGIN.CONTINUE, {}, eventType.MIX_PANEL)
+      trackChildsBirthdate(moment(date).format('MM/DD/YYYY'), false);
+      trackingAppEvent(event.LOGIN.CONTINUE, {}, eventType.MIX_PANEL);
       showMessage({
         message: res?.data?.message,
         type: 'default',
@@ -48,7 +48,7 @@ const ChooseDueDateScreen = () => {
   };
 
   const navigateToCalculate = () => {
-    trackChildsBirthdate("Don't know",true);
+    trackChildsBirthdate("Don't know", true);
     navigate(ROUTE_NAME.CALCULATE_DUE_DATE);
     // navigate(ROUTE_NAME.ON_BOARDING);
   };
@@ -59,7 +59,7 @@ const ChooseDueDateScreen = () => {
       const res: any = await updateUserInfo({
         is_skip: true,
       });
-      trackingAppEvent(event.LOGIN.SKIP, {}, eventType.MIX_PANEL)
+      trackingAppEvent(event.LOGIN.SKIP, {}, eventType.MIX_PANEL);
       dispatch(saveDataUser(res?.data?.user));
       // dispatch(changeStatusLogin(true));
       navigate(ROUTE_NAME.SLIDE_INTRO);
@@ -94,10 +94,17 @@ const ChooseDueDateScreen = () => {
           </Text>
           <AppDatePicker
             onChange={(date: any) => {
-              trackingAppEvent(event.LOGIN.SELECT_DUE_DATE, {}, eventType.MIX_PANEL);
+              trackingAppEvent(
+                event.LOGIN.SELECT_DUE_DATE,
+                {},
+                eventType.MIX_PANEL,
+              );
               setDate(date);
             }}
             minimumDate={new Date()}
+            maximumDate={
+              new Date(new Date().setMonth(new Date().getMonth() + 9))
+            }
           />
           <AppButton
             titleButton={t('chooseDueDate.notKnowDueDate')}

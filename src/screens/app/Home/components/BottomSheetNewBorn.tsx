@@ -90,7 +90,7 @@ const BottomSheetNewBorn = (props: TProps) => {
           </View>
         );
       })}
-      {newBorn?.length < 10 && (
+      {/* {newBorn?.length < 10 && (
         <TouchableOpacity
           style={[
             styles.wrapContainer,
@@ -110,7 +110,7 @@ const BottomSheetNewBorn = (props: TProps) => {
             {t('newBorn.addBaby')}
           </Text>
         </TouchableOpacity>
-      )}
+      )} */}
     </>
   );
 };

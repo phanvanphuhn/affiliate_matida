@@ -192,13 +192,14 @@ export const AppHeader = ({
           style={styles.imageNameApp}
         />
       </TouchableOpacity>
-      <View style={styles.row}>
+      <View style={[styles.row]}>
         {openNewBorn && (
           <TouchableOpacity
             style={{
               flexDirection: 'row',
               marginRight: scaler(16),
               width: scaler(48),
+              paddingRight: scaler(16),
             }}
             onPress={openNewBorn}>
             <View

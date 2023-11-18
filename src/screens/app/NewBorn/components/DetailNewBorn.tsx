@@ -28,7 +28,7 @@ const DetailNewBorn = (props: any) => {
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => goBack()}>
-          <SvgArrowBackLogin />
+          <SvgArrowBackLogin fill={'transparent'} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigate(ROUTE_NAME.EDIT_NEW_BORN, route?.params)}>

@@ -673,6 +673,7 @@ export const vi = {
     journey: 'đã gia nhập hội Mẹ Bỉm!',
     done: 'Hoàn thành!',
     babyName: 'Tên em bé',
+    name: 'Tên',
     babyWeight: 'Cân nặng khi sinh',
     babyHeight: 'Chiều cao khi sinh',
     male: 'Bé trai',
@@ -692,7 +693,9 @@ export const vi = {
     babyPicture: 'Ảnh của con',
     selectDate: 'Chọn ngày sinh',
     selectTime: 'Chọn giờ sinh',
-    happyPreggy: 'Chào mẹ,',
+    happyPreggy: 'Vì một thai kì vui khoẻ!',
+    dueDate: 'Ngày dự sinh',
+    addDueDate: 'Thêm ngày dự sinh',
   },
   newBornTida: {
     hi: 'Chào mẹ,\ncó nhiều thắc mắc là chuyện bình thường.',

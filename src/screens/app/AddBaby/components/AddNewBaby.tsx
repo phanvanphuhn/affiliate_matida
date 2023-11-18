@@ -37,6 +37,7 @@ const AddNewBaby = (props: any) => {
     due_date: '',
     avatar: '',
     pregnant_type: 'singleton',
+    error: {},
   });
 
   const onChooseDueDate = () => {
@@ -51,8 +52,31 @@ const AddNewBaby = (props: any) => {
     navigate(ROUTE_NAME.TAB_HOME);
   };
 
+  const onValidateForm = () => {
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    const formErrors: any = {};
+    let formIsValid = true;
+
+    if (state.name.length < 1) {
+      formIsValid = false;
+      formErrors['name'] = t('newBornErrorMsg.requireName');
+    }
+
+    if (state.name.length && specialChars.test(state.name)) {
+      formIsValid = false;
+      formErrors['name'] = t('newBornErrorMsg.specialName');
+    }
+
+    if (state.due_date.length < 1) {
+      formIsValid = false;
+      formErrors['due_date'] = t('newBornErrorMsg.requireDob');
+    }
+
+    setState({error: formErrors});
+    return formIsValid;
+  };
+
   const onSave = async () => {
-    GlobalService.showLoading();
     const params = {
       user_id: user?.id,
       name: state.name,
@@ -60,43 +84,47 @@ const AddNewBaby = (props: any) => {
       avatar: state.avatar,
       pregnant_type: 'singleton',
     };
-    try {
-      const response = await createBaby(params);
-      let res;
-      if (route?.params?.type == 'Caculate') {
-        res = await calculateDate(state?.body);
-      } else {
-        res = await selectDueDate({
-          due_date: moment(state.due_date).format('MM/DD/YYYY'),
-        });
-      }
-      trackBirthdateEvent(moment(state.due_date).format('MM/DD/YYYY'), false);
-      if (res.success && response.success) {
+
+    if (onValidateForm()) {
+      try {
+        GlobalService.showLoading();
+        const response = await createBaby(params);
+        let res;
+        if (route?.params?.type == 'Caculate') {
+          res = await calculateDate(state?.body);
+        } else {
+          res = await selectDueDate({
+            due_date: moment(state.due_date).format('MM/DD/YYYY'),
+          });
+        }
+        trackBirthdateEvent(moment(state.due_date).format('MM/DD/YYYY'), false);
+        if (res.success && response.success) {
+          showMessage({
+            message: res?.data?.message,
+            type: 'default',
+            backgroundColor: colors.success_message,
+          });
+          navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
+            data: res?.data,
+            type: route?.params?.type ? route?.params?.type : 'Choose',
+            isAddNewBaby: true,
+          });
+        } else {
+          showMessage({
+            message: res?.data?.message,
+            type: 'default',
+            backgroundColor: colors.success_message,
+          });
+        }
+        GlobalService.hideLoading();
+      } catch (error) {
         showMessage({
-          message: res?.data?.message,
+          message: 'Upload failed',
           type: 'default',
-          backgroundColor: colors.success_message,
+          backgroundColor: colors.error_message,
         });
-        navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
-          data: res?.data,
-          type: route?.params?.type ? route?.params?.type : 'Choose',
-          isAddNewBaby: true,
-        });
-      } else {
-        showMessage({
-          message: res?.data?.message,
-          type: 'default',
-          backgroundColor: colors.success_message,
-        });
+        GlobalService.hideLoading();
       }
-      GlobalService.hideLoading();
-    } catch (error) {
-      showMessage({
-        message: 'Upload failed',
-        type: 'default',
-        backgroundColor: colors.error_message,
-      });
-      GlobalService.hideLoading();
     }
   };
 
@@ -124,17 +152,21 @@ const AddNewBaby = (props: any) => {
 
         <View style={[styles.wrapContent, {marginBottom: scaler(24)}]}>
           <Text style={[styles.label, {marginBottom: scaler(8)}]}>
-            {t('newBorn.babyName')}
+            {t('newBorn.name')}
           </Text>
           <TextInput
             placeholder={t('newBorn.babyName')}
             value={state.name}
             onChangeText={text => setState({name: text})}
           />
+          {state?.error?.name?.length > 0 && (
+            <Text style={styles.errorMsg}>{state.error.name}</Text>
+          )}
         </View>
+
         <View style={styles.wrapContent}>
           <Text style={[styles.label, {marginBottom: scaler(8)}]}>
-            {t('profileSettings.dueDate')}
+            {t('newBorn.dueDate')}
           </Text>
           <TouchableOpacity
             style={styles.wrapContentContainer}
@@ -151,14 +183,17 @@ const AddNewBaby = (props: any) => {
                   : {fontSize: scaler(14), fontWeight: '400', color: '#A3A1AB'},
               ]}>
               {state.due_date.length > 0
-                ? moment(state.due_date).format('DD/MM/YYYY')
-                : t('newBorn.whichDate')}
+                ? moment.utc(state.due_date).format('DD/MM/YYYY')
+                : t('newBorn.addDueDate')}
             </Text>
             <Image
               source={iconCalendarGrey}
               style={{height: scaler(24), width: scaler(24)}}
             />
           </TouchableOpacity>
+          {state?.error?.due_date?.length > 0 && (
+            <Text style={styles.errorMsg}>{state.error.due_date}</Text>
+          )}
         </View>
       </View>
 
@@ -182,7 +217,8 @@ const AddNewBaby = (props: any) => {
             {backgroundColor: colors.primary},
           ]}
           onPress={onSave}
-          disabled={!state.name || !state.due_date}>
+          // disabled={!state.name || !state.due_date}
+        >
           <Text style={{color: colors.white, fontWeight: '500'}}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -228,6 +264,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray350,
     alignItems: 'center',
     borderRadius: scaler(40),
+  },
+  errorMsg: {
+    fontSize: scaler(12),
+    fontWeight: '400',
+    color: colors.red50,
+    marginTop: scaler(8),
   },
 });
 

@@ -139,6 +139,7 @@ const NewBornScreen = (props: TProps) => {
           text1: t('error.addNewBornFail'),
           text1NumberOfLines: 2,
           position: 'top',
+          type: 'error',
         });
       }
     } catch (error) {
@@ -147,6 +148,7 @@ const NewBornScreen = (props: TProps) => {
         text1: t('error.addNewBornFail'),
         text1NumberOfLines: 2,
         position: 'top',
+        type: 'error',
       });
     }
   };

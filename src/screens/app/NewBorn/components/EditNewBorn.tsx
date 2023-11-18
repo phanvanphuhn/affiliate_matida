@@ -19,7 +19,7 @@ import BottomSheet, {
   SCREEN_WIDTH,
 } from '@gorhom/bottom-sheet';
 import {goBack, navigate} from '@navigation';
-import {iconChevronDown} from '@images';
+import {iconCalendarGrey, iconChevronDown, iconClockGrey} from '@images';
 import {ROUTE_NAME} from '@routeName';
 import {TBaby} from '../../Home/components/BottomSheetNewBorn';
 import Toast from 'react-native-toast-message';
@@ -83,6 +83,8 @@ const EditNewBorn = (props: any) => {
     typeBottomSheet: '',
     error: {},
   });
+
+  console.log('state:', state);
 
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
@@ -230,6 +232,7 @@ const EditNewBorn = (props: any) => {
           text1: t('error.addNewBornFail'),
           text1NumberOfLines: 2,
           position: 'top',
+          type: 'ERROR',
         });
       }
     }
@@ -260,11 +263,11 @@ const EditNewBorn = (props: any) => {
             <ScrollView>
               <View style={styles.wrapContent}>
                 <Text style={[styles.label, state.error.name ? {} : {}]}>
-                  {t('newBorn.babyName')}
+                  {t('newBorn.name')}
                 </Text>
                 <TextInput
                   style={[styles.content, {fontWeight: '500'}]}
-                  placeholder="Bear"
+                  placeholder={t('newBorn.babyName')}
                   value={state.name}
                   onChangeText={text => {
                     setState({name: text});
@@ -327,12 +330,12 @@ const EditNewBorn = (props: any) => {
                           : {color: colors.borderColor},
                       ]}>
                       {state.dob
-                        ? moment.utc(state.dob).format('DD/MM/YYYY')
+                        ? moment(state.dob).format('DD/MM/YYYY')
                         : t('newBorn.selectDate')}
                     </Text>
 
                     <Image
-                      source={iconChevronDown}
+                      source={iconCalendarGrey}
                       style={{
                         height: scaler(24),
                         width: scaler(24),
@@ -366,12 +369,12 @@ const EditNewBorn = (props: any) => {
                           : {color: colors.borderColor},
                       ]}>
                       {state.tob
-                        ? moment.utc(state.tob).format('HH:mm')
+                        ? moment(state.tob).format('HH:mm')
                         : t('newBorn.selectTime')}
                     </Text>
 
                     <Image
-                      source={iconChevronDown}
+                      source={iconClockGrey}
                       style={{
                         height: scaler(24),
                         width: scaler(24),
@@ -442,8 +445,8 @@ const EditNewBorn = (props: any) => {
                       cm
                     </Text>
                   </View>
-                  {state?.error?.weight?.length > 0 && (
-                    <Text style={styles.errorMsg}>{state.error.weight}</Text>
+                  {state?.error?.height?.length > 0 && (
+                    <Text style={styles.errorMsg}>{state.error.height}</Text>
                   )}
                 </View>
               </View>
@@ -529,6 +532,7 @@ const styles = StyleSheet.create({
     fontSize: scaler(12),
     fontWeight: '400',
     color: '#85828C',
+    marginBottom: scaler(8),
   },
   wrapContent: {
     padding: scaler(16),

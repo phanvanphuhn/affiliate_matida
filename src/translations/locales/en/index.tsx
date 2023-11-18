@@ -669,6 +669,7 @@ export const en = {
     journey: 'the Newborn journey!',
     done: 'So excited!',
     babyName: "Baby's name",
+    name: 'Name',
     babyWeight: "Baby's weight",
     babyHeight: "Baby's height",
     male: 'Male',
@@ -689,6 +690,8 @@ export const en = {
     selectDate: 'Select date',
     selectTime: 'Select time',
     happyPreggy: 'Happy Preggy!',
+    dueDate: 'Due date',
+    addDueDate: 'Add due date',
   },
   newBornTida: {
     hi: "Hi new mommy,\nit's normal to have tons of questions.",

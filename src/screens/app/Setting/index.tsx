@@ -4,6 +4,7 @@ import {
   avatarDefault,
   iconArrowRightGrey,
   iconClose,
+  iconKid,
   iconPlusCircle,
   iconPregnant,
   SvgBlocked,
@@ -225,7 +226,13 @@ const Setting = () => {
                 ]}>
                 <View style={[styles.wrapContainer, {flex: 1}]}>
                   <Image
-                    source={item?.avatar ? {uri: item?.avatar} : iconPregnant}
+                    source={
+                      item?.avatar
+                        ? {uri: item?.avatar}
+                        : item?.type == 'newborn'
+                        ? iconKid
+                        : iconPregnant
+                    }
                     style={{
                       height: scaler(24),
                       width: scaler(24),
@@ -260,31 +267,31 @@ const Setting = () => {
             </View>
           );
         })}
-        {newBorn.length < 10 && (
-          <TouchableOpacity
-            style={[
-              styles.wrapContainer,
-              {
-                marginTop: scaler(16),
-                marginBottom: scaler(16),
-                marginLeft: scaler(16),
-              },
-            ]}
-            onPress={onNavigateAddBaby}>
-            <Image
-              source={iconPlusCircle}
-              style={{
-                height: scaler(24),
-                width: scaler(24),
-                marginRight: scaler(8),
-              }}
-              resizeMode="contain"
-            />
-            <Text style={[styles.title, {color: '#A3A1AB'}]}>
-              {t('newBorn.addBaby')}
-            </Text>
-          </TouchableOpacity>
-        )}
+        {/* {newBorn.length < 10 && ( */}
+        <TouchableOpacity
+          style={[
+            styles.wrapContainer,
+            {
+              marginTop: scaler(16),
+              marginBottom: scaler(16),
+              marginLeft: scaler(16),
+            },
+          ]}
+          onPress={onNavigateAddBaby}>
+          <Image
+            source={iconPlusCircle}
+            style={{
+              height: scaler(24),
+              width: scaler(24),
+              marginRight: scaler(8),
+            }}
+            resizeMode="contain"
+          />
+          <Text style={[styles.title, {color: '#A3A1AB'}]}>
+            {t('newBorn.addBaby')}
+          </Text>
+        </TouchableOpacity>
+        {/* )} */}
         <Text style={[styles.title, {marginTop: scaler(16)}]}>
           {t('setting.mom')}
         </Text>
