@@ -108,15 +108,15 @@ const NewBornTracker = (props: TProps) => {
           <View>
             <Text>Newborn tracker</Text>
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{flexDirection: 'row', width: '20%'}}
             onPress={openNewBorn}>
             <Text style={{marginRight: scaler(4)}} numberOfLines={1}>
-              {' '}
               {selectedNewBorn[0]?.name || 'Baby 1'}
             </Text>
             <SvgCaretDown stroke={colors.black} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <View style={{width: '20%'}} />
         </View>
         <View style={{paddingHorizontal: scaler(16)}}>
           <ListMonth state={params?.state} setState={params?.setState} />
