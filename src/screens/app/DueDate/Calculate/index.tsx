@@ -107,6 +107,9 @@ const CalculateDueDateScreenApp = (props: any) => {
               }
               onChange={(date: any) => setDate(date)}
               maximumDate={new Date()}
+              minimumDate={
+                new Date(new Date().setMonth(new Date().getMonth() - 12))
+              }
             />
           </View>
           {method === CalculationMethod.FIRST_DAY_OF_LAST_PERIOD ? (

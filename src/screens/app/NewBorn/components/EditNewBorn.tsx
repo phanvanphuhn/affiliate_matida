@@ -86,8 +86,6 @@ const EditNewBorn = (props: any) => {
     error: {},
   });
 
-  console.log('state:', state);
-
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
   }, []);
@@ -180,7 +178,7 @@ const EditNewBorn = (props: any) => {
         date_of_birth:
           moment(state.dob).format('YYYY/MM/DD') +
           ' ' +
-          moment(state.tob).format('HH:mm:ss'),
+          moment(state.tob, 'HH:mm').format('HH:mm:ss'),
         weight: Number(
           state.weight.includes(',')
             ? state.weight.replace(',', '.') * 1000

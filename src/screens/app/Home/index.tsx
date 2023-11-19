@@ -126,6 +126,7 @@ const Home = () => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const data = useSelector((state: any) => state?.home?.data);
   const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
+  const week = useSelector((state: any) => state?.home?.week);
   const loading = useSelector((state: any) => state?.home?.loading);
   const deepLink = useSelector((state: any) => state?.check?.deepLink);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
