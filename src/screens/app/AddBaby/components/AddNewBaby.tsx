@@ -21,6 +21,7 @@ import {
   calculateDate,
   createBaby,
   selectDueDate,
+  updateBaby,
 } from '@services';
 import {useSelector} from 'react-redux';
 import Toast from 'react-native-toast-message';
@@ -35,16 +36,20 @@ const AddNewBaby = (props: any) => {
   const {t} = useTranslation();
 
   const [state, setState] = useDetailPost({
-    name: '',
-    due_date: '',
-    avatar: '',
+    name: route?.params?.name ? route?.params?.name : '',
+    due_date: route?.params?.due_date
+      ? moment.utc(route?.params?.due_date).format('MM/DD/YYYY')
+      : '',
+    avatar: route?.params?.avatar ? route?.params?.avatar : '',
     pregnant_type: 'singleton',
+    isEdit: route?.params?.isEdit ? route?.params?.isEdit : false,
     error: {},
   });
 
   const onChooseDueDate = () => {
     const params = {
       isAddNewBaby: true,
+      state: state,
       setState: setState,
     };
     navigate(ROUTE_NAME.CHOOSE_DUE_DATE_APP, params);
@@ -86,11 +91,27 @@ const AddNewBaby = (props: any) => {
       avatar: state.avatar,
       pregnant_type: 'singleton',
     };
-
+    const updateParams = {
+      id: user?.id,
+      body: {
+        user_id: user?.id,
+        name: state.name,
+        due_date: moment(state.due_date).format('YYYY/MM/DD'),
+        avatar: state.avatar,
+        pregnant_type: 'singleton',
+      },
+    };
     if (onValidateForm()) {
       try {
         GlobalService.showLoading();
+        // let response;
+        // if (state?.isEdit) {
+        //   response = await updateBaby(updateParams);
+        // } else {
+        //   response = await createBaby(params);
+        // }
         const response = await createBaby(params);
+
         let res;
         if (route?.params?.type == 'Caculate') {
           res = await calculateDate(state?.body);
@@ -100,7 +121,7 @@ const AddNewBaby = (props: any) => {
           });
         }
         trackBirthdateEvent(moment(state.due_date).format('MM/DD/YYYY'), false);
-        if (res.success && response.success) {
+        if (res.success && response?.success) {
           showMessage({
             message: res?.data?.message,
             type: 'default',

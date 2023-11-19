@@ -63,7 +63,6 @@ const Setting = () => {
   });
   const {t} = useTranslation();
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
-  console.log('newBorn: ,newBorn', newBorn);
 
   useEffect(() => {
     CodePush.getUpdateMetadata().then(info => {

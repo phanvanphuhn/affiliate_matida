@@ -74,7 +74,9 @@ const EditNewBorn = (props: any) => {
       ? route?.params?.birth_experience
       : 'c_section',
     dob: route?.params?.date_of_birth ? route?.params?.date_of_birth : '',
-    tob: route?.params?.date_of_birth ? route?.params?.date_of_birth : '',
+    tob: route?.params?.date_of_birth
+      ? moment.utc(route?.params?.date_of_birth).format('HH:mm')
+      : '',
     weight: route?.params?.weight
       ? (route?.params?.weight / 1000).toString()
       : '',
@@ -371,7 +373,7 @@ const EditNewBorn = (props: any) => {
                           : {color: colors.borderColor},
                       ]}>
                       {state.tob
-                        ? moment(state.tob).format('HH:mm')
+                        ? moment(state.tob, 'HH:mm').format('HH:mm')
                         : t('newBorn.selectTime')}
                     </Text>
 

@@ -58,6 +58,7 @@ const ChooseDueDateScreenApp = (props: any) => {
     trackBirthdateEvent("Don't know", true);
     const params = {
       isAddNewBaby: route?.params?.isAddNewBaby,
+      state: route?.params?.state,
       setState: route?.params?.setState,
     };
     navigate(ROUTE_NAME.CALCULATE_DUE_DATE_APP, params);
