@@ -24,7 +24,7 @@ import {ROUTE_NAME} from '@routeName';
 import {TBaby} from '../../Home/components/BottomSheetNewBorn';
 import Toast from 'react-native-toast-message';
 import {useTranslation} from 'react-i18next';
-import {createBaby, updateBaby} from '@services';
+import {createBaby, selectDueDate, updateBaby} from '@services';
 import BottomSheetContent from './BottomSheetContent';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheetModal from '@component/BottomSheetModal';
@@ -85,7 +85,7 @@ const EditNewBorn = (props: any) => {
     typeBottomSheet: '',
     error: {},
   });
-
+  console.log('EditNewBorn: ', state);
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
   }, []);
@@ -176,9 +176,9 @@ const EditNewBorn = (props: any) => {
         gender: state.gender.toLowerCase(),
         birth_experience: state.birth_experience,
         date_of_birth:
-          moment(state.dob).format('YYYY/MM/DD') +
+          moment.utc(state.dob).format('YYYY/MM/DD') +
           ' ' +
-          moment(state.tob, 'HH:mm').format('HH:mm:ss'),
+          moment.utc(state.tob, 'HH:mm').format('HH:mm:ss'),
         weight: Number(
           state.weight.includes(',')
             ? state.weight.replace(',', '.') * 1000
@@ -198,9 +198,9 @@ const EditNewBorn = (props: any) => {
       gender: state.gender.toLowerCase(),
       birth_experience: state.birth_experience,
       date_of_birth:
-        moment(state.dob).format('YYYY/MM/DD') +
+        moment.utc(state.dob).format('YYYY/MM/DD') +
         ' ' +
-        moment(state.tob).format('HH:mm:ss'),
+        moment.utc(state.tob).format('HH:mm:ss'),
       weight: Number(
         state.weight.includes(',')
           ? state.weight.replace(',', '.') * 1000
@@ -217,12 +217,15 @@ const EditNewBorn = (props: any) => {
       try {
         if (route?.params?.isAddNewBaby) {
           const res = await createBaby(paramsAddBaby);
-          if (res.success) {
-            navigate(ROUTE_NAME.TAB_HOME);
+          const response = await selectDueDate({
+            due_date: moment.utc(state.dob).format('MM/DD/YYYY'),
+          });
+          if (res?.success && response?.success) {
+            navigate(ROUTE_NAME.ADD_BABY_SUCCESS, response);
           }
         } else {
           const res = await updateBaby(params);
-          if (res.success) {
+          if (res?.success) {
             navigate(ROUTE_NAME.TAB_HOME);
           }
         }
@@ -232,7 +235,7 @@ const EditNewBorn = (props: any) => {
           text1: t('error.addNewBornFail'),
           text1NumberOfLines: 2,
           position: 'top',
-          type: 'ERROR',
+          type: 'error',
         });
       }
     }
@@ -329,10 +332,10 @@ const EditNewBorn = (props: any) => {
                           ? {
                               color: colors.black,
                             }
-                          : {color: colors.borderColor},
+                          : {color: '#C7C7CD'},
                       ]}>
                       {state.dob
-                        ? moment(state.dob).format('DD/MM/YYYY')
+                        ? moment.utc(state.dob).format('DD/MM/YYYY')
                         : t('newBorn.selectDate')}
                     </Text>
 
@@ -368,10 +371,10 @@ const EditNewBorn = (props: any) => {
                           ? {
                               color: colors.labelColor,
                             }
-                          : {color: colors.borderColor},
+                          : {color: '#C7C7CD'},
                       ]}>
                       {state.tob
-                        ? moment(state.tob, 'HH:mm').format('HH:mm')
+                        ? moment.utc(state.tob, 'HH:mm').format('HH:mm')
                         : t('newBorn.selectTime')}
                     </Text>
 
@@ -411,6 +414,7 @@ const EditNewBorn = (props: any) => {
                         setState({weight: text});
                       }}
                       keyboardType="numeric"
+                      maxLength={4}
                     />
                     <Text
                       style={[
@@ -442,6 +446,7 @@ const EditNewBorn = (props: any) => {
                         setState({height: text});
                       }}
                       keyboardType="number-pad"
+                      maxLength={4}
                     />
                     <Text style={[styles.label, {fontSize: scaler(14)}]}>
                       cm

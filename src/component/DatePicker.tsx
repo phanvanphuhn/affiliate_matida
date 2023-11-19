@@ -80,6 +80,7 @@ export const AppDatePicker = ({
           }}
           locale={lang === 1 ? 'en' : 'vi'}
           is24hourSource={is24hourSource}
+          timeZoneOffsetInMinutes={0}
         />
       </View>
     </View>

@@ -32,7 +32,7 @@ const DetailNewBorn = (props: any) => {
       navigate(ROUTE_NAME.ADD_NEW_BABY, detailNewBorn);
     }
   };
-
+  console.log('DetailNewBorn: ', route?.params);
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.headerContainer}>
