@@ -1,6 +1,7 @@
 import {
   iconArrowRight,
   iconArrowRightGrey,
+  iconKid,
   iconPlusCircle,
   iconPregnant,
   iconSend,
@@ -55,7 +56,13 @@ const BottomSheetNewBorn = (props: TProps) => {
               ]}>
               <View style={[styles.wrapContainer, {flex: 1}]}>
                 <Image
-                  source={item?.avatar ? {uri: item?.avatar} : iconPregnant}
+                  source={
+                    item?.avatar
+                      ? {uri: item?.avatar}
+                      : item?.type == 'newborn'
+                      ? iconKid
+                      : iconPregnant
+                  }
                   style={{
                     height: scaler(24),
                     width: scaler(24),

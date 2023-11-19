@@ -6,6 +6,7 @@ import RenderHtml from 'react-native-render-html';
 import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 
 type TProps = {
   onPress: () => void;
@@ -18,6 +19,11 @@ const NewBornContainer = (props: TProps) => {
   const {onPress, data, user, state} = props;
   const {baby} = data;
   const lang = useSelector((state: any) => state?.auth?.lang);
+
+  const gender = [
+    {value: 'male', labelEn: 'Male', labelVi: 'Bé trai'},
+    {value: 'female', labelEn: 'Female', labelVi: 'Bé gái'},
+  ];
 
   return (
     <View style={styles.container}>
@@ -47,7 +53,7 @@ const NewBornContainer = (props: TProps) => {
             <RenderHtml
               contentWidth={100}
               source={{
-                html: `<div>${lang == 2 ? baby?.name_vn : baby?.name_en}</div>`,
+                html: `<div>${baby?.content}</div>`,
               }}
               baseStyle={styles.description}
               enableExperimentalMarginCollapsing={true}
@@ -73,7 +79,7 @@ const NewBornContainer = (props: TProps) => {
 
       <View style={styles.wrapContentContainer}>
         <View style={{flexDirection: 'row'}}>
-          <Image
+          <FastImage
             source={user?.avatar ? {uri: user?.avatar} : newBornBaby}
             style={{
               width: scaler(28),
@@ -87,7 +93,13 @@ const NewBornContainer = (props: TProps) => {
             <Text style={{fontSize: 11, fontWeight: '500'}}>
               {user?.baby_name}
             </Text>
-            {/* <Text style={styles.title}>Libra girl</Text> */}
+            <Text style={styles.title}>
+              {lang == 1
+                ? gender.filter(item => item.value == user?.baby_gender)[0]
+                    ?.labelEn
+                : gender.filter(item => item.value == user?.baby_gender)[0]
+                    ?.labelVi}
+            </Text>
           </View>
         </View>
 

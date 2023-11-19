@@ -199,6 +199,7 @@ export const AppHeader = ({
               flexDirection: 'row',
               width: scaler(48),
               marginRight: scaler(32),
+              justifyContent: 'flex-end',
             }}
             onPress={openNewBorn}>
             <View

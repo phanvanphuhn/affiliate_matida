@@ -53,7 +53,7 @@ export const SizeComparisonComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: scaler(36),
+    marginBottom: scaler(16),
     alignItems: 'center',
     // paddingTop: scaler(28),
   },

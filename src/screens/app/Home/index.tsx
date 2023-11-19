@@ -131,6 +131,10 @@ const Home = () => {
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
 
+  const isSelectProfileNewBorn = newBorn.filter(
+    item => item.type == 'newborn' && item.selected == true,
+  );
+
   useUXCam(ROUTE_NAME.HOME);
 
   useEffect(() => {
@@ -427,43 +431,42 @@ const Home = () => {
           <ChatGPTComponent />
         </View>
 
-        <View
-          style={{
-            // paddingHorizontal: scaler(20),
-            marginBottom: scaler(16),
-          }}>
-          <NewBornContainer
-            onPress={onPressNewBornTracker}
-            data={data?.babyProgress}
-            user={data?.user}
-            state={state}
-          />
-        </View>
-
-        {/* {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
+        {isSelectProfileNewBorn.length > 0 ? (
+          <View
+            style={{
+              // paddingHorizontal: scaler(20),
+              marginBottom: scaler(16),
+            }}>
+            <NewBornContainer
+              onPress={onPressNewBornTracker}
+              data={data?.babyProgress}
+              user={data?.user}
+              state={state}
+            />
+          </View>
+        ) : !!user?.is_skip || weekPregnant?.days < 0 ? null : (
           <>
-            {isShowForReviewer(user) && (
+            {/* {isShowForReviewer(user) && (
               <View>
                 <WeeksPregnant />
               </View>
-            )}
+            )} */}
             <View
               style={{
                 // paddingHorizontal: scaler(20),
-                marginBottom: scaler(30),
+                marginBottom: scaler(16),
               }}>
               {isShowForReviewer(user) && <SizeComparisonComponent />}
-              <ChatGPTComponent />
 
               <View
                 style={{
-                  paddingHorizontal: scaler(20),
+                  paddingHorizontal: scaler(16),
                 }}>
                 <PregnancyProgress />
               </View>
             </View>
           </>
-        )} */}
+        )}
 
         {/* <View>
           <ListPostComponent posts={data?.posts} />
@@ -556,7 +559,7 @@ const Home = () => {
         {/* <DailyAffirmation quote={data?.quote} /> */}
       </ScrollView>
       {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
-      {isShowForReviewer(user) && (
+      {isShowForReviewer(user) && weekPregnant?.weeks > 33 && (
         <FloatingNewBornButton onPress={onNavigateNewBorn} />
       )}
       {isShowForReviewer(user) && (
