@@ -102,7 +102,6 @@ const ListMonth = (props: TProps) => {
   };
 
   const scrollToWeek = () => {
-    console.log('123');
     const index = data.findIndex(
       (element: any) => element?.value == state.filter,
     );

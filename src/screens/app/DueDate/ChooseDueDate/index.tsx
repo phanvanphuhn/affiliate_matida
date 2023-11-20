@@ -23,7 +23,9 @@ const ChooseDueDateScreenApp = (props: any) => {
 
   const handlePressButton = async () => {
     if (route?.params?.isAddNewBaby) {
-      route?.params?.setState({due_date: moment(date).format('MM/DD/YYYY')});
+      route?.params?.setState({
+        due_date: moment.utc(date).format('MM/DD/YYYY'),
+      });
       navigate(ROUTE_NAME.ADD_NEW_BABY);
     } else {
       try {

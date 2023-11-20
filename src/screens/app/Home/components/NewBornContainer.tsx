@@ -71,7 +71,11 @@ const NewBornContainer = (props: TProps) => {
       </View>
       <View style={[styles.wrapContentContainer, {marginBottom: scaler(32)}]}>
         <View
-          style={{flexDirection: 'column', justifyContent: 'space-between'}}>
+          style={{
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
+          }}>
           <View>
             <RenderHtml
               contentWidth={100}
@@ -95,7 +99,7 @@ const NewBornContainer = (props: TProps) => {
               height: scaler(116),
             }}
             // resizeMethod="resize"
-            resizeMode="contain"
+            resizeMode="center"
           />
         </View>
       </View>
@@ -108,6 +112,7 @@ const NewBornContainer = (props: TProps) => {
               width: scaler(28),
               height: scaler(28),
               marginRight: scaler(8),
+              borderRadius: scaler(99),
             }}
             // resizeMethod="resize"
             resizeMode="contain"

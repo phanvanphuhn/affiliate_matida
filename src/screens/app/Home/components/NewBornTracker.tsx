@@ -108,7 +108,7 @@ const NewBornTracker = (props: TProps) => {
             <SvgArrowLeft stroke={colors.black} size={24} />
           </TouchableOpacity>
           <View>
-            <Text style={{fontSize: scaler(16), fontWeight: '600'}}>
+            <Text style={{fontSize: scaler(16), fontWeight: '500'}}>
               {t('newBorn.tracker')}
             </Text>
           </View>

@@ -185,7 +185,13 @@ const DetailNewBorn = (props: any) => {
                 Ngày dự sinh
               </Text>
               <Text style={styles.text}>
-                {moment.utc(route?.params?.due_date).format('DD/MM/YYYY')}
+                {route?.params?.date_of_birth
+                  ? moment
+                      .utc(route?.params?.date_of_birth)
+                      .format('DD/MM/YYYY')
+                  : route?.params?.due_date
+                  ? moment.utc(route?.params?.due_date).format('DD/MM/YYYY')
+                  : 'DD/MM/YYYY'}{' '}
               </Text>
             </View>
           )}
