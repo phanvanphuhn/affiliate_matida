@@ -138,6 +138,7 @@ const Information = (props: TProps) => {
                 setState({weight: text});
               }}
               keyboardType="decimal-pad"
+              maxLength={4}
             />
             <Text>kg</Text>
           </View>
@@ -154,6 +155,7 @@ const Information = (props: TProps) => {
                 setState({height: text});
               }}
               keyboardType="decimal-pad"
+              maxLength={4}
             />
             <Text>cm</Text>
           </View>

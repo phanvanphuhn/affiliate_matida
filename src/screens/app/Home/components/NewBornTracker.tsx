@@ -281,6 +281,7 @@ const styles = StyleSheet.create({
     fontSize: scaler(16),
     fontWeight: '600',
     color: colors.black,
+    flex: 1,
   },
   content: {
     fontSize: scaler(14),

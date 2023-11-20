@@ -31,6 +31,12 @@ export const selectDueDate: any = async (data: any) => {
   return response;
 };
 
+export const getSelectDueDate: any = async (data: any) => {
+  const {id, due_date} = data;
+  const response = await api.get(`${SELECT_DUE_DATE}/${id}`);
+  return response;
+};
+
 export const getDetailUser: any = async (id: any) => {
   const response = await api.get(`${DETAIL_USER}/${id}`);
   return response;

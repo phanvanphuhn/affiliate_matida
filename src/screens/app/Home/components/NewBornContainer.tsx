@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   wrapContentContainer: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   title: {
     fontSize: scaler(11),

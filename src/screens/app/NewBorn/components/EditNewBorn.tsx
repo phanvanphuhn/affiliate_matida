@@ -24,7 +24,12 @@ import {ROUTE_NAME} from '@routeName';
 import {TBaby} from '../../Home/components/BottomSheetNewBorn';
 import Toast from 'react-native-toast-message';
 import {useTranslation} from 'react-i18next';
-import {createBaby, selectDueDate, updateBaby} from '@services';
+import {
+  createBaby,
+  getSelectDueDate,
+  selectDueDate,
+  updateBaby,
+} from '@services';
 import BottomSheetContent from './BottomSheetContent';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheetModal from '@component/BottomSheetModal';
@@ -85,7 +90,7 @@ const EditNewBorn = (props: any) => {
     typeBottomSheet: '',
     error: {},
   });
-  console.log('EditNewBorn: ', state);
+
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
   }, []);
@@ -217,7 +222,8 @@ const EditNewBorn = (props: any) => {
       try {
         if (route?.params?.isAddNewBaby) {
           const res = await createBaby(paramsAddBaby);
-          const response = await selectDueDate({
+          const response = await getSelectDueDate({
+            id: res?.data?.id,
             due_date: moment.utc(state.dob).format('MM/DD/YYYY'),
           });
           if (res?.success && response?.success) {
