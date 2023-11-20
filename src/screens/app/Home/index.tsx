@@ -22,6 +22,7 @@ import {
   updateDataHome,
   updateStatusDeepLink,
   getListBaby,
+  getDataHomeByWeek,
 } from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
@@ -108,13 +109,12 @@ const Home = () => {
 
   const [refreshing, setRefreshing] = useState(false);
   const [state, setState] = useDetailPost({
-    filter: '',
+    filter: 'week_1',
     isShowNewBorn: false,
     data: [],
     isShowContent: [],
   });
   // const [loading, setLoading] = useState<boolean>(true);
-
   const scrollRef = useRef<ScrollView>(null);
   const firstRef = useRef(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -153,6 +153,12 @@ const Home = () => {
       const res = await updateUserInfo(body);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    GlobalService.showLoading();
+    dispatch(getDataHomeByWeek({week: state.filter}));
+    GlobalService.hideLoading();
+  }, [state.filter]);
 
   useEffect(() => {
     updateLangUser();
@@ -230,9 +236,10 @@ const Home = () => {
       const res = await calendarCheckups();
       setState({
         data: res?.data,
-        filter: Object.keys(res?.data)[0],
+        // filter: Object.keys(res?.data)[0],
         isShowContent: [],
       });
+      GlobalService.hideLoading();
     } catch (error) {
     } finally {
       setRefreshing(false);
@@ -269,7 +276,8 @@ const Home = () => {
     navigation.navigate(ROUTE_NAME.NEW_BORN);
   };
 
-  const onNavigateDetailNewBorn = async (item: TBaby) => {
+  const onSwitchBaby = async (item: TBaby) => {
+    GlobalService.showLoading();
     handleCloseScheduleOrderBottomSheet();
     const params = {
       id: item.id,
@@ -280,9 +288,11 @@ const Home = () => {
       if (res.success) {
         getData();
       } else {
+        GlobalService.hideLoading();
         console.log('error');
       }
     } catch (error) {
+      GlobalService.hideLoading();
       console.log('error: ', error);
     }
   };
@@ -573,7 +583,7 @@ const Home = () => {
           enablePanDownToClose={true}>
           <BottomSheetNewBorn
             onPress={onNavigateAddBaby}
-            onNavigateDetailNewBorn={onNavigateDetailNewBorn}
+            onSwitchBaby={onSwitchBaby}
           />
         </BottomSheetModal>
       )}

@@ -7,6 +7,7 @@ import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
+import {useTranslation} from 'react-i18next';
 
 type TProps = {
   onPress: () => void;
@@ -18,8 +19,9 @@ type TProps = {
 const NewBornContainer = (props: TProps) => {
   const {onPress, data, user, state} = props;
   const {baby} = data;
-  const lang = useSelector((state: any) => state?.auth?.lang);
 
+  const {t} = useTranslation();
+  const lang = useSelector((state: any) => state?.auth?.lang);
   const gender = [
     {value: 'male', labelEn: 'Male', labelVi: 'Bé trai'},
     {value: 'female', labelEn: 'Female', labelVi: 'Bé gái'},
@@ -30,19 +32,40 @@ const NewBornContainer = (props: TProps) => {
       <View style={[styles.wrapContentContainer, {marginBottom: scaler(32)}]}>
         {user?.pregnantWeek?.weekPregnant && (
           <Text style={styles.title}>
-            {user?.pregnantWeek?.weekPregnant.month > 0
-              ? user?.pregnantWeek?.weekPregnant.month + ' month'
+            {user?.pregnantWeek?.weekPregnant.years > 0
+              ? user?.pregnantWeek?.weekPregnant.years +
+                (user?.pregnantWeek?.weekPregnant.years > 1
+                  ? ` ${t('newBorn.year')}s`
+                  : ` ${t('newBorn.year')}`)
+              : null}
+            {user?.pregnantWeek?.weekPregnant.months > 0
+              ? user?.pregnantWeek?.weekPregnant.months +
+                (user?.pregnantWeek?.weekPregnant.months > 1
+                  ? ` ${t('newBorn.month')}s`
+                  : ` ${t('newBorn.month')}`)
               : null}
             {user?.pregnantWeek?.weekPregnant.weeks > 0
-              ? user?.pregnantWeek?.weekPregnant.weeks + ' weeks'
+              ? user?.pregnantWeek?.weekPregnant.weeks +
+                (user?.pregnantWeek?.weekPregnant.weeks > 1
+                  ? ` ${t('newBorn.week')}s`
+                  : ` ${t('newBorn.week')}`)
               : null}
+            {user?.pregnantWeek?.weekPregnant.days > 0
+              ? user?.pregnantWeek?.weekPregnant.days +
+                (user?.pregnantWeek?.weekPregnant.days > 1
+                  ? ` ${t('newBorn.day')}s`
+                  : ` ${t('newBorn.day')}`)
+              : null}
+            {` ${t('newBorn.old')}`}
           </Text>
         )}
 
-        {(user?.due_date || user?.date_of_birth) && (
+        {(user?.due_date || user?.baby_date_of_birth) && (
           <Text style={styles.title}>
-            born on{' '}
-            {moment(user?.due_date || user?.date_of_birth).format('DD/MM/YYYY')}
+            {t('newBorn.bornOn')}{' '}
+            {moment(user?.due_date || user?.baby_date_of_birth).format(
+              'DD/MM/YYYY',
+            )}
           </Text>
         )}
       </View>

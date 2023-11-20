@@ -32,6 +32,7 @@ import RenderHtml from 'react-native-render-html';
 import {useSelector} from 'react-redux';
 import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {RootState} from 'src/redux/rootReducer';
+import {useTranslation} from 'react-i18next';
 
 type TData = {
   index: number;
@@ -47,6 +48,7 @@ const NewBornTracker = (props: TProps) => {
   const {route} = props;
   const {params} = route;
 
+  const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
 
@@ -106,7 +108,9 @@ const NewBornTracker = (props: TProps) => {
             <SvgArrowLeft stroke={colors.black} size={24} />
           </TouchableOpacity>
           <View>
-            <Text>Newborn tracker</Text>
+            <Text style={{fontSize: scaler(16), fontWeight: '600'}}>
+              {t('newBorn.tracker')}
+            </Text>
           </View>
           {/* <TouchableOpacity
             style={{flexDirection: 'row', width: '20%'}}
@@ -288,7 +292,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   wrapTipContainer: {
-    paddingVertical: scaler(16),
+    paddingBottom: scaler(16),
+    paddingTop: scaler(24),
   },
 });
 

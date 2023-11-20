@@ -27,6 +27,8 @@ import {useTranslation} from 'react-i18next';
 import {
   createBaby,
   getSelectDueDate,
+  postSelectDueDate,
+  selectBabyDate,
   selectDueDate,
   updateBaby,
 } from '@services';
@@ -222,9 +224,9 @@ const EditNewBorn = (props: any) => {
       try {
         if (route?.params?.isAddNewBaby) {
           const res = await createBaby(paramsAddBaby);
-          const response = await getSelectDueDate({
+          const response = await selectBabyDate({
             id: res?.data?.id,
-            due_date: moment.utc(state.dob).format('MM/DD/YYYY'),
+            date: moment.utc(state.dob).format('YYYY-MM-DD'),
           });
           if (res?.success && response?.success) {
             navigate(ROUTE_NAME.ADD_BABY_SUCCESS, response);

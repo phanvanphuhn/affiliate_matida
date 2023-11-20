@@ -16,7 +16,7 @@ import {useTranslation} from 'react-i18next';
 
 type TProps = {
   onPress: () => void;
-  onNavigateDetailNewBorn: ({}) => void;
+  onSwitchBaby: ({}) => void;
 };
 
 export type TBaby = {
@@ -35,7 +35,7 @@ export type TBaby = {
 };
 
 const BottomSheetNewBorn = (props: TProps) => {
-  const {onPress, onNavigateDetailNewBorn} = props;
+  const {onPress, onSwitchBaby} = props;
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
   const {t} = useTranslation();
   return (
@@ -44,7 +44,7 @@ const BottomSheetNewBorn = (props: TProps) => {
         return (
           <View style={styles.container}>
             <TouchableOpacity
-              onPress={() => onNavigateDetailNewBorn(item)}
+              onPress={() => onSwitchBaby(item)}
               style={[
                 styles.wrapContainer,
                 {

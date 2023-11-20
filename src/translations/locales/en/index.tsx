@@ -692,6 +692,13 @@ export const en = {
     happyPreggy: 'Happy Preggy!',
     dueDate: 'Due date',
     addDueDate: 'Add due date',
+    bornOn: 'born on',
+    year: 'year',
+    month: 'month',
+    week: 'week',
+    day: 'day',
+    old: 'old',
+    tracker: 'Newborn Tracker',
   },
   newBornTida: {
     hi: "Hi new mommy,\nit's normal to have tons of questions.",

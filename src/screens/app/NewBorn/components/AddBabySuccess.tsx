@@ -1,14 +1,18 @@
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
+import {LogoApp} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AddBabySuccess = (props: any) => {
   const {route} = props;
   const {params} = route;
+
+  const {t} = useTranslation();
 
   const onNavigateHomePage = () => {
     navigate(ROUTE_NAME.TAB_HOME);
@@ -21,7 +25,9 @@ const AddBabySuccess = (props: any) => {
         <Text style={styles.title}>{params?.data?.text}</Text>
 
         <Image
-          source={{uri: params?.data?.image?.url}}
+          source={
+            params?.data?.image?.url ? {uri: params?.data?.image?.url} : LogoApp
+          }
           style={{height: SCREEN_WIDTH, width: '100%'}}
           resizeMode="contain"
         />
@@ -29,7 +35,7 @@ const AddBabySuccess = (props: any) => {
         <TouchableOpacity
           style={styles.wrapBtnContainer}
           onPress={onNavigateHomePage}>
-          <Text style={styles.btnTitle}>Tell me more</Text>
+          <Text style={styles.btnTitle}>{t('resultDueDate.tellMeMore')}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

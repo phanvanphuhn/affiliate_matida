@@ -8,6 +8,7 @@ const GET_USER_INFO = 'auth/user/infor';
 const UPDATE_USER_INFO = 'user/profile';
 const UPLOAD_IMAGE = 'clouds/upload';
 const DETAIL_USER = 'user';
+const SELECT_BABY_DATE = 'user/select-baby-date';
 
 const GET_POST = 'posts';
 const GET_HOME = 'home';
@@ -31,9 +32,9 @@ export const selectDueDate: any = async (data: any) => {
   return response;
 };
 
-export const getSelectDueDate: any = async (data: any) => {
-  const {id, due_date} = data;
-  const response = await api.get(`${SELECT_DUE_DATE}/${id}`);
+export const selectBabyDate: any = async (data: any) => {
+  const {id, date} = data;
+  const response = await api.post(`${SELECT_BABY_DATE}/${id}`, {date: date});
   return response;
 };
 

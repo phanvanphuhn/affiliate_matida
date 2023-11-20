@@ -696,6 +696,13 @@ export const vi = {
     happyPreggy: 'Vì một thai kì vui khoẻ!',
     dueDate: 'Ngày dự sinh',
     addDueDate: 'Thêm ngày dự sinh',
+    bornOn: 'sinh ngày',
+    year: 'năm',
+    month: 'tháng',
+    week: 'tuần',
+    day: 'ngày',
+    old: 'tuổi',
+    tracker: 'Theo dõi con yêu',
   },
   newBornTida: {
     hi: 'Chào mẹ,\ncó nhiều thắc mắc là chuyện bình thường.',
