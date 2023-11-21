@@ -32,8 +32,8 @@ const NewBornContainer = (props: TProps) => {
     if (user?.pregnantWeek?.weekPregnant.years) {
       result.push(
         user?.pregnantWeek?.weekPregnant.years > 1 && lang == 1
-          ? user?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}s`
-          : user?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}`,
+          ? user?.pregnantWeek?.weekPregnant.years + ` ${t('newBorn.year')}s`
+          : user?.pregnantWeek?.weekPregnant.years + ` ${t('newBorn.year')}`,
       );
     }
 
