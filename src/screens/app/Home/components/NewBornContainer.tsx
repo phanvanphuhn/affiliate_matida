@@ -27,36 +27,50 @@ const NewBornContainer = (props: TProps) => {
     {value: 'female', labelEn: 'Female', labelVi: 'Bé gái'},
   ];
 
+  const getBabyYearOld = () => {
+    let result = [];
+    if (user?.pregnantWeek?.weekPregnant.years) {
+      result.push(
+        user?.pregnantWeek?.weekPregnant.years > 1
+          ? user?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}s`
+          : user?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}`,
+      );
+    }
+
+    if (user?.pregnantWeek?.weekPregnant.months) {
+      result.push(
+        user?.pregnantWeek?.weekPregnant.months > 1
+          ? user?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}s`
+          : user?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}`,
+      );
+    }
+
+    if (user?.pregnantWeek?.weekPregnant.weeks) {
+      result.push(
+        user?.pregnantWeek?.weekPregnant.weeks > 1
+          ? user?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}s`
+          : user?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}`,
+      );
+    }
+
+    if (user?.pregnantWeek?.weekPregnant.days) {
+      result.push(
+        user?.pregnantWeek?.weekPregnant.days > 1
+          ? user?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}s`
+          : user?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}`,
+      );
+    }
+
+    // return 2 items from result
+    return result.slice(0, 2).join(' & ');
+  };
+
   return (
     <View style={styles.container}>
       <View style={[styles.wrapContentContainer, {marginBottom: scaler(32)}]}>
         {user?.pregnantWeek?.weekPregnant && (
           <Text style={styles.title}>
-            {user?.pregnantWeek?.weekPregnant.years > 0
-              ? user?.pregnantWeek?.weekPregnant.years +
-                (user?.pregnantWeek?.weekPregnant.years > 1
-                  ? ` ${t('newBorn.year')}s`
-                  : ` ${t('newBorn.year')}`)
-              : null}
-            {user?.pregnantWeek?.weekPregnant.months > 0
-              ? user?.pregnantWeek?.weekPregnant.months +
-                (user?.pregnantWeek?.weekPregnant.months > 1
-                  ? ` ${t('newBorn.month')}s`
-                  : ` ${t('newBorn.month')}`)
-              : null}
-            {user?.pregnantWeek?.weekPregnant.weeks > 0
-              ? user?.pregnantWeek?.weekPregnant.weeks +
-                (user?.pregnantWeek?.weekPregnant.weeks > 1
-                  ? ` ${t('newBorn.week')}s`
-                  : ` ${t('newBorn.week')}`)
-              : null}
-            {user?.pregnantWeek?.weekPregnant.days > 0
-              ? user?.pregnantWeek?.weekPregnant.days +
-                (user?.pregnantWeek?.weekPregnant.days > 1
-                  ? ` ${t('newBorn.day')}s`
-                  : ` ${t('newBorn.day')}`)
-              : null}
-            {` ${t('newBorn.old')}`}
+            {getBabyYearOld() + ' ' + t('newBorn.old')}
           </Text>
         )}
 

@@ -37,15 +37,17 @@ const AddNewBaby = (props: any) => {
   const {t} = useTranslation();
 
   const [state, setState] = useDetailPost({
+    id: route?.params?.name ? route?.params?.id : '',
     name: route?.params?.name ? route?.params?.name : '',
     due_date: route?.params?.due_date
       ? moment.utc(route?.params?.due_date).format('MM/DD/YYYY')
       : '',
     avatar: route?.params?.avatar ? route?.params?.avatar : '',
     pregnant_type: 'singleton',
-    isEdit: route?.params?.isEdit ? route?.params?.isEdit : false,
+    isEdit: route?.params?.name ? true : false,
     error: {},
   });
+
   const onChooseDueDate = () => {
     const params = {
       isAddNewBaby: true,
@@ -92,7 +94,7 @@ const AddNewBaby = (props: any) => {
       pregnant_type: 'singleton',
     };
     const updateParams = {
-      id: user?.id,
+      id: state.id,
       body: {
         user_id: user?.id,
         name: state.name,
@@ -110,7 +112,12 @@ const AddNewBaby = (props: any) => {
         // } else {
         //   response = await createBaby(params);
         // }
-        const response = await createBaby(params);
+        let response;
+        if (state?.isEdit) {
+          response = await updateBaby(updateParams);
+        } else {
+          response = await createBaby(params);
+        }
 
         let res;
         if (route?.params?.type == 'Caculate') {

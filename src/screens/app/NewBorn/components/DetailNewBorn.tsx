@@ -9,7 +9,7 @@ import {
 import {navigate, goBack} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -18,39 +18,48 @@ import {useTranslation} from 'react-i18next';
 import moment from 'moment';
 import {birth_experience, gender} from './EditNewBorn';
 import {useSelector} from 'react-redux';
+import {getBabyInfo} from '@services';
 
 const DetailNewBorn = (props: any) => {
   const {route} = props;
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
-  const detailNewBorn = {...route?.params};
+
+  console.log('route: ', route?.params);
 
   const onEditBaby = () => {
     if (route?.params?.type == 'newborn') {
       navigate(ROUTE_NAME.EDIT_NEW_BORN, route?.params);
     } else {
-      navigate(ROUTE_NAME.ADD_NEW_BABY, detailNewBorn);
+      navigate(ROUTE_NAME.ADD_NEW_BABY, route?.params);
     }
   };
-  console.log('DetailNewBorn: ', route?.params);
+
+  const getDataBabyInfo = async () => {
+    const res = await getBabyInfo(route?.params?.id);
+    console.log('res: ', res);
+  };
+
+  useEffect(() => {
+    getDataBabyInfo();
+  }, []);
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => goBack()}>
           <SvgArrowBackLogin fill={'transparent'} />
         </TouchableOpacity>
-        {route?.params?.type == 'newborn' && (
-          <TouchableOpacity onPress={onEditBaby}>
-            <Image
-              source={iconEditGrey}
-              style={{
-                height: scaler(24),
-                width: scaler(24),
-                marginRight: scaler(16),
-              }}
-            />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity onPress={onEditBaby}>
+          <Image
+            source={iconEditGrey}
+            style={{
+              height: scaler(24),
+              width: scaler(24),
+              marginRight: scaler(16),
+            }}
+          />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.bodyContainer}>
@@ -87,7 +96,37 @@ const DetailNewBorn = (props: any) => {
             )}
           </View>
 
-          {route?.params?.type == 'newborn' ? (
+          {route?.params?.type == ('pregnant' || 'pregnant-overdue') ? (
+            <View
+              style={{
+                paddingVertical: scaler(16),
+                borderTopWidth: scaler(1),
+                borderBottomWidth: scaler(1),
+                borderColor: '#F1F0F5',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={[
+                  styles.label,
+                  {
+                    fontSize: scaler(12),
+                    color: '#8B8484',
+                    marginBottom: scaler(8),
+                  },
+                ]}>
+                Ngày dự sinh
+              </Text>
+              <Text style={styles.text}>
+                {route?.params?.date_of_birth
+                  ? moment
+                      .utc(route?.params?.date_of_birth)
+                      .format('DD/MM/YYYY')
+                  : route?.params?.due_date
+                  ? moment.utc(route?.params?.due_date).format('DD/MM/YYYY')
+                  : 'DD/MM/YYYY'}{' '}
+              </Text>
+            </View>
+          ) : (
             <View
               style={{
                 paddingVertical: scaler(16),
@@ -164,81 +203,51 @@ const DetailNewBorn = (props: any) => {
                 </Text>
               </View>
             </View>
-          ) : (
-            <View
-              style={{
-                paddingVertical: scaler(16),
-                borderTopWidth: scaler(1),
-                borderBottomWidth: scaler(1),
-                borderColor: '#F1F0F5',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={[
-                  styles.label,
-                  {
-                    fontSize: scaler(12),
-                    color: '#8B8484',
-                    marginBottom: scaler(8),
-                  },
-                ]}>
-                Ngày dự sinh
-              </Text>
-              <Text style={styles.text}>
-                {route?.params?.date_of_birth
-                  ? moment
-                      .utc(route?.params?.date_of_birth)
-                      .format('DD/MM/YYYY')
-                  : route?.params?.due_date
-                  ? moment.utc(route?.params?.due_date).format('DD/MM/YYYY')
-                  : 'DD/MM/YYYY'}{' '}
-              </Text>
-            </View>
           )}
 
-          {route?.params?.type == 'newborn' && (
-            <View style={[styles.wrapDescription, {marginTop: scaler(16)}]}>
-              <Text
-                style={[
-                  styles.label,
-                  {fontSize: scaler(12), color: '#8B8484'},
-                ]}>
-                {t('newBorn.birthExperience')}
-              </Text>
-              <Text style={styles.text}>
-                {lang == 1
-                  ? birth_experience.filter(
-                      item => item.value == route?.params?.birth_experience,
-                    )[0]?.label
-                  : birth_experience.filter(
-                      item => item.value == route?.params?.birth_experience,
-                    )[0]?.labelVi}
-              </Text>
-            </View>
-          )}
-          {route?.params?.type == 'newborn' && (
-            <View style={styles.wrapDescription}>
-              <Text
-                style={[
-                  styles.label,
-                  {fontSize: scaler(12), color: '#8B8484'},
-                ]}>
-                {t('newBorn.babyWeight')}
-              </Text>
-              <Text style={styles.text}>{route?.params.weight / 1000} kg</Text>
-            </View>
-          )}
-          {route?.params?.type == 'newborn' && (
-            <View style={styles.wrapDescription}>
-              <Text
-                style={[
-                  styles.label,
-                  {fontSize: scaler(12), color: '#8B8484'},
-                ]}>
-                {t('newBorn.babyHeight')}
-              </Text>
-              <Text style={styles.text}>{route?.params.height} cm</Text>
-            </View>
+          {route?.params?.type !== ('pregnant' || 'pregnant-overdue') && (
+            <>
+              <View style={[styles.wrapDescription, {marginTop: scaler(16)}]}>
+                <Text
+                  style={[
+                    styles.label,
+                    {fontSize: scaler(12), color: '#8B8484'},
+                  ]}>
+                  {t('newBorn.birthExperience')}
+                </Text>
+                <Text style={styles.text}>
+                  {lang == 1
+                    ? birth_experience.filter(
+                        item => item.value == route?.params?.birth_experience,
+                      )[0]?.label
+                    : birth_experience.filter(
+                        item => item.value == route?.params?.birth_experience,
+                      )[0]?.labelVi}
+                </Text>
+              </View>
+              <View style={styles.wrapDescription}>
+                <Text
+                  style={[
+                    styles.label,
+                    {fontSize: scaler(12), color: '#8B8484'},
+                  ]}>
+                  {t('newBorn.babyWeight')}
+                </Text>
+                <Text style={styles.text}>
+                  {route?.params.weight / 1000} kg
+                </Text>
+              </View>
+              <View style={styles.wrapDescription}>
+                <Text
+                  style={[
+                    styles.label,
+                    {fontSize: scaler(12), color: '#8B8484'},
+                  ]}>
+                  {t('newBorn.babyHeight')}
+                </Text>
+                <Text style={styles.text}>{route?.params.height} cm</Text>
+              </View>
+            </>
           )}
         </View>
       </View>

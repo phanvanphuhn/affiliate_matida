@@ -67,7 +67,11 @@ const Information = (props: TProps) => {
               dataDate={state.dmy}
               textColor={colors.black}
               style={{backgroundColor: colors.white}}
-              maximumDate={new Date()}
+              maximumDate={
+                new Date().getHours() < 8
+                  ? new Date(new Date().setDate(new Date().getDate() + 1))
+                  : new Date()
+              }
               width={SCREEN_WIDTH}
             />
           </View>
