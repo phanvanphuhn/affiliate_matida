@@ -102,6 +102,11 @@ const NewBornContainer = (props: TProps) => {
               enableExperimentalGhostLinesPrevention={true}
               tagsStyles={{...tagsStyles}}
             />
+            <Text>
+              {user?.baby_gender == 'male'
+                ? baby?.baby_size?.split('#')[0]
+                : baby?.baby_size?.split('#')[1]}
+            </Text>
           </View>
         </View>
 
