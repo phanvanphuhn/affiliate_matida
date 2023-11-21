@@ -9,7 +9,7 @@ import {
 import {navigate, goBack} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -24,8 +24,7 @@ const DetailNewBorn = (props: any) => {
   const {route} = props;
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
-
-  console.log('route: ', route?.params);
+  const [data, setData] = useState<any>();
 
   const onEditBaby = () => {
     if (route?.params?.type == 'newborn') {
@@ -37,7 +36,45 @@ const DetailNewBorn = (props: any) => {
 
   const getDataBabyInfo = async () => {
     const res = await getBabyInfo(route?.params?.id);
-    console.log('res: ', res);
+    setData(res?.data);
+  };
+
+  const getBabyYearOld = () => {
+    let result = [];
+    if (data?.pregnantWeek?.weekPregnant.years) {
+      result.push(
+        data?.pregnantWeek?.weekPregnant.years > 1 && lang == 1
+          ? data?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}s`
+          : data?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}`,
+      );
+    }
+
+    if (data?.pregnantWeek?.weekPregnant.months) {
+      result.push(
+        data?.pregnantWeek?.weekPregnant.months > 1 && lang == 1
+          ? data?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}s`
+          : data?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}`,
+      );
+    }
+
+    if (data?.pregnantWeek?.weekPregnant.weeks) {
+      result.push(
+        data?.pregnantWeek?.weekPregnant.weeks > 1 && lang == 1
+          ? data?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}s`
+          : data?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}`,
+      );
+    }
+
+    if (data?.pregnantWeek?.weekPregnant.days) {
+      result.push(
+        data?.pregnantWeek?.weekPregnant.days > 1 && lang == 1
+          ? data?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}s`
+          : data?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}`,
+      );
+    }
+
+    // return 2 items from result
+    return result.slice(0, 2).join(' & ');
   };
 
   useEffect(() => {
@@ -83,7 +120,7 @@ const DetailNewBorn = (props: any) => {
                   styles.label,
                   {fontSize: scaler(14), color: colors.labelColor},
                 ]}>
-                2 months old
+                {getBabyYearOld()}
               </Text>
             ) : (
               <Text
@@ -91,7 +128,7 @@ const DetailNewBorn = (props: any) => {
                   styles.label,
                   {fontSize: scaler(14), color: colors.labelColor},
                 ]}>
-                40 tuần tuổi
+                {getBabyYearOld()}
               </Text>
             )}
           </View>

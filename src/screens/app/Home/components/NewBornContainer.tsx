@@ -31,7 +31,7 @@ const NewBornContainer = (props: TProps) => {
     let result = [];
     if (user?.pregnantWeek?.weekPregnant.years) {
       result.push(
-        user?.pregnantWeek?.weekPregnant.years > 1
+        user?.pregnantWeek?.weekPregnant.years > 1 && lang == 1
           ? user?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}s`
           : user?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}`,
       );
@@ -39,7 +39,7 @@ const NewBornContainer = (props: TProps) => {
 
     if (user?.pregnantWeek?.weekPregnant.months) {
       result.push(
-        user?.pregnantWeek?.weekPregnant.months > 1
+        user?.pregnantWeek?.weekPregnant.months > 1 && lang == 1
           ? user?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}s`
           : user?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}`,
       );
@@ -47,7 +47,7 @@ const NewBornContainer = (props: TProps) => {
 
     if (user?.pregnantWeek?.weekPregnant.weeks) {
       result.push(
-        user?.pregnantWeek?.weekPregnant.weeks > 1
+        user?.pregnantWeek?.weekPregnant.weeks > 1 && lang == 1
           ? user?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}s`
           : user?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}`,
       );
@@ -55,7 +55,7 @@ const NewBornContainer = (props: TProps) => {
 
     if (user?.pregnantWeek?.weekPregnant.days) {
       result.push(
-        user?.pregnantWeek?.weekPregnant.days > 1
+        user?.pregnantWeek?.weekPregnant.days > 1 && lang == 1
           ? user?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}s`
           : user?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}`,
       );

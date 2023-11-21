@@ -146,7 +146,7 @@ const NewBornTracker = (props: TProps) => {
             </Text>
           </View>
           <View style={styles.wrapContentContainer}>
-            {dataCollapsible.map((item: any) => {
+            {dataCollapsible?.map((item: any) => {
               return (
                 <View
                   style={[
@@ -200,7 +200,7 @@ const NewBornTracker = (props: TProps) => {
             })}
           </View>
           <View style={{paddingHorizontal: scaler(16)}}>
-            {dataFull.map((item: any) => {
+            {dataFull?.map((item: any) => {
               return (
                 <View
                   style={[
