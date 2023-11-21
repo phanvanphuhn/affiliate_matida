@@ -92,7 +92,7 @@ const EditNewBorn = (props: any) => {
     typeBottomSheet: '',
     error: {},
   });
-
+  console.log('state: ', state);
   const handleScheduleOrderSheetChanges = useCallback((index?: number) => {
     bottomSheetRef.current?.collapse();
   }, []);

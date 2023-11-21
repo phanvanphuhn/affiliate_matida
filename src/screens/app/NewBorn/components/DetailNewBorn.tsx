@@ -41,15 +41,15 @@ const DetailNewBorn = (props: any) => {
 
   const getBabyYearOld = () => {
     let result = [];
-    if (data?.pregnantWeek?.weekPregnant.years) {
+    if (data?.pregnantWeek?.weekPregnant.years > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.years > 1 && lang == 1
-          ? data?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}s`
-          : data?.pregnantWeek?.weekPregnant.years + `${t('newBorn.year')}`,
+          ? data?.pregnantWeek?.weekPregnant.years + ` ${t('newBorn.year')}s`
+          : data?.pregnantWeek?.weekPregnant.years + ` ${t('newBorn.year')}`,
       );
     }
 
-    if (data?.pregnantWeek?.weekPregnant.months) {
+    if (data?.pregnantWeek?.weekPregnant.months > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.months > 1 && lang == 1
           ? data?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}s`
@@ -57,7 +57,7 @@ const DetailNewBorn = (props: any) => {
       );
     }
 
-    if (data?.pregnantWeek?.weekPregnant.weeks) {
+    if (data?.pregnantWeek?.weekPregnant.weeks > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.weeks > 1 && lang == 1
           ? data?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}s`
@@ -65,7 +65,7 @@ const DetailNewBorn = (props: any) => {
       );
     }
 
-    if (data?.pregnantWeek?.weekPregnant.days) {
+    if (data?.pregnantWeek?.weekPregnant.days > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.days > 1 && lang == 1
           ? data?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}s`
@@ -133,7 +133,9 @@ const DetailNewBorn = (props: any) => {
             )}
           </View>
 
-          {route?.params?.type == ('pregnant' || 'pregnant-overdue') ? (
+          {route?.params?.type == 'pregnant' ||
+          route?.params?.type == 'pregnant-overdue' ||
+          route?.params?.type == 'unknown' ? (
             <View
               style={{
                 paddingVertical: scaler(16),
@@ -242,7 +244,9 @@ const DetailNewBorn = (props: any) => {
             </View>
           )}
 
-          {route?.params?.type !== ('pregnant' || 'pregnant-overdue') && (
+          {route?.params?.type == 'pregnant' ||
+          route?.params?.type == 'pregnant-overdue' ||
+          route?.params?.type == 'unknown' ? null : (
             <>
               <View style={[styles.wrapDescription, {marginTop: scaler(16)}]}>
                 <Text

@@ -33,6 +33,7 @@ import {useSelector} from 'react-redux';
 import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {RootState} from 'src/redux/rootReducer';
 import {useTranslation} from 'react-i18next';
+import FastImage from 'react-native-fast-image';
 
 type TData = {
   index: number;
@@ -127,13 +128,13 @@ const NewBornTracker = (props: TProps) => {
         </View>
 
         <ScrollView style={styles.bodyContainer}>
-          <Image
+          <FastImage
             source={newBornBaby}
             style={{
               width: '100%',
               height: scaler(293),
             }}
-            resizeMode="center"
+            resizeMode="contain"
           />
           <View style={styles.wrapHighlightContainer}>
             <Text

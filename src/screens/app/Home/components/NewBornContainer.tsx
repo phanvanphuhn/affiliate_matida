@@ -119,7 +119,12 @@ const NewBornContainer = (props: TProps) => {
       </View>
 
       <View style={styles.wrapContentContainer}>
-        <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            paddingRight: scaler(16),
+            maxWidth: '50%',
+          }}>
           <FastImage
             source={user?.avatar ? {uri: user?.avatar} : newBornBaby}
             style={{
@@ -132,8 +137,12 @@ const NewBornContainer = (props: TProps) => {
             resizeMode="contain"
           />
           <View>
-            <Text style={{fontSize: 11, fontWeight: '500'}}>
+            <Text style={{fontSize: 11, fontWeight: '500'}} numberOfLines={1}>
               {user?.baby_name}
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus
+              reprehenderit minus, rerum obcaecati repellendus inventore
+              assumenda error ducimus porro quae consequatur suscipit beatae
+              voluptatibus reiciendis quo nostrum neque earum enim!
             </Text>
             <Text style={styles.title}>
               {lang == 1
@@ -145,7 +154,7 @@ const NewBornContainer = (props: TProps) => {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.wrapBtnContainer} onPress={onPress}>
+        <TouchableOpacity style={[styles.wrapBtnContainer]} onPress={onPress}>
           <Text style={styles.btnTitle}>View more</Text>
           <Image
             source={tailArrowRight}

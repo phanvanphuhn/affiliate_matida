@@ -121,7 +121,7 @@ const AddNewBaby = (props: any) => {
 
         let res;
         if (route?.params?.type == 'Caculate') {
-          res = await calculateDate(state?.body);
+          res = state?.body;
         } else {
           res = await selectDueDate({
             due_date: moment

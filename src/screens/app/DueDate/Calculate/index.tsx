@@ -50,9 +50,13 @@ const CalculateDueDateScreenApp = (props: any) => {
     };
 
     if (route?.params?.isAddNewBaby) {
+      const res = await calculateDate(
+        method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
+      );
+
       route?.params?.setState({
-        due_date: moment(date).format('MM/DD/YYYY'),
-        body: method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
+        due_date: moment(res?.data?.resultPeriod?.dueDate).format('MM/DD/YYYY'),
+        body: res,
       });
       navigate(ROUTE_NAME.ADD_NEW_BABY, {
         type: 'Caculate',

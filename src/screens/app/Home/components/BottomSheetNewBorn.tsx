@@ -59,7 +59,9 @@ const BottomSheetNewBorn = (props: TProps) => {
                   source={
                     item?.avatar
                       ? {uri: item?.avatar}
-                      : item?.type == 'newborn'
+                      : item?.type !== 'pregnant' &&
+                        item?.type !== 'pregnant-overdue' &&
+                        item?.type !== 'unknown'
                       ? iconKid
                       : iconPregnant
                   }

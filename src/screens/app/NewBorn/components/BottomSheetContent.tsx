@@ -28,7 +28,7 @@ const BottomSheetContent = (props: any) => {
           setDate(date);
           setState({dob: date});
         }}
-        // dataDate={state.dob}
+        dataDate={date}
         maximumDate={new Date()}
         textColor={colors.black}
         style={{backgroundColor: colors.white}}
@@ -53,7 +53,7 @@ const BottomSheetContent = (props: any) => {
           setTime(time);
           setState({tob: time});
         }}
-        // dataDate={state.tob}
+        dataDate={time}
         textColor={colors.black}
         mode={'time'}
         style={{backgroundColor: colors.white}}

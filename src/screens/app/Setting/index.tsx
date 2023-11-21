@@ -228,7 +228,9 @@ const Setting = () => {
                     source={
                       item?.avatar
                         ? {uri: item?.avatar}
-                        : item?.type !== ('pregnant' || 'pregnant-overdue')
+                        : item?.type !== 'pregnant' &&
+                          item?.type !== 'pregnant-overdue' &&
+                          item?.type !== 'unknown'
                         ? iconKid
                         : iconPregnant
                     }
