@@ -133,7 +133,11 @@ const Home = () => {
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
 
   const isSelectProfileNewBorn = newBorn.filter(
-    item => item.type == 'newborn' && item.selected == true,
+    item =>
+      item?.type !== 'pregnant' &&
+      item?.type !== 'pregnant-overdue' &&
+      item?.type !== 'unknown' &&
+      item.selected == true,
   );
 
   useUXCam(ROUTE_NAME.HOME);
