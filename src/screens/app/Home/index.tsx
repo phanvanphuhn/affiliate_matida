@@ -72,6 +72,7 @@ import NewBornContainer from './components/NewBornContainer';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheetNewBorn, {TBaby} from './components/BottomSheetNewBorn';
 import {navigate} from '@navigation';
+import MomProgram from './components/MomProgram';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -572,6 +573,7 @@ const Home = () => {
         </HorizontalList> */}
 
         {/* <DailyAffirmation quote={data?.quote} /> */}
+        {isShowForReviewer(user) && <MomProgram />}
       </ScrollView>
       {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
       {isShowForReviewer(user) && weekPregnant?.weeks > 33 && (

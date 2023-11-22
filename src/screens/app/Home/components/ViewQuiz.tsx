@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     paddingHorizontal: scaler(16),
-    marginBottom: scaler(40),
+    marginBottom: scaler(16),
   },
   viewContent: {
     width: '100%',

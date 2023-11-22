@@ -27,10 +27,14 @@ const DetailNewBorn = (props: any) => {
   const [data, setData] = useState<any>();
 
   const onEditBaby = () => {
-    if (route?.params?.type == 'newborn') {
-      navigate(ROUTE_NAME.EDIT_NEW_BORN, route?.params);
-    } else {
+    if (
+      route?.params?.type == 'pregnant' ||
+      route?.params?.type == 'pregnant-overdue' ||
+      route?.params?.type == 'unknown'
+    ) {
       navigate(ROUTE_NAME.ADD_NEW_BABY, route?.params);
+    } else {
+      navigate(ROUTE_NAME.EDIT_NEW_BORN, route?.params);
     }
   };
 

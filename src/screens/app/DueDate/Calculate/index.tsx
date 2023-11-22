@@ -33,7 +33,6 @@ const CalculateDueDateScreenApp = (props: any) => {
   const [cycleLength, setCycleLength] = useState<string>('TWENTY_EIGHT');
   const [daysIVF, setDaysIVF] = useState<string>('IVF3');
   const [date, setDate] = useState<any>(moment());
-
   useUXCam(ROUTE_NAME.CALCULATE_DUE_DATE_APP);
 
   const handlePressButton = async () => {
@@ -55,7 +54,9 @@ const CalculateDueDateScreenApp = (props: any) => {
       );
 
       route?.params?.setState({
-        due_date: moment(res?.data?.resultPeriod?.dueDate).format('MM/DD/YYYY'),
+        due_date: moment(res?.data?.resultPeriod?.dueDate, 'MM/DD/YYYY').format(
+          'MM/DD/YYYY',
+        ),
         body: res,
       });
       navigate(ROUTE_NAME.ADD_NEW_BABY, {

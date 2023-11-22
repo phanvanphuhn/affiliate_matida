@@ -1,7 +1,15 @@
 import {iconArrowRight, newBornBaby, tailArrowRight} from '@images';
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Button,
+  Pressable,
+} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {useSelector} from 'react-redux';
@@ -123,12 +131,14 @@ const NewBornContainer = (props: TProps) => {
         </View>
       </View>
 
-      <View style={styles.wrapContentContainer}>
+      <TouchableOpacity
+        style={[styles.wrapContentContainer, {paddingVertical: scaler(8)}]}
+        onPress={onPress}>
         <View
           style={{
             flexDirection: 'row',
             paddingRight: scaler(16),
-            maxWidth: '50%',
+            flex: 1,
           }}>
           <FastImage
             source={user?.avatar ? {uri: user?.avatar} : newBornBaby}
@@ -144,10 +154,6 @@ const NewBornContainer = (props: TProps) => {
           <View>
             <Text style={{fontSize: 11, fontWeight: '500'}} numberOfLines={1}>
               {user?.baby_name}
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus
-              reprehenderit minus, rerum obcaecati repellendus inventore
-              assumenda error ducimus porro quae consequatur suscipit beatae
-              voluptatibus reiciendis quo nostrum neque earum enim!
             </Text>
             <Text style={styles.title}>
               {lang == 1
@@ -159,7 +165,13 @@ const NewBornContainer = (props: TProps) => {
           </View>
         </View>
 
-        <TouchableOpacity style={[styles.wrapBtnContainer]} onPress={onPress}>
+        <TouchableOpacity
+          style={[
+            styles.wrapBtnContainer,
+            {width: scaler(128), justifyContent: 'center'},
+          ]}
+          hitSlop={{top: 30, bottom: 30, left: 30, right: 30}}
+          onPress={onPress}>
           <Text style={styles.btnTitle}>View more</Text>
           <Image
             source={tailArrowRight}
@@ -170,7 +182,7 @@ const NewBornContainer = (props: TProps) => {
             }}
           />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -184,6 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   wrapContentContainer: {
+    flex: 1,
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
