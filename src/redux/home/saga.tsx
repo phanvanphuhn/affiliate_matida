@@ -35,6 +35,7 @@ export function* getDataHomeByWeekSaga(action: any) {
   try {
     const res: ResponseGenerator = yield getHomeByWeeks({
       weeks: action?.payload?.week,
+      month: action?.payload?.month,
     });
 
     yield put(getDataHomeSuccess(res?.data));

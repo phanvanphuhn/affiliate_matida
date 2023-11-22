@@ -93,7 +93,9 @@ export const getHome: any = async () => {
 };
 
 export const getHomeByWeeks: any = async (data: any) => {
-  const response = await api.get(`${GET_HOME}?week=${data.weeks}`);
+  const response = await api.get(
+    `${GET_HOME}?week=${data.weeks}&month=${data.month}`,
+  );
   return response;
 };
 

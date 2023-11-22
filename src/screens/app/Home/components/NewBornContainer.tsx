@@ -26,7 +26,7 @@ type TProps = {
 
 const NewBornContainer = (props: TProps) => {
   const {onPress, data, user, state} = props;
-  const {baby} = data;
+  const {baby, baby_zodiac} = data;
 
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
@@ -110,11 +110,11 @@ const NewBornContainer = (props: TProps) => {
               enableExperimentalGhostLinesPrevention={true}
               tagsStyles={{...tagsStyles}}
             />
-            <Text>
+            {/* <Text>
               {user?.baby_gender == 'male'
                 ? baby?.baby_size?.split('#')[0]
                 : baby?.baby_size?.split('#')[1]}
-            </Text>
+            </Text> */}
           </View>
         </View>
 
@@ -152,15 +152,21 @@ const NewBornContainer = (props: TProps) => {
             resizeMode="contain"
           />
           <View>
-            <Text style={{fontSize: 11, fontWeight: '500'}} numberOfLines={1}>
+            <Text
+              style={{fontSize: 11, fontWeight: '500', maxWidth: '80%'}}
+              numberOfLines={1}>
               {user?.baby_name}
             </Text>
             <Text style={styles.title}>
               {lang == 1
                 ? gender.filter(item => item.value == user?.baby_gender)[0]
-                    ?.labelEn
+                    ?.labelEn +
+                  ' ' +
+                  baby_zodiac?.name_en
                 : gender.filter(item => item.value == user?.baby_gender)[0]
-                    ?.labelVi}
+                    ?.labelVi +
+                  ' ' +
+                  baby_zodiac?.name_vi}
             </Text>
           </View>
         </View>

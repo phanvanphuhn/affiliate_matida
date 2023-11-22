@@ -34,6 +34,8 @@ import {tagsStyles} from '../../DetailArticle/settingHTML';
 import {RootState} from 'src/redux/rootReducer';
 import {useTranslation} from 'react-i18next';
 import FastImage from 'react-native-fast-image';
+import ContainerProvider from '@component/ContainerProvider';
+import {useContainerContext} from '@component/ContainerProvider';
 
 type TData = {
   index: number;
@@ -49,13 +51,15 @@ const NewBornTracker = (props: TProps) => {
   const {route} = props;
   const {params} = route;
 
+  const {state, setState} = useContainerContext();
+
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
 
   const selectedNewBorn = newBorn.filter(item => item.selected == true);
   const filter = params?.state?.filter;
-  const dataFilter = _.get(params?.state.data, filter);
+  const dataFilter = _.get(params?.state?.data, filter?.value);
   const dataFull = dataFilter?.contents?.filter(
     (item: any) => item.style == 'full',
   );
@@ -102,18 +106,19 @@ const NewBornTracker = (props: TProps) => {
   };
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <SafeAreaView edges={['top']} style={[styles.container]}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity style={{width: '20%'}} onPress={() => goBack()}>
-            <SvgArrowLeft stroke={colors.black} size={24} />
-          </TouchableOpacity>
-          <View>
-            <Text style={{fontSize: scaler(16), fontWeight: '500'}}>
-              {t('newBorn.tracker')}
-            </Text>
-          </View>
-          {/* <TouchableOpacity
+    <ContainerProvider state={params?.state} setState={params?.setState}>
+      <GestureHandlerRootView style={styles.container}>
+        <SafeAreaView edges={['top']} style={[styles.container]}>
+          <View style={styles.headerContainer}>
+            <TouchableOpacity style={{width: '20%'}} onPress={() => goBack()}>
+              <SvgArrowLeft stroke={colors.black} size={24} />
+            </TouchableOpacity>
+            <View>
+              <Text style={{fontSize: scaler(16), fontWeight: '500'}}>
+                {t('newBorn.tracker')}
+              </Text>
+            </View>
+            {/* <TouchableOpacity
             style={{flexDirection: 'row', width: '20%'}}
             onPress={openNewBorn}>
             <Text style={{marginRight: scaler(4)}} numberOfLines={1}>
@@ -121,65 +126,101 @@ const NewBornTracker = (props: TProps) => {
             </Text>
             <SvgCaretDown stroke={colors.black} />
           </TouchableOpacity> */}
-          <View style={{width: '20%'}} />
-        </View>
-        <View style={{paddingHorizontal: scaler(16)}}>
-          <ListMonth state={params?.state} setState={params?.setState} />
-        </View>
-
-        <ScrollView style={styles.bodyContainer}>
-          <FastImage
-            source={newBornBaby}
-            style={{
-              width: '100%',
-              height: scaler(293),
-            }}
-            resizeMode="contain"
-          />
-          <View style={styles.wrapHighlightContainer}>
-            <Text
-              style={{
-                fontSize: scaler(16),
-                fontWeight: '600',
-                color: colors.white,
-              }}>
-              Highlights of the month
-            </Text>
+            <View style={{width: '20%'}} />
           </View>
-          <View style={styles.wrapContentContainer}>
-            {dataCollapsible?.map((item: any) => {
-              return (
-                <View
-                  style={[
-                    {
-                      marginBottom: scaler(16),
-                    },
-                    item.index == dataCollapsible.length
-                      ? {}
-                      : {
-                          borderBottomColor: colors.borderColor,
-                          borderBottomWidth: 0.5,
-                          paddingBottom: scaler(16),
-                        },
-                  ]}>
-                  <TouchableOpacity
-                    onPress={() => setShowContent(item)}
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}>
+          {/* <View style={{paddingHorizontal: scaler(16)}}>
+            <ListMonth state={state} setState={setState} />
+          </View> */}
+
+          <ScrollView style={styles.bodyContainer}>
+            <FastImage
+              source={newBornBaby}
+              style={{
+                width: '100%',
+                height: scaler(293),
+              }}
+              resizeMode="contain"
+            />
+            <View style={styles.wrapHighlightContainer}>
+              <Text
+                style={{
+                  fontSize: scaler(16),
+                  fontWeight: '600',
+                  color: colors.white,
+                }}>
+                Highlights of the month
+              </Text>
+            </View>
+            <View style={styles.wrapContentContainer}>
+              {dataCollapsible?.map((item: any) => {
+                return (
+                  <View
+                    style={[
+                      {
+                        marginBottom: scaler(16),
+                      },
+                      item.index == dataCollapsible.length
+                        ? {}
+                        : {
+                            borderBottomColor: colors.borderColor,
+                            borderBottomWidth: 0.5,
+                            paddingBottom: scaler(16),
+                          },
+                    ]}>
+                    <TouchableOpacity
+                      onPress={() => setShowContent(item)}
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <Text style={styles.label}>{item.title}</Text>
+
+                      <Image
+                        source={iconChevronDown}
+                        style={{
+                          height: scaler(24),
+                          width: scaler(24),
+                        }}
+                      />
+                    </TouchableOpacity>
+
+                    {expandContent?.includes(item.title) && (
+                      <TouchableWithoutFeedback>
+                        <View>
+                          <RenderHtml
+                            contentWidth={100}
+                            source={{
+                              html: `<div>${item.description}</div>`,
+                            }}
+                            // baseStyle={styles.description}
+                            enableExperimentalMarginCollapsing={true}
+                            enableExperimentalBRCollapsing={true}
+                            enableExperimentalGhostLinesPrevention={true}
+                            tagsStyles={{...tagsStyles}}
+                          />
+                        </View>
+                      </TouchableWithoutFeedback>
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+            <View style={{paddingHorizontal: scaler(16)}}>
+              {dataFull?.map((item: any) => {
+                return (
+                  <View
+                    style={[
+                      styles.wrapTipContainer,
+                      item.index == dataFull.length
+                        ? {marginBottom: scaler(32)}
+                        : {
+                            borderBottomColor: colors.borderColor,
+                            borderBottomWidth: 0.5,
+                            paddingBottom: scaler(16),
+                          },
+                    ]}>
                     <Text style={styles.label}>{item.title}</Text>
 
-                    <Image
-                      source={iconChevronDown}
-                      style={{
-                        height: scaler(24),
-                        width: scaler(24),
-                      }}
-                    />
-                  </TouchableOpacity>
-
-                  {expandContent?.includes(item.title) && (
                     <TouchableWithoutFeedback>
                       <View>
                         <RenderHtml
@@ -195,62 +236,27 @@ const NewBornTracker = (props: TProps) => {
                         />
                       </View>
                     </TouchableWithoutFeedback>
-                  )}
-                </View>
-              );
-            })}
-          </View>
-          <View style={{paddingHorizontal: scaler(16)}}>
-            {dataFull?.map((item: any) => {
-              return (
-                <View
-                  style={[
-                    styles.wrapTipContainer,
-                    item.index == dataFull.length
-                      ? {marginBottom: scaler(32)}
-                      : {
-                          borderBottomColor: colors.borderColor,
-                          borderBottomWidth: 0.5,
-                          paddingBottom: scaler(16),
-                        },
-                  ]}>
-                  <Text style={styles.label}>{item.title}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          </ScrollView>
 
-                  <TouchableWithoutFeedback>
-                    <View>
-                      <RenderHtml
-                        contentWidth={100}
-                        source={{
-                          html: `<div>${item.description}</div>`,
-                        }}
-                        // baseStyle={styles.description}
-                        enableExperimentalMarginCollapsing={true}
-                        enableExperimentalBRCollapsing={true}
-                        enableExperimentalGhostLinesPrevention={true}
-                        tagsStyles={{...tagsStyles}}
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-              );
-            })}
-          </View>
-        </ScrollView>
-
-        <BottomSheetModal
-          ref={bottomSheetRef}
-          snapPoints={snapPoints}
-          onChange={handleScheduleOrderSheetChanges}
-          animateOnMount={false}
-          onClose={handleCloseScheduleOrderBottomSheet}
-          enablePanDownToClose={true}>
-          <BottomSheetNewBorn
-            onPress={onNavigateAddBaby}
-            onNavigateDetailNewBorn={onNavigateDetailNewBorn}
-          />
-        </BottomSheetModal>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+          <BottomSheetModal
+            ref={bottomSheetRef}
+            snapPoints={snapPoints}
+            onChange={handleScheduleOrderSheetChanges}
+            animateOnMount={false}
+            onClose={handleCloseScheduleOrderBottomSheet}
+            enablePanDownToClose={true}>
+            <BottomSheetNewBorn
+              onPress={onNavigateAddBaby}
+              onNavigateDetailNewBorn={onNavigateDetailNewBorn}
+            />
+          </BottomSheetModal>
+        </SafeAreaView>
+      </GestureHandlerRootView>
+    </ContainerProvider>
   );
 };
 

@@ -43,9 +43,10 @@ const DetailNewBorn = (props: any) => {
     setData(res?.data);
   };
 
-  const getBabyYearOld = () => {
+  const getBabyYearOld = (params: any) => {
+    const {year, month, week, day} = params;
     let result = [];
-    if (data?.pregnantWeek?.weekPregnant.years > 0) {
+    if (year > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.years > 1 && lang == 1
           ? data?.pregnantWeek?.weekPregnant.years + ` ${t('newBorn.year')}s`
@@ -53,7 +54,7 @@ const DetailNewBorn = (props: any) => {
       );
     }
 
-    if (data?.pregnantWeek?.weekPregnant.months > 0) {
+    if (month > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.months > 1 && lang == 1
           ? data?.pregnantWeek?.weekPregnant.months + ` ${t('newBorn.month')}s`
@@ -61,7 +62,7 @@ const DetailNewBorn = (props: any) => {
       );
     }
 
-    if (data?.pregnantWeek?.weekPregnant.weeks > 0) {
+    if (week > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.weeks > 1 && lang == 1
           ? data?.pregnantWeek?.weekPregnant.weeks + ` ${t('newBorn.week')}s`
@@ -69,7 +70,7 @@ const DetailNewBorn = (props: any) => {
       );
     }
 
-    if (data?.pregnantWeek?.weekPregnant.days > 0) {
+    if (day > 0) {
       result.push(
         data?.pregnantWeek?.weekPregnant.days > 1 && lang == 1
           ? data?.pregnantWeek?.weekPregnant.days + ` ${t('newBorn.day')}s`
@@ -118,13 +119,18 @@ const DetailNewBorn = (props: any) => {
             <Text style={styles.title}>
               {route?.params?.name ? route?.params?.name : 'Baby Bear 1'}
             </Text>
-            {route?.params?.type == 'newborn' ? (
+            {route?.params?.type == 'pregnant' ||
+            route?.params?.type == 'pregnant-overdue' ||
+            route?.params?.type == 'unknown' ? (
               <Text
                 style={[
                   styles.label,
                   {fontSize: scaler(14), color: colors.labelColor},
                 ]}>
-                {getBabyYearOld()}
+                {getBabyYearOld({
+                  week: data?.pregnantWeek?.weekPregnant.weeks,
+                  day: data?.pregnantWeek?.weekPregnant.days,
+                })}
               </Text>
             ) : (
               <Text
@@ -132,7 +138,12 @@ const DetailNewBorn = (props: any) => {
                   styles.label,
                   {fontSize: scaler(14), color: colors.labelColor},
                 ]}>
-                {getBabyYearOld()}
+                {getBabyYearOld({
+                  year: data?.pregnantWeek?.weekPregnant.years,
+                  month: data?.pregnantWeek?.weekPregnant.months,
+                  week: data?.pregnantWeek?.weekPregnant.weeks,
+                  day: data?.pregnantWeek?.weekPregnant.days,
+                })}
               </Text>
             )}
           </View>
