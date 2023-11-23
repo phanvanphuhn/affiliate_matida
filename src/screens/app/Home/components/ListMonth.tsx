@@ -1,12 +1,12 @@
 import {colors, scaler} from '@stylesCommon';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {TState} from '../index';
 import {useContainerContext} from '@component/ContainerProvider';
 
 type TProps = {
-  state: TState;
-  setState: ({}) => void;
+  callback?: (a: TData) => void;
+  filterVal?: TData;
 };
 
 export type TData = {
@@ -16,7 +16,8 @@ export type TData = {
   intVal: number;
 };
 
-const ListMonth = () => {
+const ListMonth = (props: TProps) => {
+  const {callback, filterVal} = props;
   const {state, setState} = useContainerContext();
 
   const flatListRef = useRef(null);
@@ -120,11 +121,13 @@ const ListMonth = () => {
 
   const onSelectFilter = (item: TData) => {
     setState({filter: item});
+    callback && callback(item && item);
   };
 
   const scrollToWeek = () => {
     const index = data.findIndex(
-      (element: any) => element?.value == state.filter.value,
+      (element: any) =>
+        element?.value == (filterVal ? filterVal?.value : state?.filter.value),
     );
     if (index >= 0) {
       const wait = new Promise((resolve: any) => setTimeout(resolve, 500));
@@ -142,23 +145,25 @@ const ListMonth = () => {
     if (state?.filter) {
       scrollToWeek();
     }
-  }, [state?.filter.value]);
+  }, [state?.filter.value, filterVal?.value]);
 
   const renderItem = ({item}: any) => {
     return (
       <TouchableOpacity
         style={[
           styles.wrapBtnContainer,
-          state.filter.value == item.value
+          (filterVal ? filterVal?.value : state?.filter.value) == item.value
             ? {backgroundColor: '#FFEBEB'}
             : {backgroundColor: colors.white},
         ]}
         onPress={() => onSelectFilter(item)}
-        disabled={state?.filter.value == item.value}>
+        disabled={
+          (filterVal ? filterVal?.value : state?.filter.value) == item.value
+        }>
         <Text
           style={[
             styles.btnTitle,
-            state.filter.value == item.value
+            (filterVal ? filterVal?.value : state?.filter.value) == item.value
               ? {color: colors.primaryBackground}
               : {color: '#A3A1AB'},
           ]}>

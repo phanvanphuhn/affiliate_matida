@@ -52,14 +52,16 @@ const NewBornTracker = (props: TProps) => {
   const {params} = route;
 
   const {state, setState} = useContainerContext();
+  const [filterVal, setFilterVal] = useState(params?.state?.filter);
 
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
+  const data = useSelector((state: any) => state?.home?.data);
 
   const selectedNewBorn = newBorn.filter(item => item.selected == true);
-  const filter = params?.state?.filter;
-  const dataFilter = _.get(params?.state?.data, filter?.value);
+  // const filter = params?.state?.filter;
+  const dataFilter = _.get(params?.state?.data, filterVal?.value);
   const dataFull = dataFilter?.contents?.filter(
     (item: any) => item.style == 'full',
   );
@@ -105,6 +107,10 @@ const NewBornTracker = (props: TProps) => {
     setExpandContent(isShowContent);
   };
 
+  const filterCallback = (value: any) => {
+    setFilterVal(value);
+  };
+
   return (
     <ContainerProvider state={params?.state} setState={params?.setState}>
       <GestureHandlerRootView style={styles.container}>
@@ -128,13 +134,22 @@ const NewBornTracker = (props: TProps) => {
           </TouchableOpacity> */}
             <View style={{width: '20%'}} />
           </View>
-          {/* <View style={{paddingHorizontal: scaler(16)}}>
-            <ListMonth state={state} setState={setState} />
-          </View> */}
+          <View style={{paddingHorizontal: scaler(16)}}>
+            <ListMonth
+              callback={filterCallback}
+              filterVal={filterVal}
+              state={params?.state}
+              setState={params?.setState}
+            />
+          </View>
 
           <ScrollView style={styles.bodyContainer}>
             <FastImage
-              source={newBornBaby}
+              source={
+                data?.babyProgress?.baby
+                  ? {uri: data?.babyProgress?.baby?.image[0]}
+                  : newBornBaby
+              }
               style={{
                 width: '100%',
                 height: scaler(293),

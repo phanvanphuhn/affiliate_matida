@@ -242,17 +242,19 @@ const Home = () => {
   };
 
   const getData = async () => {
+    GlobalService.showLoading();
     try {
       dispatch(getDataHome());
       dispatch(getListBaby());
       const res = await calendarCheckups();
       setState({
         data: res?.data,
-        // filter: Object.keys(res?.data)[0],
+        filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
         isShowContent: [],
       });
       GlobalService.hideLoading();
     } catch (error) {
+      GlobalService.hideLoading();
     } finally {
       setRefreshing(false);
     }
@@ -421,7 +423,7 @@ const Home = () => {
             paddingBottom: scaler(16),
             paddingHorizontal: scaler(16),
           }}>
-          <ListMonth state={state} setState={setState} />
+          <ListMonth />
         </View>
 
         <ScrollView
