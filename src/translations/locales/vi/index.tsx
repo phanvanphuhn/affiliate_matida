@@ -705,6 +705,8 @@ export const vi = {
     day: 'ngày',
     old: 'tuổi',
     tracker: 'Theo dõi con yêu',
+    highlights: 'Nổi bật',
+    viewMore: 'Xem thêm',
   },
   newBornTida: {
     hi: 'Chào mẹ,\ncó nhiều thắc mắc là chuyện bình thường.',

@@ -77,6 +77,7 @@ import MomProgram from './components/MomProgram';
 import ContainerProvider from '@component/ContainerProvider';
 import {useContainerContext} from '@component/ContainerProvider';
 import AddInformation from './components/AddInformation';
+import {trackCustomEvent} from '@services/webengageManager';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -147,7 +148,7 @@ const Home = () => {
       item?.type !== 'unknown' &&
       item.selected == true,
   );
-
+  console.log('isSelectProfileNewBorn: ', isSelectProfileNewBorn);
   useUXCam(ROUTE_NAME.HOME);
 
   useEffect(() => {
@@ -316,6 +317,7 @@ const Home = () => {
   };
 
   const onPressNewBornTracker = () => {
+    trackCustomEvent('Test', {userInfo: user});
     navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER, {
       state,
       setState,
@@ -606,8 +608,8 @@ const Home = () => {
 
           {/* <DailyAffirmation quote={data?.quote} /> */}
           {isShowForReviewer(user) &&
-            (user?.pregnant_type == 'pregnant' ||
-              user?.pregnant_type == 'pregnant-overdue') && (
+            (user?.baby_type == 'pregnant' ||
+              user?.baby_type == 'pregnant-overdue') && (
               <MomProgram data={isSignUp} />
             )}
         </ScrollView>

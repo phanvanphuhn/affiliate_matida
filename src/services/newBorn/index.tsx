@@ -12,7 +12,6 @@ export const getListBaby: any = async () => {
 };
 
 export const getBabyInfo: any = async (id: number) => {
-  console.log('id: ', id);
   const response = await api.get(`/${GET_BABY}/${id}`);
   return response;
 };

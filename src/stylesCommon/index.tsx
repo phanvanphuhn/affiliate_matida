@@ -83,16 +83,16 @@ const stylesCommon = StyleSheet.create({
     fontFamily: 'Inter-Light',
   },
   fontWeight400: {
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Cabin-Regular',
   },
   fontWeight500: {
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'Cabin-Medium',
   },
   fontWeight600: {
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Cabin-SemiBold',
   },
   fontWeight700: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Cabin-Bold',
   },
   fontWeight800: {
     fontFamily: 'Inter-ExtraBold',

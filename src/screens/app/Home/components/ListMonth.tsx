@@ -3,6 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {TState} from '../index';
 import {useContainerContext} from '@component/ContainerProvider';
+import {useSelector} from 'react-redux';
 
 type TProps = {
   callback?: (a: TData) => void;
@@ -12,14 +13,15 @@ type TProps = {
 export type TData = {
   id: number;
   value: string;
-  label: string;
+  labelEn: string;
+  labelVi: string;
   intVal: number;
 };
 
 const ListMonth = (props: TProps) => {
   const {callback, filterVal} = props;
   const {state, setState} = useContainerContext();
-  console.log('state: ', state);
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const flatListRef = useRef(null);
 
@@ -27,91 +29,106 @@ const ListMonth = (props: TProps) => {
     {
       id: 1,
       value: 'week_1',
-      label: 'Week 1',
+      labelEn: 'Week 1',
+      labelVi: 'Tuần 1',
       intVal: 1,
     },
     {
       id: 2,
       value: 'week_2',
-      label: 'Week 2',
+      labelEn: 'Week 2',
+      labelVi: 'Tuần 2',
       intVal: 2,
     },
     {
       id: 3,
       value: 'week_3',
-      label: 'Week 3',
+      labelEn: 'Week 3',
+      labelVi: 'Tuần 3',
       intVal: 3,
     },
     {
       id: 4,
       value: 'week_4',
-      label: 'Week 4',
+      labelEn: 'Week 4',
+      labelVi: 'Tuần 4',
       intVal: 4,
     },
     {
       id: 5,
       value: 'week_5',
-      label: 'Week 5',
+      labelEn: 'Week 5',
+      labelVi: 'Tuần 5',
       intVal: 5,
     },
     {
       id: 6,
       value: 'week_6',
-      label: 'Week 6',
+      labelEn: 'Week 6',
+      labelVi: 'Tuần 6',
       intVal: 6,
     },
     {
       id: 7,
       value: 'week_7',
-      label: 'Week 7',
+      labelEn: 'Week 7',
+      labelVi: 'Tuần 7',
       intVal: 7,
     },
     {
       id: 8,
       value: 'week_8',
-      label: 'Week 8',
+      labelEn: 'Week 8',
+      labelVi: 'Tuần 8',
       intVal: 8,
     },
     {
       id: 9,
       value: 'month_3',
-      label: 'Month 3',
+      labelEn: 'Month 3',
+      labelVi: 'Tháng 3',
       intVal: 3,
     },
     {
       id: 10,
       value: 'month_4',
-      label: 'Month 4',
+      labelEn: 'Month 4',
+      labelVi: 'Tháng 4',
       intVal: 4,
     },
     {
       id: 11,
       value: 'month_5',
-      label: 'Month 5',
+      labelEn: 'Month 5',
+      labelVi: 'Tháng 5',
       intVal: 5,
     },
     {
       id: 12,
       value: 'month_6',
-      label: 'Month 6',
+      labelEn: 'Month 6',
+      labelVi: 'Tháng 6',
       intVal: 6,
     },
     {
       id: 13,
       value: 'month_7',
-      label: 'Month 7',
+      labelEn: 'Month 7',
+      labelVi: 'Tháng 7',
       intVal: 7,
     },
     {
       id: 14,
       value: 'month_8',
-      label: 'Month 8',
+      labelEn: 'Month 8',
+      labelVi: 'Tháng 8',
       intVal: 8,
     },
     {
       id: 15,
       value: 'month_9',
-      label: 'Month 9',
+      labelEn: 'Month 9',
+      labelVi: 'Tháng 9',
       intVal: 9,
     },
   ];
@@ -168,7 +185,7 @@ const ListMonth = (props: TProps) => {
               ? {color: colors.primaryBackground}
               : {color: '#A3A1AB'},
           ]}>
-          {item.label}
+          {lang == 1 ? item.labelEn : item.labelVi}
         </Text>
       </TouchableOpacity>
     );

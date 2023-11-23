@@ -163,10 +163,10 @@ const NewBornContainer = (props: TProps) => {
             </Text>
             <Text style={styles.title}>
               {lang == 1
-                ? gender.filter(item => item.value == user?.baby_gender)[0]
-                    ?.labelEn +
+                ? baby_zodiac?.name_en +
                   ' ' +
-                  baby_zodiac?.name_en
+                  gender.filter(item => item.value == user?.baby_gender)[0]
+                    ?.labelEn
                 : gender.filter(item => item.value == user?.baby_gender)[0]
                     ?.labelVi +
                   ' ' +
@@ -182,7 +182,7 @@ const NewBornContainer = (props: TProps) => {
           ]}
           hitSlop={{top: 30, bottom: 30, left: 30, right: 30}}
           onPress={onPress}>
-          <Text style={styles.btnTitle}>View more</Text>
+          <Text style={styles.btnTitle}>{t('newBorn.viewMore')}</Text>
           <Image
             source={tailArrowRight}
             style={{

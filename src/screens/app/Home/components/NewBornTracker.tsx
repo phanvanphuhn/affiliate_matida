@@ -163,7 +163,7 @@ const NewBornTracker = (props: TProps) => {
                   fontWeight: '600',
                   color: colors.white,
                 }}>
-                Highlights of the month
+                {t('newBorn.highlights')}
               </Text>
             </View>
             <View style={styles.wrapContentContainer}>
