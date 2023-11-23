@@ -1,43 +1,107 @@
 import {momProgram, newBornBaby} from '@images';
+import {getProgramJoin} from '@services';
 import {colors, scaler} from '@stylesCommon';
-import React from 'react';
+import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import Toast from 'react-native-toast-message';
+import {useSelector} from 'react-redux';
 
-const MomProgram = () => {
-  const onSignUp = () => {};
+const MomProgram = (props: any) => {
+  const {data} = props;
+  console.log('data: ', data);
+
+  const {t} = useTranslation();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
+  const [signUp, setSignUp] = useState();
+
+  const onSignUp = async () => {
+    try {
+      const res = await getProgramJoin();
+      if (res.success) {
+        setSignUp(res?.data);
+        Toast.show({
+          visibilityTime: 4000,
+          text1: t('error.success'),
+          text1NumberOfLines: 2,
+          position: 'top',
+        });
+      } else {
+        Toast.show({
+          visibilityTime: 4000,
+          text1: t('error.pleaseTryAgain'),
+          text1NumberOfLines: 2,
+          position: 'top',
+          type: 'error',
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        visibilityTime: 4000,
+        text1: t('error.pleaseTryAgain'),
+        text1NumberOfLines: 2,
+        position: 'top',
+        type: 'error',
+      });
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={{flex: 1, alignItems: 'center'}}>
-        <Text style={styles.title}>The Power Mom Program</Text>
-        <Text style={styles.subTitle}>
-          Sign up here for early,
-          <Text style={{color: colors.primary}}> free of charge </Text>
-          access before the official launch.
-        </Text>
-      </View>
+    <View style={[styles.container]}>
+      {data?.userInProgram ? (
+        <>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text
+              style={[
+                styles.title,
+                {paddingHorizontal: scaler(16), textAlign: 'center'},
+              ]}>
+              {t('momProgram.powerMom')}
+            </Text>
+            <Text style={styles.subTitle}>{t('momProgram.thankYou')}</Text>
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <Text style={styles.label}>{t('momProgram.youAreInvite')}</Text>
+            <Text
+              style={[
+                styles.title,
+                {paddingHorizontal: scaler(16), textAlign: 'center'},
+              ]}>
+              {t('momProgram.powerMom')}
+            </Text>
+            <Text style={styles.subTitle}>
+              {t('momProgram.signUpHere')}
+              <Text style={{color: colors.primary}}>
+                {' '}
+                {t('momProgram.free')}{' '}
+              </Text>
+              {lang === 1 ? t('momProgram.access') : null}
+            </Text>
+          </View>
 
-      <View style={styles.wrapContentContainer}>
-        <Text style={styles.label}>
-          • Expert guidance through your pregnancy
-        </Text>
-        <Text style={styles.label}>• Learn all the mommy & baby secrets</Text>
-        <Text style={styles.label}>
-          • Access to a medical doctor for questions
-        </Text>
-        <Text style={styles.label}>• Reduce stress or anxiety</Text>
-        <Text style={styles.label}>• Vouchers, offers & bonus surprises</Text>
+          <View style={styles.wrapContentContainer}>
+            <Text style={styles.label}>{t('momProgram.sub1')}</Text>
+            <Text style={styles.label}>{t('momProgram.sub2')}</Text>
+            <Text style={styles.label}>{t('momProgram.sub3')}</Text>
+            <Text style={styles.label}>{t('momProgram.sub4')}</Text>
 
-        <TouchableOpacity style={styles.wrapBtnContainer} onPress={onSignUp}>
-          <Text style={styles.btnTitle}>Sign up now</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{width: '100%', alignItems: 'center'}}>
-          <Text style={styles.subBtnTitle}>
-            Free of charge, no strings attached
-          </Text>
-        </TouchableOpacity>
-      </View>
-
+            <TouchableOpacity
+              style={styles.wrapBtnContainer}
+              onPress={onSignUp}>
+              <Text style={styles.btnTitle}>{t('momProgram.accept')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{width: '100%', alignItems: 'center'}}>
+              <Text style={styles.subBtnTitle}>
+                {t('momProgram.freeOfCharge')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
       <View>
         <Image
           source={momProgram}
@@ -46,7 +110,7 @@ const MomProgram = () => {
             height: scaler(198),
           }}
           // resizeMethod="resize"
-          resizeMode="center"
+          resizeMode="contain"
         />
       </View>
     </View>
@@ -59,6 +123,10 @@ const styles = StyleSheet.create({
     paddingTop: scaler(16),
     marginHorizontal: scaler(16),
     borderRadius: scaler(16),
+  },
+  label: {
+    fontWeight: '500',
+    fontSize: scaler(14),
   },
   title: {
     fontWeight: '600',

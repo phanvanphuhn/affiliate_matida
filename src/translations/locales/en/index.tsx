@@ -634,6 +634,8 @@ export const en = {
   error: {
     uploadImageFail: 'Please select a smaller size image',
     addNewBornFail: 'Add new born fail',
+    pleaseTryAgain: 'Please try again.',
+    success: 'Success!',
   },
   deal: {
     by: 'by',
@@ -713,5 +715,26 @@ export const en = {
     requireTob: 'Please input time of birth of baby',
     requireWeight: 'Please input weight of baby',
     requireHeight: 'Please input height of baby',
+  },
+  momProgram: {
+    youAreInvite: 'You’re invited to join',
+    powerMom: 'The Power Mom Program',
+    signUpHere: 'Sign up here for early,',
+    free: 'free of charge',
+    access: 'access.',
+    sub1: '• Expert guidance through your pregnancy',
+    sub2: '• Access to a medical doctor for questions',
+    sub3: '• Reduce stress or anxiety',
+    sub4: '• Vouchers, offers & bonus surprises',
+    accept: 'Accept invitation',
+    freeOfCharge: 'Free of charge, no strings attached',
+    thankYou:
+      'Thank you for signing up for the program. We will let you know when you can join it!',
+  },
+  addInformation: {
+    helpCalculate: 'I need your help to calculate',
+    babySize: 'Baby’s size is now',
+    mystery: 'a mystery',
+    addInformation: 'Add information',
   },
 };

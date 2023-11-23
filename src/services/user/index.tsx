@@ -27,6 +27,9 @@ const LIST_USER = 'user';
 const SHARE_LINK_USER = 'topics/send-message/users';
 const GET_VERSION = 'versions';
 
+const PROGRAM_JOIN = 'programs/join';
+const PROGRAM_CHECK = 'programs/check';
+
 export const selectDueDate: any = async (data: any) => {
   const response = await api.post(SELECT_DUE_DATE, data);
   return response;
@@ -155,5 +158,15 @@ export const postShareLinkUser: any = async (data: any) => {
 
 export const getVersionApp: any = async () => {
   const response = await api.get(GET_VERSION);
+  return response;
+};
+
+export const getProgramJoin: any = async () => {
+  const response = await api.get(PROGRAM_JOIN);
+  return response;
+};
+
+export const getProgramCheck: any = async () => {
+  const response = await api.get(PROGRAM_CHECK);
   return response;
 };

@@ -119,28 +119,31 @@ const NewBornScreen = (props: TProps) => {
 
   const onDone = async () => {
     const params = {
-      user_id: user?.id,
-      name: state.name.toString(),
-      gender: state.sex.toLowerCase(),
-      birth_experience: state.deliver,
-      date_of_birth:
-        moment(state.dmy).format('YYYY/MM/DD') +
-        ' ' +
-        moment(state.hour).format('HH:mm:ss'),
-      weight: Number(
-        state.weight.includes(',')
-          ? state.weight.replace(',', '.') * 1000
-          : state.weight * 1000,
-      ),
-      height: Number(
-        state.height.includes(',')
-          ? state.height.replace(',', '.')
-          : state.height,
-      ),
-      avatar: state.avatar,
+      id: user?.baby_id,
+      body: {
+        user_id: user?.id,
+        name: state.name.toString(),
+        gender: state.sex.toLowerCase(),
+        birth_experience: state.deliver,
+        date_of_birth:
+          moment(state.dmy).format('YYYY/MM/DD') +
+          ' ' +
+          moment(state.hour).format('HH:mm:ss'),
+        weight: Number(
+          state.weight.includes(',')
+            ? state.weight.replace(',', '.') * 1000
+            : state.weight * 1000,
+        ),
+        height: Number(
+          state.height.includes(',')
+            ? state.height.replace(',', '.')
+            : state.height,
+        ),
+        avatar: state.avatar,
+      },
     };
     try {
-      const res = await createBaby(params);
+      const res = await updateBaby(params);
       if (res.success) {
         navigate(ROUTE_NAME.TAB_HOME);
       } else {

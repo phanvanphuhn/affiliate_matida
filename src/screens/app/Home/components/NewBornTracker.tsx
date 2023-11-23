@@ -146,7 +146,7 @@ const NewBornTracker = (props: TProps) => {
           <ScrollView style={styles.bodyContainer}>
             <FastImage
               source={
-                data?.babyProgress?.baby
+                data?.babyProgress?.baby?.image
                   ? {uri: data?.babyProgress?.baby?.image[0]}
                   : newBornBaby
               }

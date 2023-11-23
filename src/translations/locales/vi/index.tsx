@@ -638,6 +638,8 @@ export const vi = {
   error: {
     uploadImageFail: 'Mẹ thử chọn ảnh có size nhỏ hơn nhé',
     addNewBornFail: 'Thêm em bé không thành công',
+    pleaseTryAgain: 'Xin hãy thử lại.',
+    success: 'Thành công!',
   },
   deal: {
     by: 'bởi',
@@ -717,5 +719,26 @@ export const vi = {
     requireTob: 'Hãy điền giờ sinh của bé',
     requireWeight: 'Hãy điền cân nặng của bé',
     requireHeight: 'Hãy điền chiều cao của bé',
+  },
+  momProgram: {
+    youAreInvite: 'Mẹ được mời đến tham dự',
+    powerMom: 'Chương trình Mẹ bầu thông thái',
+    signUpHere: 'Đăng ký để có thể truy cập sớm và ',
+    free: 'miễn phí.',
+    access: 'access.',
+    sub1: '• Chuyên gia hướng dẫn suốt thai kỳ',
+    sub2: '• Hỏi đáp trực tiếp cùng bác sĩ',
+    sub3: '• Giảm lo âu và tận hưởng thai kỳ vui khoẻ',
+    sub4: '• Hàng ngàn ưu đãi và bất ngờ thú vị',
+    accept: 'Tham gia ngay',
+    freeOfCharge: 'Đăng ký không mất phí',
+    thankYou:
+      'Cảm ơn mẹ đã đăng ký tham gia. Matida sẽ nhắn mẹ khi chương trình ra mắt!',
+  },
+  addInformation: {
+    helpCalculate: 'Con cần mẹ giúp để tính mốc tăng trưởng',
+    babySize: 'Độ lớn của con là',
+    mystery: '\nmột bí ẩn',
+    addInformation: 'Thêm thông tin',
   },
 };

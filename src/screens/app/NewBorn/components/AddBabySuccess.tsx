@@ -25,9 +25,7 @@ const AddBabySuccess = (props: any) => {
         <Text style={styles.title}>{params?.data?.text}</Text>
 
         <Image
-          source={
-            params?.data?.image?.url ? {uri: params?.data?.image?.url} : LogoApp
-          }
+          source={params?.data?.image ? {uri: params?.data?.image} : LogoApp}
           style={{height: SCREEN_WIDTH, width: '100%'}}
           resizeMode="contain"
         />

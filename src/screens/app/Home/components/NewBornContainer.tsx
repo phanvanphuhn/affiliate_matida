@@ -22,17 +22,18 @@ type TProps = {
   data: any;
   user: any;
   state: any;
+  isSelectProfileNewBorn: any;
 };
 
 const NewBornContainer = (props: TProps) => {
-  const {onPress, data, user, state} = props;
+  const {onPress, data, user, state, isSelectProfileNewBorn} = props;
   const {baby, baby_zodiac} = data;
 
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const gender = [
-    {value: 'male', labelEn: 'Male', labelVi: 'Bé trai'},
-    {value: 'female', labelEn: 'Female', labelVi: 'Bé gái'},
+    {value: 'male', labelEn: 'Boy', labelVi: 'Bé trai'},
+    {value: 'female', labelEn: 'Girl', labelVi: 'Bé gái'},
   ];
 
   const getBabyYearOld = () => {
@@ -131,9 +132,7 @@ const NewBornContainer = (props: TProps) => {
         </View>
       </View>
 
-      <TouchableOpacity
-        style={[styles.wrapContentContainer, {paddingVertical: scaler(8)}]}
-        onPress={onPress}>
+      <View style={[styles.wrapContentContainer, {paddingVertical: scaler(8)}]}>
         <View
           style={{
             flexDirection: 'row',
@@ -141,7 +140,12 @@ const NewBornContainer = (props: TProps) => {
             flex: 1,
           }}>
           <FastImage
-            source={user?.avatar ? {uri: user?.avatar} : newBornBaby}
+            source={
+              isSelectProfileNewBorn &&
+              isSelectProfileNewBorn[0]?.avatar.length > 0
+                ? {uri: isSelectProfileNewBorn[0]?.avatar}
+                : newBornBaby
+            }
             style={{
               width: scaler(28),
               height: scaler(28),
@@ -174,7 +178,7 @@ const NewBornContainer = (props: TProps) => {
         <TouchableOpacity
           style={[
             styles.wrapBtnContainer,
-            {width: scaler(128), justifyContent: 'center'},
+            {width: scaler(128), justifyContent: 'center', elevation: 99},
           ]}
           hitSlop={{top: 30, bottom: 30, left: 30, right: 30}}
           onPress={onPress}>
@@ -188,7 +192,7 @@ const NewBornContainer = (props: TProps) => {
             }}
           />
         </TouchableOpacity>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };

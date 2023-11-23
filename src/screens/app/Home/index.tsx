@@ -28,6 +28,7 @@ import {ROUTE_NAME} from '@routeName';
 import {
   answerDailyQuiz,
   calendarCheckups,
+  getProgramCheck,
   getUserInfoApi,
   GlobalService,
   updateBaby,
@@ -75,6 +76,7 @@ import {navigate} from '@navigation';
 import MomProgram from './components/MomProgram';
 import ContainerProvider from '@component/ContainerProvider';
 import {useContainerContext} from '@component/ContainerProvider';
+import AddInformation from './components/AddInformation';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -111,6 +113,7 @@ const Home = () => {
   }
 
   const [refreshing, setRefreshing] = useState(false);
+  const [isSignUp, setIsSignUp] = useState();
 
   const [state, setState] = useDetailPost({
     filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
@@ -128,6 +131,7 @@ const Home = () => {
   const isFocus = useSelector((state: any) => state?.tab?.home);
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  console.log('user: ', user);
   const data = useSelector((state: any) => state?.home?.data);
   const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
   const week = useSelector((state: any) => state?.home?.week);
@@ -391,6 +395,17 @@ const Home = () => {
     }
   };
 
+  const checkProgram = async () => {
+    const res = await getProgramCheck();
+    if (res?.success) {
+      setIsSignUp(res?.data);
+    }
+  };
+
+  useEffect(() => {
+    checkProgram();
+  }, []);
+
   return (
     <ContainerProvider state={state} setState={setState}>
       <GestureHandlerRootView style={styles.container}>
@@ -469,9 +484,15 @@ const Home = () => {
                 user={data?.user}
                 state={state}
                 setState={setState}
+                isSelectProfileNewBorn={isSelectProfileNewBorn}
               />
             </View>
-          ) : !!user?.is_skip || weekPregnant?.days < 0 ? null : (
+          ) : !!user?.is_skip || weekPregnant?.days < 0 ? (
+            <View
+              style={{paddingHorizontal: scaler(16), marginBottom: scaler(16)}}>
+              <AddInformation onPress={onNavigateNewBorn} />
+            </View>
+          ) : (
             <>
               {/* {isShowForReviewer(user) && (
               <View>
@@ -584,10 +605,14 @@ const Home = () => {
         </HorizontalList> */}
 
           {/* <DailyAffirmation quote={data?.quote} /> */}
-          {isShowForReviewer(user) && <MomProgram />}
+          {isShowForReviewer(user) &&
+            (user?.pregnant_type == 'pregnant' ||
+              user?.pregnant_type == 'pregnant-overdue') && (
+              <MomProgram data={isSignUp} />
+            )}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
-        {isShowForReviewer(user) && weekPregnant?.weeks > 33 && (
+        {isShowForReviewer(user) && weekPregnant?.weeks > 29 && (
           <FloatingNewBornButton onPress={onNavigateNewBorn} />
         )}
         {isShowForReviewer(user) && (

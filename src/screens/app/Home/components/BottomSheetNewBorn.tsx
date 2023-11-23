@@ -85,7 +85,7 @@ const BottomSheetNewBorn = (props: TProps) => {
                     .utc(item.date_of_birth || item.due_date)
                     .format('DD/MM/YYYY')}
                 </Text>
-                <Image
+                {/* <Image
                   source={iconArrowRightGrey}
                   style={{
                     height: scaler(24),
@@ -93,7 +93,7 @@ const BottomSheetNewBorn = (props: TProps) => {
                     marginLeft: scaler(8),
                   }}
                   resizeMode="contain"
-                />
+                /> */}
               </View>
             </TouchableOpacity>
           </View>

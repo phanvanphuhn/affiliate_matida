@@ -19,6 +19,7 @@ export type TData = {
 const ListMonth = (props: TProps) => {
   const {callback, filterVal} = props;
   const {state, setState} = useContainerContext();
+  console.log('state: ', state);
 
   const flatListRef = useRef(null);
 
