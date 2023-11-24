@@ -60,6 +60,7 @@ const ic_eye = require('./ic_eye.png');
 const ic_send_opacity = require('./ic_send_opacity.png');
 const newBornBaby = require('../icon/newBornBaby.png');
 const momProgram = require('./momProgramImage.png');
+const moreInformation = require('./MoreInformation.png');
 
 export {
   DailyQuiz,
@@ -122,4 +123,5 @@ export {
   ic_send_opacity,
   newBornBaby,
   momProgram,
+  moreInformation,
 };

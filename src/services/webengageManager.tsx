@@ -196,6 +196,24 @@ export const trackUser = user => {
     }
 
     for (const key in user) {
+      if (key == 'pregnantWeek') {
+        webengage.user.setAttribute(
+          'baby_pregnantWeek',
+          new Date(user?.pregnantWeek?.dueDate),
+        );
+        webengage.user.setAttribute(
+          'baby_trimester',
+          user?.pregnantWeek?.weekPregnant?.trimester,
+        );
+        webengage.user.setAttribute(
+          'baby_weeks',
+          user?.pregnantWeek?.weekPregnant?.weeks,
+        );
+        webengage.user.setAttribute(
+          'baby_months',
+          user?.pregnantWeek?.weekPregnant?.months,
+        );
+      }
       if (Object.prototype.hasOwnProperty.call(user, key)) {
         const value = user[key];
 

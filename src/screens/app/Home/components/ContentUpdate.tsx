@@ -1,4 +1,4 @@
-import {newBornBaby} from '@images';
+import {moreInformation, newBornBaby} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import moment from 'moment';
 import React from 'react';
@@ -74,10 +74,10 @@ const ContentUpdate = (props: TProps) => {
       <View style={styles.wrapContainer}>
         <Text style={styles.title}>{t('newBorn.update')}</Text>
         <Image
-          source={baby?.image ? {uri: baby?.image[0]} : newBornBaby}
+          source={moreInformation}
           style={{
-            width: scaler(155),
-            height: scaler(116),
+            width: scaler(187),
+            height: scaler(140),
           }}
           // resizeMethod="resize"
           resizeMode="center"

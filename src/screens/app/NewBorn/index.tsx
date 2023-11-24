@@ -60,12 +60,12 @@ const NewBornScreen = (props: TProps) => {
     {
       id: 1,
       value: 'male',
-      title: 'Male',
+      title: 'Boy',
     },
     {
       id: 2,
       value: 'female',
-      title: 'Female',
+      title: 'Girl',
     },
     // {
     //   id: 3,

@@ -248,6 +248,8 @@ const Home = () => {
   const getData = async () => {
     GlobalService.showLoading();
     try {
+      getDataUser();
+      checkProgram();
       dispatch(getDataHome());
       dispatch(getListBaby());
       const res = await calendarCheckups();
@@ -411,10 +413,6 @@ const Home = () => {
       setIsSignUp(res?.data);
     }
   };
-
-  useEffect(() => {
-    checkProgram();
-  }, []);
 
   useEffect(() => {
     trackUser(user);
@@ -640,7 +638,9 @@ const Home = () => {
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
         {isShowForReviewer(user) &&
           weekPregnant?.weeks > 29 &&
-          isSelectProfileNewBorn[0]?.type !== 'newborn' && (
+          (isSelectProfileNewBorn[0]?.type == 'pregnant' ||
+            isSelectProfileNewBorn[0]?.type == 'pregnant-overdue' ||
+            isSelectProfileNewBorn[0]?.type == 'unknown') && (
             <FloatingNewBornButton onPress={onNavigateNewBorn} />
           )}
         {isShowForReviewer(user) && (

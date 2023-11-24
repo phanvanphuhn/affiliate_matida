@@ -29,6 +29,7 @@ const AddInformation = (props: TProps) => {
             style={{
               fontSize: scaler(20),
               fontWeight: '600',
+              marginBottom: scaler(16),
             }}>
             {t('addInformation.mystery')}
           </Text>
@@ -72,7 +73,6 @@ const styles = StyleSheet.create({
     fontSize: scaler(14),
     fontWeight: '500',
     color: colors.black,
-    marginBottom: scaler(16),
   },
   wrapBtnContainer: {
     paddingVertical: scaler(12),
