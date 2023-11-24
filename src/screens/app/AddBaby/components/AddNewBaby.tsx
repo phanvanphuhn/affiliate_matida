@@ -21,6 +21,7 @@ import {
   GlobalService,
   calculateDate,
   createBaby,
+  selectBabyDate,
   selectDueDate,
   updateBaby,
 } from '@services';
@@ -118,15 +119,13 @@ const AddNewBaby = (props: any) => {
         } else {
           response = await createBaby(params);
         }
-
         let res;
         if (route?.params?.type == 'Caculate') {
           res = state?.body;
         } else {
-          res = await selectDueDate({
-            due_date: moment
-              .utc(state.due_date, 'MM/DD/YYYY')
-              .format('MM/DD/YYYY'),
+          res = await selectBabyDate({
+            id: response?.data?.id,
+            date: moment.utc(state.due_date, 'MM/DD/YYYY').format('MM/DD/YYYY'),
           });
         }
         trackBirthdateEvent(moment(state.due_date).format('MM/DD/YYYY'), false);

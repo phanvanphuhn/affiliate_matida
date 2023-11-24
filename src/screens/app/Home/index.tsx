@@ -77,7 +77,7 @@ import MomProgram from './components/MomProgram';
 import ContainerProvider from '@component/ContainerProvider';
 import {useContainerContext} from '@component/ContainerProvider';
 import AddInformation from './components/AddInformation';
-import {trackCustomEvent} from '@services/webengageManager';
+import {trackUser} from '@services/webengageManager';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -132,7 +132,6 @@ const Home = () => {
   const isFocus = useSelector((state: any) => state?.tab?.home);
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
-  console.log('user: ', user);
   const data = useSelector((state: any) => state?.home?.data);
   const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
   const week = useSelector((state: any) => state?.home?.week);
@@ -143,12 +142,11 @@ const Home = () => {
 
   const isSelectProfileNewBorn = newBorn.filter(
     item =>
-      item?.type !== 'pregnant' &&
-      item?.type !== 'pregnant-overdue' &&
-      item?.type !== 'unknown' &&
+      // item?.type !== 'pregnant' &&
+      // item?.type !== 'pregnant-overdue' &&
+      // item?.type !== 'unknown' &&
       item.selected == true,
   );
-  console.log('isSelectProfileNewBorn: ', isSelectProfileNewBorn);
   useUXCam(ROUTE_NAME.HOME);
 
   useEffect(() => {
@@ -317,7 +315,6 @@ const Home = () => {
   };
 
   const onPressNewBornTracker = () => {
-    trackCustomEvent('Test', {userInfo: user});
     navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER, {
       state,
       setState,
@@ -408,6 +405,10 @@ const Home = () => {
     checkProgram();
   }, []);
 
+  useEffect(() => {
+    trackUser(user);
+  }, []);
+
   return (
     <ContainerProvider state={state} setState={setState}>
       <GestureHandlerRootView style={styles.container}>
@@ -474,7 +475,10 @@ const Home = () => {
             <ChatGPTComponent />
           </View>
 
-          {isSelectProfileNewBorn.length > 0 ? (
+          {isSelectProfileNewBorn.length > 0 &&
+          isSelectProfileNewBorn[0]?.type !== 'pregnant' &&
+          isSelectProfileNewBorn[0]?.type !== 'pregnant-overdue' &&
+          isSelectProfileNewBorn[0]?.type !== 'unknown' ? (
             <View
               style={{
                 // paddingHorizontal: scaler(20),
@@ -614,9 +618,11 @@ const Home = () => {
             )}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
-        {isShowForReviewer(user) && weekPregnant?.weeks > 29 && (
-          <FloatingNewBornButton onPress={onNavigateNewBorn} />
-        )}
+        {isShowForReviewer(user) &&
+          weekPregnant?.weeks > 29 &&
+          isSelectProfileNewBorn[0]?.type !== 'newborn' && (
+            <FloatingNewBornButton onPress={onNavigateNewBorn} />
+          )}
         {isShowForReviewer(user) && (
           <BottomSheetModal
             ref={bottomSheetRef}

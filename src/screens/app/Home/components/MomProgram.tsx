@@ -9,7 +9,6 @@ import {useSelector} from 'react-redux';
 
 const MomProgram = (props: any) => {
   const {data} = props;
-  console.log('data: ', data);
 
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
@@ -49,7 +48,7 @@ const MomProgram = (props: any) => {
 
   return (
     <View style={[styles.container]}>
-      {data?.userInProgram ? (
+      {data?.userInProgram || signUp?.message ? (
         <>
           <View style={{flex: 1, alignItems: 'center'}}>
             <Text
@@ -76,7 +75,6 @@ const MomProgram = (props: any) => {
             <Text style={styles.subTitle}>
               {t('momProgram.signUpHere')}
               <Text style={{color: colors.primary}}>
-                {' '}
                 {t('momProgram.free')}{' '}
               </Text>
               {lang === 1 ? t('momProgram.access') : null}
@@ -94,7 +92,9 @@ const MomProgram = (props: any) => {
               onPress={onSignUp}>
               <Text style={styles.btnTitle}>{t('momProgram.accept')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{width: '100%', alignItems: 'center'}}>
+            <TouchableOpacity
+              style={{width: '100%', alignItems: 'center'}}
+              disabled={true}>
               <Text style={styles.subBtnTitle}>
                 {t('momProgram.freeOfCharge')}
               </Text>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '600',
-    fontSize: scaler(24),
+    fontSize: scaler(20),
     marginBottom: scaler(8),
   },
   subTitle: {

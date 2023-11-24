@@ -663,7 +663,7 @@ export const en = {
     whatTime: 'What time was your baby born?',
     whatName: "What is your baby's name?",
     whatGender: "What is your baby's gender?",
-    howDeliver: 'How was you deliver?',
+    howDeliver: 'How did you deliver?',
     whatWeight: "What was your baby's weight?",
     whatHeight: "What was your baby's height?",
     havePicture: 'Have you got any picture of the baby?',
@@ -701,7 +701,7 @@ export const en = {
     day: 'day',
     old: 'old',
     tracker: 'Newborn Tracker',
-    highlights: 'Highlights of the month',
+    highlights: 'Highlights',
     viewMore: 'View more',
   },
   newBornTida: {

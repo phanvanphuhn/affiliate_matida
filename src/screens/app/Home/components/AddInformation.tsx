@@ -24,15 +24,13 @@ const AddInformation = (props: TProps) => {
       <Text style={styles.title}>{t('addInformation.helpCalculate')}</Text>
       <View style={styles.wrapContainer}>
         <View style={{flex: 1, marginRight: scaler(32)}}>
-          <Text style={styles.label}>
-            {t('addInformation.babySize')}
-            <Text
-              style={{
-                fontSize: scaler(20),
-                fontWeight: '600',
-              }}>
-              {t('addInformation.mystery')}
-            </Text>
+          <Text style={styles.label}>{t('addInformation.babySize')}</Text>
+          <Text
+            style={{
+              fontSize: scaler(20),
+              fontWeight: '600',
+            }}>
+            {t('addInformation.mystery')}
           </Text>
           <TouchableOpacity style={styles.wrapBtnContainer} onPress={onPress}>
             <Text style={styles.btnTitle}>

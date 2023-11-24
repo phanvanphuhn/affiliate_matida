@@ -83,12 +83,12 @@ const NewBornContainer = (props: TProps) => {
           </Text>
         )}
 
-        {(user?.due_date || user?.baby_date_of_birth) && (
+        {(user?.baby_date_of_birth || user?.due_date) && (
           <Text style={styles.title}>
             {t('newBorn.bornOn')}{' '}
-            {moment(user?.due_date || user?.baby_date_of_birth).format(
-              'DD/MM/YYYY',
-            )}
+            {moment
+              .utc(user?.baby_date_of_birth || user?.due_date)
+              .format('DD/MM/YYYY')}
           </Text>
         )}
       </View>

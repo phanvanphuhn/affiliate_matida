@@ -126,9 +126,9 @@ const NewBornScreen = (props: TProps) => {
         gender: state.sex.toLowerCase(),
         birth_experience: state.deliver,
         date_of_birth:
-          moment(state.dmy).format('YYYY/MM/DD') +
+          moment.utc(state.dmy).format('YYYY/MM/DD') +
           ' ' +
-          moment(state.hour).format('HH:mm:ss'),
+          moment.utc(state.hour).format('HH:mm:ss'),
         weight: Number(
           state.weight.includes(',')
             ? state.weight.replace(',', '.') * 1000
