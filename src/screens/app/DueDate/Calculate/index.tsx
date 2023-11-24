@@ -54,9 +54,7 @@ const CalculateDueDateScreenApp = (props: any) => {
       );
 
       route?.params?.setState({
-        due_date: moment(res?.data?.resultPeriod?.dueDate, 'MM/DD/YYYY').format(
-          'MM/DD/YYYY',
-        ),
+        due_date: moment(res?.data?.resultPeriod?.dueDate).format('MM/DD/YYYY'),
         body: res,
       });
       navigate(ROUTE_NAME.ADD_NEW_BABY, {

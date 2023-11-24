@@ -99,7 +99,7 @@ const AddNewBaby = (props: any) => {
       body: {
         user_id: user?.id,
         name: state.name,
-        due_date: moment(state.due_date).format('YYYY/MM/DD'),
+        due_date: moment.utc(state.due_date).format('YYYY/MM/DD'),
         avatar: state.avatar,
         pregnant_type: 'singleton',
       },
