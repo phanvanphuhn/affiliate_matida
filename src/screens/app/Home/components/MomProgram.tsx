@@ -1,6 +1,7 @@
 import {momProgram, newBornBaby} from '@images';
 import {getProgramJoin} from '@services';
 import {colors, scaler} from '@stylesCommon';
+import {event, eventType, trackingAppEvent} from '@util';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
@@ -12,10 +13,18 @@ const MomProgram = (props: any) => {
 
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [signUp, setSignUp] = useState();
 
   const onSignUp = async () => {
+    trackingAppEvent(
+      event.TEASER.PP_TEASER_ACCEPT_INVITATION,
+      {
+        id: user?.id,
+      },
+      eventType.MIX_PANEL,
+    );
     try {
       const res = await getProgramJoin();
       if (res.success) {

@@ -78,6 +78,7 @@ import ContainerProvider from '@component/ContainerProvider';
 import {useContainerContext} from '@component/ContainerProvider';
 import AddInformation from './components/AddInformation';
 import {trackUser} from '@services/webengageManager';
+import ContentUpdate from './components/ContentUpdate';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -296,6 +297,11 @@ const Home = () => {
   const onSwitchBaby = async (item: TBaby) => {
     GlobalService.showLoading();
     handleCloseScheduleOrderBottomSheet();
+    trackingAppEvent(
+      event.NEW_BORN.NEW_BORN_HOMEPAGE_CHANGE_BABY,
+      {},
+      eventType.MIX_PANEL,
+    );
     const params = {
       id: item.id,
       body: {selected: true},
@@ -315,6 +321,11 @@ const Home = () => {
   };
 
   const onPressNewBornTracker = () => {
+    trackingAppEvent(
+      event.NEW_BORN.NEW_BORN_CLICK_VIEW_MORE,
+      {},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER, {
       state,
       setState,
@@ -475,10 +486,19 @@ const Home = () => {
             <ChatGPTComponent />
           </View>
 
-          {isSelectProfileNewBorn.length > 0 &&
-          isSelectProfileNewBorn[0]?.type !== 'pregnant' &&
-          isSelectProfileNewBorn[0]?.type !== 'pregnant-overdue' &&
-          isSelectProfileNewBorn[0]?.type !== 'unknown' ? (
+          {data?.babyProgress?.baby?.month > 6 ||
+          data?.babyProgress?.baby?.year > 0 ? (
+            <View style={{paddingHorizontal: scaler(16)}}>
+              <ContentUpdate
+                dataNewBorn={isSelectProfileNewBorn}
+                user={data?.user}
+                data={data?.babyProgress}
+              />
+            </View>
+          ) : isSelectProfileNewBorn.length > 0 &&
+            isSelectProfileNewBorn[0]?.type !== 'pregnant' &&
+            isSelectProfileNewBorn[0]?.type !== 'pregnant-overdue' &&
+            isSelectProfileNewBorn[0]?.type !== 'unknown' ? (
             <View
               style={{
                 // paddingHorizontal: scaler(20),

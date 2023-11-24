@@ -703,6 +703,7 @@ export const en = {
     tracker: 'Newborn Tracker',
     highlights: 'Highlights',
     viewMore: 'View more',
+    update: 'This content will be added shortly. Stay tuned!',
   },
   newBornTida: {
     hi: "Hi mommy,\nit's normal to have tons of questions.",

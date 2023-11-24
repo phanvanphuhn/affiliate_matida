@@ -4,6 +4,7 @@ import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {TState} from '../index';
 import {useContainerContext} from '@component/ContainerProvider';
 import {useSelector} from 'react-redux';
+import {event, eventType, trackingAppEvent} from '@util';
 
 type TProps = {
   callback?: (a: TData) => void;
@@ -22,6 +23,7 @@ const ListMonth = (props: TProps) => {
   const {callback, filterVal} = props;
   const {state, setState} = useContainerContext();
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const flatListRef = useRef(null);
 
@@ -138,6 +140,16 @@ const ListMonth = (props: TProps) => {
   );
 
   const onSelectFilter = (item: TData) => {
+    trackingAppEvent(
+      event.NEW_BORN.NEW_BORN_HOMEPAGE_CHANGE_TIME,
+      {
+        params: {
+          userId: user.id,
+          week: item.value,
+        },
+      },
+      eventType.MIX_PANEL,
+    );
     setState({filter: item});
     callback && callback(item && item);
   };

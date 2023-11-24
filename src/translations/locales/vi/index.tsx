@@ -707,6 +707,8 @@ export const vi = {
     tracker: 'Theo dõi con yêu',
     highlights: 'Nổi bật',
     viewMore: 'Xem thêm',
+    update:
+      'Con đang nhờ Matida cập nhật và sẽ kể với mẹ sớm thôi. Mẹ chờ con nhé!',
   },
   newBornTida: {
     hi: 'Chào mẹ,\ncó nhiều thắc mắc là chuyện bình thường.',
