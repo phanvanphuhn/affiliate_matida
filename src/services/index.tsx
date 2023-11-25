@@ -17,3 +17,4 @@ export * from './pay';
 export * from './forum';
 export * from './feed';
 export * from './deal';
+export * from './newBorn';

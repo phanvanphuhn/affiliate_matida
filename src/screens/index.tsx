@@ -64,6 +64,13 @@ import {Question3} from './auth/DueDate/Question3';
 import ListDetailPost from './app/Forum/components/ListDetailPost';
 import Deal from './app/Deal/Deal';
 import DetailDeal from './app/Deal/components/detailDeal';
+import NewBornScreen from './app/NewBorn';
+import DetailNewBorn from './app/NewBorn/components/DetailNewBorn';
+import EditNewBorn from './app/NewBorn/components/EditNewBorn';
+import AddBaby from './app/AddBaby';
+import AddNewBaby from './app/AddBaby/components/AddNewBaby';
+import NewBornTracker from './app/Home/components/NewBornTracker';
+import AddBabySuccess from './app/NewBorn/components/AddBabySuccess';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -132,6 +139,13 @@ const screens = {
   ListDetailPost,
   Deal,
   DetailDeal,
+  NewBornScreen,
+  DetailNewBorn,
+  EditNewBorn,
+  AddBaby,
+  AddNewBaby,
+  NewBornTracker,
+  AddBabySuccess,
 };
 
 export {screens};

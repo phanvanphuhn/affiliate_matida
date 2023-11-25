@@ -30,7 +30,6 @@ export const ViewTextSeeMore = ({
 }: Props) => {
   const [heightText, setHeightText] = useState<number>(0);
   const [showMore, setShowMore] = useState<boolean>(false);
-
   const {t} = useTranslation();
 
   const handleLayout = (event: LayoutChangeEvent) => {
@@ -40,7 +39,7 @@ export const ViewTextSeeMore = ({
   return (
     <>
       <View style={{paddingTop: scaler(8)}}>
-        <Text
+        {/* <Text
           style={[
             style,
             {
@@ -52,7 +51,7 @@ export const ViewTextSeeMore = ({
           ]}
           onLayout={handleLayout}>
           {text}
-        </Text>
+        </Text> */}
         <AppTextUrl
           style={[style]}
           color={colors.primary}

@@ -13,6 +13,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2769C4F82C824D74875BD8DA /* Cabin-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7746ECCF85E4D949220A51E /* Cabin-Italic.ttf */; };
 		3D1BFDF66A104A2C8A0F78CF /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A0AF255CABE4759915955D8 /* Inter-Bold.ttf */; };
 		3D27EB502AAA2AAB0083327A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27EB4F2AAA2AAB0083327A /* Social.framework */; };
 		3D27EB522AAA2AB50083327A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27EB512AAA2AB50083327A /* MessageUI.framework */; };
@@ -21,12 +22,16 @@
 		65774292E6B74F25A91C9325 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D07EC33364E418EABED233F /* Inter-Thin.ttf */; };
 		746C9F041EB34DCFA5A25573 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6280389058054CAE84517384 /* Inter-ExtraLight.ttf */; };
 		9D574EBB8AA1438CB09FC04C /* PlusJakartaSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6E1CA253EDC4E72883F54C7 /* PlusJakartaSans-Medium.ttf */; };
+		9F3A9777E4494BB5BA1B971E /* Cabin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A591AEB9A0149C0B4EE4AEA /* Cabin-Bold.ttf */; };
 		A41DDD215A7F4D6ABBD5B4FD /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9BD9C227E8B04DE19E0D30FF /* Poppins-Medium.ttf */; };
 		A47998E629D2AB1000CD3366 /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47998E529D2AB1000CD3366 /* dummy.swift */; };
 		AADA2BEC4B9B4B4E898A6F7D /* MavenPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE1DABADE909400392B9E1C3 /* MavenPro-Bold.ttf */; };
 		AF6A441BAEE54F1EBF746C1E /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E92D7BAA5AB4134BC71A0E8 /* Inter-Light.ttf */; };
 		B353BEFF2A9866BD0099339C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B353BEFE2A9866BD0099339C /* GoogleService-Info.plist */; };
+		BB6C367D96AA43078E1C64D7 /* Cabin-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D61448A2B6E44FAFBD136BA8 /* Cabin-Medium.ttf */; };
+		C53148F01A7A4EC6974C4376 /* Cabin-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4977EE96F634EAB92CB00DA /* Cabin-SemiBold.ttf */; };
 		CCAA80D859CB4E01A3931541 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FD2C951DF2C42B88309F42C /* Inter-ExtraBold.ttf */; };
+		D2A06367AACF404C90FF8B38 /* Cabin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5F48FEA4CFF465987F280EC /* Cabin-Regular.ttf */; };
 		E8FE02CCBFDC4D97B8430DD1 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFDD61F82E534265BE2813FA /* Inter-Medium.ttf */; };
 		F4864C91FCB74EE8878C7358 /* Trocchi-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBAD1087AD0445D99B319E7F /* Trocchi-Regular.ttf */; };
 		F876178EECE4D4E063631B50 /* Pods_Matida.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F8D72160F01B8DC15440EC4 /* Pods_Matida.framework */; };
@@ -66,6 +71,7 @@
 		6280389058054CAE84517384 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
 		7FD2C951DF2C42B88309F42C /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.ttf"; path = "../src/assets/fonts/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Matida-MatidaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matida-MatidaTests.release.xcconfig"; path = "Target Support Files/Pods-Matida-MatidaTests/Pods-Matida-MatidaTests.release.xcconfig"; sourceTree = "<group>"; };
+		8A591AEB9A0149C0B4EE4AEA /* Cabin-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cabin-Bold.ttf"; path = "../src/assets/fonts/Cabin-Bold.ttf"; sourceTree = "<group>"; };
 		8B20E9C42A4ADED000B7B2FD /* MatidaDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MatidaDebug.entitlements; path = Matida/MatidaDebug.entitlements; sourceTree = "<group>"; };
 		8D07EC33364E418EABED233F /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
 		9A0AF255CABE4759915955D8 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
@@ -74,8 +80,12 @@
 		A47998E229D2AAD900CD3366 /* Matida-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Matida-Bridging-Header.h"; sourceTree = "<group>"; };
 		A47998E529D2AB1000CD3366 /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		B353BEFE2A9866BD0099339C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5F48FEA4CFF465987F280EC /* Cabin-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cabin-Regular.ttf"; path = "../src/assets/fonts/Cabin-Regular.ttf"; sourceTree = "<group>"; };
 		B73B9B3C41B24F0B978464AD /* PlusJakartaSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-SemiBold.ttf"; path = "../src/assets/fonts/PlusJakartaSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		C4977EE96F634EAB92CB00DA /* Cabin-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cabin-SemiBold.ttf"; path = "../src/assets/fonts/Cabin-SemiBold.ttf"; sourceTree = "<group>"; };
 		C6E1CA253EDC4E72883F54C7 /* PlusJakartaSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Medium.ttf"; path = "../src/assets/fonts/PlusJakartaSans-Medium.ttf"; sourceTree = "<group>"; };
+		C7746ECCF85E4D949220A51E /* Cabin-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cabin-Italic.ttf"; path = "../src/assets/fonts/Cabin-Italic.ttf"; sourceTree = "<group>"; };
+		D61448A2B6E44FAFBD136BA8 /* Cabin-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Cabin-Medium.ttf"; path = "../src/assets/fonts/Cabin-Medium.ttf"; sourceTree = "<group>"; };
 		DC0C62960BA341AA83C6F5FB /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		DFDD61F82E534265BE2813FA /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../src/assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -191,8 +201,8 @@
 			children = (
 				13EE43ABFD6C474BA9026D7F /* PPFragment-TextRegular.otf */,
 				9A0AF255CABE4759915955D8 /* Inter-Bold.ttf */,
-				7FD2C951DF2C42B88309F42C /* Inter-ExtraBold.ttf */,
 				6280389058054CAE84517384 /* Inter-ExtraLight.ttf */,
+				7FD2C951DF2C42B88309F42C /* Inter-ExtraBold.ttf */,
 				0E92D7BAA5AB4134BC71A0E8 /* Inter-Light.ttf */,
 				DFDD61F82E534265BE2813FA /* Inter-Medium.ttf */,
 				040993AC16144DD3921C9721 /* Inter-Regular.ttf */,
@@ -203,6 +213,11 @@
 				FBAD1087AD0445D99B319E7F /* Trocchi-Regular.ttf */,
 				C6E1CA253EDC4E72883F54C7 /* PlusJakartaSans-Medium.ttf */,
 				B73B9B3C41B24F0B978464AD /* PlusJakartaSans-SemiBold.ttf */,
+				8A591AEB9A0149C0B4EE4AEA /* Cabin-Bold.ttf */,
+				C7746ECCF85E4D949220A51E /* Cabin-Italic.ttf */,
+				D61448A2B6E44FAFBD136BA8 /* Cabin-Medium.ttf */,
+				B5F48FEA4CFF465987F280EC /* Cabin-Regular.ttf */,
+				C4977EE96F634EAB92CB00DA /* Cabin-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -330,6 +345,11 @@
 				F4864C91FCB74EE8878C7358 /* Trocchi-Regular.ttf in Resources */,
 				9D574EBB8AA1438CB09FC04C /* PlusJakartaSans-Medium.ttf in Resources */,
 				52478658B8AB42E1832BB9B8 /* PlusJakartaSans-SemiBold.ttf in Resources */,
+				9F3A9777E4494BB5BA1B971E /* Cabin-Bold.ttf in Resources */,
+				2769C4F82C824D74875BD8DA /* Cabin-Italic.ttf in Resources */,
+				BB6C367D96AA43078E1C64D7 /* Cabin-Medium.ttf in Resources */,
+				D2A06367AACF404C90FF8B38 /* Cabin-Regular.ttf in Resources */,
+				C53148F01A7A4EC6974C4376 /* Cabin-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,7 +610,7 @@
 				CODE_SIGN_ENTITLEMENTS = Matida/MatidaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = GBB9254WZA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Matida/Info.plist;
@@ -600,7 +620,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.8.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -629,7 +649,7 @@
 				CODE_SIGN_ENTITLEMENTS = Matida/Matida.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = GBB9254WZA;
 				INFOPLIST_FILE = Matida/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Matida;
@@ -638,7 +658,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.8.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

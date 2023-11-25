@@ -9,3 +9,4 @@ export * from './home';
 export * from './explore';
 export * from './check';
 export * from './forum';
+export * from './newBorn';

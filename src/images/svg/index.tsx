@@ -272,11 +272,11 @@ function SvgArrowRightContained(props: any) {
 }
 
 function SvgArrowLeft(props: any) {
-  const {stroke} = props;
+  const {stroke, size} = props;
   return (
     <Svg
-      width={32}
-      height={32}
+      width={size || 32}
+      height={size || 32}
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -793,6 +793,39 @@ function SvgCircleRightDailyAffirmation(props: any) {
   );
 }
 
+function SvgCircleRightDailyAffirmation1(props: any) {
+  const {color} = props;
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={166}
+      height={166}
+      viewBox="0 0 166 96"
+      fill="none"
+      {...props}>
+      <Path
+        opacity={0.15}
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M158.269 -110.969C158.269 -85.6237 137.703 -64.9761 112.374 -64.9761C87.0829 -64.9761 66.4795 -85.6616 66.4795 -111.007C66.4795 -136.352 87.0451 -157 112.374 -157C137.703 -157 158.269 -136.315 158.269 -110.969ZM143.147 -111.007C143.147 -128.018 129.348 -141.846 112.374 -141.846C95.3998 -141.846 81.6012 -128.018 81.6012 -111.007C81.6012 -93.9964 95.3998 -80.1682 112.374 -80.1682C129.348 -80.1682 143.147 -93.9964 143.147 -111.007ZM207.566 -78.6522C225.712 -73.2725 237.053 -60.8082 239.511 -43.5324C244.009 -11.6328 217.017 32.8827 178.003 57.6977C147.268 77.3603 122.128 75.3524 108.896 66.866C98.6514 60.3118 93.51 49.1735 95.1356 37.0501C96.7234 25.1162 102.659 15.1523 112.261 8.21924C125.455 -1.29002 145.983 -5.11647 168.476 -2.50237C168.514 -11.1024 170.329 -23.3394 178.57 -32.0909C186.395 -40.3879 197.926 -43.6839 212.821 -41.8275L210.968 -26.787C201.139 -27.9993 193.919 -26.2945 189.571 -21.7103C182.539 -14.2848 183.22 0.187515 184.089 5.11263L185.98 15.9479L175.205 13.9021C153.392 9.69678 132.638 12.2351 121.107 20.5699C114.794 25.1541 111.202 31.2157 110.144 39.1338C109.312 45.4607 111.77 50.8026 117.062 54.1744C125.946 59.8193 145.151 60.8422 169.913 45.0061C203.748 23.3734 228.245 -15.4213 224.578 -41.4487C222.99 -52.8143 215.807 -60.4672 203.332 -64.1421C160.77 -76.6673 123.573 -24.1037 122.671 -22.8286L122.657 -22.809L117.213 -14.9288L110.787 -22.0134C110.295 -22.5817 60.2799 -77.3263 28.0327 -51.3368C17.2207 -42.5852 12.9866 -28.5676 16.0865 -11.7843C24.0255 31.0642 69.8066 64.6308 113.357 80.0123V96C40.6216 72.4731 7.50493 24.7752 1.2294 -9.01866C-2.89128 -31.2196 3.45986 -50.9579 18.5816 -63.1571C31.3973 -73.4619 53.8532 -81.3421 88.1796 -60.202C99.8989 -52.9659 109.69 -44.3659 115.701 -38.6073C128.971 -54.7844 164.658 -91.306 207.566 -78.6522Z"
+        fill="url(#paint0_linear_391_23922)"
+      />
+      <Defs>
+        <LinearGradient
+          id="paint0_linear_391_23922"
+          x1={120}
+          y1={-28.2046}
+          x2={-28.2046}
+          y2={103.94}
+          gradientUnits="userSpaceOnUse">
+          <Stop stop-color={color || 'white'} />
+          <Stop offset="1" stop-color="white" stop-opacity="0" />
+        </LinearGradient>
+      </Defs>
+    </Svg>
+  );
+}
+
 function SvgLogoDailyAffirmation(props: any) {
   const {color} = props;
   return (
@@ -917,6 +950,7 @@ function SvgNotResult(props: any) {
 }
 
 function SvgIconDelete(props: any) {
+  const {fill} = props;
   return (
     <Svg
       width={20}
@@ -925,7 +959,7 @@ function SvgIconDelete(props: any) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
-      <Rect width={20} height={20} rx={10} fill="#D3D3D3" />
+      <Rect width={20} height={20} rx={10} fill={fill ? fill : '#D3D3D3'} />
       <Path
         d="M13.375 6.625l-6.75 6.75M13.375 13.375l-6.75-6.75"
         stroke="#fff"
@@ -2489,6 +2523,7 @@ function SvgGoogle(props: any) {
 }
 
 function SvgArrowBackLogin(props: any) {
+  const {fill} = props;
   return (
     <Svg
       width={64}
@@ -2499,7 +2534,7 @@ function SvgArrowBackLogin(props: any) {
       {...props}>
       {/* @ts-ignore */}
       <G filter="url(#filter0_b_29_2392)">
-        <Rect width={64} height={40} rx={20} fill="#F6F4F6" />
+        <Rect width={64} height={40} rx={20} fill={fill ? fill : '#F6F4F6'} />
         <Path
           d="M38.791 19.005h-11.17l4.88-4.88c.39-.39.39-1.03 0-1.42a.996.996 0 00-1.41 0l-6.59 6.59a.996.996 0 000 1.41l6.59 6.59a.996.996 0 101.41-1.41l-4.88-4.88h11.17c.55 0 1-.45 1-1s-.45-1-1-1z"
           fill="#180A05"
@@ -2723,4 +2758,5 @@ export {
   SvgArrowDown,
   SvgRadioCircle,
   SvgRadioSelected,
+  SvgCircleRightDailyAffirmation1,
 };

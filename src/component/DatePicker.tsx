@@ -4,6 +4,7 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
@@ -12,6 +13,7 @@ import {DefaultTFuncReturn} from 'i18next';
 import {useSelector} from 'react-redux';
 
 import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
 
 interface AppDatePickerProps {
   title?: string | DefaultTFuncReturn;
@@ -19,6 +21,11 @@ interface AppDatePickerProps {
   minimumDate?: any;
   dataDate?: any;
   style?: StyleProp<ViewStyle>;
+  textColor?: string;
+  mode?: 'date' | 'time' | 'datetime';
+  is24hourSource?: 'locale' | 'device';
+  maximumDate?: any;
+  width?: number;
 }
 
 export const AppDatePicker = ({
@@ -27,6 +34,11 @@ export const AppDatePicker = ({
   minimumDate,
   dataDate,
   style,
+  textColor,
+  mode,
+  is24hourSource,
+  maximumDate,
+  width,
 }: AppDatePickerProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const [date, setDate] = useState(new Date());
@@ -48,16 +60,16 @@ export const AppDatePicker = ({
         style,
       ]}>
       {!!title && <Text style={styles.textTitle}>{title}</Text>}
-      <View style={[styles.viewDatePicker]}>
+      <View style={[styles.viewDatePicker, width ? {width: width} : {}]}>
         <DatePicker
           date={dataDate ? dataDate : date}
           onDateChange={date => {
             setDate(date);
             onChange(date);
           }}
-          mode="date"
-          textColor={colors.white}
-          maximumDate={new Date('2100-12-31')}
+          mode={mode ? mode : 'date'}
+          textColor={textColor ? textColor : colors.white}
+          maximumDate={maximumDate ? maximumDate : new Date('2100-12-31')}
           minimumDate={minimumDate}
           androidVariant="iosClone"
           fadeToColor="none"
@@ -67,6 +79,8 @@ export const AppDatePicker = ({
             flex: 1,
           }}
           locale={lang === 1 ? 'en' : 'vi'}
+          is24hourSource={is24hourSource}
+          timeZoneOffsetInMinutes={0}
         />
       </View>
     </View>

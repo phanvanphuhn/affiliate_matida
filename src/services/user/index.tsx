@@ -8,6 +8,7 @@ const GET_USER_INFO = 'auth/user/infor';
 const UPDATE_USER_INFO = 'user/profile';
 const UPLOAD_IMAGE = 'clouds/upload';
 const DETAIL_USER = 'user';
+const SELECT_BABY_DATE = 'user/select-baby-date';
 
 const GET_POST = 'posts';
 const GET_HOME = 'home';
@@ -26,8 +27,17 @@ const LIST_USER = 'user';
 const SHARE_LINK_USER = 'topics/send-message/users';
 const GET_VERSION = 'versions';
 
+const PROGRAM_JOIN = 'programs/join';
+const PROGRAM_CHECK = 'programs/check';
+
 export const selectDueDate: any = async (data: any) => {
   const response = await api.post(SELECT_DUE_DATE, data);
+  return response;
+};
+
+export const selectBabyDate: any = async (data: any) => {
+  const {id, date} = data;
+  const response = await api.post(`${SELECT_BABY_DATE}/${id}`, {date: date});
   return response;
 };
 
@@ -86,7 +96,9 @@ export const getHome: any = async () => {
 };
 
 export const getHomeByWeeks: any = async (data: any) => {
-  const response = await api.get(`${GET_HOME}?week=${data.weeks}`);
+  const response = await api.get(
+    `${GET_HOME}?week=${data.weeks}&month=${data.month}`,
+  );
   return response;
 };
 
@@ -146,5 +158,15 @@ export const postShareLinkUser: any = async (data: any) => {
 
 export const getVersionApp: any = async () => {
   const response = await api.get(GET_VERSION);
+  return response;
+};
+
+export const getProgramJoin: any = async () => {
+  const response = await api.get(PROGRAM_JOIN);
+  return response;
+};
+
+export const getProgramCheck: any = async () => {
+  const response = await api.get(PROGRAM_CHECK);
   return response;
 };

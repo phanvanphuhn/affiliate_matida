@@ -22,6 +22,22 @@ const iconTick = require('./tick.png');
 const icon_PostForum = require('./icon_PostForum.png');
 const floating_button = require('./floating_button.png');
 const iconCalendarCheckup = require('./icon_calendar_checkup.png');
+const iconNewBorn = require('./newBorn.png');
+const iconNewBornTida = require('./newBornTida.png');
+const iconCloudSuggestion = require('./cloudSuggestion.png');
+const iconGoBackNewBorn = require('./icGoBack.png');
+const iconNextNewBorn = require('./icNext.png');
+const iconAddImage = require('./icAddImage.png');
+const chatGPTbackground = require('./chatGPTbackground.png');
+const tailArrowRight = require('./arrow-right.png');
+const iconPregnant = require('./pregnant.png');
+const iconArrowRightGrey = require('./arrowRightGrey.png');
+const iconPlusCircle = require('./plus-circle.png');
+const iconEditGrey = require('./iconEditGrey.png');
+const iconChevronDown = require('./chevronDown.png');
+const iconCalendarGrey = require('./calendarGrey.png');
+const iconClockGrey = require('./iconClockGrey.png');
+const iconKid = require('./iconKid.png');
 
 export {
   iconFlagVn,
@@ -48,4 +64,20 @@ export {
   icon_PostForum,
   floating_button,
   iconCalendarCheckup,
+  iconNewBorn,
+  iconNewBornTida,
+  iconCloudSuggestion,
+  iconGoBackNewBorn,
+  iconNextNewBorn,
+  iconAddImage,
+  chatGPTbackground,
+  tailArrowRight,
+  iconPregnant,
+  iconArrowRightGrey,
+  iconPlusCircle,
+  iconEditGrey,
+  iconChevronDown,
+  iconCalendarGrey,
+  iconClockGrey,
+  iconKid,
 };

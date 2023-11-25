@@ -1,0 +1,4 @@
+export const typeBaby = {
+  GET_LIST_BABY: 'GET_LIST_BABY',
+  GET_LIST_BABY_SUCCESS: 'GET_LIST_BABY_SUCCESS',
+};

@@ -410,28 +410,28 @@ const ProfileSettingsScreen = () => {
                       )}
                     </View>
                   </View>
-                  <View
+                  {/* <View
                     style={{
                       paddingLeft:
                         Platform.OS === 'ios' ? scaler(12) : scaler(16),
                     }}>
                     <DueDateComponent dateValue={date} />
-                  </View>
-                  <AppInput
+                  </View> */}
+                  {/* <AppInput
                     style={styles.input}
                     onValueChange={handleChange('baby_name')}
                     label={t('profileSettings.babyName')}
                     value={values.baby_name}
                     error={errors.baby_name}
-                  />
+                  /> */}
 
-                  <SelectionPicker
+                  {/* <SelectionPicker
                     listItem={getListPregnancy}
                     value={pregnant_type}
                     stylesSelection={styles.viewBabyName}
                     placeholder={t('profileSettings.typeOfPregnancy')}
                     onPress={value => setPregnanttype(value)}
-                  />
+                  /> */}
                   {/* {!!errors?.pregnant_type && (
                   <Text style={styles.error}>{errors?.pregnant_type}</Text>
                 )} */}

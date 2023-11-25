@@ -90,7 +90,12 @@ const ListDetailPost = (props: any) => {
         numColumns={2}
         contentContainerStyle={styles.listContentContainer}
         onEndReached={handleLoadMore}
-        onRefresh={pullToRefresh}
+        onRefresh={() => {
+          if (state.page == 1) {
+            return;
+          }
+          pullToRefresh;
+        }}
         refreshing={state.loading}
       />
     </View>

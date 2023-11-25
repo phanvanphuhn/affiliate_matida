@@ -19,8 +19,10 @@ import {CalculationMethod} from './_type';
 import {trackingAppEvent, event, useUXCam} from '@util';
 import {calculateDate, GlobalService} from '@services';
 import moment from 'moment';
+import {navigate} from '@navigation';
 
-const CalculateDueDateScreenApp = () => {
+const CalculateDueDateScreenApp = (props: any) => {
+  const {route} = props;
   const listMethod = getMethod();
   const listCycleLength = getCycleLength();
   const listIVFdays = getIVFdays();
@@ -31,32 +33,50 @@ const CalculateDueDateScreenApp = () => {
   const [cycleLength, setCycleLength] = useState<string>('TWENTY_EIGHT');
   const [daysIVF, setDaysIVF] = useState<string>('IVF3');
   const [date, setDate] = useState<any>(moment());
-
   useUXCam(ROUTE_NAME.CALCULATE_DUE_DATE_APP);
 
   const handlePressButton = async () => {
-    try {
-      GlobalService.showLoading();
-      const body = {
-        calc_method: 0,
-        date: moment(date).format('MM/DD/YYYY'),
-        cycle_length: cycleLength,
-      };
-      const body2 = {
-        calc_method: 1,
-        date: moment(date).format('MM/DD/YYYY'),
-        ivf_day: daysIVF,
-      };
+    GlobalService.showLoading();
+    const body = {
+      calc_method: 0,
+      date: moment(date).format('MM/DD/YYYY'),
+      cycle_length: cycleLength,
+    };
+    const body2 = {
+      calc_method: 1,
+      date: moment(date).format('MM/DD/YYYY'),
+      ivf_day: daysIVF,
+    };
+
+    if (route?.params?.isAddNewBaby) {
       const res = await calculateDate(
         method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
       );
-      navigation.navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
-        data: res?.data,
+      console.log('res: ', res?.data?.resultPeriod?.dueDate);
+      route?.params?.setState({
+        due_date: moment(
+          res?.data?.resultPeriod?.dueDate || res?.data?.resultIVF?.dueDate,
+          'MM/DD/YYYY',
+        ).format('MM/DD/YYYY'),
+        body: res,
+      });
+      navigate(ROUTE_NAME.ADD_NEW_BABY, {
         type: 'Caculate',
       });
       GlobalService.hideLoading();
-    } catch (error) {
-      GlobalService.hideLoading();
+    } else {
+      try {
+        const res = await calculateDate(
+          method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
+        );
+        navigation.navigate(ROUTE_NAME.RESULT_DUE_DATE_APP, {
+          data: res?.data,
+          type: 'Caculate',
+        });
+        GlobalService.hideLoading();
+      } catch (error) {
+        GlobalService.hideLoading();
+      }
     }
   };
 
@@ -92,6 +112,10 @@ const CalculateDueDateScreenApp = () => {
                   : t('CalculationMethod.first_day_of_last_period')
               }
               onChange={(date: any) => setDate(date)}
+              maximumDate={new Date()}
+              minimumDate={
+                new Date(new Date().setMonth(new Date().getMonth() - 9))
+              }
             />
           </View>
           {method === CalculationMethod.FIRST_DAY_OF_LAST_PERIOD ? (

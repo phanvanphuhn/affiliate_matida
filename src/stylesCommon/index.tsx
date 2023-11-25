@@ -62,6 +62,9 @@ const colors = {
   success_message: '#28B4AE',
   error_message: '#A67481',
   transparent: 'transparent',
+  primaryBackground: '#EE6566',
+  cancelBackground: '#F8F7F8',
+  labelColor: '#39383D',
 };
 
 //Font chữ được sử dụng trong app
@@ -80,16 +83,16 @@ const stylesCommon = StyleSheet.create({
     fontFamily: 'Inter-Light',
   },
   fontWeight400: {
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Cabin-Regular',
   },
   fontWeight500: {
-    fontFamily: 'Inter-Medium',
+    fontFamily: 'Cabin-Medium',
   },
   fontWeight600: {
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Cabin-SemiBold',
   },
   fontWeight700: {
-    fontFamily: 'Inter-Bold',
+    fontFamily: 'Cabin-Bold',
   },
   fontWeight800: {
     fontFamily: 'Inter-ExtraBold',

@@ -1,11 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import {
   Animated,
   Platform,
   RefreshControl,
   ScrollView,
   StatusBar,
+  Text,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,15 +21,20 @@ import {
   saveIsDoneDaily,
   updateDataHome,
   updateStatusDeepLink,
+  getListBaby,
+  getDataHomeByWeek,
 } from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
   answerDailyQuiz,
+  calendarCheckups,
+  getProgramCheck,
   getUserInfoApi,
   GlobalService,
+  updateBaby,
   updateUserInfo,
 } from '@services';
-import {scaler} from '@stylesCommon';
+import {colors, scaler} from '@stylesCommon';
 import {
   ChatGPTComponent,
   PregnancyProgress,
@@ -57,6 +63,22 @@ import {EVideoType} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
+import {FloatingNewBornButton} from '@component/FloatingNewBornButton';
+import ListMonth, {TData} from './components/ListMonth';
+import useDetailFeed from '../DetailFeed/useDetailFeed';
+import useDetailPost from '../Forum/components/useDetailPost';
+import BottomSheetModal from '@component/BottomSheetModal';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
+import NewBornContainer from './components/NewBornContainer';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import BottomSheetNewBorn, {TBaby} from './components/BottomSheetNewBorn';
+import {navigate} from '@navigation';
+import MomProgram from './components/MomProgram';
+import ContainerProvider from '@component/ContainerProvider';
+import {useContainerContext} from '@component/ContainerProvider';
+import AddInformation from './components/AddInformation';
+import {trackUser} from '@services/webengageManager';
+import ContentUpdate from './components/ContentUpdate';
 import {trackCustomEvent} from '@services/webengageManager';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
@@ -71,6 +93,12 @@ type IData = {
   rooms: any[];
   dailyQuizz: any | undefined;
   masterClasses: any[];
+};
+
+export type TState = {
+  filter: TData;
+  data: any;
+  isShowNewBorn: boolean;
 };
 
 const Home = () => {
@@ -88,19 +116,39 @@ const Home = () => {
   }
 
   const [refreshing, setRefreshing] = useState(false);
-  // const [loading, setLoading] = useState<boolean>(true);
+  const [isSignUp, setIsSignUp] = useState();
+
+  const [state, setState] = useDetailPost({
+    filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
+    isShowNewBorn: false,
+    data: [],
+    isShowContent: [],
+  });
 
   const scrollRef = useRef<ScrollView>(null);
   const firstRef = useRef(false);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const snapPoints = useMemo(() => ['30%', '50%'], []);
 
   const isFocus = useSelector((state: any) => state?.tab?.home);
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const data = useSelector((state: any) => state?.home?.data);
   const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
+  const week = useSelector((state: any) => state?.home?.week);
   const loading = useSelector((state: any) => state?.home?.loading);
   const deepLink = useSelector((state: any) => state?.check?.deepLink);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
+  const newBorn = useSelector((state: RootState) => state.newBorn.list);
+
+  const isSelectProfileNewBorn = newBorn.filter(
+    item =>
+      // item?.type !== 'pregnant' &&
+      // item?.type !== 'pregnant-overdue' &&
+      // item?.type !== 'unknown' &&
+      item.selected == true,
+  );
 
   function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
@@ -146,6 +194,16 @@ const Home = () => {
       const res = await updateUserInfo(body);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    GlobalService.showLoading();
+    if (state.filter.value?.indexOf('week') != -1) {
+      dispatch(getDataHomeByWeek({week: state.filter.intVal, month: 0}));
+    } else {
+      dispatch(getDataHomeByWeek({week: 1, month: state.filter.intVal}));
+    }
+    GlobalService.hideLoading();
+  }, [state.filter.value]);
 
   useEffect(() => {
     updateLangUser();
@@ -217,9 +275,21 @@ const Home = () => {
   };
 
   const getData = async () => {
+    GlobalService.showLoading();
     try {
+      getDataUser();
+      checkProgram();
       dispatch(getDataHome());
+      dispatch(getListBaby());
+      const res = await calendarCheckups();
+      setState({
+        data: res?.data,
+        filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
+        isShowContent: [],
+      });
+      GlobalService.hideLoading();
     } catch (error) {
+      GlobalService.hideLoading();
     } finally {
       setRefreshing(false);
     }
@@ -248,6 +318,72 @@ const Home = () => {
       // url: item?.url ?? '',
       // title: item?.title ?? '',
       // item: item,
+    });
+  };
+
+  const onNavigateNewBorn = () => {
+    trackingAppEvent(
+      event.NEW_BORN.CLICK_REPORT_BIRTH,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
+    navigation.navigate(ROUTE_NAME.NEW_BORN);
+  };
+
+  const onSwitchBaby = async (item: TBaby) => {
+    GlobalService.showLoading();
+    handleCloseScheduleOrderBottomSheet();
+    trackingAppEvent(
+      event.NEW_BORN.NEW_BORN_HOMEPAGE_CHANGE_BABY,
+      {},
+      eventType.MIX_PANEL,
+    );
+    const params = {
+      id: item.id,
+      body: {selected: true},
+    };
+    try {
+      const res = await updateBaby(params);
+      if (res.success) {
+        getData();
+      } else {
+        GlobalService.hideLoading();
+        console.log('error');
+      }
+    } catch (error) {
+      GlobalService.hideLoading();
+      console.log('error: ', error);
+    }
+  };
+
+  const onPressNewBornTracker = () => {
+    trackingAppEvent(
+      event.NEW_BORN.NEW_BORN_CLICK_VIEW_MORE,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
+    navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER, {
+      state,
+      setState,
+    });
+  };
+
+  const openNewBorn = useCallback(() => {
+    handleScheduleOrderSheetChanges(0);
+  }, []);
+
+  const handleScheduleOrderSheetChanges = useCallback((index: number) => {
+    bottomSheetRef.current?.collapse();
+  }, []);
+
+  const handleCloseScheduleOrderBottomSheet = () => {
+    bottomSheetRef.current?.close();
+  };
+
+  const onNavigateAddBaby = () => {
+    handleCloseScheduleOrderBottomSheet();
+    navigate(ROUTE_NAME.ADD_BABY, {
+      isAddNewBaby: true,
     });
   };
 
@@ -305,9 +441,21 @@ const Home = () => {
     }
   };
 
+  const checkProgram = async () => {
+    const res = await getProgramCheck();
+    if (res?.success) {
+      setIsSignUp(res?.data);
+    }
+  };
+
+  useEffect(() => {
+    trackUser(user);
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Animated.Image
+    <ContainerProvider state={state} setState={setState}>
+      <GestureHandlerRootView style={styles.container}>
+        {/* <Animated.Image
         source={imageBackgroundOpacity}
         style={[
           styles.circleBackground,
@@ -320,64 +468,113 @@ const Home = () => {
             ],
           },
         ]}
-      />
-      <AppHeader
-        onPressMenu={navigateSetting}
-        onPressAvatar={navigateUser}
-        onPressNotification={navigateNotification}
-        onPressMessage={navigationMessage}
-        onPressLogo={handlePressLogo}
-      />
+      /> */}
+        <AppHeader
+          onPressMenu={navigateSetting}
+          onPressNotification={navigateNotification}
+          onPressLogo={handlePressLogo}
+          bgc={colors.white}
+          rightNoti={navigateNotification}
+          openNewBorn={openNewBorn}
+        />
 
-      <ScrollView
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  y: scrollY,
+        <View
+          style={{
+            backgroundColor: colors.white,
+            paddingBottom: scaler(16),
+            paddingHorizontal: scaler(16),
+          }}>
+          <ListMonth />
+        </View>
+
+        <ScrollView
+          ref={scrollRef}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    y: scrollY,
+                  },
                 },
               },
-            },
-          ],
-          {useNativeDriver: false},
-        )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        contentContainerStyle={{
-          paddingBottom: scaler(30),
-          paddingTop: scaler(18),
-        }}>
-        {!!user?.is_skip || weekPregnant?.days < 0 ? null : (
-          <>
-            {isShowForReviewer(user) && (
-              <View>
-                <WeeksPregnant />
-              </View>
-            )}
+            ],
+            {useNativeDriver: false},
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          contentContainerStyle={{
+            paddingBottom: scaler(30),
+            paddingTop: scaler(18),
+          }}>
+          <View
+            style={{
+              // paddingHorizontal: scaler(20),
+              marginBottom: scaler(16),
+            }}>
+            <ChatGPTComponent />
+          </View>
+
+          {data?.babyProgress?.baby?.month > 6 ||
+          data?.babyProgress?.baby?.year > 0 ? (
+            <View style={{paddingHorizontal: scaler(16)}}>
+              <ContentUpdate
+                dataNewBorn={isSelectProfileNewBorn}
+                user={data?.user}
+                data={data?.babyProgress}
+              />
+            </View>
+          ) : isSelectProfileNewBorn.length > 0 &&
+            isSelectProfileNewBorn[0]?.type !== 'pregnant' &&
+            isSelectProfileNewBorn[0]?.type !== 'pregnant-overdue' &&
+            isSelectProfileNewBorn[0]?.type !== 'unknown' ? (
             <View
               style={{
                 // paddingHorizontal: scaler(20),
-                marginBottom: scaler(30),
+                marginBottom: scaler(16),
               }}>
-              {isShowForReviewer(user) && <SizeComparisonComponent />}
-              <ChatGPTComponent />
-
+              <NewBornContainer
+                onPress={onPressNewBornTracker}
+                data={data?.babyProgress}
+                user={data?.user}
+                state={state}
+                setState={setState}
+                isSelectProfileNewBorn={isSelectProfileNewBorn}
+              />
+            </View>
+          ) : !!user?.is_skip || weekPregnant?.days < 0 ? (
+            <View
+              style={{paddingHorizontal: scaler(16), marginBottom: scaler(16)}}>
+              <AddInformation onPress={onNavigateNewBorn} />
+            </View>
+          ) : (
+            <>
+              {/* {isShowForReviewer(user) && (
+              <View>
+                <WeeksPregnant />
+              </View>
+            )} */}
               <View
                 style={{
-                  paddingHorizontal: scaler(20),
+                  // paddingHorizontal: scaler(20),
+                  marginBottom: scaler(16),
                 }}>
-                <PregnancyProgress />
-              </View>
-            </View>
-          </>
-        )}
+                {isShowForReviewer(user) && <SizeComparisonComponent />}
 
-        {/* <View>
+                <View
+                  style={{
+                    paddingHorizontal: scaler(16),
+                  }}>
+                  <PregnancyProgress />
+                </View>
+              </View>
+            </>
+          )}
+
+          {/* <View>
           <ListPostComponent posts={data?.posts} />
 
           <TouchableOpacity
@@ -388,13 +585,13 @@ const Home = () => {
           </TouchableOpacity>
         </View> */}
 
-        {data?.dailyQuizz && isShowForReviewer(user) ? (
-          <ViewQuiz onAnswer={onAnswerQuiz} />
-        ) : null}
+          {data?.dailyQuizz && isShowForReviewer(user) ? (
+            <ViewQuiz onAnswer={onAnswerQuiz} />
+          ) : null}
 
-        {/* <BannerTestQuiz /> */}
+          {/* <BannerTestQuiz /> */}
 
-        {/*
+          {/*
         <HorizontalList
           loading={loading}
           title={t('home.weeklyVideos')}
@@ -412,7 +609,7 @@ const Home = () => {
           ))}
         </HorizontalList> */}
 
-        {/* <HorizontalList
+          {/* <HorizontalList
           loading={loading}
           length={data?.rooms?.length}
           title={t('home.groupTalks')}
@@ -423,7 +620,7 @@ const Home = () => {
           ))}
         </HorizontalList> */}
 
-        {/* <HorizontalList
+          {/* <HorizontalList
           loading={loading}
           title={t('home.weeklyArticles')}
           length={data?.articles?.length}
@@ -439,7 +636,7 @@ const Home = () => {
           ))}
         </HorizontalList> */}
 
-        {/* <HorizontalList
+          {/* <HorizontalList
           loading={loading}
           title={t('home.podcasts')}
           styleHeader={{paddingHorizontal: scaler(20)}}
@@ -450,7 +647,7 @@ const Home = () => {
           ))}
         </HorizontalList> */}
 
-        {/* <HorizontalList
+          {/* <HorizontalList
           // IconSvg={<SvgBook />}
           loading={loading}
           title={t('home.masterClass')}
@@ -465,10 +662,37 @@ const Home = () => {
           ))}
         </HorizontalList> */}
 
-        {/* <DailyAffirmation quote={data?.quote} /> */}
-      </ScrollView>
-      {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
-    </View>
+          {/* <DailyAffirmation quote={data?.quote} /> */}
+          {isShowForReviewer(user) &&
+            (user?.baby_type == 'pregnant' ||
+              user?.baby_type == 'pregnant-overdue') && (
+              <MomProgram data={isSignUp} />
+            )}
+        </ScrollView>
+        {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
+        {isShowForReviewer(user) &&
+          weekPregnant?.weeks > 29 &&
+          (isSelectProfileNewBorn[0]?.type == 'pregnant' ||
+            isSelectProfileNewBorn[0]?.type == 'pregnant-overdue' ||
+            isSelectProfileNewBorn[0]?.type == 'unknown') && (
+            <FloatingNewBornButton onPress={onNavigateNewBorn} />
+          )}
+        {isShowForReviewer(user) && (
+          <BottomSheetModal
+            ref={bottomSheetRef}
+            snapPoints={snapPoints}
+            onChange={handleScheduleOrderSheetChanges}
+            animateOnMount={false}
+            onClose={handleCloseScheduleOrderBottomSheet}
+            enablePanDownToClose={true}>
+            <BottomSheetNewBorn
+              onPress={onNavigateAddBaby}
+              onSwitchBaby={onSwitchBaby}
+            />
+          </BottomSheetModal>
+        )}
+      </GestureHandlerRootView>
+    </ContainerProvider>
   );
 };
 

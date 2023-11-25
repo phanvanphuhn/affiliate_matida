@@ -1,5 +1,12 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import {stylesDailyAffirmation} from '@constant';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
@@ -11,64 +18,72 @@ import {
   SvgLogoDailyAffirmation,
   SvgSparkle,
   TidaAI,
+  SvgCircleRightDailyAffirmation1,
+  IconBackgroundImageHome,
 } from '@images';
 import {useTranslation} from 'react-i18next';
 import {AppButton} from '@component';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {event, eventType, trackingAppEvent} from '@util';
+import LinearGradient from 'react-native-linear-gradient';
+import {chatGPTbackground} from '@images';
 
 export const ChatGPTComponent = React.memo(() => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const styleOfWeek = stylesDailyAffirmation[1];
+
+  const onNavigateChatGPT = () => {
+    trackingAppEvent(event.TIDA.TIDA_OPEN_HOMEPAGE, {}, eventType.MIX_PANEL);
+    navigation.navigate(ROUTE_NAME.CHAT_GPT);
+  };
+
   return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: '#654AC9', overflow: 'hidden'},
-      ]}>
-      <SvgCircleRightDailyAffirmation
-        color={styleOfWeek.colorIcon}
-        // color="red"
-        style={{position: 'absolute', top: scaler(47), left: -scaler(44)}}
-      />
-      <SvgLogoDailyAffirmation
-        color={styleOfWeek.colorIcon}
-        style={{position: 'absolute', top: -scaler(22), right: -scaler(100)}}
-      />
-      <View style={{alignItems: 'center', flex: 1}}>
-        <Text style={[styles.textTitle, {color: styleOfWeek.colorTitle}]}>
-          {t('home.titleTida')}
-        </Text>
-        {/* <SvgIconTida style={{marginVertical: scaler(16)}} /> */}
+    <TouchableOpacity
+      onPress={onNavigateChatGPT}
+      style={{paddingHorizontal: scaler(16)}}
+      activeOpacity={0.9}>
+      <LinearGradient
+        colors={['rgb(134, 85, 255)', '#EE6566']}
+        style={{
+          borderRadius: scaler(16),
+          paddingTop: scaler(16),
+          paddingRight: scaler(16),
+          paddingLeft: scaler(16),
+        }}>
         <Image
-          source={TidaAI}
-          style={{
-            width: scaler(104),
-            height: scaler(104),
-            // borderRadius: scaler(52),
-            marginTop: scaler(16),
-          }}
-          // resizeMethod="resize"
-          resizeMode="contain"
+          source={IconBackgroundImageHome}
+          style={styles.imageBackground}
         />
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => {
-            trackingAppEvent(
-              event.TIDA.TIDA_OPEN_HOMEPAGE,
-              {},
-              eventType.MIX_PANEL,
-            );
-            navigation.navigate(ROUTE_NAME.CHAT_GPT);
-          }}>
-          <SvgSparkle />
-          <Text style={styles.textBody}>{t('home.askTida')}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <View style={styles.wrapContainer}>
+          <View style={styles.wrapContentContainer}>
+            <Text style={[styles.textTitle, {color: styleOfWeek.colorTitle}]}>
+              {t('newBornTida.hi')}
+            </Text>
+            <Text style={styles.description}>{t('newBornTida.tidaHere')}</Text>
+            <View style={styles.btn}>
+              <Text style={styles.textBody}>{t('newBornTida.askNow')}</Text>
+            </View>
+          </View>
+
+          <View>
+            <Image
+              source={TidaAI}
+              style={{
+                width: scaler(90),
+                height: scaler(120),
+                // borderRadius: scaler(52),
+                marginTop: scaler(16),
+              }}
+              // resizeMethod="resize"
+              resizeMode="contain"
+            />
+          </View>
+        </View>
+      </LinearGradient>
+    </TouchableOpacity>
   );
 });
 
@@ -78,28 +93,46 @@ const styles = StyleSheet.create({
     paddingVertical: scaler(28),
     backgroundColor: colors.brandMainPinkRed,
     marginHorizontal: scaler(20),
-    borderRadius: scaler(8),
-    marginBottom: scaler(28),
+    borderRadius: scaler(16),
   },
   textTitle: {
-    ...stylesCommon.fontWeight600,
-    fontSize: scaler(18),
+    ...stylesCommon.fontWeight500,
+    fontSize: scaler(11),
     color: colors.white,
-    textAlign: 'center',
   },
   textBody: {
-    ...stylesCommon.fontWeight600,
-    fontSize: scaler(14),
-    color: '#654AC9',
+    ...stylesCommon.fontWeight500,
+    fontSize: scaler(12),
     textAlign: 'center',
-    marginLeft: scaler(10),
   },
   btn: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.white,
-    paddingVertical: scaler(8),
-    paddingHorizontal: scaler(39),
-    borderRadius: scaler(8),
+    paddingVertical: scaler(6),
+    paddingHorizontal: scaler(12),
+    borderRadius: scaler(14),
+  },
+  wrapContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  wrapContentContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: scaler(16),
+  },
+  description: {
+    fontSize: scaler(20),
+    ...stylesCommon.fontWeight600,
+    color: colors.white,
+  },
+  imageBackground: {
+    width: scaler(134),
+    height: scaler(249),
+    position: 'absolute',
+    right: 0,
+    top: scaler(-100),
   },
 });
