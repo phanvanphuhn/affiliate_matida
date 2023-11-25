@@ -183,7 +183,9 @@ const ContentDeal = (props: any) => {
       <TouchableOpacity
         style={styles.wrapButtonContainer}
         onPress={onShowModal}>
-        <Text style={styles.buttonTitle}>{t('deal.getDeal')}</Text>
+        <Text style={styles.buttonTitle}>
+          {data?.required_data ? t('deal.contactForm') : t('deal.getDeal')}
+        </Text>
       </TouchableOpacity>
       <ScrollView
         style={{maxHeight: '100%', marginBottom: 16}}
@@ -213,7 +215,11 @@ const ContentDeal = (props: any) => {
       </ScrollView>
       <ModalGetDeal
         onCancel={onCloseModal}
-        onConfirm={data?.required_data ? onSubmit : onPressGetDeal}
+        onConfirm={
+          data?.required_data && data?.required_data.length > 0
+            ? onSubmit
+            : onPressGetDeal
+        }
         visible={isShowModal}
         dealCode={data?.code}
         requiredData={data?.required_data}

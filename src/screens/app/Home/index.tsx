@@ -79,6 +79,7 @@ import {useContainerContext} from '@component/ContainerProvider';
 import AddInformation from './components/AddInformation';
 import {trackUser} from '@services/webengageManager';
 import ContentUpdate from './components/ContentUpdate';
+import {trackCustomEvent} from '@services/webengageManager';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -148,6 +149,34 @@ const Home = () => {
       // item?.type !== 'unknown' &&
       item.selected == true,
   );
+
+  function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+
+  function formatDate(date) {
+    return (
+      [
+        date.getFullYear(),
+        padTo2Digits(date.getMonth() + 1),
+        padTo2Digits(date.getDate()),
+      ].join('-') +
+      ' ' +
+      [
+        padTo2Digits(date.getHours()),
+        padTo2Digits(date.getMinutes()),
+        padTo2Digits(date.getSeconds()),
+      ].join(':')
+    );
+  }
+
+  useEffect(() => {
+    trackCustomEvent('User_Info', {
+      info: user,
+      due_date: formatDate(new Date()),
+    });
+  }, []);
+
   useUXCam(ROUTE_NAME.HOME);
 
   useEffect(() => {

@@ -744,5 +744,6 @@ export const vi = {
     babySize: 'Độ lớn của con là',
     mystery: '\nmột bí ẩn',
     addInformation: 'Thêm thông tin',
+    contactForm: 'Nhận tư vấn',
   },
 };
