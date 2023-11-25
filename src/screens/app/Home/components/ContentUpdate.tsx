@@ -80,7 +80,7 @@ const ContentUpdate = (props: TProps) => {
             height: scaler(140),
           }}
           // resizeMethod="resize"
-          resizeMode="center"
+          resizeMode="contain"
         />
       </View>
     </View>

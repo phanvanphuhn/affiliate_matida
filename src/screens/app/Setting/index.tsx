@@ -173,6 +173,11 @@ const Setting = () => {
   };
 
   const onNavigateAddBaby = () => {
+    trackingAppEvent(
+      event.NEW_BORN.SETTING_ADD_NEW_BABY,
+      {},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.ADD_BABY, {
       isAddNewBaby: true,
     });
@@ -268,31 +273,31 @@ const Setting = () => {
             </View>
           );
         })}
-        {/* {newBorn.length < 10 && ( */}
-        <TouchableOpacity
-          style={[
-            styles.wrapContainer,
-            {
-              marginTop: scaler(16),
-              marginBottom: scaler(16),
-              marginLeft: scaler(16),
-            },
-          ]}
-          onPress={onNavigateAddBaby}>
-          <Image
-            source={iconPlusCircle}
-            style={{
-              height: scaler(24),
-              width: scaler(24),
-              marginRight: scaler(8),
-            }}
-            resizeMode="contain"
-          />
-          <Text style={[styles.title, {color: '#A3A1AB'}]}>
-            {t('newBorn.addBaby')}
-          </Text>
-        </TouchableOpacity>
-        {/* )} */}
+        {newBorn.length < 10 && (
+          <TouchableOpacity
+            style={[
+              styles.wrapContainer,
+              {
+                marginTop: scaler(16),
+                marginBottom: scaler(16),
+                marginLeft: scaler(16),
+              },
+            ]}
+            onPress={onNavigateAddBaby}>
+            <Image
+              source={iconPlusCircle}
+              style={{
+                height: scaler(24),
+                width: scaler(24),
+                marginRight: scaler(8),
+              }}
+              resizeMode="contain"
+            />
+            <Text style={[styles.title, {color: '#A3A1AB'}]}>
+              {t('newBorn.addBaby')}
+            </Text>
+          </TouchableOpacity>
+        )}
         <Text style={[styles.title, {marginTop: scaler(16)}]}>
           {t('setting.mom')}
         </Text>

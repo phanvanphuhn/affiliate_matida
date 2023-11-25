@@ -293,6 +293,11 @@ const Home = () => {
   };
 
   const onNavigateNewBorn = () => {
+    trackingAppEvent(
+      event.NEW_BORN.CLICK_REPORT_BIRTH,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.NEW_BORN);
   };
 
@@ -325,7 +330,7 @@ const Home = () => {
   const onPressNewBornTracker = () => {
     trackingAppEvent(
       event.NEW_BORN.NEW_BORN_CLICK_VIEW_MORE,
-      {},
+      {id: user?.id},
       eventType.MIX_PANEL,
     );
     navigation.navigate(ROUTE_NAME.NEW_BORN_TRACKER, {

@@ -27,6 +27,7 @@ import Toast from 'react-native-toast-message';
 import {navigate} from '@navigation';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+import {event, eventType, trackingAppEvent} from '@util';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -96,6 +97,64 @@ const NewBornScreen = (props: TProps) => {
   };
 
   const onNextPage = () => {
+    switch (state.page) {
+      case 0:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_HAS_YOUR_BABY_BORN,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case 1:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_BIRTH_DAY,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case 2:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_BIRTH_TIME,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case 3:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_BABY_NAME,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case 4:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_BABY_GENDER,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case 5:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_BIRTH_METHOD,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case 6:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_BIRTH_WEIGHT,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case 7:
+        trackingAppEvent(
+          event.NEW_BORN.REPORT_BIRTH_BIRTH_HEIGHT,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+    }
     setState({page: state.page + 1});
   };
 
@@ -118,6 +177,11 @@ const NewBornScreen = (props: TProps) => {
   };
 
   const onDone = async () => {
+    trackingAppEvent(
+      event.NEW_BORN.REPORT_BIRTH_DONE_TELL_ME_MORE,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     const params = {
       id: user?.baby_id,
       body: {
