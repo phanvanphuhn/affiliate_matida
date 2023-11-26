@@ -77,14 +77,14 @@ const ContentDeal = (props: any) => {
       const res = await submitDeal(params);
       if (res?.success) {
         showMessage({
-          message: 'Submit deal success',
+          message: t('deal.submitSuccess'),
           type: 'default',
           backgroundColor: colors.success_message,
           color: '#FFFFFF',
         });
       } else {
         showMessage({
-          message: 'Submit deal failed',
+          message: t('deal.submitFailed'),
           type: 'default',
           backgroundColor: colors.error_message,
           color: '#FFFFFF',
@@ -92,7 +92,7 @@ const ContentDeal = (props: any) => {
       }
     } catch (error) {
       showMessage({
-        message: 'Submit deal failed',
+        message: t('deal.submitFailed'),
         type: 'default',
         backgroundColor: colors.error_message,
         color: '#FFFFFF',
@@ -147,13 +147,22 @@ const ContentDeal = (props: any) => {
       eventType.MIX_PANEL,
     );
     Clipboard.setString(data?.code);
-    Linking.openURL(data?.link);
-    showMessage({
-      message: t('articles.successShare'),
-      type: 'default',
-      backgroundColor: colors.success_message,
-      color: '#FFFFFF',
-    });
+    if (data?.link) {
+      Linking.openURL(data?.link);
+      showMessage({
+        message: t('deal.getCodeSuccess'),
+        type: 'default',
+        backgroundColor: colors.success_message,
+        color: '#FFFFFF',
+      });
+    } else {
+      showMessage({
+        message: t('deal.getCodeFailed'),
+        type: 'default',
+        backgroundColor: colors.error_message,
+        color: '#FFFFFF',
+      });
+    }
   };
 
   return (
@@ -184,7 +193,9 @@ const ContentDeal = (props: any) => {
         style={styles.wrapButtonContainer}
         onPress={onShowModal}>
         <Text style={styles.buttonTitle}>
-          {data?.required_data ? t('deal.contactForm') : t('deal.getDeal')}
+          {data?.required_data && data?.required_data.length > 0
+            ? t('deal.contactForm')
+            : t('deal.getDeal')}
         </Text>
       </TouchableOpacity>
       <ScrollView
