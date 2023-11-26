@@ -650,6 +650,10 @@ export const en = {
     getOffer: 'Contact form',
     submit: 'Submit',
     contactForm: 'Contact Form',
+    getCodeSuccess: 'Get code success',
+    getCodeFailed: 'Get code failed',
+    submitSuccess: 'Submit deal success',
+    submitFailed: 'Submit deal failed',
   },
   newBorn: {
     hi: 'Hi Mom,',

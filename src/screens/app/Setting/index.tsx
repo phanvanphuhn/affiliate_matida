@@ -378,10 +378,10 @@ const styles = StyleSheet.create({
     marginLeft: scaler(10),
   },
   viewBottom: {
-    flex: 1,
+    backgroundColor: colors.white,
+    height: scaler(80),
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: getBottomSpace() + scaler(20),
   },
   txtBottom: {
     color: colors.gray300,

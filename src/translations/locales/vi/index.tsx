@@ -653,6 +653,11 @@ export const vi = {
     phoneNumber: 'Số điện thoại',
     getOffer: 'Nhận ưu đãi',
     submit: 'Nhận tư vấn',
+    contactForm: 'Nhận tư vấn',
+    getCodeSuccess: 'Lấy mã thành công',
+    getCodeFailed: 'Lấy mã thất bại',
+    submitSuccess: 'Đăng ký deal thành công',
+    submitFailed: 'Đăng ký deal thất bại',
   },
   newBorn: {
     hi: 'Chào mẹ,',

@@ -40,7 +40,7 @@ const ModalGetDeal = (props: any) => {
       onRequestClose={() => {}}
       animationType="fade">
       <View style={styles.modalContainer}>
-        {requiredData ? (
+        {requiredData && requiredData?.length > 0 ? (
           <>
             <View
               style={styles.viewOut}
