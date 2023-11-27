@@ -55,7 +55,9 @@ const CalculateDueDateScreenApp = (props: any) => {
       console.log('res: ', res?.data?.resultPeriod?.dueDate);
       route?.params?.setState({
         due_date: moment(
-          res?.data?.resultPeriod?.dueDate || res?.data?.resultIVF?.dueDate,
+          res?.data?.resultPeriod?.dueDate
+            ? res?.data?.resultPeriod?.dueDate
+            : res?.data?.resultIVF?.dueDate,
           'MM/DD/YYYY',
         ).format('MM/DD/YYYY'),
         body: res,

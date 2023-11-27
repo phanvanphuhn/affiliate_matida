@@ -17,7 +17,6 @@ const ResultDueDateScreenApp = (props: any) => {
   const {t} = useTranslation();
   const {route} = props;
   const {data, type} = route?.params;
-  console.log('data: ', data, type);
   const navigation = useNavigation<any>();
   const [detail, setDetail] = useState<any>(null);
 
@@ -58,7 +57,7 @@ const ResultDueDateScreenApp = (props: any) => {
       <View style={styles.container}>
         <View style={[styles.body, stylesScreen.body]}>
           <Image
-            source={{uri: `${data?.image?.url}`}}
+            source={{uri: `${data?.image?.url}`} || {uri: data?.image}}
             style={stylesScreen.icon}
           />
           <Text style={stylesScreen.text}>

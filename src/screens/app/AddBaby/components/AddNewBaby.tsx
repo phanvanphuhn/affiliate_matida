@@ -99,7 +99,7 @@ const AddNewBaby = (props: any) => {
       body: {
         user_id: user?.id,
         name: state.name,
-        due_date: moment.utc(state.due_date).format('YYYY/MM/DD'),
+        due_date: moment.utc(state.due_date, 'MM/DD/YYYY').format('YYYY/MM/DD'),
         avatar: state.avatar,
         pregnant_type: 'singleton',
       },
@@ -107,12 +107,6 @@ const AddNewBaby = (props: any) => {
     if (onValidateForm()) {
       try {
         GlobalService.showLoading();
-        // let response;
-        // if (state?.isEdit) {
-        //   response = await updateBaby(updateParams);
-        // } else {
-        //   response = await createBaby(params);
-        // }
         let response;
         if (state?.isEdit) {
           response = await updateBaby(updateParams);

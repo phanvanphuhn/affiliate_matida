@@ -64,7 +64,7 @@ import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
 import {FloatingNewBornButton} from '@component/FloatingNewBornButton';
-import ListMonth, {TData} from './components/ListMonth';
+import ListMonth, {TData, dataInitListMonth} from './components/ListMonth';
 import useDetailFeed from '../DetailFeed/useDetailFeed';
 import useDetailPost from '../Forum/components/useDetailPost';
 import BottomSheetModal from '@component/BottomSheetModal';
@@ -271,20 +271,61 @@ const Home = () => {
     try {
       const res = await getUserInfoApi();
       dispatch(saveDataUser(res?.data?.data));
+      return res?.data?.data;
     } catch (error) {}
   };
 
   const getData = async () => {
     GlobalService.showLoading();
+    let initFilter;
     try {
-      getDataUser();
+      const userInfo = await getDataUser();
+      const {months, weeks, days, years} = userInfo?.pregnantWeek?.weekPregnant;
+      if (months == 0 && days == 0) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == weeks && item.value.includes('week'),
+        );
+      } else if (months == 0 && days > 0) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == weeks + 1 && item.value.includes('week'),
+        );
+      } else if (months == 1 && weeks == 0 && days == 0) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == 4 && item.value.includes('week'),
+        );
+      } else if (months == 1 && weeks == 0 && days > 0) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == 5 && item.value.includes('week'),
+        );
+      } else if (months == 1 && weeks > 0) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == weeks + 4 && item.value.includes('week'),
+        );
+      } else if (months == 2 && weeks == 0 && days == 0) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == 8 && item.value.includes('week'),
+        );
+      } else if (months == 2 && (weeks > 0 || days > 0)) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == 3 && item.value.includes('month'),
+        );
+      } else if (months > 6) {
+        initFilter = [{}];
+      } else {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == months && item.value.includes('month'),
+        );
+      }
       checkProgram();
       dispatch(getDataHome());
       dispatch(getListBaby());
       const res = await calendarCheckups();
       setState({
         data: res?.data,
-        filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
+        filter:
+          initFilter && initFilter?.length > 0
+            ? initFilter[0]
+            : {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
         isShowContent: [],
       });
       GlobalService.hideLoading();

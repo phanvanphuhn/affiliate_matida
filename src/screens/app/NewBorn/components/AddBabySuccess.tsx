@@ -11,7 +11,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 const AddBabySuccess = (props: any) => {
   const {route} = props;
   const {params} = route;
-
   const {t} = useTranslation();
 
   const onNavigateHomePage = () => {

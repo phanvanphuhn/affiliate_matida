@@ -18,8 +18,6 @@ const AppImage = React.memo((props: any) => {
   const [loading, setLoading] = useState<any>(null);
   const [error, setError] = useState<boolean>(false);
 
-  log && reactotron.log?.('URL', uri, log);
-
   const onLoadStart = useCallback(() => {
     setLoading(true);
   }, []);
@@ -36,7 +34,7 @@ const AppImage = React.memo((props: any) => {
 
   return (
     <View style={[style, {borderWidth: 0}]}>
-      {!uri || error ? (
+      {!uri ? (
         <Image source={user ? avatarDefault : LogoApp} style={[style]} />
       ) : (
         <FastImage
@@ -49,7 +47,7 @@ const AppImage = React.memo((props: any) => {
           resizeMode={resizeMode ? resizeMode : 'cover'}
           onLoadStart={() => onLoadStart()}
           onLoad={() => onLoad()}
-          onError={onError}
+          // onError={onError}
           // onLoadEnd={onLoadEnd}
         />
       )}
