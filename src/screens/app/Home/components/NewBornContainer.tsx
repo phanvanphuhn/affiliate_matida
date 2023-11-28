@@ -1,5 +1,5 @@
 import {iconArrowRight, newBornBaby, tailArrowRight} from '@images';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {
   View,
@@ -157,7 +157,11 @@ const NewBornContainer = (props: TProps) => {
           />
           <View>
             <Text
-              style={{fontSize: 11, fontWeight: '500', maxWidth: '80%'}}
+              style={{
+                fontSize: 11,
+                ...stylesCommon.fontWeight500,
+                maxWidth: '80%',
+              }}
               numberOfLines={1}>
               {user?.baby_name}
             </Text>
@@ -212,8 +216,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: scaler(11),
-    fontWeight: '500',
     color: '#82808A',
+    ...stylesCommon.fontWeight500,
   },
   wrapBtnContainer: {
     paddingVertical: scaler(8),
@@ -224,7 +228,7 @@ const styles = StyleSheet.create({
   },
   btnTitle: {
     fontSize: 12,
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     color: colors.primaryBackground,
   },
   description: {

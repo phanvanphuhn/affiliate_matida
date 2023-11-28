@@ -1,4 +1,4 @@
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import {TState} from '../index';
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   btnTitle: {
     fontSize: 12,
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
   },
 });
 

@@ -137,7 +137,7 @@ export const ViewQuiz = React.memo((props: any) => {
               heightMax={110}
               text={lang === 1 ? data?.question_en : data?.question_vi}
               style={styles.txtTitleContent}
-              numberOfLines={3}
+              numberOfLines={10}
             />
           </View>
           {/* <View style={styles.viewRow}>

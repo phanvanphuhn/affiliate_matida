@@ -1,5 +1,5 @@
 import {goBack, navigate} from '@navigation';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {
   View,
@@ -125,7 +125,7 @@ const AddNewBaby = (props: any) => {
         trackBirthdateEvent(moment(state.due_date).format('MM/DD/YYYY'), false);
         if (res.success && response?.success) {
           showMessage({
-            message: res?.data?.message,
+            message: t('newBorn.happyPreggy'),
             type: 'default',
             backgroundColor: colors.success_message,
           });
@@ -136,7 +136,7 @@ const AddNewBaby = (props: any) => {
           });
         } else {
           showMessage({
-            message: res?.data?.message,
+            message: t('error.addNewBornFail'),
             type: 'default',
             backgroundColor: colors.success_message,
           });
@@ -144,7 +144,7 @@ const AddNewBaby = (props: any) => {
         GlobalService.hideLoading();
       } catch (error) {
         showMessage({
-          message: 'Upload failed',
+          message: t('error.addNewBornFail'),
           type: 'default',
           backgroundColor: colors.error_message,
         });
@@ -208,12 +208,12 @@ const AddNewBaby = (props: any) => {
                   state.due_date.length > 0
                     ? {
                         fontSize: scaler(14),
-                        fontWeight: '400',
+                        ...stylesCommon.fontWeight400,
                         color: colors.black,
                       }
                     : {
                         fontSize: scaler(14),
-                        fontWeight: '400',
+                        ...stylesCommon.fontWeight400,
                         color: '#A3A1AB',
                       },
                 ]}>
@@ -258,7 +258,9 @@ const AddNewBaby = (props: any) => {
             onPress={onSave}
             // disabled={!state.name || !state.due_date}
           >
-            <Text style={{color: colors.white, fontWeight: '500'}}>Save</Text>
+            <Text style={{color: colors.white, ...stylesCommon.fontWeight500}}>
+              Save
+            </Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
@@ -278,16 +280,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: scaler(24),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
   },
   desc: {
     fontSize: scaler(14),
-    fontWeight: '400',
+    ...stylesCommon.fontWeight400,
     color: colors.labelColor,
   },
   label: {
     fontSize: scaler(12),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     color: '#85828C',
   },
   wrapContent: {
@@ -307,7 +309,7 @@ const styles = StyleSheet.create({
   },
   errorMsg: {
     fontSize: scaler(12),
-    fontWeight: '400',
+    ...stylesCommon.fontWeight400,
     color: colors.red50,
     marginTop: scaler(8),
   },

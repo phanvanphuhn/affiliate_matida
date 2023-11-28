@@ -653,7 +653,7 @@ export const vi = {
     phoneNumber: 'Số điện thoại',
     getOffer: 'Nhận ưu đãi',
     submit: 'Nhận tư vấn',
-    contactForm: 'Nhận tư vấn',
+    contactForm: 'Nhận ưu đãi',
     getCodeSuccess: 'Lấy mã thành công',
     getCodeFailed: 'Lấy mã thất bại',
     submitSuccess: 'Đăng ký deal thành công',
@@ -742,7 +742,7 @@ export const vi = {
     accept: 'Tham gia ngay',
     freeOfCharge: 'Đăng ký không mất phí',
     thankYou:
-      'Cảm ơn mẹ đã đăng ký tham gia. Matida sẽ nhắn mẹ khi chương trình ra mắt!',
+      'Cảm ơn mẹ đã đăng ký tham gia.\nMatida sẽ nhắn mẹ khi chương trình ra mắt!',
   },
   addInformation: {
     helpCalculate: 'Con cần mẹ giúp để tính mốc tăng trưởng',

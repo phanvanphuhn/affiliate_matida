@@ -47,7 +47,7 @@ const AppImage = React.memo((props: any) => {
           resizeMode={resizeMode ? resizeMode : 'cover'}
           onLoadStart={() => onLoadStart()}
           onLoad={() => onLoad()}
-          // onError={onError}
+          onError={onError}
           // onLoadEnd={onLoadEnd}
         />
       )}

@@ -309,6 +309,14 @@ const Home = () => {
         initFilter = dataInitListMonth.filter(
           item => item.intVal == 3 && item.value.includes('month'),
         );
+      } else if (months < 7 && (weeks > 0 || days > 0)) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == months + 1 && item.value.includes('month'),
+        );
+      } else if (months < 7 && weeks == 0 && days == 0) {
+        initFilter = dataInitListMonth.filter(
+          item => item.intVal == months && item.value.includes('month'),
+        );
       } else if (months > 6) {
         initFilter = [{}];
       } else {
@@ -706,9 +714,8 @@ const Home = () => {
           {/* <DailyAffirmation quote={data?.quote} /> */}
           {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||
-              user?.baby_type == 'pregnant-overdue') && (
-              <MomProgram data={isSignUp} />
-            )}
+              user?.baby_type == 'pregnant-overdue' ||
+              user?.baby_type == 'unknown') && <MomProgram data={isSignUp} />}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
         {isShowForReviewer(user) &&

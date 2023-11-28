@@ -50,11 +50,11 @@ const ChooseDueDateScreenApp = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    if (user?.due_date) {
-      setDate(new Date(user?.due_date));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.due_date) {
+  //     setDate(new Date(user?.due_date));
+  //   }
+  // }, [user]);
 
   const navigateToCalculate = () => {
     trackBirthdateEvent("Don't know", true);

@@ -679,8 +679,8 @@ export const en = {
     name: 'Name',
     babyWeight: 'Birth weight',
     babyHeight: 'Birth height',
-    male: 'Male',
-    female: 'Female',
+    male: 'Boy',
+    female: 'Girl',
     notToSay: 'Prefer not to say',
     naturalBirth: 'Natural Birth',
     cSection: 'C section',
@@ -727,7 +727,7 @@ export const en = {
   momProgram: {
     youAreInvite: 'You’re invited to join',
     powerMom: 'The Power Mom Program',
-    signUpHere: 'Sign up here for early,',
+    signUpHere: 'Sign up here for early, ',
     free: 'free of charge',
     access: 'access.',
     sub1: '• Expert guidance through your pregnancy',
@@ -737,7 +737,7 @@ export const en = {
     accept: 'Accept invitation',
     freeOfCharge: 'Free of charge, no strings attached',
     thankYou:
-      'Thank you for signing up for the program. We will let you know when you can join it!',
+      'Thank you for signing up for the program.\nWe will let you know when you can join it!',
   },
   addInformation: {
     helpCalculate: 'I need your help to calculate',

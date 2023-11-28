@@ -1,4 +1,4 @@
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useCallback, useMemo, useRef} from 'react';
 import {
   View,
@@ -261,7 +261,7 @@ const EditNewBorn = (props: any) => {
               <Text style={[styles.title, {marginBottom: scaler(8)}]}>
                 {t('newBorn.happyParenting')}
               </Text>
-              <Text style={[styles.content, {fontWeight: '400'}]}>
+              <Text style={[styles.content, {...stylesCommon.fontWeight400}]}>
                 {t('newBorn.tellMeMore')}
               </Text>
 
@@ -279,7 +279,7 @@ const EditNewBorn = (props: any) => {
                   {t('newBorn.name')}
                 </Text>
                 <TextInput
-                  style={[styles.content, {fontWeight: '500'}]}
+                  style={[styles.content, {...stylesCommon.fontWeight500}]}
                   placeholder={t('newBorn.babyName')}
                   value={state.name}
                   onChangeText={text => {
@@ -299,7 +299,8 @@ const EditNewBorn = (props: any) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                   }}>
-                  <Text style={[styles.content, {fontWeight: '500'}]}>
+                  <Text
+                    style={[styles.content, {...stylesCommon.fontWeight500}]}>
                     {lang == 1
                       ? gender.filter(item => item.value == state.gender)[0]
                           ?.label
@@ -335,7 +336,7 @@ const EditNewBorn = (props: any) => {
                     <Text
                       style={[
                         styles.content,
-                        {fontWeight: '500'},
+                        {...stylesCommon.fontWeight500},
                         state.dob
                           ? {
                               color: colors.black,
@@ -374,7 +375,7 @@ const EditNewBorn = (props: any) => {
                     <Text
                       style={[
                         styles.content,
-                        {fontWeight: '500'},
+                        {...stylesCommon.fontWeight500},
                         state.tob
                           ? {
                               color: colors.labelColor,
@@ -415,7 +416,10 @@ const EditNewBorn = (props: any) => {
                       justifyContent: 'space-between',
                     }}>
                     <TextInput
-                      style={[styles.content, {fontWeight: '500', flex: 1}]}
+                      style={[
+                        styles.content,
+                        {...stylesCommon.fontWeight500, flex: 1},
+                      ]}
                       placeholder="3.0"
                       value={state.weight}
                       onChangeText={text => {
@@ -447,7 +451,10 @@ const EditNewBorn = (props: any) => {
                       justifyContent: 'space-between',
                     }}>
                     <TextInput
-                      style={[styles.content, {fontWeight: '500', flex: 1}]}
+                      style={[
+                        styles.content,
+                        {...stylesCommon.fontWeight500, flex: 1},
+                      ]}
                       placeholder="80"
                       value={state.height}
                       onChangeText={text => {
@@ -474,7 +481,8 @@ const EditNewBorn = (props: any) => {
                     justifyContent: 'space-between',
                   }}
                   onPress={() => onOpenBottomSheet('birth_experience')}>
-                  <Text style={[styles.content, {fontWeight: '500'}]}>
+                  <Text
+                    style={[styles.content, {...stylesCommon.fontWeight500}]}>
                     {lang == 1
                       ? birth_experience.filter(
                           item => item.value == state.birth_experience,
@@ -539,14 +547,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: scaler(24),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
   },
   content: {
     fontSize: scaler(14),
   },
   label: {
     fontSize: scaler(12),
-    fontWeight: '400',
+    ...stylesCommon.fontWeight400,
     color: '#85828C',
     marginBottom: scaler(8),
   },
@@ -577,7 +585,7 @@ const styles = StyleSheet.create({
   },
   errorMsg: {
     fontSize: scaler(12),
-    fontWeight: '400',
+    ...stylesCommon.fontWeight400,
     color: colors.red50,
     marginTop: scaler(8),
   },
