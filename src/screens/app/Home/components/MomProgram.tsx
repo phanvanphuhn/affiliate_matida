@@ -1,6 +1,6 @@
 import {momProgram, newBornBaby} from '@images';
 import {getProgramJoin} from '@services';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {event, eventType, trackingAppEvent} from '@util';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -133,17 +133,17 @@ const styles = StyleSheet.create({
     marginHorizontal: scaler(16),
     borderRadius: scaler(16),
   },
-  label: {
-    fontWeight: '500',
-    fontSize: scaler(14),
-  },
+  // label: {
+  //   ...stylesCommon.fontWeight500,
+  //   fontSize: scaler(14),
+  // },
   title: {
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     fontSize: scaler(20),
     marginBottom: scaler(8),
   },
   subTitle: {
-    fontWeight: '400',
+    ...stylesCommon.fontWeight400,
     fontSize: scaler(14),
     color: '#39383D',
     textAlign: 'center',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     borderColor: '#F1F0F5',
   },
   label: {
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     fontSize: scaler(14),
     color: colors.labelColor,
     marginBottom: scaler(8),
@@ -178,13 +178,13 @@ const styles = StyleSheet.create({
     marginBottom: scaler(16),
   },
   btnTitle: {
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     fontSize: scaler(12),
     color: colors.white,
   },
   subBtnTitle: {
     fontSize: scaler(12),
-    fontWeight: '400',
+    ...stylesCommon.fontWeight400,
     color: '#85828C',
   },
 });
