@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import {
+  ActivityIndicator,
   Animated,
   Platform,
   RefreshControl,
@@ -115,14 +116,16 @@ const Home = () => {
     }
   }
 
-  const [refreshing, setRefreshing] = useState(false);
-  const [isSignUp, setIsSignUp] = useState();
+  // const [refreshing, setRefreshing] = useState(false);
+  // const [isSignUp, setIsSignUp] = useState();
 
   const [state, setState] = useDetailPost({
     filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
     isShowNewBorn: false,
     data: [],
     isShowContent: [],
+    isSignUp: '',
+    refreshing: true,
   });
 
   const scrollRef = useRef<ScrollView>(null);
@@ -276,7 +279,8 @@ const Home = () => {
   };
 
   const getData = async () => {
-    GlobalService.showLoading();
+    // GlobalService.showLoading();
+    setState({refreshing: true});
     let initFilter;
     try {
       const userInfo = await getDataUser();
@@ -325,7 +329,7 @@ const Home = () => {
         );
       }
       checkProgram();
-      dispatch(getDataHome());
+      // dispatch(getDataHome());
       dispatch(getListBaby());
       const res = await calendarCheckups();
       setState({
@@ -335,12 +339,13 @@ const Home = () => {
             ? initFilter[0]
             : {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
         isShowContent: [],
+        refreshing: false,
       });
       GlobalService.hideLoading();
     } catch (error) {
       GlobalService.hideLoading();
     } finally {
-      setRefreshing(false);
+      setState({refreshing: false});
     }
   };
 
@@ -380,7 +385,7 @@ const Home = () => {
   };
 
   const onSwitchBaby = async (item: TBaby) => {
-    GlobalService.showLoading();
+    // GlobalService.showLoading();
     handleCloseScheduleOrderBottomSheet();
     trackingAppEvent(
       event.NEW_BORN.NEW_BORN_HOMEPAGE_CHANGE_BABY,
@@ -440,7 +445,7 @@ const Home = () => {
     navigation.navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
   };
   const onRefresh = () => {
-    setRefreshing(true);
+    setState({refreshing: true});
     getData();
   };
 
@@ -493,7 +498,7 @@ const Home = () => {
   const checkProgram = async () => {
     const res = await getProgramCheck();
     if (res?.success) {
-      setIsSignUp(res?.data);
+      setState({isSignUp: res?.data});
     }
   };
 
@@ -501,23 +506,71 @@ const Home = () => {
     trackUser(user);
   }, []);
 
+  const renderNewBornContent = () => {
+    if (
+      data?.babyProgress?.baby?.month > 6 ||
+      data?.babyProgress?.baby?.year > 0
+    ) {
+      return (
+        <View style={{paddingHorizontal: scaler(16)}}>
+          <ContentUpdate
+            dataNewBorn={isSelectProfileNewBorn}
+            user={data?.user}
+            data={data?.babyProgress}
+          />
+        </View>
+      );
+    } else if (
+      isSelectProfileNewBorn.length > 0 &&
+      isSelectProfileNewBorn[0]?.type !== 'pregnant' &&
+      isSelectProfileNewBorn[0]?.type !== 'pregnant-overdue' &&
+      isSelectProfileNewBorn[0]?.type !== 'unknown'
+    ) {
+      return (
+        <View
+          style={{
+            // paddingHorizontal: scaler(20),
+            marginBottom: scaler(16),
+          }}>
+          <NewBornContainer
+            onPress={onPressNewBornTracker}
+            data={data?.babyProgress}
+            user={data?.user}
+            state={state}
+            setState={setState}
+            isSelectProfileNewBorn={isSelectProfileNewBorn}
+          />
+        </View>
+      );
+    } else if (!!user?.is_skip || weekPregnant?.days < 0) {
+      return (
+        <View style={{paddingHorizontal: scaler(16), marginBottom: scaler(16)}}>
+          <AddInformation onPress={onNavigateNewBorn} />
+        </View>
+      );
+    } else {
+      return (
+        <View
+          style={{
+            // paddingHorizontal: scaler(20),
+            marginBottom: scaler(16),
+          }}>
+          {isShowForReviewer(user) && <SizeComparisonComponent />}
+
+          <View
+            style={{
+              paddingHorizontal: scaler(16),
+            }}>
+            <PregnancyProgress />
+          </View>
+        </View>
+      );
+    }
+  };
+
   return (
     <ContainerProvider state={state} setState={setState}>
       <GestureHandlerRootView style={styles.container}>
-        {/* <Animated.Image
-        source={imageBackgroundOpacity}
-        style={[
-          styles.circleBackground,
-          {
-            opacity: opacityY,
-            transform: [
-              {
-                translateY: _translateY,
-              },
-            ],
-          },
-        ]}
-      /> */}
         <AppHeader
           onPressMenu={navigateSetting}
           onPressNotification={navigateNotification}
@@ -552,170 +605,41 @@ const Home = () => {
             ],
             {useNativeDriver: false},
           )}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
+          // refreshControl={
+          //   <RefreshControl
+          //     refreshing={state?.refreshing}
+          //     onRefresh={onRefresh}
+          //   />
+          // }
           contentContainerStyle={{
             paddingBottom: scaler(30),
             paddingTop: scaler(18),
           }}>
           <View
             style={{
-              // paddingHorizontal: scaler(20),
               marginBottom: scaler(16),
             }}>
             <ChatGPTComponent />
           </View>
 
-          {data?.babyProgress?.baby?.month > 6 ||
-          data?.babyProgress?.baby?.year > 0 ? (
-            <View style={{paddingHorizontal: scaler(16)}}>
-              <ContentUpdate
-                dataNewBorn={isSelectProfileNewBorn}
-                user={data?.user}
-                data={data?.babyProgress}
-              />
-            </View>
-          ) : isSelectProfileNewBorn.length > 0 &&
-            isSelectProfileNewBorn[0]?.type !== 'pregnant' &&
-            isSelectProfileNewBorn[0]?.type !== 'pregnant-overdue' &&
-            isSelectProfileNewBorn[0]?.type !== 'unknown' ? (
-            <View
-              style={{
-                // paddingHorizontal: scaler(20),
-                marginBottom: scaler(16),
-              }}>
-              <NewBornContainer
-                onPress={onPressNewBornTracker}
-                data={data?.babyProgress}
-                user={data?.user}
-                state={state}
-                setState={setState}
-                isSelectProfileNewBorn={isSelectProfileNewBorn}
-              />
-            </View>
-          ) : !!user?.is_skip || weekPregnant?.days < 0 ? (
-            <View
-              style={{paddingHorizontal: scaler(16), marginBottom: scaler(16)}}>
-              <AddInformation onPress={onNavigateNewBorn} />
+          {state?.refreshing ? (
+            <View style={styles.wrapLoadingContainer}>
+              <ActivityIndicator size={'small'} color={'red'} />
             </View>
           ) : (
-            <>
-              {/* {isShowForReviewer(user) && (
-              <View>
-                <WeeksPregnant />
-              </View>
-            )} */}
-              <View
-                style={{
-                  // paddingHorizontal: scaler(20),
-                  marginBottom: scaler(16),
-                }}>
-                {isShowForReviewer(user) && <SizeComparisonComponent />}
-
-                <View
-                  style={{
-                    paddingHorizontal: scaler(16),
-                  }}>
-                  <PregnancyProgress />
-                </View>
-              </View>
-            </>
+            renderNewBornContent()
           )}
-
-          {/* <View>
-          <ListPostComponent posts={data?.posts} />
-
-          <TouchableOpacity
-            style={styles.createPostButton}
-            onPress={() => navigation.navigate(ROUTE_NAME.CREATE_NEWPOST)}>
-            <SvgMessages3 />
-            <Text style={styles.titleButton}>{t('home.createPost')}</Text>
-          </TouchableOpacity>
-        </View> */}
 
           {data?.dailyQuizz && isShowForReviewer(user) ? (
             <ViewQuiz onAnswer={onAnswerQuiz} />
           ) : null}
 
-          {/* <BannerTestQuiz /> */}
-
-          {/*
-        <HorizontalList
-          loading={loading}
-          title={t('home.weeklyVideos')}
-          length={data?.videos?.length}
-          styleHeader={{paddingHorizontal: scaler(20)}}
-          onPressSeeMore={() => {
-            navigation.navigate(ROUTE_NAME.VIDEO_LIST);
-          }}>
-          {data?.videos?.map((video: any) => (
-            <WeekVideo
-              video={video}
-              onPress={handlePressItemVideo}
-              key={video.id}
-            />
-          ))}
-        </HorizontalList> */}
-
-          {/* <HorizontalList
-          loading={loading}
-          length={data?.rooms?.length}
-          title={t('home.groupTalks')}
-          styleHeader={{paddingHorizontal: scaler(20)}}
-          onPressSeeMore={() => navigation.navigate(ROUTE_NAME.TAB_LIVETALK)}>
-          {data?.rooms?.map((item: any, index: number) => (
-            <ItemTalks item={item} index={index} key={index} />
-          ))}
-        </HorizontalList> */}
-
-          {/* <HorizontalList
-          loading={loading}
-          title={t('home.weeklyArticles')}
-          length={data?.articles?.length}
-          styleHeader={{paddingHorizontal: scaler(20)}}
-          contentContainerStyle={{marginBottom: 0}}
-          onPressSeeMore={() => navigate(ROUTE_NAME.WEEKLY_ARTICLES)}>
-          {data?.articles?.map((article: IArticles) => (
-            <NewArticles
-              article={article}
-              onPress={handlePressItemArticle}
-              key={article.id}
-            />
-          ))}
-        </HorizontalList> */}
-
-          {/* <HorizontalList
-          loading={loading}
-          title={t('home.podcasts')}
-          styleHeader={{paddingHorizontal: scaler(20)}}
-          length={data?.podcast?.length}
-          onPressSeeMore={() => navigation.navigate(ROUTE_NAME.LIST_PODCAST)}>
-          {data?.podcast?.map((podcast: any, index: number) => (
-            <PodcastItem podcast={podcast} key={podcast.id} />
-          ))}
-        </HorizontalList> */}
-
-          {/* <HorizontalList
-          // IconSvg={<SvgBook />}
-          loading={loading}
-          title={t('home.masterClass')}
-          length={data?.masterClasses?.length}
-          styleHeader={{paddingHorizontal: scaler(20)}}
-          contentContainerStyle={{marginBottom: 0}}
-          onPressSeeMore={() =>
-            navigation.navigate(ROUTE_NAME.LIST_MASTER_CLASS)
-          }>
-          {data?.masterClasses?.map((masterClass: IArticles) => (
-            <ItemMasterClass masterClass={masterClass} key={masterClass.id} />
-          ))}
-        </HorizontalList> */}
-
-          {/* <DailyAffirmation quote={data?.quote} /> */}
           {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||
               user?.baby_type == 'pregnant-overdue' ||
-              user?.baby_type == 'unknown') && <MomProgram data={isSignUp} />}
+              user?.baby_type == 'unknown') && (
+              <MomProgram data={state?.isSignUp} />
+            )}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
         {isShowForReviewer(user) &&

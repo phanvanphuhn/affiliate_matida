@@ -174,11 +174,12 @@ const NewBornTracker = (props: TProps) => {
                       {
                         marginBottom: scaler(16),
                       },
-                      item.index == dataCollapsible.length
+                      dataCollapsible?.indexOf(item) ==
+                      dataCollapsible.length - 1
                         ? {}
                         : {
                             borderBottomColor: colors.borderColor,
-                            borderBottomWidth: 0.5,
+                            borderBottomWidth: 0.25,
                             paddingBottom: scaler(16),
                           },
                     ]}>
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
   wrapContentContainer: {
     paddingHorizontal: scaler(16),
     paddingTop: scaler(16),
-    backgroundColor: colors.gray350,
+    backgroundColor: '#F6F6F9',
   },
   label: {
     fontSize: scaler(16),

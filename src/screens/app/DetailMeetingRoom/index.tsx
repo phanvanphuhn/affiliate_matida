@@ -23,6 +23,7 @@ import {colors, scaler} from '@stylesCommon';
 import {
   AppSocket,
   convertLangMonth,
+  convertTimeRoom,
   event,
   eventType,
   getTimeEndRoom,
@@ -199,15 +200,9 @@ const DetailMeetingRoom = (props: any) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <SvgCalendar color={colors.brandMainPinkRed} />
             <Text style={styles.txtDateTime}>
-              {moment(infoRoom?.room?.start_time, 'YYYY/MM/DD hh:mm:ss').format(
-                'DD ',
-              )}
-              {convertLangMonth(
-                moment(infoRoom?.room?.start_time).format('MMMM'),
-              )}{' '}
-              {moment(infoRoom?.room?.start_time).format('YYYY')}{' '}
-              {moment(infoRoom?.room?.start_time, 'YYYY/MM/DD hh:mm:ss').format(
-                'HH:mm A',
+              {convertTimeRoom(
+                infoRoom?.room?.start_time,
+                infoRoom?.room?.type_room,
               )}
             </Text>
           </View>

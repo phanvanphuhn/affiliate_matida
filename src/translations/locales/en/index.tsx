@@ -723,6 +723,7 @@ export const en = {
     requireTob: 'Please input time of birth of baby',
     requireWeight: 'Please input weight of baby',
     requireHeight: 'Please input height of baby',
+    requireDueDate: 'Please input due date of baby',
   },
   momProgram: {
     youAreInvite: 'You’re invited to join',

@@ -24,15 +24,25 @@ const styles = StyleSheet.create({
     height: scaler(48),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: scaler(8)
+    borderRadius: scaler(8),
   },
-  titleButton:{
+  titleButton: {
     fontSize: scaler(14),
     ...stylesCommon.fontWeight600,
     lineHeight: scaler(21),
     color: colors.primary,
-    marginLeft: scaler(11)
-  }
+    marginLeft: scaler(11),
+  },
+  wrapLoadingContainer: {
+    paddingHorizontal: scaler(16),
+    marginHorizontal: scaler(16),
+    paddingVertical: scaler(16),
+    borderRadius: scaler(16),
+    backgroundColor: colors.white,
+    marginBottom: scaler(16),
+    height: scaler(280),
+    justifyContent: 'center',
+  },
 });
 
 export {styles};

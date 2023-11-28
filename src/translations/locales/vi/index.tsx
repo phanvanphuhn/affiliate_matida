@@ -728,6 +728,7 @@ export const vi = {
     requireTob: 'Hãy điền giờ sinh của bé',
     requireWeight: 'Hãy điền cân nặng của bé',
     requireHeight: 'Hãy điền chiều cao của bé',
+    requireDueDate: 'Hãy điền ngày dự sinh của bé',
   },
   momProgram: {
     youAreInvite: 'Mẹ được mời đến tham dự',

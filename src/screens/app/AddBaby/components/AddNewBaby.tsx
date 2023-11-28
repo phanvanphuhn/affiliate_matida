@@ -79,7 +79,7 @@ const AddNewBaby = (props: any) => {
 
     if (state.due_date.length < 1) {
       formIsValid = false;
-      formErrors['due_date'] = t('newBornErrorMsg.requireDob');
+      formErrors['due_date'] = t('newBornErrorMsg.requireDueDate');
     }
 
     setState({error: formErrors});
@@ -189,6 +189,7 @@ const AddNewBaby = (props: any) => {
               placeholder={t('newBorn.babyName')}
               value={state.name}
               onChangeText={text => setState({name: text})}
+              placeholderTextColor={'lightgray'}
             />
             {state?.error?.name?.length > 0 && (
               <Text style={styles.errorMsg}>{state.error.name}</Text>
@@ -202,27 +203,14 @@ const AddNewBaby = (props: any) => {
             <TouchableOpacity
               style={styles.wrapContentContainer}
               onPress={onChooseDueDate}>
-              <Text
-                style={[
-                  styles.label,
-                  state.due_date.length > 0
-                    ? {
-                        fontSize: scaler(14),
-                        ...stylesCommon.fontWeight400,
-                        color: colors.black,
-                      }
-                    : {
-                        fontSize: scaler(14),
-                        ...stylesCommon.fontWeight400,
-                        color: '#A3A1AB',
-                      },
-                ]}>
-                {state.due_date.length > 0
-                  ? moment
-                      .utc(state.due_date, 'MM/DD/YYYY')
-                      .format('DD/MM/YYYY')
-                  : t('newBorn.addDueDate')}
-              </Text>
+              <TextInput
+                editable={false}
+                placeholder={t('newBorn.addDueDate')}
+                value={moment
+                  .utc(state.due_date, 'MM/DD/YYYY')
+                  .format('DD/MM/YYYY')}
+                placeholderTextColor={'lightgray'}
+              />
               <Image
                 source={iconCalendarGrey}
                 style={{height: scaler(24), width: scaler(24)}}
@@ -241,7 +229,7 @@ const AddNewBaby = (props: any) => {
               paddingTop: scaler(16),
               paddingHorizontal: scaler(16),
               paddingBottom: scaler(32),
-              borderTopWidth: 0.5,
+              borderTopWidth: 0.25,
               borderColor: colors.borderColor,
             },
           ]}>
