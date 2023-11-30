@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: scaler(16),
     paddingBottom: scaler(10),
-    backgroundColor: colors.white,
+    backgroundColor: colors.gray250,
     flex: 1,
   },
   list: {

@@ -65,7 +65,11 @@ import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
 import {FloatingNewBornButton} from '@component/FloatingNewBornButton';
-import ListMonth, {TData, dataInitListMonth} from './components/ListMonth';
+import ListMonth, {
+  TData,
+  dataInitListMonth,
+  dataInitPregnantWeek,
+} from './components/ListMonth';
 import useDetailFeed from '../DetailFeed/useDetailFeed';
 import useDetailPost from '../Forum/components/useDetailPost';
 import BottomSheetModal from '@component/BottomSheetModal';
@@ -81,6 +85,7 @@ import AddInformation from './components/AddInformation';
 import {trackUser} from '@services/webengageManager';
 import ContentUpdate from './components/ContentUpdate';
 import {trackCustomEvent} from '@services/webengageManager';
+import moment from 'moment';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -285,7 +290,15 @@ const Home = () => {
     try {
       const userInfo = await getDataUser();
       const {months, weeks, days, years} = userInfo?.pregnantWeek?.weekPregnant;
-      if (months == 0 && days == 0) {
+      if (
+        user?.baby_type == 'pregnant' ||
+        user?.baby_type == 'pregnant-overdue' ||
+        user?.baby_type == 'unknown'
+      ) {
+        initFilter = dataInitPregnantWeek.filter(
+          item => item.intVal == weeks && item.value.includes('week'),
+        );
+      } else if (months == 0 && days == 0) {
         initFilter = dataInitListMonth.filter(
           item => item.intVal == weeks && item.value.includes('week'),
         );
@@ -329,7 +342,7 @@ const Home = () => {
         );
       }
       checkProgram();
-      // dispatch(getDataHome());
+      dispatch(getDataHome());
       dispatch(getListBaby());
       const res = await calendarCheckups();
       setState({

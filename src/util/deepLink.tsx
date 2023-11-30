@@ -1,7 +1,7 @@
-import {TypeDeepLink} from '@constant';
+import {TRouteDeepLink, TypeDeepLink} from '@constant';
 import {navigate, NavigationUtils} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
-import {DEEP_LINK, OLD_DEEP_LINK, WEB_API_KEY} from '@services';
+import {DEEP_LINK, OLD_DEEP_LINK, ROUTE_LINK, WEB_API_KEY} from '@services';
 import axios from 'axios';
 //@ts-ignore
 import dynamicLinks from '@react-native-firebase/dynamic-links';
@@ -63,11 +63,33 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
     afterLink = link.replace(new RegExp(`^${DEEP_LINK}/`), '');
   } else if (link.startsWith(OLD_DEEP_LINK)) {
     afterLink = link.replace(new RegExp(`^${OLD_DEEP_LINK}/`), '');
+  } else if (link.startsWith(ROUTE_LINK)) {
+    afterLink = link.replace(new RegExp(`^${ROUTE_LINK}/`), '');
   }
   const arrayParamsLink = afterLink.split('/');
-
   if (arrayParamsLink?.length < 2) {
-    return;
+    switch (arrayParamsLink[0]) {
+      case TRouteDeepLink.REPORT_BIRTH:
+        navigate(ROUTE_NAME.NEW_BORN);
+        break;
+      case TRouteDeepLink.USER_SETTINGS:
+        navigate(ROUTE_NAME.SETTING_SCREEN);
+        break;
+      case TRouteDeepLink.TAB_EXPLORE:
+        navigate(ROUTE_NAME.TAB_FEED);
+        break;
+      case TRouteDeepLink.TAB_COMMUNITY:
+        navigate(ROUTE_NAME.TAB_COMMUNITY);
+        break;
+      case TRouteDeepLink.TAB_DEAL:
+        navigate(ROUTE_NAME.TAB_DEAL);
+        break;
+      case TRouteDeepLink.TAB_LIVE_TALK:
+        navigate(ROUTE_NAME.TAB_LIVETALK);
+        break;
+      default:
+        break;
+    }
   }
   switch (arrayParamsLink[0]) {
     case TypeDeepLink.ARTICLE:

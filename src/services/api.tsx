@@ -10,6 +10,7 @@ const api = axios.create();
 export const WEB_API_KEY = 'AIzaSyC97bqy22ssFYx7piwjAB5yFhaqoXfTEX4';
 export const DEEP_LINK = 'https://matida.page.link';
 export const OLD_DEEP_LINK = 'https://matida1.page.link';
+export const ROUTE_LINK = 'https://www.matida.app';
 
 api.interceptors.request.use(
   async (config: any) => {

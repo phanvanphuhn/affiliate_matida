@@ -74,15 +74,15 @@ export const LikeView = (props: any) => {
           onPress={handlePressLike}
           activeOpacity={0.8}>
           {isLike ? (
-            <SvgHearted color={color && '#FFFFFF'} />
+            <SvgHearted color={color && colors.red50} />
           ) : (
-            <SvgHeart color={color && '#FFFFFF'} />
+            <SvgHeart color={color && colors.gray300} />
           )}
           <Text
             style={[
               styles.text,
               color && {
-                color: 'white',
+                color: colors.black,
               },
             ]}>
             {totalLike}
@@ -92,12 +92,12 @@ export const LikeView = (props: any) => {
           style={{flexDirection: 'row', alignItems: 'center'}}
           activeOpacity={0.8}
           onPress={onNavigate}>
-          <SvgComment color={color && '#FFFFFF'} />
+          <SvgComment color={color && colors.gray300} />
           <Text
             style={[
               styles.text,
               color && {
-                color: 'white',
+                color: colors.black,
               },
             ]}>
             {parseInt(data?.total_comment ?? '0', 10) +

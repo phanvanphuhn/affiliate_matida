@@ -32,6 +32,7 @@ import {
   KEY_UXCAM,
   MERCHANT_IDENTIFIER,
   STRIPE_KEY,
+  handleRouteDeepLink,
 } from '@util';
 import {Mixpanel} from 'mixpanel-react-native';
 import KeepAwake from 'react-native-keep-awake';
@@ -45,6 +46,7 @@ import TrackPlayer, {
   RepeatMode,
 } from 'react-native-track-player';
 import RNUxcam from 'react-native-ux-cam';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 //Disable yellow box warning
 LogBox.ignoreAllLogs();

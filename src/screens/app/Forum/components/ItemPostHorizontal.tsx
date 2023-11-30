@@ -5,7 +5,7 @@ import {AppImage} from '@component';
 import {colorRoom} from '@constant';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {LikeView} from './LikeView';
@@ -94,7 +94,7 @@ export const ItemPostHorizontal = (props: Props) => {
         styles.container,
         styles.content,
         {
-          backgroundColor: colorRoom[index],
+          backgroundColor: colors.white,
           marginBottom: props?.mgb ? props?.mgb : 0,
           width: props?.isListPost ? itemWidth * 0.9 : itemWidth,
         },
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   txtContent: {
     ...stylesCommon.fontWeight600,
     fontSize: scaler(14),
-    color: 'white',
+    color: colors.black,
     marginBottom: scaler(7),
     flexGrow: 1,
     flexShrink: 1,

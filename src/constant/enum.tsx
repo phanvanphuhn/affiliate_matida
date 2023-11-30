@@ -133,3 +133,12 @@ export enum ETabForum {
   MATIDA_TEAM,
   MATIDA_EXPERTS,
 }
+
+export enum TRouteDeepLink {
+  REPORT_BIRTH = 'report-birth',
+  USER_SETTINGS = 'user-settings',
+  TAB_EXPLORE = 'tab-explore',
+  TAB_COMMUNITY = 'tab-community',
+  TAB_DEAL = 'tab-deal',
+  TAB_LIVE_TALK = 'tab-live-talk',
+}
