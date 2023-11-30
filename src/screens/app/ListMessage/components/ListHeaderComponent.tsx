@@ -24,7 +24,8 @@ export const ListHeaderComponent = ({}: Props) => {
 
   const option = useSelector((state: any) => state?.listChat?.option);
   const search = useSelector((state: any) => state?.listChat?.search);
-
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  console.log('user: ', user);
   const [value, setValue] = useState<string>('');
   const refFirst = useRef<boolean>(false);
   const refInput = useRef<TextInput>(null);
@@ -61,22 +62,24 @@ export const ListHeaderComponent = ({}: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.viewInput]}>
-        <SvgSearch />
-        <TextInput
-          ref={refInput}
-          onChangeText={setValue}
-          value={value}
-          style={styles.inputSearch}
-          placeholder={t('chat.search') as string}
-          onFocus={handleFocus}
-        />
-        {value.length > 0 && (
-          <TouchableOpacity onPress={() => setValue('')}>
-            <SvgIconDelete />
-          </TouchableOpacity>
-        )}
-      </View>
+      {user?.user_type !== 'user' && (
+        <View style={[styles.viewInput]}>
+          <SvgSearch />
+          <TextInput
+            ref={refInput}
+            onChangeText={setValue}
+            value={value}
+            style={styles.inputSearch}
+            placeholder={t('chat.search') as string}
+            onFocus={handleFocus}
+          />
+          {value.length > 0 && (
+            <TouchableOpacity onPress={() => setValue('')}>
+              <SvgIconDelete />
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
       {option === EChatOption.USER ? (
         <TouchableOpacity
           onPress={handleCancel}

@@ -236,7 +236,7 @@ const AddNewBaby = (props: any) => {
           <TouchableOpacity
             style={styles.wrapButtonContainer}
             onPress={onCancel}>
-            <Text>Cancel</Text>
+            <Text>{t('newBorn.cancel')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -247,7 +247,7 @@ const AddNewBaby = (props: any) => {
             // disabled={!state.name || !state.due_date}
           >
             <Text style={{color: colors.white, ...stylesCommon.fontWeight500}}>
-              Save
+              {t('newBorn.save')}
             </Text>
           </TouchableOpacity>
         </View>

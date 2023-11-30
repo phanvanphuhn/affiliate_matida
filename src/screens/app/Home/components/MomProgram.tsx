@@ -111,7 +111,7 @@ const MomProgram = (props: any) => {
           </View>
         </>
       )}
-      <View>
+      <View style={{flex: 1, borderRadius: scaler(16)}}>
         <Image
           source={momProgram}
           style={{
@@ -119,7 +119,7 @@ const MomProgram = (props: any) => {
             height: scaler(198),
           }}
           // resizeMethod="resize"
-          resizeMode="contain"
+          // resizeMode="contain"
         />
       </View>
     </View>

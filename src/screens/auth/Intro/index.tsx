@@ -98,8 +98,8 @@ const Intro = () => {
         if (data?.accessToken) {
           const res = await loginFacebook(data?.accessToken);
           dispatch(saveDataLoginFacebook(res?.data));
-         loginWebEngage(`${res?.data?.data?.id}Facebook`);
-         trackUser(res?.data?.data);
+          loginWebEngage(`${res?.data?.data?.id}Facebook`);
+          trackUser(res?.data?.data);
           if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
@@ -123,9 +123,7 @@ const Intro = () => {
       }
     } else if (value === 'Zalo') {
       if (Platform.OS === 'android') {
-        const oauthCode: any = await LoginWithZalo(
-          Constants.AUTH_VIA_APP_OR_WEB,
-        );
+        const oauthCode: any = await LoginWithZalo(Constants.AUTH_VIA_APP);
         if (!refCheckLoginZalo.current) {
           refCheckLoginZalo.current = true;
           //@ts-ignore
@@ -152,9 +150,7 @@ const Intro = () => {
           }
         }
       } else {
-        const oauthCode: any = await LoginWithZalo(
-          Constants.AUTH_VIA_APP_OR_WEB,
-        );
+        const oauthCode: any = await LoginWithZalo(Constants.AUTH_VIA_APP);
         const res = await loginZalo(oauthCode?.accessToken);
         dispatch(saveDataLoginFacebook(res?.data));
         loginWebEngage(`${res?.data?.data?.id}Zalo-ios`);

@@ -2,6 +2,8 @@ import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
 import {
   LogoApp,
   SvgArrowBackLogin,
+  defaultIconBabyDueDate,
+  defaultIconBabyNewBorn,
   iconEdit,
   iconEditGrey,
   iconPen,
@@ -108,7 +110,13 @@ const DetailNewBorn = (props: any) => {
         <View style={styles.wrapImageContainer}>
           <FastImage
             source={
-              route?.params?.avatar ? {uri: route?.params?.avatar} : LogoApp
+              route?.params?.avatar
+                ? {uri: route?.params?.avatar}
+                : route?.params?.type == 'pregnant' ||
+                  route?.params?.type == 'pregnant-overdue' ||
+                  route?.params?.type == 'unknown'
+                ? defaultIconBabyDueDate
+                : defaultIconBabyNewBorn
             }
             style={styles.image}
             resizeMode="contain"
