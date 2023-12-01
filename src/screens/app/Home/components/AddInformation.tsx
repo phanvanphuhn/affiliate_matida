@@ -1,5 +1,5 @@
 import {newBornBaby} from '@images';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -28,7 +28,7 @@ const AddInformation = (props: TProps) => {
           <Text
             style={{
               fontSize: scaler(20),
-              fontWeight: '600',
+              ...stylesCommon.fontWeight600,
               marginBottom: scaler(16),
             }}>
             {t('addInformation.mystery')}
@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: scaler(11),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     color: '#85828C',
     marginBottom: scaler(24),
   },
   label: {
     fontSize: scaler(14),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     color: colors.black,
   },
   wrapBtnContainer: {
@@ -79,10 +79,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: scaler(16),
     backgroundColor: colors.primaryBackground,
     borderRadius: scaler(24),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnTitle: {
     fontSize: scaler(12),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     color: colors.white,
   },
 });

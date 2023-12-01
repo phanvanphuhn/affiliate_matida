@@ -49,6 +49,8 @@ const AddNewBaby = (props: any) => {
     error: {},
   });
 
+  console.log('state: ', state);
+
   const onChooseDueDate = () => {
     const params = {
       isAddNewBaby: true,
@@ -206,9 +208,13 @@ const AddNewBaby = (props: any) => {
               <TextInput
                 editable={false}
                 placeholder={t('newBorn.addDueDate')}
-                value={moment
-                  .utc(state.due_date, 'MM/DD/YYYY')
-                  .format('DD/MM/YYYY')}
+                value={
+                  state.due_date
+                    ? moment
+                        .utc(state.due_date, 'MM/DD/YYYY')
+                        .format('DD/MM/YYYY')
+                    : ''
+                }
                 placeholderTextColor={'lightgray'}
               />
               <Image

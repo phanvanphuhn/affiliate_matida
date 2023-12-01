@@ -408,6 +408,20 @@ export const dataInitPregnantWeek: TData[] = [
     labelVi: 'Tuần 40',
     intVal: 40,
   },
+  {
+    id: 41,
+    value: 'week_41',
+    labelEn: 'Week 41',
+    labelVi: 'Tuần 41',
+    intVal: 41,
+  },
+  {
+    id: 42,
+    value: 'week_42',
+    labelEn: 'Week 42',
+    labelVi: 'Tuần 42',
+    intVal: 42,
+  },
 ];
 
 const ListMonth = (props: TProps) => {

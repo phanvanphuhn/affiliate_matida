@@ -62,7 +62,7 @@ export const ListHeaderComponent = ({}: Props) => {
 
   return (
     <View style={styles.container}>
-      {user?.user_type !== 'user' && (
+      {user?.role !== 1 && (
         <View style={[styles.viewInput]}>
           <SvgSearch />
           <TextInput
