@@ -593,14 +593,16 @@ const Home = () => {
           openNewBorn={openNewBorn}
         />
 
-        <View
-          style={{
-            backgroundColor: colors.white,
-            paddingBottom: scaler(16),
-            paddingHorizontal: scaler(16),
-          }}>
-          <ListMonth />
-        </View>
+        {isShowForReviewer(user) && (
+          <View
+            style={{
+              backgroundColor: colors.white,
+              paddingBottom: scaler(16),
+              paddingHorizontal: scaler(16),
+            }}>
+            <ListMonth />
+          </View>
+        )}
 
         <ScrollView
           ref={scrollRef}
@@ -628,19 +630,21 @@ const Home = () => {
             paddingBottom: scaler(30),
             paddingTop: scaler(18),
           }}>
-          <View
-            style={{
-              marginBottom: scaler(16),
-            }}>
-            <ChatGPTComponent />
-          </View>
+          {isShowForReviewer(user) && (
+            <View
+              style={{
+                marginBottom: scaler(16),
+              }}>
+              <ChatGPTComponent />
+            </View>
+          )}
 
           {state?.refreshing ? (
             <View style={styles.wrapLoadingContainer}>
               <ActivityIndicator size={'small'} color={'red'} />
             </View>
           ) : (
-            renderNewBornContent()
+            isShowForReviewer(user) && renderNewBornContent()
           )}
 
           {data?.dailyQuizz && isShowForReviewer(user) ? (

@@ -23,6 +23,7 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
   event,
   eventType,
+  isShowForReviewer,
   logoutWebEngage,
   trackEventBranch,
   trackingAppEvent,
@@ -213,67 +214,68 @@ const Setting = () => {
         <Text style={[styles.title, {marginTop: scaler(16)}]}>
           {t('setting.baby')}
         </Text>
-        {newBorn?.map((item: any) => {
-          return (
-            <View>
-              <TouchableOpacity
-                onPress={() => onNavigateDetailNewBorn(item)}
-                style={[
-                  styles.wrapContainer,
-                  {
-                    justifyContent: 'space-between',
-                    borderBottomColor: colors.gray,
-                    borderBottomWidth: 1,
-                    paddingVertical: scaler(16),
-                    paddingLeft: scaler(16),
-                  },
-                ]}>
-                <View style={[styles.wrapContainer, {flex: 1}]}>
-                  <Image
-                    source={
-                      item?.avatar
-                        ? {uri: item?.avatar}
-                        : item?.type !== 'pregnant' &&
-                          item?.type !== 'pregnant-overdue' &&
-                          item?.type !== 'unknown'
-                        ? iconKid
-                        : iconPregnant
-                    }
-                    style={{
-                      height: scaler(24),
-                      width: scaler(24),
-                      marginRight: scaler(8),
-                      borderRadius: scaler(99),
-                    }}
-                    resizeMode="contain"
-                  />
-                  <Text style={[styles.title, {flex: 1}]} numberOfLines={1}>
-                    {item?.name
-                      ? item?.name
-                      : `Baby ${newBorn.indexOf(item) + 1}`}
-                  </Text>
-                </View>
-                <View style={[styles.wrapContainer]}>
-                  <Text style={styles.desc}>
-                    {moment
-                      .utc(item.date_of_birth || item.due_date)
-                      .format('DD/MM/YYYY')}
-                  </Text>
-                  <Image
-                    source={iconArrowRightGrey}
-                    style={{
-                      height: scaler(24),
-                      width: scaler(24),
-                      marginLeft: scaler(8),
-                    }}
-                    resizeMode="contain"
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-          );
-        })}
-        {newBorn.length < 10 && (
+        {isShowForReviewer(user) &&
+          newBorn?.map((item: any) => {
+            return (
+              <View>
+                <TouchableOpacity
+                  onPress={() => onNavigateDetailNewBorn(item)}
+                  style={[
+                    styles.wrapContainer,
+                    {
+                      justifyContent: 'space-between',
+                      borderBottomColor: colors.gray,
+                      borderBottomWidth: 1,
+                      paddingVertical: scaler(16),
+                      paddingLeft: scaler(16),
+                    },
+                  ]}>
+                  <View style={[styles.wrapContainer, {flex: 1}]}>
+                    <Image
+                      source={
+                        item?.avatar
+                          ? {uri: item?.avatar}
+                          : item?.type !== 'pregnant' &&
+                            item?.type !== 'pregnant-overdue' &&
+                            item?.type !== 'unknown'
+                          ? iconKid
+                          : iconPregnant
+                      }
+                      style={{
+                        height: scaler(24),
+                        width: scaler(24),
+                        marginRight: scaler(8),
+                        borderRadius: scaler(99),
+                      }}
+                      resizeMode="contain"
+                    />
+                    <Text style={[styles.title, {flex: 1}]} numberOfLines={1}>
+                      {item?.name
+                        ? item?.name
+                        : `Baby ${newBorn.indexOf(item) + 1}`}
+                    </Text>
+                  </View>
+                  <View style={[styles.wrapContainer]}>
+                    <Text style={styles.desc}>
+                      {moment
+                        .utc(item.date_of_birth || item.due_date)
+                        .format('DD/MM/YYYY')}
+                    </Text>
+                    <Image
+                      source={iconArrowRightGrey}
+                      style={{
+                        height: scaler(24),
+                        width: scaler(24),
+                        marginLeft: scaler(8),
+                      }}
+                      resizeMode="contain"
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        {isShowForReviewer(user) && newBorn.length < 10 && (
           <TouchableOpacity
             style={[
               styles.wrapContainer,
