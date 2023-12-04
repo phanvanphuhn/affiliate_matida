@@ -262,7 +262,7 @@ const LiveTalk = () => {
           </HorizontalList>
         </ScrollView>
       </View>
-      <ButtonCreateTalk />
+      {user?.role !== 1 && <ButtonCreateTalk />}
       {isShowForReviewer(user) && <FLoatingAIButton />}
     </View>
   );
