@@ -714,6 +714,8 @@ export const vi = {
     viewMore: 'Xem thêm',
     update:
       'Con đang nhờ Matida cập nhật và sẽ kể với mẹ sớm thôi. Mẹ chờ con nhé!',
+    plsAddDueDate: 'Hãy điền ngày dự sinh của bé.',
+    calculateDueDate: 'Hãy dùng công cụ để tính toán ngày sinh của bé.',
   },
   newBornTida: {
     hi: 'Chào mẹ,\ncó nhiều thắc mắc là chuyện bình thường.',

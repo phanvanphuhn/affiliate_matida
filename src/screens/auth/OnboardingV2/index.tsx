@@ -1,48 +1,32 @@
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useEffect} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {useTranslation} from 'react-i18next';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {iconNewBornTida, iconCloudSuggestion} from '@images';
-import useDetailPost from '../Forum/components/useDetailPost';
+import useDetailPost from '../../app/Forum/components/useDetailPost';
 import ProcessBar from './components/ProcessBar';
-import {useNavigation} from '@react-navigation/native';
+import Title from './components/Title';
 import Information from './components/Information';
 import Button from './components/Button';
-import Title from './components/Title';
-import {ROUTE_NAME} from '@routeName';
-import KeyboardShift from '../DetailFeed/components/KeyboardShift';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {useTranslation} from 'react-i18next';
-import {createBaby, updateBaby} from '@services';
-import Toast from 'react-native-toast-message';
-import {navigate} from '@navigation';
+import {event, eventType, trackingAppEvent} from '@util';
+import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
-import {event, eventType, trackingAppEvent} from '@util';
+import {navigate} from '@navigation';
+import {updateBaby} from '@services';
+import {ROUTE_NAME} from '@routeName';
+import Toast from 'react-native-toast-message';
+import {iconCloudSuggestion, iconNewBornTida} from '@images';
+import {getMethod} from '../DueDate/Calculate/handle';
 
-const screenWidth = Dimensions.get('screen').width;
-
-type TProps = {
-  route: any;
-  params?: {
-    isAddBaby?: boolean;
-  };
-};
-
-const NewBornScreen = (props: TProps) => {
-  const {route} = props;
+const OnboardingV2 = () => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  console.log('user: ', user);
+
+  const listMethod = getMethod();
 
   const [state, setState] = useDetailPost({
     page: 0,
@@ -55,6 +39,10 @@ const NewBornScreen = (props: TProps) => {
     weight: '',
     height: '',
     avatar: '',
+    isKnowDueDate: true,
+    method: listMethod[0].value,
+    cycleLength: 'TWENTY_EIGHT',
+    daysIVF: 'IVF3',
   });
 
   const sex = [
@@ -68,11 +56,6 @@ const NewBornScreen = (props: TProps) => {
       value: 'female',
       title: 'Girl',
     },
-    // {
-    //   id: 3,
-    //   value: 'notToSay',
-    //   title: 'Prefer not to say',
-    // },
   ];
 
   const deliver = [
@@ -159,10 +142,12 @@ const NewBornScreen = (props: TProps) => {
   };
 
   const onPreviousPage = () => {
-    if (state.page > 0) {
+    if (state.page == 10) {
+      setState({page: 0});
+    } else if (state.page > 0) {
       setState({page: state.page - 1});
     } else {
-      navigation.goBack();
+      setState({page: 10});
     }
   };
 
@@ -175,7 +160,6 @@ const NewBornScreen = (props: TProps) => {
       return false;
     }
   };
-
   const onDone = async () => {
     trackingAppEvent(
       event.NEW_BORN.REPORT_BIRTH_DONE_TELL_ME_MORE,
@@ -206,6 +190,7 @@ const NewBornScreen = (props: TProps) => {
         avatar: state.avatar,
       },
     };
+
     try {
       const res = await updateBaby(params);
       if (res.success) {
@@ -213,7 +198,7 @@ const NewBornScreen = (props: TProps) => {
       } else {
         Toast.show({
           visibilityTime: 4000,
-          text1: t('error.addNewBornFail'),
+          text1: t('error.addNewBornFail') as string,
           text1NumberOfLines: 2,
           position: 'top',
           type: 'error',
@@ -222,7 +207,7 @@ const NewBornScreen = (props: TProps) => {
     } catch (error) {
       Toast.show({
         visibilityTime: 4000,
-        text1: t('error.addNewBornFail'),
+        text1: t('error.addNewBornFail') as string,
         text1NumberOfLines: 2,
         position: 'top',
         type: 'error',
@@ -236,7 +221,7 @@ const NewBornScreen = (props: TProps) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      {state.page > 0 && state.page < 9 ? (
+      {state.page > 0 && state.page !== 9 ? (
         <ProcessBar page={state.page} />
       ) : null}
       <KeyboardAwareScrollView
@@ -251,7 +236,7 @@ const NewBornScreen = (props: TProps) => {
               ? {marginTop: scaler(60)}
               : {marginTop: scaler(98)},
           ]}>
-          <Title page={state.page} />
+          <Title page={state.page} isKnowDueDate={state.isKnowDueDate} />
         </View>
 
         <View style={styles.wrapBodyContainer}>
@@ -268,12 +253,14 @@ const NewBornScreen = (props: TProps) => {
         </View>
 
         <View style={styles.wrapBottomContainer}>
-          {state.page > 0 && state.page < 9 && (
+          {state.page > 0 && state.page < 14 && state.page !== 9 && (
             <Button
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
               state={state}
               onValidate={onValidate}
+              setState={setState}
+              onDone={onDone}
             />
           )}
 
@@ -337,4 +324,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewBornScreen;
+export default OnboardingV2;

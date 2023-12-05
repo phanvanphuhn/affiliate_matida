@@ -49,8 +49,6 @@ const AddNewBaby = (props: any) => {
     error: {},
   });
 
-  console.log('state: ', state);
-
   const onChooseDueDate = () => {
     const params = {
       isAddNewBaby: true,

@@ -73,7 +73,7 @@ const Intro = () => {
     if (value?.user?.due_date) {
       dispatch(changeStatusLogin(true));
     } else {
-      navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+      navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
     }
   };
 
@@ -114,7 +114,7 @@ const Intro = () => {
               eventType.AFF_FLYER,
             );
             trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-            navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+            navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
           }
           GlobalService.hideLoading();
         }
@@ -148,7 +148,7 @@ const Intro = () => {
               eventType.AFF_FLYER,
             );
             trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-            navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+            navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
           }
         }
       } else {
@@ -173,7 +173,7 @@ const Intro = () => {
             eventType.AFF_FLYER,
           );
           trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-          navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+          navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
         }
       }
     } else if (value === 'Apple') {
@@ -205,7 +205,7 @@ const Intro = () => {
             eventType.AFF_FLYER,
           );
           trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-          navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+          navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
         }
       } else {
       }

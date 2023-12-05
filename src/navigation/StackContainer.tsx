@@ -384,6 +384,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
               gestureEnabled: false,
             }}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.ONBOARDING_V2}
+            component={screens.OnboardingV2}
+          />
           {/* <Stack.Screen
             name={ROUTE_NAME.SELECT_DOB}
             component={screens.SelectDOB}
