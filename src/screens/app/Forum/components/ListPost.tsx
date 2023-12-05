@@ -25,6 +25,7 @@ import {styles} from '../Forum.style';
 import {ItemPost} from './ItemPost';
 import {ListActivePeople} from './ListActivePeople';
 import {ListPostHorizontal} from './ListPostHorizontal';
+import {isShowForReviewer} from '@util';
 
 export const ListPost = () => {
   const {t} = useTranslation();
@@ -39,6 +40,7 @@ export const ListPost = () => {
     (state: any) => state?.forum?.loadMore,
   );
   const loadList: boolean = useSelector((state: any) => state?.forum?.loadList);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [modalDelete, setModalDelete] = useState<boolean>(false);
   const [modalBlock, setModalBlock] = useState<boolean>(false);
@@ -135,7 +137,9 @@ export const ListPost = () => {
   };
 
   const renderItem = ({item, index}: any) => {
-    return short_code === 'all' ? (
+    return !isShowForReviewer(user) ? (
+      <View />
+    ) : short_code === 'all' ? (
       <ListPostHorizontal data={item} index={index} />
     ) : (
       <ItemPost
