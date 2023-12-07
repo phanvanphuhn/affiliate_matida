@@ -261,6 +261,7 @@ export const en = {
     version: 'Version: ',
     mom: 'Mom',
     baby: 'Babies',
+    source: 'Sources of the recommendations',
   },
   articles: {
     listen: 'Listen to the article',

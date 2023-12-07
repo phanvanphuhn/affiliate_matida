@@ -342,6 +342,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.ADD_BABY_SUCCESS}
             component={screens.AddBabySuccess}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.SOURCE}
+            component={screens.SourceOfRecommendation}
+          />
         </Stack.Navigator>
       );
     } else {

@@ -124,6 +124,11 @@ const Setting = () => {
       svg: <SvgBlocked />,
     },
     {
+      id: 7,
+      title: t('setting.source'),
+      svg: <SvgLanguage />,
+    },
+    {
       id: 5,
       title: t('setting.logOut'),
       svg: <SvgLogout />,
@@ -149,6 +154,9 @@ const Setting = () => {
         break;
       case 6:
         navigation.navigate(ROUTE_NAME.LIST_BLOCKED_USER);
+        break;
+      case 7:
+        navigation.navigate(ROUTE_NAME.SOURCE);
         break;
       default:
         return;

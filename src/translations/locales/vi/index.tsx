@@ -265,6 +265,7 @@ export const vi = {
     version: 'Phiên bản: ',
     mom: 'Mẹ bỉm',
     baby: 'Em bé',
+    source: 'Nguồn tham khảo',
   },
   articles: {
     listen: 'Nghe audio',
