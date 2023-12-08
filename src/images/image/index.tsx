@@ -63,6 +63,10 @@ const momProgram = require('./momProgramImage.png');
 const moreInformation = require('./MoreInformation.png');
 const defaultIconBabyDueDate = require('./defaultIconBabyDueDate.png');
 const defaultIconBabyNewBorn = require('./defaultIconBabyNewBorn.png');
+const bacsyHoa = require('./bacsyHoa.jpg');
+const bacsyPhuongAnh = require('./bacsyPhuongAnh.jpg');
+const bacsyMaiSuong = require('./bacsyMaiSuong.jpg');
+const bacsyNguyenTram = require('./bacsyNguyenTram.jpg');
 
 export {
   DailyQuiz,
@@ -128,4 +132,8 @@ export {
   moreInformation,
   defaultIconBabyDueDate,
   defaultIconBabyNewBorn,
+  bacsyHoa,
+  bacsyPhuongAnh,
+  bacsyMaiSuong,
+  bacsyNguyenTram,
 };
