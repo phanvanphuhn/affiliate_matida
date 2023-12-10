@@ -42,6 +42,7 @@ export type TState = {
   method: string;
   cycleLength: string;
   daysIVF: string;
+  isNewBorn: boolean;
 };
 
 type TProps = {
@@ -201,6 +202,10 @@ const Information = (props: TProps) => {
             {!state.isKnowDueDate && (
               <ModalMethodCalculation
                 titleSelection={''}
+                stylesTextLabel={{
+                  textAlign: 'center',
+                  marginLeft: scaler(24),
+                }}
                 value={state.method}
                 onPress={value => {
                   setState({method: value});
@@ -212,40 +217,52 @@ const Information = (props: TProps) => {
               dataDate={state.dmy}
               textColor={colors.black}
               style={{backgroundColor: colors.white}}
+              minimumDate={new Date()}
               maximumDate={
-                new Date().getHours() < 8
-                  ? new Date(new Date().setDate(new Date().getDate() + 1))
-                  : new Date()
+                new Date(new Date().setMonth(new Date().getMonth() + 9))
               }
               width={SCREEN_WIDTH}
             />
-            {!state.isKnowDueDate &&
-            state.method === CalculationMethod.FIRST_DAY_OF_LAST_PERIOD ? (
-              <SelectionPicker
-                titleSelection={''}
-                value={state.cycleLength}
-                listItem={listCycleLength}
-                onPress={value => setState({cycleLength: value})}
-              />
-            ) : (
-              <AppRadioButton
-                listItem={listIVFdays}
-                value={state.daysIVF}
-                onChange={value => setState({daysIVF: value})}
-              />
-            )}
+            {!state.isKnowDueDate ? (
+              state.method === CalculationMethod.FIRST_DAY_OF_LAST_PERIOD ? (
+                <SelectionPicker
+                  titleSelection={''}
+                  value={state.cycleLength}
+                  listItem={listCycleLength}
+                  onPress={value => setState({cycleLength: value})}
+                  stylesTextLabel={{
+                    textAlign: 'center',
+                    marginLeft: scaler(24),
+                  }}
+                />
+              ) : (
+                <AppRadioButton
+                  listItem={listIVFdays}
+                  value={state.daysIVF}
+                  onChange={value => setState({daysIVF: value})}
+                  textStyle={{color: colors.black}}
+                  iconColor={colors.black}
+                />
+              )
+            ) : null}
           </ScrollView>
         );
       default:
         return (
           <View style={styles.container}>
             <TouchableOpacity
-              onPress={onNextPage}
+              onPress={() => {
+                onNextPage();
+                setState({isNewBorn: true});
+              }}
               style={styles.wrapNextButtonContainer}>
               <Text style={styles.nextButtonTitle}>{t('newBorn.yes')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={onPreviousPage}
+              onPress={() => {
+                onPreviousPage();
+                setState({isNewBorn: false});
+              }}
               style={styles.wrapPreviousButtonContainer}>
               <Text style={styles.previousButtonTitle}>{t('newBorn.no')}</Text>
             </TouchableOpacity>

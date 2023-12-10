@@ -8,13 +8,14 @@ import {useTranslation} from 'react-i18next';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-const AddBabySuccess = (props: any) => {
+const AuthAddBabySuccess = (props: any) => {
   const {route} = props;
+  console.log('route: ', route);
   const {params} = route;
   const {t} = useTranslation();
 
   const onNavigateHomePage = () => {
-    navigate(ROUTE_NAME.TAB_HOME);
+    navigate(ROUTE_NAME.SLIDE_INTRO);
   };
 
   return (
@@ -62,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddBabySuccess;
+export default AuthAddBabySuccess;

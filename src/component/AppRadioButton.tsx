@@ -1,19 +1,30 @@
 import {SvgRadioCircle, SvgRadioSelected} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {IItem} from './_type';
 
 interface AppRadioButtonProps {
   listItem: IItem[];
   onChange: (value: any) => void;
   value: any;
+  textStyle?: StyleProp<TextStyle>;
+  iconColor?: string;
 }
 
 export const AppRadioButton = ({
   listItem,
   onChange,
   value,
+  textStyle,
+  iconColor,
 }: AppRadioButtonProps) => {
   return (
     <View>
@@ -23,6 +34,8 @@ export const AppRadioButton = ({
           value={value}
           key={index}
           onPress={onChange}
+          textStyle={textStyle}
+          iconColor={iconColor}
         />
       ))}
     </View>
@@ -33,9 +46,17 @@ interface ItemRadioButtonProps {
   item: IItem;
   onPress: (value: any) => void;
   value: any;
+  textStyle?: StyleProp<TextStyle>;
+  iconColor?: string;
 }
 
-const ItemRadioButton = ({item, onPress, value}: ItemRadioButtonProps) => {
+const ItemRadioButton = ({
+  item,
+  onPress,
+  value,
+  textStyle,
+  iconColor,
+}: ItemRadioButtonProps) => {
   const isSelected = item.value === value;
   return (
     <TouchableOpacity
@@ -43,9 +64,13 @@ const ItemRadioButton = ({item, onPress, value}: ItemRadioButtonProps) => {
       onPress={() => onPress(item.value)}
       style={styles.containerItem}>
       <View style={styles.radioImg}>
-        {isSelected ? <SvgRadioSelected /> : <SvgRadioCircle />}
+        {isSelected ? (
+          <SvgRadioSelected color={iconColor} />
+        ) : (
+          <SvgRadioCircle color={iconColor} />
+        )}
       </View>
-      <Text style={styles.textItem}>{item.label}</Text>
+      <Text style={[styles.textItem, textStyle]}>{item.label}</Text>
     </TouchableOpacity>
   );
 };

@@ -240,7 +240,7 @@ const EditNewBorn = (props: any) => {
       } catch (error) {
         Toast.show({
           visibilityTime: 4000,
-          text1: t('error.addNewBornFail'),
+          text1: t('error.addNewBornFail') as string,
           text1NumberOfLines: 2,
           position: 'top',
           type: 'error',
@@ -280,7 +280,7 @@ const EditNewBorn = (props: any) => {
                 </Text>
                 <TextInput
                   style={[styles.content, {...stylesCommon.fontWeight500}]}
-                  placeholder={t('newBorn.babyName')}
+                  placeholder={t('newBorn.babyName') as string}
                   value={state.name}
                   onChangeText={text => {
                     setState({name: text});

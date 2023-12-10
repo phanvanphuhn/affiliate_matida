@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
 import {navigate} from '@navigation';
-import {updateBaby} from '@services';
+import {calculateDate, createBaby, selectBabyDate, updateBaby} from '@services';
 import {ROUTE_NAME} from '@routeName';
 import Toast from 'react-native-toast-message';
 import {iconCloudSuggestion, iconNewBornTida} from '@images';
@@ -24,7 +24,6 @@ const OnboardingV2 = () => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
-  console.log('user: ', user);
 
   const listMethod = getMethod();
 
@@ -43,6 +42,7 @@ const OnboardingV2 = () => {
     method: listMethod[0].value,
     cycleLength: 'TWENTY_EIGHT',
     daysIVF: 'IVF3',
+    isNewBorn: true,
   });
 
   const sex = [
@@ -166,35 +166,82 @@ const OnboardingV2 = () => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-    const params = {
-      id: user?.baby_id,
-      body: {
-        user_id: user?.id,
-        name: state.name.toString(),
-        gender: state.sex.toLowerCase(),
-        birth_experience: state.deliver,
-        date_of_birth:
-          moment.utc(state.dmy).format('YYYY/MM/DD') +
-          ' ' +
-          moment.utc(state.hour).format('HH:mm:ss'),
-        weight: Number(
-          state.weight.includes(',')
-            ? state.weight.replace(',', '.') * 1000
-            : state.weight * 1000,
-        ),
-        height: Number(
-          state.height.includes(',')
-            ? state.height.replace(',', '.')
-            : state.height,
-        ),
-        avatar: state.avatar,
-      },
-    };
+    let params;
+    if (state.isNewBorn) {
+      params = {
+        body: {
+          user_id: user?.id,
+          name: state.name.toString(),
+          gender: state.sex.toLowerCase(),
+          birth_experience: state.deliver,
+          date_of_birth:
+            moment.utc(state.dmy).format('YYYY/MM/DD') +
+            ' ' +
+            moment.utc(state.hour).format('HH:mm:ss'),
+          weight: Number(
+            state.weight.includes(',')
+              ? state.weight.replace(',', '.') * 1000
+              : state.weight * 1000,
+          ),
+          height: Number(
+            state.height.includes(',')
+              ? state.height.replace(',', '.')
+              : state.height,
+          ),
+          avatar: state.avatar,
+        },
+      };
+    } else if (state.isKnowDueDate) {
+      params = {
+        body: {
+          user_id: user?.id,
+          name: state.name.toString(),
+          avatar: state.avatar,
+          due_date: moment.utc(state.dmy).format('YYYY/MM/DD'),
+        },
+      };
+    } else {
+      const body = {
+        calc_method: 0,
+        date: moment(state.dmy).format('MM/DD/YYYY'),
+        cycle_length: state.cycleLength,
+      };
+
+      const body2 = {
+        calc_method: 1,
+        date: moment(state.dmy).format('MM/DD/YYYY'),
+        ivf_day: state.daysIVF,
+      };
+
+      const res = await calculateDate(
+        state.method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
+      );
+
+      params = {
+        body: {
+          user_id: user?.id,
+          name: state.name.toString(),
+          avatar: state.avatar,
+          due_date: moment(
+            res?.data?.resultPeriod?.dueDate
+              ? res?.data?.resultPeriod?.dueDate
+              : res?.data?.resultIVF?.dueDate,
+            'MM/DD/YYYY',
+          ).format('MM/DD/YYYY'),
+        },
+      };
+    }
 
     try {
-      const res = await updateBaby(params);
-      if (res.success) {
-        navigate(ROUTE_NAME.TAB_HOME);
+      const response = await createBaby(params);
+
+      const res = await selectBabyDate({
+        id: response?.data?.id,
+        date: moment.utc(state.due_date, 'MM/DD/YYYY').format('MM/DD/YYYY'),
+      });
+
+      if (res.success && response.success) {
+        navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {text: 'Test'});
       } else {
         Toast.show({
           visibilityTime: 4000,
