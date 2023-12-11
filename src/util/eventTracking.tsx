@@ -163,4 +163,7 @@ export const event = {
   TEASER: {
     PP_TEASER_ACCEPT_INVITATION: 'PP_TEASER_ACCEPT_INVITATION',
   },
+  WEBENGAGE: {
+    USER_SIGN_UP: 'USER_SIGNED_UP',
+  },
 };

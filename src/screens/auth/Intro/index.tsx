@@ -28,7 +28,7 @@ import {
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import {Constants, login as LoginWithZalo} from 'react-native-zalo-kit';
 import reactotron from 'reactotron-react-native';
-import {trackUser} from '@services/webengageManager.tsx';
+import {trackUser, trackCustomEvent} from '@services/webengageManager.tsx';
 
 const Intro = () => {
   const {t} = useTranslation();
@@ -114,6 +114,13 @@ const Intro = () => {
               eventType.AFF_FLYER,
             );
             trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
+            trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
+              user_id: res?.data?.data?.id,
+              name: res?.data?.data?.name,
+              user_name: res?.data?.data?.username,
+              email: res?.data?.data?.email,
+              phone: res?.data?.data?.phone_number,
+            });
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
           GlobalService.hideLoading();
@@ -148,6 +155,13 @@ const Intro = () => {
               eventType.AFF_FLYER,
             );
             trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
+            trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
+              user_id: res?.data?.data?.id,
+              name: res?.data?.data?.name,
+              user_name: res?.data?.data?.username,
+              email: res?.data?.data?.email,
+              phone: res?.data?.data?.phone_number,
+            });
             navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
           }
         }
@@ -173,6 +187,13 @@ const Intro = () => {
             eventType.AFF_FLYER,
           );
           trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
+          trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
+            user_id: res?.data?.data?.id,
+            name: res?.data?.data?.name,
+            user_name: res?.data?.data?.username,
+            email: res?.data?.data?.email,
+            phone: res?.data?.data?.phone_number,
+          });
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       }
@@ -205,6 +226,13 @@ const Intro = () => {
             eventType.AFF_FLYER,
           );
           trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
+          trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
+            user_id: res?.data?.data?.id,
+            name: res?.data?.data?.name,
+            user_name: res?.data?.data?.username,
+            email: res?.data?.data?.email,
+            phone: res?.data?.data?.phone_number,
+          });
           navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
         }
       } else {
