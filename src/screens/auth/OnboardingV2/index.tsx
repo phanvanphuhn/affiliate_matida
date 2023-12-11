@@ -169,36 +169,32 @@ const OnboardingV2 = () => {
     let params;
     if (state.isNewBorn) {
       params = {
-        body: {
-          user_id: user?.id,
-          name: state.name.toString(),
-          gender: state.sex.toLowerCase(),
-          birth_experience: state.deliver,
-          date_of_birth:
-            moment.utc(state.dmy).format('YYYY/MM/DD') +
-            ' ' +
-            moment.utc(state.hour).format('HH:mm:ss'),
-          weight: Number(
-            state.weight.includes(',')
-              ? state.weight.replace(',', '.') * 1000
-              : state.weight * 1000,
-          ),
-          height: Number(
-            state.height.includes(',')
-              ? state.height.replace(',', '.')
-              : state.height,
-          ),
-          avatar: state.avatar,
-        },
+        user_id: user?.id,
+        name: state.name.toString(),
+        gender: state.sex.toLowerCase(),
+        birth_experience: state.deliver,
+        date_of_birth:
+          moment.utc(state.dmy).format('YYYY/MM/DD') +
+          ' ' +
+          moment.utc(state.hour).format('HH:mm:ss'),
+        weight: Number(
+          state.weight.includes(',')
+            ? state.weight.replace(',', '.') * 1000
+            : state.weight * 1000,
+        ),
+        height: Number(
+          state.height.includes(',')
+            ? state.height.replace(',', '.')
+            : state.height,
+        ),
+        avatar: state.avatar,
       };
     } else if (state.isKnowDueDate) {
       params = {
-        body: {
-          user_id: user?.id,
-          name: state.name.toString(),
-          avatar: state.avatar,
-          due_date: moment.utc(state.dmy).format('YYYY/MM/DD'),
-        },
+        user_id: user?.id,
+        name: state.name.toString(),
+        avatar: state.avatar,
+        due_date: moment.utc(state.dmy).format('YYYY/MM/DD'),
       };
     } else {
       const body = {
@@ -218,30 +214,26 @@ const OnboardingV2 = () => {
       );
 
       params = {
-        body: {
-          user_id: user?.id,
-          name: state.name.toString(),
-          avatar: state.avatar,
-          due_date: moment(
-            res?.data?.resultPeriod?.dueDate
-              ? res?.data?.resultPeriod?.dueDate
-              : res?.data?.resultIVF?.dueDate,
-            'MM/DD/YYYY',
-          ).format('MM/DD/YYYY'),
-        },
+        user_id: user?.id,
+        name: state.name.toString(),
+        avatar: state.avatar,
+        due_date: moment(
+          res?.data?.resultPeriod?.dueDate
+            ? res?.data?.resultPeriod?.dueDate
+            : res?.data?.resultIVF?.dueDate,
+          'MM/DD/YYYY',
+        ).format('MM/DD/YYYY'),
       };
     }
 
     try {
       const response = await createBaby(params);
-
       const res = await selectBabyDate({
         id: response?.data?.id,
-        date: moment.utc(state.due_date, 'MM/DD/YYYY').format('MM/DD/YYYY'),
+        date: moment.utc(state.dmy, 'MM/DD/YYYY').format('MM/DD/YYYY'),
       });
-
       if (res.success && response.success) {
-        navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {text: 'Test'});
+        navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {data: res.data});
       } else {
         Toast.show({
           visibilityTime: 4000,

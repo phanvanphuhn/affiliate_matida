@@ -217,9 +217,15 @@ const Information = (props: TProps) => {
               dataDate={state.dmy}
               textColor={colors.black}
               style={{backgroundColor: colors.white}}
-              minimumDate={new Date()}
+              minimumDate={
+                state?.isKnowDueDate
+                  ? new Date()
+                  : new Date(new Date().setMonth(new Date().getMonth() - 9))
+              }
               maximumDate={
-                new Date(new Date().setMonth(new Date().getMonth() + 9))
+                state?.isKnowDueDate
+                  ? new Date(new Date().setMonth(new Date().getMonth() + 9))
+                  : new Date()
               }
               width={SCREEN_WIDTH}
             />

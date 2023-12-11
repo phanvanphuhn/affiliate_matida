@@ -5,7 +5,14 @@ import {ROUTE_NAME} from '@routeName';
 import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AuthAddBabySuccess = (props: any) => {
@@ -21,11 +28,13 @@ const AuthAddBabySuccess = (props: any) => {
   return (
     <SafeAreaView
       style={{flex: 1, backgroundColor: colors.white, padding: scaler(16)}}>
-      <View>
+      <ScrollView style={{flex: 1}}>
         <Text style={styles.title}>{params?.data?.text}</Text>
 
         <Image
-          source={params?.data?.image ? {uri: params?.data?.image} : LogoApp}
+          source={
+            params?.data?.image ? {uri: params?.data?.image?.url} : LogoApp
+          }
           style={{height: SCREEN_WIDTH, width: '100%'}}
           resizeMode="contain"
         />
@@ -35,7 +44,7 @@ const AuthAddBabySuccess = (props: any) => {
           onPress={onNavigateHomePage}>
           <Text style={styles.btnTitle}>{t('resultDueDate.tellMeMore')}</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
