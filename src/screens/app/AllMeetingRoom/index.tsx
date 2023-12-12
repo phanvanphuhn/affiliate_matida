@@ -25,9 +25,12 @@ import {
   GlobalService,
 } from '@services';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
+import {useSelector} from 'react-redux';
 
 const AllMeetingRoom = () => {
   const {t} = useTranslation();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   const [statusButton, setStatusButton] = useState(1);
   const [data, setData] = useState([]);
   const [dataJoined, setDataJoined] = useState([]);
@@ -171,7 +174,7 @@ const AllMeetingRoom = () => {
           keyExtractor={(index: any) => index?.toString()}
         />
       </View>
-      <ButtonCreateTalk />
+      {user?.role !== 1 && <ButtonCreateTalk />}
     </View>
   );
 };
