@@ -123,11 +123,11 @@ const Setting = () => {
       title: t('setting.block'),
       svg: <SvgBlocked />,
     },
-    {
-      id: 7,
-      title: t('setting.source'),
-      svg: <SvgLanguage />,
-    },
+    // {
+    //   id: 7,
+    //   title: t('setting.source'),
+    //   svg: <SvgLanguage />,
+    // },
     {
       id: 5,
       title: t('setting.logOut'),
