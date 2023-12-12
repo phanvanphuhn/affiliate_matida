@@ -54,17 +54,17 @@ export const FLoatingAIButton = () => {
     }
   };
 
-  useEffect(() => {
-    const tout = setTimeout(() => {
-      clearTimeout(tout);
-      getData();
-    }, 45000);
+  // useEffect(() => {
+  //   const tout = setTimeout(() => {
+  //     clearTimeout(tout);
+  //     getData();
+  //   }, 45000);
 
-    const tout2 = setTimeout(() => {
-      clearTimeout(tout2);
-      // fadeOut();
-    }, 75000);
-  }, []);
+  //   const tout2 = setTimeout(() => {
+  //     clearTimeout(tout2);
+  //     // fadeOut();
+  //   }, 75000);
+  // }, []);
 
   const onNnavigateChatAPI = () => {
     setData('');
