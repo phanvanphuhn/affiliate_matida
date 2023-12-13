@@ -17,11 +17,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 const AuthAddBabySuccess = (props: any) => {
   const {route} = props;
-  console.log('route: ', route);
   const {params} = route;
   const {t} = useTranslation();
 
   const onNavigateHomePage = () => {
+    if (params?.state?.page > 9) {
+      navigate(ROUTE_NAME.TAB_HOME);
+    }
     navigate(ROUTE_NAME.SLIDE_INTRO);
   };
 

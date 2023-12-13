@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   customButton: {
     backgroundColor: '#FFFFFF',
-    marginTop: scaler(16),
+    marginBottom: scaler(16),
     borderColor: colors.primary,
     borderWidth: 1,
   },
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: colors.textSmallColor,
     ...stylesCommon.fontWeight400,
     fontSize: scaler(14),
-    lineHeight: scaler(21)
+    lineHeight: scaler(21),
   },
   txtBottom: {
     ...stylesCommon.fontPlus500,
@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
     width: widthScreen,
     height: heightScreen + getStatusBarHeight(),
   },
-  imageHeart:{
+  imageHeart: {
     width: scaler(30),
     height: scaler(30),
     marginLeft: scaler(8),
-    marginTop: scaler(2)
-  }
+    marginTop: scaler(2),
+  },
 });
 
 export {styles};

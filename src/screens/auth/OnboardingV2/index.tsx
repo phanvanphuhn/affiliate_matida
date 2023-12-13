@@ -233,7 +233,10 @@ const OnboardingV2 = () => {
         date: moment.utc(state.dmy, 'MM/DD/YYYY').format('MM/DD/YYYY'),
       });
       if (res.success && response.success) {
-        navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {data: res.data});
+        navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {
+          data: res.data,
+          state: state,
+        });
       } else {
         Toast.show({
           visibilityTime: 4000,
