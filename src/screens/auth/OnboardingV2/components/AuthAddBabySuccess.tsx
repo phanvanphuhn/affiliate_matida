@@ -21,7 +21,7 @@ const AuthAddBabySuccess = (props: any) => {
   const {t} = useTranslation();
 
   const onNavigateHomePage = () => {
-    if (params?.state?.page > 9) {
+    if (params?.state?.page < 10) {
       navigate(ROUTE_NAME.TAB_HOME);
     }
     navigate(ROUTE_NAME.SLIDE_INTRO);
