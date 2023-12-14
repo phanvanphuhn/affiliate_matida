@@ -51,7 +51,11 @@ const ItemAnswer = (props: ItemAnswerProps) => {
 export default ItemAnswer;
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    marginBottom: -1,
+  },
   textAnswer: {
     textAlign: 'center',
     fontSize: scaler(17),

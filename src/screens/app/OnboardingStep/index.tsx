@@ -260,6 +260,6 @@ const styles = StyleSheet.create({
   buttonStep: {
     backgroundColor: colors.white,
     borderRadius: 50,
-    padding: 8,
+    padding: 15,
   },
 });

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image, RefreshControl} from 'react-native';
 import {colors, scaler, widthScreen} from '@stylesCommon';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgClose, SvgPathBottom, SvgPathTop, teaser1, teaser2, teaser3, teaser4} from '@images';
@@ -8,6 +8,7 @@ import {setActive} from "react-native-sound";
 import {goBack} from "@navigation";
 import {useNavigation} from "@react-navigation/native";
 import {ROUTE_NAME} from "@routeName";
+import Swiper from "../DetailFeed/SwiperFlatlist/Swiper";
 
 interface TeaserProgramProps {
     isHome?:boolean
@@ -131,14 +132,20 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               paddingBottom:30
           }}>
           {pagination()}
-          <Carousel
-            data={data}
-            renderItem={_renderItem}
-            itemWidth={props?.isHome?widthScreen-32:widthScreen}
-            sliderWidth={props?.isHome?widthScreen-32:widthScreen}
-            windowSize={10}
-            onSnapToItem={(index) => setActiveSlide( index ) }
-          />
+            <Swiper
+                index={activeSlide}
+                horizontal={true}
+                loop={false}
+                removeClippedSubviews={true}
+                loadMinimal={true}
+                loadMinimalSize={10}
+                lockScrollTimeoutDuration={250}
+                nestedScrollEnabled={true}
+                bounces={true}
+                onIndexChanged={setActiveSlide}>
+                {data?.map((item, index) => _renderItem({item,index})
+                )}
+            </Swiper>
             <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
                 <Text style={styles.textButtonSignUp}>Sign up now</Text>
             </TouchableOpacity>
