@@ -260,22 +260,22 @@ export const ModalConfirmPay = forwardRef<
           step === StepPayment.CONFIRM ? widthScreen - scaler(32) : widthScreen,
       }}>
       <>
-        {step === StepPayment.CONFIRM ? (
-          <ViewConfirmPay
-            price={price}
-            onPressCancel={handleCancel}
-            onPressYes={handlePressYesPay}
-            type={type}
-            isPay={loading}
-          />
-        ) : (
-          <ViewChooseMethodPayment
-            isPaySupported={isPaySupported}
-            onCancel={handleCancel}
-            onPressPayPlatform={handlePaymentPlatform}
-            onPressPayStripe={handlePaymentStripe}
-          />
-        )}
+        {/*{step === StepPayment.CONFIRM ? (*/}
+        {/*  <ViewConfirmPay*/}
+        {/*    price={price}*/}
+        {/*    onPressCancel={handleCancel}*/}
+        {/*    onPressYes={handlePressYesPay}*/}
+        {/*    type={type}*/}
+        {/*    isPay={loading}*/}
+        {/*  />*/}
+        {/*) : (*/}
+        <ViewChooseMethodPayment
+          isPaySupported={isPaySupported}
+          onCancel={handleCancel}
+          onPressPayPlatform={handlePaymentPlatform}
+          onPressPayStripe={handlePaymentStripe}
+        />
+        {/*)}*/}
       </>
     </AppModal>
   );

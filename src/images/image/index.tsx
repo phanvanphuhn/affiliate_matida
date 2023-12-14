@@ -67,6 +67,26 @@ const bacsyHoa = require('./bacsyHoa.jpg');
 const bacsyPhuongAnh = require('./bacsyPhuongAnh.jpg');
 const bacsyMaiSuong = require('./bacsyMaiSuong.jpg');
 const bacsyNguyenTram = require('./bacsyNguyenTram.jpg');
+const ic_gift = require('./ic_gift.png');
+const ic_lock = require('./ic_lock.png');
+const ic_strawberry = require('./ic_strawberry.png');
+const ic_background = require('./ic_background.png');
+const ic_apple = require('./ic_apple.png');
+const ic_transfer = require('./ic_transfer.png');
+const ic_copy = require('./ic_copy.png');
+const ic_google = require('./ic_google.png');
+const bg1 = require('./bg1.png');
+const ic_flower = require('./ic_flower.png');
+const ic_back_arrow = require('./ic_back_arrow.png');
+const teaser1 = require('./teaser1.png');
+const teaser2 = require('./teaser2.png');
+const teaser3 = require('./teaser3.png');
+const teaser4 = require('./teaser4.png');
+const bg_pp = require('./bg_pp.png');
+const ic_default1 = require('./ic_default1.png');
+const ic_default2 = require('./ic_default2.png');
+const ic_logo_round = require('./ic_logo_round.png');
+const ic_smile = require('./ic_smile.png');
 
 export {
   DailyQuiz,
@@ -136,4 +156,24 @@ export {
   bacsyPhuongAnh,
   bacsyMaiSuong,
   bacsyNguyenTram,
+  ic_gift,
+  ic_lock,
+  ic_strawberry,
+  ic_background,
+  ic_apple,
+  ic_transfer,
+  ic_copy,
+  ic_google,
+  bg1,
+  ic_flower,
+  ic_back_arrow,
+  teaser1,
+  teaser2,
+  teaser3,
+  teaser4,
+  bg_pp,
+  ic_default1,
+  ic_default2,
+  ic_logo_round,
+  ic_smile,
 };

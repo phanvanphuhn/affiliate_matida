@@ -86,6 +86,7 @@ import {trackUser} from '@services/webengageManager';
 import ContentUpdate from './components/ContentUpdate';
 import {trackCustomEvent} from '@services/webengageManager';
 import moment from 'moment';
+import TeaserProgram from '../PregnancyProgram/TeaserProgram';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -655,7 +656,9 @@ const Home = () => {
             (user?.baby_type == 'pregnant' ||
               user?.baby_type == 'pregnant-overdue' ||
               user?.baby_type == 'unknown') && (
-              <MomProgram data={state?.isSignUp} />
+              <View style={{marginHorizontal: 16}}>
+                <TeaserProgram data={state?.isSignUp} isHome={true} />
+              </View>
             )}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}

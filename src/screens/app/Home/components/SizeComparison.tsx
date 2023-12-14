@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     width: scaler(48),
     height: scaler(48),
     borderRadius: scaler(48 / 2),
-    backgroundColor: colors.primary,
+    backgroundColor: colors.pink200,
     justifyContent: 'center',
     alignItems: 'center',
   },

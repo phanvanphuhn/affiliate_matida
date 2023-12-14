@@ -221,7 +221,7 @@ export const ViewQuiz = React.memo((props: any) => {
       {data ? (
         <View style={styles.container}>
           <LinearGradient
-            colors={['rgb(134, 85, 255)', '#EE6566']}
+            colors={['rgb(134, 85, 255)', colors.pink200]}
             style={styles.viewContent}>
             <Image
               source={IconBackgroundImageHome}

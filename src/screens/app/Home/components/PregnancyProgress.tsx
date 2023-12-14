@@ -41,7 +41,7 @@ export const PregnancyProgress = () => {
       activeOpacity={1}>
       <Text
         style={{
-          color: colors.primary,
+          color: colors.pink200,
           ...stylesCommon.fontWeight600,
           fontSize: scaler(12),
           textAlign: 'center',
@@ -169,12 +169,12 @@ const styles = StyleSheet.create({
   },
   progress: {
     height: '100%',
-    backgroundColor: '#FE8187',
+    backgroundColor: colors.pink200,
     borderRadius: 10,
     position: 'absolute',
   },
   progressBar: {
-    backgroundColor: '#F6F4F6',
+    backgroundColor: colors.gray,
     height: scaler(14),
     borderRadius: scaler(40),
     flex: 1,

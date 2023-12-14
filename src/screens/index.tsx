@@ -72,6 +72,13 @@ import AddNewBaby from './app/AddBaby/components/AddNewBaby';
 import NewBornTracker from './app/Home/components/NewBornTracker';
 import AddBabySuccess from './app/NewBorn/components/AddBabySuccess';
 import SourceOfRecommendation from './app/SourceOfRecommendation';
+import PregnancyProgram from './app/PregnancyProgram';
+import WeeklyChallengeComplete from './app/PregnancyProgram/WeeklyChallengeComplete';
+import UpdateInformation from './app/PregnancyProgram/UpdateInformation';
+import CompletePayment from './app/PregnancyProgram/CompletePayment';
+import OnboardingStep from './app/OnboardingStep';
+import DetailTaskProgram from './app/PregnancyProgram/DetailTaskProgram';
+import TeaserProgram from './app/PregnancyProgram/TeaserProgram';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -148,6 +155,13 @@ const screens = {
   NewBornTracker,
   AddBabySuccess,
   SourceOfRecommendation,
+  PregnancyProgram,
+  WeeklyChallengeComplete,
+  UpdateInformation,
+  CompletePayment,
+  OnboardingStep,
+  DetailTaskProgram,
+  TeaserProgram,
 };
 
 export {screens};

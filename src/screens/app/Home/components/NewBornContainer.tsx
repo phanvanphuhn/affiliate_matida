@@ -193,6 +193,7 @@ const NewBornContainer = (props: TProps) => {
               height: scaler(16),
               width: scaler(16),
               marginLeft: scaler(4),
+              tintColor: colors.white,
             }}
           />
         </TouchableOpacity>
@@ -222,14 +223,14 @@ const styles = StyleSheet.create({
   wrapBtnContainer: {
     paddingVertical: scaler(8),
     paddingHorizontal: scaler(16),
-    backgroundColor: '#FFEBEB',
+    backgroundColor: colors.pink200,
     borderRadius: scaler(40),
     flexDirection: 'row',
   },
   btnTitle: {
     fontSize: 12,
     ...stylesCommon.fontWeight500,
-    color: colors.primaryBackground,
+    color: colors.white,
   },
   description: {
     fontSize: scaler(14),

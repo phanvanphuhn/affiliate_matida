@@ -46,7 +46,7 @@ export const ChatGPTComponent = React.memo(() => {
       style={{paddingHorizontal: scaler(16)}}
       activeOpacity={0.9}>
       <LinearGradient
-        colors={['rgb(134, 85, 255)', '#EE6566']}
+        colors={['rgb(134, 85, 255)', '#FF8FFF']}
         style={{
           borderRadius: scaler(16),
           paddingTop: scaler(16),

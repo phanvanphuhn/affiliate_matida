@@ -5,6 +5,9 @@ import {ROUTE_NAME} from './routeName';
 
 import {Tabbar} from '@component';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import PregnancyProgram from '../screens/app/PregnancyProgram';
+import {navigate} from './NavigationUtils';
+import {TouchableOpacity} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -28,7 +31,11 @@ const StackTab = () => {
       {/* <Tab.Screen name={ROUTE_NAME.TAB_EXPLORE} component={screens.Explore} /> */}
       <Tab.Screen name={ROUTE_NAME.TAB_COMMUNITY} component={screens.Forum} />
       <Tab.Screen name={ROUTE_NAME.TAB_DEAL} component={screens.Deal} />
-      <Tab.Screen name={ROUTE_NAME.TAB_LIVETALK} component={screens.LiveTalk} />
+      {/*<Tab.Screen name={ROUTE_NAME.TAB_LIVETALK} component={screens.LiveTalk} />*/}
+      <Tab.Screen
+        name={ROUTE_NAME.PREGNANCY_PROGRAM}
+        component={screens.PregnancyProgram}
+      />
     </Tab.Navigator>
   );
 };
