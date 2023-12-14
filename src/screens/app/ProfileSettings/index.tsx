@@ -110,7 +110,7 @@ const ProfileSettingsScreen = () => {
     baby_name: validateFormVN().babyName,
     username: validateFormVN().username,
   });
-
+  console.log('validationSchemaVN: ', validationSchemaVN);
   const initialValuesProfileSettings: any = {
     name: user?.name ? user?.name : '',
     email: user?.email ? user?.email : '',
@@ -171,6 +171,7 @@ const ProfileSettingsScreen = () => {
   };
   //Hàm gọi khi ấn button Save
   const handleSave = async (values: any) => {
+    console.log('values?.name: ', values?.name);
     try {
       if (values?.email?.length === 0) {
         const body = {
@@ -187,7 +188,8 @@ const ProfileSettingsScreen = () => {
           pregnant_type: pregnant_type,
           avatar: imageUrlApi,
           phone_number: values?.phone_number,
-          calling_code: `+${phoneCode}`,
+          calling_code:
+            values?.phone_number?.length > 0 ? `+${phoneCode}` : null,
           country_code: countryCode,
         };
         const res: any = await updateUserInfo(
@@ -219,7 +221,8 @@ const ProfileSettingsScreen = () => {
           email: values?.email,
           avatar: imageUrlApi,
           phone_number: values?.phone_number,
-          calling_code: `+${phoneCode}`,
+          calling_code:
+            values?.phone_number?.length > 0 ? `+${phoneCode}` : null,
           country_code: countryCode,
         };
         const res: any = await updateUserInfo(
