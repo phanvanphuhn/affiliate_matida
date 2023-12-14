@@ -83,9 +83,9 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                 <Text style={styles.text1}>1. </Text>
                 <Text style={[styles.text1, {flex: 1}]}>
                   <Text style={{fontWeight: '600'}}>Tiny Movements:</Text>
- Witness the beginning of your baby's motor skills with subtle
-                  movements. In the early weeks, they might start wiggling and
-                  squirming as their tiny muscles start to form.
+                  {
+                    "\nWitness the beginning of your baby's motor skills with subtlemovements. In the early weeks, they might start wiggling and squirming as their tiny muscles start to form."
+                  }
                 </Text>
               </View>
 
@@ -97,10 +97,9 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                 <Text style={styles.text1}>2. </Text>
                 <Text style={[styles.text1, {flex: 1}]}>
                   <Text style={{fontWeight: '600'}}>Early Sensations:</Text>
- Delve into the early cognitive development of your baby.
-                  Despite their small size, they can respond to stimuli,
-                  indicating the budding awareness and early cognitive
-                  functions.
+                  {
+                    '\nDelve into the early cognitive development of your baby. Despite their small size, they can respond to stimuli, indicating the budding awareness and early cognitive functions.'
+                  }
                 </Text>
               </View>
 
@@ -112,10 +111,9 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                 <Text style={styles.text1}>3. </Text>
                 <Text style={[styles.text1, {flex: 1}]}>
                   <Text style={{fontWeight: '600'}}>Early Connections:</Text>
- Start building early connections with your baby through the
-                  first signs of communication. Though it's too early for words,
-                  notice how your baby responds to your voice and other external
-                  sounds.
+                  {
+                    "\nStart building early connections with your baby through the first signs of communication. Though it's too early for words, notice how your baby responds to your voice and other external sounds."
+                  }
                 </Text>
               </View>
 
@@ -129,10 +127,9 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                   <Text style={{fontWeight: '600'}}>
                     Initial Emotional Bonds:
                   </Text>
- Feel the initial stages of social and emotional growth. While
-                  it's early days, the bond between you and your baby is already
-                  forming, setting the foundation for future smiles and
-                  emotional connections.
+                  {
+                    "\nFeel the initial stages of social and emotional growth. While it's early days, the bond between you and your baby is already forming, setting the foundation for future smiles and emotional connections."
+                  }
                 </Text>
               </View>
 
@@ -144,17 +141,9 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                 <Text style={styles.text1}>5. </Text>
                 <Text style={[styles.text1, {flex: 1}]}>
                   <Text style={{fontWeight: '600'}}>Early Sleep Patterns:</Text>
- Observe the early sleep patterns, acknowledging the
-                  importance of rest even in these initial stages. Creating a
-                  calm environment can contribute to a supportive sleep
-                  routine.  While it's just the beginning, each tiny milestone
-                  lays the groundwork for the remarkable journey of parenthood.
-                  Connect with prenatal classes, read materials specific to
-                  early pregnancy, and share experiences with other expectant
-                  moms to enhance your understanding of these early development
-                  stages. It's a thrilling venture into the wonders of
-                  pregnancy, filled with anticipation and the promise of
-                  countless heartwarming moments to come.
+                  {
+                    "\nObserve the early sleep patterns, acknowledging the importance of rest even in these initial stages. Creating a calm environment can contribute to a supportive sleep routine. \n\nWhile it's just the beginning, each tiny milestone lays the groundwork for the remarkable journey of parenthood. Connect with prenatal classes, read materials specific to early pregnancy, and share experiences with other expectant moms to enhance your understanding of these early development stages. It's a thrilling venture into the wonders of pregnancy, filled with anticipation and the promise of countless heartwarming moments to come."
+                  }
                 </Text>
               </View>
             </View>
