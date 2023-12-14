@@ -94,9 +94,6 @@ const UpdateInformation = (props: UpdateInformationProps) => {
             <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
               <Text style={styles.textDone}>Next</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={goBack} style={styles.buttonCancel}>
-              <Text style={styles.textCancel}>Cancel</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
       </View>

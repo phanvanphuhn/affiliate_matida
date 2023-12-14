@@ -253,14 +253,12 @@ const CompletePayment = (props: CompletePaymentProps) => {
           <View
             style={{
               paddingHorizontal: scaler(24),
+              paddingBottom: scaler(15),
             }}>
             <TouchableOpacity
               onPress={onPaymentFinish}
               style={styles.buttonDone}>
-              <Text style={styles.textDone}>I have transfered the money</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonCancel}>
-              <Text style={styles.textCancel}>Cancel</Text>
+              <Text style={styles.textDone}>Next</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

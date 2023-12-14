@@ -355,10 +355,12 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
           <Stack.Screen
             name={ROUTE_NAME.UPDATE_INFORMATION}
             component={screens.UpdateInformation}
+            options={{animation: 'slide_from_bottom'}}
           />
           <Stack.Screen
             name={ROUTE_NAME.COMPLETE_PAYMENT}
             component={screens.CompletePayment}
+            options={{animation: 'slide_from_bottom'}}
           />
           <Stack.Screen
             name={ROUTE_NAME.ONBOARDING_STEP}
@@ -371,6 +373,7 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
           <Stack.Screen
             name={ROUTE_NAME.TEASER_PROGRAM}
             component={screens.TeaserProgram}
+            options={{animation: 'slide_from_bottom'}}
           />
         </Stack.Navigator>
       );
