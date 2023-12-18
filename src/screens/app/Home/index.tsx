@@ -233,7 +233,7 @@ const Home = () => {
         user?.id,
         user?.name,
       );
-    }, []),
+    }, [user?.baby_type]),
   );
 
   useEffect(() => {

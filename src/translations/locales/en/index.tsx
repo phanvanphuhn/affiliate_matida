@@ -747,4 +747,10 @@ export const en = {
     mystery: 'a mystery',
     addInformation: 'Add information',
   },
+  common: {
+    networkSystem: 'Network System',
+    noInternet:
+      'There is no internet connection\nPlease check your internet connection',
+    tryAgain: 'Try Again',
+  },
 };
