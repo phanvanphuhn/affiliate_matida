@@ -1,5 +1,6 @@
 import PregnancyProgram from '../screens/app/PregnancyProgram';
 import Onboarding from '../screens/app/./OnboardingStep';
+import VerifyPayment from '../screens/app/PregnancyProgram/VerifyPayment';
 
 const ROUTE_NAME = {
   INTRO: 'INTRO',
@@ -94,6 +95,10 @@ const ROUTE_NAME = {
   ONBOARDING_STEP: 'ONBOARDING_STEP',
   DETAIL_TASK_PROGRAM: 'DETAIL_TASK_PROGRAM',
   TEASER_PROGRAM: 'TEASER_PROGRAM',
+  ONBOARDING_FINISHED: 'ONBOARDING_FINISHED',
+  VERIFY_PAYMENT: 'VERIFY_PAYMENT',
+  ABOUT_PROGRAM: 'ABOUT_PROGRAM',
+  MOM_DIARY: 'MOM_DIARY',
 };
 
 export {ROUTE_NAME};

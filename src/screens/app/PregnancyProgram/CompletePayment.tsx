@@ -174,7 +174,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
   };
 
   const onPaymentFinish = () => {
-    navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+    navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
   };
   const onCallBack = () => {};
   return (

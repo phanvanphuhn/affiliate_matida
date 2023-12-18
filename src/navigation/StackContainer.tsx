@@ -16,6 +16,7 @@ import {ROUTE_NAME} from './routeName';
 import StackTab from './StackTab';
 import UpdateInformation from '../screens/app/PregnancyProgram/UpdateInformation';
 import Onboarding from '../screens/app/./OnboardingStep';
+import VerifyPayment from '../screens/app/PregnancyProgram/VerifyPayment';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -367,6 +368,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             component={screens.OnboardingStep}
           />
           <Stack.Screen
+            name={ROUTE_NAME.ONBOARDING_FINISHED}
+            component={screens.OnboardingFinished}
+          />
+          <Stack.Screen
             name={ROUTE_NAME.DETAIL_TASK_PROGRAM}
             component={screens.DetailTaskProgram}
           />
@@ -374,6 +379,19 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.TEASER_PROGRAM}
             component={screens.TeaserProgram}
             options={{animation: 'slide_from_bottom'}}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.VERIFY_PAYMENT}
+            component={screens.VerifyPayment}
+            options={{animation: 'slide_from_bottom'}}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.ABOUT_PROGRAM}
+            component={screens.AboutProgram}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.MOM_DIARY}
+            component={screens.MomDiary}
           />
         </Stack.Navigator>
       );

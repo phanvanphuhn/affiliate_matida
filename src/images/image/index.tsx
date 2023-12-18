@@ -87,6 +87,9 @@ const ic_default1 = require('./ic_default1.png');
 const ic_default2 = require('./ic_default2.png');
 const ic_logo_round = require('./ic_logo_round.png');
 const ic_smile = require('./ic_smile.png');
+const bg2 = require('./bg2.png');
+const ic_default_upload = require('./ic_default_upload.png');
+const ic_plus = require('./ic_plus.png');
 
 export {
   DailyQuiz,
@@ -176,4 +179,7 @@ export {
   ic_default2,
   ic_logo_round,
   ic_smile,
+  bg2,
+  ic_default_upload,
+  ic_plus,
 };

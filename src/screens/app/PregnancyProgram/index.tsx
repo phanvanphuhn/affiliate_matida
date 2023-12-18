@@ -13,7 +13,15 @@ import {AppHeader, Header} from '@component';
 import ListFeed from '../Feed/components/ListFeed';
 import {HeaderComponent} from '../MomTest/TestResult/components';
 import {ViewButtonHeader} from '../NotificationList/components';
-import {bg_pp, ic_back, ic_back_arrow, ic_smile, SvgArrowLeft} from '@images';
+import {
+  bg_pp,
+  ic_back,
+  ic_back_arrow,
+  ic_gift,
+  ic_smile,
+  SvgArrowLeft,
+  SvgLineWave,
+} from '@images';
 import {useTranslation} from 'react-i18next';
 import {clearDataDetailPost} from '@redux';
 import {useNavigation} from '@react-navigation/native';
@@ -21,6 +29,7 @@ import SnapCarousel from 'react-native-snap-carousel';
 import TabProgram from './components/TabProgram';
 import DashedLine from './components/DashedLine';
 import ListWeek from './components/ListWeek';
+import {ROUTE_NAME} from '@routeName';
 interface PregnancyProgramProps {}
 
 const PregnancyProgram = (props: PregnancyProgramProps) => {
@@ -32,6 +41,12 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
     navigation.goBack();
   };
 
+  const onCheckOut = () => {
+    navigation.navigate(ROUTE_NAME.ABOUT_PROGRAM);
+  };
+  const onGift = () => {
+    navigation.navigate(ROUTE_NAME.MOM_DIARY);
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -47,9 +62,9 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
           />
         }
         ComponentRight={
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onGift}>
             <Image
-              source={ic_smile}
+              source={ic_gift}
               style={{
                 height: 30,
                 width: 30,
@@ -61,6 +76,33 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         onPressLeft={goBack}
       />
       <ScrollView nestedScrollEnabled={true}>
+        <View
+          style={{
+            backgroundColor: colors.blue,
+            paddingTop: 15,
+            zIndex: 100,
+          }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: scaler(15),
+              fontWeight: '500',
+              color: colors.white,
+              marginBottom: 10,
+            }}>
+            Have questions about this course?{' '}
+            <Text
+              onPress={onCheckOut}
+              style={{
+                textDecorationLine: 'underline',
+              }}>
+              Check this out
+            </Text>
+          </Text>
+          <View style={{bottom: -8}}>
+            <SvgLineWave color={colors.pink250} />
+          </View>
+        </View>
         <ListWeek />
         <Image
           style={{

@@ -120,7 +120,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
 
     if (currentQuestion == Data?.length - 1) {
-      navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
+      navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED);
     } else {
       setCurrentQuestion(curr => curr + 1);
     }

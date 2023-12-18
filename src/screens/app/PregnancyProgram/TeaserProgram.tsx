@@ -11,6 +11,7 @@ import {colors, scaler, widthScreen} from '@stylesCommon';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   SvgClose,
+  SvgLineWave,
   SvgPathBottom,
   SvgPathTop,
   teaser1,
@@ -30,13 +31,13 @@ interface TeaserProgramProps {
 }
 const data = [
   {
-    name: 'Get 1:1 medical support',
+    name: 'Direct access to doctors & experts',
     description:
       'A support group with medical doctors\n' + '& like-minded moms (to be)',
     icon: teaser1,
   },
   {
-    name: 'Learn all the pregnancy secrets',
+    name: 'Weekly effort of 15 minutes',
     description:
       'All the pregnancy knowledge with\n' + 'weekly effort of only 15 minutes',
     icon: teaser2,
@@ -71,6 +72,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
+          height: '100%',
         }}>
         <Image source={item.icon} />
         <Text
@@ -112,48 +114,64 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         }}
         inactiveDotOpacity={1}
         inactiveDotScale={1}
+        containerStyle={{marginTop: 0, paddingTop: 0, paddingBottom: 10}}
       />
     );
   };
   return (
-    <View style={[styles.container, {paddingTop: 30}]}>
-      {!props?.isHome && (
-        <TouchableOpacity onPress={goBack} style={styles.buttonClose}>
-          <SvgClose color={colors.white} />
-        </TouchableOpacity>
-      )}
+    <View style={[styles.container, {}]}>
+      <View
+        style={{
+          backgroundColor: colors.yellow200,
+          height: widthScreen,
+          width: widthScreen,
+          borderRadius: widthScreen / 2,
+          borderColor: colors.white,
+          borderWidth: 10,
+          justifyContent: 'flex-end',
+          paddingBottom: 60,
+          transform: [{scaleX: 1.04}],
+          alignItems: 'center',
+          position: 'absolute',
+          top: -widthScreen / 2 + 70,
+        }}>
+        {!props?.isHome && (
+          <TouchableOpacity
+            onPress={goBack}
+            hitSlop={{top: 20, right: 20, bottom: 20, left: 20}}
+            style={styles.buttonClose}>
+            <SvgClose color={colors.labelColor} />
+          </TouchableOpacity>
+        )}
 
-      <Text style={styles.textTitle}>The All-in-one Course</Text>
-      <Text
-        style={[
-          styles.textTitle2,
-          {
-            marginTop: 10,
-          },
-        ]}>
-        Cool mom,
-      </Text>
-      <Text style={styles.textTitle2}>Happy Baby</Text>
-
-      <View style={styles.container2}>
-        <Text style={styles.textSpecial}>Special price for early birds</Text>
-        <Text style={styles.textPriceOld}>699,000 vnd</Text>
-        <Text style={styles.textPriceNew}>
-          499,000 vnd <Text style={styles.textPriceNew2}>/lifetime</Text>
+        <Text style={styles.textTitle}>The All-in-one Course</Text>
+        <Text
+          style={[
+            styles.textTitle2,
+            {
+              marginTop: 10,
+            },
+          ]}>
+          Cool mom,
         </Text>
+        <Text style={styles.textTitle2}>Happy Baby</Text>
       </View>
       <View
         style={{
           flex: 1,
+          marginTop: widthScreen / 2 + 30,
         }}>
-        <SvgPathTop />
         <View
           style={{
             backgroundColor: colors.white,
             flex: 1,
-            paddingBottom: 30,
           }}>
-          {pagination()}
+          <View
+            style={{
+              top: -8,
+            }}>
+            <SvgLineWave color={colors.pink350} />
+          </View>
           <Swiper
             index={activeSlide}
             horizontal={true}
@@ -167,8 +185,38 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             onIndexChanged={setActiveSlide}>
             {data?.map((item, index) => _renderItem({item, index}))}
           </Swiper>
+          {pagination()}
+
+          <View
+            style={{
+              bottom: -8,
+            }}>
+            <SvgLineWave color={colors.blue50} />
+          </View>
+        </View>
+        <View style={styles.container3}>
+          <View style={styles.container4}>
+            <View style={styles.container5}>
+              <Text style={styles.textOff}>30% off</Text>
+            </View>
+            <Text style={styles.textPrice1}>
+              499,000đ{' '}
+              <Text
+                style={{
+                  fontSize: scaler(13),
+                }}>
+                /lifetime
+              </Text>
+            </Text>
+            <Text style={styles.textPriceOld}>
+              <Text style={{textDecorationLine: 'line-through'}}>669,000đ</Text>
+              /lifetime
+            </Text>
+          </View>
           <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
-            <Text style={styles.textButtonSignUp}>Sign up now</Text>
+            <Text style={styles.textButtonSignUp}>
+              Sign up for early bird discount
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -181,7 +229,7 @@ export default TeaserProgram;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.pink350,
     borderRadius: scaler(16),
   },
   buttonClose: {
@@ -191,13 +239,13 @@ const styles = StyleSheet.create({
   textTitle: {
     fontSize: scaler(20),
     fontWeight: '500',
-    color: colors.white,
+    color: colors.labelColor,
     textAlign: 'center',
   },
   textTitle2: {
     fontSize: scaler(28),
     fontWeight: '600',
-    color: colors.white,
+    color: colors.labelColor,
     textAlign: 'center',
   },
   container2: {
@@ -236,17 +284,54 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   buttonSignUp: {
-    backgroundColor: colors.pink200,
+    backgroundColor: colors.yellow200,
     paddingVertical: 15,
-    marginHorizontal: 25,
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: scaler(20),
   },
   textButtonSignUp: {
     fontSize: scaler(15),
     fontWeight: '600',
+    color: colors.textColor,
+  },
+  container3: {
+    marginBottom: scaler(35),
+    marginTop: scaler(28),
+    marginHorizontal: 25,
+  },
+  container4: {
+    backgroundColor: colors.white,
+    borderRadius: scaler(12),
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: scaler(10),
+    paddingHorizontal: scaler(55),
+    marginBottom: scaler(17),
+  },
+  container5: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    backgroundColor: colors.pink300,
+    borderTopLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    padding: 5,
+    paddingHorizontal: 9,
+  },
+  textOff: {
     color: colors.white,
+    fontSize: scaler(11),
+    fontWeight: '600',
+  },
+  textPrice1: {
+    color: colors.pink300,
+    fontWeight: '600',
+    fontSize: scaler(18),
+  },
+  textPriceOld: {
+    color: colors.gray550,
+    fontSize: scaler(13),
+    marginTop: 5,
   },
 });

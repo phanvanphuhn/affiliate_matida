@@ -79,6 +79,10 @@ import CompletePayment from './app/PregnancyProgram/CompletePayment';
 import OnboardingStep from './app/OnboardingStep';
 import DetailTaskProgram from './app/PregnancyProgram/DetailTaskProgram';
 import TeaserProgram from './app/PregnancyProgram/TeaserProgram';
+import OnboardingFinished from './app/OnboardingStep/OnboardingFinished';
+import VerifyPayment from './app/PregnancyProgram/VerifyPayment';
+import AboutProgram from './app/PregnancyProgram/AboutProgram';
+import MomDiary from './app/PregnancyProgram/MomDiary';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -162,6 +166,10 @@ const screens = {
   OnboardingStep,
   DetailTaskProgram,
   TeaserProgram,
+  OnboardingFinished,
+  VerifyPayment,
+  AboutProgram,
+  MomDiary,
 };
 
 export {screens};
