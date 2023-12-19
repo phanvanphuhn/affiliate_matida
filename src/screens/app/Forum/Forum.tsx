@@ -12,8 +12,8 @@ import {
   trackingAppEvent,
   useUXCam,
 } from '@util';
-import React, {useEffect} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {ActivityIndicator, View, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {HeaderForum, ListPost, ListTopTab} from './components';
 import {styles} from './Forum.style';
@@ -23,6 +23,7 @@ import {useNavigation} from '@react-navigation/native';
 export const Forum = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
+  const scrollRef = useRef<ScrollView>(null);
 
   const loading = useSelector((state: any) => state?.forum?.loading);
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -43,6 +44,12 @@ export const Forum = () => {
     navigation.navigate(ROUTE_NAME.LIST_MESSAGE);
   };
 
+  const handlePressLogo = () => {
+    setTimeout(() => {
+      scrollRef?.current?.scrollTo({x: 0, y: 0, animated: true});
+    }, 0);
+  };
+
   const getData = async () => {
     dispatch(getListTabForum());
   };
@@ -61,10 +68,11 @@ export const Forum = () => {
     <View style={{flex: 1, backgroundColor: colors.white}}>
       <AppHeader
         onPressMenu={navigateSetting}
-        onPressAvatar={navigateUser}
-        onPressMessage={navigationMessage}
         onPressNotification={navigateNotification}
         bgc={colors.white}
+        rightNoti={navigateNotification}
+        onPressLogo={handlePressLogo}
+        onPressMessage={navigationMessage}
       />
       {/* <FlatList
         data={[{}]}

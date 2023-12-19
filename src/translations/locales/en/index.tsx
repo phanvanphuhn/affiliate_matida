@@ -650,7 +650,7 @@ export const en = {
     phoneNumber: 'Phone Number',
     getOffer: 'Contact form',
     submit: 'Submit',
-    contactForm: 'Contact Form',
+    contactForm: 'Get deal',
     getCodeSuccess: 'Get code success',
     getCodeFailed: 'Get code failed',
     submitSuccess: 'Submit deal success',

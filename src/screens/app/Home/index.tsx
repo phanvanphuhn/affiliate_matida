@@ -469,24 +469,7 @@ const Home = () => {
     // handleChangeWeeks(week);
   };
 
-  const scrollY = new Animated.Value(0);
-  const opacityY = scrollY.interpolate({
-    inputRange: [0, 60, 80, 100],
-    outputRange: [1, 1, 0.6, 0],
-    extrapolate: 'clamp',
-  });
-
-  const _translateY = scrollY.interpolate({
-    inputRange: [0, 50, 100],
-    outputRange: [0, -110, -220],
-    extrapolate: 'clamp',
-  });
-
-  const _scale = scrollY.interpolate({
-    inputRange: [0, 50, 100],
-    outputRange: [1, 1, 0.8],
-    extrapolate: 'clamp',
-  });
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const onAnswerQuiz = async (value: any) => {
     try {
@@ -591,6 +574,7 @@ const Home = () => {
           bgc={colors.white}
           rightNoti={navigateNotification}
           openNewBorn={openNewBorn}
+          onPressMessage={navigationMessage}
         />
 
         {isShowForReviewer(user) && (
@@ -603,6 +587,8 @@ const Home = () => {
             <ListMonth />
           </View>
         )}
+
+        {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
 
         <ScrollView
           ref={scrollRef}
@@ -630,15 +616,6 @@ const Home = () => {
             paddingBottom: scaler(30),
             paddingTop: scaler(18),
           }}>
-          {isShowForReviewer(user) && (
-            <View
-              style={{
-                marginBottom: scaler(16),
-              }}>
-              <ChatGPTComponent />
-            </View>
-          )}
-
           {state?.refreshing ? (
             <View style={styles.wrapLoadingContainer}>
               <ActivityIndicator size={'small'} color={'red'} />

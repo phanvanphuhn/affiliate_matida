@@ -125,6 +125,27 @@ export const dataInitListMonth: TData[] = [
     labelVi: 'Tháng 9',
     intVal: 9,
   },
+  {
+    id: 16,
+    value: 'month_10',
+    labelEn: 'Month 10',
+    labelVi: 'Tháng 10',
+    intVal: 10,
+  },
+  {
+    id: 17,
+    value: 'month_11',
+    labelEn: 'Month 11',
+    labelVi: 'Tháng 11',
+    intVal: 11,
+  },
+  {
+    id: 18,
+    value: 'month_12',
+    labelEn: 'Month 12',
+    labelVi: 'Tháng 12',
+    intVal: 12,
+  },
 ];
 
 export const dataInitPregnantWeek: TData[] = [
