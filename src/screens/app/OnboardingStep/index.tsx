@@ -7,10 +7,16 @@ import {
   Image,
   LayoutAnimation,
 } from 'react-native';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import Container from '../DetailFeed/components/Container';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ic_back, SvgPathBottom, SvgPathTop} from '@images';
+import {
+  ic_back,
+  SvgArrowCircleRight,
+  SvgArrowLeft,
+  SvgPathBottom,
+  SvgPathTop,
+} from '@images';
 import ItemAnswer from './components/ItemAnswer';
 import {goBack} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
@@ -177,13 +183,15 @@ const OnboardingStep = (props: OnboardingStepProps) => {
                 );
               })}
             </View>
-            <SvgPathBottom />
+            <View style={{marginTop: 1}}>
+              <SvgPathBottom />
+            </View>
           </View>
         </View>
 
         <View style={styles.containerButtonStep}>
           <TouchableOpacity onPress={onBackQuestion} style={styles.buttonStep}>
-            <Image source={ic_back} />
+            <SvgArrowLeft stroke={colors.textColor} size={24} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onNextQuestion}
@@ -191,12 +199,10 @@ const OnboardingStep = (props: OnboardingStepProps) => {
               styles.buttonStep,
               {
                 backgroundColor: colors.pink200,
+                transform: [{rotate: '180deg'}],
               },
             ]}>
-            <Image
-              source={ic_back}
-              style={{transform: [{rotate: '180deg'}], tintColor: colors.white}}
-            />
+            <SvgArrowLeft size={24} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -215,13 +221,13 @@ const styles = StyleSheet.create({
     padding: scaler(20),
   },
   containerLineStep: {
-    height: 8,
+    height: 4,
     width: '100%',
     borderRadius: 20,
     backgroundColor: colors.white,
   },
   lineStep: {
-    height: 8,
+    height: 4,
     width: '10%',
     borderRadius: 20,
     backgroundColor: colors.pink200,
@@ -230,7 +236,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: scaler(10),
+    marginTop: scaler(8),
   },
   textStep: {
     fontSize: scaler(12),
@@ -243,6 +249,7 @@ const styles = StyleSheet.create({
     color: colors.labelColor,
     textAlign: 'center',
     paddingHorizontal: scaler(20),
+    ...stylesCommon.fontWeight600,
   },
   textAnswer: {
     textAlign: 'center',
@@ -260,6 +267,6 @@ const styles = StyleSheet.create({
   buttonStep: {
     backgroundColor: colors.white,
     borderRadius: 50,
-    padding: 15,
+    padding: 12,
   },
 });

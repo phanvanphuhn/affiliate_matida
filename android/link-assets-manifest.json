@@ -74,6 +74,26 @@
       "sha1": "283f21b44efbdbf276ba802be2d949a36bbc4233"
     },
     {
+      "path": "src/assets/fonts/Sarabun-Bold.ttf",
+      "sha1": "8a5854cb1d43fe0caf68d4f82a62c3dfd4f5cb5a"
+    },
+    {
+      "path": "src/assets/fonts/Sarabun-Italic.ttf",
+      "sha1": "f216de40f8b953423f68f5f4a3f9844dd8eeb6e7"
+    },
+    {
+      "path": "src/assets/fonts/Sarabun-Medium.ttf",
+      "sha1": "39c5f343e03df2db76283f8b07125e15ffff0b75"
+    },
+    {
+      "path": "src/assets/fonts/Sarabun-Regular.ttf",
+      "sha1": "a9b65e36ee8224b459b9dcdb8bf55ef41b4ab867"
+    },
+    {
+      "path": "src/assets/fonts/Sarabun-SemiBold.ttf",
+      "sha1": "fa6c7f47da0dae54034d0b4eea541e48e615d2d5"
+    },
+    {
       "path": "src/assets/fonts/Trocchi-Regular.ttf",
       "sha1": "812cc40aa7c745803da910ab1248dbcb4bbf9c4b"
     }

@@ -86,7 +86,7 @@ import {trackUser} from '@services/webengageManager';
 import ContentUpdate from './components/ContentUpdate';
 import {trackCustomEvent} from '@services/webengageManager';
 import moment from 'moment';
-import TeaserProgram from '../PregnancyProgram/TeaserProgram';
+import TeaserProgram from './components/TeaserProgram';
 
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
@@ -631,14 +631,14 @@ const Home = () => {
             paddingBottom: scaler(30),
             paddingTop: scaler(18),
           }}>
-          {isShowForReviewer(user) && (
-            <View
-              style={{
-                marginBottom: scaler(16),
-              }}>
-              <ChatGPTComponent />
-            </View>
-          )}
+          {isShowForReviewer(user) &&
+            (user?.baby_type == 'pregnant' ||
+              user?.baby_type == 'pregnant-overdue' ||
+              user?.baby_type == 'unknown') && (
+              <View style={{marginHorizontal: 16}}>
+                <TeaserProgram data={state?.isSignUp} isHome={true} />
+              </View>
+            )}
 
           {state?.refreshing ? (
             <View style={styles.wrapLoadingContainer}>
@@ -652,14 +652,14 @@ const Home = () => {
             <ViewQuiz onAnswer={onAnswerQuiz} />
           ) : null}
 
-          {isShowForReviewer(user) &&
-            (user?.baby_type == 'pregnant' ||
-              user?.baby_type == 'pregnant-overdue' ||
-              user?.baby_type == 'unknown') && (
-              <View style={{marginHorizontal: 16}}>
-                <TeaserProgram data={state?.isSignUp} isHome={true} />
-              </View>
-            )}
+          {isShowForReviewer(user) && (
+            <View
+              style={{
+                marginBottom: scaler(16),
+              }}>
+              <ChatGPTComponent />
+            </View>
+          )}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
         {isShowForReviewer(user) &&

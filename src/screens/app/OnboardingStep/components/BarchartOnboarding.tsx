@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {BarChart, LineChart, PieChart} from 'react-native-gifted-charts';
-import {colors, scaler, widthScreen} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {itemType} from 'react-native-gifted-charts/src/BarChart/types';
 import {yAxisSides} from 'react-native-gifted-charts/src/utils/constants';
 
@@ -10,7 +10,12 @@ const data: itemType = [
   {
     value: 50,
     frontColor: colors.pink300,
-    labelTextStyle: {color: colors.pink200, fontWeight: '600'},
+    labelTextStyle: {
+      color: colors.labelColor,
+      fontWeight: '600',
+      fontSize: scaler(14),
+      ...stylesCommon.fontWeight600,
+    },
   },
   {
     value: 80,
@@ -18,7 +23,8 @@ const data: itemType = [
     labelTextStyle: {
       color: colors.gray550,
       fontWeight: '500',
-      fontSize: scaler(13),
+      fontSize: scaler(12),
+      ...stylesCommon.fontWeight500,
     },
   },
   {
@@ -27,7 +33,8 @@ const data: itemType = [
     labelTextStyle: {
       color: colors.gray550,
       fontWeight: '500',
-      fontSize: scaler(13),
+      fontSize: scaler(12),
+      ...stylesCommon.fontWeight500,
     },
   },
   {
@@ -36,7 +43,8 @@ const data: itemType = [
     labelTextStyle: {
       color: colors.gray550,
       fontWeight: '500',
-      fontSize: scaler(13),
+      fontSize: scaler(12),
+      ...stylesCommon.fontWeight500,
     },
   },
 ];
@@ -48,12 +56,10 @@ const BarchartOnboarding = (props: BarchartProps) => {
         data={data}
         width={widthScreen - 30}
         barBorderRadius={8}
-        frontColor={'#177AD5'}
         barWidth={40}
         initialSpacing={30}
         spacing={widthScreen / 9}
-        rulesType={'solid'}
-        rulesColor={colors.pink250}
+        hideRules={true}
         isAnimated
         rulesConfigArray={[
           {},
@@ -63,18 +69,19 @@ const BarchartOnboarding = (props: BarchartProps) => {
             rulesThickness: 2,
           },
         ]}
+        yAxisLabelTextStyle={{}}
         noOfSections={4}
         disableScroll={true}
         hideYAxisText={true}
-        xAxisColor={colors.pink200}
-        yAxisColor={colors.pink200}
+        xAxisColor={colors.blue}
+        yAxisColor={colors.blue}
         xAxisTextNumberOfLines={2}
         endSpacing={0}
         xAxisLabelTexts={[
-          'Pregnancy Core',
+          'Pregnancy\nBasics',
           'Baby\nCare',
-          'Love & Money',
-          'Fitness & Nutrition',
+          'Love &\nMoney',
+          'Fitness &\nNutrition',
         ]}
       />
     </View>

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scaler(8),
   },
   wrapContent: {
-    backgroundColor: '#FFF0F0',
+    backgroundColor: colors.blue,
     paddingHorizontal: scaler(12),
     paddingVertical: scaler(4),
     marginBottom: scaler(4),
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: scaler(12),
     fontWeight: '500',
-    color: colors.brandMainPinkRed,
+    color: colors.white,
   },
   button: {
     height: scaler(60),

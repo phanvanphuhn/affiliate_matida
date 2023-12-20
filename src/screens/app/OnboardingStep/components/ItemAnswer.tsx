@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {SvgPathBottom, SvgPathTop} from '@images';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 
 interface ItemAnswerProps {
   isSelected?: boolean;
@@ -14,8 +14,8 @@ const ItemAnswer = (props: ItemAnswerProps) => {
   const [state, setState] = useState();
   return (
     <View style={styles.container}>
+      <SvgPathTop color={props.isSelected ? colors.blue : colors.white} />
       <TouchableOpacity style={{flex: 1}} onPress={props.onSelected}>
-        <SvgPathTop color={props.isSelected ? colors.blue : colors.white} />
         <View
           style={{
             backgroundColor: props.isSelected ? colors.blue : colors.white,
@@ -42,8 +42,10 @@ const ItemAnswer = (props: ItemAnswerProps) => {
           </Text>
           <View style={{width: 10}} />
         </View>
-        <SvgPathBottom color={props.isSelected ? colors.blue : colors.white} />
       </TouchableOpacity>
+      <View style={{marginBottom: 1}}>
+        <SvgPathBottom color={props.isSelected ? colors.blue : colors.white} />
+      </View>
     </View>
   );
 };
@@ -61,5 +63,6 @@ const styles = StyleSheet.create({
     fontSize: scaler(17),
     fontWeight: '500',
     color: colors.borderColor,
+    ...stylesCommon.fontSarabun600,
   },
 });

@@ -10,13 +10,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {goBack} from '@navigation';
 import {
   ic_apple,
   ic_background,
   ic_copy,
+  ic_download,
   ic_google,
   ic_logo_round,
   ic_transfer,
@@ -183,14 +184,19 @@ const CompletePayment = (props: CompletePaymentProps) => {
         <TouchableOpacity onPress={goBack} style={styles.buttonBack}>
           <Image source={iconClose} />
         </TouchableOpacity>
-        <ScrollView contentContainerStyle={{paddingBottom: scaler(30)}}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: scaler(30)}}>
           <Text style={styles.textTitle}>Complete payment</Text>
           <Text style={styles.textSubTitle}>
             Please select a method to complete this payment
           </Text>
           <View style={styles.containerButtonRow}>
             <TouchableOpacity
-              style={[styles.buttonTransfer, {borderColor: colors.pink200}]}>
+              style={[
+                styles.buttonTransfer,
+                {borderColor: colors.pink200, marginRight: scaler(15)},
+              ]}>
               <Image source={ic_transfer} />
               <Text style={styles.textTransfer}>Bank Transfer</Text>
             </TouchableOpacity>
@@ -207,12 +213,19 @@ const CompletePayment = (props: CompletePaymentProps) => {
           <ImageBackground source={ic_background}>
             <SvgPathBottom />
             <View style={styles.containerInput}>
-              <QRCode
-                value="Matida"
-                logo={ic_logo_round}
-                logoSize={32}
-                logoBorderRadius={32}
-              />
+              <View style={{width: '100%'}}>
+                <View style={{alignItems: 'center'}}>
+                  <QRCode
+                    value="Matida"
+                    logo={ic_logo_round}
+                    logoSize={32}
+                    logoBorderRadius={32}
+                  />
+                </View>
+                <TouchableOpacity style={styles.buttonCopy}>
+                  <Image source={ic_download} />
+                </TouchableOpacity>
+              </View>
               <View style={{width: '100%'}}>
                 <Text style={styles.textLabel}>Transaction contents</Text>
                 <Text style={styles.input}>1511 PP1</Text>
@@ -258,7 +271,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
             <TouchableOpacity
               onPress={onPaymentFinish}
               style={styles.buttonDone}>
-              <Text style={styles.textDone}>Next</Text>
+              <Text style={styles.textDone}>I have transferred my money</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -280,12 +293,14 @@ const styles = StyleSheet.create({
     fontSize: scaler(24),
     fontWeight: '600',
     textAlign: 'center',
+    ...stylesCommon.fontWeight600,
   },
   textSubTitle: {
     fontSize: scaler(15),
     textAlign: 'center',
     padding: scaler(15),
     color: colors.textColor,
+    ...stylesCommon.fontSarabun400,
   },
   containerInput: {
     backgroundColor: colors.white,
@@ -303,6 +318,7 @@ const styles = StyleSheet.create({
     color: colors.gray50,
     marginTop: scaler(20),
     textAlign: 'center',
+    ...stylesCommon.fontSarabun500,
   },
   input: {
     textAlign: 'center',
@@ -310,6 +326,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     paddingTop: scaler(10),
     paddingHorizontal: scaler(24),
+    ...stylesCommon.fontWeight500,
   },
   input2: {
     textAlign: 'center',
@@ -318,6 +335,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scaler(24),
     color: colors.labelColor,
     marginTop: 5,
+    ...stylesCommon.fontSarabun500,
   },
   buttonCopy: {
     position: 'absolute',
@@ -336,6 +354,7 @@ const styles = StyleSheet.create({
     fontSize: scaler(15),
     fontWeight: '600',
     color: colors.white,
+    ...stylesCommon.fontSarabun600,
   },
   buttonCancel: {
     backgroundColor: colors.gray350,
@@ -361,17 +380,19 @@ const styles = StyleSheet.create({
   buttonTransfer: {
     backgroundColor: colors.gray350,
     paddingVertical: scaler(15),
-    paddingHorizontal: scaler(15),
     borderRadius: scaler(30),
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.gray,
+    flex: 1,
+    justifyContent: 'center',
   },
   textTransfer: {
     fontSize: scaler(15),
     fontWeight: '600',
     color: colors.textColor,
     marginLeft: scaler(7),
+    ...stylesCommon.fontSarabun600,
   },
 });

@@ -6,7 +6,7 @@ import {
   LayoutAnimation,
   TouchableOpacity,
 } from 'react-native';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: colors.labelColor,
     textAlign: 'center',
+    ...stylesCommon.fontWeight500,
   },
   textTitle2: {
     fontSize: scaler(26),
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.textColor,
     marginTop: scaler(8),
+    ...stylesCommon.fontWeight600,
   },
   container3: {
     backgroundColor: colors.white,
@@ -95,6 +97,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     marginTop: scaler(20),
+    ...stylesCommon.fontWeight600,
   },
   textTitleChart2: {
     fontSize: scaler(15),
@@ -102,6 +105,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.labelColor,
     marginTop: scaler(5),
+    ...stylesCommon.fontSarabun400,
   },
   containerChart: {
     paddingTop: scaler(20),
@@ -123,5 +127,6 @@ const styles = StyleSheet.create({
   textFinish: {
     fontSize: scaler(15),
     fontWeight: '600',
+    ...stylesCommon.fontSarabun600,
   },
 });

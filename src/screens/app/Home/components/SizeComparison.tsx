@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   button: {
     height: scaler(56),
     borderRadius: scaler(200),
-    backgroundColor: '#170B0B66',
+    backgroundColor: colors.white,
     position: 'absolute',
     bottom: scaler(18),
     right: scaler(12),
@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
     height: scaler(24),
   },
   txtButton: {
-    color: '#FFFFFF',
     ...stylesCommon.fontPlus600,
-    fontSize: scaler(16),
+    fontSize: scaler(17),
+    fontWeight: '600',
     lineHeight: scaler(22),
     marginRight: scaler(10),
   },

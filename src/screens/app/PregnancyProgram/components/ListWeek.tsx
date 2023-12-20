@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import DashedLine from './DashedLine';
-import {colors, scaler, widthScreen} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {
   ic_gift,
   ic_lock,
@@ -168,7 +168,7 @@ const ListWeek = (props: ListWeekProps) => {
                   color:
                     item.status == 'Happening'
                       ? colors.pink200
-                      : colors.labelColor,
+                      : colors.gray500,
                 },
               ]}>
               {item.name}
@@ -212,11 +212,13 @@ const styles = StyleSheet.create({
     fontSize: scaler(11),
     fontWeight: '400',
     color: colors.textSmallColor,
+    ...stylesCommon.fontSarabun400,
   },
   textName: {
     fontSize: scaler(12),
     fontWeight: '500',
     color: colors.labelColor,
+    ...stylesCommon.fontWeight600,
   },
   container: {backgroundColor: colors.gray450, paddingVertical: scaler(20)},
   center: {

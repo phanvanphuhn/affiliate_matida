@@ -12,7 +12,13 @@ import {
 import Container from '../DetailFeed/components/Container';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ic_background, iconClose, SvgPathBottom, SvgPathTop} from '@images';
-import {colors, heightScreen, scaler} from '@stylesCommon';
+import {
+  colors,
+  heightScreen,
+  scaler,
+  stylesCommon,
+  widthScreen,
+} from '@stylesCommon';
 import {goBack} from '@navigation';
 import useStateCustom from '../../../util/hooks/useStateCustom';
 import {useNavigation} from '@react-navigation/native';
@@ -41,7 +47,9 @@ const UpdateInformation = (props: UpdateInformationProps) => {
         <TouchableOpacity onPress={goBack} style={styles.buttonBack}>
           <Image source={iconClose} />
         </TouchableOpacity>
-        <ScrollView>
+        <ScrollView
+          contentContainerStyle={{paddingBottom: 50}}
+          showsVerticalScrollIndicator={false}>
           <Text style={styles.textTitle}>Update information</Text>
           <Text style={styles.textSubTitle}>
             Please fill in this form so we can set up your plan.
@@ -75,14 +83,6 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                 style={styles.input}
                 placeholder={'Your phone number'}
               />
-              {/*<Text style={styles.textLabel}>Your address</Text>*/}
-              {/*<TextInput*/}
-              {/*  value={state.address}*/}
-              {/*  onChangeText={onChangeText('address')}*/}
-              {/*  style={[styles.input, {maxHeight: 100}]}*/}
-              {/*  placeholder={'Your address'}*/}
-              {/*  multiline={true}*/}
-              {/*/>*/}
             </View>
             <SvgPathTop />
           </ImageBackground>
@@ -94,6 +94,34 @@ const UpdateInformation = (props: UpdateInformationProps) => {
             <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
               <Text style={styles.textDone}>Next</Text>
             </TouchableOpacity>
+            <Text
+              style={{
+                color: colors.gray500,
+                fontWeight: '400',
+                fontSize: scaler(13),
+                textAlign: 'center',
+                marginTop: 15,
+                ...stylesCommon.fontSarabun400,
+              }}>
+              By continue, I agree to the{' '}
+              <Text
+                style={{
+                  color: colors.pink300,
+                  fontWeight: '500',
+                  ...stylesCommon.fontSarabun500,
+                }}>
+                Terms
+              </Text>{' '}
+              &{' '}
+              <Text
+                style={{
+                  color: colors.pink300,
+                  fontWeight: '500',
+                  ...stylesCommon.fontSarabun500,
+                }}>
+                Privacy Policy
+              </Text>
+            </Text>
           </View>
         </ScrollView>
       </View>
@@ -114,12 +142,14 @@ const styles = StyleSheet.create({
     fontSize: scaler(24),
     fontWeight: '600',
     textAlign: 'center',
+    ...stylesCommon.fontWeight600,
   },
   textSubTitle: {
     fontSize: scaler(15),
     textAlign: 'center',
     padding: scaler(15),
     color: colors.textColor,
+    ...stylesCommon.fontSarabun400,
   },
   containerInput: {
     backgroundColor: colors.white,
@@ -130,7 +160,7 @@ const styles = StyleSheet.create({
     marginVertical: scaler(25),
     borderRadius: scaler(16),
     alignItems: 'center',
-    height: heightScreen / 2,
+    height: heightScreen / 2 + 120,
   },
   textLabel: {
     fontSize: scaler(13),
@@ -138,12 +168,14 @@ const styles = StyleSheet.create({
     color: colors.gray50,
     marginTop: scaler(20),
     textAlign: 'center',
+    ...stylesCommon.fontSarabun500,
   },
   input: {
     textAlign: 'center',
     fontSize: scaler(16),
     fontWeight: '500',
     paddingTop: scaler(10),
+    ...stylesCommon.fontWeight400,
   },
   buttonDone: {
     backgroundColor: colors.pink200,
@@ -157,6 +189,7 @@ const styles = StyleSheet.create({
     fontSize: scaler(15),
     fontWeight: '600',
     color: colors.white,
+    ...stylesCommon.fontSarabun600,
   },
   buttonCancel: {
     backgroundColor: colors.gray350,

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import {stylesDailyAffirmation} from '@constant';
-import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {IQuote} from '../types';
 import {useSelector} from 'react-redux';
 import {
@@ -20,6 +20,7 @@ import {
   TidaAI,
   SvgCircleRightDailyAffirmation1,
   IconBackgroundImageHome,
+  ic_line,
 } from '@images';
 import {useTranslation} from 'react-i18next';
 import {AppButton} from '@component';
@@ -45,23 +46,12 @@ export const ChatGPTComponent = React.memo(() => {
       onPress={onNavigateChatGPT}
       style={{paddingHorizontal: scaler(16)}}
       activeOpacity={0.9}>
-      <LinearGradient
-        colors={['rgb(134, 85, 255)', '#FF8FFF']}
-        style={{
-          borderRadius: scaler(16),
-          paddingTop: scaler(16),
-          paddingRight: scaler(16),
-          paddingLeft: scaler(16),
-        }}>
-        <Image
-          source={IconBackgroundImageHome}
-          style={styles.imageBackground}
-        />
+      <View style={styles.container1}>
+        <View style={styles.containerYellow} />
+        <Image source={ic_line} style={styles.imageBackground} />
         <View style={styles.wrapContainer}>
           <View style={styles.wrapContentContainer}>
-            <Text style={[styles.textTitle, {color: styleOfWeek.colorTitle}]}>
-              {t('newBornTida.hi')}
-            </Text>
+            <Text style={[styles.textTitle]}>{t('newBornTida.hi')}</Text>
             <Text style={styles.description}>{t('newBornTida.tidaHere')}</Text>
             <View style={styles.btn}>
               <Text style={styles.textBody}>{t('newBornTida.askNow')}</Text>
@@ -82,7 +72,7 @@ export const ChatGPTComponent = React.memo(() => {
             />
           </View>
         </View>
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 });
@@ -98,12 +88,13 @@ const styles = StyleSheet.create({
   textTitle: {
     ...stylesCommon.fontWeight500,
     fontSize: scaler(11),
-    color: colors.white,
+    color: colors.textColor,
   },
   textBody: {
     ...stylesCommon.fontWeight500,
     fontSize: scaler(12),
     textAlign: 'center',
+    color: colors.pink300,
   },
   btn: {
     flexDirection: 'row',
@@ -126,7 +117,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: scaler(20),
     ...stylesCommon.fontWeight600,
-    color: colors.white,
+    color: colors.textColor,
   },
   imageBackground: {
     width: scaler(134),
@@ -134,5 +125,23 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: scaler(-100),
+    resizeMode: 'contain',
+  },
+  container1: {
+    borderRadius: scaler(16),
+    paddingTop: scaler(16),
+    paddingRight: scaler(16),
+    paddingLeft: scaler(16),
+    backgroundColor: colors.pink350,
+    overflow: 'hidden',
+  },
+  containerYellow: {
+    backgroundColor: colors.yellow200,
+    height: '200%',
+    aspectRatio: 1,
+    borderRadius: widthScreen,
+    position: 'absolute',
+    top: '-20%',
+    left: '-20%',
   },
 });

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 interface DashedLineProps {
   axis?: 'horizontal' | 'vertical';
@@ -58,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashedLine;
+export default memo(DashedLine);

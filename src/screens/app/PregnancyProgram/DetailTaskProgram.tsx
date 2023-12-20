@@ -17,7 +17,7 @@ import {
   SvgPathBottom,
   SvgPathTop,
 } from '@images';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import Svg, {Path} from 'react-native-svg';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {goBack} from '@navigation';
@@ -195,16 +195,19 @@ const styles = StyleSheet.create({
     fontSize: scaler(15),
     fontWeight: '500',
     color: colors.borderColor,
+    ...stylesCommon.fontSarabun500,
   },
   textAbout: {
     fontSize: scaler(24),
     fontWeight: '600',
     marginTop: scaler(10),
     marginBottom: scaler(24),
+    ...stylesCommon.fontWeight600,
   },
   text1: {
     fontSize: scaler(15),
     color: colors.labelColor,
     marginBottom: scaler(30),
+    ...stylesCommon.fontSarabun400,
   },
 });

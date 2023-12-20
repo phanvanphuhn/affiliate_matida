@@ -10,7 +10,13 @@ import {
 } from 'react-native';
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import ListProgram from './ListProgram';
-import {colors, heightScreen, scaler, widthScreen} from '@stylesCommon';
+import {
+  colors,
+  heightScreen,
+  scaler,
+  stylesCommon,
+  widthScreen,
+} from '@stylesCommon';
 import PagerView from 'react-native-pager-view';
 
 interface TabProgramProps {}
@@ -22,7 +28,6 @@ const TabProgram = (props: TabProgramProps) => {
     {key: 'finished', title: 'Finished'},
   ]);
   const onIndexChange = (index: number) => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     setIndex(index);
   };
 
@@ -93,6 +98,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: scaler(13),
     color: colors.gray50,
+    ...stylesCommon.fontSarabun600,
   },
   indicatorStyle: {
     height: '100%',

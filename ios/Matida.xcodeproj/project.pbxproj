@@ -37,6 +37,11 @@
 		F4864C91FCB74EE8878C7358 /* Trocchi-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBAD1087AD0445D99B319E7F /* Trocchi-Regular.ttf */; };
 		FB788EDB296AEA7F00C67070 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB788EDA296AEA7F00C67070 /* BootSplash.storyboard */; };
 		FF48A5D81B6F4D638C059B0A /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC0C62960BA341AA83C6F5FB /* Inter-SemiBold.ttf */; };
+		6795692F52364567BB45BBB4 /* Sarabun-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B26208000D544C094CD446A /* Sarabun-Bold.ttf */; };
+		7422A90E300944FA931F7FE7 /* Sarabun-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7C0484C22BF4777A985C5DE /* Sarabun-Italic.ttf */; };
+		D737E791F4AF457EA6ECC0EB /* Sarabun-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3EA6DDF11DD24D47AE0D36F6 /* Sarabun-Medium.ttf */; };
+		F84E254741B547ABAFB0F326 /* Sarabun-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78AAFBD6BF954319B4C060C5 /* Sarabun-Regular.ttf */; };
+		8BE0D81C6E804918A3DFF357 /* Sarabun-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F893D9509604219B196F1EE /* Sarabun-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +98,11 @@
 		FB788EDA296AEA7F00C67070 /* BootSplash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BootSplash.storyboard; sourceTree = "<group>"; };
 		FB8FADEB295D74E30056879A /* Matida.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Matida.entitlements; path = Matida/Matida.entitlements; sourceTree = "<group>"; };
 		FBAD1087AD0445D99B319E7F /* Trocchi-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Trocchi-Regular.ttf"; path = "../src/assets/fonts/Trocchi-Regular.ttf"; sourceTree = "<group>"; };
+		4B26208000D544C094CD446A /* Sarabun-Bold.ttf */ = {isa = PBXFileReference; name = "Sarabun-Bold.ttf"; path = "../src/assets/fonts/Sarabun-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F7C0484C22BF4777A985C5DE /* Sarabun-Italic.ttf */ = {isa = PBXFileReference; name = "Sarabun-Italic.ttf"; path = "../src/assets/fonts/Sarabun-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3EA6DDF11DD24D47AE0D36F6 /* Sarabun-Medium.ttf */ = {isa = PBXFileReference; name = "Sarabun-Medium.ttf"; path = "../src/assets/fonts/Sarabun-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		78AAFBD6BF954319B4C060C5 /* Sarabun-Regular.ttf */ = {isa = PBXFileReference; name = "Sarabun-Regular.ttf"; path = "../src/assets/fonts/Sarabun-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3F893D9509604219B196F1EE /* Sarabun-SemiBold.ttf */ = {isa = PBXFileReference; name = "Sarabun-SemiBold.ttf"; path = "../src/assets/fonts/Sarabun-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +228,11 @@
 				D61448A2B6E44FAFBD136BA8 /* Cabin-Medium.ttf */,
 				B5F48FEA4CFF465987F280EC /* Cabin-Regular.ttf */,
 				C4977EE96F634EAB92CB00DA /* Cabin-SemiBold.ttf */,
+				4B26208000D544C094CD446A /* Sarabun-Bold.ttf */,
+				F7C0484C22BF4777A985C5DE /* Sarabun-Italic.ttf */,
+				3EA6DDF11DD24D47AE0D36F6 /* Sarabun-Medium.ttf */,
+				78AAFBD6BF954319B4C060C5 /* Sarabun-Regular.ttf */,
+				3F893D9509604219B196F1EE /* Sarabun-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -350,6 +365,11 @@
 				BB6C367D96AA43078E1C64D7 /* Cabin-Medium.ttf in Resources */,
 				D2A06367AACF404C90FF8B38 /* Cabin-Regular.ttf in Resources */,
 				C53148F01A7A4EC6974C4376 /* Cabin-SemiBold.ttf in Resources */,
+				6795692F52364567BB45BBB4 /* Sarabun-Bold.ttf in Resources */,
+				7422A90E300944FA931F7FE7 /* Sarabun-Italic.ttf in Resources */,
+				D737E791F4AF457EA6ECC0EB /* Sarabun-Medium.ttf in Resources */,
+				F84E254741B547ABAFB0F326 /* Sarabun-Regular.ttf in Resources */,
+				8BE0D81C6E804918A3DFF357 /* Sarabun-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

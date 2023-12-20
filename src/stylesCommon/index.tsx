@@ -128,6 +128,21 @@ const stylesCommon = StyleSheet.create({
   fontPlus600: {
     fontFamily: 'PlusJakartaSans-SemiBold',
   },
+  fontSarabun700: {
+    fontFamily: 'Sarabun-Bold',
+  },
+  fontSarabunItalic: {
+    fontFamily: 'Sarabun-Italic',
+  },
+  fontSarabun500: {
+    fontFamily: 'Sarabun-Medium',
+  },
+  fontSarabun400: {
+    fontFamily: 'Sarabun-Regular',
+  },
+  fontSarabun600: {
+    fontFamily: 'Sarabun-Semibold',
+  },
 });
 
 const scaler = (size: any) => perfectSize(size);

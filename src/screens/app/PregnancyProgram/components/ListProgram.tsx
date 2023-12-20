@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -10,7 +10,13 @@ import {
   Platform,
   UIManager,
 } from 'react-native';
-import {colors, heightScreen, scaler, widthScreen} from '@stylesCommon';
+import {
+  colors,
+  heightScreen,
+  scaler,
+  stylesCommon,
+  widthScreen,
+} from '@stylesCommon';
 import Svg, {Circle, G, Path, Line} from 'react-native-svg';
 import DashedLine from './DashedLine';
 import {ic_default1, ic_default2, ic_gift, SvgArrowLeft} from '@images';
@@ -26,9 +32,9 @@ interface ListProgramProps {
 }
 const DATA = [
   {
-    title: 'Core module',
+    title: 'Pregnancy Knowledge',
     type: 'core',
-    label: 'Basics',
+    label: 'Core',
     data: [
       {
         name: 'Learn about the Baby Development Milestones',
@@ -75,6 +81,7 @@ const DATA = [
 
 const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState();
+  const refHeight = useRef();
   const navigation = useNavigation<any>();
 
   const onDetail = (item: any) => {
@@ -89,7 +96,7 @@ const ListProgram = (props: ListProgramProps) => {
       case 'core':
         return colors.pink200;
       case 'personal':
-        return colors.green;
+        return colors.green250;
       default:
         return colors.primaryBackground;
     }
@@ -112,21 +119,34 @@ const ListProgram = (props: ListProgramProps) => {
                   <Path
                     d="M1 1V35C1 55.8366 8.16344 52 20 55V55"
                     stroke={getColor(item.type)}
-                    strokeWidth={1.5}
+                    strokeWidth={2}
                     strokeLinecap="round"
                     strokeDasharray="2 4"
-                    x={4}
+                    x={8}
                     y={0}
                   />
                 </Svg>
               ) : (
-                <DashedLine
-                  dashLength={3}
-                  dashThickness={1}
-                  dashColor={getColor(item.type)}
-                  axis={'vertical'}
-                  style={{flex: 1, alignSelf: 'center'}}
-                />
+                // <DashedLine
+                //   dashLength={3}
+                //   dashThickness={1}
+                //   dashColor={getColor(item.type)}
+                //   axis={'vertical'}
+                //   style={{flex: 1, alignSelf: 'center'}}
+                // />
+                <Svg
+                  style={{width: 20, height: '100%', position: 'absolute'}}
+                  fill="none">
+                  <Path
+                    d="M1 1V519"
+                    stroke={getColor(item.type)}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeDasharray="2 4"
+                    x={8}
+                    y={22}
+                  />
+                </Svg>
               )}
             </View>
             <View
@@ -134,12 +154,13 @@ const ListProgram = (props: ListProgramProps) => {
                 flex: 1,
                 paddingBottom: scaler(10),
               }}>
-              <View style={styles.rowStart}>
+              <View style={[styles.rowStart, {alignItems: 'center'}]}>
                 <View style={{flex: 1}}>
                   <Text
                     style={{
                       fontSize: scaler(19),
                       fontWeight: '600',
+                      ...stylesCommon.fontSarabun600,
                     }}>
                     {item.title}
                   </Text>
@@ -173,6 +194,7 @@ const ListProgram = (props: ListProgramProps) => {
                           color: colors.white,
                           fontSize: scaler(15),
                           fontWeight: '600',
+                          ...stylesCommon.fontWeight600,
                         }}>
                         Thanks Mommy, I'm proud of you !
                       </Text>
@@ -204,7 +226,9 @@ const ListProgram = (props: ListProgramProps) => {
                             onPress={() => onDetail(e)}
                             style={styles.rowCenter}>
                             <Text style={styles.textSmash}>
-                              {props?.tabIndex == 0 ? 'Smash it' : 'Review it'}
+                              {props?.tabIndex == 0
+                                ? 'Finish the task'
+                                : 'Review it'}
                             </Text>
                             <SvgArrowLeft
                               stroke={colors.pink300}
@@ -241,6 +265,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontWeight: '600',
     fontSize: scaler(13),
+    ...stylesCommon.fontSarabun600,
+    marginBottom: 2,
   },
   rowCenter: {
     flexDirection: 'row',
@@ -250,6 +276,7 @@ const styles = StyleSheet.create({
     fontSize: scaler(15),
     fontWeight: '600',
     paddingRight: 5,
+    ...stylesCommon.fontWeight600,
   },
   textChildDesc: {
     color: colors.gray500,
@@ -257,6 +284,7 @@ const styles = StyleSheet.create({
     marginTop: scaler(5),
     paddingRight: scaler(10),
     paddingBottom: scaler(10),
+    ...stylesCommon.fontSarabun400,
   },
   containerChild: {
     backgroundColor: colors.gray350,
@@ -272,7 +300,8 @@ const styles = StyleSheet.create({
   textTag: {
     color: colors.white,
     fontSize: scaler(10),
-    fontWeight: '500',
+    fontWeight: '600',
+    ...stylesCommon.fontSarabun600,
   },
   containerTag: {
     backgroundColor: colors.primaryBackground,
@@ -295,10 +324,11 @@ const styles = StyleSheet.create({
   },
   dot: {
     backgroundColor: colors.primaryBackground,
-    height: scaler(10),
-    width: scaler(10),
-    borderRadius: scaler(5),
-    marginTop: 7,
+    height: scaler(16),
+    width: scaler(16),
+    borderRadius: scaler(8),
+    marginTop: 6,
+    marginLeft: 1,
   },
   rowStart: {
     flexDirection: 'row',

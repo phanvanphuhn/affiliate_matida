@@ -90,6 +90,11 @@ const ic_smile = require('./ic_smile.png');
 const bg2 = require('./bg2.png');
 const ic_default_upload = require('./ic_default_upload.png');
 const ic_plus = require('./ic_plus.png');
+const chuyengia1 = require('./chuyengia1.png');
+const ic_line_wave = require('./ic_line_wave.png');
+const ic_line = require('./ic_line.png');
+const ic_info = require('./ic_info.png');
+const ic_download = require('./ic_download.png');
 
 export {
   DailyQuiz,
@@ -182,4 +187,9 @@ export {
   bg2,
   ic_default_upload,
   ic_plus,
+  chuyengia1,
+  ic_line_wave,
+  ic_line,
+  ic_info,
+  ic_download,
 };
