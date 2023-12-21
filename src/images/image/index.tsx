@@ -63,6 +63,7 @@ const momProgram = require('./momProgramImage.png');
 const moreInformation = require('./MoreInformation.png');
 const defaultIconBabyDueDate = require('./defaultIconBabyDueDate.png');
 const defaultIconBabyNewBorn = require('./defaultIconBabyNewBorn.png');
+const imageIntroOnboardingV2 = require('./imageIntroOnboardingV2.png');
 const bacsyHoa = require('./bacsyHoa.jpg');
 const bacsyPhuongAnh = require('./bacsyPhuongAnh.jpg');
 const bacsyMaiSuong = require('./bacsyMaiSuong.jpg');
@@ -132,6 +133,7 @@ export {
   moreInformation,
   defaultIconBabyDueDate,
   defaultIconBabyNewBorn,
+  imageIntroOnboardingV2,
   bacsyHoa,
   bacsyPhuongAnh,
   bacsyMaiSuong,

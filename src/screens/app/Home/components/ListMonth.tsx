@@ -483,7 +483,7 @@ const ListMonth = (props: TProps) => {
         element?.value == (filterVal ? filterVal?.value : state?.filter.value),
     );
     if (index >= 0) {
-      const wait = new Promise((resolve: any) => setTimeout(resolve, 500));
+      const wait = new Promise((resolve: any) => setTimeout(resolve, 1500));
       wait.then(() => {
         flatListRef?.current?.scrollToIndex({
           index: index === 0 ? 0 : index,

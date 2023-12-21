@@ -204,16 +204,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    GlobalService.showLoading();
-    if (state.filter.value?.indexOf('week') != -1) {
-      dispatch(getDataHomeByWeek({week: state.filter.intVal, month: 0}));
-    } else {
-      dispatch(getDataHomeByWeek({week: 1, month: state.filter.intVal}));
-    }
-    GlobalService.hideLoading();
-  }, [state.filter.value]);
-
-  useEffect(() => {
     updateLangUser();
   }, [lang]);
 
@@ -342,7 +332,7 @@ const Home = () => {
         );
       }
       checkProgram();
-      dispatch(getDataHome());
+      // dispatch(getDataHome());
       dispatch(getListBaby());
       const res = await calendarCheckups();
       setState({
@@ -501,6 +491,16 @@ const Home = () => {
   useEffect(() => {
     trackUser(user);
   }, []);
+
+  useEffect(() => {
+    GlobalService.showLoading();
+    if (state.filter.value?.indexOf('week') != -1) {
+      dispatch(getDataHomeByWeek({week: state.filter.intVal, month: 0}));
+    } else {
+      dispatch(getDataHomeByWeek({week: 1, month: state.filter.intVal}));
+    }
+    GlobalService.hideLoading();
+  }, [state.filter.value]);
 
   const renderNewBornContent = () => {
     if (

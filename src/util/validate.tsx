@@ -1,6 +1,6 @@
 //Đây là nơi chứa tất cả các validate của formik
 import * as yup from 'yup';
-const nameRegExp = /^[^\d`~!@#$%^&*()_+=[\]{}|\\;:'",<.>/?]+$/;
+const nameRegExp = /^[a-zA-Z0-9\s]*$/;
 export const validateForm = () => {
   return {
     name: yup

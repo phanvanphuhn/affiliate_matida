@@ -52,7 +52,6 @@ const CalculateDueDateScreenApp = (props: any) => {
       const res = await calculateDate(
         method === 'FIRST_DAY_OF_LAST_PERIOD' ? body : body2,
       );
-      console.log('res: ', res?.data?.resultPeriod?.dueDate);
       route?.params?.setState({
         due_date: moment(
           res?.data?.resultPeriod?.dueDate

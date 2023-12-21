@@ -110,7 +110,7 @@ const ProfileSettingsScreen = () => {
     baby_name: validateFormVN().babyName,
     username: validateFormVN().username,
   });
-
+  console.log('validationSchemaVN: ', validationSchemaVN);
   const initialValuesProfileSettings: any = {
     name: user?.name ? user?.name : '',
     email: user?.email ? user?.email : '',
@@ -171,6 +171,7 @@ const ProfileSettingsScreen = () => {
   };
   //Hàm gọi khi ấn button Save
   const handleSave = async (values: any) => {
+    console.log('values?.name: ', values?.name);
     try {
       if (values?.email?.length === 0) {
         const body = {

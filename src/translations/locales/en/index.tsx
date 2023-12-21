@@ -710,6 +710,8 @@ export const en = {
     highlights: 'Highlights',
     viewMore: 'View more',
     update: 'This content will be added shortly. Stay tuned!',
+    plsAddDueDate: 'Please add the due date of your baby.',
+    calculateDueDate: 'Use our calculator to find out your due date.',
   },
   newBornTida: {
     hi: "Hi mommy,\nit's normal to have tons of questions.",

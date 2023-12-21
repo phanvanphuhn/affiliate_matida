@@ -7,9 +7,9 @@ export const vi = {
     next: 'Tiếp tục',
   },
   intro: {
-    introTitle: 'Cảm ơn bạn đã chọn Matida \ncùng đồng hành',
+    introTitle: 'Chào mẹ, Matida đây',
     introContent:
-      'Matida sẽ cùng bạn theo dõi sự phát triển của em bé trong suốt thai kỳ. Hãy tham gia cộng đồng để cùng học hỏi, kết nối và trao đổi thông tin.',
+      'Ứng dụng đồng hành từ lúc mẹ mang thai đến khi con chào đời. Cùng theo dõi sự phát triển của con, nghe chia sẻ từ các chuyên gia và mẹ bầu khác nào.',
   },
   login: {
     signIn: 'Đăng nhập',
@@ -715,6 +715,8 @@ export const vi = {
     viewMore: 'Xem thêm',
     update:
       'Con đang nhờ Matida cập nhật và sẽ kể với mẹ sớm thôi. Mẹ chờ con nhé!',
+    plsAddDueDate: 'Hãy điền ngày dự sinh của bé.',
+    calculateDueDate: 'Hãy dùng công cụ để tính toán ngày sinh của bé.',
   },
   newBornTida: {
     hi: 'Chào mẹ,\ncó nhiều thắc mắc là chuyện bình thường.',

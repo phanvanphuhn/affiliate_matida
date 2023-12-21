@@ -1,5 +1,5 @@
 import {AppButton} from '@component';
-import {iconHeart, imageIntro, SvgLogo} from '@images';
+import {iconHeart, imageIntro, SvgLogo, imageIntroOnboardingV2} from '@images';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {scaler} from '@stylesCommon';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -73,7 +73,7 @@ const Intro = () => {
     if (value?.user?.due_date) {
       dispatch(changeStatusLogin(true));
     } else {
-      navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+      navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
     }
   };
 
@@ -114,14 +114,7 @@ const Intro = () => {
               eventType.AFF_FLYER,
             );
             trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-            trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
-              user_id: res?.data?.data?.id,
-              name: res?.data?.data?.name,
-              user_name: res?.data?.data?.username,
-              email: res?.data?.data?.email,
-              phone: res?.data?.data?.phone_number,
-            });
-            navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+            navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
           }
           GlobalService.hideLoading();
         }
@@ -155,14 +148,7 @@ const Intro = () => {
               eventType.AFF_FLYER,
             );
             trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-            trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
-              user_id: res?.data?.data?.id,
-              name: res?.data?.data?.name,
-              user_name: res?.data?.data?.username,
-              email: res?.data?.data?.email,
-              phone: res?.data?.data?.phone_number,
-            });
-            navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+            navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
           }
         }
       } else {
@@ -187,14 +173,7 @@ const Intro = () => {
             eventType.AFF_FLYER,
           );
           trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-          trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
-            user_id: res?.data?.data?.id,
-            name: res?.data?.data?.name,
-            user_name: res?.data?.data?.username,
-            email: res?.data?.data?.email,
-            phone: res?.data?.data?.phone_number,
-          });
-          navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+          navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
         }
       }
     } else if (value === 'Apple') {
@@ -226,14 +205,7 @@ const Intro = () => {
             eventType.AFF_FLYER,
           );
           trackEventBranch(event.BRANCH.SIGNUP, eventParams, true);
-          trackCustomEvent(event.WEBENGAGE.USER_SIGN_UP, {
-            user_id: res?.data?.data?.id,
-            name: res?.data?.data?.name,
-            user_name: res?.data?.data?.username,
-            email: res?.data?.data?.email,
-            phone: res?.data?.data?.phone_number,
-          });
-          navigation.navigate(ROUTE_NAME.CHOOSE_DUE_DATE);
+          navigation.navigate(ROUTE_NAME.ONBOARDING_V2);
         }
       } else {
       }
@@ -249,45 +221,23 @@ const Intro = () => {
       style={styles.containerScroll}>
       <View style={styles.container}>
         <Image
-          source={imageIntro}
+          source={imageIntroOnboardingV2}
           style={styles.imageIntro}
           resizeMode="cover"
         />
         <View style={styles.viewBottomText}>
           <SvgLogo />
-          {lang === 2 ? (
-            <>
-              <Text style={[styles.txtBottom, {marginTop: scaler(12)}]}>
-                Chào bạn,
-              </Text>
-              <View style={{flexDirection: 'row', marginBottom: scaler(12)}}>
-                <Text style={styles.txtBottom}>Matida đây</Text>
-                <Image source={iconHeart} style={styles.imageHeart} />
-              </View>
-            </>
-          ) : (
-            <Text style={styles.txtBottom}>{t('intro.introTitle')}</Text>
-          )}
-          {lang === 2 ? (
-            <Text style={[styles.txtBottomContent, {width: '100%'}]}>
-              Ứng dụng đồng hành cùng mẹ bầu trong hành trình làm mẹ. Cùng theo
-              dõi thai kỳ, lắng nghe chia sẻ từ các chuyên gia và mẹ bầu khác.
-              Khám phá ngay!
-            </Text>
-          ) : (
-            <Text style={styles.txtBottomContent}>
-              {t('intro.introContent')}
-            </Text>
-          )}
+          <Text style={styles.txtBottom}>{t('intro.introTitle')}</Text>
+          <Text style={styles.txtBottomContent}>{t('intro.introContent')}</Text>
         </View>
         <View style={styles.viewBottom}>
-          <AppButton titleButton={t('login.logIn')} onClick={showLogin} />
           <AppButton
-            titleButton={t('login.signUp')}
-            onClick={showSignUp}
+            titleButton={t('login.logIn')}
+            onClick={showLogin}
             customStyleButton={styles.customButton}
             customStyleText={styles.customTextButton}
           />
+          <AppButton titleButton={t('login.signUp')} onClick={showSignUp} />
         </View>
         {login === true ? (
           <View style={styles.viewModal}>
