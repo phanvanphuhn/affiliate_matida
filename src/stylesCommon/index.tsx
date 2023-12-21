@@ -65,6 +65,8 @@ const colors = {
   primaryBackground: '#EE6566',
   cancelBackground: '#F8F7F8',
   labelColor: '#39383D',
+  pink4: '#FD91FD',
+  purple4: '#8FA0FF',
 };
 
 //Font chữ được sử dụng trong app

@@ -38,6 +38,8 @@ const iconChevronDown = require('./chevronDown.png');
 const iconCalendarGrey = require('./calendarGrey.png');
 const iconClockGrey = require('./iconClockGrey.png');
 const iconKid = require('./iconKid.png');
+const iconEditWhite = require('./iconEditWhite.png');
+const iconPlusCircleWhite = require('./iconPlusCircleWhite.png');
 
 export {
   iconFlagVn,
@@ -80,4 +82,6 @@ export {
   iconCalendarGrey,
   iconClockGrey,
   iconKid,
+  iconEditWhite,
+  iconPlusCircleWhite,
 };

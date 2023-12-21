@@ -67,7 +67,7 @@ export const ChatGPTComponent = React.memo(({value}: any) => {
     //   }}>
     <TouchableOpacity
       onPress={onNavigateChatGPT}
-      style={{paddingHorizontal: scaler(16), marginTop: scaler(16)}}
+      style={{paddingHorizontal: scaler(16), marginBottom: scaler(16)}}
       activeOpacity={0.9}>
       <LinearGradient
         colors={['rgb(134, 85, 255)', '#EE6566']}

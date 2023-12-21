@@ -1,10 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {FLoatingAIButton} from '@component';
+import {
+  ExpertWorkshopsItem,
+  ExpertWorkshopsItemV2,
+  FLoatingAIButton,
+  HorizontalList,
+} from '@component';
 import {getListTabForum} from '@redux';
 import {ROUTE_NAME} from '@routeName';
-import {colors} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
   event,
   eventType,
@@ -12,18 +17,47 @@ import {
   trackingAppEvent,
   useUXCam,
 } from '@util';
-import React, {useEffect, useRef} from 'react';
-import {ActivityIndicator, View, ScrollView} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  ActivityIndicator,
+  View,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {HeaderForum, ListPost, ListTopTab} from './components';
 import {styles} from './Forum.style';
-import {AppHeader} from '@component';
+import {
+  AppHeader,
+  FloatingCreateNewPost,
+  FloatingCreateNewRoom,
+} from '@component';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
+import {getLiveTalk} from '@services';
+
+type IData = {
+  momLiveTalks: any[];
+  expertLiveTalk: any[];
+  recordExpertWorkShop: any[];
+};
+
+const initData: IData = {
+  momLiveTalks: [],
+  expertLiveTalk: [],
+  recordExpertWorkShop: [],
+};
 
 export const Forum = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
   const scrollRef = useRef<ScrollView>(null);
+  const {t} = useTranslation();
+
+  const [data, setData] = useState<IData>(initData);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const loading = useSelector((state: any) => state?.forum?.loading);
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -51,7 +85,19 @@ export const Forum = () => {
   };
 
   const getData = async () => {
-    dispatch(getListTabForum());
+    try {
+      dispatch(getListTabForum());
+      const res = await getLiveTalk();
+      setData(res?.data);
+    } catch (e) {
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  const onRefresh = () => {
+    // setRefreshing(true);
+    getData();
   };
 
   useEffect(() => {
@@ -65,7 +111,7 @@ export const Forum = () => {
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: colors.white}}>
+    <View style={{flex: 1}}>
       <AppHeader
         onPressMenu={navigateSetting}
         onPressNotification={navigateNotification}
@@ -93,11 +139,78 @@ export const Forum = () => {
         </View>
       ) : (
         <>
-          <ListTopTab />
-          <ListPost />
+          {/* <ListTopTab /> */}
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: scaler(24),
+                marginBottom: scaler(8),
+                paddingHorizontal: scaler(16),
+              }}>
+              <Text
+                style={{
+                  fontSize: scaler(18),
+                  ...stylesCommon.fontWeight600,
+                }}>
+                {t('talk.expertWorkshops')}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(ROUTE_NAME.ALL_MEETING_ROOM)
+                }>
+                <Text
+                  style={{
+                    ...stylesCommon.fontWeight500,
+                    fontSize: scaler(14),
+                    color: colors.pink4,
+                  }}>
+                  {t('talk.seeAll')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              data={data?.expertLiveTalk}
+              renderItem={({item, index}) => {
+                return <ExpertWorkshopsItemV2 item={item} key={index} />;
+              }}
+              horizontal={true}
+            />
+          </View>
+          <View style={{flex: 1}}>
+            <Text
+              style={{
+                fontSize: scaler(18),
+                paddingHorizontal: scaler(16),
+                marginBottom: scaler(8),
+                ...stylesCommon.fontWeight600,
+              }}>
+              {t('newFeed.titleHeader')}
+            </Text>
+            <ListPost />
+          </View>
         </>
       )}
-      {isShowForReviewer(user) && <FLoatingAIButton />}
+      {isShowForReviewer(user) && (
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            position: 'absolute',
+            justifyContent: 'center',
+            bottom: scaler(16),
+            paddingHorizontal: scaler(16),
+          }}>
+          <FloatingCreateNewPost />
+          {user?.role !== 1 && (
+            <View style={{marginLeft: scaler(16)}}>
+              <FloatingCreateNewRoom />
+            </View>
+          )}
+        </View>
+      )}
+      {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
     </View>
   );
 };

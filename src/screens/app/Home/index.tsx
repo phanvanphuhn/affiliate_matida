@@ -588,8 +588,6 @@ const Home = () => {
           </View>
         )}
 
-        {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
-
         <ScrollView
           ref={scrollRef}
           showsVerticalScrollIndicator={false}
@@ -627,6 +625,8 @@ const Home = () => {
           {data?.dailyQuizz && isShowForReviewer(user) ? (
             <ViewQuiz onAnswer={onAnswerQuiz} />
           ) : null}
+
+          {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
 
           {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||
