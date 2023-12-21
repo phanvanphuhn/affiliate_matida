@@ -28,7 +28,7 @@ import {
 import {AccessToken, LoginManager} from 'react-native-fbsdk-next';
 import {Constants, login as LoginWithZalo} from 'react-native-zalo-kit';
 import reactotron from 'reactotron-react-native';
-import {trackUser} from '@services/webengageManager.tsx';
+import {trackUser, trackCustomEvent} from '@services/webengageManager.tsx';
 
 const Intro = () => {
   const {t} = useTranslation();

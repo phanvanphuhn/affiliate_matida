@@ -111,56 +111,57 @@ export const AppHeader = ({
     <SafeAreaView
       edges={['top']}
       style={[styles.container, bgc ? {backgroundColor: colors.white} : {}]}>
-      <View style={styles.row}>
-        {onPressMenu && (
-          <TouchableOpacity
-            onPress={onPressMenu}
-            style={{
-              paddingLeft: scaler(16),
-              paddingVertical: scaler(10),
-            }}>
-            <SvgMenu color={bgc ? 'black' : 'white'} />
-          </TouchableOpacity>
-        )}
-        {rightNoti ? (
-          <TouchableOpacity
-            onPress={onPressNotification}
-            style={{
-              paddingVertical: scaler(10),
-              marginLeft: scaler(18),
-              marginRight: scaler(2),
-            }}>
-            {<SvgNotification color={bgc ? 'black' : 'white'} />}
-            {!!totalUnreadNotification && (
-              <View
-                style={[
-                  styles.viewIndexNoti,
-                  +totalUnreadNotification < 10 && {
-                    paddingHorizontal: scaler(5),
-                  },
-                ]}>
-                <Text style={styles.textIndexNoti}>
-                  {+totalUnreadNotification > 99 ? 99 : totalUnreadNotification}
-                </Text>
-                {+totalUnreadNotification > 99 && (
-                  <Text
-                    style={[
-                      {
-                        textAlignVertical: 'top',
-                      },
-                      styles.textIndexNoti,
-                    ]}>
-                    +
+      <View style={[styles.row, {paddingHorizontal: scaler(16)}]}>
+        <View style={[styles.site, {justifyContent: 'space-between'}]}>
+          {onPressMenu && (
+            <TouchableOpacity
+              onPress={onPressMenu}
+              style={{
+                paddingVertical: scaler(10),
+              }}>
+              <SvgMenu color={bgc ? 'black' : 'white'} />
+            </TouchableOpacity>
+          )}
+          {rightNoti ? (
+            <TouchableOpacity
+              onPress={onPressNotification}
+              style={{
+                paddingVertical: scaler(10),
+                marginRight: scaler(2),
+              }}>
+              {<SvgNotification color={bgc ? 'black' : 'white'} />}
+              {!!totalUnreadNotification && (
+                <View
+                  style={[
+                    styles.viewIndexNoti,
+                    +totalUnreadNotification < 10 && {
+                      paddingHorizontal: scaler(5),
+                    },
+                  ]}>
+                  <Text style={styles.textIndexNoti}>
+                    {+totalUnreadNotification > 99
+                      ? 99
+                      : totalUnreadNotification}
                   </Text>
-                )}
-              </View>
-            )}
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            onPress={onPressAvatar}
-            style={{marginLeft: scaler(20)}}>
-            {/* {user?.avatar?.length > 0 ? (
+                  {+totalUnreadNotification > 99 && (
+                    <Text
+                      style={[
+                        {
+                          textAlignVertical: 'top',
+                        },
+                        styles.textIndexNoti,
+                      ]}>
+                      +
+                    </Text>
+                  )}
+                </View>
+              )}
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              onPress={onPressAvatar}
+              style={{marginLeft: scaler(20)}}>
+              {/* {user?.avatar?.length > 0 ? (
             <>
               <FastImage
                 style={styles.avatarImage}
@@ -176,111 +177,74 @@ export const AppHeader = ({
           ) : (
             <Image source={avatarDefault} style={styles.avatarImage} />
           )} */}
-            <AppImage uri={user?.avatar} style={styles.avatarImage} user />
-            {loading === true ? (
-              <View style={styles.viewLoading}>
-                <ActivityIndicator color={colors.primary} size="small" />
-              </View>
-            ) : null}
+              <AppImage uri={user?.avatar} style={styles.avatarImage} user />
+              {loading === true ? (
+                <View style={styles.viewLoading}>
+                  <ActivityIndicator color={colors.primary} size="small" />
+                </View>
+              ) : null}
+            </TouchableOpacity>
+          )}
+          {onPressMessage && (
+            <TouchableOpacity
+              onPress={onPressMessage}
+              style={{paddingVertical: scaler(10)}}>
+              {<SvgMessage color={bgc ? 'black' : 'white'} />}
+              {dot && (
+                <View
+                  style={[
+                    styles.dotMessage,
+                    bgc ? {backgroundColor: 'black'} : {},
+                  ]}
+                />
+              )}
+            </TouchableOpacity>
+          )}
+        </View>
+        <View style={styles.center}>
+          <TouchableOpacity onPress={onPressLogo} activeOpacity={0.9}>
+            {/* <Text style={styles.textLogo}>Matida</Text> */}
+            <Image
+              source={bgc ? imageNameAppPink : imageNameApp}
+              style={styles.imageNameApp}
+            />
           </TouchableOpacity>
-        )}
-      </View>
-      <TouchableOpacity onPress={onPressLogo} activeOpacity={0.9}>
-        {/* <Text style={styles.textLogo}>Matida</Text> */}
-        <Image
-          source={bgc ? imageNameAppPink : imageNameApp}
-          style={styles.imageNameApp}
-        />
-      </TouchableOpacity>
-      <View style={[styles.row]}>
-        {openNewBorn && (
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              width: scaler(48),
-              marginRight: scaler(32),
-              justifyContent: 'flex-end',
-            }}
-            onPress={openNewBorn}>
-            <View
+        </View>
+        <View style={[styles.site, {justifyContent: 'flex-end'}]}>
+          {openNewBorn && (
+            <TouchableOpacity
               style={{
-                marginRight: scaler(4),
-              }}>
-              <Text numberOfLines={1} style={{color: colors.black}}>
-                {selectedNewBorn[0]?.name || 'Baby 1'}
-              </Text>
-            </View>
-            <View>
-              <SvgCaretDown stroke={bgc ? colors.black : 'white'} />
-            </View>
-          </TouchableOpacity>
-        )}
-        {onPressNotification && !rightNoti && (
-          <TouchableOpacity
-            onPress={onPressNotification}
-            style={{
-              paddingRight: scaler(20),
-              paddingVertical: scaler(10),
-            }}>
-            {<SvgNotification color={bgc ? 'black' : 'white'} />}
-            {!!totalUnreadNotification && (
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}
+              onPress={openNewBorn}>
               <View
-                style={[
-                  styles.viewIndexNoti,
-                  +totalUnreadNotification < 10 && {
-                    paddingHorizontal: scaler(5),
-                  },
-                ]}>
-                <Text style={styles.textIndexNoti}>
-                  {+totalUnreadNotification > 99 ? 99 : totalUnreadNotification}
+                style={{
+                  marginRight: scaler(4),
+                }}>
+                <Text numberOfLines={1} style={{color: colors.black}}>
+                  {selectedNewBorn[0]?.name || 'Baby 1'}
                 </Text>
-                {+totalUnreadNotification > 99 && (
-                  <Text
-                    style={[
-                      {
-                        textAlignVertical: 'top',
-                      },
-                      styles.textIndexNoti,
-                    ]}>
-                    +
-                  </Text>
-                )}
               </View>
-            )}
-          </TouchableOpacity>
-        )}
-        {/* <View style={{paddingRight: scaler(20), paddingVertical: scaler(10)}} /> */}
-        {onPressMessage && (
-          <TouchableOpacity
-            onPress={onPressMessage}
-            style={{paddingVertical: scaler(10), paddingRight: scaler(16)}}>
-            {<SvgMessage color={bgc ? 'black' : 'white'} />}
-            {dot && (
-              <View
-                style={[
-                  styles.dotMessage,
-                  bgc ? {backgroundColor: 'black'} : {},
-                ]}
-              />
-            )}
-          </TouchableOpacity>
-        )}
-        {onPressSearch ? (
-          <TouchableOpacity
-            onPress={onPressSearch}
-            style={{
-              paddingVertical: scaler(10),
-              paddingRight: scaler(16),
-              marginLeft: scaler(44),
-            }}>
-            <SvgSearch color={bgc ? colors.black : colors.white} />
-          </TouchableOpacity>
-        ) : isFeed ? (
-          <View style={{width: scaler(48)}} />
-        ) : null}
-        {/* <View style={{paddingVertical: scaler(10)}}>
+              <View>
+                <SvgCaretDown stroke={bgc ? colors.black : 'white'} />
+              </View>
+            </TouchableOpacity>
+          )}
+          {/* <View style={{paddingRight: scaler(20), paddingVertical: scaler(10)}} /> */}
+          {onPressSearch && (
+            <TouchableOpacity
+              onPress={onPressSearch}
+              style={{
+                paddingVertical: scaler(10),
+              }}>
+              <SvgSearch color={bgc ? colors.black : colors.white} />
+            </TouchableOpacity>
+          )}
+          {/* <View style={{paddingVertical: scaler(10)}}>
           <View style={{width: scaler(60)}} />
         </View> */}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -349,5 +313,14 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontWeight600,
     fontSize: scaler(10),
     color: colors.white,
+  },
+  site: {
+    width: '30%',
+    flexDirection: 'row',
+  },
+  center: {
+    width: '40%',
+    alignItems: 'center',
+    paddingLeft: scaler(8),
   },
 });

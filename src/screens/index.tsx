@@ -73,6 +73,7 @@ import NewBornTracker from './app/Home/components/NewBornTracker';
 import AddBabySuccess from './app/NewBorn/components/AddBabySuccess';
 import OnboardingV2 from './auth/OnboardingV2';
 import AuthAddBabySuccess from './auth/OnboardingV2/components/AuthAddBabySuccess';
+import SourceOfRecommendation from './app/SourceOfRecommendation';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -150,6 +151,7 @@ const screens = {
   AddBabySuccess,
   OnboardingV2,
   AuthAddBabySuccess,
+  SourceOfRecommendation,
 };
 
 export {screens};

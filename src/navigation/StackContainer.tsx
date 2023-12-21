@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {saveIsReview} from '@redux';
 import {AppSocket} from '@util';
 import * as React from 'react';
-import {Platform} from 'react-native';
+import {Alert, DevSettings, Platform} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import InAppReview from 'react-native-in-app-review';
 import {useDispatch, useSelector} from 'react-redux';
@@ -14,6 +14,9 @@ import {screens} from '../screens';
 import {linking} from './Linking';
 import {ROUTE_NAME} from './routeName';
 import StackTab from './StackTab';
+import NetInfo, {useNetInfo} from '@react-native-community/netinfo';
+import RNRestart from 'react-native-restart';
+import {useTranslation} from 'react-i18next';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -23,6 +26,8 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
     headerShown: false,
   };
   const dispatch = useDispatch();
+  const netInfo = useNetInfo();
+  const {t} = useTranslation();
 
   const lang = useSelector((state: any) => state?.auth?.lang);
   const isLogin: any = useSelector((state: any) => state?.auth?.statusLogin);
@@ -34,6 +39,26 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
     (state: RootState) => state?.auth?.isSeenComment,
   );
   const isReview = useSelector((state: RootState) => state?.auth?.isReview);
+
+  const tryAgainPress = () => {
+    if (__DEV__) {
+      DevSettings.reload();
+    }
+    RNRestart.Restart();
+  };
+
+  const noInternetAlert = () =>
+    Alert.alert(t('common.networkSystem'), t('common.noInternet') as string, [
+      {text: t('common.tryAgain') as string, onPress: tryAgainPress},
+    ]);
+
+  React.useEffect(() => {
+    NetInfo.fetch().then(state => {
+      if (!state.isConnected) {
+        noInternetAlert();
+      }
+    });
+  }, [netInfo]);
 
   React.useEffect(() => {
     if (token) {
@@ -341,6 +366,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
           <Stack.Screen
             name={ROUTE_NAME.ADD_BABY_SUCCESS}
             component={screens.AddBabySuccess}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.SOURCE}
+            component={screens.SourceOfRecommendation}
           />
         </Stack.Navigator>
       );

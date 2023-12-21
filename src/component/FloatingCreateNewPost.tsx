@@ -1,4 +1,4 @@
-import {iconEdit} from '@images';
+import {iconEdit, iconEditWhite} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {trackCommunityTab} from '@services/webengageManager.tsx';
 
-export const CreateNewPostComponent = () => {
+export const FloatingCreateNewPost = () => {
   const {t} = useTranslation();
   return (
     <View style={styles.container}>
@@ -18,7 +18,10 @@ export const CreateNewPostComponent = () => {
           trackCommunityTab(true);
           navigate(ROUTE_NAME.CREATE_NEWPOST);
         }}>
-        <Image source={iconEdit} />
+        <Image
+          source={iconEditWhite}
+          style={{height: scaler(20), width: scaler(20)}}
+        />
         <Text style={styles.text}>{t('post.create_new')}</Text>
       </TouchableOpacity>
     </View>
@@ -26,22 +29,20 @@ export const CreateNewPostComponent = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: scaler(16),
-    // marginTop: scaler(12),
-  },
+  container: {},
   button: {
-    width: '100%',
-    paddingHorizontal: scaler(17),
-    paddingVertical: scaler(13),
+    width: scaler(171),
+    paddingHorizontal: scaler(12),
+    paddingVertical: scaler(12),
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FDF1F1',
-    borderRadius: scaler(8),
+    backgroundColor: colors.pink4,
+    borderRadius: scaler(24),
+    justifyContent: 'center',
   },
   text: {
-    color: colors.primary,
-    fontSize: scaler(14),
+    color: colors.white,
+    fontSize: scaler(12),
     ...stylesCommon.fontWeight600,
     marginLeft: scaler(9),
   },

@@ -72,11 +72,12 @@ const Deal = () => {
     <View style={styles.container}>
       <AppHeader
         onPressMenu={navigateSetting}
-        onPressAvatar={navigateUser}
         onPressNotification={navigateNotification}
-        onPressMessage={navigationMessage}
         onPressLogo={handlePressLogo}
-        bgc="white"
+        bgc={colors.white}
+        rightNoti={navigateNotification}
+        // openNewBorn={openNewBorn}
+        onPressMessage={navigationMessage}
       />
       <View style={styles.wrapContainer}>
         <ListDeal data={data} />

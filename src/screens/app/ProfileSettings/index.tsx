@@ -189,7 +189,7 @@ const ProfileSettingsScreen = () => {
           avatar: imageUrlApi,
           phone_number: values?.phone_number,
           calling_code:
-            values?.phone_number?.length > 0 ? `+${phoneCode}` : null,
+            values?.phone_number.length > 0 ? `+${phoneCode}` : null,
           country_code: countryCode,
         };
         const res: any = await updateUserInfo(
@@ -222,7 +222,7 @@ const ProfileSettingsScreen = () => {
           avatar: imageUrlApi,
           phone_number: values?.phone_number,
           calling_code:
-            values?.phone_number?.length > 0 ? `+${phoneCode}` : null,
+            values?.phone_number.length > 0 ? `+${phoneCode}` : null,
           country_code: countryCode,
         };
         const res: any = await updateUserInfo(

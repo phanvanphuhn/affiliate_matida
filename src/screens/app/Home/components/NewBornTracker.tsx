@@ -9,6 +9,7 @@ import {
   Touchable,
   ScrollView,
   TouchableWithoutFeedback,
+  LayoutAnimation,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BottomSheetNewBorn from './BottomSheetNewBorn';
@@ -103,6 +104,7 @@ const NewBornTracker = (props: TProps) => {
       isShowContent.splice(expandContent.indexOf(item.title), 1);
     } else {
       isShowContent.push(item.title);
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     }
     setExpandContent(isShowContent);
   };

@@ -261,6 +261,7 @@ export const en = {
     version: 'Version: ',
     mom: 'Mom',
     baby: 'Babies',
+    source: 'Sources of the recommendations',
   },
   articles: {
     listen: 'Listen to the article',
@@ -649,7 +650,7 @@ export const en = {
     phoneNumber: 'Phone Number',
     getOffer: 'Contact form',
     submit: 'Submit',
-    contactForm: 'Contact Form',
+    contactForm: 'Get deal',
     getCodeSuccess: 'Get code success',
     getCodeFailed: 'Get code failed',
     submitSuccess: 'Submit deal success',
@@ -747,5 +748,11 @@ export const en = {
     babySize: 'Baby’s size is now',
     mystery: 'a mystery',
     addInformation: 'Add information',
+  },
+  common: {
+    networkSystem: 'Network System',
+    noInternet:
+      'There is no internet connection\nPlease check your internet connection',
+    tryAgain: 'Try Again',
   },
 };
