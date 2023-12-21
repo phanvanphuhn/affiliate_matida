@@ -1,4 +1,5 @@
 import {
+  ic_program,
   iconCommunity,
   iconTabDeal,
   iconTabExplore,
@@ -36,7 +37,7 @@ import {useTranslation} from 'react-i18next';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-const active_color = colors.brandMainPinkRed;
+const active_color = colors.pink200;
 const inActive_color = colors.textSmallColor;
 
 type Props = {
@@ -65,6 +66,8 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         return t('bottomTab.deal');
       case ROUTE_NAME.TAB_LIVETALK:
         return t('bottomTab.liveTalks');
+      case ROUTE_NAME.PREGNANCY_PROGRAM:
+        return t('bottomTab.program');
     }
   };
   const renderIcon = (value: string) => {
@@ -81,6 +84,8 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         return iconTabLiveTalk;
       case ROUTE_NAME.TAB_DEAL:
         return iconTabDeal;
+      case ROUTE_NAME.PREGNANCY_PROGRAM:
+        return ic_program;
     }
   };
 
@@ -143,10 +148,14 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         const isFocused = state.index === index;
         const onPress = () => {
           if (!isFocused) {
-            navigation.navigate(route.name);
-            onRefreshExplore();
-            if (route.name === ROUTE_NAME.TAB_EXPLORE) {
-              isCallExplore.current = true;
+            if (route.name == ROUTE_NAME.PREGNANCY_PROGRAM) {
+              navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+            } else {
+              navigation.navigate(route.name);
+              onRefreshExplore();
+              if (route.name === ROUTE_NAME.TAB_EXPLORE) {
+                isCallExplore.current = true;
+              }
             }
           } else {
             switch (route.name) {
@@ -242,8 +251,8 @@ const styles = StyleSheet.create({
   },
   viewActive: {
     width: scaler(48),
-    height: scaler(3),
-    backgroundColor: colors.primary,
+    height: scaler(2),
+    backgroundColor: colors.pink200,
     position: 'absolute',
     top: 0,
   },

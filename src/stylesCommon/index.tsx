@@ -35,6 +35,9 @@ const colors = {
   gray300: '#1C272D',
   gray350: '#F6F6F6',
   gray400: '#33302E',
+  gray450: '#F9F9FB',
+  gray500: '#82848C',
+  gray550: '#A1A2AB',
   facebook: '#2875D0',
   zalo: '#2395FF',
   brandMainPinkRed: '#E86C6C',
@@ -42,6 +45,10 @@ const colors = {
   pink50: '#C75555',
   pink100: '#B94747',
   pink150: '#FAE2E2',
+  pink200: '#FD91FD',
+  pink250: '#FFDBFF',
+  pink300: '#F764F7',
+  pink350: '#FFC2FF',
   red: '#FF0000',
   red50: '#E66D6E',
   red100: '#FF0909',
@@ -56,10 +63,12 @@ const colors = {
   green100: '#EAF8EE',
   green150: '#57B1AD',
   green200: '#B1D39D',
+  green250: '#56D2CF',
   yellow: '#F5BC65',
   yellow50: '#FFF9F0',
   yellow100: '#FFF5F4',
   yellow150: '#FFF6F3',
+  yellow200: '#FFF66E',
   backgroundFeed: '#FFFFFF',
   backgroundPackage: '#FBFBFF',
 
@@ -69,6 +78,10 @@ const colors = {
   primaryBackground: '#EE6566',
   cancelBackground: '#F8F7F8',
   labelColor: '#39383D',
+  blue: '#8FA0FF',
+  blue50: '#B0BCFF',
+  blue100: '#DBE0FF',
+  borderColor2: '#F1F0F5',
   purple4: '#8FA0FF',
 };
 
@@ -119,6 +132,21 @@ const stylesCommon = StyleSheet.create({
   },
   fontPlus600: {
     fontFamily: 'PlusJakartaSans-SemiBold',
+  },
+  fontSarabun700: {
+    fontFamily: 'Sarabun-Bold',
+  },
+  fontSarabunItalic: {
+    fontFamily: 'Sarabun-Italic',
+  },
+  fontSarabun500: {
+    fontFamily: 'Sarabun-Medium',
+  },
+  fontSarabun400: {
+    fontFamily: 'Sarabun-Regular',
+  },
+  fontSarabun600: {
+    fontFamily: 'Sarabun-Semibold',
   },
 });
 

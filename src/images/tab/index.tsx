@@ -4,6 +4,7 @@ const iconTabLiveTalk = require('./TabLiveTalks.png');
 const iconCommunity = require('./TabCommunity.png');
 const iconTabFeed = require('./TabFeed.png');
 const iconTabDeal = require('./discount.png');
+const ic_program = require('./ic_program.png');
 
 export {
   iconTabExplore,
@@ -12,4 +13,5 @@ export {
   iconCommunity,
   iconTabFeed,
   iconTabDeal,
+  ic_program,
 };

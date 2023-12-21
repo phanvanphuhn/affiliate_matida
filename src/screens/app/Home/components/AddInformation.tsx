@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   wrapBtnContainer: {
     paddingVertical: scaler(12),
     paddingHorizontal: scaler(16),
-    backgroundColor: colors.primaryBackground,
+    backgroundColor: colors.pink200,
     borderRadius: scaler(24),
     justifyContent: 'center',
     alignItems: 'center',

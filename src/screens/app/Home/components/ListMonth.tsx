@@ -506,7 +506,7 @@ const ListMonth = (props: TProps) => {
         style={[
           styles.wrapBtnContainer,
           (filterVal ? filterVal?.value : state?.filter.value) == item.value
-            ? {backgroundColor: '#FFEBEB'}
+            ? {backgroundColor: colors.blue}
             : {backgroundColor: colors.white},
         ]}
         onPress={() => onSelectFilter(item)}
@@ -517,7 +517,7 @@ const ListMonth = (props: TProps) => {
           style={[
             styles.btnTitle,
             (filterVal ? filterVal?.value : state?.filter.value) == item.value
-              ? {color: colors.primaryBackground}
+              ? {color: colors.white}
               : {color: '#A3A1AB'},
           ]}>
           {lang == 1 ? item.labelEn : item.labelVi}

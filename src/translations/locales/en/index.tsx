@@ -1,3 +1,5 @@
+import PregnancyProgram from '../../../screens/app/PregnancyProgram';
+
 export const en = {
   changeLang: {
     title: "Let's talk!",
@@ -215,6 +217,7 @@ export const en = {
     home: 'Tracker',
     community: 'Community',
     deal: 'Deals',
+    program: 'Program',
   },
   popularArticles: 'More to read',
   seeMore: 'See more',

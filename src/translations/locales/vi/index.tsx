@@ -219,6 +219,7 @@ export const vi = {
     home: 'Theo dõi',
     community: 'Forum',
     deal: 'Ưu đãi',
+    program: 'Chương trình',
   },
   popularArticles: 'Đọc nhiều hơn',
   seeMore: 'Xem thêm',

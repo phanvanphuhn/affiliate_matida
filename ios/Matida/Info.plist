@@ -187,6 +187,11 @@
 		<string>Trocchi-Regular.ttf</string>
 		<string>PlusJakartaSans-Medium.ttf</string>
 		<string>PlusJakartaSans-SemiBold.ttf</string>
+		<string>Sarabun-Bold.ttf</string>
+		<string>Sarabun-Italic.ttf</string>
+		<string>Sarabun-Medium.ttf</string>
+		<string>Sarabun-Regular.ttf</string>
+		<string>Sarabun-SemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

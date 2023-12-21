@@ -128,7 +128,6 @@ export const ViewQuiz = React.memo((props: any) => {
             style={{
               ...stylesCommon.fontWeight500,
               fontSize: scaler(11),
-              color: '#FFFFFF',
             }}>
             {t('home.testKnowledge')}
           </Text>
@@ -220,15 +219,34 @@ export const ViewQuiz = React.memo((props: any) => {
     <>
       {data ? (
         <View style={styles.container}>
-          <LinearGradient
-            colors={['rgb(134, 85, 255)', '#EE6566']}
-            style={styles.viewContent}>
-            <Image
-              source={IconBackgroundImageHome}
-              style={styles.imageBackground}
+          <View style={styles.viewContent}>
+            <View
+              style={{
+                height: '190%',
+                aspectRatio: 1,
+                borderRadius: widthScreen / 1.5,
+                backgroundColor: colors.pink250,
+                position: 'absolute',
+                bottom: 0,
+                left: '-50%',
+              }}
+            />
+            <View
+              style={{
+                height: '60%',
+                aspectRatio: 1,
+                borderRadius: widthScreen / 1.5,
+                backgroundColor: colors.transparent,
+                borderColor: colors.white,
+                borderWidth: 6,
+                position: 'absolute',
+                top: '-50%',
+                right: '-25%',
+                transform: [{scaleX: 1.5}, {scaleY: 2}],
+              }}
             />
             {renderViewResult()}
-          </LinearGradient>
+          </View>
         </View>
       ) : null}
     </>
@@ -244,9 +262,10 @@ const styles = StyleSheet.create({
   viewContent: {
     width: '100%',
     // height: scaler(319),
-    backgroundColor: '#654AC9',
+    backgroundColor: colors.blue50,
     borderRadius: scaler(16),
     paddingVertical: scaler(24),
+    overflow: 'hidden',
   },
   imageBackground: {
     width: scaler(134),
@@ -266,9 +285,8 @@ const styles = StyleSheet.create({
   },
   txtTitleContent: {
     ...stylesCommon.fontPlus600,
-    fontSize: scaler(18),
-    lineHeight: scaler(33),
-    color: '#FFFFFF',
+    fontSize: scaler(16),
+    lineHeight: scaler(20),
   },
   viewRow: {
     width: '100%',
@@ -318,7 +336,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: scaler(10),
   },
   txtResult: {
-    color: '#FFFFFF',
     ...stylesCommon.fontWeight600,
     fontSize: scaler(14),
   },
