@@ -24,6 +24,9 @@ const colors = {
   borderColor: '#A8A8A8',
   white: '#FFFFFF',
   gray: '#EAEAEA',
+  gray2: '#F0F0F5',
+  gray3: '#E1E2E8',
+  gray7: '#82848C',
   gray50: '#9D9D9D',
   gray100: '#F6F4F6',
   gray150: '#FDF1F1',
@@ -35,6 +38,7 @@ const colors = {
   facebook: '#2875D0',
   zalo: '#2395FF',
   brandMainPinkRed: '#E86C6C',
+  pink4: '#FD91FD',
   pink50: '#C75555',
   pink100: '#B94747',
   pink150: '#FAE2E2',
@@ -65,7 +69,6 @@ const colors = {
   primaryBackground: '#EE6566',
   cancelBackground: '#F8F7F8',
   labelColor: '#39383D',
-  pink4: '#FD91FD',
   purple4: '#8FA0FF',
 };
 

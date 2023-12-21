@@ -170,13 +170,15 @@ export const Forum = () => {
                 </Text>
               </TouchableOpacity>
             </View>
-            <FlatList
-              data={data?.expertLiveTalk}
-              renderItem={({item, index}) => {
-                return <ExpertWorkshopsItemV2 item={item} key={index} />;
-              }}
-              horizontal={true}
-            />
+            <View style={{paddingLeft: scaler(16)}}>
+              <FlatList
+                data={data?.expertLiveTalk}
+                renderItem={({item, index}) => {
+                  return <ExpertWorkshopsItemV2 item={item} key={index} />;
+                }}
+                horizontal={true}
+              />
+            </View>
           </View>
           <View style={{flex: 1}}>
             <Text

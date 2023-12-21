@@ -1,5 +1,12 @@
 import {EVideoType, TypeRoom} from '@constant';
-import {LogoApp, SvgCalendar, SvgLock, SvgPrevious44} from '@images';
+import {
+  LogoApp,
+  SvgCalendar,
+  SvgLock,
+  SvgPrevious44,
+  iconCrown,
+  iconFlower,
+} from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
@@ -10,6 +17,9 @@ import {useSelector} from 'react-redux';
 import {AppImage} from '../AppImage';
 import {ViewLockPayment} from '../Payment';
 import {StatusRoom} from '../StatusRoom';
+import {StackRouter} from '@react-navigation/native';
+import {styles} from '../AppModal/styles';
+import moment from 'moment';
 
 type Props = {
   recorded?: boolean;
@@ -51,45 +61,120 @@ export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
       navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {id: item?.room?.id});
     }
   };
-
+  console.log('item: ', item);
   return (
     <TouchableOpacity
       style={s.container}
       activeOpacity={1}
       onPress={handlePress}>
-      <View style={{width: scaler(80), height: scaler(80)}}>
-        {item?.user?.avatar || item?.thumbnail ? (
-          <AppImage
-            uri={recorded ? item?.thumbnail : item?.user?.avatar}
-            style={s.image}
-            onLoadCallBack={() => setLoading(false)}
+      <View
+        style={[
+          s.header,
+          isPayment
+            ? {backgroundColor: colors.pink4}
+            : {backgroundColor: colors.gray3},
+        ]}>
+        <Text
+          style={{
+            ...stylesCommon.fontWeight600,
+            fontSize: 13,
+            color: isPayment ? colors.white : colors.black,
+          }}>
+          {item?.user?.name}
+        </Text>
+        {isPayment && (
+          <Image
+            source={iconFlower}
+            style={{height: scaler(20), width: scaler(20)}}
           />
-        ) : (
-          <Image source={LogoApp} style={s.image} />
-        )}
-
-        {isPayment ? (
-          <ViewLockPayment
-            price={item?.price_vn}
-            style={{
-              flexDirection: 'column-reverse',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            styleLock={{alignSelf: 'center', marginBottom: scaler(12)}}
-            stylePrice={{alignSelf: 'center'}}
-          />
-        ) : (
-          <>
-            {recorded && !loading && (
-              <View style={s.viewPrevious}>
-                <SvgPrevious44 />
-              </View>
-            )}
-          </>
         )}
       </View>
-      <View
+      <View style={s.body}>
+        <View style={{flex: 1}}>
+          <Text style={s.textTitle}>{item?.room?.title}</Text>
+          {recorded ? null : (
+            <View style={s.row}>
+              <SvgCalendar color={colors.black} />
+              <Text style={s.textTime}>
+                {moment(item?.room?.start_time, 'YYYY/MM/DD hh:mm:ss').format(
+                  'DD/MM, HH:mm',
+                )}
+              </Text>
+            </View>
+          )}
+          <View style={[s.row, {marginTop: scaler(12)}]}>
+            {isPayment && (
+              <Image
+                source={iconCrown}
+                style={{
+                  height: scaler(20),
+                  width: scaler(20),
+                  marginRight: scaler(8),
+                }}
+              />
+            )}
+            {item?.room.status == 2 ? (
+              <View
+                style={{
+                  borderRadius: scaler(16),
+                  backgroundColor: colors.pink4,
+                }}>
+                <Text style={[s.status]}>Live</Text>
+              </View>
+            ) : item?.room.status == 1 ? (
+              <View
+                style={{
+                  borderRadius: scaler(16),
+                  backgroundColor: colors.purple4,
+                }}>
+                <Text style={[s.status]}>Upcoming</Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  borderRadius: scaler(16),
+                  backgroundColor: colors.gray2,
+                }}>
+                <Text style={[s.status, {color: colors.gray7}]}>Finished</Text>
+              </View>
+            )}
+          </View>
+        </View>
+        <View style={{width: scaler(80), height: scaler(80)}}>
+          {item?.user?.avatar || item?.thumbnail ? (
+            <AppImage
+              uri={recorded ? item?.thumbnail : item?.user?.avatar}
+              style={s.image}
+              onLoadCallBack={() => setLoading(false)}
+            />
+          ) : (
+            <Image source={LogoApp} style={s.image} />
+          )}
+
+          {isPayment ? (
+            <ViewLockPayment
+              price={item?.price_vn}
+              style={{
+                flexDirection: 'column-reverse',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              styleLock={{alignSelf: 'center', marginBottom: scaler(12)}}
+              stylePrice={{alignSelf: 'center'}}
+            />
+          ) : (
+            <>
+              {recorded && !loading && (
+                <View style={s.viewPrevious}>
+                  <SvgPrevious44 />
+                </View>
+              )}
+            </>
+          )}
+        </View>
+      </View>
+
+      {/* <View
         style={{
           marginTop: scaler(8),
           flex: 1,
@@ -132,40 +217,57 @@ export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
         <View style={s.viewLock}>
           <SvgLock color={colors.primary} size={16} />
         </View>
-      )}
+      )} */}
     </TouchableOpacity>
   );
 };
 
 const s = StyleSheet.create({
   container: {
-    padding: scaler(16),
-    borderRadius: scaler(8),
-    width: scaler(154),
+    borderRadius: scaler(16),
+    width: scaler(264),
     marginRight: scaler(16),
-    height: scaler(200),
+    backgroundColor: colors.white,
+    marginBottom: scaler(32),
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: scaler(12),
+    paddingHorizontal: scaler(16),
+    paddingVertical: scaler(8),
+    borderTopLeftRadius: scaler(16),
+    borderTopRightRadius: scaler(16),
+  },
+  body: {
+    paddingRight: scaler(12),
+    paddingLeft: scaler(16),
+    flexDirection: 'row',
+    width: '100%',
   },
   textTitle: {
     color: colors.textColor,
     ...stylesCommon.fontWeight600,
-    fontSize: scaler(13),
-    marginVertical: scaler(4),
+    fontSize: scaler(15),
+    marginBottom: scaler(8),
   },
   textTime: {
     color: colors.textColor,
     ...stylesCommon.fontWeight400,
-    fontSize: scaler(12),
+    fontSize: scaler(13),
     marginLeft: scaler(12),
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  status: {
+    paddingHorizontal: scaler(8),
+    paddingVertical: scaler(4),
+    fontSize: 11,
+    ...stylesCommon.fontWeight600,
+    color: colors.white,
   },
   image: {
     width: scaler(80),
