@@ -753,4 +753,9 @@ export const vi = {
     addInformation: 'Thêm thông tin',
     contactForm: 'Nhận tư vấn',
   },
+  common: {
+    networkSystem: 'Matida thông báo',
+    noInternet: 'Mẹ vui lòng kiểm tra lại đường truyền mạng nhé',
+    tryAgain: 'Thử lại',
+  },
 };

@@ -47,7 +47,7 @@ export const validateFormVN = () => {
 
     phone: yup
       .string()
-      .required('Đây là trường bắt buộc')
+      // .required('Đây là trường bắt buộc')
       .matches(
         /^[^ !"`'#%&,:;<>=@{}~\$\(\)\*\+\-\/\\\?\[\]\^\|]+$/,
         'Số điện thoại không hợp lệ',

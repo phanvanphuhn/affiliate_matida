@@ -215,6 +215,7 @@ const AddNewBaby = (props: any) => {
                         .format('DD/MM/YYYY')
                     : ''
                 }
+                pointerEvents="none"
                 placeholderTextColor={'lightgray'}
               />
               <Image

@@ -48,7 +48,7 @@ export const ListPostHorizontal = (props: Props) => {
   };
 
   return (
-    <View>
+    <View style={{backgroundColor: colors.white}}>
       {data?.posts.length > 0 ? (
         <View style={styles.viewTitle}>
           <Text style={styles.txtTitle}>
@@ -76,14 +76,15 @@ export const ListPostHorizontal = (props: Props) => {
 const styles = StyleSheet.create({
   container: {},
   txtTitle: {
-    ...stylesCommon.fontWeight700,
-    color: '#252525',
-    fontSize: scaler(20),
+    ...stylesCommon.fontWeight600,
+    color: colors.black,
+    fontSize: scaler(16),
+    marginTop: scaler(8),
   },
   txtSeemore: {
-    ...stylesCommon.fontWeight600,
+    ...stylesCommon.fontWeight500,
     fontSize: scaler(14),
-    color: colors.red50,
+    color: colors.pink4,
   },
   viewTitle: {
     flexDirection: 'row',

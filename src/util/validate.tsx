@@ -45,7 +45,7 @@ export const validateForm = () => {
       .max(50, 'Nick name may not be greater than 50 characters'),
     phone: yup
       .string()
-      .required('This is a field required')
+      // .required('This is a field required')
       .matches(
         /^[^ !"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+$/,
         'Phone number is not special characters',

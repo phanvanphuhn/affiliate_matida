@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Animated,
 } from 'react-native';
 
 import {stylesDailyAffirmation} from '@constant';
@@ -29,7 +30,7 @@ import {event, eventType, trackingAppEvent} from '@util';
 import LinearGradient from 'react-native-linear-gradient';
 import {chatGPTbackground} from '@images';
 
-export const ChatGPTComponent = React.memo(() => {
+export const ChatGPTComponent = React.memo(({value}: any) => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
@@ -40,10 +41,33 @@ export const ChatGPTComponent = React.memo(() => {
     navigation.navigate(ROUTE_NAME.CHAT_GPT);
   };
 
+  const Header_Max_Height = 240;
+  const Header_Min_Height = 120;
+  const Scroll_Distance = Header_Max_Height - Header_Min_Height;
+
+  const animatedHeaderHeight = value.interpolate({
+    inputRange: [0, Scroll_Distance],
+    outputRange: [Header_Max_Height, Header_Min_Height],
+    extrapolate: 'clamp',
+  });
+
+  const animatedHeaderColor = value.interpolate({
+    inputRange: [0, Scroll_Distance],
+    outputRange: ['#181D31', '#678983'],
+    extrapolate: 'clamp',
+  });
+
   return (
+    // <Animated.View
+    //   style={{
+    //     marginTop: scaler(16),
+    //     marginBottom: scaler(16),
+    //     height: animatedHeaderHeight,
+    //     backgroundColor: animatedHeaderColor,
+    //   }}>
     <TouchableOpacity
       onPress={onNavigateChatGPT}
-      style={{paddingHorizontal: scaler(16)}}
+      style={{paddingHorizontal: scaler(16), marginBottom: scaler(16)}}
       activeOpacity={0.9}>
       <LinearGradient
         colors={['rgb(134, 85, 255)', '#EE6566']}
@@ -84,6 +108,7 @@ export const ChatGPTComponent = React.memo(() => {
         </View>
       </LinearGradient>
     </TouchableOpacity>
+    // </Animated.View>
   );
 });
 
