@@ -149,7 +149,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         const onPress = () => {
           if (!isFocused) {
             if (route.name == ROUTE_NAME.PREGNANCY_PROGRAM) {
-              navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+              navigation.navigate(ROUTE_NAME.ONBOARDING_STEP);
             } else {
               navigation.navigate(route.name);
               onRefreshExplore();
