@@ -205,16 +205,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    GlobalService.showLoading();
-    if (state.filter.value?.indexOf('week') != -1) {
-      dispatch(getDataHomeByWeek({week: state.filter.intVal, month: 0}));
-    } else {
-      dispatch(getDataHomeByWeek({week: 1, month: state.filter.intVal}));
-    }
-    GlobalService.hideLoading();
-  }, [state.filter.value]);
-
-  useEffect(() => {
     updateLangUser();
   }, [lang]);
 
@@ -234,7 +224,7 @@ const Home = () => {
         user?.id,
         user?.name,
       );
-    }, []),
+    }, [user?.baby_type]),
   );
 
   useEffect(() => {
@@ -343,7 +333,7 @@ const Home = () => {
         );
       }
       checkProgram();
-      dispatch(getDataHome());
+      // dispatch(getDataHome());
       dispatch(getListBaby());
       const res = await calendarCheckups();
       setState({
@@ -470,24 +460,7 @@ const Home = () => {
     // handleChangeWeeks(week);
   };
 
-  const scrollY = new Animated.Value(0);
-  const opacityY = scrollY.interpolate({
-    inputRange: [0, 60, 80, 100],
-    outputRange: [1, 1, 0.6, 0],
-    extrapolate: 'clamp',
-  });
-
-  const _translateY = scrollY.interpolate({
-    inputRange: [0, 50, 100],
-    outputRange: [0, -110, -220],
-    extrapolate: 'clamp',
-  });
-
-  const _scale = scrollY.interpolate({
-    inputRange: [0, 50, 100],
-    outputRange: [1, 1, 0.8],
-    extrapolate: 'clamp',
-  });
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const onAnswerQuiz = async (value: any) => {
     try {
@@ -519,6 +492,16 @@ const Home = () => {
   useEffect(() => {
     trackUser(user);
   }, []);
+
+  useEffect(() => {
+    GlobalService.showLoading();
+    if (state.filter.value?.indexOf('week') != -1) {
+      dispatch(getDataHomeByWeek({week: state.filter.intVal, month: 0}));
+    } else {
+      dispatch(getDataHomeByWeek({week: 1, month: state.filter.intVal}));
+    }
+    GlobalService.hideLoading();
+  }, [state.filter.value]);
 
   const renderNewBornContent = () => {
     if (
@@ -592,6 +575,7 @@ const Home = () => {
           bgc={colors.white}
           rightNoti={navigateNotification}
           openNewBorn={openNewBorn}
+          onPressMessage={navigationMessage}
         />
 
         {isShowForReviewer(user) && (
@@ -660,6 +644,14 @@ const Home = () => {
               <ChatGPTComponent />
             </View>
           )}
+          {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
+
+          {isShowForReviewer(user) &&
+            (user?.baby_type == 'pregnant' ||
+              user?.baby_type == 'pregnant-overdue' ||
+              user?.baby_type == 'unknown') && (
+              <MomProgram data={state?.isSignUp} />
+            )}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
         {isShowForReviewer(user) &&

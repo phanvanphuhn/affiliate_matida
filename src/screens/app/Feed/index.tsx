@@ -18,6 +18,14 @@ const Feed = () => {
     navigation.navigate(ROUTE_NAME.SETTING_SCREEN);
   };
 
+  const navigationMessage = () => {
+    navigation.navigate(ROUTE_NAME.LIST_MESSAGE);
+  };
+
+  const navigateNotification = () => {
+    navigation.navigate(ROUTE_NAME.NOTIFICATION_LIST);
+  };
+
   const handlePressLogo = () => {
     setTimeout(() => {
       refFlatList?.current?.scrollToOffset({animated: true, offset: 0});
@@ -32,11 +40,13 @@ const Feed = () => {
     <View style={{backgroundColor: colors.white, flex: 1}}>
       <AppHeader
         onPressMenu={navigateSetting}
-        onPressAvatar={navigateUser}
+        onPressNotification={navigateNotification}
         onPressLogo={handlePressLogo}
-        onPressSearch={onPressSearch}
         bgc={colors.white}
-        isFeed={true}
+        rightNoti={navigateNotification}
+        // openNewBorn={openNewBorn}
+        onPressSearch={onPressSearch}
+        onPressMessage={navigationMessage}
       />
       <ListFeed />
     </View>

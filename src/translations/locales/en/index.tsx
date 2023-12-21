@@ -653,7 +653,7 @@ export const en = {
     phoneNumber: 'Phone Number',
     getOffer: 'Contact form',
     submit: 'Submit',
-    contactForm: 'Contact Form',
+    contactForm: 'Get deal',
     getCodeSuccess: 'Get code success',
     getCodeFailed: 'Get code failed',
     submitSuccess: 'Submit deal success',
@@ -713,6 +713,8 @@ export const en = {
     highlights: 'Highlights',
     viewMore: 'View more',
     update: 'This content will be added shortly. Stay tuned!',
+    plsAddDueDate: 'Please add the due date of your baby.',
+    calculateDueDate: 'Use our calculator to find out your due date.',
   },
   newBornTida: {
     hi: "Hi mommy,\nit's normal to have tons of questions.",
@@ -749,5 +751,11 @@ export const en = {
     babySize: 'Baby’s size is now',
     mystery: 'a mystery',
     addInformation: 'Add information',
+  },
+  common: {
+    networkSystem: 'Network System',
+    noInternet:
+      'There is no internet connection\nPlease check your internet connection',
+    tryAgain: 'Try Again',
   },
 };

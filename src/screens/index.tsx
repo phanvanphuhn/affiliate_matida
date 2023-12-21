@@ -71,6 +71,8 @@ import AddBaby from './app/AddBaby';
 import AddNewBaby from './app/AddBaby/components/AddNewBaby';
 import NewBornTracker from './app/Home/components/NewBornTracker';
 import AddBabySuccess from './app/NewBorn/components/AddBabySuccess';
+import OnboardingV2 from './auth/OnboardingV2';
+import AuthAddBabySuccess from './auth/OnboardingV2/components/AuthAddBabySuccess';
 import SourceOfRecommendation from './app/SourceOfRecommendation';
 import PregnancyProgram from './app/PregnancyProgram';
 import WeeklyChallengeComplete from './app/PregnancyProgram/WeeklyChallengeComplete';
@@ -158,6 +160,8 @@ const screens = {
   AddNewBaby,
   NewBornTracker,
   AddBabySuccess,
+  OnboardingV2,
+  AuthAddBabySuccess,
   SourceOfRecommendation,
   PregnancyProgram,
   WeeklyChallengeComplete,

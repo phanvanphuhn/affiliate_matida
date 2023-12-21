@@ -7,3 +7,4 @@ export * from './RoomScheduleCreate';
 export * from './RoomParticipantsCreate';
 export * from './MemberParticipant';
 export * from './ViewLive';
+export * from './ExpertWorkshopsItemV2';

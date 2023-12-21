@@ -94,7 +94,7 @@ export const ItemPostHorizontal = (props: Props) => {
         styles.container,
         styles.content,
         {
-          backgroundColor: colors.white,
+          backgroundColor: '#F6F6F9',
           marginBottom: props?.mgb ? props?.mgb : 0,
           width: props?.isListPost ? itemWidth * 0.9 : itemWidth,
         },

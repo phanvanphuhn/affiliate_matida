@@ -69,3 +69,5 @@ export * from './AppPictureInPicture';
 export * from './talk';
 export * from './CheckAppVersion';
 export * from './FloatingNewBornButton';
+export * from './FloatingCreateNewPost';
+export * from './FloatingCreateNewRoom';
