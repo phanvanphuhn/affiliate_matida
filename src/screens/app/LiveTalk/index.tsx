@@ -146,11 +146,11 @@ const LiveTalk = () => {
     <View style={{flex: 1, backgroundColor: colors.white}}>
       <AppHeader
         onPressMenu={navigateSetting}
-        onPressAvatar={navigateUser}
         onPressNotification={navigateNotification}
-        onPressMessage={navigationMessage}
         onPressLogo={handlePressLogo}
-        bgc="white"
+        bgc={colors.white}
+        rightNoti={navigateNotification}
+        onPressMessage={navigationMessage}
       />
       <View style={{flex: 1}}>
         <ScrollView

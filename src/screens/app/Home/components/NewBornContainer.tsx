@@ -23,6 +23,7 @@ type TProps = {
   user: any;
   state: any;
   isSelectProfileNewBorn: any;
+  setState: () => void;
 };
 
 const NewBornContainer = (props: TProps) => {

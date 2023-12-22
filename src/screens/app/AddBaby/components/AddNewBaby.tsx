@@ -49,8 +49,6 @@ const AddNewBaby = (props: any) => {
     error: {},
   });
 
-  console.log('state: ', state);
-
   const onChooseDueDate = () => {
     const params = {
       isAddNewBaby: true,
@@ -188,10 +186,11 @@ const AddNewBaby = (props: any) => {
               {t('newBorn.name')}
             </Text>
             <TextInput
-              placeholder={t('newBorn.babyName')}
+              placeholder={t('newBorn.babyName') as string}
               value={state.name}
               onChangeText={text => setState({name: text})}
               placeholderTextColor={'lightgray'}
+              style={styles.content}
             />
             {state?.error?.name?.length > 0 && (
               <Text style={styles.errorMsg}>{state.error.name}</Text>
@@ -207,7 +206,7 @@ const AddNewBaby = (props: any) => {
               onPress={onChooseDueDate}>
               <TextInput
                 editable={false}
-                placeholder={t('newBorn.addDueDate')}
+                placeholder={t('newBorn.addDueDate') as string}
                 value={
                   state.due_date
                     ? moment
@@ -215,7 +214,9 @@ const AddNewBaby = (props: any) => {
                         .format('DD/MM/YYYY')
                     : ''
                 }
+                pointerEvents="none"
                 placeholderTextColor={'lightgray'}
+                style={styles.content}
               />
               <Image
                 source={iconCalendarGrey}
@@ -285,6 +286,11 @@ const styles = StyleSheet.create({
     fontSize: scaler(12),
     ...stylesCommon.fontWeight500,
     color: '#85828C',
+  },
+  content: {
+    fontSize: scaler(14),
+    ...stylesCommon.fontWeight500,
+    color: colors.black,
   },
   wrapContent: {
     width: '100%',

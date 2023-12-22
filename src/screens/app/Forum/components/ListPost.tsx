@@ -188,7 +188,7 @@ export const ListPost = () => {
               ) : null}
             </>
           }
-          ListHeaderComponent={<ListActivePeople />}
+          // ListHeaderComponent={<ListActivePeople />}
           keyExtractor={(item: any) => item?.id}
         />
       </View>
