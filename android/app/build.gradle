@@ -140,8 +140,8 @@ android {
         applicationId "com.growth.levers.matida"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 121
-        versionName "1.9.4"
+        versionCode 123
+        versionName "1.9.5"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         vectorDrawables.useSupportLibrary = true
         missingDimensionStrategy "store", "play"
