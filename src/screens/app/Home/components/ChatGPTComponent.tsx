@@ -46,18 +46,6 @@ export const ChatGPTComponent = React.memo(({value}: any) => {
   const Header_Min_Height = 120;
   const Scroll_Distance = Header_Max_Height - Header_Min_Height;
 
-  const animatedHeaderHeight = value.interpolate({
-    inputRange: [0, Scroll_Distance],
-    outputRange: [Header_Max_Height, Header_Min_Height],
-    extrapolate: 'clamp',
-  });
-
-  const animatedHeaderColor = value.interpolate({
-    inputRange: [0, Scroll_Distance],
-    outputRange: ['#181D31', '#678983'],
-    extrapolate: 'clamp',
-  });
-
   return (
     // <Animated.View
     //   style={{

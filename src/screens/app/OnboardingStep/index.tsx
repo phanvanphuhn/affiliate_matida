@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -21,118 +21,119 @@ import ItemAnswer from './components/ItemAnswer';
 import {goBack} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
+import {
+  getQuestionOnboarding,
+  submitAnswerOnboarding,
+} from '../../../services/pregnancyProgram';
+import useStateCustom from '../../../util/hooks/useStateCustom';
+import {GlobalService} from '@services';
 
 interface OnboardingStepProps {}
-const Data = [
-  {
-    question: 'How much sleep is typical for a newborn in a 24-hour period?',
-    answers: [
-      {name: '8 to 10 hours'},
-      {name: '12 to 14 hours'},
-      {name: '14 to 17 hours'},
-    ],
-  },
-  {
-    question: "By which age has the baby's brain developed significantly?",
-    answers: [
-      {name: 'By 6 months'},
-      {name: 'By 10 year'},
-      {name: 'By 3 years'},
-    ],
-  },
-  {
-    question: 'How prepared do you feel for parenthood?',
-    answers: [
-      {name: 'I already have a comprehensive understanding of newborn care'},
-      {
-        name: 'I have some knowledge, but want to learn more on specific aspects',
-      },
-      {name: 'First time parent here looking for guidance on where to start'},
-    ],
-  },
-  {
-    question: 'What is your family / living situation?',
-    answers: [
-      {name: 'I am a single mom'},
-      {name: 'I live with my partner / husband'},
-      {name: 'I live with my family'},
-    ],
-  },
-  {
-    question: 'How would you describe your family dynamics?',
-    answers: [
-      {name: 'Generally harmonious'},
-      {name: 'Some complexities, seeking guidance'},
-      {name: 'Challenging family dynamics, in need of support'},
-    ],
-  },
-  {
-    question: 'How well do you communicate with your partner and / or family?',
-    answers: [
-      {name: 'Generally open and effective communication'},
-      {name: 'Some communication challenges'},
-      {name: 'Concerned about potential conflicts regarding parenting roles'},
-    ],
-  },
-  {
-    question: 'Are you aware of nutrition for fetal brain development?',
-    answers: [
-      {
-        name: "Yes, I'm well-informed about foods supporting fetal brain development",
-      },
-      {name: 'I have some knowledge but would love to learn more'},
-      {
-        name: "I'm not sure, but I'm eager to discover which foods are beneficial",
-      },
-    ],
-  },
-  {
-    question: 'How would you describe your exercise routine?',
-    answers: [
-      {name: 'I am an exercise pro'},
-      {name: 'I work out sometimes'},
-      {name: "I don't do any sports. Should I?"},
-    ],
-  },
-  {
-    question: 'Do you know about critical nutrients during pregnancy?',
-    answers: [
-      {
-        name: "I'm familiar with the essential nutrients needed during pregnancy",
-      },
-      {name: 'I have a basic understanding and want to deepen my knowledge'},
-      {
-        name: "I'm not sure, but I'm excited to know more about crucial nutrients",
-      },
-    ],
-  },
-];
-
+interface OnboardingStepAnswer {
+  answer_en: string;
+  answer_vi: string;
+  created_at: string;
+  id: number;
+  is_correct: boolean;
+  point: number;
+  question_id: number;
+  updated_at: string;
+}
+interface OnboardingStepQuestion {
+  answers: OnboardingStepAnswer[];
+  baby_type: string;
+  category: string;
+  created_at: string;
+  date_show?: string;
+  explain: string;
+  id: number;
+  is_passed: number;
+  package_id: number;
+  question_en: string;
+  question_vi: string;
+  type: number;
+  updated_at: string;
+}
+interface IState {
+  dataQuestion?: OnboardingStepQuestion[];
+  currentQuestion?: number;
+  userAnswerId?: number;
+  answers?: object;
+}
 const answerKeys = ['A', 'B', 'C', 'D'];
 const OnboardingStep = (props: OnboardingStepProps) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [listAnswer, setListAnswer] = useState<any>({});
+  const [state, setState] = useStateCustom<IState>({
+    dataQuestion: [],
+    currentQuestion: 0,
+    userAnswerId: 0,
+    answers: {},
+  });
+  console.log('=>(index.tsx:68) state', state);
   const navigation = useNavigation<any>();
+
+  const onSubmit = async () => {
+    try {
+      let listAnswer = state.answers || {};
+      let data = Object.keys(listAnswer).map(key => {
+        let value = listAnswer[key];
+        return {
+          question_id: state.dataQuestion[key].id,
+          answer_id: state.dataQuestion[key].answers[value].id,
+        };
+      });
+      console.log('=>(index.tsx:69) data', data);
+      let result = await submitAnswerOnboarding(data, state.userAnswerId);
+      if (result.success) {
+        navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED);
+      } else {
+      }
+    } catch (error) {
+    } finally {
+      navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED);
+    }
+  };
+  const getDataQuestion = async () => {
+    GlobalService.showLoading();
+    let result = await getQuestionOnboarding();
+    let listAnswer = {};
+    result?.data?.data?.[0]?.questions.forEach((question, i) => {
+      listAnswer[i] = 1;
+    });
+    setState({
+      dataQuestion: result?.data?.data?.[0]?.questions || [],
+      answers: listAnswer,
+      userAnswerId: result?.data?.data?.[0]?.id,
+    });
+    GlobalService.hideLoading();
+  };
+
+  useEffect(() => {
+    getDataQuestion();
+  }, []);
+
   const onBackQuestion = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
 
-    if (currentQuestion == 0) {
+    if (state?.currentQuestion == 0) {
       goBack();
     } else {
-      setCurrentQuestion(curr => curr - 1);
+      setState({currentQuestion: (state.currentQuestion || 0) - 1});
     }
   };
   const onNextQuestion = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
-
-    if (currentQuestion == Data?.length - 1) {
-      navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED);
+    if (state.currentQuestion == (state.dataQuestion || [])?.length - 1) {
+      onSubmit();
     } else {
-      setCurrentQuestion(curr => curr + 1);
+      setState({
+        currentQuestion: (state.currentQuestion ?? 0) + 1,
+      });
     }
   };
-  const onSelectAnswer = (e, i) => {
-    setListAnswer(answer => ({...answer, [currentQuestion]: i}));
+  const onSelectAnswer = (e: OnboardingStepAnswer, i: number) => {
+    setState({
+      answers: {...state.answers, [state.currentQuestion ?? 0]: i},
+    });
   };
   return (
     <View style={styles.container}>
@@ -145,13 +146,13 @@ const OnboardingStep = (props: OnboardingStepProps) => {
             <View
               style={[
                 styles.lineStep,
-                {width: `${((currentQuestion + 1) / 9) * 100}%`},
+                {width: `${(((state.currentQuestion ?? 0) + 1) / 9) * 100}%`},
               ]}
             />
           </View>
           <View style={styles.containerTextStep}>
             <Text style={styles.textStep}>
-              {currentQuestion + 1}/{Data?.length}
+              {(state.currentQuestion ?? 0) + 1}/{state?.dataQuestion?.length}
             </Text>
             <Text style={styles.textStep}>Finish</Text>
           </View>
@@ -159,7 +160,10 @@ const OnboardingStep = (props: OnboardingStepProps) => {
 
         <View style={{flex: 1}}>
           <Text style={styles.textQuestion}>
-            {Data[currentQuestion].question}
+            {
+              (state?.dataQuestion || [])[state.currentQuestion ?? 0]
+                ?.question_en
+            }
           </Text>
           <View
             style={{
@@ -172,13 +176,18 @@ const OnboardingStep = (props: OnboardingStepProps) => {
                 backgroundColor: colors.white,
                 flex: 1,
               }}>
-              {Data[currentQuestion].answers.map((answer, i) => {
+              {(state?.dataQuestion || [])[
+                state.currentQuestion ?? 0
+              ]?.answers.map((answer, i) => {
                 return (
                   <ItemAnswer
                     onSelected={() => onSelectAnswer(answer, i)}
-                    title={answer.name}
+                    title={answer.answer_en}
                     answerKey={answerKeys[i]}
-                    isSelected={i == (listAnswer[currentQuestion] ?? 1)}
+                    isSelected={
+                      i ==
+                      ((state.answers || {})[state.currentQuestion ?? 0] ?? 1)
+                    }
                   />
                 );
               })}
