@@ -54,6 +54,7 @@ initI18n();
 
 import {StripeProvider} from '@stripe/stripe-react-native';
 import CodePush from 'react-native-code-push';
+import {withIAPContext} from 'react-native-iap';
 
 const options = {
   // updateDialog: true,
@@ -346,7 +347,7 @@ const App = () => {
   );
 };
 
-export default CodePush(options)(App);
+export default CodePush(options)(withIAPContext(App));
 
 //NOTE:
 //Turn on log redux: check src/redux/store.tsx

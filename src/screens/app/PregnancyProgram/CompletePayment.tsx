@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {
-  Alert,
   Image,
   ImageBackground,
   Platform,
@@ -22,32 +21,33 @@ import {
   ic_logo_round,
   ic_transfer,
   iconClose,
-  LogoApp,
   SvgPathBottom,
   SvgPathTop,
 } from '@images';
 import QRCode from 'react-native-qrcode-svg';
-import {ModalConfirmPay, ModalConfirmPayment} from '@component';
-import {EPaymentType} from '@constant';
-import {
-  confirmPlatformPayPayment,
-  initPaymentSheet,
-  isPlatformPaySupported,
-  openPlatformPaySetup,
-  PaymentSheetError,
-  PlatformPay,
-  PlatformPayError,
-  StripeError,
-} from '@stripe/stripe-react-native';
-import {
-  GlobalService,
-  postPaymentIntent,
-  postPaymentInvoice,
-  postPaymentSheet,
-} from '@services';
+import {ModalConfirmPayment} from '@component';
 import {useTranslation} from 'react-i18next';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
+import {
+  getPlanByCode,
+  requestSubcribePlan,
+} from '../../../services/pregnancyProgram';
+import {GlobalService, PRODUCT_ID_PAY} from '@services';
+import {showMessage} from 'react-native-flash-message';
+import {
+  endConnection,
+  flushFailedPurchasesCachedAsPendingAndroid,
+  initConnection,
+  ProductPurchase,
+  PurchaseError,
+  purchaseErrorListener,
+  purchaseUpdatedListener,
+  requestPurchase,
+  requestSubscription,
+  SubscriptionPurchase,
+  useIAP,
+} from 'react-native-iap';
 
 interface CompletePaymentProps {}
 
@@ -55,129 +55,136 @@ const CompletePayment = (props: CompletePaymentProps) => {
   const refPay = useRef<ModalConfirmPayment>(null);
   const {t} = useTranslation();
   const navigation = useNavigation<any>();
+  const {
+    connected,
+    products,
+    promotedProductsIOS,
+    subscriptions,
+    purchaseHistories,
+    availablePurchases,
+    currentPurchase,
+    currentPurchaseError,
+    initConnectionError,
+    finishTransaction,
+    getProducts,
+    getSubscriptions,
+    getAvailablePurchases,
+    getPurchaseHistories,
+    requestSubscription,
+  } = useIAP();
+  const getData = async () => {
+    let res = await getPlanByCode();
+    console.log('=>(CompletePayment.tsx:43) res', res);
+  };
+  const listenPurchases = (
+    purchase: SubscriptionPurchase | ProductPurchase,
+  ) => {
+    console.log('purchaseUpdatedListener', purchase);
+    const receipt = purchase.transactionReceipt;
+    if (receipt) {
+    }
+  };
+  const initialize = async () => {
+    let init = await initConnection();
+    if (Platform.OS == 'android') {
+      await flushFailedPurchasesCachedAsPendingAndroid();
+    }
+  };
 
-  const [isPaySupported, setIsPaySupported] = useState<boolean>();
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     GlobalService.showLoading();
+  //     const getPurchase = async () => {
+  //       try {
+  //         const result = await getAvailablePurchases();
+  //         const hasPurchased = result?.find(
+  //           product => product.productId === PRODUCT_ID_PAY,
+  //         );
+  //         console.log('=>(CompletePayment.tsx:103) hasPurchased', hasPurchased);
+  //         GlobalService.hideLoading();
+  //       } catch (error) {
+  //         GlobalService.hideLoading();
+  //         console.error('Error occurred while fetching purchases', error);
+  //       }
+  //     };
+  //
+  //     getPurchase();
+  //   }, []),
+  // );
+  useEffect(() => {
+    getData();
+    initialize();
+    return () => {
+      endConnection();
+    };
+  }, []);
+
+  console.log('=>(CompletePayment.tsx:97) products', products);
+
+  console.log('=>(CompletePayment.tsx:108) subscriptions', subscriptions);
+  const handlePurchase = async (sku: string) => {
+    try {
+      let available = await getSubscriptions({skus: [PRODUCT_ID_PAY]});
+      let offerToken: string | undefined = subscriptions[0]
+        ?.subscriptionOfferDetails
+        ? (subscriptions[0]?.subscriptionOfferDetails || [])?.[0]?.offerToken
+        : undefined;
+      console.log('=>(CompletePayment.tsx:102) available', offerToken);
+      let purchase = await requestSubscription({
+        sku,
+        ...(offerToken && {
+          subscriptionOffers: [{sku: sku, offerToken}],
+        }),
+        andDangerouslyFinishTransactionAutomaticallyIOS: false,
+      });
+      finishTransaction({
+        purchase: purchase,
+      });
+      console.log('=>(CompletePayment.tsx:100) res', purchase);
+    } catch (err) {
+      console.log('=>(CompletePayment.tsx:107) err', err);
+    }
+  };
 
   useEffect(() => {
-    (async function () {
-      const isSupport =
-        Platform.OS === 'ios'
-          ? await isPlatformPaySupported()
-          : await isPlatformPaySupported({googlePay: {testEnv: false}});
-      setIsPaySupported(isSupport);
-    })();
-  }, [isPlatformPaySupported]);
+    // ... listen to currentPurchaseError, to check if any error happened
+    console.log(
+      '=>(CompletePayment.tsx:116) currentPurchaseError',
+      currentPurchaseError,
+    );
+  }, [currentPurchaseError]);
 
-  const initializePaymentSheet = async () => {
-    GlobalService.showLoading();
+  useEffect(() => {
+    // ... listen to currentPurchase, to check if the purchase went through
+    console.log('=>(CompletePayment.tsx:124) currentPurchase', currentPurchase);
+  }, [currentPurchase]);
+  const handleSubcribePlan = async () => {
     try {
-      // const res = await postPaymentSheet(id, type);
-      const {error} = await initPaymentSheet({
-        merchantDisplayName: 'Matida',
-        customerId: 'res?.data?.customer',
-        customerEphemeralKeySecret: 'res?.data?.ephemeralKey',
-        paymentIntentClientSecret: 'res?.data?.paymentIntent?.client_secret',
-        // allowsDelayedPaymentMethods: true,
-        // customFlow: true,
-        defaultBillingDetails: {
-          name: 'user?.name' ?? 'User',
-        },
-        applePay: {
-          merchantCountryCode: 'VN',
-        },
-        googlePay: {
-          merchantCountryCode: 'VN',
-          testEnv: false, // use test environment
-        },
+      let data = {
+        plan_code: 'PP',
+        payment_method: 'bank_transfer',
+      };
+      GlobalService.showLoading();
+      let res = await requestSubcribePlan(data);
+
+      return true;
+    } catch (err) {
+      showMessage({
+        message: err?.response?.data?.message,
+        type: 'danger',
+        backgroundColor: colors.primaryBackground,
       });
-      if (!error) {
-      }
-    } catch (e) {
+      return false;
     } finally {
       GlobalService.hideLoading();
     }
   };
-  const handlePressPayButton = async () => {
-    await initializePaymentSheet();
-    if (!isPaySupported && Platform.OS === 'ios') {
-      await openPlatformPaySetup();
-    } else {
-      await handlePaymentPlatform();
+  const onPaymentFinish = async () => {
+    let isDone = await handleSubcribePlan();
+    if (isDone) {
+      navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
     }
   };
-  const getAfterPay = async (
-    error:
-      | StripeError<PaymentSheetError>
-      | StripeError<PlatformPayError>
-      | undefined,
-  ) => {
-    try {
-      GlobalService.showLoading();
-      await postPaymentInvoice('id', 1, error ? 2 : 1, error?.message || '');
-      if (!error) {
-        Alert.alert(t('payment.success'), t('payment.msgSuccess') as string);
-        onCallBack();
-      } else {
-        if (error?.code !== 'Canceled') {
-          Alert.alert(t('payment.failure'), t('payment.msgFailure') as string);
-        }
-      }
-    } catch (e) {
-    } finally {
-      GlobalService.hideLoading();
-    }
-  };
-  const handlePaymentPlatform = async () => {
-    try {
-      // close();
-      GlobalService.showLoading();
-      // const res = await postPaymentIntent('id', 1);
-      GlobalService.hideLoading();
-      // const clientSecret = res?.data?.client_secret;
-      // if (clientSecret) {
-      const {paymentIntent, error} = await confirmPlatformPayPayment(
-        'clientSecret',
-        {
-          applePay: {
-            cartItems: [
-              {
-                label: 'Total',
-                amount: `${150000}`,
-                paymentType: PlatformPay.PaymentType.Immediate,
-              },
-            ],
-            merchantCountryCode: 'VN',
-            currencyCode: 'VND',
-            requiredBillingContactFields: [
-              PlatformPay.ContactField.PhoneNumber,
-            ],
-          },
-          googlePay: {
-            testEnv: false,
-            merchantName: 'Matida',
-            merchantCountryCode: 'VN',
-            currencyCode: 'VND',
-            billingAddressConfig: {
-              format: PlatformPay.BillingAddressFormat.Full,
-              isPhoneNumberRequired: true,
-              isRequired: true,
-            },
-          },
-        },
-      );
-      await getAfterPay(error);
-      console.log('=>(CompletePayment.tsx:162) error', error);
-      // }
-    } catch (error) {
-      console.log('=>(CompletePayment.tsx:167) error', error);
-      GlobalService.hideLoading();
-    }
-  };
-
-  const onPaymentFinish = () => {
-    navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
-  };
-  const onCallBack = () => {};
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
       <View style={[styles.container]}>
@@ -201,7 +208,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
               <Text style={styles.textTransfer}>Bank Transfer</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={handlePressPayButton}
+              onPress={() => {
+                handlePurchase(PRODUCT_ID_PAY);
+              }}
               style={styles.buttonTransfer}>
               <Image source={Platform.OS == 'ios' ? ic_apple : ic_google} />
               <Text style={styles.textTransfer}>

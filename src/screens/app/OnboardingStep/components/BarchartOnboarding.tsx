@@ -21,7 +21,7 @@ const data: itemType = [
     value: 80,
     frontColor: colors.blue100,
     labelTextStyle: {
-      color: colors.gray550,
+      color: colors.gray,
       fontWeight: '500',
       fontSize: scaler(12),
       ...stylesCommon.fontWeight500,
@@ -31,7 +31,7 @@ const data: itemType = [
     value: 90,
     frontColor: colors.blue100,
     labelTextStyle: {
-      color: colors.gray550,
+      color: colors.gray,
       fontWeight: '500',
       fontSize: scaler(12),
       ...stylesCommon.fontWeight500,
@@ -41,7 +41,7 @@ const data: itemType = [
     value: 150,
     frontColor: colors.blue100,
     labelTextStyle: {
-      color: colors.gray550,
+      color: colors.gray,
       fontWeight: '500',
       fontSize: scaler(12),
       ...stylesCommon.fontWeight500,
