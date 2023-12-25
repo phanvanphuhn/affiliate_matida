@@ -15,12 +15,14 @@ import {useNavigation} from '@react-navigation/native';
 import TabProgram from './components/TabProgram';
 import ListWeek from './components/ListWeek';
 import {ROUTE_NAME} from '@routeName';
+import {useSelector} from 'react-redux';
 
 interface PregnancyProgramProps {}
 
 const PregnancyProgram = (props: PregnancyProgramProps) => {
-  const [state, setState] = useState();
+  const [currentWeek, setCurrentWeek] = useState(0);
   const navigation = useNavigation<any>();
+  const week = useSelector((state: any) => state?.home?.week);
 
   const {t} = useTranslation();
   const goBack = () => {
@@ -29,6 +31,9 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
 
   const onGift = () => {
     navigation.navigate(ROUTE_NAME.MOM_DIARY);
+  };
+  const onAbout = () => {
+    navigation.navigate(ROUTE_NAME.ABOUT_PROGRAM);
   };
   return (
     <View style={styles.container}>
@@ -46,7 +51,7 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
                 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={{paddingLeft: 10}} onPress={onGift}>
+            <TouchableOpacity style={{paddingLeft: 10}} onPress={onAbout}>
               <Image
                 source={ic_info}
                 style={{
@@ -61,7 +66,7 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         onPressLeft={goBack}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ListWeek />
+        <ListWeek onSelectedWeek={setCurrentWeek} />
         <Image
           style={{
             width: '100%',
@@ -73,10 +78,12 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         />
         <View style={styles.container2}>
           <View style={styles.center}>
-            <Text style={styles.textTitle}>You are now in week 5</Text>
-            <Text style={styles.textTitle2}>37 weeks to go. You got this!</Text>
+            <Text style={styles.textTitle}>You are now in week {week}</Text>
+            <Text style={styles.textTitle2}>
+              {42 - week} weeks to go. You got this!
+            </Text>
           </View>
-          <TabProgram />
+          <TabProgram currentWeek={currentWeek} />
         </View>
       </ScrollView>
     </View>

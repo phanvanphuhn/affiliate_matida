@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -6,6 +6,7 @@ import {
   ListRenderItem,
   FlatList,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import DashedLine from './DashedLine';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
@@ -21,27 +22,36 @@ import LinearGradient from 'react-native-linear-gradient';
 import Svg, {Path} from 'react-native-svg';
 import * as Progress from 'react-native-progress';
 import CircularProgress from './CircularProgress';
-interface ListWeekProps {}
+import {useSelector} from 'react-redux';
+interface ListWeekProps {
+  onSelectedWeek: (week: number) => void;
+}
 const ListWeek = (props: ListWeekProps) => {
   const [state, setState] = useState([]);
+  const week = useSelector((state: any) => state?.home?.week);
+  const flatlistRef = useRef<FlatList>();
 
   useEffect(() => {
     const getData = () => {
-      let data = Array.from({length: 40}, (x, i) => ({
+      let data = Array.from({length: 42}, (x, i) => ({
         name: `Week ${i + 1}`,
         status:
-          i <= 2
-            ? 'Completed'
-            : i <= 3 && i > 2
-            ? 'Uncompleted'
-            : i == 4
-            ? 'Happening'
-            : 'Upcoming',
+          i + 1 < week ? 'Completed' : i + 1 == week ? 'Happening' : 'Upcoming',
       }));
       setState(data);
     };
     getData();
   }, []);
+  useEffect(() => {
+    if (flatlistRef.current && state?.length) {
+      setTimeout(() => {
+        flatlistRef.current?.scrollToIndex({
+          index: week - 1,
+          animated: true,
+        });
+      }, 1000);
+    }
+  }, [state, week]);
   const getColor = useCallback(item => {
     switch (item.status) {
       case 'Completed':
@@ -154,7 +164,11 @@ const ListWeek = (props: ListWeekProps) => {
         {index == 0 ? null : (
           <View style={styles.containerDashed}>{renderLine(item)}</View>
         )}
-        <View style={[{alignItems: 'center'}]}>
+        <TouchableOpacity
+          onPress={() => {
+            props?.onSelectedWeek && props?.onSelectedWeek(index + 1);
+          }}
+          style={[{alignItems: 'center'}]}>
           {renderDot(item)}
           <View
             style={{
@@ -186,10 +200,11 @@ const ListWeek = (props: ListWeekProps) => {
               {item.status}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   };
+
   const keyExtractor = (item, index) => index.toString();
   return (
     <View style={styles.container}>
@@ -197,6 +212,17 @@ const ListWeek = (props: ListWeekProps) => {
         data={state}
         renderItem={renderItem}
         horizontal={true}
+        ref={flatlistRef}
+        onScrollToIndexFailed={info => {
+          setTimeout(
+            () =>
+              flatlistRef.current?.scrollToIndex({
+                index: info.index,
+                animated: true,
+              }),
+            500,
+          );
+        }}
         contentContainerStyle={{paddingHorizontal: 20}}
         showsHorizontalScrollIndicator={false}
         keyExtractor={keyExtractor}

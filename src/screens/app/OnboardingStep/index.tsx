@@ -19,7 +19,7 @@ import {
 } from '@images';
 import ItemAnswer from './components/ItemAnswer';
 import {goBack} from '@navigation';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {
   getQuestionOnboarding,
@@ -62,13 +62,17 @@ interface IState {
 }
 const answerKeys = ['A', 'B', 'C', 'D'];
 const OnboardingStep = (props: OnboardingStepProps) => {
+  const route = useRoute<any>();
   const [state, setState] = useStateCustom<IState>({
-    dataQuestion: [],
+    dataQuestion: route?.params?.packageQuizz?.questions || [],
     currentQuestion: 0,
-    userAnswerId: 0,
-    answers: {},
+    userAnswerId: route?.params?.packageQuizz?.id || 0,
+    answers:
+      route?.params?.packageQuizz?.questions?.reduce((a, b, i) => {
+        a[i] = 1;
+        return a;
+      }, {}) || {},
   });
-  console.log('=>(index.tsx:68) state', state);
   const navigation = useNavigation<any>();
 
   const onSubmit = async () => {
@@ -108,9 +112,9 @@ const OnboardingStep = (props: OnboardingStepProps) => {
     GlobalService.hideLoading();
   };
 
-  useEffect(() => {
-    getDataQuestion();
-  }, []);
+  // useEffect(() => {
+  //   getDataQuestion();
+  // }, []);
 
   const onBackQuestion = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
