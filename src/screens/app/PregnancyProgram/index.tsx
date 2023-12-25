@@ -15,12 +15,14 @@ import {useNavigation} from '@react-navigation/native';
 import TabProgram from './components/TabProgram';
 import ListWeek from './components/ListWeek';
 import {ROUTE_NAME} from '@routeName';
+import {useSelector} from 'react-redux';
 
 interface PregnancyProgramProps {}
 
 const PregnancyProgram = (props: PregnancyProgramProps) => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigation = useNavigation<any>();
+  const week = useSelector((state: any) => state?.home?.week);
 
   const {t} = useTranslation();
   const goBack = () => {
@@ -74,11 +76,9 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         />
         <View style={styles.container2}>
           <View style={styles.center}>
-            <Text style={styles.textTitle}>
-              You are now in week {currentWeek}
-            </Text>
+            <Text style={styles.textTitle}>You are now in week {week}</Text>
             <Text style={styles.textTitle2}>
-              {42 - currentWeek} weeks to go. You got this!
+              {42 - week} weeks to go. You got this!
             </Text>
           </View>
           <TabProgram currentWeek={currentWeek} />
