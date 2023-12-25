@@ -55,7 +55,6 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
               <SvgLineWave color={colors.pink350} />
             </View>
             <View style={styles.containerContent2}>
-              <Image source={teaser2} />
               <Text style={styles.textContent}>
                 Your program is being created!
               </Text>
@@ -63,6 +62,14 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
                 {
                   'Thank your for signing up! \nOur team will now create your personalised program and activate it for you. You will hear from us in the next 24 hours.'
                 }
+              </Text>
+              <Image source={teaser2} />
+              <Text style={styles.textContent2}>
+                Don't for get to{' '}
+                <Text style={[styles.textContent2, {color: colors.pink300}]}>
+                  turn on your notifications
+                </Text>{' '}
+                for weekly important reminders.
               </Text>
             </View>
             <View style={{bottom: -8}}>
@@ -101,7 +108,7 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     alignSelf: 'flex-end',
-    paddingHorizontal: scaler(16),
+    paddingRight: scaler(16),
   },
   iconClose: {
     height: 25,
@@ -109,14 +116,12 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontSize: scaler(20),
-    fontWeight: '500',
     marginBottom: 10,
     color: colors.textColor,
     ...stylesCommon.fontWeight500,
   },
   text2: {
     fontSize: scaler(26),
-    fontWeight: '600',
     ...stylesCommon.fontWeight600,
   },
   containerContent: {
@@ -132,17 +137,15 @@ const styles = StyleSheet.create({
   },
   textContent: {
     fontSize: scaler(22),
-    fontWeight: '600',
     marginTop: scaler(58),
     ...stylesCommon.fontWeight600,
   },
   textContent2: {
     fontSize: scaler(15),
-    fontWeight: '400',
     color: colors.labelColor,
     textAlign: 'center',
     marginTop: 10,
-    ...stylesCommon.fontSarabun400,
+    ...stylesCommon.fontWeight400,
   },
   buttonFinish: {
     backgroundColor: colors.yellow200,
@@ -155,8 +158,7 @@ const styles = StyleSheet.create({
   },
   textFinish: {
     fontSize: scaler(15),
-    fontWeight: '600',
     color: colors.textColor,
-    ...stylesCommon.fontSarabun600,
+    ...stylesCommon.fontWeight600,
   },
 });

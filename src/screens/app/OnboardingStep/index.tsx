@@ -95,14 +95,15 @@ const OnboardingStep = (props: OnboardingStepProps) => {
   const getDataQuestion = async () => {
     GlobalService.showLoading();
     let result = await getQuestionOnboarding();
+    console.log('result: ', result);
     let listAnswer = {};
-    result?.data?.data?.[0]?.questions.forEach((question, i) => {
+    result?.data.package_quizz?.questions.forEach((question, i) => {
       listAnswer[i] = 1;
     });
     setState({
-      dataQuestion: result?.data?.data?.[0]?.questions || [],
+      dataQuestion: result?.data?.package_quizz?.questions || [],
       answers: listAnswer,
-      userAnswerId: result?.data?.data?.[0]?.id,
+      userAnswerId: result?.data?.package_quizz?.id,
     });
     GlobalService.hideLoading();
   };

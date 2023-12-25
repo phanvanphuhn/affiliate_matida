@@ -138,7 +138,7 @@ export const Forum = () => {
           <ActivityIndicator color={colors.primary} size="small" />
         </View>
       ) : (
-        <>
+        <ScrollView style={{flex: 1}}>
           {/* <ListTopTab /> */}
           <View>
             <View
@@ -192,7 +192,7 @@ export const Forum = () => {
             </Text>
             <ListPost />
           </View>
-        </>
+        </ScrollView>
       )}
       {isShowForReviewer(user) && (
         <View

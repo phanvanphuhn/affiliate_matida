@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
-import {colors, scaler, widthScreen} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 
 interface ExpertsProps {}
 const data = [
@@ -9,31 +9,37 @@ const data = [
     name: 'Hoa',
     description: 'Obstetrician',
     image:
-      'https://i.pinimg.com/236x/77/82/f0/7782f0c631b3765abca616306f416a61.jpg',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520456296115766.jpg',
   },
   {
     name: 'Phương Anh',
     description: 'Obstetrician',
     image:
-      'https://i.pinimg.com/236x/74/20/58/742058099ee4749d2da5d820396870eb.jpg',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520600416191297.jpg',
   },
   {
     name: 'Sương',
     description: 'Lactation Expert',
     image:
-      'https://image.baophapluat.vn/1200x630/Uploaded/2023/athlrainaghat/2023_04_01/anh-minh-hoa-anh-tackexinhcom-8033.jpeg',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520618216628521.jpg',
   },
   {
-    name: 'Tú Anh',
-    description: 'Life Coach',
+    name: 'Mina Chung',
+    description: 'Financial Coach',
     image:
-      'https://cpad.ask.fm/450/774/576/-29996968-1tfd7tc-gpggmmc5d0og3a0/original/image.jpg',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520637730003352.jpg',
   },
   {
     name: 'Trâm',
     description: 'Yoga Coach',
     image:
-      'https://i.pinimg.com/236x/77/82/f0/7782f0c631b3765abca616306f416a61.jpg',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520720586395151.jpg',
+  },
+  {
+    name: 'Stephanie',
+    description: 'Program Manager',
+    image:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520742320445490.jpg',
   },
 ];
 const Experts = (props: ExpertsProps) => {
@@ -74,14 +80,14 @@ const Experts = (props: ExpertsProps) => {
           <Text
             style={{
               fontSize: scaler(17),
-              fontWeight: '500',
+              ...stylesCommon.fontWeight500,
             }}>
             Meet our experts
           </Text>
           <Text
             style={{
               fontSize: scaler(22),
-              fontWeight: '600',
+              ...stylesCommon.fontWeight600,
               marginTop: 10,
               marginBottom: 15,
             }}>
@@ -92,6 +98,7 @@ const Experts = (props: ExpertsProps) => {
               fontSize: scaler(15),
               lineHeight: scaler(24),
               color: colors.labelColor,
+              ...stylesCommon.fontWeight400,
             }}>
             The Matida pregnancy program was crafted by our expert medical team,
             offering the most valuable and supportive content for your journey.
@@ -123,7 +130,7 @@ const Experts = (props: ExpertsProps) => {
                   <Text
                     style={{
                       fontSize: scaler(17),
-                      fontWeight: '500',
+                      ...stylesCommon.fontWeight500,
                       marginTop: 12,
                     }}>
                     {item.name}
@@ -131,7 +138,7 @@ const Experts = (props: ExpertsProps) => {
                   <Text
                     style={{
                       fontSize: scaler(13),
-                      fontWeight: '400',
+                      ...stylesCommon.fontWeight400,
                     }}>
                     {item.description}
                   </Text>

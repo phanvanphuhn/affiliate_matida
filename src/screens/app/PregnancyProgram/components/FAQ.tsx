@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import Collapsible from './Collapsible';
 
 interface FAQProps {}
@@ -73,7 +73,7 @@ const data = [
     content: 'Please write us an email to contact@matida.app.',
   },
 ];
-const colorList = [colors.pink350, colors.yellow200, colors.blue];
+const colorList = [colors.pink350, colors.yellow200, colors.blue50];
 const FAQ = (props: FAQProps) => {
   const [state, setState] = useState();
   return (
@@ -82,14 +82,14 @@ const FAQ = (props: FAQProps) => {
         <Text
           style={{
             fontSize: scaler(17),
-            fontWeight: '500',
+            ...stylesCommon.fontWeight500,
           }}>
           Frequently asked questions
         </Text>
         <Text
           style={{
             fontSize: scaler(22),
-            fontWeight: '600',
+            ...stylesCommon.fontWeight600,
             lineHeight: 28,
             marginTop: 6,
             marginBottom: 20,

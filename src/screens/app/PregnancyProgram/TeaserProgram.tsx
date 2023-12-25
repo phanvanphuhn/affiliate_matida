@@ -43,7 +43,7 @@ const data = [
     name: 'Direct access to doctors & experts',
     description:
       'A support group with medical doctors\n& like-minded moms (to be)',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091207815195951.png',
+    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
   },
   {
     name: 'Weekly effort of 15 minutes',
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     alignSelf: 'flex-end',
-    padding: scaler(15),
+    paddingRight: scaler(16),
   },
   textTitle: {
     fontSize: scaler(20),
