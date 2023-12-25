@@ -636,14 +636,6 @@ const Home = () => {
             <ViewQuiz onAnswer={onAnswerQuiz} />
           ) : null}
 
-          {isShowForReviewer(user) && (
-            <View
-              style={{
-                marginBottom: scaler(16),
-              }}>
-              <ChatGPTComponent />
-            </View>
-          )}
           {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
 
           {isShowForReviewer(user) &&
