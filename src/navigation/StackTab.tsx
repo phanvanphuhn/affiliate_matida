@@ -29,13 +29,13 @@ const StackTab = () => {
       <Tab.Screen name={ROUTE_NAME.TAB_HOME} component={screens.Home} />
       <Tab.Screen name={ROUTE_NAME.TAB_FEED} component={screens.Feed} />
       {/* <Tab.Screen name={ROUTE_NAME.TAB_EXPLORE} component={screens.Explore} /> */}
-      <Tab.Screen name={ROUTE_NAME.TAB_COMMUNITY} component={screens.Forum} />
-      <Tab.Screen name={ROUTE_NAME.TAB_DEAL} component={screens.Deal} />
-      {/* <Tab.Screen name={ROUTE_NAME.TAB_LIVETALK} component={screens.LiveTalk} /> */}
       <Tab.Screen
         name={ROUTE_NAME.PREGNANCY_PROGRAM}
         component={screens.PregnancyProgram}
       />
+      <Tab.Screen name={ROUTE_NAME.TAB_COMMUNITY} component={screens.Forum} />
+      <Tab.Screen name={ROUTE_NAME.TAB_DEAL} component={screens.Deal} />
+      {/* <Tab.Screen name={ROUTE_NAME.TAB_LIVETALK} component={screens.LiveTalk} /> */}
     </Tab.Navigator>
   );
 };
