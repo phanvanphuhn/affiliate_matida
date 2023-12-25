@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgLineWave} from '@images';
@@ -18,6 +18,7 @@ interface OnboardingFinishedProps {}
 const OnboardingFinished = (props: OnboardingFinishedProps) => {
   const [state, setState] = useState();
   const navigation = useNavigation<any>();
+
   const onNext = () => {
     navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
   };
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.textColor,
     marginTop: scaler(8),
+    paddingHorizontal: scaler(20),
     ...stylesCommon.fontWeight600,
   },
   container3: {

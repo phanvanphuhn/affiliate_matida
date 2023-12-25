@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -22,6 +22,9 @@ import DashedLine from './DashedLine';
 import {ic_default1, ic_default2, ic_gift, SvgArrowLeft} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
+import {getUserTask} from '../../../../services/pregnancyProgram';
+import {useSelector} from 'react-redux';
+import {GlobalService} from '@services';
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -29,61 +32,89 @@ if (Platform.OS === 'android') {
 }
 interface ListProgramProps {
   tabIndex?: number; // 0 todos || 1 finished
+  currentWeek: number;
 }
-const DATA = [
-  {
-    title: 'Pregnancy Knowledge',
-    type: 'core',
-    label: 'Core',
-    data: [
-      {
-        name: 'Learn about the Baby Development Milestones',
-        description: 'Learn',
-        icon: ic_default1,
-      },
-      {
-        name: '1st checkup (Routine tests - Ultrasound, Blood test)',
-        description: 'Check up',
-        icon: ic_default2,
-      },
-      {
-        name: 'Can you feel the changes happening inside?',
-        description: 'Mom diary',
-        icon: ic_default2,
-      },
-    ],
-  },
-  {
-    title: 'Love & Money',
-    type: 'personal',
-    label: 'Personal challenge',
-    data: [
-      {
-        name: 'Initiate a Family Movie Night',
-        description: 'Activity',
-        icon: ic_default1,
-      },
-    ],
-  },
-  {
-    title: 'You are making progress',
-    type: 'reward',
-    label: 'Basics',
-    data: [
-      {
-        name: 'What should mom eat in week 5?',
-        description: 'Learn',
-        icon: ic_default2,
-      },
-    ],
-  },
-];
 
 const ListProgram = (props: ListProgramProps) => {
-  const [state, setState] = useState();
-  const refHeight = useRef();
+  const [state, setState] = useState([]);
   const navigation = useNavigation<any>();
-
+  const week = useSelector((state: any) => state?.home?.week);
+  const getTitle = (type: string) => {
+    switch (type) {
+      case 'reward':
+        return '';
+      case 'core':
+        return 'Pregnancy Knowledge';
+      case 'love_and_money':
+        return 'Love & Money';
+      case 'fitness_and_nutrition':
+        return 'Fitness & Nutrition';
+      default:
+        return '';
+    }
+  };
+  const getLabel = (type: string) => {
+    switch (type) {
+      case 'reward':
+        return '';
+      case 'core':
+        return 'Core';
+      case 'love_and_money':
+        return 'Personal challenge';
+      case 'fitness_and_nutrition':
+        return 'Fitness & Nutrition';
+      default:
+        return '';
+    }
+  };
+  const getData = async () => {
+    try {
+      GlobalService.showLoading();
+      let res = await getUserTask(
+        props?.currentWeek || week,
+        props?.tabIndex == 0 ? 'doing' : 'success',
+      );
+      if (res?.success) {
+        let data = res?.data
+          .sort((a: any, b: any) => a.order - b.order)
+          ?.map((e: any) => e.task?.module)
+          .filter((e: any, i: number, arr: any) => arr.indexOf(e) == i)
+          .map(e => {
+            let arr = res?.data.filter((item: any) => item.task?.module == e);
+            return {
+              title: getTitle(e),
+              label: getLabel(e),
+              type: e,
+              data: arr,
+            };
+          });
+        if (data?.length > 0) {
+          data = data.concat([
+            {
+              title: 'You are making progress',
+              type: 'reward',
+              label: 'Basics',
+              data: [
+                {
+                  name: 'What should mom eat in week 5?',
+                  description: 'Learn',
+                  icon: ic_default2,
+                },
+              ],
+            },
+          ]);
+        }
+        setState(data);
+        console.log('=>(ListProgram.tsx:128) data', data);
+      }
+    } catch (e) {
+    } finally {
+      GlobalService.hideLoading();
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, [props?.currentWeek, props?.tabIndex]);
   const onDetail = (item: any) => {
     navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
       item,
@@ -95,15 +126,18 @@ const ListProgram = (props: ListProgramProps) => {
         return colors.blue;
       case 'core':
         return colors.pink200;
-      case 'personal':
+      case 'love_and_money':
         return colors.green250;
       default:
         return colors.primaryBackground;
     }
   };
+  const onGift = () => {
+    navigation.navigate(ROUTE_NAME.MOM_DIARY);
+  };
   return (
     <View style={styles.container}>
-      {DATA.map((item, index) => {
+      {state?.map((item, index) => {
         return (
           <View key={index} style={[styles.rowStart, {}]}>
             <View
@@ -127,24 +161,18 @@ const ListProgram = (props: ListProgramProps) => {
                   />
                 </Svg>
               ) : (
-                // <DashedLine
-                //   dashLength={3}
-                //   dashThickness={1}
-                //   dashColor={getColor(item.type)}
-                //   axis={'vertical'}
-                //   style={{flex: 1, alignSelf: 'center'}}
-                // />
                 <Svg
                   style={{width: 20, height: '100%', position: 'absolute'}}
                   fill="none">
-                  <Path
-                    d="M1 1V519"
+                  <Line
                     stroke={getColor(item.type)}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeDasharray="2 4"
-                    x={8}
-                    y={22}
+                    x1="10"
+                    y1="22"
+                    x2="10"
+                    y2={'100%'}
                   />
                 </Svg>
               )}
@@ -179,6 +207,7 @@ const ListProgram = (props: ListProgramProps) => {
                 {item.type == 'reward' ? (
                   <View>
                     <TouchableOpacity
+                      onPress={onGift}
                       style={{
                         backgroundColor: colors.blue,
                         flexDirection: 'row',
@@ -217,9 +246,11 @@ const ListProgram = (props: ListProgramProps) => {
                         ]}>
                         <View style={{flex: 1}}>
                           <View style={{flex: 1}}>
-                            <Text style={styles.textChild}>{e.name}</Text>
+                            <Text style={styles.textChild}>
+                              {e?.task?.name_en}
+                            </Text>
                             <Text style={styles.textChildDesc}>
-                              {e.description}
+                              {e.task?.categories?.[0]?.split('_').join(' ')}
                             </Text>
                           </View>
                           <TouchableOpacity
@@ -238,7 +269,14 @@ const ListProgram = (props: ListProgramProps) => {
                             />
                           </TouchableOpacity>
                         </View>
-                        <Image source={e.icon} style={styles.img} />
+                        <Image
+                          source={
+                            e?.task?.thumbnail
+                              ? {uri: e?.task?.thumbnail}
+                              : ic_default1
+                          }
+                          style={styles.img}
+                        />
                       </TouchableOpacity>
                     );
                   })
@@ -284,6 +322,7 @@ const styles = StyleSheet.create({
     marginTop: scaler(5),
     paddingRight: scaler(10),
     paddingBottom: scaler(10),
+    textTransform: 'capitalize',
     ...stylesCommon.fontSarabun400,
   },
   containerChild: {

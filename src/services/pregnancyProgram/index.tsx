@@ -3,6 +3,8 @@ import api from '../api';
 const SUBSCRIPTION_PLANS = 'subscription-plans/';
 const QUESTION_ONBOARDING = 'package-quizz/pregnancy-program';
 const ANSWER_ONBOARDING = 'user-answer/pregnancy-program';
+const PACKAGE_QUIZZ = 'package-quizz';
+const USER_TASK = 'user-tasks';
 
 export const getPlanByCode: any = async () => {
   const response = await api.get(`${SUBSCRIPTION_PLANS}code/PP`);
@@ -28,8 +30,16 @@ export const submitAnswerOnboarding: any = async (
   });
   return response;
 };
-
-export const calculateDate: any = async (data: any) => {
-  const response = await api.post(CALCULATE_DATE, data);
+export const getPackageQuizzWithId: any = async (id: number) => {
+  const response = await api.get(`${PACKAGE_QUIZZ}/${id}`);
+  return response;
+};
+export const getUserTask: any = async (week: number, status: string) => {
+  const response = await api.get(`${USER_TASK}`, {
+    params: {
+      week,
+      status,
+    },
+  });
   return response;
 };

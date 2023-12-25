@@ -29,6 +29,7 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
   const [state, setState] = useState();
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
+  console.log('=>(DetailTaskProgram.tsx:32) route', route);
   return (
     <SafeAreaView
       edges={['bottom']}
@@ -36,7 +37,11 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <ImageBackground
-            source={route?.params?.item?.icon || bg1}
+            source={
+              route?.params?.item?.task?.thumbnail
+                ? {uri: route?.params?.item?.task?.thumbnail}
+                : bg1
+            }
             style={styles.imgBg}>
             <View
               style={{
@@ -65,9 +70,13 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
             <Image source={ic_flower} style={styles.flower} />
             <View style={styles.container2}>
               <Text style={styles.textLearn}>
-                {route?.params?.item?.description}
+                {route?.params?.item?.task?.categories?.[0]
+                  ?.split('_')
+                  ?.join(' ')}
               </Text>
-              <Text style={styles.textAbout}>{route?.params?.item?.name}</Text>
+              <Text style={styles.textAbout}>
+                {route?.params?.item?.task?.name_en}
+              </Text>
               <Text style={styles.text1}>
                 Embark on an exciting journey to learn about the early
                 development milestones of your baby, a crucial task for
@@ -195,6 +204,7 @@ const styles = StyleSheet.create({
     fontSize: scaler(15),
     fontWeight: '500',
     color: colors.borderColor,
+    textTransform: 'capitalize',
     ...stylesCommon.fontSarabun500,
   },
   textAbout: {

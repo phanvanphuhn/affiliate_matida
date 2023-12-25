@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import {SvgPathBottom, SvgPathTop} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 
@@ -15,7 +21,9 @@ const ItemAnswer = (props: ItemAnswerProps) => {
   return (
     <View style={styles.container}>
       <SvgPathTop color={props.isSelected ? colors.blue : colors.white} />
-      <TouchableOpacity style={{flex: 1}} onPress={props.onSelected}>
+      <Pressable
+        style={{flex: 1, marginBottom: -0.2}}
+        onPress={props.onSelected}>
         <View
           style={{
             backgroundColor: props.isSelected ? colors.blue : colors.white,
@@ -42,8 +50,8 @@ const ItemAnswer = (props: ItemAnswerProps) => {
           </Text>
           <View style={{width: 10}} />
         </View>
-      </TouchableOpacity>
-      <View style={{marginBottom: 1}}>
+      </Pressable>
+      <View style={{marginBottom: 2}}>
         <SvgPathBottom color={props.isSelected ? colors.blue : colors.white} />
       </View>
     </View>

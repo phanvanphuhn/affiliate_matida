@@ -34,6 +34,8 @@ import {
 } from '@redux';
 import {event, eventType, trackingAppEvent} from '@util';
 import {useTranslation} from 'react-i18next';
+import {GlobalService} from '@services';
+import {getQuestionOnboarding} from '../services/pregnancyProgram';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -141,7 +143,30 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
       isCallExplore.current = false;
     }
   };
-
+  const getDataQuestion = async () => {
+    let result = await getQuestionOnboarding();
+    if (result?.data?.user_score?.score) {
+      navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED, {
+        metadata: result?.data?.user_score?.metadata,
+        score: result?.data?.user_score?.score,
+      });
+    } else {
+      navigation.navigate(ROUTE_NAME.ONBOARDING_STEP, {
+        packageQuizz: result?.data?.package_quizz,
+      });
+    }
+  };
+  const checkPlan = () => {
+    if (user.user_subscriptions.some(e => e.code == 'PP')) {
+      navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+    } else {
+      if (user.payments.some(e => e.processing)) {
+        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT);
+      } else {
+        getDataQuestion();
+      }
+    }
+  };
   return (
     <View style={styles.container}>
       {state.routes.map((route: any, index: number) => {
@@ -149,7 +174,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
         const onPress = () => {
           if (!isFocused) {
             if (route.name == ROUTE_NAME.PREGNANCY_PROGRAM) {
-              navigation.navigate(ROUTE_NAME.ONBOARDING_STEP);
+              checkPlan();
             } else {
               navigation.navigate(route.name);
               onRefreshExplore();

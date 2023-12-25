@@ -19,7 +19,9 @@ import {
 } from '@stylesCommon';
 import PagerView from 'react-native-pager-view';
 
-interface TabProgramProps {}
+interface TabProgramProps {
+  currentWeek: number;
+}
 const TabProgram = (props: TabProgramProps) => {
   const [tabIndex, setIndex] = useState<number>(0);
 
@@ -64,7 +66,7 @@ const TabProgram = (props: TabProgramProps) => {
         })}
       </View>
 
-      <ListProgram tabIndex={tabIndex} />
+      <ListProgram tabIndex={tabIndex} currentWeek={props?.currentWeek} />
     </View>
   );
 };
