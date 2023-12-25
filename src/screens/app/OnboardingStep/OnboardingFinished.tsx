@@ -50,7 +50,7 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
         </View>
 
         <View style={styles.container4}>
-          <View style={{top: -8, paddingBottom: scaler(40)}}>
+          <View style={{top: -8, paddingBottom: scaler(32)}}>
             <SvgLineWave color={colors.blue50} />
           </View>
           <TouchableOpacity onPress={onNext} style={styles.buttonFinish}>
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.yellow200,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: scaler(13),
+    paddingVertical: scaler(16),
     alignSelf: 'center',
     width: '85%',
-    borderRadius: scaler(50),
+    borderRadius: scaler(40),
   },
   textFinish: {
     fontSize: scaler(15),

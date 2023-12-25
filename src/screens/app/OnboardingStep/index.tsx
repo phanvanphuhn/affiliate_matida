@@ -99,8 +99,9 @@ const OnboardingStep = (props: OnboardingStepProps) => {
   const getDataQuestion = async () => {
     GlobalService.showLoading();
     let result = await getQuestionOnboarding();
+    console.log('result: ', result);
     let listAnswer = {};
-    result?.data?.package_quizz?.questions.forEach((question, i) => {
+    result?.data.package_quizz?.questions.forEach((question, i) => {
       listAnswer[i] = 1;
     });
     setState({
