@@ -108,6 +108,11 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
         id: arrayParamsLink[1],
       });
       break;
+    case TypeDeepLink.DEAL:
+      navigate(ROUTE_NAME.TAB_DEAL, {
+        id: arrayParamsLink[1],
+      });
+      break;
     default:
       break;
   }

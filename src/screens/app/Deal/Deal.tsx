@@ -8,9 +8,10 @@ import ListDeal from './components/listDeal';
 import useDetailPost from '../Forum/components/useDetailPost';
 import {getListDeal} from '@services/deal';
 import {useSelector} from 'react-redux';
-import {GlobalService} from '@services';
+import {DEEP_LINK, GlobalService} from '@services';
 import {event, eventType, isShowForReviewer, trackingAppEvent} from '@util';
 import {FLoatingAIButton} from '@component';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 
 type TMockData = {
   id: number;
@@ -21,10 +22,49 @@ type TMockData = {
   data: Object;
 };
 
-const Deal = () => {
+const Deal = (props: any) => {
+  const {route} = props;
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const lang = useSelector((state: any) => state.auth.lang);
 
   const [data, setData] = useState<any>();
+
+  // const onShare = async () => {
+  //   let link;
+  //   data?.map(async item => {
+  //     link = await dynamicLinks().buildShortLink(
+  //       {
+  //         link: `${DEEP_LINK}/deal/${item.id}`,
+  //         domainUriPrefix: DEEP_LINK,
+  //         android: {
+  //           packageName: 'com.growth.levers.matida',
+  //           fallbackUrl:
+  //             'https://play.google.com/store/apps/details?id=com.growth.levers.matida',
+  //         },
+  //         ios: {
+  //           bundleId: 'com.growth.levers.matida',
+  //           appStoreId: '1671957732',
+  //           fallbackUrl:
+  //             'https://apps.apple.com/vn/app/matida-app-theo-d%C3%B5i-thai-k%E1%BB%B3/id1671957732?l=vi',
+  //         },
+  //         otherPlatform: {
+  //           fallbackUrl: 'https://www.matida.app/',
+  //         },
+  //         social: {
+  //           title: lang == 2 ? item.name_vi : item.name_en,
+  //           descriptionText: 'Matida - Ứng dụng đồng hành cùng Mẹ bầu hiện đại',
+  //           imageUrl: item.thumbnails['6x4'],
+  //         },
+  //       },
+  //       dynamicLinks.ShortLinkType.UNGUESSABLE,
+  //     );
+  //     console.log('data link: ', link, item.name_vi);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   onShare();
+  // }, []);
 
   const getListDealFromApi = async () => {
     GlobalService.showLoading();
@@ -33,6 +73,10 @@ const Deal = () => {
       if (res?.success) {
         GlobalService.hideLoading();
         setData(res?.data);
+        if (route?.params?.id) {
+          const item = res?.data?.filter(item => item.id == route?.params?.id);
+          navigation.navigate(ROUTE_NAME.DETAIL_DEAL, {data: item[0]});
+        }
       } else {
         GlobalService.hideLoading();
         console.log('Cannot get list deal');
@@ -45,7 +89,7 @@ const Deal = () => {
 
   useEffect(() => {
     getListDealFromApi();
-  }, []);
+  }, [route?.params?.id]);
 
   const scrollRef = useRef<ScrollView>(null);
   const navigation = useNavigation<any>();

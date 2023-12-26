@@ -30,6 +30,7 @@ export enum TypeDeepLink {
   ARTICLE = 'article',
   FEED = 'feed',
   ROOM = 'room',
+  DEAL = 'deal',
 }
 
 export enum OPTION_SHARE {

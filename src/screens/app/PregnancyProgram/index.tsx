@@ -72,7 +72,9 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
             width: '100%',
             aspectRatio: 3 / 2,
           }}
-          source={bg_pp}
+          source={{
+            uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
+          }}
         />
         <View style={styles.container2}>
           <View style={styles.center}>

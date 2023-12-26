@@ -230,7 +230,7 @@ const OnboardingV2 = () => {
       const response = await createBaby(params);
       const res = await selectBabyDate({
         id: response?.data?.id,
-        date: moment.utc(state.dmy, 'MM/DD/YYYY').format('MM/DD/YYYY'),
+        date: moment.utc(state.dmy, 'MM/DD/YYYY').format('YYYY-MM-DD'),
       });
       if (res.success && response.success) {
         navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {
@@ -274,7 +274,7 @@ const OnboardingV2 = () => {
         <View
           style={[
             styles.wrapTitleContainer,
-            state.page > 0 && state.page < 9
+            (state.page > 0 && state.page < 9) || state.page == 12
               ? {marginTop: scaler(60)}
               : {marginTop: scaler(98)},
           ]}>

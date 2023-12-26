@@ -638,12 +638,12 @@ const Home = () => {
 
           {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
 
-          {isShowForReviewer(user) &&
+          {/* {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||
               user?.baby_type == 'pregnant-overdue' ||
               user?.baby_type == 'unknown') && (
               <MomProgram data={state?.isSignUp} />
-            )}
+            )} */}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
         {isShowForReviewer(user) &&
