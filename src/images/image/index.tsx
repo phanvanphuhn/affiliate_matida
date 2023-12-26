@@ -92,6 +92,7 @@ const bg2 = require('./bg2.png');
 const ic_default_upload = require('./ic_default_upload.png');
 const ic_plus = require('./ic_plus.png');
 const chuyengia1 = require('./chuyengia1.png');
+const chuyengia2 = require('./chuyengia2.png');
 const ic_line_wave = require('./ic_line_wave.png');
 const ic_line = require('./ic_line.png');
 const ic_info = require('./ic_info.png');
@@ -194,4 +195,5 @@ export {
   ic_line,
   ic_info,
   ic_download,
+  chuyengia2,
 };

@@ -143,9 +143,8 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                 marginTop: 10,
               },
             ]}>
-            Cool mom,
+            Matida Masterclass
           </Text>
-          <Text style={styles.textTitle2}>Happy Baby</Text>
         </View>
         <View
           style={{
@@ -192,7 +191,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             <Text
               style={{
                 fontSize: scaler(15),
-                ...stylesCommon.fontSarabun500,
+                ...stylesCommon.fontWeight400,
                 marginBottom: scaler(15),
               }}>
               Have questions about this course?{' '}
@@ -267,15 +266,13 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: scaler(20),
-    fontWeight: '500',
     color: colors.labelColor,
     textAlign: 'center',
     ...stylesCommon.fontWeight500,
   },
   textTitle2: {
-    fontSize: scaler(28),
-    fontWeight: '600',
-    color: colors.labelColor,
+    fontSize: scaler(26),
+    color: colors.neutral10,
     textAlign: 'center',
     ...stylesCommon.fontWeight600,
   },
@@ -292,7 +289,7 @@ const styles = StyleSheet.create({
   textSpecial: {
     color: colors.pink300,
     fontSize: scaler(20),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     textAlign: 'center',
     marginBottom: scaler(10),
   },
@@ -300,19 +297,18 @@ const styles = StyleSheet.create({
     color: colors.gray550,
     fontSize: scaler(13),
     marginTop: 5,
-    fontWeight: '400',
     textAlign: 'center',
     ...stylesCommon.fontWeight400,
   },
   textPriceNew: {
     fontSize: scaler(24),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     color: colors.textColor,
     textAlign: 'center',
   },
   textPriceNew2: {
     fontSize: scaler(15),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
   },
   buttonSignUp: {
     backgroundColor: colors.yellow200,
@@ -323,8 +319,8 @@ const styles = StyleSheet.create({
   },
   textButtonSignUp: {
     fontSize: scaler(15),
-    fontWeight: '600',
-    color: colors.textColor,
+    color: colors.labelColor,
+    ...stylesCommon.fontWeight600,
   },
   container3: {
     marginBottom: scaler(35),
@@ -353,14 +349,12 @@ const styles = StyleSheet.create({
   textOff: {
     color: colors.white,
     fontSize: scaler(11),
-    fontWeight: '600',
-    ...stylesCommon.fontSarabun600,
+    ...stylesCommon.fontWeight600,
   },
   textPrice1: {
     color: colors.pink300,
-    fontWeight: '600',
     fontSize: scaler(18),
-    ...stylesCommon.fontWeight700,
+    ...stylesCommon.fontWeight600,
   },
   containerItem: {
     alignItems: 'center',
@@ -368,7 +362,6 @@ const styles = StyleSheet.create({
   },
   textItemName: {
     fontSize: scaler(20),
-    fontWeight: '600',
     color: colors.pink300,
     marginBottom: 10,
     textAlign: 'center',
@@ -376,16 +369,14 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontWeight600,
   },
   textItemDesc: {
-    fontSize: scaler(17),
-    fontWeight: '400',
+    fontSize: scaler(15),
     color: colors.labelColor,
     textAlign: 'center',
-    ...stylesCommon.fontSarabun400,
+    ...stylesCommon.fontWeight400,
   },
   textItemDescBold: {
-    fontSize: scaler(17),
-    fontWeight: '600',
-    color: colors.textBoldColor,
-    ...stylesCommon.fontSarabun600,
+    fontSize: scaler(15),
+    color: '#101012',
+    ...stylesCommon.fontWeight600,
   },
 });

@@ -102,7 +102,8 @@ export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
               </Text>
             </View>
           )}
-          <View style={[s.row, {marginTop: scaler(12)}]}>
+          <View
+            style={[s.row, {marginTop: scaler(12), marginBottom: scaler(16)}]}>
             {isPayment && (
               <Image
                 source={iconCrown}

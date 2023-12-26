@@ -110,6 +110,11 @@ export const Forum = () => {
     getData();
   }, []);
 
+  console.log(
+    'data?.expertLiveTalk: ',
+    data?.expertLiveTalk?.filter(item => item?.room?.status !== 3),
+  );
+
   return (
     <View style={{flex: 1}}>
       <AppHeader
@@ -140,52 +145,61 @@ export const Forum = () => {
       ) : (
         <ScrollView style={{flex: 1}}>
           {/* <ListTopTab /> */}
-          <View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginTop: scaler(24),
-                marginBottom: scaler(8),
-                paddingHorizontal: scaler(16),
-              }}>
-              <Text
+          {data?.expertLiveTalk?.filter(item => item?.room?.status !== 3)
+            ?.length > 0 && (
+            <View>
+              <View
                 style={{
-                  fontSize: scaler(18),
-                  ...stylesCommon.fontWeight600,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: scaler(24),
+                  marginBottom: scaler(8),
+                  paddingHorizontal: scaler(16),
                 }}>
-                {t('talk.expertWorkshops')}
-              </Text>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(ROUTE_NAME.ALL_MEETING_ROOM)
-                }>
                 <Text
                   style={{
-                    ...stylesCommon.fontWeight500,
-                    fontSize: scaler(14),
-                    color: colors.pink4,
+                    fontSize: scaler(18),
+                    ...stylesCommon.fontWeight600,
                   }}>
-                  {t('talk.seeAll')}
+                  {t('talk.expertWorkshops')}
                 </Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate(ROUTE_NAME.ALL_MEETING_ROOM)
+                  }>
+                  <Text
+                    style={{
+                      ...stylesCommon.fontWeight500,
+                      fontSize: scaler(14),
+                      color: colors.pink4,
+                    }}>
+                    {t('talk.seeAll')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{paddingLeft: scaler(16)}}>
+                <FlatList
+                  data={data?.expertLiveTalk?.slice(0, 3)}
+                  renderItem={({item, index}) => {
+                    return <ExpertWorkshopsItemV2 item={item} key={index} />;
+                  }}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                />
+              </View>
             </View>
-            <View style={{paddingLeft: scaler(16)}}>
-              <FlatList
-                data={data?.expertLiveTalk}
-                renderItem={({item, index}) => {
-                  return <ExpertWorkshopsItemV2 item={item} key={index} />;
-                }}
-                horizontal={true}
-              />
-            </View>
-          </View>
+          )}
           <View style={{flex: 1}}>
             <Text
               style={{
                 fontSize: scaler(18),
                 paddingHorizontal: scaler(16),
                 marginBottom: scaler(8),
+                marginTop:
+                  data?.expertLiveTalk?.filter(item => item?.room?.status !== 3)
+                    ?.length > 0
+                    ? 0
+                    : scaler(16),
                 ...stylesCommon.fontWeight600,
               }}>
               {t('newFeed.titleHeader')}

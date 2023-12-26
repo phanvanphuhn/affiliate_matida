@@ -57,9 +57,21 @@ export const SlideIntroHook = () => {
     },
     {
       id: 5,
-      source: lang === 2 ? slideIntro5 : slideIntro5en,
+      source: slideIntro4,
       title: t('slideIntro.title.4'),
       textBody: t('slideIntro.textBody.4'),
+    },
+    {
+      id: 6,
+      source: slideIntro4,
+      title: t('slideIntro.title.5'),
+      textBody: t('slideIntro.textBody.5'),
+    },
+    {
+      id: 7,
+      source: lang === 2 ? slideIntro5 : slideIntro5en,
+      title: t('slideIntro.title.6'),
+      textBody: t('slideIntro.textBody.6'),
     },
   ];
 

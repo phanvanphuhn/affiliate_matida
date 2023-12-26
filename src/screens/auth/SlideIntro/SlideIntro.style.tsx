@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    top: scaler(170),
+    top: scaler(24),
     justifyContent: 'space-between',
     paddingLeft: scaler(30),
   },
@@ -47,8 +47,8 @@ export const styles = StyleSheet.create({
   },
 
   textSkip: {
-    fontSize: scaler(20),
-    color: colors.black,
+    fontSize: scaler(15),
+    color: colors.labelColor,
     ...stylesCommon.fontWeight600,
   },
   textBold: {

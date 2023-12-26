@@ -65,15 +65,6 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                 style={styles.input}
                 placeholder={'Your name'}
               />
-              <Text style={styles.textLabel}>Your pregnancy week</Text>
-              <TextInput
-                style={styles.input}
-                value={state.pregnancyWeek}
-                onChangeText={onChangeText('pregnancyWeek')}
-                placeholder={'Your pregnancy week'}
-                maxLength={2}
-                keyboardType={'number-pad'}
-              />
               <Text style={styles.textLabel}>Your phone number</Text>
               <TextInput
                 maxLength={10}
@@ -82,6 +73,15 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                 keyboardType={'number-pad'}
                 style={styles.input}
                 placeholder={'Your phone number'}
+              />
+              <Text style={styles.textLabel}>Your pregnancy week</Text>
+              <TextInput
+                style={styles.input}
+                value={state.pregnancyWeek}
+                onChangeText={onChangeText('pregnancyWeek')}
+                placeholder={'Your pregnancy week'}
+                maxLength={2}
+                keyboardType={'number-pad'}
               />
             </View>
             <SvgPathTop />
