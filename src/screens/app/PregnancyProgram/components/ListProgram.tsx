@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Text,
   View,
@@ -20,7 +20,7 @@ import {
 import Svg, {Circle, G, Path, Line} from 'react-native-svg';
 import DashedLine from './DashedLine';
 import {ic_default1, ic_default2, ic_gift, SvgArrowLeft} from '@images';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {getUserTask} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
@@ -38,7 +38,7 @@ interface ListProgramProps {
 const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
   const navigation = useNavigation<any>();
-  const week = useSelector((state: any) => state?.home?.week);
+  const week = useSelector((state: any) => state?.home?.week - 4);
   const getTitle = (type: string) => {
     switch (type) {
       case 'reward':
@@ -49,6 +49,8 @@ const ListProgram = (props: ListProgramProps) => {
         return 'Love & Money';
       case 'fitness_and_nutrition':
         return 'Fitness & Nutrition';
+      case 'baby_care':
+        return 'Baby Care';
       default:
         return '';
     }
@@ -63,6 +65,8 @@ const ListProgram = (props: ListProgramProps) => {
         return 'Personal challenge';
       case 'fitness_and_nutrition':
         return 'Fitness & Nutrition';
+      case 'baby_care':
+        return 'Baby care';
       default:
         return '';
     }
@@ -112,13 +116,31 @@ const ListProgram = (props: ListProgramProps) => {
       GlobalService.hideLoading();
     }
   };
-  useEffect(() => {
-    getData();
-  }, [props?.currentWeek, props?.tabIndex]);
+  useFocusEffect(
+    useCallback(() => {
+      getData();
+    }, [props?.currentWeek, props?.tabIndex]),
+  );
   const onDetail = (item: any) => {
-    navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
-      item,
-    });
+    switch (item?.task?.type) {
+      case 'input_data':
+        console.log('=>(ListProgram.tsx:125) props?.tabIndex', props?.tabIndex);
+        navigation.navigate(ROUTE_NAME.MOM_DIARY, {
+          item,
+          type: props?.tabIndex == 1 ? 'review' : 'todo',
+        });
+        break;
+      case 'self_check':
+        navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
+          item,
+        });
+        break;
+      default:
+        navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
+          item,
+        });
+        break;
+    }
   };
   const getColor = (type: string) => {
     switch (type) {
@@ -172,7 +194,7 @@ const ListProgram = (props: ListProgramProps) => {
                     x1="10"
                     y1="22"
                     x2="10"
-                    y2={'100%'}
+                    y2={'200%'}
                   />
                 </Svg>
               )}

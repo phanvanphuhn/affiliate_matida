@@ -28,12 +28,12 @@ interface ListWeekProps {
 }
 const ListWeek = (props: ListWeekProps) => {
   const [state, setState] = useState([]);
-  const week = useSelector((state: any) => state?.home?.week);
+  const week = useSelector((state: any) => state?.home?.week - 4);
   const flatlistRef = useRef<FlatList>();
 
   useEffect(() => {
     const getData = () => {
-      let data = Array.from({length: 42}, (x, i) => ({
+      let data = Array.from({length: 38}, (x, i) => ({
         name: `Week ${i + 1}`,
         status:
           i + 1 < week ? 'Completed' : i + 1 == week ? 'Happening' : 'Upcoming',
@@ -160,11 +160,16 @@ const ListWeek = (props: ListWeekProps) => {
   }, []);
   const renderItem: ListRenderItem<any> = ({item, index}) => {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View
+        onLayout={e => {
+          console.log('=>(ListWeek.tsx:165) e', e.nativeEvent.layout);
+        }}
+        style={{flexDirection: 'row'}}>
         {index == 0 ? null : (
           <View style={styles.containerDashed}>{renderLine(item)}</View>
         )}
         <TouchableOpacity
+          disabled={item.status == 'Upcoming'}
           onPress={() => {
             props?.onSelectedWeek && props?.onSelectedWeek(index + 1);
           }}
@@ -205,6 +210,11 @@ const ListWeek = (props: ListWeekProps) => {
     );
   };
 
+  const getItemLayout = (_, index) => ({
+    length: widthScreen / 3 + 17.7, //  WIDTH + (MARGIN_HORIZONTAL * 2)
+    offset: (widthScreen / 3 + 17.7) * index, //  ( WIDTH + (MARGIN_HORIZONTAL*2) ) * (index)
+    index,
+  });
   const keyExtractor = (item, index) => index.toString();
   return (
     <View style={styles.container}>
@@ -213,6 +223,7 @@ const ListWeek = (props: ListWeekProps) => {
         renderItem={renderItem}
         horizontal={true}
         ref={flatlistRef}
+        getItemLayout={getItemLayout}
         onScrollToIndexFailed={info => {
           setTimeout(
             () =>

@@ -204,7 +204,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             </Text>
             <View style={styles.container4}>
               <View style={styles.container5}>
-                <Text style={styles.textOff}>30% off</Text>
+                <Text style={styles.textOff}>28% off</Text>
               </View>
               <Text style={styles.textPrice1}>
                 499,000đ{' '}

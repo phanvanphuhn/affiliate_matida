@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -7,6 +7,8 @@ import {
   ScrollView,
   ImageBackground,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Linking,
 } from 'react-native';
 import {
   bg1,
@@ -22,14 +24,62 @@ import Svg, {Path} from 'react-native-svg';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {goBack} from '@navigation';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  getContentUserTask,
+  markAsCompleted,
+} from '../../../services/pregnancyProgram';
+import RenderHtml from 'react-native-render-html';
+import CustomImageRenderer from '../DetailFeed/components/CustomImageRenderer';
+import {tagsStyles} from '../DetailFeed/components/settingsHtml';
+import {showMessage} from 'react-native-flash-message';
 
 interface DetailTaskProgramProps {}
 
 const DetailTaskProgram = (props: DetailTaskProgramProps) => {
-  const [state, setState] = useState();
+  const [content, setContent] = useState<string>('');
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   console.log('=>(DetailTaskProgram.tsx:32) route', route);
+  const getData = async () => {
+    let result = await getContentUserTask(route?.params?.item?.id);
+    if (result?.success) {
+      setContent(result?.data?.content?.content);
+    }
+  };
+
+  const onSave = async () => {
+    try {
+      if (route?.params?.item?.status == 'success') {
+        goBack();
+      } else {
+        let data = {
+          task_id: route?.params?.item?.id,
+        };
+        let result = await markAsCompleted(data);
+        if (result?.success) {
+          goBack();
+        }
+      }
+    } catch (err) {
+      showMessage({
+        message: err?.response?.data?.message,
+        type: 'danger',
+        backgroundColor: colors.primaryBackground,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const renderersProps = {
+    a: {
+      onPress(event, url, htmlAttribs, target) {
+        Linking.openURL(url);
+      },
+    },
+  };
   return (
     <SafeAreaView
       edges={['bottom']}
@@ -77,83 +127,29 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
               <Text style={styles.textAbout}>
                 {route?.params?.item?.task?.name_en}
               </Text>
-              <Text style={styles.text1}>
-                Embark on an exciting journey to learn about the early
-                development milestones of your baby, a crucial task for
-                moms-to-be in the early stages of pregnancy. Understanding these
-                milestones is like having a sneak peek into the incredible
-                journey your baby is about to embark on.
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                }}>
-                <Text style={styles.text1}>1. </Text>
-                <Text style={[styles.text1, {flex: 1}]}>
-                  <Text style={{fontWeight: '600'}}>Tiny Movements:</Text>
-                  {
-                    "\nWitness the beginning of your baby's motor skills with subtlemovements. In the early weeks, they might start wiggling and squirming as their tiny muscles start to form."
-                  }
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                }}>
-                <Text style={styles.text1}>2. </Text>
-                <Text style={[styles.text1, {flex: 1}]}>
-                  <Text style={{fontWeight: '600'}}>Early Sensations:</Text>
-                  {
-                    '\nDelve into the early cognitive development of your baby. Despite their small size, they can respond to stimuli, indicating the budding awareness and early cognitive functions.'
-                  }
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                }}>
-                <Text style={styles.text1}>3. </Text>
-                <Text style={[styles.text1, {flex: 1}]}>
-                  <Text style={{fontWeight: '600'}}>Early Connections:</Text>
-                  {
-                    "\nStart building early connections with your baby through the first signs of communication. Though it's too early for words, notice how your baby responds to your voice and other external sounds."
-                  }
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                }}>
-                <Text style={styles.text1}>4. </Text>
-                <Text style={[styles.text1, {flex: 1}]}>
-                  <Text style={{fontWeight: '600'}}>
-                    Initial Emotional Bonds:
-                  </Text>
-                  {
-                    "\nFeel the initial stages of social and emotional growth. While it's early days, the bond between you and your baby is already forming, setting the foundation for future smiles and emotional connections."
-                  }
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                }}>
-                <Text style={styles.text1}>5. </Text>
-                <Text style={[styles.text1, {flex: 1}]}>
-                  <Text style={{fontWeight: '600'}}>Early Sleep Patterns:</Text>
-                  {
-                    "\nObserve the early sleep patterns, acknowledging the importance of rest even in these initial stages. Creating a calm environment can contribute to a supportive sleep routine. \n\nWhile it's just the beginning, each tiny milestone lays the groundwork for the remarkable journey of parenthood. Connect with prenatal classes, read materials specific to early pregnancy, and share experiences with other expectant moms to enhance your understanding of these early development stages. It's a thrilling venture into the wonders of pregnancy, filled with anticipation and the promise of countless heartwarming moments to come."
-                  }
-                </Text>
+              <View>
+                {!!content && (
+                  <RenderHtml
+                    contentWidth={100}
+                    renderers={{
+                      img: CustomImageRenderer,
+                    }}
+                    renderersProps={renderersProps}
+                    source={{
+                      html: `<div>${content}</div>`,
+                    }}
+                    baseStyle={styles.description}
+                    enableExperimentalMarginCollapsing={true}
+                    enableExperimentalBRCollapsing={true}
+                    enableExperimentalGhostLinesPrevention={true}
+                    defaultTextProps={{
+                      style: {
+                        ...styles.description,
+                      },
+                    }}
+                    tagsStyles={{...tagsStyles}}
+                  />
+                )}
               </View>
             </View>
           </View>
@@ -166,7 +162,7 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
             paddingHorizontal: 20,
           }}>
           <TouchableOpacity
-            onPress={goBack}
+            onPress={onSave}
             style={{
               backgroundColor: colors.pink200,
               padding: scaler(15),
@@ -218,6 +214,12 @@ const styles = StyleSheet.create({
     fontSize: scaler(15),
     color: colors.labelColor,
     marginBottom: scaler(30),
+    ...stylesCommon.fontSarabun400,
+  },
+  description: {
+    fontSize: scaler(15),
+    color: colors.labelColor,
+    lineHeight: 24,
     ...stylesCommon.fontSarabun400,
   },
 });

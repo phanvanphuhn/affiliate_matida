@@ -96,6 +96,7 @@ const ic_line_wave = require('./ic_line_wave.png');
 const ic_line = require('./ic_line.png');
 const ic_info = require('./ic_info.png');
 const ic_download = require('./ic_download.png');
+const ic_trash = require('./ic_trash.png');
 
 export {
   DailyQuiz,
@@ -194,4 +195,5 @@ export {
   ic_line,
   ic_info,
   ic_download,
+  ic_trash,
 };

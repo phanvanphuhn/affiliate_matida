@@ -22,7 +22,7 @@ interface PregnancyProgramProps {}
 const PregnancyProgram = (props: PregnancyProgramProps) => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigation = useNavigation<any>();
-  const week = useSelector((state: any) => state?.home?.week);
+  const week = useSelector((state: any) => state?.home?.week - 4);
 
   const {t} = useTranslation();
   const goBack = () => {
@@ -80,7 +80,7 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
           <View style={styles.center}>
             <Text style={styles.textTitle}>You are now in week {week}</Text>
             <Text style={styles.textTitle2}>
-              {42 - week} weeks to go. You got this!
+              {38 - week} weeks to go. You got this!
             </Text>
           </View>
           <TabProgram currentWeek={currentWeek} />

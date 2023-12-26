@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TextInput,
   ScrollView,
+  Linking,
 } from 'react-native';
 import Container from '../DetailFeed/components/Container';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -41,6 +42,13 @@ const UpdateInformation = (props: UpdateInformationProps) => {
   const onNext = () => {
     navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT);
   };
+  const onPolicy = async () => {
+    let url = 'https://docs.matida.app/privacy-policy/en';
+    let isOpen = await Linking.canOpenURL(url);
+    if (isOpen) {
+      Linking.openURL(url);
+    }
+  };
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <View style={styles.container}>
@@ -48,6 +56,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
           <Image source={iconClose} />
         </TouchableOpacity>
         <ScrollView
+          bounces={false}
           contentContainerStyle={{paddingBottom: 50}}
           showsVerticalScrollIndicator={false}>
           <Text style={styles.textTitle}>Update information</Text>
@@ -105,6 +114,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
               }}>
               By continue, I agree to the{' '}
               <Text
+                onPress={onPolicy}
                 style={{
                   color: colors.pink300,
                   fontWeight: '500',
@@ -114,6 +124,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
               </Text>{' '}
               &{' '}
               <Text
+                onPress={onPolicy}
                 style={{
                   color: colors.pink300,
                   fontWeight: '500',
@@ -136,7 +147,7 @@ const styles = StyleSheet.create({
   buttonBack: {
     alignItems: 'flex-end',
     paddingHorizontal: scaler(15),
-    paddingVertical: scaler(10),
+    // paddingVertical: scaler(10),
   },
   textTitle: {
     fontSize: scaler(24),
@@ -154,13 +165,12 @@ const styles = StyleSheet.create({
   containerInput: {
     backgroundColor: colors.white,
     paddingVertical: scaler(20),
-    paddingBottom: scaler(40),
+    paddingBottom: '50%',
     paddingHorizontal: scaler(30),
     marginHorizontal: scaler(20),
     marginVertical: scaler(25),
     borderRadius: scaler(16),
     alignItems: 'center',
-    height: heightScreen / 2 + 120,
   },
   textLabel: {
     fontSize: scaler(13),
