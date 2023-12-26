@@ -27,6 +27,7 @@ import {
 } from '../../../services/pregnancyProgram';
 import useStateCustom from '../../../util/hooks/useStateCustom';
 import {GlobalService} from '@services';
+import {showMessage} from 'react-native-flash-message';
 
 interface OnboardingStepProps {}
 interface OnboardingStepAnswer {
@@ -77,23 +78,26 @@ const OnboardingStep = (props: OnboardingStepProps) => {
 
   const onSubmit = async () => {
     try {
-      let listAnswer = state.answers || {};
-      let data = Object.keys(listAnswer).map(key => {
+      let listAnswer: any = state.answers || {};
+      let data = Object.keys(listAnswer).map((key: any) => {
         let value = listAnswer[key];
         return {
-          question_id: state.dataQuestion[key].id,
-          answer_id: state.dataQuestion[key].answers[value].id,
+          question_id: state.dataQuestion?.[key]?.id,
+          answer_id: state.dataQuestion?.[key]?.answers?.[value]?.id,
         };
       });
-      console.log('=>(index.tsx:69) data', data);
       let result = await submitAnswerOnboarding(data, state.userAnswerId);
       if (result.success) {
         navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED);
       } else {
       }
     } catch (error) {
+      showMessage({
+        message: error?.response?.data?.message,
+        type: 'danger',
+        backgroundColor: colors.primaryBackground,
+      });
     } finally {
-      navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED);
     }
   };
   const getDataQuestion = async () => {
