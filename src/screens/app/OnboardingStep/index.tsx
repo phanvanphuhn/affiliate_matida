@@ -88,7 +88,10 @@ const OnboardingStep = (props: OnboardingStepProps) => {
       });
       let result = await submitAnswerOnboarding(data, state.userAnswerId);
       if (result.success) {
-        navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED);
+        navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED, {
+          metadata: result?.data?.metadata,
+          score: result?.data?.score,
+        });
       } else {
       }
     } catch (error) {
