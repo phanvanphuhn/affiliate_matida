@@ -35,14 +35,8 @@ export const ItemSlideIntro = ({item}: ItemSlideIntroProps) => {
             paddingRight: scaler(21),
             paddingTop: scaler(48),
           }}>
-          <Text
-            style={[styles.textBold, item.id === 4 && {color: colors.white}]}>
-            {item.title}
-          </Text>
-          <Text
-            style={[styles.textNormal, item.id === 4 && {color: colors.white}]}>
-            {item.textBody}
-          </Text>
+          <Text style={[styles.textBold]}>{item.title}</Text>
+          <Text style={[styles.textNormal]}>{item.textBody}</Text>
         </View>
       </View>
     </View>

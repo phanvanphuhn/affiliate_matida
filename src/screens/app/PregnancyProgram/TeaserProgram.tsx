@@ -34,41 +34,47 @@ import {ROUTE_NAME} from '@routeName';
 import Swiper from '../DetailFeed/SwiperFlatlist/Swiper';
 import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
+import {useTranslation} from 'react-i18next';
 
 interface TeaserProgramProps {
   isHome?: boolean;
 }
-const data = [
-  {
-    name: 'Direct access to doctors & experts',
-    description:
-      'A support group with medical doctors\n& like-minded moms (to be)',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
-  },
-  {
-    name: 'Weekly effort of 15 minutes',
-    description: "Learn all the pregnancy secrets\n that other moms don't know",
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png',
-  },
-  {
-    name: "Support your baby's growth",
-    description: 'Techniques & habits to\nbest develop your unborn child',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png',
-  },
-  {
-    name: 'Be the best version of yourself',
-    description: 'Personal guidance to understand\nyour strengths & weaknesses',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png',
-  },
-  {
-    name: 'Get discounts & save',
-    description: 'Vouchers for family related\n shops and services',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
-  },
-];
+
 const TeaserProgram = (props: TeaserProgramProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
+
+  const data = [
+    {
+      name: t('pregnancyProgram.directAccess'),
+      description:
+        'A support group with medical doctors\n& like-minded moms (to be)',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
+    },
+    {
+      name: t('pregnancyProgram.weeklyEffort'),
+      description:
+        "Learn all the pregnancy secrets\n that other moms don't know",
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png',
+    },
+    {
+      name: t('pregnancyProgram.supportBaby'),
+      description: 'Techniques & habits to\nbest develop your unborn child',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png',
+    },
+    {
+      name: t('pregnancyProgram.beTheBest'),
+      description:
+        'Personal guidance to understand\nyour strengths & weaknesses',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png',
+    },
+    {
+      name: t('pregnancyProgram.getDiscount'),
+      description: 'Vouchers for family related\n shops and services',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
+    },
+  ];
 
   const onSignUpNow = () => {
     navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
@@ -135,7 +141,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             </TouchableOpacity>
           )}
 
-          <Text style={styles.textTitle}>The All-in-one Course</Text>
+          <Text style={styles.textTitle}>
+            {t('pregnancyProgram.aioCourse')}
+          </Text>
           <Text
             style={[
               styles.textTitle2,
@@ -193,17 +201,18 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                 fontSize: scaler(15),
                 ...stylesCommon.fontWeight400,
                 marginBottom: scaler(15),
+                textAlign: 'center',
               }}>
-              Have questions about this course?{' '}
+              {t('pregnancyProgram.haveQuestion')}{' '}
               <Text
                 onPress={onCheckOut}
                 style={{textDecorationLine: 'underline', fontWeight: '500'}}>
-                Check this out
+                {t('pregnancyProgram.checkThisOut')}
               </Text>
             </Text>
             <View style={styles.container4}>
               <View style={styles.container5}>
-                <Text style={styles.textOff}>30% off</Text>
+                <Text style={styles.textOff}>28% off</Text>
               </View>
               <Text style={styles.textPrice1}>
                 499,000đ{' '}
@@ -212,7 +221,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                     fontSize: scaler(13),
                     ...stylesCommon.fontSarabun600,
                   }}>
-                  /lifetime
+                  /{t('pregnancyProgram.liftTime')}
                 </Text>
               </Text>
               <Text style={styles.textPriceOld}>
@@ -223,12 +232,12 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                   }}>
                   669,000đ
                 </Text>
-                /lifetime
+                /{t('pregnancyProgram.liftTime')}
               </Text>
             </View>
             <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
               <Text style={styles.textButtonSignUp}>
-                Sign up for early bird discount
+                {t('pregnancyProgram.signUpEarly')}
               </Text>
             </TouchableOpacity>
           </View>

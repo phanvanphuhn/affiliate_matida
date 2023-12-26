@@ -12,12 +12,16 @@ import {ROUTE_NAME} from '@routeName';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SvgLineWave} from '@images';
 import BarchartOnboarding from './components/BarchartOnboarding';
+import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
 
 interface OnboardingFinishedProps {}
 
 const OnboardingFinished = (props: OnboardingFinishedProps) => {
   const [state, setState] = useState();
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
+  const lang = useSelector((state: any) => state.auth.lang);
 
   const onNext = () => {
     navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
@@ -26,11 +30,9 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
     <View style={styles.container}>
       <SafeAreaView edges={['top']} style={styles.container2}>
         <Text style={styles.textTitle}>
-          We have identified your challenges.
+          {t('pregnancyProgram.masterClassResult')}
         </Text>
-        <Text style={styles.textTitle2}>
-          But don't worry. You still have time to improve.
-        </Text>
+        <Text style={styles.textTitle2}>{t('pregnancyProgram.dontWorry')}</Text>
       </SafeAreaView>
 
       <View style={styles.container3}>
@@ -41,10 +43,12 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
           <SvgLineWave />
         </View>
 
-        <Text style={styles.textTitleChart}>Here’s what we'll focus on</Text>
-        <Text style={styles.textTitleChart2}>
-          You can always adjust it later
-        </Text>
+        <Text style={styles.textTitleChart}>{t('pregnancyProgram.here')}</Text>
+        {lang == 1 && (
+          <Text style={styles.textTitleChart2}>
+            {t('pregnancyProgram.adjust')}
+          </Text>
+        )}
         <View style={styles.containerChart}>
           <BarchartOnboarding />
         </View>
@@ -54,7 +58,9 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
             <SvgLineWave color={colors.blue50} />
           </View>
           <TouchableOpacity onPress={onNext} style={styles.buttonFinish}>
-            <Text style={styles.textFinish}>Let's work on it together</Text>
+            <Text style={styles.textFinish}>
+              {t('pregnancyProgram.letWork')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -70,23 +76,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.yellow200,
   },
   container2: {
-    paddingHorizontal: scaler(20),
+    paddingHorizontal: scaler(10),
     paddingTop: scaler(33),
   },
   textTitle: {
     fontSize: scaler(20),
-    fontWeight: '500',
     color: colors.labelColor,
     textAlign: 'center',
     ...stylesCommon.fontWeight500,
   },
   textTitle2: {
     fontSize: scaler(26),
-    fontWeight: '600',
     textAlign: 'center',
     color: colors.textColor,
     marginTop: scaler(8),
-    paddingHorizontal: scaler(20),
     ...stylesCommon.fontWeight600,
   },
   container3: {

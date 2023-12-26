@@ -15,6 +15,8 @@ import {goBack} from '@navigation';
 import About from './components/About';
 import Experts from './components/Experts';
 import FAQ from './components/FAQ';
+import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
 interface AboutProgramProps {}
 const FirstRoute = () => <View style={{flex: 1, backgroundColor: '#ff4081'}} />;
 
@@ -29,12 +31,14 @@ const renderScene = SceneMap({
 const AboutProgram = (props: AboutProgramProps) => {
   const [state, setState] = useState();
   const layout = useWindowDimensions();
+  const {t} = useTranslation();
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'about', title: 'About'},
-    {key: 'experts', title: 'Experts'},
-    {key: 'faq', title: 'FAQ'},
+    {key: 'about', titleEn: 'About', titleVi: 'Khoá học'},
+    {key: 'experts', titleEn: 'Experts', titleVi: 'Chuyên gia'},
+    {key: 'faq', titleEn: 'FAQ', titleVi: 'Hỏi đáp'},
   ]);
   const renderTabBar = (props: any) => {
     return (
@@ -53,16 +57,18 @@ const AboutProgram = (props: AboutProgramProps) => {
           activeColor={colors.pink300}
           inactiveColor={colors.gray550}
           style={styles.tabbar}
-          renderLabel={({route, focused}) => (
-            <Text
-              style={{
-                ...styles.textTab,
-                fontWeight: focused ? '600' : '500',
-                color: focused ? colors.white : colors.gray550,
-              }}>
-              {route.title}
-            </Text>
-          )}
+          renderLabel={({route, focused}) => {
+            return (
+              <Text
+                style={{
+                  ...styles.textTab,
+                  fontWeight: focused ? '600' : '500',
+                  color: focused ? colors.white : colors.gray550,
+                }}>
+                {lang == 2 ? route.titleVi : route.titleEn}
+              </Text>
+            );
+          }}
         />
       </View>
     );
@@ -70,7 +76,7 @@ const AboutProgram = (props: AboutProgramProps) => {
   return (
     <View style={{flex: 1, backgroundColor: colors.white}}>
       <Header
-        title={'About the program'}
+        title={t('pregnancyProgram.aboutTheProgram')}
         IconLeft={
           <Image
             source={ic_back_arrow}

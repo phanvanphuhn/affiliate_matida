@@ -20,7 +20,7 @@ export const SlideIntro = () => {
     t,
     // colorSkipText,
   } = SlideIntroHook();
-
+  console.log('file: ', file);
   return (
     <View style={styles.container}>
       <FlatList

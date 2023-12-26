@@ -52,15 +52,15 @@ export const styles = StyleSheet.create({
     ...stylesCommon.fontWeight600,
   },
   textBold: {
-    fontSize: scaler(26),
-    color: colors.gray400,
-    ...stylesCommon.fontWeight700,
+    fontSize: scaler(24),
+    color: colors.neutral10,
+    ...stylesCommon.fontWeight600,
     lineHeight: scaler(30),
   },
   textNormal: {
-    fontSize: scaler(16),
-    color: colors.gray400,
-    ...stylesCommon.fontWeight300,
+    fontSize: scaler(15),
+    color: colors.labelColor,
+    ...stylesCommon.fontWeight400,
     lineHeight: scaler(30),
   },
 });
