@@ -5,6 +5,7 @@ import {
   StyleSheet,
   LayoutAnimation,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -28,42 +29,50 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
   };
   return (
     <View style={styles.container}>
-      <SafeAreaView edges={['top']} style={styles.container2}>
-        <Text style={styles.textTitle}>
-          {t('pregnancyProgram.masterClassResult')}
-        </Text>
-        <Text style={styles.textTitle2}>{t('pregnancyProgram.dontWorry')}</Text>
-      </SafeAreaView>
-
-      <View style={styles.container3}>
-        <View
-          style={{
-            top: -8,
-          }}>
-          <SvgLineWave />
-        </View>
-
-        <Text style={styles.textTitleChart}>{t('pregnancyProgram.here')}</Text>
-        {lang == 1 && (
-          <Text style={styles.textTitleChart2}>
-            {t('pregnancyProgram.adjust')}
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}>
+        <SafeAreaView edges={['top']} style={styles.container2}>
+          <Text style={styles.textTitle}>
+            {t('pregnancyProgram.masterClassResult')}
           </Text>
-        )}
-        <View style={styles.containerChart}>
-          <BarchartOnboarding />
-        </View>
+          <Text style={styles.textTitle2}>
+            {t('pregnancyProgram.dontWorry')}
+          </Text>
+        </SafeAreaView>
 
-        <View style={styles.container4}>
-          <View style={{top: -8, paddingBottom: scaler(32)}}>
-            <SvgLineWave color={colors.blue50} />
+        <View style={styles.container3}>
+          <View
+            style={{
+              top: -8,
+            }}>
+            <SvgLineWave />
           </View>
-          <TouchableOpacity onPress={onNext} style={styles.buttonFinish}>
-            <Text style={styles.textFinish}>
-              {t('pregnancyProgram.letWork')}
+
+          <Text style={styles.textTitleChart}>
+            {t('pregnancyProgram.here')}
+          </Text>
+          {lang == 1 && (
+            <Text style={styles.textTitleChart2}>
+              {t('pregnancyProgram.adjust')}
             </Text>
-          </TouchableOpacity>
+          )}
+          <View style={styles.containerChart}>
+            <BarchartOnboarding />
+          </View>
+
+          <View style={styles.container4}>
+            <View style={{top: -8, paddingBottom: scaler(32)}}>
+              <SvgLineWave color={colors.blue50} />
+            </View>
+            <TouchableOpacity onPress={onNext} style={styles.buttonFinish}>
+              <Text style={styles.textFinish}>
+                {t('pregnancyProgram.letWork')}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -114,6 +123,7 @@ const styles = StyleSheet.create({
   },
   containerChart: {
     paddingTop: scaler(20),
+    paddingBottom: scaler(10),
     flex: 1,
   },
   container4: {
