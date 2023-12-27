@@ -43,3 +43,11 @@ export const getUserTask: any = async (week: number, status: string) => {
   });
   return response;
 };
+export const getContentUserTask: any = async (id: string) => {
+  const response = await api.get(`${USER_TASK}/content/${id}`, {});
+  return response;
+};
+export const markAsCompleted: any = async (data: any) => {
+  const response = await api.post(`${USER_TASK}/mark-as-completed`, data);
+  return response;
+};

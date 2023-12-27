@@ -271,19 +271,16 @@ const CompletePayment = (props: CompletePaymentProps) => {
             </View>
             <SvgPathTop />
           </ImageBackground>
-
-          <View
-            style={{
-              paddingHorizontal: scaler(24),
-              paddingBottom: scaler(15),
-            }}>
-            <TouchableOpacity
-              onPress={onPaymentFinish}
-              style={styles.buttonDone}>
-              <Text style={styles.textDone}>I have transferred my money</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
+        <View
+          style={{
+            paddingHorizontal: scaler(24),
+            paddingBottom: scaler(30),
+          }}>
+          <TouchableOpacity onPress={onPaymentFinish} style={styles.buttonDone}>
+            <Text style={styles.textDone}>I have transferred my money</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -356,7 +353,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: scaler(15),
-    marginTop: scaler(20),
+    marginTop: scaler(10),
     borderRadius: scaler(40),
   },
   textDone: {
@@ -382,8 +379,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: scaler(30),
-    paddingBottom: scaler(20),
+    paddingHorizontal: scaler(24),
+    paddingBottom: scaler(32),
     paddingTop: scaler(10),
   },
   buttonTransfer: {
