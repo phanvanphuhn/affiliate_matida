@@ -13,7 +13,6 @@ const data: itemType = [
     frontColor: colors.pink300,
     labelTextStyle: {
       color: colors.labelColor,
-      fontWeight: '600',
       fontSize: scaler(14),
       ...stylesCommon.fontWeight600,
     },
@@ -23,7 +22,6 @@ const data: itemType = [
     frontColor: colors.blue100,
     labelTextStyle: {
       color: colors.gray550,
-      fontWeight: '500',
       fontSize: scaler(12),
       ...stylesCommon.fontWeight500,
     },
@@ -33,7 +31,6 @@ const data: itemType = [
     frontColor: colors.blue100,
     labelTextStyle: {
       color: colors.gray550,
-      fontWeight: '500',
       fontSize: scaler(12),
       ...stylesCommon.fontWeight500,
     },
@@ -44,7 +41,6 @@ const data: itemType = [
     label: 'aaa',
     labelTextStyle: {
       color: colors.gray550,
-      fontWeight: '500',
       fontSize: scaler(12),
       ...stylesCommon.fontWeight500,
     },
@@ -61,10 +57,10 @@ const BarchartOnboarding = (props: BarchartProps) => {
         return 'Love &\nMoney';
       case 'newborn_care':
         return 'Baby\nCare';
-      case 'nutrition_and_fitness':
-        return 'Fitness &\nNutrition';
       case 'core':
         return 'Pregnancy\nBasics';
+      case 'nutrition_and_fitness':
+        return 'Fitness &\nNutrition';
     }
   };
   useEffect(() => {
@@ -78,7 +74,6 @@ const BarchartOnboarding = (props: BarchartProps) => {
       ),
       labelTextStyle: {
         color: colors.labelColor,
-        fontWeight: '600',
         fontSize: scaler(14),
         textAlign: 'center',
         ...stylesCommon.fontWeight600,
@@ -89,7 +84,6 @@ const BarchartOnboarding = (props: BarchartProps) => {
 
       labelTextStyle: {
         color: colors.gray550,
-        fontWeight: '500',
         fontSize: scaler(12),
         textAlign: 'center',
         ...stylesCommon.fontWeight500,
@@ -216,7 +210,6 @@ const styles = StyleSheet.create({
   textUrgent: {
     textAlign: 'center',
     fontSize: scaler(11),
-    fontWeight: '600',
-    ...stylesCommon.fontSarabun600,
+    ...stylesCommon.fontWeight600,
   },
 });

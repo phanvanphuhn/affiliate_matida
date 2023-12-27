@@ -4,7 +4,7 @@ import {
   ModalMethodCalculation,
   SelectionPicker,
 } from '@component';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {
   View,
@@ -198,19 +198,24 @@ const Information = (props: TProps) => {
         );
       case 12:
         return (
-          <ScrollView style={{flex: 1, width: '100%'}}>
-            {!state.isKnowDueDate && (
+          <ScrollView
+            style={{flex: 1, width: '100%'}}
+            showsVerticalScrollIndicator={false}>
+            {!state.isKnowDueDate ? (
               <ModalMethodCalculation
                 titleSelection={''}
                 stylesTextLabel={{
                   textAlign: 'center',
                   marginLeft: scaler(24),
+                  ...stylesCommon.fontWeight400,
                 }}
                 value={state.method}
                 onPress={value => {
                   setState({method: value});
                 }}
               />
+            ) : (
+              <View style={{height: scaler(54)}} />
             )}
             <AppDatePicker
               onChange={(date: any) => setState({dmy: date})}
@@ -239,6 +244,7 @@ const Information = (props: TProps) => {
                   stylesTextLabel={{
                     textAlign: 'center',
                     marginLeft: scaler(24),
+                    ...stylesCommon.fontWeight400,
                   }}
                 />
               ) : (

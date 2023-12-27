@@ -34,41 +34,47 @@ import {ROUTE_NAME} from '@routeName';
 import Swiper from '../DetailFeed/SwiperFlatlist/Swiper';
 import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
+import {useTranslation} from 'react-i18next';
 
 interface TeaserProgramProps {
   isHome?: boolean;
 }
-const data = [
-  {
-    name: 'Direct access to doctors & experts',
-    description:
-      'A support group with medical doctors\n& like-minded moms (to be)',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
-  },
-  {
-    name: 'Weekly effort of 15 minutes',
-    description: "Learn all the pregnancy secrets\n that other moms don't know",
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png',
-  },
-  {
-    name: "Support your baby's growth",
-    description: 'Techniques & habits to\nbest develop your unborn child',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png',
-  },
-  {
-    name: 'Be the best version of yourself',
-    description: 'Personal guidance to understand\nyour strengths & weaknesses',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png',
-  },
-  {
-    name: 'Get discounts & save',
-    description: 'Vouchers for family related\n shops and services',
-    icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
-  },
-];
+
 const TeaserProgram = (props: TeaserProgramProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
+
+  const data = [
+    {
+      name: t('pregnancyProgram.directAccess'),
+      description:
+        'A support group with medical doctors\n& like-minded moms (to be)',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
+    },
+    {
+      name: t('pregnancyProgram.weeklyEffort'),
+      description:
+        "Learn all the pregnancy secrets\n that other moms don't know",
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png',
+    },
+    {
+      name: t('pregnancyProgram.supportBaby'),
+      description: 'Techniques & habits to\nbest develop your unborn child',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png',
+    },
+    {
+      name: t('pregnancyProgram.beTheBest'),
+      description:
+        'Personal guidance to understand\nyour strengths & weaknesses',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png',
+    },
+    {
+      name: t('pregnancyProgram.getDiscount'),
+      description: 'Vouchers for family related\n shops and services',
+      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
+    },
+  ];
 
   const onSignUpNow = () => {
     navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
@@ -135,7 +141,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             </TouchableOpacity>
           )}
 
-          <Text style={styles.textTitle}>The All-in-one Course</Text>
+          <Text style={styles.textTitle}>
+            {t('pregnancyProgram.aioCourse')}
+          </Text>
           <Text
             style={[
               styles.textTitle2,
@@ -143,9 +151,8 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                 marginTop: 10,
               },
             ]}>
-            Cool mom,
+            Matida Masterclass
           </Text>
-          <Text style={styles.textTitle2}>Happy Baby</Text>
         </View>
         <View
           style={{
@@ -192,14 +199,15 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             <Text
               style={{
                 fontSize: scaler(15),
-                ...stylesCommon.fontSarabun500,
+                ...stylesCommon.fontWeight400,
                 marginBottom: scaler(15),
+                textAlign: 'center',
               }}>
-              Have questions about this course?{' '}
+              {t('pregnancyProgram.haveQuestion')}{' '}
               <Text
                 onPress={onCheckOut}
                 style={{textDecorationLine: 'underline', fontWeight: '500'}}>
-                Check this out
+                {t('pregnancyProgram.checkThisOut')}
               </Text>
             </Text>
             <View style={styles.container4}>
@@ -213,7 +221,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                     fontSize: scaler(13),
                     ...stylesCommon.fontSarabun600,
                   }}>
-                  /lifetime
+                  /{t('pregnancyProgram.liftTime')}
                 </Text>
               </Text>
               <Text style={styles.textPriceOld}>
@@ -224,12 +232,12 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                   }}>
                   669,000đ
                 </Text>
-                /lifetime
+                /{t('pregnancyProgram.liftTime')}
               </Text>
             </View>
             <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
               <Text style={styles.textButtonSignUp}>
-                Sign up for early bird discount
+                {t('pregnancyProgram.signUpEarly')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -267,15 +275,13 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: scaler(20),
-    fontWeight: '500',
     color: colors.labelColor,
     textAlign: 'center',
     ...stylesCommon.fontWeight500,
   },
   textTitle2: {
-    fontSize: scaler(28),
-    fontWeight: '600',
-    color: colors.labelColor,
+    fontSize: scaler(26),
+    color: colors.neutral10,
     textAlign: 'center',
     ...stylesCommon.fontWeight600,
   },
@@ -292,7 +298,7 @@ const styles = StyleSheet.create({
   textSpecial: {
     color: colors.pink300,
     fontSize: scaler(20),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     textAlign: 'center',
     marginBottom: scaler(10),
   },
@@ -300,19 +306,18 @@ const styles = StyleSheet.create({
     color: colors.gray550,
     fontSize: scaler(13),
     marginTop: 5,
-    fontWeight: '400',
     textAlign: 'center',
     ...stylesCommon.fontWeight400,
   },
   textPriceNew: {
     fontSize: scaler(24),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     color: colors.textColor,
     textAlign: 'center',
   },
   textPriceNew2: {
     fontSize: scaler(15),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
   },
   buttonSignUp: {
     backgroundColor: colors.yellow200,
@@ -323,8 +328,8 @@ const styles = StyleSheet.create({
   },
   textButtonSignUp: {
     fontSize: scaler(15),
-    fontWeight: '600',
-    color: colors.textColor,
+    color: colors.labelColor,
+    ...stylesCommon.fontWeight600,
   },
   container3: {
     marginBottom: scaler(35),
@@ -353,14 +358,12 @@ const styles = StyleSheet.create({
   textOff: {
     color: colors.white,
     fontSize: scaler(11),
-    fontWeight: '600',
-    ...stylesCommon.fontSarabun600,
+    ...stylesCommon.fontWeight600,
   },
   textPrice1: {
     color: colors.pink300,
-    fontWeight: '600',
     fontSize: scaler(18),
-    ...stylesCommon.fontWeight700,
+    ...stylesCommon.fontWeight600,
   },
   containerItem: {
     alignItems: 'center',
@@ -368,7 +371,6 @@ const styles = StyleSheet.create({
   },
   textItemName: {
     fontSize: scaler(20),
-    fontWeight: '600',
     color: colors.pink300,
     marginBottom: 10,
     textAlign: 'center',
@@ -376,16 +378,14 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontWeight600,
   },
   textItemDesc: {
-    fontSize: scaler(17),
-    fontWeight: '400',
+    fontSize: scaler(15),
     color: colors.labelColor,
     textAlign: 'center',
-    ...stylesCommon.fontSarabun400,
+    ...stylesCommon.fontWeight400,
   },
   textItemDescBold: {
-    fontSize: scaler(17),
-    fontWeight: '600',
-    color: colors.textBoldColor,
-    ...stylesCommon.fontSarabun600,
+    fontSize: scaler(15),
+    color: '#101012',
+    ...stylesCommon.fontWeight600,
   },
 });

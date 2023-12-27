@@ -20,7 +20,7 @@ export const SlideIntro = () => {
     t,
     // colorSkipText,
   } = SlideIntroHook();
-
+  console.log('file: ', file);
   return (
     <View style={styles.container}>
       <FlatList
@@ -59,15 +59,6 @@ export const SlideIntro = () => {
         <TouchableOpacity style={[styles.btnSkip]} onPress={handlePressSkip}>
           <Animated.View
             style={{
-              opacity: opacityDashboard,
-              height: heightDashboard,
-            }}>
-            <View>
-              <Text style={[styles.textSkip]}>{t('slideIntro.dashboard')}</Text>
-            </View>
-          </Animated.View>
-          <Animated.View
-            style={{
               position: 'absolute',
               top: scaler(10),
               right: scaler(30),
@@ -78,6 +69,15 @@ export const SlideIntro = () => {
               <Animated.Text style={[styles.textSkip]}>
                 {t('slideIntro.skip')}
               </Animated.Text>
+            </View>
+          </Animated.View>
+          <Animated.View
+            style={{
+              opacity: opacityDashboard,
+              height: heightDashboard,
+            }}>
+            <View>
+              <Text style={[styles.textSkip]}>{t('slideIntro.dashboard')}</Text>
             </View>
           </Animated.View>
         </TouchableOpacity>
