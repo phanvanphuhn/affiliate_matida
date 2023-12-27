@@ -194,9 +194,11 @@ const CompletePayment = (props: CompletePaymentProps) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: scaler(30)}}>
-          <Text style={styles.textTitle}>Complete payment</Text>
+          <Text style={styles.textTitle}>
+            {t('pregnancyProgram.completePayment')}
+          </Text>
           <Text style={styles.textSubTitle}>
-            Please select a method to complete this payment
+            {t('pregnancyProgram.selectMethod')}
           </Text>
           <View style={styles.containerButtonRow}>
             <TouchableOpacity
@@ -205,7 +207,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 {borderColor: colors.pink200, marginRight: scaler(15)},
               ]}>
               <Image source={ic_transfer} />
-              <Text style={styles.textTransfer}>Bank Transfer</Text>
+              <Text style={styles.textTransfer}>
+                {t('pregnancyProgram.bankTransfer')}
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -236,14 +240,18 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 </TouchableOpacity>
               </View>
               <View style={{width: '100%'}}>
-                <Text style={styles.textLabel}>Transaction contents</Text>
+                <Text style={styles.textLabel}>
+                  {t('pregnancyProgram.transactionContent')}
+                </Text>
                 <Text style={styles.input}>1511 PP1</Text>
                 <TouchableOpacity style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
               <View style={{width: '100%'}}>
-                <Text style={styles.textLabel}>Transaction amount</Text>
+                <Text style={styles.textLabel}>
+                  {t('pregnancyProgram.transactionAmount')}
+                </Text>
                 <Text style={styles.input}>{`${t('payment.pay', {
                   money: 399000?.toLocaleString(),
                   currency: 'vnd',
@@ -253,18 +261,24 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 </TouchableOpacity>
               </View>
               <View style={{width: '100%'}}>
-                <Text style={styles.textLabel}>Bank account</Text>
+                <Text style={styles.textLabel}>
+                  {t('pregnancyProgram.bankAccount')}
+                </Text>
                 <Text style={styles.input}>0123456789</Text>
                 <TouchableOpacity style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
               <View>
-                <Text style={styles.textLabel}>Bank</Text>
+                <Text style={styles.textLabel}>
+                  {t('pregnancyProgram.bank')}
+                </Text>
                 <Text style={styles.input}>Vietcombank</Text>
               </View>
               <View>
-                <Text style={styles.textLabel}>Account owner</Text>
+                <Text style={styles.textLabel}>
+                  {t('pregnancyProgram.accountOwner')}
+                </Text>
                 <Text style={styles.input}>Matida Co.Ltd</Text>
                 <Text style={styles.input2}>MST: 123456789</Text>
               </View>
@@ -278,7 +292,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
             paddingBottom: scaler(30),
           }}>
           <TouchableOpacity onPress={onPaymentFinish} style={styles.buttonDone}>
-            <Text style={styles.textDone}>I have transferred my money</Text>
+            <Text style={styles.textDone}>
+              {t('pregnancyProgram.transferredMoney')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

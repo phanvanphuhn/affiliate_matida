@@ -23,6 +23,7 @@ import Svg, {Path} from 'react-native-svg';
 import * as Progress from 'react-native-progress';
 import CircularProgress from './CircularProgress';
 import {useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 interface ListWeekProps {
   onSelectedWeek: (week: number) => void;
 }
@@ -30,6 +31,7 @@ const ListWeek = (props: ListWeekProps) => {
   const [state, setState] = useState([]);
   const week = useSelector((state: any) => state?.home?.week - 4);
   const flatlistRef = useRef<FlatList>();
+  const {t} = useTranslation();
 
   useEffect(() => {
     const getData = () => {
@@ -158,6 +160,7 @@ const ListWeek = (props: ListWeekProps) => {
         );
     }
   }, []);
+
   const renderItem: ListRenderItem<any> = ({item, index}) => {
     return (
       <View
@@ -202,7 +205,11 @@ const ListWeek = (props: ListWeekProps) => {
                       : colors.textSmallColor,
                 },
               ]}>
-              {item.status}
+              {item.status == 'Upcoming'
+                ? t('pregnancyProgram.Upcoming')
+                : item.status == 'Completed'
+                ? t('pregnancyProgram.Completed')
+                : t('pregnancyProgram.Happening')}
             </Text>
           </View>
         </TouchableOpacity>
@@ -247,15 +254,13 @@ export default ListWeek;
 const styles = StyleSheet.create({
   textStatus: {
     fontSize: scaler(11),
-    fontWeight: '400',
     color: colors.textSmallColor,
     ...stylesCommon.fontSarabun400,
   },
   textName: {
     fontSize: scaler(12),
-    fontWeight: '500',
     color: colors.labelColor,
-    ...stylesCommon.fontWeight600,
+    ...stylesCommon.fontWeight500,
   },
   container: {backgroundColor: colors.gray450, paddingVertical: scaler(20)},
   center: {
@@ -264,11 +269,11 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: scaler(20),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
   },
   textTitle2: {
     fontSize: scaler(14),
-    fontWeight: '400',
+    ...stylesCommon.fontWeight400,
   },
   containerDashed: {
     width: widthScreen / 4,
@@ -291,6 +296,6 @@ const styles = StyleSheet.create({
   dotText: {
     color: colors.white,
     fontSize: scaler(16),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
   },
 });

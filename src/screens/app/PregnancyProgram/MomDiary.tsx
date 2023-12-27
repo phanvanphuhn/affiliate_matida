@@ -30,6 +30,7 @@ import useStateCustom from '../../../util/hooks/useStateCustom';
 import {GlobalService, uploadImage} from '@services';
 import {useRoute} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
+import {useTranslation} from 'react-i18next';
 
 interface MomDiaryProps {}
 interface IState {
@@ -43,6 +44,7 @@ interface IState {
 const MomDiary = (props: MomDiaryProps) => {
   const route = useRoute<any>();
   console.log('=>(MomDiary.tsx:43) route', route);
+  const {t} = useTranslation();
   const [state, setState] = useStateCustom<IState>({
     visible: false,
     isSave: false,
@@ -113,7 +115,7 @@ const MomDiary = (props: MomDiaryProps) => {
   return (
     <View style={styles.container}>
       <Header
-        title={'Mom Diary'}
+        title={t('momDiary.momDiary')}
         IconLeft={
           <Image
             source={ic_back_arrow}
@@ -137,7 +139,7 @@ const MomDiary = (props: MomDiaryProps) => {
                     ? colors.pink200
                     : colors.gray550,
               }}>
-              {!state?.isEdit ? 'Edit' : 'Save'}
+              {!state?.isEdit ? t('momDiary.edit') : t('momDiary.save')}
             </Text>
           </TouchableOpacity>
         }
@@ -146,10 +148,7 @@ const MomDiary = (props: MomDiaryProps) => {
 
       <KeyboardAwareScrollView>
         <View style={styles.container2}>
-          <Text style={styles.textTitle}>
-            Make sure to fill out this diary every week. At the end of your
-            pregnancy, Matida has a present for you.
-          </Text>
+          <Text style={styles.textTitle}>{t('momDiary.momDesc')}</Text>
           <View style={{bottom: -8}}>
             <SvgLineWave color={colors.pink250} />
           </View>
@@ -200,12 +199,14 @@ const MomDiary = (props: MomDiaryProps) => {
           <View style={{padding: 16}}>
             <Text style={styles.textUpload}>
               {route?.params?.type == 'review'
-                ? `Week ${route?.params?.item?.week}`
-                : 'Upload a picture of your bump this week'}
+                ? `${t('momDiary.week')} ${route?.params?.item?.week}`
+                : t('momDiary.uploadPicture')}
             </Text>
             {route?.params?.type != 'review' && (
               <Text style={styles.textWeek}>
-                Week {route?.params?.item?.week} message to your baby
+                {`${t('momDiary.week')} ${route?.params?.item?.week} ${t(
+                  'momDiary.messageBaby',
+                )}`}
               </Text>
             )}
             <Text
@@ -218,7 +219,7 @@ const MomDiary = (props: MomDiaryProps) => {
               {route?.params?.item?.task?.name_en}
             </Text>
             <TextInput
-              placeholder={'Write something about this '}
+              placeholder={t('momDiary.writeSomething') as string}
               style={{
                 minHeight: 60,
                 paddingTop: 20,

@@ -48,30 +48,27 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   const data = [
     {
       name: t('pregnancyProgram.directAccess'),
-      description:
-        'A support group with medical doctors\n& like-minded moms (to be)',
+      description: t('pregnancyProgram.supportGroup'),
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
     },
     {
       name: t('pregnancyProgram.weeklyEffort'),
-      description:
-        "Learn all the pregnancy secrets\n that other moms don't know",
+      description: t('pregnancyProgram.learnAll'),
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png',
     },
     {
       name: t('pregnancyProgram.supportBaby'),
-      description: 'Techniques & habits to\nbest develop your unborn child',
+      description: t('pregnancyProgram.techniqueHabit'),
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png',
     },
     {
       name: t('pregnancyProgram.beTheBest'),
-      description:
-        'Personal guidance to understand\nyour strengths & weaknesses',
+      description: t('pregnancyProgram.personalGuidance'),
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png',
     },
     {
       name: t('pregnancyProgram.getDiscount'),
-      description: 'Vouchers for family related\n shops and services',
+      description: t('pregnancyProgram.voucherFor'),
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
     },
   ];
@@ -86,7 +83,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           source={{uri: item.icon}}
           style={{
             width: '100%',
-            aspectRatio: 3 / 2.3,
+            aspectRatio: 3 / 2,
           }}
         />
         <Text style={styles.textItemName}>{item.name}</Text>
@@ -94,7 +91,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           parse={[
             {
               pattern:
-                /Vouchers|medical doctors\n& like-minded moms|Learn all the pregnancy secrets|best develop your unborn child|understand\nyour strengths & weaknesses/,
+                /Vouchers|medical doctors\n& like-minded moms|Learn all the pregnancy secrets|best develop your unborn child|understand\nyour strengths & weaknesses|từ bác sĩ và chuyên gia|Tất cả thông tin được tổng hợp theo tuần|giúp thai nhi phát triển tốt nhất|cùng mẹ phát triển|Phiếu giảm giá/,
               style: styles.textItemDescBold,
             },
           ]}

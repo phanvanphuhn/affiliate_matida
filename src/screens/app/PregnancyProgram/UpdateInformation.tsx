@@ -24,6 +24,7 @@ import {goBack} from '@navigation';
 import useStateCustom from '../../../util/hooks/useStateCustom';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
+import {useTranslation} from 'react-i18next';
 
 interface UpdateInformationProps {}
 
@@ -34,6 +35,9 @@ const UpdateInformation = (props: UpdateInformationProps) => {
     phoneNumber: '0123456789',
     address: '111 Road 123, Ben Nghe Ward, District 1, Ho Chi Minh City',
   });
+
+  const {t} = useTranslation();
+
   const onChangeText = (key: string) => (text: string) => {
     setState({[key]: text});
   };
@@ -59,36 +63,44 @@ const UpdateInformation = (props: UpdateInformationProps) => {
           bounces={false}
           contentContainerStyle={{paddingBottom: 50}}
           showsVerticalScrollIndicator={false}>
-          <Text style={styles.textTitle}>Update information</Text>
+          <Text style={styles.textTitle}>
+            {t('pregnancyProgram.updateInformation')}
+          </Text>
           <Text style={styles.textSubTitle}>
-            Please fill in this form so we can set up your plan.
+            {t('pregnancyProgram.pleaseFill')}
           </Text>
 
           <ImageBackground source={ic_background}>
             <SvgPathBottom />
             <View style={styles.containerInput}>
-              <Text style={styles.textLabel}>Your name</Text>
+              <Text style={styles.textLabel}>
+                {t('pregnancyProgram.yourName')}
+              </Text>
               <TextInput
                 value={state.yourName}
                 onChangeText={onChangeText('yourName')}
                 style={styles.input}
-                placeholder={'Your name'}
+                placeholder={t('pregnancyProgram.yourName') as string}
               />
-              <Text style={styles.textLabel}>Your phone number</Text>
+              <Text style={styles.textLabel}>
+                {t('pregnancyProgram.phoneNumber')}
+              </Text>
               <TextInput
                 maxLength={10}
                 value={state.phoneNumber}
                 onChangeText={onChangeText('phoneNumber')}
                 keyboardType={'number-pad'}
                 style={styles.input}
-                placeholder={'Your phone number'}
+                placeholder={t('pregnancyProgram.phoneNumber') as string}
               />
-              <Text style={styles.textLabel}>Your pregnancy week</Text>
+              <Text style={styles.textLabel}>
+                {t('pregnancyProgram.yourPregnancyWeek')}
+              </Text>
               <TextInput
                 style={styles.input}
                 value={state.pregnancyWeek}
                 onChangeText={onChangeText('pregnancyWeek')}
-                placeholder={'Your pregnancy week'}
+                placeholder={t('pregnancyProgram.yourPregnancyWeek') as string}
                 maxLength={2}
                 keyboardType={'number-pad'}
               />
@@ -101,7 +113,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
               paddingHorizontal: scaler(24),
             }}>
             <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
-              <Text style={styles.textDone}>Next</Text>
+              <Text style={styles.textDone}>{t('pregnancyProgram.next')}</Text>
             </TouchableOpacity>
             <Text
               style={{
@@ -112,7 +124,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                 marginTop: 15,
                 ...stylesCommon.fontSarabun400,
               }}>
-              By continue, I agree to the{' '}
+              {t('pregnancyProgram.byContinue')}{' '}
               <Text
                 onPress={onPolicy}
                 style={{
@@ -120,7 +132,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                   fontWeight: '500',
                   ...stylesCommon.fontSarabun500,
                 }}>
-                Terms
+                {t('pregnancyProgram.terms')}
               </Text>{' '}
               &{' '}
               <Text
@@ -130,7 +142,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                   fontWeight: '500',
                   ...stylesCommon.fontSarabun500,
                 }}>
-                Privacy Policy
+                {t('pregnancyProgram.privacy')}
               </Text>
             </Text>
           </View>

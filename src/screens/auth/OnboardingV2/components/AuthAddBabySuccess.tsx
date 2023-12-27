@@ -14,17 +14,21 @@ import {
   ScrollView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import {changeStatusLogin} from '@redux';
 
 const AuthAddBabySuccess = (props: any) => {
   const {route} = props;
   const {params} = route;
   const {t} = useTranslation();
+  const dispatch = useDispatch();
 
   const onNavigateHomePage = () => {
     if (params?.state?.page < 10) {
-      navigate(ROUTE_NAME.TAB_HOME);
+      dispatch(changeStatusLogin(true));
+    } else {
+      navigate(ROUTE_NAME.SLIDE_INTRO);
     }
-    navigate(ROUTE_NAME.SLIDE_INTRO);
   };
 
   return (

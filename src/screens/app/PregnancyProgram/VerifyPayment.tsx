@@ -19,12 +19,14 @@ import {goBack} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {useNavigation} from '@react-navigation/native';
 import {isIphoneX} from 'react-native-iphone-x-helper';
+import {useTranslation} from 'react-i18next';
 
 interface VerifyPaymentProps {}
 
 const VerifyPayment = (props: VerifyPaymentProps) => {
   const [state, setState] = useState();
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
 
   const onPaymentFinish = () => {
     navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);

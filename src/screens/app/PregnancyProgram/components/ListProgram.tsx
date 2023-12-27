@@ -25,6 +25,7 @@ import {ROUTE_NAME} from '@routeName';
 import {getUserTask} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import {GlobalService} from '@services';
+import {useTranslation} from 'react-i18next';
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -39,18 +40,19 @@ const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
   const navigation = useNavigation<any>();
   const week = useSelector((state: any) => state?.home?.week - 4);
+  const {t} = useTranslation();
   const getTitle = (type: string) => {
     switch (type) {
       case 'reward':
         return '';
       case 'core':
-        return 'Pregnancy Knowledge';
+        return t('pregnancyProgram.pregnancyKnowledge');
       case 'love_and_money':
-        return 'Love & Money';
+        return t('pregnancyProgram.loveMoney');
       case 'fitness_and_nutrition':
-        return 'Fitness & Nutrition';
+        return t('pregnancyProgram.fitnessNutrition');
       case 'baby_care':
-        return 'Baby Care';
+        return t('pregnancyProgram.babyCare');
       default:
         return '';
     }
@@ -95,7 +97,7 @@ const ListProgram = (props: ListProgramProps) => {
         if (data?.length > 0) {
           data = data.concat([
             {
-              title: 'You are making progress',
+              title: t('pregnancyProgram.makingProgress'),
               type: 'reward',
               label: 'Basics',
               data: [
@@ -209,7 +211,6 @@ const ListProgram = (props: ListProgramProps) => {
                   <Text
                     style={{
                       fontSize: scaler(19),
-                      fontWeight: '600',
                       ...stylesCommon.fontSarabun600,
                     }}>
                     {item.title}
@@ -244,10 +245,9 @@ const ListProgram = (props: ListProgramProps) => {
                         style={{
                           color: colors.white,
                           fontSize: scaler(15),
-                          fontWeight: '600',
                           ...stylesCommon.fontWeight600,
                         }}>
-                        Thanks Mommy, I'm proud of you !
+                        {t('pregnancyProgram.thankMommy')}
                       </Text>
                       <Image style={{height: 26, width: 26}} source={ic_gift} />
                     </TouchableOpacity>
@@ -280,8 +280,8 @@ const ListProgram = (props: ListProgramProps) => {
                             style={styles.rowCenter}>
                             <Text style={styles.textSmash}>
                               {props?.tabIndex == 0
-                                ? 'Finish the task'
-                                : 'Review it'}
+                                ? t('pregnancyProgram.finishTheTask')
+                                : t('pregnancyProgram.reviewIt')}
                             </Text>
                             <SvgArrowLeft
                               stroke={colors.pink300}
@@ -323,7 +323,6 @@ const styles = StyleSheet.create({
   textSmash: {
     color: colors.pink300,
     marginRight: 5,
-    fontWeight: '600',
     fontSize: scaler(13),
     ...stylesCommon.fontSarabun600,
     marginBottom: 2,
@@ -334,7 +333,6 @@ const styles = StyleSheet.create({
   },
   textChild: {
     fontSize: scaler(15),
-    fontWeight: '600',
     paddingRight: 5,
     ...stylesCommon.fontWeight600,
   },
@@ -361,7 +359,6 @@ const styles = StyleSheet.create({
   textTag: {
     color: colors.white,
     fontSize: scaler(10),
-    fontWeight: '600',
     ...stylesCommon.fontSarabun600,
   },
   containerTag: {

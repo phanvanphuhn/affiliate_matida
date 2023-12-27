@@ -23,6 +23,7 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigation = useNavigation<any>();
   const week = useSelector((state: any) => state?.home?.week - 4);
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const {t} = useTranslation();
   const goBack = () => {
@@ -38,7 +39,7 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
   return (
     <View style={styles.container}>
       <Header
-        title={'Cool Mom, Happy Baby'}
+        title={'Matida Masterclass'}
         ComponentRight={
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity onPress={onGift}>
@@ -78,9 +79,12 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         />
         <View style={styles.container2}>
           <View style={styles.center}>
-            <Text style={styles.textTitle}>You are now in week {week}</Text>
+            <Text style={styles.textTitle}>
+              {t('pregnancyProgram.youAreNow')} {week}
+            </Text>
             <Text style={styles.textTitle2}>
-              {38 - week} weeks to go. You got this!
+              {lang == 2 && 'Mẹ còn'} {40 - week}{' '}
+              {t('pregnancyProgram.weekToGo')}
             </Text>
           </View>
           <TabProgram currentWeek={currentWeek} />
@@ -101,12 +105,10 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: scaler(20),
-    fontWeight: '600',
     ...stylesCommon.fontWeight600,
   },
   textTitle2: {
     fontSize: scaler(14),
-    fontWeight: '400',
     color: colors.labelColor,
     marginTop: 5,
     marginBottom: scaler(10),

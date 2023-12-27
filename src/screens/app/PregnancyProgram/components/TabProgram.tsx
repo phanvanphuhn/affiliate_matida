@@ -18,16 +18,18 @@ import {
   widthScreen,
 } from '@stylesCommon';
 import PagerView from 'react-native-pager-view';
+import {useSelector} from 'react-redux';
 
 interface TabProgramProps {
   currentWeek: number;
 }
 const TabProgram = (props: TabProgramProps) => {
   const [tabIndex, setIndex] = useState<number>(0);
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const [routes] = React.useState([
-    {key: 'todo', title: 'To do'},
-    {key: 'finished', title: 'Finished'},
+    {key: 'todo', titleEn: 'To do', titleVi: 'Đang mở'},
+    {key: 'finished', titleEn: 'Finished', titleVi: 'Hoàn thành'},
   ]);
   const onIndexChange = (index: number) => {
     setIndex(index);
@@ -59,7 +61,7 @@ const TabProgram = (props: TabProgramProps) => {
                         fontWeight: '500',
                       },
                 ]}>
-                {route.title}
+                {lang == 2 ? route.titleVi : route.titleEn}
               </Text>
             </TouchableOpacity>
           );

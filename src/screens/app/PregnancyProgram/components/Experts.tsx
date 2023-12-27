@@ -2,48 +2,51 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {useTranslation} from 'react-i18next';
 
 interface ExpertsProps {}
-const data = [
-  {
-    name: 'Hoa',
-    description: 'Obstetrician',
-    image:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520456296115766.jpg',
-  },
-  {
-    name: 'Phương Anh',
-    description: 'Obstetrician',
-    image:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520600416191297.jpg',
-  },
-  {
-    name: 'Sương',
-    description: 'Lactation Expert',
-    image:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520618216628521.jpg',
-  },
-  {
-    name: 'Mina Chung',
-    description: 'Financial Coach',
-    image:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520637730003352.jpg',
-  },
-  {
-    name: 'Trâm',
-    description: 'Yoga Coach',
-    image:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520720586395151.jpg',
-  },
-  {
-    name: 'Stephanie',
-    description: 'Program Manager',
-    image:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1703520742320445490.jpg',
-  },
-];
+
 const Experts = (props: ExpertsProps) => {
   const [state, setState] = useState();
+  const {t} = useTranslation();
+  const data = [
+    {
+      name: 'Thuý',
+      description: t('pregnancyProgram.babyExpert'),
+      image:
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520456296115766.jpg',
+    },
+    {
+      name: 'Phương Anh',
+      description: t('pregnancyProgram.obstetrician'),
+      image:
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520600416191297.jpg',
+    },
+    {
+      name: 'Sương',
+      description: t('pregnancyProgram.lactation'),
+      image:
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520618216628521.jpg',
+    },
+    {
+      name: 'Mina Chung',
+      description: t('pregnancyProgram.financial'),
+      image:
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520637730003352.jpg',
+    },
+    {
+      name: 'Trâm',
+      description: t('pregnancyProgram.yoga'),
+      image:
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520720586395151.jpg',
+    },
+    {
+      name: 'Stephanie',
+      description: t('pregnancyProgram.pm'),
+      image:
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520742320445490.jpg',
+    },
+  ];
   const renderLine = () => {
     return (
       <Svg width="390" height="45" viewBox="0 0 390 45" fill="none">

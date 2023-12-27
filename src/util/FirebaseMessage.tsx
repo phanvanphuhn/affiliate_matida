@@ -372,9 +372,7 @@ function createAppNotification() {
     store.dispatch(changeWeekUser(+data?.week));
     setTimeout(() => {
       // navigate(ROUTE_NAME.TIME_LINE);
-      navigate(ROUTE_NAME.WEEKLY_ARTICLES, {
-        week: data?.week,
-      });
+      navigate(ROUTE_NAME.WEEKLY_ARTICLES);
     }, 100);
   };
 
