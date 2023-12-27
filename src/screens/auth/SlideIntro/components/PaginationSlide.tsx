@@ -23,26 +23,26 @@ export const PaginationSlide = ({size, scrollX}: PaginationSlideProps) => {
             ITEM_WIDTH_SLIDE_INTRO * index,
             ITEM_WIDTH_SLIDE_INTRO * (index + 1),
           ],
-          outputRange: [0.24, 1, 0.24],
+          outputRange: [1, 1, 1],
           extrapolate: 'clamp',
         });
-        // const backgroundColor = scrollX.interpolate({
-        //   inputRange: [
-        //     pageWidth * (index - 1),
-        //     pageWidth * index,
-        //     pageWidth * (index + 1),
-        //   ],
-        //   outputRange: [colors., Colors.primary, Colors.gray.gray60],
-        //   extrapolate: 'clamp',
-        // });
+        const backgroundColor = scrollX.interpolate({
+          inputRange: [
+            ITEM_WIDTH_SLIDE_INTRO * (index - 1),
+            ITEM_WIDTH_SLIDE_INTRO * index,
+            ITEM_WIDTH_SLIDE_INTRO * (index + 1),
+          ],
+          outputRange: ['#D0D1D9', colors.pink4, '#D0D1D9'],
+          extrapolate: 'clamp',
+        });
         return (
           <Animated.View
             key={index}
             style={[
               styles.normalDot,
               {
-                width,
-                // backgroundColor: backgroundColor,
+                // width,
+                backgroundColor: backgroundColor,
                 opacity,
               },
             ]}

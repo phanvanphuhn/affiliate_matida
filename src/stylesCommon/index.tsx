@@ -71,6 +71,7 @@ const colors = {
   yellow200: '#FFF66E',
   backgroundFeed: '#FFFFFF',
   backgroundPackage: '#FBFBFF',
+  neutral10: '#101012',
 
   success_message: '#28B4AE',
   error_message: '#A67481',

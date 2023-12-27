@@ -47,8 +47,7 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
               <Image source={iconClose} style={styles.iconClose} />
             </TouchableOpacity>
             <Text style={styles.text1}>The All-in-one Course</Text>
-            <Text style={styles.text2}>Cool Mom,</Text>
-            <Text style={styles.text2}>Happy Baby</Text>
+            <Text style={styles.text2}>Matida Masterclass</Text>
           </View>
           <View style={styles.containerContent}>
             <View style={{top: -8}}>
@@ -60,16 +59,16 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
               </Text>
               <Text style={styles.textContent2}>
                 {
-                  'Thank your for signing up! \nOur team will now create your personalised program and activate it for you. You will hear from us in the next 24 hours.'
+                  'Thank your for signing up! \nOur team will now create your personalized program and activate it for you. You will hear from us in the next 24 hours.'
                 }
               </Text>
               <Image source={teaser2} />
               <Text style={styles.textContent2}>
-                Don't for get to{' '}
+                Don't forget to{' '}
                 <Text style={[styles.textContent2, {color: colors.pink300}]}>
                   turn on your notifications
                 </Text>{' '}
-                for weekly important reminders.
+                {'\nfor weekly important reminders.'}
               </Text>
             </View>
             <View style={{bottom: -8}}>
@@ -132,20 +131,20 @@ const styles = StyleSheet.create({
   containerContent2: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: scaler(30),
+    paddingHorizontal: scaler(40),
   },
   textContent: {
     fontSize: scaler(22),
-    marginTop: scaler(58),
     ...stylesCommon.fontWeight600,
+    marginTop: scaler(40),
   },
   textContent2: {
     fontSize: scaler(15),
     color: colors.labelColor,
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: scaler(20),
     ...stylesCommon.fontWeight400,
+    marginBottom: scaler(24),
   },
   buttonFinish: {
     backgroundColor: colors.yellow200,

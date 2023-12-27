@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {colors, scaler, widthScreen} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {
   chuyengia1,
+  chuyengia2,
   ic_line_wave,
   SvgClose,
   SvgLineWave,
@@ -33,7 +34,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           height: widthScreen / 1.5,
           width: widthScreen / 1.5,
           borderRadius: 500,
-          backgroundColor: colors.pink200,
+          backgroundColor: colors.pink350,
           position: 'absolute',
           right: -30,
           top: 10,
@@ -43,6 +44,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         style={{
           position: 'absolute',
           right: 0,
+          top: -4,
         }}>
         <Image source={ic_line_wave} />
       </View>
@@ -51,8 +53,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           <Text style={styles.textOff}>
             {'Hi new mommy,\nare you ready for the journey?'}
           </Text>
-          <Text style={styles.textPrice1}>Cool Mom,</Text>
-          <Text style={styles.textPrice1}>Happy Baby</Text>
+          <Text style={styles.textPrice1}>Matida Masterclass</Text>
         </View>
         <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>Sign up now</Text>
@@ -64,10 +65,10 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           flex: 1,
         }}>
         <Image
-          source={chuyengia1}
+          source={chuyengia2}
           style={{
-            height: '85%',
-            aspectRatio: 1,
+            width: scaler(168),
+            height: scaler(168),
           }}
         />
       </View>
@@ -93,13 +94,13 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: scaler(20),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
     color: colors.labelColor,
     textAlign: 'center',
   },
   textTitle2: {
     fontSize: scaler(28),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     color: colors.labelColor,
     textAlign: 'center',
   },
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   textSpecial: {
     color: colors.pink300,
     fontSize: scaler(20),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     textAlign: 'center',
     marginBottom: scaler(10),
   },
@@ -124,19 +125,19 @@ const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
     color: colors.textColor,
     fontSize: scaler(16),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     marginBottom: scaler(4),
     textAlign: 'center',
   },
   textPriceNew: {
     fontSize: scaler(24),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     color: colors.textColor,
     textAlign: 'center',
   },
   textPriceNew2: {
     fontSize: scaler(15),
-    fontWeight: '500',
+    ...stylesCommon.fontWeight500,
   },
   buttonSignUp: {
     backgroundColor: colors.white,
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   },
   textButtonSignUp: {
     fontSize: scaler(13),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
     color: colors.pink300,
   },
   container3: {
@@ -170,11 +171,12 @@ const styles = StyleSheet.create({
   textOff: {
     color: colors.labelColor,
     fontSize: scaler(11),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
   },
   textPrice1: {
     color: colors.labelColor,
-    fontWeight: '600',
     fontSize: scaler(20),
+    ...stylesCommon.fontWeight600,
+    marginTop: scaler(8),
   },
 });
