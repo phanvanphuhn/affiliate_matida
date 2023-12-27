@@ -338,3 +338,11 @@ export const openUrl = async (url: string) => {
     reactotron.log?.('CANNOT OPEN ' + url);
   }
 };
+
+export const formatPrice = (value: string) => {
+  let price = parseInt(value);
+  return price
+    .toFixed(2)
+    .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+    .replace('.00', '');
+};

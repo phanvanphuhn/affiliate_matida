@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   Text,
   View,
@@ -19,15 +19,24 @@ import {goBack} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {useNavigation} from '@react-navigation/native';
 import {isIphoneX} from 'react-native-iphone-x-helper';
+import {useSelector} from 'react-redux';
 
 interface VerifyPaymentProps {}
 
 const VerifyPayment = (props: VerifyPaymentProps) => {
   const [state, setState] = useState();
   const navigation = useNavigation<any>();
+  const userInfo = useSelector((state: any) => state?.auth?.userInfo);
+  const isPaymentProcessing = useMemo(() =>
+    userInfo?.payments?.some(e => e.status == 'processing'),
+  );
 
   const onPaymentFinish = () => {
-    navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+    if (isPaymentProcessing) {
+      navigation.navigate(ROUTE_NAME.TAB_HOME);
+    } else {
+      navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+    }
   };
   return (
     <View style={styles.container}>

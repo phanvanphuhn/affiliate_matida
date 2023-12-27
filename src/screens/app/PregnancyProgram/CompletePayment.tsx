@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -27,7 +27,11 @@ import {
 import QRCode from 'react-native-qrcode-svg';
 import {ModalConfirmPayment} from '@component';
 import {useTranslation} from 'react-i18next';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {
   getPlanByCode,
@@ -48,12 +52,45 @@ import {
   SubscriptionPurchase,
   useIAP,
 } from 'react-native-iap';
-
+import {UpdateInformationState} from './UpdateInformation';
+import {RouteProp} from '@react-navigation/core/src/types';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {formatPrice} from '@util';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import RNFS from 'react-native-fs';
 interface CompletePaymentProps {}
+interface BankState {
+  bank_account_name: string;
+  bank_account_number: string;
+  bank_name: string;
+  phone_number: string;
+}
+interface PlanState {
+  bank_account: BankState;
+  code: string;
+  created_at: string;
+  currency: string;
+  description_en?: string;
+  description_vi?: string;
+  discount: string;
+  duration: number;
+  duration_unit: string;
+  id: number;
+  is_active: boolean;
+  is_subscribed: boolean;
+  name_en: string;
+  name_vi: string;
+  price: string;
+  updated_at: string;
+  success: boolean;
+}
 
 const CompletePayment = (props: CompletePaymentProps) => {
   const refPay = useRef<ModalConfirmPayment>(null);
+  const [plan, setPlan] = useState<PlanState>({});
   const {t} = useTranslation();
+  const route = useRoute<RouteProp<any>>();
+  const QrRef = useRef<any>();
   const navigation = useNavigation<any>();
   const {
     connected,
@@ -74,7 +111,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
   } = useIAP();
   const getData = async () => {
     let res = await getPlanByCode();
-    console.log('=>(CompletePayment.tsx:43) res', res);
+    if (res?.success) {
+      setPlan(res?.data);
+    }
   };
   const listenPurchases = (
     purchase: SubscriptionPurchase | ProductPurchase,
@@ -158,32 +197,35 @@ const CompletePayment = (props: CompletePaymentProps) => {
     // ... listen to currentPurchase, to check if the purchase went through
     console.log('=>(CompletePayment.tsx:124) currentPurchase', currentPurchase);
   }, [currentPurchase]);
-  const handleSubcribePlan = async () => {
-    try {
-      let data = {
-        plan_code: 'PP',
-        payment_method: 'bank_transfer',
-      };
-      GlobalService.showLoading();
-      let res = await requestSubcribePlan(data);
 
-      return true;
-    } catch (err) {
-      showMessage({
-        message: err?.response?.data?.message,
-        type: 'danger',
-        backgroundColor: colors.primaryBackground,
-      });
-      return false;
-    } finally {
-      GlobalService.hideLoading();
-    }
-  };
   const onPaymentFinish = async () => {
-    let isDone = await handleSubcribePlan();
-    if (isDone) {
-      navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
-    }
+    navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
+  };
+  const onCopy = (value: string) => () => {
+    Clipboard.setString(value);
+    showMessage({message: 'Copy success', type: 'success'});
+  };
+
+  const onDownloadQrCode = () => {
+    QrRef.current.toDataURL((data: any) => {
+      RNFS.writeFile(
+        RNFS.CachesDirectoryPath + '/qr-matida.png',
+        data,
+        'base64',
+      )
+        .then(success => {
+          return CameraRoll.saveToCameraRoll(
+            RNFS.CachesDirectoryPath + '/qr-matida.png',
+            'photo',
+          );
+        })
+        .then(() => {
+          showMessage({
+            message: 'Saved file success!',
+            type: 'success',
+          });
+        });
+    });
   };
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
@@ -229,47 +271,69 @@ const CompletePayment = (props: CompletePaymentProps) => {
                     logo={ic_logo_round}
                     logoSize={32}
                     logoBorderRadius={32}
+                    getRef={r => (QrRef.current = r)}
                   />
                 </View>
-                <TouchableOpacity style={styles.buttonCopy}>
+                <TouchableOpacity
+                  onPress={onDownloadQrCode}
+                  style={styles.buttonCopy}>
                   <Image source={ic_download} />
                 </TouchableOpacity>
               </View>
               <View style={{width: '100%'}}>
                 <Text style={styles.textLabel}>Transaction contents</Text>
-                <Text style={styles.input}>1511 PP1</Text>
-                <TouchableOpacity style={styles.buttonCopy}>
+                <Text style={styles.input}>
+                  {route?.params?.values?.verify_code}
+                </Text>
+                <TouchableOpacity
+                  onPress={onCopy(route?.params?.values?.verify_code)}
+                  style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
               <View style={{width: '100%'}}>
                 <Text style={styles.textLabel}>Transaction amount</Text>
                 <Text style={styles.input}>{`${t('payment.pay', {
-                  money: 399000?.toLocaleString(),
-                  currency: 'vnd',
+                  money: formatPrice(plan?.price),
+                  currency: plan?.currency,
                 })}`}</Text>
-                <TouchableOpacity style={styles.buttonCopy}>
+                <TouchableOpacity
+                  onPress={onCopy(plan?.price)}
+                  style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
               <View style={{width: '100%'}}>
                 <Text style={styles.textLabel}>Bank account</Text>
-                <Text style={styles.input}>0123456789</Text>
-                <TouchableOpacity style={styles.buttonCopy}>
+                <Text style={styles.input}>
+                  {plan?.bank_account?.bank_account_number}
+                </Text>
+                <TouchableOpacity
+                  onPress={onCopy(plan?.bank_account?.bank_account_number)}
+                  style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
               <View>
                 <Text style={styles.textLabel}>Bank</Text>
-                <Text style={styles.input}>Vietcombank</Text>
+                <Text style={styles.input}>
+                  {plan?.bank_account?.bank_name}
+                </Text>
               </View>
               <View>
                 <Text style={styles.textLabel}>Account owner</Text>
-                <Text style={styles.input}>Matida Co.Ltd</Text>
-                <Text style={styles.input2}>MST: 123456789</Text>
+                <Text style={styles.input}>
+                  {plan?.bank_account?.bank_account_name}
+                </Text>
+                {/*<Text style={styles.input2}>MST: 123456789</Text>*/}
               </View>
             </View>
-            <SvgPathTop />
+            <View
+              style={{
+                marginBottom: -0.2,
+              }}>
+              <SvgPathTop />
+            </View>
           </ImageBackground>
         </ScrollView>
         <View

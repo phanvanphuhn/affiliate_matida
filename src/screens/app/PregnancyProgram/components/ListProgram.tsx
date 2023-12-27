@@ -38,7 +38,7 @@ interface ListProgramProps {
 const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
   const navigation = useNavigation<any>();
-  const week = useSelector((state: any) => state?.home?.week - 4);
+  const week = useSelector((state: any) => state?.home?.week);
   const getTitle = (type: string) => {
     switch (type) {
       case 'reward':
