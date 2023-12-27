@@ -259,6 +259,7 @@ export const en = {
       'Your profile settings have not been saved. \nWould you like to save it ?',
     save: 'Save it',
     discard: 'Discard',
+    myPurchases: 'My Purchases',
     privacyPolicy: 'Privacy Policy',
     block: 'Blocked Users',
     version: 'Version: ',

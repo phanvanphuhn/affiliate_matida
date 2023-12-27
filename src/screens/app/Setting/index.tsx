@@ -8,6 +8,7 @@ import {
   iconPlusCircle,
   iconPregnant,
   SvgBlocked,
+  SvgFlower,
   SvgLanguage,
   SvgLogout,
   SvgPost,
@@ -114,6 +115,11 @@ const Setting = () => {
       svg: <SvgPost />,
     },
     {
+      id: 8,
+      title: t('setting.myPurchases'),
+      svg: <SvgFlower />,
+    },
+    {
       id: 4,
       title: t('setting.privacyPolicy'),
       svg: <SvgPrivacy />,
@@ -157,6 +163,9 @@ const Setting = () => {
         break;
       case 7:
         navigation.navigate(ROUTE_NAME.SOURCE);
+        break;
+      case 8:
+        navigation.navigate(ROUTE_NAME.MY_PURCHASES);
         break;
       default:
         return;

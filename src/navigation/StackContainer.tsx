@@ -418,6 +418,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.MOM_DIARY}
             component={screens.MomDiary}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.MY_PURCHASES}
+            component={screens.MyPurchases}
+          />
         </Stack.Navigator>
       );
     } else {

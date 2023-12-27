@@ -78,7 +78,7 @@ const colors = {
   transparent: 'transparent',
   primaryBackground: '#EE6566',
   cancelBackground: '#F8F7F8',
-  labelColor: '#39383D',
+  labelColor: '#38393D',
   blue: '#8FA0FF',
   blue50: '#B0BCFF',
   blue100: '#DBE0FF',

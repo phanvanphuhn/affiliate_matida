@@ -105,6 +105,7 @@ const sliderIntroV24 = require('./sliderIntroV24.png');
 const sliderIntroV25 = require('./sliderIntroV25.png');
 const sliderIntroV26 = require('./sliderIntroV26.png');
 const sliderIntroV27 = require('./sliderIntroV27.png');
+const babyPurchases = require('./babyPurchases.png');
 
 export {
   DailyQuiz,
@@ -212,4 +213,5 @@ export {
   sliderIntroV25,
   sliderIntroV26,
   sliderIntroV27,
+  babyPurchases,
 };

@@ -85,6 +85,7 @@ import OnboardingFinished from './app/OnboardingStep/OnboardingFinished';
 import VerifyPayment from './app/PregnancyProgram/VerifyPayment';
 import AboutProgram from './app/PregnancyProgram/AboutProgram';
 import MomDiary from './app/PregnancyProgram/MomDiary';
+import MyPurchases from './app/MyPurchases';
 
 //Nhóm các màn hình vào 1 file index
 const screens = {
@@ -174,6 +175,7 @@ const screens = {
   VerifyPayment,
   AboutProgram,
   MomDiary,
+  MyPurchases,
 };
 
 export {screens};

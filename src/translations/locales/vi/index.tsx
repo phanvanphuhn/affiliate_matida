@@ -261,6 +261,7 @@ export const vi = {
       'Những thay đổi của bạn chưa được lưu. \nBạn có muốn lưu nó không?',
     save: 'Lưu',
     discard: 'Loại bỏ',
+    myPurchases: 'Lịch sử thanh toán',
     privacyPolicy: 'Chính sách bảo mật',
     block: 'Danh sách chặn',
     version: 'Phiên bản: ',
