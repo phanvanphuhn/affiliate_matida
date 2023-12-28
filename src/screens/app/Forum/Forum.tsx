@@ -25,6 +25,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {HeaderForum, ListPost, ListTopTab} from './components';
@@ -57,9 +58,9 @@ export const Forum = () => {
   const {t} = useTranslation();
 
   const [data, setData] = useState<IData>(initData);
-  // const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const loading = useSelector((state: any) => state?.forum?.loading);
+  // const loading = useSelector((state: any) => state?.forum?.loading);
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const navigateUser = () => {
@@ -91,12 +92,12 @@ export const Forum = () => {
       setData(res?.data);
     } catch (e) {
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
   const onRefresh = () => {
-    // setRefreshing(true);
+    setLoading(true);
     getData();
   };
 
@@ -143,7 +144,11 @@ export const Forum = () => {
           <ActivityIndicator color={colors.primary} size="small" />
         </View>
       ) : (
-        <ScrollView style={{flex: 1}}>
+        <ScrollView
+          style={{flex: 1}}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+          }>
           {/* <ListTopTab /> */}
           {data?.expertLiveTalk?.filter(item => item?.room?.status !== 3)
             ?.length > 0 && (

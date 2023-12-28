@@ -57,7 +57,7 @@ const Button = (props: TProps) => {
       {!disableNextBtn() && (
         <TouchableOpacity
           style={styles.nextButton}
-          onPress={state.page == 12 ? onDone : onNextPage}
+          onPress={state.page == 12 || state.page == 8 ? onDone : onNextPage}
           disabled={disableNextBtn()}>
           <Image
             source={iconNextNewBorn}

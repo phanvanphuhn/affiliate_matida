@@ -1,5 +1,6 @@
 import {Header} from '@component';
 import {SvgArrowLeft, babyPurchases} from '@images';
+import {navigate} from '@navigation';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import moment from 'moment';
 import React from 'react';
@@ -11,21 +12,24 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   ScrollView,
+  Platform,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
+import useCheckPregnancy from '@util/hooks/useCheckPregnancy';
 
 const MyPurchases = () => {
   const {t} = useTranslation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
-  console.log('user: ', user);
+  const checkPlan = useCheckPregnancy();
+
   return (
     <View style={{flex: 1, backgroundColor: colors.white}}>
       <Header
         title={t('setting.myPurchases')}
         IconLeft={<SvgArrowLeft stroke={colors.textColor} />}
       />
-      {user?.payments.length > 1 ? (
+      {user?.payments.length < 1 ? (
         <View style={[styles.container, {alignItems: 'center'}]}>
           <FastImage
             source={babyPurchases}
@@ -39,10 +43,11 @@ const MyPurchases = () => {
             Không có lịch sử thanh toán
           </Text>
           <Text style={[styles.label, {marginTop: scaler(12)}]}>
-            Mẹ không có lịch sử thanh toán nào cả!
+            Hiẹn tại mẹ chưa có thanh toán nào
           </Text>
           <TouchableOpacity
-            style={[styles.wrapBtnContainer, {marginTop: scaler(24)}]}>
+            style={[styles.wrapBtnContainer, {marginTop: scaler(24)}]}
+            onPress={checkPlan}>
             <Text style={styles.btnTitle}>Đăng ký ngay</Text>
           </TouchableOpacity>
         </View>
@@ -66,56 +71,89 @@ const MyPurchases = () => {
             Purchase History
           </Text>
           <ScrollView style={{flex: 1}}>
-            <View style={styles.wrapItemContainer}>
-              <Text
-                style={[
-                  styles.title,
-                  {fontSize: scaler(16), marginBottom: scaler(4)},
-                ]}>
-                ID: 0913540002 3012 PP1
-              </Text>
-              <View style={styles.row}>
-                <Text
-                  style={[
-                    styles.lifeTime,
-                    {fontSize: scaler(15), color: colors.gray550},
-                  ]}>
-                  Amount
-                </Text>
-                <Text style={[styles.label, {color: colors.neutral10}]}>
-                  499,000đ
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Text
-                  style={[
-                    styles.lifeTime,
-                    {fontSize: scaler(15), color: colors.gray550},
-                  ]}>
-                  Method
-                </Text>
-                <Text style={[styles.label, {color: colors.neutral10}]}>
-                  Bank Transfer
-                </Text>
-              </View>
-              <View style={styles.row}>
-                <Text
-                  style={[
-                    styles.lifeTime,
-                    {fontSize: scaler(15), color: colors.gray550},
-                  ]}>
-                  Date
-                </Text>
-                <Text style={[styles.label, {color: colors.neutral10}]}>
-                  {moment(new Date()).format('DD/MM/YYYY')}
-                </Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <View style={styles.wrapStatusContainer}>
-                  <Text style={styles.statusTitle}>Successful</Text>
+            {user?.payments.map(item => {
+              return (
+                <View style={styles.wrapItemContainer}>
+                  <Text
+                    style={[
+                      styles.title,
+                      {fontSize: scaler(16), marginBottom: scaler(4)},
+                    ]}>
+                    ID: {item?.transaction_id}
+                  </Text>
+                  <View style={styles.row}>
+                    <Text
+                      style={[
+                        styles.lifeTime,
+                        {fontSize: scaler(15), color: colors.gray550},
+                      ]}>
+                      Amount
+                    </Text>
+                    <Text style={[styles.label, {color: colors.neutral10}]}>
+                      {(item?.price / 1000)
+                        ?.toString()
+                        ?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      đ
+                    </Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text
+                      style={[
+                        styles.lifeTime,
+                        {fontSize: scaler(15), color: colors.gray550},
+                      ]}>
+                      Method
+                    </Text>
+                    <Text style={[styles.label, {color: colors.neutral10}]}>
+                      {item?.payment_method == 'bank_transfer'
+                        ? 'Bank Transfer'
+                        : Platform.OS == 'ios'
+                        ? 'Apple Pay'
+                        : 'Google Pay'}
+                    </Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text
+                      style={[
+                        styles.lifeTime,
+                        {fontSize: scaler(15), color: colors.gray550},
+                      ]}>
+                      Date
+                    </Text>
+                    <Text style={[styles.label, {color: colors.neutral10}]}>
+                      {moment(item?.payment_date).format('DD/MM/YYYY')}
+                    </Text>
+                  </View>
+                  {item?.status == 'completed' ? (
+                    <View style={{flexDirection: 'row'}}>
+                      <View style={styles.wrapStatusContainer}>
+                        <Text style={styles.statusTitle}>Successful</Text>
+                      </View>
+                    </View>
+                  ) : item?.status == 'processing' ? (
+                    <View style={{flexDirection: 'row'}}>
+                      <View
+                        style={[
+                          styles.wrapStatusContainer,
+                          {backgroundColor: colors.gray550},
+                        ]}>
+                        <Text style={styles.statusTitle}>Pending</Text>
+                      </View>
+                    </View>
+                  ) : (
+                    <View style={{flexDirection: 'row'}}>
+                      <View
+                        style={[
+                          styles.wrapStatusContainer,
+                          {backgroundColor: colors.red200},
+                        ]}>
+                        <Text style={styles.statusTitle}>Failed</Text>
+                      </View>
+                    </View>
+                  )}
                 </View>
-              </View>
-            </View>
+              );
+            })}
           </ScrollView>
         </View>
       )}

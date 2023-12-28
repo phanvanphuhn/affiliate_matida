@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, TextInput, TextInputProps} from 'react-native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {getIn, useFormikContext} from 'formik';
 import {UpdateInformationState} from '../UpdateInformation';
+import {useTranslation} from 'react-i18next';
 
 interface FormInputProps extends TextInputProps {
   name: keyof UpdateInformationState;
@@ -14,10 +15,12 @@ const FormInput = (props: FormInputProps) => {
   const {handleChange, values, errors, touched} =
     useFormikContext<UpdateInformationState>();
   const error = useMemo(() => getIn(errors, props.name), [errors, props.name]);
+  console.log('error: ', error);
   const isTouched = useMemo(
     () => getIn(touched, props.name),
     [props.name, touched],
   );
+  const {t} = useTranslation();
   return (
     <View style={styles.container}>
       <Text style={styles.textLabel}>{props.title}</Text>
@@ -28,7 +31,9 @@ const FormInput = (props: FormInputProps) => {
         style={styles.input}
         placeholder={props.placeholder}
       />
-      {!!error && !!isTouched && <Text style={styles.textError}>{error}</Text>}
+      {!!error && !!isTouched && (
+        <Text style={styles.textError}>{t(error)}</Text>
+      )}
     </View>
   );
 };

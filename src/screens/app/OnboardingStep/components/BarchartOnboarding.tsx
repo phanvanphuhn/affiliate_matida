@@ -6,6 +6,7 @@ import {itemType} from 'react-native-gifted-charts/src/BarChart/types';
 import {useRoute} from '@react-navigation/native';
 import useStateCustom from '../../../../util/hooks/useStateCustom';
 import {ic_back_arrow} from '@images';
+import {useSelector} from 'react-redux';
 
 interface BarchartProps {}
 const data: itemType = [
@@ -53,6 +54,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
     data: [],
     dataSos: [true, false, false, true],
   });
+  const lang = useSelector((state: any) => state?.auth?.lang);
   const getLabel = (type: string) => {
     switch (type) {
       case 'love_and_money':
@@ -88,9 +90,9 @@ const BarchartOnboarding = (props: BarchartProps) => {
 
         labelTextStyle: {
           color: colors.gray550,
-          fontSize: scaler(12),
+          fontSize: scaler(14),
           textAlign: 'center',
-          ...stylesCommon.fontWeight500,
+          ...stylesCommon.fontWeight600,
         },
       };
       let data: any[] = Object.keys(obj).map((key, i) => {
@@ -245,7 +247,9 @@ const BarchartOnboarding = (props: BarchartProps) => {
             }
             return (
               <View key={i} style={[styles.containerUrgent, {}]}>
-                <Text style={styles.textUrgent}>SOS</Text>
+                <Text style={styles.textUrgent}>
+                  {lang == 2 ? 'SOS' : 'Urgent'}
+                </Text>
               </View>
             );
           })}

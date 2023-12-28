@@ -113,67 +113,63 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                 <FormInput
                   name={'name'}
                   title={t('pregnancyProgram.yourName')}
-                  placeholder={t('pregnancyProgram.yourName')}
+                  placeholder={'Nguyễn Thị Mama' as string}
+                  maxLength={100}
                 />
                 <FormInput
                   maxLength={10}
                   keyboardType={'number-pad'}
                   name={'phone'}
                   title={t('pregnancyProgram.phoneNumber')}
-                  placeholder={t('pregnancyProgram.phoneNumber')}
+                  placeholder={'0123 456 789' as string}
                 />
                 <FormInput
                   name={'pregnant_week'}
                   title={t('pregnancyProgram.yourPregnancyWeek')}
-                  placeholder={t('pregnancyProgram.yourPregnancyWeek')}
+                  placeholder={'8' as string}
                   maxLength={2}
                   keyboardType={'number-pad'}
                 />
               </View>
               <SvgPathTop />
             </ImageBackground>
-
-            <View
-              style={{
-                paddingHorizontal: scaler(24),
-              }}>
-              <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
-                <Text style={styles.textDone}>
-                  {t('pregnancyProgram.next')}
-                </Text>
-              </TouchableOpacity>
-              <Text
-                style={{
-                  color: colors.gray500,
-                  fontWeight: '400',
-                  fontSize: scaler(13),
-                  textAlign: 'center',
-                  marginTop: 15,
-                  ...stylesCommon.fontSarabun400,
-                }}>
-                {t('pregnancyProgram.byContinue')}{' '}
-                <Text
-                  onPress={onPolicy}
-                  style={{
-                    color: colors.pink300,
-                    fontWeight: '500',
-                    ...stylesCommon.fontSarabun500,
-                  }}>
-                  {t('pregnancyProgram.terms')}
-                </Text>{' '}
-                &{' '}
-                <Text
-                  onPress={onPolicy}
-                  style={{
-                    color: colors.pink300,
-                    fontWeight: '500',
-                    ...stylesCommon.fontSarabun500,
-                  }}>
-                  {t('pregnancyProgram.privacy')}
-                </Text>
-              </Text>
-            </View>
           </ScrollView>
+          <View
+            style={{
+              paddingHorizontal: scaler(24),
+              marginBottom: scaler(36),
+            }}>
+            <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
+              <Text style={styles.textDone}>{t('pregnancyProgram.next')}</Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                color: colors.gray500,
+                fontSize: scaler(13),
+                textAlign: 'center',
+                marginTop: 15,
+                ...stylesCommon.fontSarabun400,
+              }}>
+              {t('pregnancyProgram.byContinue')}{' '}
+              <Text
+                onPress={onPolicy}
+                style={{
+                  color: colors.pink300,
+                  ...stylesCommon.fontSarabun500,
+                }}>
+                {t('pregnancyProgram.terms')}
+              </Text>{' '}
+              &{' '}
+              <Text
+                onPress={onPolicy}
+                style={{
+                  color: colors.pink300,
+                  ...stylesCommon.fontSarabun500,
+                }}>
+                {t('pregnancyProgram.privacy')}
+              </Text>
+            </Text>
+          </View>
         </View>
       </FormikProvider>
     </SafeAreaView>
@@ -191,7 +187,6 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: scaler(24),
-    fontWeight: '600',
     textAlign: 'center',
     ...stylesCommon.fontWeight600,
   },
@@ -214,7 +209,6 @@ const styles = StyleSheet.create({
   },
   textLabel: {
     fontSize: scaler(13),
-    fontWeight: '500',
     color: colors.gray50,
     marginTop: scaler(20),
     textAlign: 'center',
@@ -223,7 +217,6 @@ const styles = StyleSheet.create({
   input: {
     textAlign: 'center',
     fontSize: scaler(16),
-    fontWeight: '500',
     paddingTop: scaler(10),
     ...stylesCommon.fontWeight400,
   },
@@ -237,7 +230,6 @@ const styles = StyleSheet.create({
   },
   textDone: {
     fontSize: scaler(15),
-    fontWeight: '600',
     color: colors.white,
     ...stylesCommon.fontSarabun600,
   },
@@ -251,7 +243,7 @@ const styles = StyleSheet.create({
   },
   textCancel: {
     fontSize: scaler(14),
-    fontWeight: '500',
     color: colors.textColor,
+    ...stylesCommon.fontWeight500,
   },
 });

@@ -39,7 +39,9 @@ const AuthAddBabySuccess = (props: any) => {
 
         <Image
           source={
-            params?.data?.image ? {uri: params?.data?.image?.url} : LogoApp
+            params?.data?.image
+              ? {uri: params?.data?.image?.url || params?.data?.image}
+              : LogoApp
           }
           style={{height: SCREEN_WIDTH, width: '100%'}}
           resizeMode="contain"

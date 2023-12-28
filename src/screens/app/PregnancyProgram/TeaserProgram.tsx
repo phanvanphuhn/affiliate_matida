@@ -84,6 +84,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           style={{
             width: '100%',
             aspectRatio: 3 / 2,
+            marginTop: scaler(16),
           }}
         />
         <Text style={styles.textItemName}>{item.name}</Text>

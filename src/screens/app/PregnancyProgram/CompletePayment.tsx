@@ -272,6 +272,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
+              disabled={true}
               onPress={() => {
                 handlePurchase(PRODUCT_ID_PAY);
               }}
@@ -324,7 +325,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   {t('pregnancyProgram.transactionAmount')}
                 </Text>
                 <Text style={styles.input}>{`${t('payment.pay', {
-                  money: formatPrice(plan?.price),
+                  money: formatPrice(plan?.price / 1000),
                   currency: plan?.currency,
                 })}`}</Text>
                 <TouchableOpacity

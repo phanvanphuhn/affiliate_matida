@@ -645,6 +645,15 @@ export const en = {
     addNewBornFail: 'Add new born fail',
     pleaseTryAgain: 'Please try again.',
     success: 'Success!',
+    pleaseEnterName: 'Please enter your name',
+    pleaseEnterValidName: 'Special characters are not allowed in the name',
+    pleaseEnterPhone: 'Please enter your phone number',
+    pleaseEnterValidPhone: 'Please enter validate phone number',
+    pleaseEnterPregnancyWeek: 'Please enter your pregnancy week',
+    pleaseEnterValidPregnancyWeek:
+      'Please enter a valid integer for pregnancy week',
+    pregnancyWeekCannot: 'Pregnancy week cannot be higher than 40',
+    pregnancyWeekCannotLower: 'Pregnancy week cannot be lower than 1',
   },
   deal: {
     by: 'by',

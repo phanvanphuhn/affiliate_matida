@@ -187,7 +187,8 @@ const ProfileSettingsScreen = () => {
           username: values?.username,
           pregnant_type: pregnant_type,
           avatar: imageUrlApi,
-          phone_number: values?.phone_number,
+          phone_number:
+            values?.phone_number.length > 0 ? values?.phone_number : null,
           calling_code:
             values?.phone_number.length > 0 ? `+${phoneCode}` : null,
           country_code: countryCode,
@@ -220,7 +221,8 @@ const ProfileSettingsScreen = () => {
           pregnant_type: pregnant_type,
           email: values?.email,
           avatar: imageUrlApi,
-          phone_number: values?.phone_number,
+          phone_number:
+            values?.phone_number.length > 0 ? values?.phone_number : null,
           calling_code:
             values?.phone_number.length > 0 ? `+${phoneCode}` : null,
           country_code: countryCode,
