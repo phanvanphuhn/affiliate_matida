@@ -22,7 +22,9 @@ interface PregnancyProgramProps {}
 const PregnancyProgram = (props: PregnancyProgramProps) => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigation = useNavigation<any>();
-  const week = useSelector((state: any) => state?.home?.week - 4);
+  const week = useSelector((state: any) =>
+    state?.home?.week <= 4 ? 4 : state?.home?.week,
+  );
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   const {t} = useTranslation();

@@ -29,14 +29,18 @@ interface ListWeekProps {
 }
 const ListWeek = (props: ListWeekProps) => {
   const [state, setState] = useState([]);
-  const week = useSelector((state: any) => state?.home?.week - 4);
+  const week = useSelector((state: any) =>
+    state?.home?.week <= 4 ? 4 : state?.home?.week,
+  );
+  console.log('=>(ListWeek.tsx:33) week', week);
   const flatlistRef = useRef<FlatList>();
   const {t} = useTranslation();
 
   useEffect(() => {
     const getData = () => {
-      let data = Array.from({length: 38}, (x, i) => ({
+      let data = Array.from({length: 40}, (x, i) => ({
         name: `Week ${i + 1}`,
+        week: i + 1,
         status:
           i + 1 < week ? 'Completed' : i + 1 == week ? 'Happening' : 'Upcoming',
       }));
@@ -48,7 +52,7 @@ const ListWeek = (props: ListWeekProps) => {
     if (flatlistRef.current && state?.length) {
       setTimeout(() => {
         flatlistRef.current?.scrollToIndex({
-          index: week - 1,
+          index: week - 4,
           animated: true,
         });
       }, 1000);
@@ -162,9 +166,12 @@ const ListWeek = (props: ListWeekProps) => {
   }, []);
 
   const renderItem: ListRenderItem<any> = ({item, index}) => {
+    if (item.week < 4) {
+      return null;
+    }
     return (
       <View style={{flexDirection: 'row'}}>
-        {index == 0 ? null : (
+        {index < 4 ? null : (
           <View style={styles.containerDashed}>{renderLine(item)}</View>
         )}
         <TouchableOpacity

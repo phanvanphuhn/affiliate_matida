@@ -36,6 +36,7 @@ import {event, eventType, trackingAppEvent} from '@util';
 import {useTranslation} from 'react-i18next';
 import {GlobalService} from '@services';
 import {getQuestionOnboarding} from '../services/pregnancyProgram';
+import useCheckPregnancy from '../util/hooks/useCheckPregnancy';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -49,8 +50,8 @@ type Props = {
 
 const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const {t} = useTranslation();
-  const user = useSelector((state: any) => state?.auth?.userInfo);
   const dispatch = useDispatch();
+  const checkPlan = useCheckPregnancy();
 
   const isCallExplore = useRef<boolean>(true);
 
@@ -143,32 +144,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
       isCallExplore.current = false;
     }
   };
-  const getDataQuestion = async () => {
-    let result = await getQuestionOnboarding();
-    if (result?.data?.user_score?.score) {
-      navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED, {
-        metadata: result?.data?.user_score?.metadata,
-        score: result?.data?.user_score?.score,
-      });
-    } else {
-      navigation.navigate(ROUTE_NAME.ONBOARDING_STEP, {
-        packageQuizz: result?.data?.package_quizz,
-      });
-    }
-  };
-  const checkPlan = () => {
-    if (user.user_subscriptions.some(e => e.code == 'PP')) {
-      navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
-    } else {
-      if (user.payments.some(e => e.status == 'processing')) {
-        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
-          values: user.payments.find(e => e.status == 'processing'),
-        });
-      } else {
-        getDataQuestion();
-      }
-    }
-  };
+
   return (
     <View style={styles.container}>
       {state.routes.map((route: any, index: number) => {

@@ -26,6 +26,9 @@ import {getUserTask} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import {GlobalService} from '@services';
 import {useTranslation} from 'react-i18next';
+import {event, eventType, trackingAppEvent} from '@util';
+import {navigate} from '@navigation';
+import {EPreRoute} from '@constant';
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -39,7 +42,9 @@ interface ListProgramProps {
 const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
   const navigation = useNavigation<any>();
-  const week = useSelector((state: any) => state?.home?.week - 4);
+  const week = useSelector((state: any) =>
+    state?.home?.week <= 4 ? 4 : state?.home?.week,
+  );
   const {t} = useTranslation();
   const getTitle = (type: string) => {
     switch (type) {
@@ -124,6 +129,7 @@ const ListProgram = (props: ListProgramProps) => {
     }, [props?.currentWeek, props?.tabIndex]),
   );
   const onDetail = (item: any) => {
+    console.log('=>(ListProgram.tsx:154) item?.task?.type', item?.task?.type);
     switch (item?.task?.type) {
       case 'input_data':
         console.log('=>(ListProgram.tsx:125) props?.tabIndex', props?.tabIndex);
@@ -136,6 +142,27 @@ const ListProgram = (props: ListProgramProps) => {
         navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
           item,
         });
+        break;
+      case 'auto':
+        if (props.tabIndex == 1) {
+          navigate(ROUTE_NAME.TEST_RESULT, {
+            id: item?.task?.link?.replace(
+              RegExp('matida://mom-prep-test/'),
+              '',
+            ),
+            redoTest: () => {},
+            preRoute: EPreRoute.TEST_DETAIL,
+          });
+        } else {
+          navigate(ROUTE_NAME.TEST_DETAIL, {
+            quiz: {
+              id: item?.task?.link?.replace(
+                RegExp('matida://mom-prep-test/'),
+                '',
+              ),
+            },
+          });
+        }
         break;
       default:
         navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {

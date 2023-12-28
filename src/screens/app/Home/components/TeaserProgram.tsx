@@ -16,6 +16,9 @@ import {Pagination} from 'react-native-snap-carousel';
 import {goBack} from '@navigation';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
+import {getQuestionOnboarding} from '../../../../services/pregnancyProgram';
+import {useSelector} from 'react-redux';
+import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -23,10 +26,9 @@ interface TeaserProgramProps {
 const TeaserProgram = (props: TeaserProgramProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const navigation = useNavigation<any>();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  const checkPlan = useCheckPregnancy();
 
-  const onSignUpNow = () => {
-    navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
-  };
   return (
     <View style={[styles.container, {}]}>
       <View
@@ -55,7 +57,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           </Text>
           <Text style={styles.textPrice1}>Matida Masterclass</Text>
         </View>
-        <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
+        <TouchableOpacity onPress={checkPlan} style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>Sign up now</Text>
         </TouchableOpacity>
       </View>

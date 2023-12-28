@@ -29,12 +29,17 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const userInfo = useSelector((state: any) => state?.auth?.userInfo);
-  const isPaymentProcessing = useMemo(() =>
-    userInfo?.payments?.some(e => e.status == 'processing'),
-  );
+  const paymentProcessing = useMemo(() => userInfo?.payments);
 
   const onPaymentFinish = () => {
-    if (isPaymentProcessing) {
+    console.log(
+      '=>(VerifyPayment.tsx:37) isPaymentProcessing',
+      paymentProcessing,
+    );
+    if (
+      !paymentProcessing?.length ||
+      paymentProcessing?.some(e => e.status == 'processing')
+    ) {
       navigation.navigate(ROUTE_NAME.TAB_HOME);
     } else {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);

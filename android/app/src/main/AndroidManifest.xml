@@ -16,6 +16,9 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
     <application
       android:name=".MainApplication"
@@ -109,6 +112,6 @@
       </provider>
       <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_ovhk6O9nO0H4a2kWA1JocejpEsoO1M7i" />
         <!-- <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_hlxrWC5Zx16DkYmWu4AHiimdqugRYMr" /> -->
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" /> 
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
     </application>
 </manifest>
