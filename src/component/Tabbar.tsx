@@ -160,8 +160,10 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
     if (user.user_subscriptions.some(e => e.code == 'PP')) {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
     } else {
-      if (user.payments.some(e => e.processing)) {
-        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT);
+      if (user.payments.some(e => e.status == 'processing')) {
+        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+          values: user.payments.find(e => e.status == 'processing'),
+        });
       } else {
         getDataQuestion();
       }

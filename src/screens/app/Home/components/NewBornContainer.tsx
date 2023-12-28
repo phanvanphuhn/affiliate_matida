@@ -143,7 +143,7 @@ const NewBornContainer = (props: TProps) => {
           <FastImage
             source={
               isSelectProfileNewBorn &&
-              isSelectProfileNewBorn[0]?.avatar.length > 0
+              isSelectProfileNewBorn[0]?.avatar?.length > 0
                 ? {uri: isSelectProfileNewBorn[0]?.avatar}
                 : newBornBaby
             }

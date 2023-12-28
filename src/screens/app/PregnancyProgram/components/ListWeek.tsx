@@ -163,11 +163,7 @@ const ListWeek = (props: ListWeekProps) => {
 
   const renderItem: ListRenderItem<any> = ({item, index}) => {
     return (
-      <View
-        onLayout={e => {
-          console.log('=>(ListWeek.tsx:165) e', e.nativeEvent.layout);
-        }}
-        style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row'}}>
         {index == 0 ? null : (
           <View style={styles.containerDashed}>{renderLine(item)}</View>
         )}

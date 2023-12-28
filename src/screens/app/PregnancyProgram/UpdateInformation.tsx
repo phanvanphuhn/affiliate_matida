@@ -25,26 +25,62 @@ import useStateCustom from '../../../util/hooks/useStateCustom';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {useTranslation} from 'react-i18next';
+import {FormikProvider, useFormik} from 'formik';
+import FormInput from './components/FormInput';
+import validation from './validation';
+import {GlobalService} from '@services';
+import {requestSubcribePlan} from '../../../services/pregnancyProgram';
+import {showMessage} from 'react-native-flash-message';
 
 interface UpdateInformationProps {}
+export interface UpdateInformationState {
+  name: string;
+  pregnant_week: string;
+  phone: string;
+}
 
 const UpdateInformation = (props: UpdateInformationProps) => {
-  const [state, setState] = useStateCustom({
-    yourName: 'Nguyễn Thị Mama',
-    pregnancyWeek: '8',
-    phoneNumber: '0123456789',
-    address: '111 Road 123, Ben Nghe Ward, District 1, Ho Chi Minh City',
-  });
-
   const {t} = useTranslation();
 
-  const onChangeText = (key: string) => (text: string) => {
-    setState({[key]: text});
+  const handleSubcribePlan = async (metadata: UpdateInformationState) => {
+    try {
+      let data = {
+        plan_code: 'PP',
+        payment_method: 'bank_transfer',
+        metadata: metadata,
+      };
+      GlobalService.showLoading();
+      let res = await requestSubcribePlan(data);
+      if (res?.success) {
+        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+          values: res?.data,
+        });
+      }
+    } catch (err) {
+      showMessage({
+        message: err?.response?.data?.message,
+        type: 'danger',
+        backgroundColor: colors.primaryBackground,
+      });
+    } finally {
+      GlobalService.hideLoading();
+    }
   };
+  const formik = useFormik<UpdateInformationState>({
+    initialValues: {
+      name: '',
+      pregnant_week: '',
+      phone: '',
+    },
+    validationSchema: validation,
+    onSubmit: async values => {
+      handleSubcribePlan(values);
+    },
+  });
 
   const navigation = useNavigation<any>();
   const onNext = () => {
-    navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT);
+    formik.handleSubmit();
   };
   const onPolicy = async () => {
     let url = 'https://docs.matida.app/privacy-policy/en';
@@ -55,99 +91,87 @@ const UpdateInformation = (props: UpdateInformationProps) => {
   };
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={goBack} style={styles.buttonBack}>
-          <Image source={iconClose} />
-        </TouchableOpacity>
-        <ScrollView
-          bounces={false}
-          contentContainerStyle={{paddingBottom: 50}}
-          showsVerticalScrollIndicator={false}>
-          <Text style={styles.textTitle}>
-            {t('pregnancyProgram.updateInformation')}
-          </Text>
-          <Text style={styles.textSubTitle}>
-            {t('pregnancyProgram.pleaseFill')}
-          </Text>
-
-          <ImageBackground source={ic_background}>
-            <SvgPathBottom />
-            <View style={styles.containerInput}>
-              <Text style={styles.textLabel}>
-                {t('pregnancyProgram.yourName')}
-              </Text>
-              <TextInput
-                value={state.yourName}
-                onChangeText={onChangeText('yourName')}
-                style={styles.input}
-                placeholder={t('pregnancyProgram.yourName') as string}
-              />
-              <Text style={styles.textLabel}>
-                {t('pregnancyProgram.phoneNumber')}
-              </Text>
-              <TextInput
-                maxLength={10}
-                value={state.phoneNumber}
-                onChangeText={onChangeText('phoneNumber')}
-                keyboardType={'number-pad'}
-                style={styles.input}
-                placeholder={t('pregnancyProgram.phoneNumber') as string}
-              />
-              <Text style={styles.textLabel}>
-                {t('pregnancyProgram.yourPregnancyWeek')}
-              </Text>
-              <TextInput
-                style={styles.input}
-                value={state.pregnancyWeek}
-                onChangeText={onChangeText('pregnancyWeek')}
-                placeholder={t('pregnancyProgram.yourPregnancyWeek') as string}
-                maxLength={2}
-                keyboardType={'number-pad'}
-              />
-            </View>
-            <SvgPathTop />
-          </ImageBackground>
-
-          <View
-            style={{
-              paddingHorizontal: scaler(24),
-            }}>
-            <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
-              <Text style={styles.textDone}>{t('pregnancyProgram.next')}</Text>
-            </TouchableOpacity>
-            <Text
-              style={{
-                color: colors.gray500,
-                fontWeight: '400',
-                fontSize: scaler(13),
-                textAlign: 'center',
-                marginTop: 15,
-                ...stylesCommon.fontSarabun400,
-              }}>
-              {t('pregnancyProgram.byContinue')}{' '}
-              <Text
-                onPress={onPolicy}
-                style={{
-                  color: colors.pink300,
-                  fontWeight: '500',
-                  ...stylesCommon.fontSarabun500,
-                }}>
-                {t('pregnancyProgram.terms')}
-              </Text>{' '}
-              &{' '}
-              <Text
-                onPress={onPolicy}
-                style={{
-                  color: colors.pink300,
-                  fontWeight: '500',
-                  ...stylesCommon.fontSarabun500,
-                }}>
-                {t('pregnancyProgram.privacy')}
-              </Text>
+      <FormikProvider value={formik}>
+        <View style={styles.container}>
+          <TouchableOpacity onPress={goBack} style={styles.buttonBack}>
+            <Image source={iconClose} />
+          </TouchableOpacity>
+          <ScrollView
+            bounces={false}
+            contentContainerStyle={{paddingBottom: 50}}
+            showsVerticalScrollIndicator={false}>
+            <Text style={styles.textTitle}>{t('pregnancyProgram.updateInformation')}</Text>
+            <Text style={styles.textSubTitle}>
+              {t('pregnancyProgram.pleaseFill')}
             </Text>
-          </View>
-        </ScrollView>
-      </View>
+
+            <ImageBackground source={ic_background}>
+              <SvgPathBottom />
+              <View style={styles.containerInput}>
+                <FormInput
+                  name={'name'}
+                  title={{t('pregnancyProgram.yourName')}}
+                  placeholder={t('pregnancyProgram.yourName') as string}
+                />
+                <FormInput
+                  maxLength={10}
+                  keyboardType={'number-pad'}
+                  name={'phone'}
+                  title={{t('pregnancyProgram.phoneNumber')}}
+                  placeholder={t('pregnancyProgram.phoneNumber') as string}
+                />
+                <FormInput
+                  name={'pregnant_week'}
+                  title={{t('pregnancyProgram.yourPregnancyWeek')}}
+                  placeholder={t('pregnancyProgram.yourPregnancyWeek') as string}
+                  maxLength={2}
+                  keyboardType={'number-pad'}
+                />
+              </View>
+              <SvgPathTop />
+            </ImageBackground>
+
+            <View
+              style={{
+                paddingHorizontal: scaler(24),
+              }}>
+              <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
+                <Text style={styles.textDone}>{t('pregnancyProgram.next')}</Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  color: colors.gray500,
+                  fontWeight: '400',
+                  fontSize: scaler(13),
+                  textAlign: 'center',
+                  marginTop: 15,
+                  ...stylesCommon.fontSarabun400,
+                }}>
+                {t('pregnancyProgram.byContinue')}{' '}
+                <Text
+                  onPress={onPolicy}
+                  style={{
+                    color: colors.pink300,
+                    fontWeight: '500',
+                    ...stylesCommon.fontSarabun500,
+                  }}>
+                  {t('pregnancyProgram.terms')}
+                </Text>{' '}
+                &{' '}
+                <Text
+                  onPress={onPolicy}
+                  style={{
+                    color: colors.pink300,
+                    fontWeight: '500',
+                    ...stylesCommon.fontSarabun500,
+                  }}>
+                  {t('pregnancyProgram.privacy')}
+                </Text>
+              </Text>
+            </View>
+          </ScrollView>
+        </View>
+      </FormikProvider>
     </SafeAreaView>
   );
 };

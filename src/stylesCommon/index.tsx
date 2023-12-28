@@ -53,6 +53,7 @@ const colors = {
   red50: '#E66D6E',
   red100: '#FF0909',
   red150: '#AE5151',
+  red200: '#F76464',
   black: '#000000',
   black10: '#050505',
   purple: '#654AC9',

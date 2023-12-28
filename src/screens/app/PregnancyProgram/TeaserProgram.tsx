@@ -154,7 +154,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         <View
           style={{
             flex: 1,
-            marginTop: widthScreen / 2 + (isIphoneX() ? 15 : -10),
+            marginTop: widthScreen / 2 + (isIphoneX() ? 10 : 0),
           }}>
           <View
             style={{
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     transform: [{scaleX: 1.04}],
     alignItems: 'center',
     position: 'absolute',
-    top: -widthScreen / 2 + (isIphoneX() ? 70 : 40),
+    top: -widthScreen / 2 + (isIphoneX() ? 60 : 50),
   },
   buttonClose: {
     alignSelf: 'flex-end',
