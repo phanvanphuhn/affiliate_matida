@@ -100,7 +100,9 @@ const UpdateInformation = (props: UpdateInformationProps) => {
             bounces={false}
             contentContainerStyle={{paddingBottom: 50}}
             showsVerticalScrollIndicator={false}>
-            <Text style={styles.textTitle}>{t('pregnancyProgram.updateInformation')}</Text>
+            <Text style={styles.textTitle}>
+              {t('pregnancyProgram.updateInformation')}
+            </Text>
             <Text style={styles.textSubTitle}>
               {t('pregnancyProgram.pleaseFill')}
             </Text>
@@ -110,20 +112,20 @@ const UpdateInformation = (props: UpdateInformationProps) => {
               <View style={styles.containerInput}>
                 <FormInput
                   name={'name'}
-                  title={{t('pregnancyProgram.yourName')}}
-                  placeholder={t('pregnancyProgram.yourName') as string}
+                  title={t('pregnancyProgram.yourName')}
+                  placeholder={t('pregnancyProgram.yourName')}
                 />
                 <FormInput
                   maxLength={10}
                   keyboardType={'number-pad'}
                   name={'phone'}
-                  title={{t('pregnancyProgram.phoneNumber')}}
-                  placeholder={t('pregnancyProgram.phoneNumber') as string}
+                  title={t('pregnancyProgram.phoneNumber')}
+                  placeholder={t('pregnancyProgram.phoneNumber')}
                 />
                 <FormInput
                   name={'pregnant_week'}
-                  title={{t('pregnancyProgram.yourPregnancyWeek')}}
-                  placeholder={t('pregnancyProgram.yourPregnancyWeek') as string}
+                  title={t('pregnancyProgram.yourPregnancyWeek')}
+                  placeholder={t('pregnancyProgram.yourPregnancyWeek')}
                   maxLength={2}
                   keyboardType={'number-pad'}
                 />
@@ -136,7 +138,9 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                 paddingHorizontal: scaler(24),
               }}>
               <TouchableOpacity onPress={onNext} style={styles.buttonDone}>
-                <Text style={styles.textDone}>{t('pregnancyProgram.next')}</Text>
+                <Text style={styles.textDone}>
+                  {t('pregnancyProgram.next')}
+                </Text>
               </TouchableOpacity>
               <Text
                 style={{

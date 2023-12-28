@@ -78,6 +78,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
 
   const onSubmit = async () => {
     try {
+      GlobalService.showLoading();
       let listAnswer: any = state.answers || {};
       let data = Object.keys(listAnswer).map((key: any) => {
         let value = listAnswer[key];
@@ -101,6 +102,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
         backgroundColor: colors.primaryBackground,
       });
     } finally {
+      GlobalService.hideLoading();
     }
   };
   const getDataQuestion = async () => {

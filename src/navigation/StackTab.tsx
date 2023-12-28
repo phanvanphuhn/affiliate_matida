@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import PregnancyProgram from '../screens/app/PregnancyProgram';
 import {navigate} from './NavigationUtils';
 import {TouchableOpacity} from 'react-native';
+import {useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,8 @@ const screenOptions = {
 
 const StackTab = () => {
   //Render ra bottomTab
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   return (
     <Tab.Navigator
       //Custom bottomTab
@@ -25,7 +28,11 @@ const StackTab = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={ROUTE_NAME.TAB_HOME}>
+      initialRouteName={
+        user?.user_subscriptions?.some(e => e.code == 'PP')
+          ? ROUTE_NAME.PREGNANCY_PROGRAM
+          : ROUTE_NAME.TAB_HOME
+      }>
       <Tab.Screen name={ROUTE_NAME.TAB_HOME} component={screens.Home} />
       <Tab.Screen name={ROUTE_NAME.TAB_FEED} component={screens.Feed} />
       {/* <Tab.Screen name={ROUTE_NAME.TAB_EXPLORE} component={screens.Explore} /> */}

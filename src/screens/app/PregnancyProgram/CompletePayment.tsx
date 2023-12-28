@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Image,
   ImageBackground,
+  PermissionsAndroid,
   Platform,
   ScrollView,
   StyleSheet,
@@ -130,26 +131,6 @@ const CompletePayment = (props: CompletePaymentProps) => {
     }
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     GlobalService.showLoading();
-  //     const getPurchase = async () => {
-  //       try {
-  //         const result = await getAvailablePurchases();
-  //         const hasPurchased = result?.find(
-  //           product => product.productId === PRODUCT_ID_PAY,
-  //         );
-  //         console.log('=>(CompletePayment.tsx:103) hasPurchased', hasPurchased);
-  //         GlobalService.hideLoading();
-  //       } catch (error) {
-  //         GlobalService.hideLoading();
-  //         console.error('Error occurred while fetching purchases', error);
-  //       }
-  //     };
-  //
-  //     getPurchase();
-  //   }, []),
-  // );
   useEffect(() => {
     getData();
     initialize();
@@ -163,17 +144,10 @@ const CompletePayment = (props: CompletePaymentProps) => {
   console.log('=>(CompletePayment.tsx:108) subscriptions', subscriptions);
   const handlePurchase = async (sku: string) => {
     try {
-      let available = await getSubscriptions({skus: [PRODUCT_ID_PAY]});
-      let offerToken: string | undefined = subscriptions[0]
-        ?.subscriptionOfferDetails
-        ? (subscriptions[0]?.subscriptionOfferDetails || [])?.[0]?.offerToken
-        : undefined;
-      console.log('=>(CompletePayment.tsx:102) available', offerToken);
-      let purchase = await requestSubscription({
+      let available = await getProducts({skus: [PRODUCT_ID_PAY]});
+      let purchase = await requestPurchase({
         sku,
-        ...(offerToken && {
-          subscriptionOffers: [{sku: sku, offerToken}],
-        }),
+        skus: [PRODUCT_ID_PAY],
         andDangerouslyFinishTransactionAutomaticallyIOS: false,
       });
       finishTransaction({
@@ -205,28 +179,72 @@ const CompletePayment = (props: CompletePaymentProps) => {
     Clipboard.setString(value);
     showMessage({message: 'Copy success', type: 'success'});
   };
+  async function hasAndroidPermission() {
+    const getCheckPermissionPromise = () => {
+      if (Platform.Version >= 33) {
+        return Promise.all([
+          PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+          ),
+          PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+          ),
+        ]).then(
+          ([hasReadMediaImagesPermission, hasReadMediaVideoPermission]) =>
+            hasReadMediaImagesPermission && hasReadMediaVideoPermission,
+        );
+      } else {
+        return PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        );
+      }
+    };
 
-  const onDownloadQrCode = () => {
-    QrRef.current.toDataURL((data: any) => {
-      RNFS.writeFile(
-        RNFS.CachesDirectoryPath + '/qr-matida.png',
-        data,
-        'base64',
-      )
-        .then(success => {
-          return CameraRoll.saveToCameraRoll(
-            RNFS.CachesDirectoryPath + '/qr-matida.png',
-            'photo',
-          );
-        })
-        .then(() => {
-          showMessage({
-            message: 'Saved file success!',
-            type: 'success',
-          });
-        });
-    });
-  };
+    const hasPermission = await getCheckPermissionPromise();
+    if (hasPermission) {
+      return true;
+    }
+    const getRequestPermissionPromise = () => {
+      if (Platform.Version >= 33) {
+        return PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+        ]).then(
+          statuses =>
+            statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
+              PermissionsAndroid.RESULTS.GRANTED &&
+            statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
+              PermissionsAndroid.RESULTS.GRANTED,
+        );
+      } else {
+        return PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
+      }
+    };
+
+    return await getRequestPermissionPromise();
+  }
+
+  async function savePicture() {
+    try {
+      if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+        return;
+      }
+
+      let result = await CameraRoll.save(
+        route?.params?.values?.metadata?.bank_account?.qr_code || '',
+        {type: 'photo', album: 'matida'},
+      );
+      showMessage({
+        message: 'Saved file success!',
+        type: 'success',
+      });
+      console.log('=>(CompletePayment.tsx:265) result', result);
+    } catch (error) {
+      console.log('=>(CompletePayment.tsx:417) error', error);
+    }
+  }
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
       <View style={[styles.container]}>
@@ -270,16 +288,20 @@ const CompletePayment = (props: CompletePaymentProps) => {
             <View style={styles.containerInput}>
               <View style={{width: '100%'}}>
                 <View style={{alignItems: 'center'}}>
-                  <QRCode
-                    value="Matida"
-                    logo={ic_logo_round}
-                    logoSize={32}
-                    logoBorderRadius={32}
-                    getRef={r => (QrRef.current = r)}
+                  <Image
+                    source={{
+                      uri:
+                        route?.params?.values?.metadata?.bank_account
+                          ?.qr_code || '',
+                    }}
+                    style={{
+                      height: scaler(112),
+                      width: scaler(112),
+                    }}
                   />
                 </View>
                 <TouchableOpacity
-                  onPress={onDownloadQrCode}
+                  onPress={savePicture}
                   style={styles.buttonCopy}>
                   <Image source={ic_download} />
                 </TouchableOpacity>
@@ -288,10 +310,12 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 <Text style={styles.textLabel}>
                   {t('pregnancyProgram.transactionContent')}
                 </Text>
-                <Text style={styles.input}>{route?.params?.values?.verify_code}</Text>
+                <Text style={styles.input}>
+                  {route?.params?.values?.verify_code}
+                </Text>
                 <TouchableOpacity
-                    onPress={onCopy(route?.params?.values?.verify_code)}
-                    style={styles.buttonCopy}>
+                  onPress={onCopy(route?.params?.values?.verify_code)}
+                  style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
@@ -304,8 +328,8 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   currency: plan?.currency,
                 })}`}</Text>
                 <TouchableOpacity
-                    onPress={onCopy(plan?.price)}
-                    style={styles.buttonCopy}>
+                  onPress={onCopy(plan?.price)}
+                  style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
@@ -313,10 +337,12 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 <Text style={styles.textLabel}>
                   {t('pregnancyProgram.bankAccount')}
                 </Text>
-                <Text style={styles.input}>{plan?.bank_account?.bank_account_number}</Text>
+                <Text style={styles.input}>
+                  {plan?.bank_account?.bank_account_number}
+                </Text>
                 <TouchableOpacity
-                    onPress={onCopy(plan?.bank_account?.bank_account_number)}
-                    style={styles.buttonCopy}>
+                  onPress={onCopy(plan?.bank_account?.bank_account_number)}
+                  style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
               </View>
@@ -324,13 +350,17 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 <Text style={styles.textLabel}>
                   {t('pregnancyProgram.bank')}
                 </Text>
-                <Text style={styles.input}>{plan?.bank_account?.bank_name}</Text>
+                <Text style={styles.input}>
+                  {plan?.bank_account?.bank_name}
+                </Text>
               </View>
               <View>
                 <Text style={styles.textLabel}>
                   {t('pregnancyProgram.accountOwner')}
                 </Text>
-                <Text style={styles.input}>{plan?.bank_account?.bank_account_name}</Text>
+                <Text style={styles.input}>
+                  {plan?.bank_account?.bank_account_name}
+                </Text>
                 {/*<Text style={styles.input2}>MST: 123456789</Text>*/}
               </View>
             </View>

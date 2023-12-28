@@ -32,6 +32,7 @@ import RenderHtml from 'react-native-render-html';
 import CustomImageRenderer from '../DetailFeed/components/CustomImageRenderer';
 import {tagsStyles} from '../DetailFeed/components/settingsHtml';
 import {showMessage} from 'react-native-flash-message';
+import {GlobalService} from '@services';
 
 interface DetailTaskProgramProps {}
 
@@ -41,9 +42,15 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
   const route = useRoute<any>();
   console.log('=>(DetailTaskProgram.tsx:32) route', route);
   const getData = async () => {
-    let result = await getContentUserTask(route?.params?.item?.id);
-    if (result?.success) {
-      setContent(result?.data?.content?.content);
+    try {
+      GlobalService.showLoading();
+      let result = await getContentUserTask(route?.params?.item?.id);
+      if (result?.success) {
+        setContent(result?.data?.content?.content);
+      }
+    } catch (e) {
+    } finally {
+      GlobalService.hideLoading();
     }
   };
 

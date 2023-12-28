@@ -13,14 +13,11 @@ interface FormInputProps extends TextInputProps {
 const FormInput = (props: FormInputProps) => {
   const {handleChange, values, errors, touched} =
     useFormikContext<UpdateInformationState>();
-  console.log('=>(FormInput.tsx:16) touched', touched);
   const error = useMemo(() => getIn(errors, props.name), [errors, props.name]);
-  console.log('=>(FormInput.tsx:17) error', error);
   const isTouched = useMemo(
     () => getIn(touched, props.name),
     [props.name, touched],
   );
-  console.log('=>(FormInput.tsx:22) isTouched', isTouched);
   return (
     <View style={styles.container}>
       <Text style={styles.textLabel}>{props.title}</Text>
