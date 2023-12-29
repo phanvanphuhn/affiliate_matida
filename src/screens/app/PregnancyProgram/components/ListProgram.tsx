@@ -42,6 +42,8 @@ interface ListProgramProps {
 const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
   const navigation = useNavigation<any>();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
   const week = useSelector((state: any) =>
     !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
       ? 4
@@ -298,7 +300,7 @@ const ListProgram = (props: ListProgramProps) => {
                         <View style={{flex: 1}}>
                           <View style={{flex: 1}}>
                             <Text style={styles.textChild}>
-                              {e?.task?.name_en}
+                              {lang == 1 ? e?.task?.name_en : e?.task?.name_vi}
                             </Text>
                             <Text style={styles.textChildDesc}>
                               {e.task?.categories?.[0]?.split('_').join(' ')}
