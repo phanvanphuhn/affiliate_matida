@@ -31,6 +31,7 @@ import {GlobalService, uploadImage} from '@services';
 import {useRoute} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
 
 interface MomDiaryProps {}
 interface IState {
@@ -43,7 +44,7 @@ interface IState {
 }
 const MomDiary = (props: MomDiaryProps) => {
   const route = useRoute<any>();
-  console.log('=>(MomDiary.tsx:43) route', route);
+  const lang = useSelector((state: any) => state?.auth?.lang);
   const {t} = useTranslation();
   const [state, setState] = useStateCustom<IState>({
     visible: false,
@@ -112,6 +113,7 @@ const MomDiary = (props: MomDiaryProps) => {
   const onRemove = () => {
     setState({image: '', imageTemp: '', isSave: true});
   };
+
   return (
     <View style={styles.container}>
       <Header
@@ -199,12 +201,12 @@ const MomDiary = (props: MomDiaryProps) => {
           <View style={{padding: 16}}>
             <Text style={styles.textUpload}>
               {route?.params?.type == 'review'
-                ? `${t('momDiary.week')} ${route?.params?.item?.week}`
+                ? `${t('momDiary.week')} ${route?.params?.item?.week || 1}`
                 : t('momDiary.uploadPicture')}
             </Text>
             {route?.params?.type != 'review' && (
               <Text style={styles.textWeek}>
-                {`${t('momDiary.week')} ${route?.params?.item?.week} ${t(
+                {`${t('momDiary.week')} ${route?.params?.item?.week || 1} ${t(
                   'momDiary.messageBaby',
                 )}`}
               </Text>
@@ -216,7 +218,9 @@ const MomDiary = (props: MomDiaryProps) => {
                 zIndex: 999,
                 ...stylesCommon.fontWeight600,
               }}>
-              {route?.params?.item?.task?.name_en}
+              {lang == 1
+                ? route?.params?.item?.task?.name_en
+                : route?.params?.item?.task?.name_vi}
             </Text>
             <TextInput
               placeholder={t('momDiary.writeSomething') as string}

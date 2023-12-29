@@ -218,7 +218,7 @@ export const en = {
     home: 'Tracker',
     community: 'Community',
     deal: 'Deals',
-    program: 'Program',
+    program: 'Masterclass',
   },
   popularArticles: 'More to read',
   seeMore: 'See more',

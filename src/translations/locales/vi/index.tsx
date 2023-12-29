@@ -220,7 +220,7 @@ export const vi = {
     home: 'Theo dõi',
     community: 'Forum',
     deal: 'Ưu đãi',
-    program: 'Chương trình',
+    program: 'Masterclass',
   },
   popularArticles: 'Đọc nhiều hơn',
   seeMore: 'Xem thêm',
@@ -854,7 +854,7 @@ export const vi = {
     save: 'Lưu',
     momDesc:
       'Mẹ hãy nhớ điền vào nhật ký này mỗi tuần nhé. Vào cuối thai kỳ, Matida có một món quà dành cho bạn.',
-    week: 'Tuấn',
+    week: 'Tuần',
     uploadPicture: 'Hãy tải lên ảnh của mẹ tuần thai này nhé',
     messageBaby: 'gửi lời nhắn đến em bé của bạn',
     writeSomething: 'Hãy viết gì đó nhé ',
