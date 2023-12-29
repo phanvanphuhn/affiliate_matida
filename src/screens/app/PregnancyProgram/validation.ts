@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import * as Yup from 'yup';
+const nameRegExp = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF\s]+$/;
 
 const validation = Yup.object().shape({
   name: Yup.string()
     .required('error.pleaseEnterName')
-    .matches(/^[a-zA-Z\s]+$/, 'error.pleaseEnterValidName'),
+    .matches(nameRegExp, 'error.pleaseEnterValidName'),
   phone: Yup.string()
     .required('error.pleaseEnterPhone')
     .min(10, 'error.pleaseEnterValidPhone'),

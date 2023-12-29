@@ -195,20 +195,24 @@ export const Forum = () => {
             </View>
           )}
           <View style={{flex: 1}}>
-            <Text
-              style={{
-                fontSize: scaler(18),
-                paddingHorizontal: scaler(16),
-                marginBottom: scaler(8),
-                marginTop:
-                  data?.expertLiveTalk?.filter(item => item?.room?.status !== 3)
-                    ?.length > 0
-                    ? 0
-                    : scaler(16),
-                ...stylesCommon.fontWeight600,
-              }}>
-              {t('newFeed.titleHeader')}
-            </Text>
+            {data?.expertLiveTalk?.filter(item => item?.room?.status !== 3)
+              ?.length > 0 && (
+              <Text
+                style={{
+                  fontSize: scaler(18),
+                  paddingHorizontal: scaler(16),
+                  marginBottom: scaler(8),
+                  marginTop:
+                    data?.expertLiveTalk?.filter(
+                      item => item?.room?.status !== 3,
+                    )?.length > 0
+                      ? 0
+                      : scaler(16),
+                  ...stylesCommon.fontWeight600,
+                }}>
+                {t('newFeed.titleHeader')}
+              </Text>
+            )}
             <ListPost />
           </View>
         </ScrollView>

@@ -152,7 +152,7 @@ const OnboardingV2 = () => {
   };
 
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-
+  console.log('state: ', state);
   const onValidate = () => {
     if (state.name.length && specialChars.test(state.name)) {
       return true;
@@ -230,7 +230,12 @@ const OnboardingV2 = () => {
       const response = await createBaby(params);
       const res = await selectBabyDate({
         id: response?.data?.id,
-        date: moment.utc(state.dmy, 'MM/DD/YYYY').format('YYYY-MM-DD'),
+        date: moment
+          .utc(
+            state.isKnowDueDate ? state.dmy : response?.data?.due_date,
+            state.isKnowDueDate ? 'MM/DD/YYYY' : 'YYYY/MM/DD',
+          )
+          .format('YYYY-MM-DD'),
       });
       if (res.success && response.success) {
         navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {

@@ -101,7 +101,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
             contentContainerStyle={{paddingBottom: 50}}
             showsVerticalScrollIndicator={false}>
             <Text style={styles.textTitle}>
-              {t('pregnancyProgram.updateInformation')}
+              {t('pregnancyProgram.yourInformation')}
             </Text>
             <Text style={styles.textSubTitle}>
               {t('pregnancyProgram.pleaseFill')}

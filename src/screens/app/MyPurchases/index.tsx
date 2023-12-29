@@ -40,15 +40,15 @@ const MyPurchases = () => {
             }}
           />
           <Text style={[styles.title, {marginTop: scaler(40)}]}>
-            Không có lịch sử thanh toán
+            {t('myPurchases.noPurchaseFound')}
           </Text>
           <Text style={[styles.label, {marginTop: scaler(12)}]}>
-            Hiẹn tại mẹ chưa có thanh toán nào
+            {t('myPurchases.noPurchaseHistory')}
           </Text>
           <TouchableOpacity
             style={[styles.wrapBtnContainer, {marginTop: scaler(24)}]}
             onPress={checkPlan}>
-            <Text style={styles.btnTitle}>Đăng ký ngay</Text>
+            <Text style={styles.btnTitle}>{t('myPurchases.signUpNow')}</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -56,19 +56,19 @@ const MyPurchases = () => {
           <View style={styles.wrapHeaderContainer}>
             <Text style={styles.label}>Plan</Text>
             <Text style={[styles.title, {fontSize: scaler(18)}]}>
-              499,000đ <Text style={styles.lifeTime}>/lifetime</Text>
+              499,000đ{' '}
+              <Text style={styles.lifeTime}>/{t('myPurchases.lifetime')}</Text>
             </Text>
           </View>
           <Text style={[styles.subLabel, {marginTop: scaler(8)}]}>
-            Membership might take up to 24 hours after the billing date to be
-            fully activated.
+            {t('myPurchases.billing')}
           </Text>
           <Text
             style={[
               styles.title,
               {fontSize: scaler(18), marginTop: scaler(32)},
             ]}>
-            Purchase History
+            {t('myPurchases.purchaseHistory')}
           </Text>
           <ScrollView style={{flex: 1}}>
             {user?.payments.map(item => {
@@ -87,7 +87,7 @@ const MyPurchases = () => {
                         styles.lifeTime,
                         {fontSize: scaler(15), color: colors.gray550},
                       ]}>
-                      Amount
+                      {t('myPurchases.Amount')}
                     </Text>
                     <Text style={[styles.label, {color: colors.neutral10}]}>
                       {(item?.price / 1000)
@@ -102,11 +102,11 @@ const MyPurchases = () => {
                         styles.lifeTime,
                         {fontSize: scaler(15), color: colors.gray550},
                       ]}>
-                      Method
+                      {t('myPurchases.Method')}
                     </Text>
                     <Text style={[styles.label, {color: colors.neutral10}]}>
                       {item?.payment_method == 'bank_transfer'
-                        ? 'Bank Transfer'
+                        ? t('myPurchases.bankTransfer')
                         : Platform.OS == 'ios'
                         ? 'Apple Pay'
                         : 'Google Pay'}
@@ -118,7 +118,7 @@ const MyPurchases = () => {
                         styles.lifeTime,
                         {fontSize: scaler(15), color: colors.gray550},
                       ]}>
-                      Date
+                      {t('myPurchases.Date')}
                     </Text>
                     <Text style={[styles.label, {color: colors.neutral10}]}>
                       {moment(item?.payment_date).format('DD/MM/YYYY')}
@@ -127,7 +127,9 @@ const MyPurchases = () => {
                   {item?.status == 'completed' ? (
                     <View style={{flexDirection: 'row'}}>
                       <View style={styles.wrapStatusContainer}>
-                        <Text style={styles.statusTitle}>Successful</Text>
+                        <Text style={styles.statusTitle}>
+                          {t('myPurchases.Successful')}
+                        </Text>
                       </View>
                     </View>
                   ) : item?.status == 'processing' ? (
@@ -137,7 +139,9 @@ const MyPurchases = () => {
                           styles.wrapStatusContainer,
                           {backgroundColor: colors.gray550},
                         ]}>
-                        <Text style={styles.statusTitle}>Pending</Text>
+                        <Text style={styles.statusTitle}>
+                          {t('myPurchases.Pending')}
+                        </Text>
                       </View>
                     </View>
                   ) : (
@@ -147,7 +151,9 @@ const MyPurchases = () => {
                           styles.wrapStatusContainer,
                           {backgroundColor: colors.red200},
                         ]}>
-                        <Text style={styles.statusTitle}>Failed</Text>
+                        <Text style={styles.statusTitle}>
+                          {t('myPurchases.Failed')}
+                        </Text>
                       </View>
                     </View>
                   )}

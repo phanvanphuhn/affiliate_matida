@@ -62,7 +62,7 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
               style={styles.buttonClose}>
               <Image source={iconClose} style={styles.iconClose} />
             </TouchableOpacity>
-            <Text style={styles.text1}>The All-in-one Course</Text>
+            <Text style={styles.text1}>{t('pregnancyProgram.aioCourse')}</Text>
             <Text style={styles.text2}>Matida Masterclass</Text>
           </View>
           <View style={styles.containerContent}>
@@ -71,20 +71,18 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
             </View>
             <View style={styles.containerContent2}>
               <Text style={styles.textContent}>
-                Your program is being created!
+                {t('pregnancyProgram.programCreated')}
               </Text>
               <Text style={styles.textContent2}>
-                {
-                  'Thank your for signing up! \nOur team will now create your personalized program and activate it for you. You will hear from us in the next 24 hours.'
-                }
+                {t('pregnancyProgram.thankYouForSignUp')}
               </Text>
               <Image source={teaser2} />
               <Text style={styles.textContent2}>
-                Don't forget to{' '}
+                {t('pregnancyProgram.dontForget')}{' '}
                 <Text style={[styles.textContent2, {color: colors.pink300}]}>
-                  turn on your notifications
+                  {t('pregnancyProgram.turnOnNoti')}
                 </Text>{' '}
-                {'\nfor weekly important reminders.'}
+                {`\n${t('pregnancyProgram.reminder')}`}
               </Text>
             </View>
             <View style={{bottom: -8}}>
@@ -93,7 +91,9 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
           </View>
         </View>
         <TouchableOpacity onPress={onPaymentFinish} style={styles.buttonFinish}>
-          <Text style={styles.textFinish}>Explore Matida</Text>
+          <Text style={styles.textFinish}>
+            {t('pregnancyProgram.exploreMatida')}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
