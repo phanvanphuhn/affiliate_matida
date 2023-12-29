@@ -44,7 +44,7 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         title={'Matida Masterclass'}
         ComponentRight={
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={onGift}>
+            <TouchableOpacity onPress={onGift} disabled={true}>
               <Image
                 source={ic_gift}
                 style={{

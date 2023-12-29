@@ -58,13 +58,13 @@ const BarchartOnboarding = (props: BarchartProps) => {
   const getLabel = (type: string) => {
     switch (type) {
       case 'love_and_money':
-        return 'Love &\nMoney';
+        return lang == 1 ? 'Love &\nMoney' : 'Kiến thức\nthai kỳ';
       case 'newborn_care':
-        return 'Baby\nCare';
+        return lang == 1 ? 'Baby\nCare' : 'Chăm sóc\ncon yêu';
       case 'core':
-        return 'Pregnancy\nBasics';
+        return lang == 1 ? 'Pregnancy\nBasics' : 'Tài chính &\nGia đình';
       case 'nutrition_and_fitness':
-        return 'Fitness &\nNutrition';
+        return lang == 1 ? 'Fitness &\nNutrition' : 'Thể chất &\nDinh dưỡng';
     }
   };
   useEffect(() => {

@@ -39,7 +39,7 @@ const ListWeek = (props: ListWeekProps) => {
   useEffect(() => {
     const getData = () => {
       let data = Array.from({length: 40}, (x, i) => ({
-        name: `Week ${i + 1}`,
+        name: `${t('momDiary.week')} ${i + 1}`,
         week: i + 1,
         status:
           i + 1 < week ? 'Completed' : i + 1 == week ? 'Happening' : 'Upcoming',

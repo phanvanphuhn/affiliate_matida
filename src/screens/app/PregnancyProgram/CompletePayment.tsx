@@ -276,7 +276,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
               onPress={() => {
                 handlePurchase(PRODUCT_ID_PAY);
               }}
-              style={styles.buttonTransfer}>
+              style={[styles.buttonTransfer, {opacity: 0.5}]}>
               <Image source={Platform.OS == 'ios' ? ic_apple : ic_google} />
               <Text style={styles.textTransfer}>
                 {Platform.OS == 'ios' ? 'Apple Pay' : 'Google Pay'}

@@ -54,6 +54,7 @@ export const en = {
     placeholderText:
       'Please pick your due date to personalise the Matida app to your pregnancy.',
     notKnowDueDate: 'I don’t know my due date',
+    knowDueDate: 'I know my due date',
     save: 'Save',
     skip: 'Skip',
     submit: 'Submit',

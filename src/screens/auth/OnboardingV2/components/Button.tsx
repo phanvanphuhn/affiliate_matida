@@ -8,6 +8,7 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {TState} from './Information';
+import {useTranslation} from 'react-i18next';
 
 type TProps = {
   onNextPage: () => void;
@@ -21,6 +22,7 @@ type TProps = {
 const Button = (props: TProps) => {
   const {onNextPage, onPreviousPage, state, onValidate, setState, onDone} =
     props;
+  const {t} = useTranslation();
   const disableNextBtn = () => {
     if (state.name.length < 1 && (state.page == 3 || state.page == 10)) {
       return true;
@@ -49,8 +51,8 @@ const Button = (props: TProps) => {
           onPress={() => setState({isKnowDueDate: !state.isKnowDueDate})}>
           <Text style={styles.btnText}>
             {state.isKnowDueDate
-              ? `I don't know my due date`
-              : `I know my due date`}
+              ? t('chooseDueDate.notKnowDueDate')
+              : t('chooseDueDate.knowDueDate')}
           </Text>
         </TouchableOpacity>
       )}

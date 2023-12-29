@@ -1,7 +1,7 @@
 import {iconClose} from '@images';
 import {goBack, navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useTransition} from 'react';
 import {useTranslation} from 'react-i18next';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
@@ -72,18 +72,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: scaler(24),
-    fontWeight: '600',
+    ...stylesCommon.fontWeight600,
   },
   desc: {
     fontSize: scaler(14),
-    fontWeight: '400',
     color: colors.labelColor,
+    ...stylesCommon.fontWeight400,
   },
   wrapButtonContainer: {
     width: '100%',
     padding: scaler(16),
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.pink200,
     marginBottom: scaler(8),
     borderRadius: scaler(40),
   },
