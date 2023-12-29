@@ -43,7 +43,9 @@ const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
   const navigation = useNavigation<any>();
   const week = useSelector((state: any) =>
-    state?.home?.weekUserTask <= 4 ? 4 : state?.home?.weekUserTask,
+    !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
+      ? 4
+      : state?.home?.weekUserTask,
   );
   const {t} = useTranslation();
   const getTitle = (type: string) => {

@@ -30,7 +30,9 @@ interface ListWeekProps {
 const ListWeek = (props: ListWeekProps) => {
   const [state, setState] = useState([]);
   const week = useSelector((state: any) =>
-    state?.home?.weekUserTask <= 4 ? 4 : state?.home?.weekUserTask,
+    !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
+      ? 4
+      : state?.home?.weekUserTask,
   );
   console.log('=>(ListWeek.tsx:33) week', week);
   const flatlistRef = useRef<FlatList>();
