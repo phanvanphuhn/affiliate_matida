@@ -82,6 +82,8 @@ const BarchartOnboarding = (props: BarchartProps) => {
           color: colors.labelColor,
           fontSize: scaler(14),
           textAlign: 'center',
+          width: '120%',
+          left: -15,
           ...stylesCommon.fontWeight600,
         },
       };

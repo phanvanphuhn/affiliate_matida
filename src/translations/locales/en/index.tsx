@@ -840,6 +840,10 @@ export const en = {
     thankYouForSignUp:
       'Thank your for signing up! \nOur team will now create your personalized program and activate it for you. You will hear from us in the next 24 hours.',
     exploreMatida: 'Explore Matida',
+    learn: 'Learn',
+    quiz: 'Quiz',
+    checkup: 'Check up',
+    activity: 'Activity',
   },
   momDiary: {
     momDiary: 'Mom Diary',

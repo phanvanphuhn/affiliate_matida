@@ -843,6 +843,10 @@ export const vi = {
     thankYouForSignUp:
       'Cảm ơn mẹ đã đăng ký khoá học!\nQuá trình này sẽ diễn ra tối đa trong 24 giờ.\nMatida sẽ gửi thông báo đến mẹ khi chương\ntrình sẵn sàng nhé!',
     exploreMatida: 'Khám phá Matida ngay',
+    learn: 'Bài học',
+    quiz: 'Trắc nghiệm',
+    checkup: 'Khám thai',
+    activity: 'Hoạt động',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

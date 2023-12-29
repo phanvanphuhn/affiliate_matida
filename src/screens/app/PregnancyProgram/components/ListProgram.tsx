@@ -66,6 +66,22 @@ const ListProgram = (props: ListProgramProps) => {
         return '';
     }
   };
+  const getSubTitle = (type: string) => {
+    switch (type) {
+      case 'learn':
+        return t('pregnancyProgram.learn');
+      case 'check_up':
+        return t('pregnancyProgram.checkup');
+      case 'mom_diary':
+        return t('momDiary.momDiary');
+      case 'quiz':
+        return t('pregnancyProgram.quiz');
+      case 'activity':
+        return t('pregnancyProgram.activity');
+      default:
+        return '';
+    }
+  };
   const getLabel = (type: string) => {
     switch (type) {
       case 'reward':
@@ -303,7 +319,7 @@ const ListProgram = (props: ListProgramProps) => {
                               {lang == 1 ? e?.task?.name_en : e?.task?.name_vi}
                             </Text>
                             <Text style={styles.textChildDesc}>
-                              {e.task?.categories?.[0]?.split('_').join(' ')}
+                              {getSubTitle(e.task?.categories?.[0])}
                             </Text>
                           </View>
                           <TouchableOpacity
@@ -381,8 +397,6 @@ const styles = StyleSheet.create({
     padding: scaler(12),
     marginTop: scaler(16),
     borderRadius: scaler(8),
-    borderColor: colors.gray,
-    borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
