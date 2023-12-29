@@ -306,10 +306,10 @@ const ListWeek = (props: ListWeekProps) => {
         renderItem={renderItem}
         horizontal={true}
         ref={flatlistRef}
-        onContentSizeChange={() => {
-          console.log('=>(ListWeek.tsx:309) a');
+        onLayout={() => {
           scrollToIndex(week);
         }}
+        onContentSizeChange={() => {}}
         getItemLayout={getItemLayout}
         onScrollToIndexFailed={info => {
           setTimeout(
