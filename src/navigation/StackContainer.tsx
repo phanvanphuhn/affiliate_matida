@@ -20,6 +20,7 @@ import VerifyPayment from '../screens/app/PregnancyProgram/VerifyPayment';
 import NetInfo, {useNetInfo} from '@react-native-community/netinfo';
 import RNRestart from 'react-native-restart';
 import {useTranslation} from 'react-i18next';
+import FeedbackTask from '../screens/app/PregnancyProgram/FeedbackTask';
 
 let {init, endConnect} = AppSocket;
 const Stack = createNativeStackNavigator();
@@ -421,6 +422,14 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
           <Stack.Screen
             name={ROUTE_NAME.MY_PURCHASES}
             component={screens.MyPurchases}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.FEEDBACK_TASK}
+            component={screens.FeedbackTask}
+          />
+          <Stack.Screen
+            name={ROUTE_NAME.FEEDBACK_SUCCESS}
+            component={screens.FeedbackSuccess}
           />
         </Stack.Navigator>
       );

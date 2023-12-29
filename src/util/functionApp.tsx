@@ -11,6 +11,7 @@ import {store} from '../redux/store';
 import {event} from './eventTracking';
 //@ts-ignore
 import WebEngage from 'react-native-webengage';
+import {colors} from '@stylesCommon';
 var webengage = new WebEngage();
 
 let buoApp: any = null;
@@ -345,4 +346,66 @@ export const formatPrice = (value: string) => {
     .toFixed(2)
     .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
     .replace('.00', '');
+};
+
+export const getSubTitlePregnancy = (type: string) => {
+  switch (type) {
+    case 'learn':
+      return t('pregnancyProgram.learn');
+    case 'check_up':
+      return t('pregnancyProgram.checkup');
+    case 'mom_diary':
+      return t('momDiary.momDiary');
+    case 'quiz':
+      return t('pregnancyProgram.quiz');
+    case 'activity':
+      return t('pregnancyProgram.activity');
+    default:
+      return '';
+  }
+};
+export const getTitlePregnancy = (type: string) => {
+  switch (type) {
+    case 'reward':
+      return '';
+    case 'core':
+      return t('pregnancyProgram.pregnancyKnowledge');
+    case 'love_and_money':
+      return t('pregnancyProgram.loveMoney');
+    case 'fitness_and_nutrition':
+      return t('pregnancyProgram.fitnessNutrition');
+    case 'baby_care':
+      return t('pregnancyProgram.babyCare');
+    default:
+      return '';
+  }
+};
+
+export const getLabelPregnancy = (type: string) => {
+  switch (type) {
+    case 'reward':
+      return '';
+    case 'core':
+      return 'Core';
+    case 'love_and_money':
+      return 'Personal challenge';
+    case 'fitness_and_nutrition':
+      return 'Fitness & Nutrition';
+    case 'baby_care':
+      return 'Baby care';
+    default:
+      return '';
+  }
+};
+export const getColorPregnancy = (type: string) => {
+  switch (type) {
+    case 'reward':
+      return colors.blue;
+    case 'core':
+      return colors.pink200;
+    case 'love_and_money':
+      return colors.green250;
+    default:
+      return colors.primaryBackground;
+  }
 };

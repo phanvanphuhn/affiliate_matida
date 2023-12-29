@@ -24,42 +24,79 @@ import * as Progress from 'react-native-progress';
 import CircularProgress from './CircularProgress';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
+import {getProgressWeek} from '../../../../services/pregnancyProgram';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/core/src/types';
+import {ROUTE_NAME} from '@routeName';
+import useStateCustom from '../../../../util/hooks/useStateCustom';
 interface ListWeekProps {
   onSelectedWeek: (week: number) => void;
 }
 const ListWeek = (props: ListWeekProps) => {
-  const [state, setState] = useState([]);
+  const [state, setState] = useStateCustom({
+    data: [],
+    progressWeek: [],
+    completed: 0,
+    total: 0,
+  });
   const week = useSelector((state: any) =>
     !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
       ? 4
       : state?.home?.weekUserTask,
   );
-  console.log('=>(ListWeek.tsx:33) week', week);
+  const navigation = useNavigation<NavigationProp<any>>();
+
   const flatlistRef = useRef<FlatList>();
   const {t} = useTranslation();
+  const getStatus = (arr: any[], i: number) => {
+    if (i + 1 <= week) {
+      let isCheck = arr?.some(w => w.week == i + 1 && w.total == w.completed);
+      if (isCheck) {
+        return 'Completed';
+      } else {
+        if (i + 1 == week) {
+          return 'Happening';
+        } else {
+          return 'Uncompleted';
+        }
+      }
+    } else {
+      return 'Upcoming';
+    }
+  };
+  useFocusEffect(
+    useCallback(() => {
+      const getData = async () => {
+        let result = await getProgressWeek();
+        console.log('=>(ListWeek.tsx:69) result', result);
+        let data = Array.from({length: 40}, (x, i) => ({
+          name: `${t('momDiary.week')} ${i + 1}`,
+          week: i + 1,
+          status: getStatus(result?.data, i),
+        }));
+        let obj = result?.data?.find(e => e.week == week);
+        setState({
+          data,
+          progressWeek: result?.data,
+          completed: obj?.completed,
+          total: obj?.total,
+        });
+      };
+      getData();
+    }, []),
+  );
 
-  useEffect(() => {
-    const getData = () => {
-      let data = Array.from({length: 40}, (x, i) => ({
-        name: `${t('momDiary.week')} ${i + 1}`,
-        week: i + 1,
-        status:
-          i + 1 < week ? 'Completed' : i + 1 == week ? 'Happening' : 'Upcoming',
-      }));
-      setState(data);
-    };
-    getData();
-  }, []);
-  useEffect(() => {
-    if (flatlistRef.current && state?.length) {
+  const scrollToIndex = (index: number) => {
+    if (flatlistRef.current && state?.data?.length) {
+      console.log('=>(ListWeek.tsx:88) index - 4', index - 4);
       setTimeout(() => {
         flatlistRef.current?.scrollToIndex({
-          index: week - 4,
+          index: index - 4,
           animated: true,
         });
-      }, 1000);
+      }, 500);
     }
-  }, [state, week]);
+  };
   const getColor = useCallback(item => {
     switch (item.status) {
       case 'Completed':
@@ -72,7 +109,7 @@ const ListWeek = (props: ListWeekProps) => {
         return colors.gray50;
     }
   }, []);
-  const renderLine = useCallback(item => {
+  const renderLine = useCallback((item, isDisable) => {
     switch (item.status) {
       case 'Completed':
         return (
@@ -80,14 +117,14 @@ const ListWeek = (props: ListWeekProps) => {
             style={{
               height: 2,
               width: '100%',
-              backgroundColor: getColor(item),
+              backgroundColor: isDisable ? colors.transparent : getColor(item),
             }}
           />
         );
       default:
         return (
           <DashedLine
-            dashColor={getColor(item)}
+            dashColor={isDisable ? colors.transparent : getColor(item)}
             dashGap={4}
             dashLength={4}
             dashThickness={1.5}
@@ -95,127 +132,161 @@ const ListWeek = (props: ListWeekProps) => {
         );
     }
   }, []);
-  const renderDot = useCallback(item => {
-    switch (item.status) {
-      case 'Completed':
-      case 'Uncompleted':
-        return (
-          <View
-            style={{
-              backgroundColor: colors.gray450,
-              borderRadius: 50,
-              padding: 10,
-            }}>
+  const renderProgress = useCallback(() => {
+    let progress = state?.progressWeek?.find(e => e.week == week);
+    console.log('=>(ListWeek.tsx:131) progress', progress);
+    return (
+      <View style={styles.container3}>
+        <CircularProgress
+          size={34}
+          width={2}
+          fill={
+            !progress
+              ? 100
+              : ((progress?.total - progress?.completed) / progress?.total) *
+                100
+          }
+          tintColor={colors.gray}
+          style={{
+            transform: [{rotate: '90deg'}],
+          }}
+          backgroundColor={colors.pink200}>
+          {fill => (
             <View
               style={[
                 styles.containerDotText,
-                {backgroundColor: getColor(item)},
+                {
+                  backgroundColor: colors.pink200,
+                  position: 'absolute',
+                  transform: [{rotate: '-90deg'}],
+                  height: scaler(25),
+                  width: scaler(25),
+                },
               ]}>
-              {item?.status == 'Completed' ? (
-                <SvgCheck stroke={colors.white} />
-              ) : (
-                <Text style={styles.dotText}>1</Text>
-              )}
+              <Image source={ic_gift} />
             </View>
-          </View>
-        );
-      case 'Happening':
-        return (
-          <View style={styles.container3}>
-            <CircularProgress
-              size={40}
-              width={2}
-              fill={50}
-              tintColor={colors.gray}
+          )}
+        </CircularProgress>
+      </View>
+    );
+  }, [state?.progressWeek]);
+
+  const renderDot = useCallback(
+    (item, index) => {
+      switch (item.status) {
+        case 'Completed':
+        case 'Uncompleted':
+          if (index + 1 == week) {
+            return renderProgress();
+          }
+          return (
+            <View
               style={{
-                transform: [{rotate: '90deg'}],
-              }}
-              backgroundColor={colors.pink200}>
-              {fill => (
-                <View
-                  style={[
-                    styles.containerDotText,
-                    {
-                      backgroundColor: colors.pink200,
-                      position: 'absolute',
-                      transform: [{rotate: '-90deg'}],
-                    },
-                  ]}>
-                  <Image source={ic_gift} />
-                </View>
-              )}
-            </CircularProgress>
-          </View>
-        );
-      default:
-        return (
-          <View
-            style={{
-              backgroundColor: colors.gray450,
-              borderRadius: 50,
-              padding: 10,
-            }}>
-            <View
-              style={[
-                styles.containerDotText,
-                {backgroundColor: colors.white},
-              ]}>
-              <Image source={ic_lock} />
+                backgroundColor: colors.gray450,
+                borderRadius: 50,
+                padding: 10,
+              }}>
+              <View
+                style={[
+                  styles.containerDotText,
+                  {backgroundColor: getColor(item)},
+                ]}>
+                {item?.status == 'Completed' ? (
+                  <SvgCheck stroke={colors.white} />
+                ) : (
+                  <Text style={styles.dotText}>{item.week}</Text>
+                )}
+              </View>
             </View>
-          </View>
-        );
-    }
-  }, []);
+          );
+        case 'Happening':
+          return renderProgress();
+
+        default:
+          return (
+            <View
+              style={{
+                backgroundColor: colors.gray450,
+                borderRadius: 50,
+                padding: 10,
+              }}>
+              <View
+                style={[
+                  styles.containerDotText,
+                  {backgroundColor: colors.white},
+                ]}>
+                <Image source={ic_lock} />
+              </View>
+            </View>
+          );
+      }
+    },
+    [state?.progressWeek],
+  );
 
   const renderItem: ListRenderItem<any> = ({item, index}) => {
     if (item.week < 4) {
       return null;
     }
     return (
-      <View style={{flexDirection: 'row'}}>
-        {index < 4 ? null : (
-          <View style={styles.containerDashed}>{renderLine(item)}</View>
-        )}
+      <View
+        style={{
+          flexDirection: 'row',
+          width: 183,
+          paddingBottom: scaler(30),
+        }}>
         <TouchableOpacity
           disabled={item.status == 'Upcoming'}
           onPress={() => {
+            scrollToIndex(index + 1);
             props?.onSelectedWeek && props?.onSelectedWeek(index + 1);
           }}
-          style={[{alignItems: 'center'}]}>
-          {renderDot(item)}
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text
-              style={[
-                styles.textName,
-                {
-                  color:
-                    item.status == 'Happening'
-                      ? colors.pink200
-                      : colors.gray500,
-                },
-              ]}>
-              {item.name}
-            </Text>
-            <Text
-              style={[
-                styles.textStatus,
-                {
-                  color:
-                    item.status == 'Happening'
-                      ? colors.pink200
-                      : colors.textSmallColor,
-                },
-              ]}>
-              {item.status == 'Upcoming'
-                ? t('pregnancyProgram.Upcoming')
-                : item.status == 'Completed'
-                ? t('pregnancyProgram.Completed')
-                : t('pregnancyProgram.Happening')}
-            </Text>
+          style={[{alignItems: 'center', flexDirection: 'row'}]}>
+          <View style={styles.containerDashed}>
+            {renderLine(item, index < 4)}
+          </View>
+          <View>
+            {renderDot(item, index)}
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                bottom: -30,
+                width: 100,
+                alignSelf: 'center',
+              }}>
+              <Text
+                style={[
+                  styles.textName,
+                  {
+                    color:
+                      item.status == 'Happening' || index + 1 == week
+                        ? colors.pink200
+                        : colors.gray500,
+                  },
+                ]}>
+                {item.name}
+              </Text>
+              <Text
+                style={[
+                  styles.textStatus,
+                  {
+                    color:
+                      item.status == 'Happening' || index + 1 == week
+                        ? colors.pink200
+                        : colors.textSmallColor,
+                  },
+                ]}>
+                {item.status == 'Happening'
+                  ? t('pregnancyProgram.Happening')
+                  : item.status == 'Completed'
+                  ? t('pregnancyProgram.Completed')
+                  : item?.status == 'Uncompleted'
+                  ? t('pregnancyProgram.uncompleted')
+                  : t('pregnancyProgram.Upcoming')}
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
@@ -223,18 +294,22 @@ const ListWeek = (props: ListWeekProps) => {
   };
 
   const getItemLayout = (_, index) => ({
-    length: widthScreen / 3 + 17.7, //  WIDTH + (MARGIN_HORIZONTAL * 2)
-    offset: (widthScreen / 3 + 17.7) * index, //  ( WIDTH + (MARGIN_HORIZONTAL*2) ) * (index)
+    length: 182, //  WIDTH + (MARGIN_HORIZONTAL * 2)
+    offset: 182 * index, //  ( WIDTH + (MARGIN_HORIZONTAL*2) ) * (index)
     index,
   });
   const keyExtractor = (item, index) => index.toString();
   return (
     <View style={styles.container}>
       <FlatList
-        data={state}
+        data={state.data}
         renderItem={renderItem}
         horizontal={true}
         ref={flatlistRef}
+        onContentSizeChange={() => {
+          console.log('=>(ListWeek.tsx:309) a');
+          scrollToIndex(week);
+        }}
         getItemLayout={getItemLayout}
         onScrollToIndexFailed={info => {
           setTimeout(
@@ -281,8 +356,7 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontWeight400,
   },
   containerDashed: {
-    width: widthScreen / 4,
-    top: 25,
+    width: '72%',
   },
   containerDotText: {
     backgroundColor: colors.primaryBackground,
@@ -295,7 +369,7 @@ const styles = StyleSheet.create({
   container3: {
     backgroundColor: colors.gray450,
     borderRadius: 50,
-    margin: 10,
+    margin: 9,
     marginTop: 4,
   },
   dotText: {

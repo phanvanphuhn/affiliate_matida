@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   Image,
   RefreshControl,
   ScrollView,
+  TextInput,
 } from 'react-native';
 import {
   colors,
@@ -17,10 +18,18 @@ import {
 } from '@stylesCommon';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
+  ic_default1,
+  ic_default2,
+  ic_gift,
+  SvgArrowLeft,
   SvgClose,
+  SvgLike,
+  SvgLikeQuiz,
+  SvgLikeTask,
   SvgLineWave,
   SvgPathBottom,
   SvgPathTop,
+  SvgUnLikeTask,
   teaser1,
   teaser2,
   teaser3,
@@ -28,13 +37,24 @@ import {
 } from '@images';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {setActive} from 'react-native-sound';
-import {goBack} from '@navigation';
-import {useNavigation} from '@react-navigation/native';
+import {goBack, navigate} from '@navigation';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import Swiper from '../DetailFeed/SwiperFlatlist/Swiper';
 import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useTranslation} from 'react-i18next';
+import {GlobalService} from '@services';
+import {getUserTask} from '../../../services/pregnancyProgram';
+import {useSelector} from 'react-redux';
+import {
+  getColorPregnancy,
+  getLabelPregnancy,
+  getSubTitlePregnancy,
+  getTitlePregnancy,
+} from '@util';
+import Svg, {Line, Path} from 'react-native-svg';
+import {EPreRoute} from '@constant';
 
 interface FeedbackTaskProps {
   isHome?: boolean;
@@ -42,90 +62,91 @@ interface FeedbackTaskProps {
 
 const FeedbackTask = (props: FeedbackTaskProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [state, setState] = useState([]);
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
-
-  const data = [
-    {
-      name: t('pregnancyProgram.directAccess'),
-      description: t('pregnancyProgram.supportGroup'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
-    },
-    {
-      name: t('pregnancyProgram.weeklyEffort'),
-      description: t('pregnancyProgram.learnAll'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png',
-    },
-    {
-      name: t('pregnancyProgram.supportBaby'),
-      description: t('pregnancyProgram.techniqueHabit'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png',
-    },
-    {
-      name: t('pregnancyProgram.beTheBest'),
-      description: t('pregnancyProgram.personalGuidance'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png',
-    },
-    {
-      name: t('pregnancyProgram.getDiscount'),
-      description: t('pregnancyProgram.voucherFor'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
-    },
-  ];
+  const week = useSelector((state: any) =>
+    !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
+      ? 4
+      : state?.home?.weekUserTask,
+  );
+  const getData = async () => {
+    try {
+      GlobalService.showLoading();
+      let res = await getUserTask(week, 'success');
+      if (res?.success) {
+        let data = res?.data
+          .sort((a: any, b: any) => a.order - b.order)
+          ?.map((e: any) => e.task?.module)
+          .filter((e: any, i: number, arr: any) => arr.indexOf(e) == i)
+          .map(e => {
+            let arr = res?.data.filter((item: any) => item.task?.module == e);
+            return {
+              title: getTitlePregnancy(e),
+              label: getLabelPregnancy(e),
+              type: e,
+              data: arr,
+            };
+          });
+        setState(data);
+        console.log('=>(ListProgram.tsx:128) data', data);
+      }
+    } catch (e) {
+    } finally {
+      GlobalService.hideLoading();
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   const onSignUpNow = () => {
-    navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
+    navigation.navigate(ROUTE_NAME.FEEDBACK_SUCCESS, {});
   };
-  const _renderItem = ({item, index}) => {
-    return (
-      <View key={index} style={styles.containerItem}>
-        <Image
-          source={{uri: item.icon}}
-          style={{
-            width: '100%',
-            aspectRatio: 3 / 2,
-          }}
-        />
-        <Text style={styles.textItemName}>{item.name}</Text>
-        <ParsedText
-          parse={[
-            {
-              pattern:
-                /Vouchers|medical doctors\n& like-minded moms|Learn all the pregnancy secrets|best develop your unborn child|understand\nyour strengths & weaknesses|từ bác sĩ và chuyên gia|Tất cả thông tin được tổng hợp theo tuần|giúp thai nhi phát triển tốt nhất|cùng mẹ phát triển|Phiếu giảm giá/,
-              style: styles.textItemDescBold,
+
+  const onDetail = (item: any) => {
+    switch (item?.task?.type) {
+      case 'input_data':
+        navigation.navigate(ROUTE_NAME.MOM_DIARY, {
+          item,
+          type: props?.tabIndex == 1 ? 'review' : 'todo',
+        });
+        break;
+      case 'self_check':
+        navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
+          item,
+        });
+        break;
+      case 'auto':
+        if (props.tabIndex == 1) {
+          navigate(ROUTE_NAME.TEST_RESULT, {
+            id: item?.task?.link?.replace(
+              RegExp('matida://mom-prep-test/'),
+              '',
+            ),
+            redoTest: () => {},
+            preRoute: EPreRoute.TEST_DETAIL,
+          });
+        } else {
+          navigate(ROUTE_NAME.TEST_DETAIL, {
+            quiz: {
+              id: item?.task?.link?.replace(
+                RegExp('matida://mom-prep-test/'),
+                '',
+              ),
             },
-          ]}
-          style={styles.textItemDesc}>
-          {item.description}
-        </ParsedText>
-      </View>
-    );
+          });
+        }
+        break;
+      default:
+        navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
+          item,
+        });
+        break;
+    }
   };
-
-  const onCheckOut = () => {
-    navigation.navigate(ROUTE_NAME.ABOUT_PROGRAM);
-  };
-  const pagination = () => {
-    return (
-      <Pagination
-        dotsLength={data.length}
-        activeDotIndex={activeSlide}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 5,
-          backgroundColor: colors.pink200,
-        }}
-        inactiveDotStyle={{
-          backgroundColor: colors.gray,
-        }}
-        inactiveDotOpacity={1}
-        inactiveDotScale={1}
-        containerStyle={{marginTop: 0, paddingTop: 0, paddingBottom: 10}}
-      />
-    );
-  };
-
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.container, {}]}>
@@ -146,7 +167,7 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
           )}
 
           <Text style={styles.textTitle}>
-            {t('pregnancyProgram.aioCourse')}
+            {t('pregnancyProgram.LetWrapUpThisWeekTogether')}
           </Text>
           <Text
             style={[
@@ -156,7 +177,7 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
                 marginBottom: 20,
               },
             ]}>
-            Matida Masterclass
+            {t('pregnancyProgram.LetUsKnowHowThisWeekHasHelpedYou')}
           </Text>
           <View
             style={{
@@ -171,77 +192,148 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
               flex: 1,
               paddingTop: 8,
             }}>
-            <Swiper
-              index={activeSlide}
-              horizontal={true}
-              loop={false}
-              removeClippedSubviews={true}
-              loadMinimal={true}
-              loadMinimalSize={10}
-              lockScrollTimeoutDuration={250}
-              nestedScrollEnabled={true}
-              bounces={true}
-              height={410}
-              onIndexChanged={setActiveSlide}>
-              {data?.map((item, index) => _renderItem({item, index}))}
-            </Swiper>
-            {pagination()}
-
             <View
               style={{
-                bottom: -8,
+                padding: scaler(16),
+                paddingTop: scaler(30),
               }}>
-              <SvgLineWave color={colors.blue50} />
-            </View>
-          </View>
-          <View style={styles.container3}>
-            <Text
-              style={{
-                fontSize: scaler(15),
-                ...stylesCommon.fontWeight400,
-                marginBottom: scaler(15),
-                textAlign: 'center',
-              }}>
-              {t('pregnancyProgram.haveQuestion')}{' '}
               <Text
-                onPress={onCheckOut}
-                style={{textDecorationLine: 'underline', fontWeight: '500'}}>
-                {t('pregnancyProgram.checkThisOut')}
+                style={{
+                  fontSize: scaler(18),
+                  color: colors.textColor,
+                  lineHeight: scaler(22),
+                  ...stylesCommon.fontWeight600,
+                }}>
+                {t('pregnancyProgram.DoYouEnjoyTheProgramSoFar')}
               </Text>
-            </Text>
-            <View style={styles.container4}>
-              <View style={styles.container5}>
-                <Text style={styles.textOff}>28% off</Text>
+              <TextInput
+                multiline={true}
+                style={{
+                  minHeight: scaler(96),
+                  fontSize: scaler(15),
+                  marginTop: scaler(8),
+                  ...stylesCommon.fontSarabun400,
+                }}
+                placeholder={t('pregnancyProgram.TellUsAnything') as string}
+              />
+              <Text
+                style={{
+                  fontSize: scaler(18),
+                  color: colors.textColor,
+                  marginTop: scaler(40),
+                  ...stylesCommon.fontWeight600,
+                }}>
+                {t('pregnancyProgram.PleaseRateThisWeekContent')}
+              </Text>
+              <View style={{flex: 1, paddingTop: scaler(24)}}>
+                {state?.map((item, index) => {
+                  return (
+                    <View key={index} style={[styles.rowStart, {}]}>
+                      <View
+                        style={{
+                          flex: 1,
+                          paddingBottom: scaler(10),
+                        }}>
+                        <View style={[styles.rowStart, {alignItems: 'center'}]}>
+                          <View style={{flex: 1}}>
+                            <Text
+                              style={{
+                                fontSize: scaler(16),
+                                color: colors.neutral10,
+                                ...stylesCommon.fontSarabun600,
+                              }}>
+                              {item.title}
+                            </Text>
+                          </View>
+                          {item.type != 'reward' && (
+                            <View
+                              style={[
+                                styles.containerTag,
+                                {backgroundColor: getColorPregnancy(item.type)},
+                              ]}>
+                              <Text style={styles.textTag}>{item.label}</Text>
+                            </View>
+                          )}
+                        </View>
+                        <View>
+                          {item.data.map((e, i) => {
+                            return (
+                              <TouchableOpacity
+                                key={i}
+                                onPress={() => onDetail(e)}
+                                style={[
+                                  styles.containerChild,
+                                  i == item.data.length - 1
+                                    ? {
+                                        marginBottom: 20,
+                                      }
+                                    : {},
+                                ]}>
+                                <View style={{flex: 1}}>
+                                  <View style={{flex: 1}}>
+                                    <Text style={styles.textChild}>
+                                      {lang == 1
+                                        ? e?.task?.name_en
+                                        : e?.task?.name_vi}
+                                    </Text>
+                                    <Text style={styles.textChildDesc}>
+                                      {getSubTitlePregnancy(
+                                        e.task?.categories?.[0],
+                                      )}
+                                    </Text>
+                                  </View>
+                                </View>
+                                <Image
+                                  source={
+                                    e?.task?.thumbnail
+                                      ? {uri: e?.task?.thumbnail}
+                                      : ic_default1
+                                  }
+                                  style={styles.img}
+                                />
+                                <View
+                                  style={{
+                                    position: 'absolute',
+                                    bottom: -15,
+                                    left: 20,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                  }}>
+                                  <TouchableOpacity style={styles.buttonLike}>
+                                    <SvgLikeTask color={colors.pink200} />
+                                  </TouchableOpacity>
+                                  <TouchableOpacity
+                                    style={[
+                                      styles.buttonLike,
+                                      {marginLeft: 10},
+                                    ]}>
+                                    <SvgUnLikeTask color={colors.gray550} />
+                                  </TouchableOpacity>
+                                </View>
+                              </TouchableOpacity>
+                            );
+                          })}
+                        </View>
+                      </View>
+                    </View>
+                  );
+                })}
               </View>
-              <Text style={styles.textPrice1}>
-                499,000đ{' '}
-                <Text
-                  style={{
-                    fontSize: scaler(13),
-                    ...stylesCommon.fontSarabun600,
-                  }}>
-                  /{t('pregnancyProgram.liftTime')}
-                </Text>
-              </Text>
-              <Text style={styles.textPriceOld}>
-                <Text
-                  style={{
-                    textDecorationLine: 'line-through',
-                    ...stylesCommon.fontSarabun400,
-                  }}>
-                  669,000đ
-                </Text>
-                /{t('pregnancyProgram.liftTime')}
-              </Text>
             </View>
-            <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
-              <Text style={styles.textButtonSignUp}>
-                {t('pregnancyProgram.signUpEarly')}
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
+      <View style={styles.container3}>
+        <View
+          style={{
+            top: -8,
+          }}>
+          <SvgLineWave color={colors.blue50} />
+        </View>
+        <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
+          <Text style={styles.textButtonSignUp}>{t('test.submit')}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -249,6 +341,51 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
 export default FeedbackTask;
 
 const styles = StyleSheet.create({
+  buttonSignUp: {
+    backgroundColor: colors.yellow200,
+    paddingVertical: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: scaler(16),
+    marginHorizontal: 25,
+  },
+  textButtonSignUp: {
+    fontSize: scaler(15),
+    color: colors.labelColor,
+    ...stylesCommon.fontWeight600,
+  },
+  container3: {
+    marginBottom: scaler(35),
+  },
+  container4: {
+    backgroundColor: colors.white,
+    borderRadius: scaler(12),
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: scaler(10),
+    paddingHorizontal: scaler(55),
+    marginBottom: scaler(17),
+  },
+  container5: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    backgroundColor: colors.pink300,
+    borderTopLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    padding: 5,
+    paddingHorizontal: 9,
+  },
+  buttonLike: {
+    backgroundColor: colors.white,
+    padding: 10,
+    borderRadius: 100,
+    shadowColor: colors.labelColor,
+    shadowOffset: {width: 1, height: 4},
+    shadowOpacity: 0.2,
+    elevation: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.pink350,
@@ -273,16 +410,18 @@ const styles = StyleSheet.create({
     paddingRight: scaler(16),
   },
   textTitle: {
-    fontSize: scaler(20),
-    color: colors.labelColor,
+    fontSize: scaler(22),
+    color: colors.textColor,
     textAlign: 'center',
-    ...stylesCommon.fontWeight500,
+    paddingHorizontal: scaler(53),
+    ...stylesCommon.fontWeight600,
   },
   textTitle2: {
-    fontSize: scaler(26),
-    color: colors.neutral10,
+    fontSize: scaler(15),
+    color: colors.labelColor,
+    paddingHorizontal: scaler(40),
     textAlign: 'center',
-    ...stylesCommon.fontWeight600,
+    ...stylesCommon.fontSarabun400,
   },
   container2: {
     backgroundColor: colors.yellow200,
@@ -294,97 +433,79 @@ const styles = StyleSheet.create({
     bottom: -10,
     marginTop: scaler(10),
   },
-  textSpecial: {
+  img: {
+    height: widthScreen / 5,
+    width: widthScreen / 5,
+    borderRadius: 8,
+  },
+  textSmash: {
     color: colors.pink300,
-    fontSize: scaler(20),
-    ...stylesCommon.fontWeight600,
-    textAlign: 'center',
-    marginBottom: scaler(10),
-  },
-  textPriceOld: {
-    color: colors.gray550,
+    marginRight: 5,
     fontSize: scaler(13),
-    marginTop: 5,
-    textAlign: 'center',
-    ...stylesCommon.fontWeight400,
+    ...stylesCommon.fontSarabun600,
+    marginBottom: 2,
   },
-  textPriceNew: {
-    fontSize: scaler(24),
-    ...stylesCommon.fontWeight600,
-    color: colors.textColor,
-    textAlign: 'center',
-  },
-  textPriceNew2: {
-    fontSize: scaler(15),
-    ...stylesCommon.fontWeight500,
-  },
-  buttonSignUp: {
-    backgroundColor: colors.yellow200,
-    paddingVertical: 15,
-    borderRadius: 50,
+  rowCenter: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  textButtonSignUp: {
-    fontSize: scaler(15),
-    color: colors.labelColor,
+  textChild: {
+    fontSize: scaler(14),
+    paddingRight: 5,
     ...stylesCommon.fontWeight600,
   },
-  container3: {
-    marginBottom: scaler(35),
-    marginTop: scaler(28),
-    marginHorizontal: 25,
+  textChildDesc: {
+    color: colors.gray7,
+    fontSize: scaler(13),
+    marginTop: scaler(6),
+    paddingRight: scaler(10),
+    paddingBottom: scaler(20),
+    textTransform: 'capitalize',
+    ...stylesCommon.fontSarabun400,
   },
-  container4: {
-    backgroundColor: colors.white,
-    borderRadius: scaler(12),
+  containerChild: {
+    backgroundColor: colors.gray350,
+    padding: scaler(12),
+    marginTop: scaler(16),
+    marginBottom: scaler(16),
+    borderRadius: scaler(16),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: scaler(10),
-    paddingHorizontal: scaler(55),
-    marginBottom: scaler(17),
   },
-  container5: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    backgroundColor: colors.pink300,
-    borderTopLeftRadius: 12,
-    borderBottomRightRadius: 12,
-    padding: 5,
-    paddingHorizontal: 9,
-  },
-  textOff: {
+  textTag: {
     color: colors.white,
     fontSize: scaler(11),
-    ...stylesCommon.fontWeight600,
+    ...stylesCommon.fontSarabun600,
   },
-  textPrice1: {
-    color: colors.pink300,
-    fontSize: scaler(18),
-    ...stylesCommon.fontWeight600,
+  containerTag: {
+    backgroundColor: colors.primaryBackground,
+    paddingHorizontal: scaler(10),
+    paddingVertical: scaler(3),
+    borderRadius: scaler(25),
   },
-  containerItem: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
   },
-  textItemName: {
-    fontSize: scaler(20),
-    color: colors.pink300,
-    marginBottom: 10,
-    textAlign: 'center',
-    marginTop: 10,
-    ...stylesCommon.fontWeight600,
+  header: {
+    fontSize: 32,
+    backgroundColor: '#fff',
   },
-  textItemDesc: {
-    fontSize: scaler(15),
-    color: colors.labelColor,
-    textAlign: 'center',
-    ...stylesCommon.fontWeight400,
+  title: {
+    fontSize: 24,
   },
-  textItemDescBold: {
-    fontSize: scaler(15),
-    color: '#101012',
-    ...stylesCommon.fontWeight600,
+  dot: {
+    backgroundColor: colors.primaryBackground,
+    height: scaler(16),
+    width: scaler(16),
+    borderRadius: scaler(8),
+    marginTop: 6,
+    marginLeft: 1,
+  },
+  rowStart: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
 });

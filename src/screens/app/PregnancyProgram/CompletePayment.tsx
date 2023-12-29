@@ -248,9 +248,11 @@ const CompletePayment = (props: CompletePaymentProps) => {
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
       <View style={[styles.container]}>
-        <TouchableOpacity onPress={goBack} style={styles.buttonBack}>
-          <Image source={iconClose} />
-        </TouchableOpacity>
+        {!!route?.params?.isBack && (
+          <TouchableOpacity onPress={goBack} style={styles.buttonBack}>
+            <Image source={iconClose} />
+          </TouchableOpacity>
+        )}
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: scaler(30)}}>

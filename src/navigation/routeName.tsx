@@ -1,6 +1,7 @@
 import PregnancyProgram from '../screens/app/PregnancyProgram';
 import Onboarding from '../screens/app/./OnboardingStep';
 import VerifyPayment from '../screens/app/PregnancyProgram/VerifyPayment';
+import FeedbackTask from '../screens/app/PregnancyProgram/FeedbackTask';
 
 const ROUTE_NAME = {
   INTRO: 'INTRO',
@@ -99,6 +100,8 @@ const ROUTE_NAME = {
   VERIFY_PAYMENT: 'VERIFY_PAYMENT',
   ABOUT_PROGRAM: 'ABOUT_PROGRAM',
   MOM_DIARY: 'MOM_DIARY',
+  FEEDBACK_TASK: 'FEEDBACK_TASK',
+  FEEDBACK_SUCCESS: 'FEEDBACK_SUCCESS',
 
   ONBOARDING_V2: 'ONBOARDING_V2',
   AUTH_ADD_BABY_SUCCESS: 'AUTH_ADD_BABY_SUCCESS',

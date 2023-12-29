@@ -31,6 +31,7 @@ import {GlobalService, uploadImage} from '@services';
 import {useRoute} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
 
 interface MomDiaryProps {}
 interface IState {
@@ -43,8 +44,9 @@ interface IState {
 }
 const MomDiary = (props: MomDiaryProps) => {
   const route = useRoute<any>();
-  console.log('=>(MomDiary.tsx:43) route', route);
   const {t} = useTranslation();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
   const [state, setState] = useStateCustom<IState>({
     visible: false,
     isSave: false,
@@ -53,7 +55,6 @@ const MomDiary = (props: MomDiaryProps) => {
     note: route?.params?.item?.note || '',
     imageTemp: '',
   });
-  console.log('=>(MomDiary.tsx:50) state', state);
 
   const onSave = async () => {
     try {
@@ -216,7 +217,9 @@ const MomDiary = (props: MomDiaryProps) => {
                 zIndex: 999,
                 ...stylesCommon.fontWeight600,
               }}>
-              {route?.params?.item?.task?.name_en}
+              {lang == 1
+                ? route?.params?.item?.task?.name_en
+                : route?.params?.item?.task?.name_vi}
             </Text>
             <TextInput
               placeholder={t('momDiary.writeSomething') as string}

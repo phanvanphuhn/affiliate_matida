@@ -823,6 +823,7 @@ export const en = {
     Upcoming: 'Upcoming',
     Completed: 'Completed',
     Happening: 'Happening',
+    uncompleted: 'Uncompleted',
     youAreNow: 'You are now in week',
     weekToGo: 'weeks to go. You got this!',
     thankMommy: "Thanks Mommy, I'm proud of you !",
@@ -844,6 +845,15 @@ export const en = {
     quiz: 'Quiz',
     checkup: 'Check up',
     activity: 'Activity',
+    meal_plan: 'Meal plan',
+    LetWrapUpThisWeekTogether: "Let's wrap up this week together",
+    LetUsKnowHowThisWeekHasHelpedYou:
+      'Let us know how this week has helped you.',
+    DoYouEnjoyTheProgramSoFar: 'Do you enjoy the program so far?',
+    TellUsAnything: 'Tell us anything...',
+    PleaseRateThisWeekContent: "Please rate this week's content",
+    ThankYouForYourFeedback: 'Thank you for your feedback!',
+    YourFeedbackHelpsUsToGetBetter: 'Your feedback helps us to get better.',
   },
   momDiary: {
     momDiary: 'Mom Diary',

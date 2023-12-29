@@ -33,6 +33,8 @@ import CustomImageRenderer from '../DetailFeed/components/CustomImageRenderer';
 import {tagsStyles} from '../DetailFeed/components/settingsHtml';
 import {showMessage} from 'react-native-flash-message';
 import {GlobalService} from '@services';
+import {useSelector} from 'react-redux';
+import {getSubTitlePregnancy} from '@util';
 
 interface DetailTaskProgramProps {}
 
@@ -40,6 +42,8 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
   const [content, setContent] = useState<string>('');
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
   console.log('=>(DetailTaskProgram.tsx:32) route', route);
   const getData = async () => {
     try {
@@ -127,12 +131,14 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
             <Image source={ic_flower} style={styles.flower} />
             <View style={styles.container2}>
               <Text style={styles.textLearn}>
-                {route?.params?.item?.task?.categories?.[0]
-                  ?.split('_')
-                  ?.join(' ')}
+                {getSubTitlePregnancy(
+                  route?.params?.item?.task?.categories?.[0],
+                )}
               </Text>
               <Text style={styles.textAbout}>
-                {route?.params?.item?.task?.name_en}
+                {lang == 1
+                  ? route?.params?.item?.task?.name_en
+                  : route?.params?.item?.task?.name_vi}
               </Text>
               <View>
                 {!!content && (

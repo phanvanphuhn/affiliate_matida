@@ -22,7 +22,7 @@ import {ViewList} from './component/ViewList';
 
 const MasterClass = () => {
   const route = useRoute<any>();
-  const {id} = route?.params;
+  const {id} = route?.params || {};
   const {t} = useTranslation();
   const dispatch = useDispatch();
 

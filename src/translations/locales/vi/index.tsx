@@ -826,6 +826,7 @@ export const vi = {
     Upcoming: 'Sắp mở',
     Completed: 'Hoàn thành',
     Happening: 'Đang làm',
+    uncompleted: 'Chưa hoàn thành',
     youAreNow: 'Mẹ đang ở tuần',
     weekToGo: 'tuần nữa thôi, cố lên nào!',
     thankMommy: 'Cảm ơn mẹ, con tự hào về mẹ !',
@@ -847,6 +848,14 @@ export const vi = {
     quiz: 'Trắc nghiệm',
     checkup: 'Khám thai',
     activity: 'Hoạt động',
+    LetWrapUpThisWeekTogether: 'Hãy cùng nhìn lại một tuần đã qua, mẹ nhé !',
+    LetUsKnowHowThisWeekHasHelpedYou:
+      'Let us know how this week has helped you.',
+    DoYouEnjoyTheProgramSoFar: 'Do you enjoy the program so far?',
+    TellUsAnything: 'Tell us anything...',
+    PleaseRateThisWeekContent: "Please rate this week's content",
+    ThankYouForYourFeedback: 'Thank you for your feedback!',
+    YourFeedbackHelpsUsToGetBetter: 'Your feedback helps us to get better.',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',
@@ -854,7 +863,7 @@ export const vi = {
     save: 'Lưu',
     momDesc:
       'Mẹ hãy nhớ điền vào nhật ký này mỗi tuần nhé. Vào cuối thai kỳ, Matida có một món quà dành cho bạn.',
-    week: 'Tuấn',
+    week: 'Tuần',
     uploadPicture: 'Hãy tải lên ảnh của mẹ tuần thai này nhé',
     messageBaby: 'gửi lời nhắn đến em bé của bạn',
     writeSomething: 'Hãy viết gì đó nhé ',

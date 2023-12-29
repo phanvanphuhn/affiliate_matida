@@ -51,3 +51,7 @@ export const markAsCompleted: any = async (data: any) => {
   const response = await api.post(`${USER_TASK}/mark-as-completed`, data);
   return response;
 };
+export const getProgressWeek: any = async () => {
+  const response = await api.get(`${USER_TASK}/progress`);
+  return response;
+};

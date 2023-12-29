@@ -26,9 +26,18 @@ import {getUserTask} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import {GlobalService} from '@services';
 import {useTranslation} from 'react-i18next';
-import {event, eventType, trackingAppEvent} from '@util';
+import {
+  event,
+  eventType,
+  getColorPregnancy,
+  getLabelPregnancy,
+  getSubTitlePregnancy,
+  getTitlePregnancy,
+  trackingAppEvent,
+} from '@util';
 import {navigate} from '@navigation';
 import {EPreRoute} from '@constant';
+import {NavigationProp} from '@react-navigation/core/src/types';
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -41,7 +50,7 @@ interface ListProgramProps {
 
 const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NavigationProp<any>>();
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   const week = useSelector((state: any) =>
@@ -50,54 +59,7 @@ const ListProgram = (props: ListProgramProps) => {
       : state?.home?.weekUserTask,
   );
   const {t} = useTranslation();
-  const getTitle = (type: string) => {
-    switch (type) {
-      case 'reward':
-        return '';
-      case 'core':
-        return t('pregnancyProgram.pregnancyKnowledge');
-      case 'love_and_money':
-        return t('pregnancyProgram.loveMoney');
-      case 'fitness_and_nutrition':
-        return t('pregnancyProgram.fitnessNutrition');
-      case 'baby_care':
-        return t('pregnancyProgram.babyCare');
-      default:
-        return '';
-    }
-  };
-  const getSubTitle = (type: string) => {
-    switch (type) {
-      case 'learn':
-        return t('pregnancyProgram.learn');
-      case 'check_up':
-        return t('pregnancyProgram.checkup');
-      case 'mom_diary':
-        return t('momDiary.momDiary');
-      case 'quiz':
-        return t('pregnancyProgram.quiz');
-      case 'activity':
-        return t('pregnancyProgram.activity');
-      default:
-        return '';
-    }
-  };
-  const getLabel = (type: string) => {
-    switch (type) {
-      case 'reward':
-        return '';
-      case 'core':
-        return 'Core';
-      case 'love_and_money':
-        return 'Personal challenge';
-      case 'fitness_and_nutrition':
-        return 'Fitness & Nutrition';
-      case 'baby_care':
-        return 'Baby care';
-      default:
-        return '';
-    }
-  };
+
   const getData = async () => {
     try {
       GlobalService.showLoading();
@@ -113,8 +75,8 @@ const ListProgram = (props: ListProgramProps) => {
           .map(e => {
             let arr = res?.data.filter((item: any) => item.task?.module == e);
             return {
-              title: getTitle(e),
-              label: getLabel(e),
+              title: getTitlePregnancy(e),
+              label: getLabelPregnancy(e),
               type: e,
               data: arr,
             };
@@ -149,10 +111,8 @@ const ListProgram = (props: ListProgramProps) => {
     }, [props?.currentWeek, props?.tabIndex]),
   );
   const onDetail = (item: any) => {
-    console.log('=>(ListProgram.tsx:154) item?.task?.type', item?.task?.type);
     switch (item?.task?.type) {
       case 'input_data':
-        console.log('=>(ListProgram.tsx:125) props?.tabIndex', props?.tabIndex);
         navigation.navigate(ROUTE_NAME.MOM_DIARY, {
           item,
           type: props?.tabIndex == 1 ? 'review' : 'todo',
@@ -191,18 +151,7 @@ const ListProgram = (props: ListProgramProps) => {
         break;
     }
   };
-  const getColor = (type: string) => {
-    switch (type) {
-      case 'reward':
-        return colors.blue;
-      case 'core':
-        return colors.pink200;
-      case 'love_and_money':
-        return colors.green250;
-      default:
-        return colors.primaryBackground;
-    }
-  };
+
   const onGift = () => {
     navigation.navigate(ROUTE_NAME.MOM_DIARY);
   };
@@ -217,13 +166,16 @@ const ListProgram = (props: ListProgramProps) => {
                 marginRight: item.type == 'reward' ? 0 : 10,
               }}>
               <View
-                style={[styles.dot, {backgroundColor: getColor(item.type)}]}
+                style={[
+                  styles.dot,
+                  {backgroundColor: getColorPregnancy(item.type)},
+                ]}
               />
               {item.type == 'reward' ? (
                 <Svg style={{width: 20, height: '100%'}} fill="none">
                   <Path
                     d="M1 1V35C1 55.8366 8.16344 52 20 55V55"
-                    stroke={getColor(item.type)}
+                    stroke={getColorPregnancy(item.type)}
                     strokeWidth={2}
                     strokeLinecap="round"
                     strokeDasharray="2 4"
@@ -236,7 +188,7 @@ const ListProgram = (props: ListProgramProps) => {
                   style={{width: 20, height: '100%', position: 'absolute'}}
                   fill="none">
                   <Line
-                    stroke={getColor(item.type)}
+                    stroke={getColorPregnancy(item.type)}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeDasharray="2 4"
@@ -267,7 +219,7 @@ const ListProgram = (props: ListProgramProps) => {
                   <View
                     style={[
                       styles.containerTag,
-                      {backgroundColor: getColor(item.type)},
+                      {backgroundColor: getColorPregnancy(item.type)},
                     ]}>
                     <Text style={styles.textTag}>{item.label}</Text>
                   </View>
@@ -319,7 +271,7 @@ const ListProgram = (props: ListProgramProps) => {
                               {lang == 1 ? e?.task?.name_en : e?.task?.name_vi}
                             </Text>
                             <Text style={styles.textChildDesc}>
-                              {getSubTitle(e.task?.categories?.[0])}
+                              {getSubTitlePregnancy(e.task?.categories?.[0])}
                             </Text>
                           </View>
                           <TouchableOpacity
