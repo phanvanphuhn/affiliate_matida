@@ -28,6 +28,8 @@ import {
 import useStateCustom from '../../../util/hooks/useStateCustom';
 import {GlobalService} from '@services';
 import {showMessage} from 'react-native-flash-message';
+import {useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 interface OnboardingStepProps {}
 interface OnboardingStepAnswer {
@@ -64,6 +66,9 @@ interface IState {
 const answerKeys = ['A', 'B', 'C', 'D'];
 const OnboardingStep = (props: OnboardingStepProps) => {
   const route = useRoute<any>();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+  const {t} = useTranslation();
+
   const [state, setState] = useStateCustom<IState>({
     dataQuestion: route?.params?.packageQuizz?.questions || [],
     currentQuestion: 0,
@@ -168,16 +173,17 @@ const OnboardingStep = (props: OnboardingStepProps) => {
             <Text style={styles.textStep}>
               {(state.currentQuestion ?? 0) + 1}/{state?.dataQuestion?.length}
             </Text>
-            <Text style={styles.textStep}>Finish</Text>
+            <Text style={styles.textStep}>{t('newBorn.finish')}</Text>
           </View>
         </View>
 
         <View style={{flex: 1}}>
           <Text style={styles.textQuestion}>
-            {
-              (state?.dataQuestion || [])[state.currentQuestion ?? 0]
-                ?.question_en
-            }
+            {lang == 1
+              ? (state?.dataQuestion || [])[state.currentQuestion ?? 0]
+                  ?.question_en
+              : (state?.dataQuestion || [])[state.currentQuestion ?? 0]
+                  ?.question_vi}
           </Text>
           <View
             style={{
@@ -196,7 +202,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
                 return (
                   <ItemAnswer
                     onSelected={() => onSelectAnswer(answer, i)}
-                    title={answer.answer_en}
+                    title={lang == 1 ? answer.answer_en : answer.answer_vi}
                     answerKey={answerKeys[i]}
                     isSelected={
                       i ==
