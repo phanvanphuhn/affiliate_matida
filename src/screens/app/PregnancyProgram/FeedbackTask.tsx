@@ -36,11 +36,11 @@ import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useTranslation} from 'react-i18next';
 
-interface TeaserProgramProps {
+interface FeedbackTaskProps {
   isHome?: boolean;
 }
 
-const TeaserProgram = (props: TeaserProgramProps) => {
+const FeedbackTask = (props: FeedbackTaskProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
@@ -84,7 +84,6 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           style={{
             width: '100%',
             aspectRatio: 3 / 2,
-            marginTop: scaler(16),
           }}
         />
         <Text style={styles.textItemName}>{item.name}</Text>
@@ -247,7 +246,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   );
 };
 
-export default TeaserProgram;
+export default FeedbackTask;
 
 const styles = StyleSheet.create({
   container: {

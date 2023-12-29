@@ -31,6 +31,8 @@ import validation from './validation';
 import {GlobalService} from '@services';
 import {requestSubcribePlan} from '../../../services/pregnancyProgram';
 import {showMessage} from 'react-native-flash-message';
+import {useDispatch} from 'react-redux';
+import {changeWeekUserTask} from '@redux';
 
 interface UpdateInformationProps {}
 export interface UpdateInformationState {
@@ -41,6 +43,8 @@ export interface UpdateInformationState {
 
 const UpdateInformation = (props: UpdateInformationProps) => {
   const {t} = useTranslation();
+
+  const dispatch = useDispatch();
 
   const handleSubcribePlan = async (metadata: UpdateInformationState) => {
     try {
@@ -55,6 +59,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
           values: res?.data,
         });
+        dispatch(changeWeekUserTask(parseInt(metadata.pregnant_week)));
       }
     } catch (err) {
       showMessage({

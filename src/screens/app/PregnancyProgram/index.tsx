@@ -23,7 +23,7 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
   const [currentWeek, setCurrentWeek] = useState(0);
   const navigation = useNavigation<any>();
   const week = useSelector((state: any) =>
-    state?.home?.week <= 4 ? 4 : state?.home?.week,
+    state?.home?.weekUserTask <= 4 ? 4 : state?.home?.weekUserTask,
   );
   const lang = useSelector((state: any) => state?.auth?.lang);
 

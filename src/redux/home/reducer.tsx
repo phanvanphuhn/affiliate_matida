@@ -1,6 +1,7 @@
 import {produce} from 'immer';
 import {HomeState, INITIAL_STATE_HOME} from './state';
 import {typeHome} from './type';
+import {changeWeekUserTask} from './action';
 
 export default function homeReducer(state = INITIAL_STATE_HOME, action: any) {
   switch (action.type) {
@@ -15,6 +16,11 @@ export default function homeReducer(state = INITIAL_STATE_HOME, action: any) {
       return {
         ...state,
         weekPregnant: action.payload,
+      };
+    case typeHome.CHANGE_WEEK_USER_TASK:
+      return {
+        ...state,
+        weekUserTask: action.payload,
       };
     case typeHome.CHANGE_WEEK:
       return {

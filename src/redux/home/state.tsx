@@ -28,6 +28,7 @@ export type HomeState = {
   data: IData;
   weekPregnant: {weeks: number; days: number};
   week: number;
+  weekUserTask: number;
   loading: boolean;
 };
 
@@ -35,5 +36,6 @@ export const INITIAL_STATE_HOME: HomeState = {
   data: initData,
   weekPregnant: {weeks: 1, days: 1},
   week: 1,
+  weekUserTask: 4,
   loading: true,
 };
