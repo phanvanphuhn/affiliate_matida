@@ -44,9 +44,8 @@ interface IState {
 }
 const MomDiary = (props: MomDiaryProps) => {
   const route = useRoute<any>();
-  const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
-
+  const {t} = useTranslation();
   const [state, setState] = useStateCustom<IState>({
     visible: false,
     isSave: false,
@@ -113,6 +112,7 @@ const MomDiary = (props: MomDiaryProps) => {
   const onRemove = () => {
     setState({image: '', imageTemp: '', isSave: true});
   };
+
   return (
     <View style={styles.container}>
       <Header
@@ -200,12 +200,12 @@ const MomDiary = (props: MomDiaryProps) => {
           <View style={{padding: 16}}>
             <Text style={styles.textUpload}>
               {route?.params?.type == 'review'
-                ? `${t('momDiary.week')} ${route?.params?.item?.week}`
+                ? `${t('momDiary.week')} ${route?.params?.item?.week || 1}`
                 : t('momDiary.uploadPicture')}
             </Text>
             {route?.params?.type != 'review' && (
               <Text style={styles.textWeek}>
-                {`${t('momDiary.week')} ${route?.params?.item?.week} ${t(
+                {`${t('momDiary.week')} ${route?.params?.item?.week || 1} ${t(
                   'momDiary.messageBaby',
                 )}`}
               </Text>

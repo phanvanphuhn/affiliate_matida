@@ -35,6 +35,7 @@ import Swiper from '../DetailFeed/SwiperFlatlist/Swiper';
 import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useTranslation} from 'react-i18next';
+import {useSelector} from 'react-redux';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -44,12 +45,16 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const data = [
     {
       name: t('pregnancyProgram.directAccess'),
       description: t('pregnancyProgram.supportGroup'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
+      icon:
+        lang == 1
+          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png'
+          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1703834983521123611.png',
     },
     {
       name: t('pregnancyProgram.weeklyEffort'),
@@ -59,12 +64,18 @@ const TeaserProgram = (props: TeaserProgramProps) => {
     {
       name: t('pregnancyProgram.supportBaby'),
       description: t('pregnancyProgram.techniqueHabit'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png',
+      icon:
+        lang == 1
+          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091023669862042.png'
+          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1703835219320462419.png',
     },
     {
       name: t('pregnancyProgram.beTheBest'),
       description: t('pregnancyProgram.personalGuidance'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png',
+      icon:
+        lang == 1
+          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png'
+          : '"https://s3.ap-southeast-1.amazonaws.com/matida/1703835275868370189.png"',
     },
     {
       name: t('pregnancyProgram.getDiscount'),
