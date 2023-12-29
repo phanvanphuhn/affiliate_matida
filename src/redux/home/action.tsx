@@ -23,6 +23,10 @@ export const changeWeekPregnant = (payload: any) => ({
   type: typeHome.CHANGE_WEEK_PREGNANT,
   payload,
 });
+export const changeWeekUserTask = (payload: any) => ({
+  type: typeHome.CHANGE_WEEK_USER_TASK,
+  payload,
+});
 
 export const changeWeek = (payload: any) => ({
   type: typeHome.CHANGE_WEEK,
