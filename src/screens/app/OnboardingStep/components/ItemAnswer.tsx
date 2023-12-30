@@ -5,8 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   Pressable,
+  Image,
 } from 'react-native';
-import {SvgPathBottom, SvgPathTop} from '@images';
+import {ic_wave_bottom, ic_wave_top, SvgPathBottom, SvgPathTop} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 
 interface ItemAnswerProps {
@@ -20,7 +21,14 @@ const ItemAnswer = (props: ItemAnswerProps) => {
   const [state, setState] = useState();
   return (
     <View style={styles.container}>
-      <SvgPathTop color={props.isSelected ? colors.blue : colors.white} />
+      <Image
+        source={ic_wave_top}
+        style={{
+          width: '100%',
+          tintColor: props.isSelected ? colors.blue : colors.white,
+        }}
+      />
+
       <Pressable
         style={{flex: 1, marginBottom: -0.2}}
         onPress={props.onSelected}>
@@ -52,7 +60,13 @@ const ItemAnswer = (props: ItemAnswerProps) => {
         </View>
       </Pressable>
       <View style={{marginBottom: 2}}>
-        <SvgPathBottom color={props.isSelected ? colors.blue : colors.white} />
+        <Image
+          source={ic_wave_bottom}
+          style={{
+            width: '100%',
+            tintColor: props.isSelected ? colors.blue : colors.white,
+          }}
+        />
       </View>
     </View>
   );

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {ic_back_arrow} from '@images';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
+import Hyperlink from 'react-native-hyperlink';
 
 interface ColapsibleProps {
   title: string;
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     paddingRight: scaler(15),
     paddingVertical: scaler(15),
     fontSize: scaler(15),
-    ...stylesCommon.fontWeight600,
+    ...stylesCommon.fontSarabun600,
   },
   containerContent: {
     borderBottomLeftRadius: scaler(12),
@@ -80,6 +81,6 @@ const styles = StyleSheet.create({
     fontSize: scaler(15),
     color: colors.labelColor,
     lineHeight: scaler(24),
-    ...stylesCommon.fontWeight400,
+    ...stylesCommon.fontSarabun400,
   },
 });

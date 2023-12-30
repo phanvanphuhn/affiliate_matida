@@ -59,6 +59,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {formatPrice} from '@util';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import RNFS from 'react-native-fs';
+import RNFetchBlob from 'rn-fetch-blob';
 interface CompletePaymentProps {}
 interface BankState {
   bank_account_name: string;
@@ -226,25 +227,39 @@ const CompletePayment = (props: CompletePaymentProps) => {
     return await getRequestPermissionPromise();
   }
 
-  async function savePicture() {
-    try {
-      if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
-        return;
-      }
+  const saveToGallery = async () => {
+    if (Platform.OS == 'android') {
+      let dirs = RNFetchBlob.fs.dirs;
+      let path = dirs.PictureDir + '/qr-matida.png';
 
+      let res = await RNFetchBlob.config({
+        fileCache: true,
+        appendExt: 'png',
+        indicator: true,
+        IOSBackgroundTask: true,
+        path: path,
+        addAndroidDownloads: {
+          useDownloadManager: true,
+          notification: true,
+          mime: 'image/png',
+          path: path,
+          description: 'File downloaded.',
+        },
+      }).fetch(
+        'GET',
+        route?.params?.values?.metadata?.bank_account?.qr_code || '',
+      );
+    } else {
       let result = await CameraRoll.save(
         route?.params?.values?.metadata?.bank_account?.qr_code || '',
         {type: 'photo', album: 'matida'},
       );
-      showMessage({
-        message: 'Saved file success!',
-        type: 'success',
-      });
-      console.log('=>(CompletePayment.tsx:265) result', result);
-    } catch (error) {
-      console.log('=>(CompletePayment.tsx:417) error', error);
     }
-  }
+    showMessage({
+      message: 'Saved file success!',
+      type: 'success',
+    });
+  };
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
       <View style={[styles.container]}>
@@ -304,7 +319,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   />
                 </View>
                 <TouchableOpacity
-                  onPress={savePicture}
+                  onPress={saveToGallery}
                   style={styles.buttonCopy}>
                   <Image source={ic_download} />
                 </TouchableOpacity>

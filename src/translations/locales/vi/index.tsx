@@ -848,6 +848,7 @@ export const vi = {
     quiz: 'Trắc nghiệm',
     checkup: 'Khám thai',
     activity: 'Hoạt động',
+    meal_plan: 'Kế hoạch ăn uống',
     LetWrapUpThisWeekTogether: 'Hãy cùng nhìn lại một tuần đã qua, mẹ nhé !',
     LetUsKnowHowThisWeekHasHelpedYou:
       'Let us know how this week has helped you.',
@@ -856,6 +857,61 @@ export const vi = {
     PleaseRateThisWeekContent: "Please rate this week's content",
     ThankYouForYourFeedback: 'Thank you for your feedback!',
     YourFeedbackHelpsUsToGetBetter: 'Your feedback helps us to get better.',
+    AboutTheProgram: 'Về khóa học',
+    MeetOurExperts: 'Chuyên gia - Cố vấn nội dung',
+    FrequentlyAskedQuestions: 'Câu hỏi thường gặp',
+    aHolisticProgram: 'Lộ trình toàn diện cho thai kỳ khỏe mạnh',
+    contentAboutTheProgram:
+      'Có phải mẹ đang háo hức chờ đón con yêu nhưng cũng không khỏi lo lắng về hành trình sắp tới? Matida mang đến khóa học Matida Masterclass được cá nhân hóa, và tư vấn trực tiếp từ bác sĩ & chuyên gia, giúp mẹ đối diện với những thách thức của riêng mình và có trải nghiệm thật ‘bầu không bí’. \n' +
+      '\n' +
+      'Chỉ cần 15 phút mỗi tuần, mẹ được cung cấp kiến thức chuyên sâu và toàn diện về 4 mô-đun chính: Sức khỏe thai kỳ, Chăm sóc con yêu, Tài chính & Gia đình, Thể chất & Dinh dưỡng. Hãy để Matida đồng hành cùng mẹ trên hành trình tuyệt vời này thật tự tin, khỏe mạnh, và hạnh phúc nhé!\n',
+    AnEntireCareTeamAtYourFingertips: 'Đội ngũ chuyên gia kinh nghiệm',
+    contentExperts:
+      'Chương trình được xây dựng bởi đội ngũ chuyên gia nhiều kinh nghiệm, cung cấp nội dung toàn diện, hữu ích cho hành trình mang thai của mẹ.',
+    ThereAreNoStupidQuestions: 'Câu hỏi thường gặp',
+    HowDoesTheProgramWork: 'Khóa học Matida Masterclass hoạt động như thế nào?',
+    contentHowDoesTheProgramWork:
+      'Matida Masterclass với 4 mô-đun được thiết kế khoa học - linh hoạt, bao gồm các bài học và hoạt động hàng tuần được thiết kế để dễ dàng lồng ghép vào thói quen hàng ngày, cung cấp kiến thức chăm sóc thai kỳ để sẵn sàng làm mẹ. Mẹ có thể truy cập khóa học bất cứ lúc nào trên ứng dụng Matida.',
+    WhatFeaturesAreIncluded: 'Mẹ nhận được gì khi tham gia khóa học?',
+    contentWhatFeaturesAreIncluded:
+      'Khóa học cung cấp nhiều lợi ích hấp dẫn như: Nội dung được cá nhân hóa cho từng giai đoạn thai kỳ, Tư vấn trực tiếp từ bác sĩ và chuyên gia, Danh sách những món đồ cần chuẩn bị, Hướng dẫn về thể chất và dinh dưỡng thai kỳ, Cộng đồng mẹ bầu thân thiện cùng chia sẻ kinh nghiệm và hỗ trợ lẫn nhau.',
+    WhereDidMatidaSourceItsContent:
+      'Nội dung của Matida Masterclass đến từ đâu?',
+    contentWhereDidMatidaSourceItsContent:
+      'Nội dung được biên soạn bởi đội ngũ bác sĩ, chuyên gia giàu kinh nghiệm và các mẹ bỉm sữa tâm huyết. Tất cả thông tin đều dựa trên khoa học, được cập nhật và tuân theo các hướng dẫn y tế mới nhất.',
+    HowOftenIsTheProgramContentUpdated:
+      'Nội dung có được cập nhật thường xuyên không?',
+    contentHowOftenIsTheProgramContentUpdated:
+      'Đội ngũ chuyên gia của Matida thường xuyên kiểm tra nội dung để đảm bảo mẹ luôn nhận được thông tin cập nhật và chính xác nhất.',
+    WhoIsTheMatidaPregnancyProgramDesignedFor: 'Khóa học dành cho ai?',
+    contentWhoIsTheMatidaPregnancyProgramDesignedFor:
+      'Khóa học được thiết kế riêng cho các mẹ bầu đang tìm kiếm sự hỗ trợ toàn diện trong suốt thai kỳ. Dù mẹ đang ở giai đoạn nào, mong muốn tìm hiểu về kiến thức y khoa, kinh nghiệm thực tế hay tìm kiếm hỗ trợ về mặt tinh thần, Matida Masterclass đều là người bạn đồng hành lý tưởng.',
+    HowLongDoesTheProgramLast: 'Khóa học kéo dài bao lâu?',
+    contentHowLongDoesTheProgramLast:
+      'Mẹ yên tâm nhé, Matida Masterclass sẽ đồng hành cùng mẹ trong suốt hành trình thai kỳ, từ những ngày đầu tiên cho đến khi chuẩn bị chào đón con yêu. Chương trình rất linh hoạt, mẹ có thể truy cập thông tin và nhận hỗ trợ bất cứ khi nào.',
+    CanIJoinTheProgramAtAAnyStageOfMyPregnancy:
+      'Mình có thể tham gia khóa học ở bất kỳ giai đoạn nào trong thai kỳ không?',
+    contentCanIJoinTheProgramAtAAnyStageOfMyPregnancy:
+      'Đương nhiên rồi! Khóa học được thiết kế để giúp ích cho mẹ từ những tuần đầu, giữa thai kỳ hay gần đến ngày dự sinh. Nội dung sẽ luôn phù hợp với từng giai đoạn thai kỳ.',
+    IsTheProgramSuitable:
+      'Khóa học có phù hợp với mẹ bầu có tình trạng sức khỏe đặc biệt hoặc thai kỳ nguy cơ cao không?',
+    contentIsTheProgramSuitable:
+      'Khóa học cung cấp hướng dẫn chung cho thai kỳ và không thể thay thế cho chỉ định y tế. Matida khuyến nghị mẹ tham khảo ý kiến bác sĩ để đảm bảo khóa học phù hợp với tình trạng sức khỏe của mẹ.',
+    HowIsTheMatidaProgram:
+      'Khóa học Matida Masterclass có gì khác biệt gì so với các ứng dụng / khóa học khác?',
+    contentHowIsTheMatidaProgram:
+      'Điều tạo nên sự khác biệt của Matida chính là thiết kế lộ trình toàn diện, kết hợp kiến thức chuyên môn về y tế, kinh nghiệm chăm sóc con thực tiễn, và kiến thức chăm sóc sức khỏe tinh thần, tất cả đều được điều chỉnh cho phù hợp với hành trình mang thai độc nhất của mẹ.',
+    AreThereAnyLiveSessions:
+      'Khóa học có bao gồm các buổi tư vấn trực tiếp không?',
+    contentAreThereAnyLiveSessions:
+      'Nội dung cốt lõi của khóa học là các bài học trực tuyến, Matida tổ chức thêm các buổi livestream để mẹ có thể tương tác sâu hơn và nhận lời khuyên trực tiếp từ chuyên gia. Livestream được tổ chức hàng tuần trên ứng dụng hoặc mẹ có thể trao đổi với chuyên gia trong nhóm chat riêng trên Zalo.',
+    CanFamilyMembersOrPartnersParticipateInTheProgram:
+      'Chồng hoặc người thân có thể tham gia khóa học không?',
+    contentCanFamilyMembersOrPartnersParticipateInTheProgram:
+      'Chắc chắn rồi! Khóa học được thiết kế cho các mẹ bầu nhưng chồng hoặc người thân vẫn có thể học chung, đặc biệt có một số nội dung trong khóa học cần có sự tham gia của gia đình nhằm mang lại trải nghiệm thai kỳ trọn vẹn và sẵn sàng cho vai trò người đồng hành đáng tin cậy của mẹ trong thai kỳ.',
+    IHaveMoreQuestions: 'Mình còn thắc mắc - Mình có thể liên hệ với ai?',
+    contentIHaveMoreQuestions:
+      'Hãy liên hệ Matida qua email: contact@matida.app.',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

@@ -19,6 +19,7 @@ import {
   ic_flower,
   ic_plus,
   ic_trash,
+  ic_wave_line_top,
   iconAddImage,
   SvgLineWave,
 } from '@images';
@@ -151,7 +152,10 @@ const MomDiary = (props: MomDiaryProps) => {
         <View style={styles.container2}>
           <Text style={styles.textTitle}>{t('momDiary.momDesc')}</Text>
           <View style={{bottom: -8}}>
-            <SvgLineWave color={colors.pink250} />
+            <Image
+              source={ic_wave_line_top}
+              style={{width: '100%', height: 17, tintColor: colors.pink250}}
+            />
           </View>
         </View>
         <View style={{flex: 1, paddingBottom: 40}}>
@@ -190,11 +194,14 @@ const MomDiary = (props: MomDiaryProps) => {
             {((route?.params?.type == 'review' &&
               state?.isEdit &&
               state?.isSave) ||
-              (route?.params?.type == 'todo' && !state?.isSave)) &&
+              (route?.params?.type == 'todo' && state?.isEdit)) &&
               !state?.image && <Image source={ic_plus} />}
           </Pressable>
-          <View style={{top: -8}}>
-            <SvgLineWave color={colors.pink250} />
+          <View style={{top: -8.6}}>
+            <Image
+              source={ic_wave_line_top}
+              style={{width: '100%', height: 17, tintColor: colors.pink250}}
+            />
           </View>
 
           <View style={{padding: 16}}>

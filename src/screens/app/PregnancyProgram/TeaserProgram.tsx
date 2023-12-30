@@ -17,6 +17,8 @@ import {
 } from '@stylesCommon';
 import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
+  ic_wave_line_bottom,
+  ic_wave_line_top,
   SvgClose,
   SvgLineWave,
   SvgPathBottom,
@@ -175,7 +177,10 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               bottom: -8,
               zIndex: 10,
             }}>
-            <SvgLineWave color={colors.pink350} />
+            <Image
+              source={ic_wave_line_top}
+              style={{width: '100%', height: 17, tintColor: colors.pink350}}
+            />
           </View>
           <View
             style={{
@@ -201,9 +206,12 @@ const TeaserProgram = (props: TeaserProgramProps) => {
 
             <View
               style={{
-                bottom: -8,
+                bottom: -8.6,
               }}>
-              <SvgLineWave color={colors.blue50} />
+              <Image
+                source={ic_wave_line_bottom}
+                style={{width: '100%', height: 17, tintColor: colors.blue50}}
+              />
             </View>
           </View>
           <View style={styles.container3}>

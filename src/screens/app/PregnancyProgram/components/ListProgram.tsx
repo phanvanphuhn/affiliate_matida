@@ -52,7 +52,7 @@ const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
   const navigation = useNavigation<NavigationProp<any>>();
   const lang = useSelector((state: any) => state?.auth?.lang);
-
+  const isFeedback = useRef(false);
   const week = useSelector((state: any) =>
     !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
       ? 4
@@ -96,6 +96,12 @@ const ListProgram = (props: ListProgramProps) => {
               ],
             },
           ]);
+        } else {
+          if (!isFeedback.current && week == props.currentWeek) {
+            isFeedback.current = true;
+
+            navigation.navigate(ROUTE_NAME.FEEDBACK_TASK);
+          }
         }
         setState(data);
         console.log('=>(ListProgram.tsx:128) data', data);
@@ -341,7 +347,6 @@ const styles = StyleSheet.create({
     marginTop: scaler(5),
     paddingRight: scaler(10),
     paddingBottom: scaler(10),
-    textTransform: 'capitalize',
     ...stylesCommon.fontSarabun400,
   },
   containerChild: {

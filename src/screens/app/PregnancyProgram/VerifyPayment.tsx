@@ -10,6 +10,8 @@ import {
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {
   ic_default1,
+  ic_wave_line_bottom,
+  ic_wave_line_top,
   iconClose,
   SvgLineWave,
   SvgPathTop,
@@ -19,8 +21,10 @@ import {goBack} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {useNavigation} from '@react-navigation/native';
 import {isIphoneX} from 'react-native-iphone-x-helper';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
+import {getUserInfoApi, GlobalService} from '@services';
+import {saveDataUser} from '@redux';
 
 interface VerifyPaymentProps {}
 
@@ -30,20 +34,27 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
   const {t} = useTranslation();
   const userInfo = useSelector((state: any) => state?.auth?.userInfo);
   const paymentProcessing = useMemo(() => userInfo?.payments);
-
-  const onPaymentFinish = () => {
-    console.log(
-      '=>(VerifyPayment.tsx:37) isPaymentProcessing',
-      paymentProcessing,
-    );
+  const dispatch = useDispatch();
+  const getDataUser = async () => {
+    try {
+      const res = await getUserInfoApi();
+      console.log('=>(VerifyPayment.tsx:39) res', res);
+      dispatch(saveDataUser(res?.data?.data));
+      return res?.data?.data;
+    } catch (error) {}
+  };
+  const onPaymentFinish = async () => {
+    GlobalService.showLoading();
+    let data = await getDataUser();
     if (
-      !paymentProcessing?.length ||
-      paymentProcessing?.some(e => e.status == 'processing')
+      !data?.payments?.length ||
+      data?.payments?.some(e => e.status == 'processing')
     ) {
       navigation.navigate(ROUTE_NAME.TAB_HOME);
     } else {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
     }
+    GlobalService.hideLoading();
   };
   return (
     <View style={styles.container}>
@@ -66,8 +77,11 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
             <Text style={styles.text2}>Matida Masterclass</Text>
           </View>
           <View style={styles.containerContent}>
-            <View style={{top: -8}}>
-              <SvgLineWave color={colors.pink350} />
+            <View style={{top: -8.6}}>
+              <Image
+                source={ic_wave_line_top}
+                style={{width: '100%', height: 17, tintColor: colors.pink350}}
+              />
             </View>
             <View style={styles.containerContent2}>
               <Text style={styles.textContent}>
@@ -85,8 +99,11 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
                 {`\n${t('pregnancyProgram.reminder')}`}
               </Text>
             </View>
-            <View style={{bottom: -8}}>
-              <SvgLineWave color={colors.blue50} />
+            <View style={{bottom: -8.6}}>
+              <Image
+                source={ic_wave_line_bottom}
+                style={{width: '100%', height: 17, tintColor: colors.blue50}}
+              />
             </View>
           </View>
         </View>

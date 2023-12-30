@@ -360,6 +360,8 @@ export const getSubTitlePregnancy = (type: string) => {
       return t('pregnancyProgram.quiz');
     case 'activity':
       return t('pregnancyProgram.activity');
+    case 'meal_plan':
+      return t('pregnancyProgram.meal_plan');
     default:
       return '';
   }

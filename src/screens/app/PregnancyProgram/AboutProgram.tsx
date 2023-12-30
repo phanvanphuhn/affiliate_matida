@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {ic_back_arrow, ic_gift} from '@images';
-import {colors, scaler, widthScreen} from '@stylesCommon';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {Header} from '@component';
 import {goBack} from '@navigation';
 import About from './components/About';
@@ -119,8 +119,8 @@ const styles = StyleSheet.create({
   textTab: {
     textAlign: 'center',
     fontSize: 13,
-    fontWeight: '600',
     paddingBottom: 5,
+    ...stylesCommon.fontSarabun600,
   },
   indicatorStyle: {
     height: '100%',

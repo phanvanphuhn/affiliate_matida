@@ -854,6 +854,60 @@ export const en = {
     PleaseRateThisWeekContent: "Please rate this week's content",
     ThankYouForYourFeedback: 'Thank you for your feedback!',
     YourFeedbackHelpsUsToGetBetter: 'Your feedback helps us to get better.',
+    AboutTheProgram: 'About the program',
+    MeetOurExperts: 'Meet our experts',
+    FrequentlyAskedQuestions: 'Frequently asked questions',
+    aHolisticProgram:
+      'A holistic program designed for the maternal health journey',
+    contentAboutTheProgram:
+      'Matida\'s "Cool Mom, Happy Baby Program" revolutionizes prenatal care by blending convenience, personalization, and expert advice in a comprehensive app. Tailored for moms-to-be, it ensures thorough preparation for motherhood while addressing women\'s unique needs and challenges. \n\nThis holistic program contains four key modules: pregnancy fundamentals, baby care, fitness & nutrition, and love & money. With a minimal weekly investment of just 15 minutes, you gain essential knowledge for a healthy pregnancy, a happy motherhood journey, and a balanced family life.',
+    AnEntireCareTeamAtYourFingertips: 'An entire care team at your fingertips',
+    contentExperts:
+      'The Matida pregnancy program was crafted by our expert medical team,\noffering the most valuable and supportive content for your journey.',
+    ThereAreNoStupidQuestions: 'There are no stupid questions :-)',
+    HowDoesTheProgramWork: 'How does the program work?',
+    contentHowDoesTheProgramWork:
+      'The Matida pregnancy program provides a structured yet flexible set of modules including learning content and tasks, which you can access anytime through our app. These modules cover a wide range of topics, from prenatal care to preparing for motherhood, and are designed to be easily integrated into your daily routine.',
+    WhatFeaturesAreIncluded: 'What features are included?',
+    contentWhatFeaturesAreIncluded:
+      'The program includes a variety of features such as personalized content tailored to your pregnancy stage, expert advice, interactive checklists, fitness and nutrition guides, and access to a supportive community of fellow moms-to-be.',
+    WhereDidMatidaSourceItsContent: 'Where did Matida source its content?',
+    contentWhereDidMatidaSourceItsContent:
+      "Matida's content is meticulously curated and created by a team of medical professionals, experienced mothers, and subject matter experts. We ensure all information is evidence-based, up-to-date, and aligned with the latest medical guidelines and practices.",
+    HowOftenIsTheProgramContentUpdated:
+      'How often is the program content updated?',
+    contentHowOftenIsTheProgramContentUpdated:
+      'Our content is regularly reviewed and updated by medical professionals to ensure it remains current, relevant, and in line with the latest in prenatal and postnatal care.',
+    WhoIsTheMatidaPregnancyProgramDesignedFor:
+      'Who is the Matida pregnancy program designed for?',
+    contentWhoIsTheMatidaPregnancyProgramDesignedFor:
+      "The Matida pregnancy program is tailored for expectant mothers at any stage of pregnancy, seeking comprehensive guidance and support. It's ideal for those looking for a blend of medical expertise, practical advice, and emotional support.",
+    HowLongDoesTheProgramLast: 'How long does the program last?',
+    contentHowLongDoesTheProgramLast:
+      "The program spans the entirety of your pregnancy journey, offering tailored content from early pregnancy through to birth preparation. It's designed to be flexible, allowing you to access information and support as needed.",
+    CanIJoinTheProgramAtAAnyStageOfMyPregnancy:
+      'Can I join the program at any stage of my pregnancy?',
+    contentCanIJoinTheProgramAtAAnyStageOfMyPregnancy:
+      'Absolutely! Our program is designed to be beneficial whether you join in the early weeks, mid-pregnancy, or closer to your due date, providing relevant information at each stage.',
+    IsTheProgramSuitable:
+      'Is the program suitable for those with specific health conditions or high-risk pregnancies?',
+    contentIsTheProgramSuitable:
+      'The program offers general pregnancy guidance and should complement, not replace, personalized medical advice. We recommend consulting with your healthcare provider to ensure the program aligns with your specific health needs.',
+    HowIsTheMatidaProgram:
+      'How is the Matida program different from other pregnancy apps or programs?',
+    contentHowIsTheMatidaProgram:
+      "Matida's program stands out for its holistic approach, combining medical expertise, practical parenting tips, and emotional well-being resources, all tailored to your pregnancy journey.",
+    AreThereAnyLiveSessions:
+      'Are there any live sessions or direct consultations available as part of the program?',
+    contentAreThereAnyLiveSessions:
+      'While the core of our program is digital content, we also offer live sessions with experts for deeper engagement and personalized advice. These sessions are weekly live streams on the app or exchanges in private Zalo groups.',
+    CanFamilyMembersOrPartnersParticipateInTheProgram:
+      'Can family members or partners participate in the program?',
+    contentCanFamilyMembersOrPartnersParticipateInTheProgram:
+      'This specific program is specifically designed for mothers to be. However, there are parts of the program that foster the involvement of family in order to enhance the pregnancy experience and prepare them for their supportive roles.',
+    IHaveMoreQuestions: 'I have more questions - How can I get in touch?',
+    contentIHaveMoreQuestions:
+      'Please write us an email to contact@matida.app.',
   },
   momDiary: {
     momDiary: 'Mom Diary',

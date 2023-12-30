@@ -2,11 +2,14 @@ import React, {useState} from 'react';
 import {Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import {bg2} from '@images';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {useTranslation} from 'react-i18next';
 
 interface AboutProps {}
 
 const About = (props: AboutProps) => {
   const [state, setState] = useState();
+  const {t} = useTranslation();
+
   return (
     <View style={styles.container}>
       <View
@@ -28,8 +31,8 @@ const About = (props: AboutProps) => {
           style={{
             padding: scaler(20),
           }}>
-          <Text style={{fontSize: scaler(17), ...stylesCommon.fontWeight500}}>
-            About the program
+          <Text style={{fontSize: scaler(17), ...stylesCommon.fontSarabun500}}>
+            {t('pregnancyProgram.AboutTheProgram')}
           </Text>
           <Text
             style={{
@@ -38,7 +41,7 @@ const About = (props: AboutProps) => {
               lineHeight: scaler(28),
               marginTop: 10,
             }}>
-            A holistic program designed for the maternal health journey
+            {t('pregnancyProgram.aHolisticProgram')}
           </Text>
           <Text
             style={{
@@ -46,11 +49,9 @@ const About = (props: AboutProps) => {
               marginTop: scaler(20),
               color: colors.labelColor,
               lineHeight: scaler(24),
-              ...stylesCommon.fontWeight400,
+              ...stylesCommon.fontSarabun400,
             }}>
-            {
-              'Matida\'s "Cool Mom, Happy Baby Program" revolutionizes prenatal care by blending convenience, personalization, and expert advice in a comprehensive app. Tailored for moms-to-be, it ensures thorough preparation for motherhood while addressing women\'s unique needs and challenges. \n\nThis holistic program contains four key modules: pregnancy fundamentals, baby care, fitness & nutrition, and love & money. With a minimal weekly investment of just 15 minutes, you gain essential knowledge for a healthy pregnancy, a happy motherhood journey, and a balanced family life.'
-            }
+            {t('pregnancyProgram.contentAboutTheProgram')}
           </Text>
         </View>
       </ScrollView>

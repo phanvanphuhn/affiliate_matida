@@ -6,12 +6,13 @@ import {
   LayoutAnimation,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {SvgLineWave} from '@images';
+import {ic_wave_line_bottom, ic_wave_line_top, SvgLineWave} from '@images';
 import BarchartOnboarding from './components/BarchartOnboarding';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
@@ -42,11 +43,8 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
         </SafeAreaView>
 
         <View style={styles.container3}>
-          <View
-            style={{
-              top: -8,
-            }}>
-            <SvgLineWave />
+          <View style={{top: -8, paddingBottom: 2}}>
+            <Image source={ic_wave_line_top} style={{width: '100%'}} />
           </View>
 
           <Text style={styles.textTitleChart}>
@@ -62,8 +60,19 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
           </View>
 
           <View style={styles.container4}>
-            <View style={{top: -8, paddingBottom: scaler(32)}}>
-              <SvgLineWave color={colors.blue50} />
+            <View
+              style={{
+                top: -9,
+                paddingTop: 1,
+                paddingBottom: scaler(32),
+              }}>
+              <Image
+                source={ic_wave_line_bottom}
+                style={{
+                  width: '100%',
+                  tintColor: colors.blue50,
+                }}
+              />
             </View>
             <TouchableOpacity onPress={onNext} style={styles.buttonFinish}>
               <Text style={styles.textFinish}>

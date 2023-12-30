@@ -1,21 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
   Image,
   LayoutAnimation,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
-import Container from '../DetailFeed/components/Container';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
-  ic_back,
-  SvgArrowCircleRight,
+  ic_wave_bottom,
+  ic_wave_top,
   SvgArrowLeft,
   SvgPathBottom,
-  SvgPathTop,
 } from '@images';
 import ItemAnswer from './components/ItemAnswer';
 import {goBack} from '@navigation';
@@ -190,7 +188,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
               flex: 1,
               paddingTop: scaler(50),
             }}>
-            <SvgPathTop />
+            <Image source={ic_wave_top} style={{width: '100%'}} />
             <View
               style={{
                 backgroundColor: colors.white,
@@ -213,7 +211,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
               })}
             </View>
             <View style={{marginTop: 1}}>
-              <SvgPathBottom />
+              <Image source={ic_wave_bottom} style={{width: '100%'}} />
             </View>
           </View>
         </View>

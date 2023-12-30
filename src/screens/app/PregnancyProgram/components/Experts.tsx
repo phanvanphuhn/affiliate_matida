@@ -9,6 +9,7 @@ interface ExpertsProps {}
 const Experts = (props: ExpertsProps) => {
   const [state, setState] = useState();
   const {t} = useTranslation();
+
   const data = [
     {
       name: 'Thuý',
@@ -83,9 +84,9 @@ const Experts = (props: ExpertsProps) => {
           <Text
             style={{
               fontSize: scaler(17),
-              ...stylesCommon.fontWeight500,
+              ...stylesCommon.fontSarabun500,
             }}>
-            Meet our experts
+            {t('pregnancyProgram.MeetOurExperts')}
           </Text>
           <Text
             style={{
@@ -94,17 +95,16 @@ const Experts = (props: ExpertsProps) => {
               marginTop: 10,
               marginBottom: 15,
             }}>
-            An entire care team at your fingertips
+            {t('pregnancyProgram.AnEntireCareTeamAtYourFingertips')}
           </Text>
           <Text
             style={{
               fontSize: scaler(15),
               lineHeight: scaler(24),
               color: colors.labelColor,
-              ...stylesCommon.fontWeight400,
+              ...stylesCommon.fontSarabun400,
             }}>
-            The Matida pregnancy program was crafted by our expert medical team,
-            offering the most valuable and supportive content for your journey.
+            {t('pregnancyProgram.contentExperts')}
           </Text>
 
           <View

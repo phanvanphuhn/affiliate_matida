@@ -618,7 +618,9 @@ const Home = () => {
           {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||
               user?.baby_type == 'pregnant-overdue' ||
-              user?.baby_type == 'unknown') && (
+              user?.baby_type == 'unknown') &&
+            (!user?.payments?.length ||
+              user?.payments?.some(e => e.status == 'processing')) && (
               <View style={{marginHorizontal: 16}}>
                 <TeaserProgram data={state?.isSignUp} isHome={true} />
               </View>

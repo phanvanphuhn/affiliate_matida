@@ -106,6 +106,10 @@ const sliderIntroV25 = require('./sliderIntroV25.png');
 const sliderIntroV26 = require('./sliderIntroV26.png');
 const sliderIntroV27 = require('./sliderIntroV27.png');
 const babyPurchases = require('./babyPurchases.png');
+const ic_wave_top = require('./ic_wave_top.png');
+const ic_wave_bottom = require('./ic_wave_bottom.png');
+const ic_wave_line_bottom = require('./ic_wave_line_bottom.png');
+const ic_wave_line_top = require('./ic_wave_line_top.png');
 
 export {
   DailyQuiz,
@@ -214,4 +218,8 @@ export {
   sliderIntroV26,
   sliderIntroV27,
   babyPurchases,
+  ic_wave_top,
+  ic_wave_bottom,
+  ic_wave_line_bottom,
+  ic_wave_line_top,
 };
