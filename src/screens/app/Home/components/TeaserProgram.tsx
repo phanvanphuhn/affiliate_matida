@@ -19,6 +19,7 @@ import {ROUTE_NAME} from '@routeName';
 import {getQuestionOnboarding} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
+import {useTranslation} from 'react-i18next';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -28,6 +29,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   const navigation = useNavigation<any>();
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const checkPlan = useCheckPregnancy();
+  const lang = useSelector((state: any) => state?.auth?.lang);
+
+  const {t} = useTranslation();
 
   return (
     <View style={[styles.container, {}]}>
@@ -53,12 +57,14 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       <View style={styles.container3}>
         <View style={{flex: 1}}>
           <Text style={styles.textOff}>
-            {'Hi new mommy,\nare you ready for the journey?'}
+            {lang == 1
+              ? 'Hi new mommy,\nare you ready for the journey?'
+              : 'Mẹ ơi, trọn bộ kiến thức thai kỳ\nđang đợi mẹ khám phá!'}
           </Text>
           <Text style={styles.textPrice1}>Matida Masterclass</Text>
         </View>
         <TouchableOpacity onPress={checkPlan} style={styles.buttonSignUp}>
-          <Text style={styles.textButtonSignUp}>Sign up now</Text>
+          <Text style={styles.textButtonSignUp}>{t('home.signUpNow')}</Text>
         </TouchableOpacity>
       </View>
 

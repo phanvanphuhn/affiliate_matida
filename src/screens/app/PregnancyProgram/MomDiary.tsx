@@ -134,8 +134,8 @@ const MomDiary = (props: MomDiaryProps) => {
             onPress={!state?.isEdit ? onEdit : onSave}>
             <Text
               style={{
+                ...stylesCommon.fontWeight500,
                 fontSize: scaler(14),
-                fontWeight: '500',
                 color:
                   !state?.isEdit || state.isSave
                     ? colors.pink200
@@ -220,7 +220,6 @@ const MomDiary = (props: MomDiaryProps) => {
             <Text
               style={{
                 fontSize: scaler(22),
-                fontWeight: '600',
                 zIndex: 999,
                 ...stylesCommon.fontWeight600,
               }}>
@@ -293,7 +292,6 @@ const styles = StyleSheet.create({
   textTitle: {
     textAlign: 'left',
     fontSize: scaler(14),
-    fontWeight: '500',
     color: colors.white,
     marginBottom: 10,
     paddingHorizontal: scaler(16),
@@ -307,9 +305,8 @@ const styles = StyleSheet.create({
   },
   textWeek: {
     fontSize: scaler(15),
-    fontWeight: '500',
     color: colors.labelColor,
-    marginBottom: 5,
+    marginBottom: scaler(8),
     ...stylesCommon.fontSarabun500,
   },
 });

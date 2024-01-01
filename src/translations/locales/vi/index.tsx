@@ -188,6 +188,7 @@ export const vi = {
     bodyBannerQuiz:
       'Bạn đã chuẩn bị như thế nào để trở thành một người mẹ? Hãy kiểm tra kiến ​​thức của bạn',
     buttonBannerQuiz: 'Kiểm tra ngay bây giờ',
+    signUpNow: 'Khám phá ngay',
   },
   sizeComparison: {
     week: 'Tuần',
@@ -774,6 +775,7 @@ export const vi = {
     networkSystem: 'Matida thông báo',
     noInternet: 'Mẹ vui lòng kiểm tra lại đường truyền mạng nhé',
     tryAgain: 'Thử lại',
+    done: 'Hoàn thành',
   },
   pregnancyProgram: {
     masterClassResult: 'Kết quả bài test đầu vào MasterClass',

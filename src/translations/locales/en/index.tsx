@@ -186,6 +186,7 @@ export const en = {
     bodyBannerQuiz:
       'How prepared are you for becoming a mother? Let’s check your knowledge',
     buttonBannerQuiz: 'Take test now',
+    signUpNow: 'Sign up now',
   },
   sizeComparison: {
     week: 'Week',
@@ -772,6 +773,7 @@ export const en = {
     noInternet:
       'There is no internet connection\nPlease check your internet connection',
     tryAgain: 'Try Again',
+    done: 'Done',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
