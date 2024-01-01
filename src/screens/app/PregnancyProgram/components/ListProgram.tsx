@@ -159,7 +159,7 @@ const ListProgram = (props: ListProgramProps) => {
   };
 
   const onGift = () => {
-    navigation.navigate(ROUTE_NAME.MOM_DIARY);
+    // navigation.navigate(ROUTE_NAME.MOM_DIARY);
   };
   return (
     <View style={styles.container}>
@@ -236,6 +236,7 @@ const ListProgram = (props: ListProgramProps) => {
                   <View>
                     <TouchableOpacity
                       onPress={onGift}
+                      disabled={true}
                       style={{
                         backgroundColor: colors.blue,
                         flexDirection: 'row',
@@ -271,7 +272,7 @@ const ListProgram = (props: ListProgramProps) => {
                               }
                             : {},
                         ]}>
-                        <View style={{flex: 1}}>
+                        <View style={{flex: 1, marginRight: scaler(16)}}>
                           <View style={{flex: 1}}>
                             <Text style={styles.textChild}>
                               {lang == 1 ? e?.task?.name_en : e?.task?.name_vi}

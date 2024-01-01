@@ -11,19 +11,28 @@ import Information from './components/Information';
 import Button from './components/Button';
 import {event, eventType, trackingAppEvent} from '@util';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 import {navigate} from '@navigation';
-import {calculateDate, createBaby, selectBabyDate, updateBaby} from '@services';
+import {
+  calculateDate,
+  createBaby,
+  selectBabyDate,
+  selectDueDate,
+  updateBaby,
+  updateUserInfo,
+} from '@services';
 import {ROUTE_NAME} from '@routeName';
 import Toast from 'react-native-toast-message';
 import {iconCloudSuggestion, iconNewBornTida} from '@images';
 import {getMethod} from '../DueDate/Calculate/handle';
+import {saveDataUser} from '@redux';
 
 const OnboardingV2 = () => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const dispatch = useDispatch();
 
   const listMethod = getMethod();
 
@@ -237,6 +246,14 @@ const OnboardingV2 = () => {
           )
           .format('YYYY-MM-DD'),
       });
+      if (state.page > 10) {
+        const res1 = await selectDueDate({
+          due_date: moment(
+            state.isKnowDueDate ? state.dmy : response?.data?.due_date,
+            state.isKnowDueDate ? 'MM/DD/YYYY' : 'YYYY/MM/DD',
+          ).format('MM/DD/YYYY'),
+        });
+      }
       if (res.success && response.success) {
         navigate(ROUTE_NAME.AUTH_ADD_BABY_SUCCESS, {
           data: res.data,

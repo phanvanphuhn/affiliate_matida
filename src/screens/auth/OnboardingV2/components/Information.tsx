@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
   },
   wrapNextButtonContainer: {
     width: '100%',
-    backgroundColor: colors.primaryBackground,
+    backgroundColor: colors.pink4,
     padding: scaler(16),
     alignItems: 'center',
     borderRadius: scaler(40),

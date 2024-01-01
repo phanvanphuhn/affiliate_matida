@@ -820,6 +820,7 @@ export const en = {
     transactionContent: 'Transaction contents',
     transactionAmount: 'Transaction amount',
     bankAccount: 'Bank account',
+    bank: 'Bank',
     accountOwner: 'Account owner',
     transferredMoney: 'I have transferred my money',
     Upcoming: 'Upcoming',
