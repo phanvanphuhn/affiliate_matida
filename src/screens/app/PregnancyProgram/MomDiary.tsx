@@ -197,7 +197,7 @@ const MomDiary = (props: MomDiaryProps) => {
               (route?.params?.type == 'todo' && state?.isEdit)) &&
               !state?.image && <Image source={ic_plus} />}
           </Pressable>
-          <View style={{top: -8.6}}>
+          <View style={{top: -8.5}}>
             <Image
               source={ic_wave_line_top}
               style={{width: '100%', height: 17, tintColor: colors.pink250}}
@@ -205,6 +205,14 @@ const MomDiary = (props: MomDiaryProps) => {
           </View>
 
           <View style={{padding: 16}}>
+            <View
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: 30,
+              }}>
+              <Image source={ic_flower} />
+            </View>
             <Text style={styles.textUpload}>
               {route?.params?.type == 'review'
                 ? `${t('momDiary.week')} ${route?.params?.item?.week || 1}`
@@ -241,14 +249,6 @@ const MomDiary = (props: MomDiaryProps) => {
               onChangeText={text => setState({note: text, isSave: true})}
               multiline={true}
             />
-            <View
-              style={{
-                position: 'absolute',
-                right: 0,
-                top: 30,
-              }}>
-              <Image source={ic_flower} />
-            </View>
           </View>
         </View>
       </KeyboardAwareScrollView>

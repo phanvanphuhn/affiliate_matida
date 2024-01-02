@@ -1926,37 +1926,32 @@ function SvgLock(props: any) {
     <Svg
       width={size || 20}
       height={size ? size + 1 : 21}
-      viewBox="0 0 20 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>
-      {/* @ts-ignore */}
-      <G clipPath="url(#clip0_3308_11536)">
-        <Path
-          d="M16.25 7.375H3.75A.625.625 0 003.125 8v8.75c0 .345.28.625.625.625h12.5c.345 0 .625-.28.625-.625V8a.625.625 0 00-.625-.625z"
-          stroke={color || '#fff'}
-          strokeWidth={1.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <Path
-          d="M10 13.313a.937.937 0 100-1.875.937.937 0 000 1.874z"
-          fill={color || '#fff'}
-        />
-        <Path
-          d="M6.875 7.375v-2.5a3.125 3.125 0 016.25 0v2.5"
-          stroke={color || '#fff'}
-          strokeWidth={1.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </G>
-      <Defs>
-        {/* @ts-ignore */}
-        <ClipPath id="clip0_3308_11536">
-          <Path fill="#fff" transform="translate(0 .5)" d="M0 0H20V20H0z" />
-        </ClipPath>
-      </Defs>
+      <Rect
+        x="2.66669"
+        y="5.33325"
+        width="10.6667"
+        height="8.66667"
+        rx="2"
+        stroke="#A1A2AB"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M8 8.6665L8 10.6665"
+        stroke={color || '#fff'}
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <Path
+        d="M11 5.33325V4.33325C11 2.6764 9.65685 1.33325 8 1.33325C6.34315 1.33325 5 2.6764 5 4.33325V5.33325"
+        stroke={color || '#fff'}
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
     </Svg>
   );
 }

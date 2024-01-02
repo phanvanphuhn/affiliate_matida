@@ -15,6 +15,7 @@ import {
   ic_back,
   ic_back_arrow,
   ic_flower,
+  ic_wave_line_top,
   SvgLineWave,
   SvgPathBottom,
   SvgPathTop,
@@ -104,12 +105,11 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                 : bg1
             }
             style={styles.imgBg}>
-            <View
-              style={{
-                bottom: -8,
-                width: '100%',
-              }}>
-              <SvgLineWave />
+            <View style={{top: 8.49}}>
+              <Image
+                source={ic_wave_line_top}
+                style={{width: '100%', height: 17, tintColor: colors.pink350}}
+              />
             </View>
             <TouchableOpacity
               onPress={goBack}

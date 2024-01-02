@@ -38,7 +38,11 @@ import {
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {setActive} from 'react-native-sound';
 import {goBack, navigate} from '@navigation';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import Swiper from '../DetailFeed/SwiperFlatlist/Swiper';
 import ParsedText from 'react-native-parsed-text';
@@ -55,6 +59,7 @@ import {
 } from '@util';
 import Svg, {Line, Path} from 'react-native-svg';
 import {EPreRoute} from '@constant';
+import {RouteProp} from '@react-navigation/core/src/types';
 
 interface FeedbackTaskProps {
   isHome?: boolean;
@@ -64,7 +69,7 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [state, setState] = useState([]);
   const lang = useSelector((state: any) => state?.auth?.lang);
-
+  const route = useRoute<RouteProp<any>>();
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const week = useSelector((state: any) =>
@@ -75,7 +80,10 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
   const getData = async () => {
     try {
       GlobalService.showLoading();
-      let res = await getUserTask(week, 'success');
+      let res = await getUserTask(
+        route?.params?.currentWeek || week,
+        'success',
+      );
       if (res?.success) {
         let data = res?.data
           .sort((a: any, b: any) => a.order - b.order)

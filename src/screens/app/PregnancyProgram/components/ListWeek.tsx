@@ -138,7 +138,7 @@ const ListWeek = (props: ListWeekProps) => {
     return (
       <View style={styles.container3}>
         <CircularProgress
-          size={34}
+          size={40}
           width={2}
           fill={
             !progress
@@ -159,11 +159,14 @@ const ListWeek = (props: ListWeekProps) => {
                   backgroundColor: colors.pink200,
                   position: 'absolute',
                   transform: [{rotate: '-90deg'}],
-                  height: scaler(25),
-                  width: scaler(25),
+                  height: scaler(28),
+                  width: scaler(28),
                 },
               ]}>
-              <Image source={ic_gift} />
+              <Image
+                source={ic_gift}
+                style={{height: 20, width: 20, resizeMode: 'contain'}}
+              />
             </View>
           )}
         </CircularProgress>
@@ -213,7 +216,11 @@ const ListWeek = (props: ListWeekProps) => {
               <View
                 style={[
                   styles.containerDotText,
-                  {backgroundColor: colors.white},
+                  {
+                    backgroundColor: colors.white,
+                    borderColor: colors.borderColor,
+                    borderWidth: 1,
+                  },
                 ]}>
                 <Image source={ic_lock} />
               </View>
@@ -232,19 +239,17 @@ const ListWeek = (props: ListWeekProps) => {
       <View
         style={{
           flexDirection: 'row',
-          width: 183,
-          paddingBottom: scaler(30),
+          width: 150,
+          alignItems: 'center',
+          paddingBottom: scaler(35),
         }}>
         <TouchableOpacity
-          disabled={item.status == 'Upcoming'}
+          // disabled={item.status == 'Upcoming'}
           onPress={() => {
             scrollToIndex(index + 1);
             props?.onSelectedWeek && props?.onSelectedWeek(index + 1);
           }}
           style={[{alignItems: 'center', flexDirection: 'row'}]}>
-          <View style={styles.containerDashed}>
-            {renderLine(item, index < 4)}
-          </View>
           <View>
             {renderDot(item, index)}
             <View
@@ -252,7 +257,7 @@ const ListWeek = (props: ListWeekProps) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -30,
+                bottom: -35,
                 width: 100,
                 alignSelf: 'center',
               }}>
@@ -289,13 +294,16 @@ const ListWeek = (props: ListWeekProps) => {
             </View>
           </View>
         </TouchableOpacity>
+        <View style={styles.containerDashed}>
+          {renderLine(item, index == state.data.length - 1)}
+        </View>
       </View>
     );
   };
 
   const getItemLayout = (_, index) => ({
-    length: 182, //  WIDTH + (MARGIN_HORIZONTAL * 2)
-    offset: 182 * index, //  ( WIDTH + (MARGIN_HORIZONTAL*2) ) * (index)
+    length: 150, //  WIDTH + (MARGIN_HORIZONTAL * 2)
+    offset: 150 * index - 150, //  ( WIDTH + (MARGIN_HORIZONTAL*2) ) * (index)
     index,
   });
   const keyExtractor = (item, index) => index.toString();
@@ -333,14 +341,14 @@ export default ListWeek;
 
 const styles = StyleSheet.create({
   textStatus: {
-    fontSize: scaler(11),
+    fontSize: scaler(12),
     color: colors.textSmallColor,
     ...stylesCommon.fontSarabun400,
   },
   textName: {
-    fontSize: scaler(12),
+    fontSize: scaler(14),
     color: colors.labelColor,
-    ...stylesCommon.fontWeight500,
+    ...stylesCommon.fontWeight600,
   },
   container: {backgroundColor: colors.gray450, paddingVertical: scaler(20)},
   center: {
@@ -356,12 +364,12 @@ const styles = StyleSheet.create({
     ...stylesCommon.fontWeight400,
   },
   containerDashed: {
-    width: '72%',
+    width: '67%',
   },
   containerDotText: {
     backgroundColor: colors.primaryBackground,
-    height: scaler(30),
-    width: scaler(30),
+    height: scaler(35),
+    width: scaler(35),
     borderRadius: scaler(30),
     alignItems: 'center',
     justifyContent: 'center',
@@ -369,8 +377,7 @@ const styles = StyleSheet.create({
   container3: {
     backgroundColor: colors.gray450,
     borderRadius: 50,
-    margin: 9,
-    marginTop: 4,
+    padding: 10,
   },
   dotText: {
     color: colors.white,

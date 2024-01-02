@@ -64,7 +64,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
       case 'core':
         return lang == 1 ? 'Pregnancy\nBasics' : 'Tài chính &\nGia đình';
       case 'nutrition_and_fitness':
-        return lang == 1 ? 'Fitness &\nNutrition' : 'Thể chất &\nDinh dưỡng';
+        return lang == 1 ? 'Fitness &\nNutrition' : 'Thể chất & Dinh dưỡng';
     }
   };
   useEffect(() => {

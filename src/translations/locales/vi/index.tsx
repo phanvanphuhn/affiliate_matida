@@ -835,6 +835,8 @@ export const vi = {
     pregnancyKnowledge: 'Kiến thức thai kì',
     loveMoney: 'Tình yêu & Tài chính',
     fitnessNutrition: 'Sức khoẻ & Dinh dưỡng',
+    personalChallenge: 'Thử thách',
+    core: 'Kiến thức nền',
     babyCare: 'Chăm sóc bé',
     makingProgress: 'Mẹ đang tiến bộ mỗi ngày',
     programCreated: 'Đang tạo chương trình học',
@@ -912,6 +914,7 @@ export const vi = {
     IHaveMoreQuestions: 'Mình còn thắc mắc - Mình có thể liên hệ với ai?',
     contentIHaveMoreQuestions:
       'Hãy liên hệ Matida qua email: contact@matida.app.',
+    comeBackLater: 'Quay lại sau',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

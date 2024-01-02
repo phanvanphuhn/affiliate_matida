@@ -832,6 +832,8 @@ export const en = {
     pregnancyKnowledge: 'Pregnancy Knowledge',
     loveMoney: 'Love & Money',
     fitnessNutrition: 'Fitness & Nutrition',
+    personalChallenge: 'Personal challenge',
+    core: 'Core',
     babyCare: 'Baby Care',
     makingProgress: 'You are making progress',
     programCreated: 'Your program is being created!',
@@ -863,7 +865,7 @@ export const en = {
       'Matida\'s "Cool Mom, Happy Baby Program" revolutionizes prenatal care by blending convenience, personalization, and expert advice in a comprehensive app. Tailored for moms-to-be, it ensures thorough preparation for motherhood while addressing women\'s unique needs and challenges. \n\nThis holistic program contains four key modules: pregnancy fundamentals, baby care, fitness & nutrition, and love & money. With a minimal weekly investment of just 15 minutes, you gain essential knowledge for a healthy pregnancy, a happy motherhood journey, and a balanced family life.',
     AnEntireCareTeamAtYourFingertips: 'An entire care team at your fingertips',
     contentExperts:
-      'The Matida pregnancy program was crafted by our expert medical team,\noffering the most valuable and supportive content for your journey.',
+      'The Matida pregnancy program was crafted by our expert medical team, offering the most valuable and supportive content for your journey.',
     ThereAreNoStupidQuestions: 'There are no stupid questions :-)',
     HowDoesTheProgramWork: 'How does the program work?',
     contentHowDoesTheProgramWork:
@@ -908,6 +910,7 @@ export const en = {
     IHaveMoreQuestions: 'I have more questions - How can I get in touch?',
     contentIHaveMoreQuestions:
       'Please write us an email to contact@matida.app.',
+    comeBackLater: 'Come back later',
   },
   momDiary: {
     momDiary: 'Mom Diary',

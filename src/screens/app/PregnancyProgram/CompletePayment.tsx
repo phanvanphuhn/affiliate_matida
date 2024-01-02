@@ -302,7 +302,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
           </View>
 
           <ImageBackground source={ic_background}>
-            <SvgPathBottom />
+            <View style={{marginTop: -0.1}}>
+              <SvgPathBottom />
+            </View>
             <View style={styles.containerInput}>
               <View style={{width: '100%'}}>
                 <View style={{alignItems: 'center'}}>

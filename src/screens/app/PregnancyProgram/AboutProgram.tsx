@@ -57,6 +57,7 @@ const AboutProgram = (props: AboutProgramProps) => {
           activeColor={colors.pink300}
           inactiveColor={colors.gray550}
           style={styles.tabbar}
+          pressColor={colors.transparent}
           renderLabel={({route, focused}) => {
             return (
               <Text

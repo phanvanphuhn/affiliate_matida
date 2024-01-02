@@ -20,13 +20,13 @@ import {useSelector} from 'react-redux';
 interface PregnancyProgramProps {}
 
 const PregnancyProgram = (props: PregnancyProgramProps) => {
-  const [currentWeek, setCurrentWeek] = useState(0);
   const navigation = useNavigation<any>();
   const week = useSelector((state: any) =>
     !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
       ? 4
       : state?.home?.weekUserTask,
   );
+  const [currentWeek, setCurrentWeek] = useState(week);
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   const {t} = useTranslation();
@@ -86,10 +86,14 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
             <Text style={styles.textTitle}>
               {t('pregnancyProgram.youAreNow')} {week}
             </Text>
-            <Text style={styles.textTitle2}>
-              {lang == 2 && 'Mẹ còn'} {40 - week}{' '}
-              {t('pregnancyProgram.weekToGo')}
-            </Text>
+            {week == 40 ? (
+              <View style={{height: 25}} />
+            ) : (
+              <Text style={styles.textTitle2}>
+                {lang == 2 && 'Mẹ còn'} {40 - week}{' '}
+                {t('pregnancyProgram.weekToGo')}
+              </Text>
+            )}
           </View>
           <TabProgram currentWeek={currentWeek} />
         </View>

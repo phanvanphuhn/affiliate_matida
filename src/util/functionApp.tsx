@@ -388,13 +388,13 @@ export const getLabelPregnancy = (type: string) => {
     case 'reward':
       return '';
     case 'core':
-      return 'Core';
+      return t('pregnancyProgram.core');
     case 'love_and_money':
-      return 'Personal challenge';
+      return t('pregnancyProgram.personalChallenge');
     case 'fitness_and_nutrition':
-      return 'Fitness & Nutrition';
+      return t('pregnancyProgram.fitnessNutrition');
     case 'baby_care':
-      return 'Baby care';
+      return t('pregnancyProgram.babyCare');
     default:
       return '';
   }

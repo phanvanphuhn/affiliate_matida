@@ -19,7 +19,13 @@ import {
 } from '@stylesCommon';
 import Svg, {Circle, G, Path, Line} from 'react-native-svg';
 import DashedLine from './DashedLine';
-import {ic_default1, ic_default2, ic_gift, SvgArrowLeft} from '@images';
+import {
+  ic_default1,
+  ic_default2,
+  ic_gift,
+  SvgArrowLeft,
+  SvgLock,
+} from '@images';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {getUserTask} from '../../../../services/pregnancyProgram';
@@ -58,6 +64,8 @@ const ListProgram = (props: ListProgramProps) => {
       ? 4
       : state?.home?.weekUserTask,
   );
+  console.log('=>(ListProgram.tsx:61) week', week);
+  console.log('=>(ListProgram.tsx:71) props', props);
   const {t} = useTranslation();
 
   const getData = async () => {
@@ -97,10 +105,12 @@ const ListProgram = (props: ListProgramProps) => {
             },
           ]);
         } else {
-          if (!isFeedback.current && week == props.currentWeek) {
+          if (!isFeedback.current && props?.tabIndex == 0) {
             isFeedback.current = true;
 
-            navigation.navigate(ROUTE_NAME.FEEDBACK_TASK);
+            navigation.navigate(ROUTE_NAME.FEEDBACK_TASK, {
+              currentWeek: props.currentWeek,
+            });
           }
         }
         setState(data);
@@ -111,6 +121,9 @@ const ListProgram = (props: ListProgramProps) => {
       GlobalService.hideLoading();
     }
   };
+  useEffect(() => {
+    isFeedback.current = false;
+  }, [props.currentWeek]);
   useFocusEffect(
     useCallback(() => {
       getData();
@@ -261,6 +274,7 @@ const ListProgram = (props: ListProgramProps) => {
                   item.data.map((e, i) => {
                     return (
                       <TouchableOpacity
+                        disabled={week < props?.currentWeek}
                         key={i}
                         onPress={() => onDetail(e)}
                         style={[
@@ -280,21 +294,38 @@ const ListProgram = (props: ListProgramProps) => {
                               {getSubTitlePregnancy(e.task?.categories?.[0])}
                             </Text>
                           </View>
-                          <TouchableOpacity
-                            onPress={() => onDetail(e)}
-                            style={styles.rowCenter}>
-                            <Text style={styles.textSmash}>
-                              {props?.tabIndex == 0
-                                ? t('pregnancyProgram.finishTheTask')
-                                : t('pregnancyProgram.reviewIt')}
-                            </Text>
-                            <SvgArrowLeft
-                              stroke={colors.pink300}
-                              size={16}
-                              strokeWidth={3}
-                              transform={[{rotate: '180deg'}]}
-                            />
-                          </TouchableOpacity>
+                          {week < props?.currentWeek ? (
+                            <View style={styles.rowCenter}>
+                              <SvgLock
+                                color={colors.gray550}
+                                size={16}
+                                strokeWidth={3}
+                              />
+                              <Text
+                                style={[
+                                  styles.textSmash,
+                                  {color: colors.gray550, marginLeft: 5},
+                                ]}>
+                                {t('pregnancyProgram.comeBackLater')}
+                              </Text>
+                            </View>
+                          ) : (
+                            <TouchableOpacity
+                              onPress={() => onDetail(e)}
+                              style={styles.rowCenter}>
+                              <Text style={styles.textSmash}>
+                                {props?.tabIndex == 0
+                                  ? t('pregnancyProgram.finishTheTask')
+                                  : t('pregnancyProgram.reviewIt')}
+                              </Text>
+                              <SvgArrowLeft
+                                stroke={colors.pink300}
+                                size={16}
+                                strokeWidth={3}
+                                transform={[{rotate: '180deg'}]}
+                              />
+                            </TouchableOpacity>
+                          )}
                         </View>
                         <Image
                           source={

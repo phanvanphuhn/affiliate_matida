@@ -129,7 +129,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
   // }, []);
 
   const onBackQuestion = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+    // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
 
     if (state?.currentQuestion == 0) {
       goBack();
@@ -138,7 +138,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
     }
   };
   const onNextQuestion = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+    // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     if (state.currentQuestion == (state.dataQuestion || [])?.length - 1) {
       onSubmit();
     } else {
@@ -188,7 +188,10 @@ const OnboardingStep = (props: OnboardingStepProps) => {
               flex: 1,
               paddingTop: scaler(50),
             }}>
-            <Image source={ic_wave_top} style={{width: '100%'}} />
+            <Image
+              source={ic_wave_top}
+              style={{width: '100%', marginBottom: 0}}
+            />
             <View
               style={{
                 backgroundColor: colors.white,
