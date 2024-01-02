@@ -78,7 +78,10 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
             aspectRatio: 3 / 2,
           }}
           source={{
-            uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png',
+            uri:
+              lang == 1
+                ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png'
+                : 'https://s3.ap-southeast-1.amazonaws.com/matida/1703834983521123611.png',
           }}
         />
         <View style={styles.container2}>

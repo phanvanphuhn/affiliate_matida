@@ -36,6 +36,7 @@ import {showMessage} from 'react-native-flash-message';
 import {GlobalService} from '@services';
 import {useSelector} from 'react-redux';
 import {getSubTitlePregnancy} from '@util';
+import {useTranslation} from 'react-i18next';
 
 interface DetailTaskProgramProps {}
 
@@ -44,8 +45,8 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
   const navigation = useNavigation<any>();
   const route = useRoute<any>();
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const {t} = useTranslation();
 
-  console.log('=>(DetailTaskProgram.tsx:32) route', route);
   const getData = async () => {
     try {
       GlobalService.showLoading();
@@ -187,9 +188,9 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
               style={{
                 color: colors.white,
                 fontSize: scaler(15),
-                fontWeight: '600',
+                ...stylesCommon.fontWeight600,
               }}>
-              Done
+              {t('common.done')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -211,14 +212,12 @@ const styles = StyleSheet.create({
   container2: {padding: scaler(20), paddingTop: scaler(40)},
   textLearn: {
     fontSize: scaler(15),
-    fontWeight: '500',
     color: colors.borderColor,
     textTransform: 'capitalize',
     ...stylesCommon.fontSarabun500,
   },
   textAbout: {
     fontSize: scaler(24),
-    fontWeight: '600',
     marginTop: scaler(10),
     marginBottom: scaler(24),
     ...stylesCommon.fontWeight600,

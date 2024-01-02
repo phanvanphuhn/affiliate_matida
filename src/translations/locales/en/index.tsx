@@ -186,6 +186,7 @@ export const en = {
     bodyBannerQuiz:
       'How prepared are you for becoming a mother? Let’s check your knowledge',
     buttonBannerQuiz: 'Take test now',
+    signUpNow: 'Sign up now',
   },
   sizeComparison: {
     week: 'Week',
@@ -772,6 +773,7 @@ export const en = {
     noInternet:
       'There is no internet connection\nPlease check your internet connection',
     tryAgain: 'Try Again',
+    done: 'Done',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
@@ -818,6 +820,7 @@ export const en = {
     transactionContent: 'Transaction contents',
     transactionAmount: 'Transaction amount',
     bankAccount: 'Bank account',
+    bank: 'Bank',
     accountOwner: 'Account owner',
     transferredMoney: 'I have transferred my money',
     Upcoming: 'Upcoming',

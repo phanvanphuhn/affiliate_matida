@@ -90,7 +90,7 @@ const MyPurchases = () => {
                       {t('myPurchases.Amount')}
                     </Text>
                     <Text style={[styles.label, {color: colors.neutral10}]}>
-                      {(item?.price / 1000)
+                      {item?.price
                         ?.toString()
                         ?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                       đ
