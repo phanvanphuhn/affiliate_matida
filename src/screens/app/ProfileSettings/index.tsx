@@ -171,7 +171,6 @@ const ProfileSettingsScreen = () => {
   };
   //Hàm gọi khi ấn button Save
   const handleSave = async (values: any) => {
-    console.log('values?.name: ', values?.name);
     try {
       if (values?.email?.length === 0) {
         const body = {

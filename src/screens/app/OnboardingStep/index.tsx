@@ -28,6 +28,7 @@ import {GlobalService} from '@services';
 import {showMessage} from 'react-native-flash-message';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
+import {event, eventType, trackingAppEvent} from '@util';
 
 interface OnboardingStepProps {}
 interface OnboardingStepAnswer {
@@ -66,6 +67,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
   const route = useRoute<any>();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const {t} = useTranslation();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const [state, setState] = useStateCustom<IState>({
     dataQuestion: route?.params?.packageQuizz?.questions || [],
@@ -138,7 +140,12 @@ const OnboardingStep = (props: OnboardingStepProps) => {
     }
   };
   const onNextQuestion = () => {
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+    trackingAppEvent(
+      `${event.MASTER_CLASS.PP_QUESTION}${(state.currentQuestion ?? 0) + 1}`,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     if (state.currentQuestion == (state.dataQuestion || [])?.length - 1) {
       onSubmit();
     } else {

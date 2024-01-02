@@ -774,6 +774,7 @@ export const en = {
       'There is no internet connection\nPlease check your internet connection',
     tryAgain: 'Try Again',
     done: 'Done',
+    savedFileSuccess: 'Saved file success!',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',

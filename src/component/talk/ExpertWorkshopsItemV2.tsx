@@ -61,7 +61,7 @@ export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
       navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {id: item?.room?.id});
     }
   };
-  console.log('item: ', item);
+
   return (
     <TouchableOpacity
       style={s.container}

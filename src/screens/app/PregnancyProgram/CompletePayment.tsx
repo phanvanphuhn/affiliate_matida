@@ -56,10 +56,11 @@ import {
 import {UpdateInformationState} from './UpdateInformation';
 import {RouteProp} from '@react-navigation/core/src/types';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {formatPrice} from '@util';
+import {event, eventType, formatPrice, trackingAppEvent} from '@util';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
+import {useSelector} from 'react-redux';
 interface CompletePaymentProps {}
 interface BankState {
   bank_account_name: string;
@@ -111,6 +112,14 @@ const CompletePayment = (props: CompletePaymentProps) => {
     getPurchaseHistories,
     requestSubscription,
   } = useIAP();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
+  const copyType = {
+    TRANSACTION: 'Transaction',
+    PRICE: 'Price',
+    BANK_ACCOUNT_NUMBER: 'Bank_account_number',
+  };
+
   const getData = async () => {
     let res = await getPlanByCode();
     if (res?.success) {
@@ -120,7 +129,6 @@ const CompletePayment = (props: CompletePaymentProps) => {
   const listenPurchases = (
     purchase: SubscriptionPurchase | ProductPurchase,
   ) => {
-    console.log('purchaseUpdatedListener', purchase);
     const receipt = purchase.transactionReceipt;
     if (receipt) {
     }
@@ -140,9 +148,6 @@ const CompletePayment = (props: CompletePaymentProps) => {
     };
   }, []);
 
-  console.log('=>(CompletePayment.tsx:97) products', products);
-
-  console.log('=>(CompletePayment.tsx:108) subscriptions', subscriptions);
   const handlePurchase = async (sku: string) => {
     try {
       let available = await getProducts({skus: [PRODUCT_ID_PAY]});
@@ -174,9 +179,37 @@ const CompletePayment = (props: CompletePaymentProps) => {
   }, [currentPurchase]);
 
   const onPaymentFinish = async () => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_PAYMENT_INFO_I_HAVE_TRANSFERED_MY_PAYMENT,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
   };
-  const onCopy = (value: string) => () => {
+  const onCopy = (value: string, type: string) => () => {
+    switch (type) {
+      case copyType.TRANSACTION:
+        trackingAppEvent(
+          event.MASTER_CLASS.PP_PAYMENT_INFO_COPY_TRANSACTION_CONTENT,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case copyType.PRICE:
+        trackingAppEvent(
+          event.MASTER_CLASS.PP_PAYMENT_INFO_COPY_PRICE,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+      case copyType.BANK_ACCOUNT_NUMBER:
+        trackingAppEvent(
+          event.MASTER_CLASS.PP_PAYMENT_INFO_COPY_BANK_NUMBER,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        break;
+    }
     Clipboard.setString(value);
     showMessage({message: 'Copy success', type: 'success'});
   };
@@ -228,6 +261,11 @@ const CompletePayment = (props: CompletePaymentProps) => {
   }
 
   const saveToGallery = async () => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_USER_INFO_NEXT,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     if (Platform.OS == 'android') {
       let dirs = RNFetchBlob.fs.dirs;
       let path = dirs.PictureDir + '/qr-matida.png';
@@ -256,7 +294,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
       );
     }
     showMessage({
-      message: 'Saved file success!',
+      message: t('common.savedFileSuccess'),
       type: 'success',
     });
   };
@@ -334,7 +372,10 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   {route?.params?.values?.verify_code}
                 </Text>
                 <TouchableOpacity
-                  onPress={onCopy(route?.params?.values?.verify_code)}
+                  onPress={onCopy(
+                    route?.params?.values?.verify_code,
+                    copyType.TRANSACTION,
+                  )}
                   style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
@@ -348,7 +389,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   currency: plan?.currency,
                 })}`}</Text>
                 <TouchableOpacity
-                  onPress={onCopy(plan?.price)}
+                  onPress={onCopy(plan?.price, copyType.PRICE)}
                   style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>
@@ -361,7 +402,10 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   {plan?.bank_account?.bank_account_number}
                 </Text>
                 <TouchableOpacity
-                  onPress={onCopy(plan?.bank_account?.bank_account_number)}
+                  onPress={onCopy(
+                    plan?.bank_account?.bank_account_number,
+                    copyType.BANK_ACCOUNT_NUMBER,
+                  )}
                   style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>

@@ -5,6 +5,7 @@ import {DEEP_LINK, OLD_DEEP_LINK, ROUTE_LINK, WEB_API_KEY} from '@services';
 import axios from 'axios';
 //@ts-ignore
 import dynamicLinks from '@react-native-firebase/dynamic-links';
+import useCheckPregnancy from './hooks/useCheckPregnancy';
 
 export const buildDeepLink = async (type: string, id: string | number) => {
   try {
@@ -86,6 +87,9 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
         break;
       case TRouteDeepLink.TAB_LIVE_TALK:
         navigate(ROUTE_NAME.TAB_LIVETALK);
+        break;
+      case TRouteDeepLink.TAB_MASTERCLASS:
+        navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
         break;
       default:
         break;

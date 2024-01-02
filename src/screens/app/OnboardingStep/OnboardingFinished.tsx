@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -16,6 +16,8 @@ import {ic_wave_line_bottom, ic_wave_line_top, SvgLineWave} from '@images';
 import BarchartOnboarding from './components/BarchartOnboarding';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
+import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
+import {trackCustomEvent} from '@services/webengageManager';
 
 interface OnboardingFinishedProps {}
 
@@ -24,10 +26,22 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state.auth.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const onNext = () => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_LET_WORK_ON_IT_TOGETHER,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
   };
+
+  useEffect(() => {
+    trackCustomEvent(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
+    trackEventBranch(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView
