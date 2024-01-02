@@ -31,8 +31,9 @@ import validation from './validation';
 import {GlobalService} from '@services';
 import {requestSubcribePlan} from '../../../services/pregnancyProgram';
 import {showMessage} from 'react-native-flash-message';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {changeWeekUserTask} from '@redux';
+import {event, eventType, trackingAppEvent} from '@util';
 
 interface UpdateInformationProps {}
 export interface UpdateInformationState {
@@ -43,7 +44,8 @@ export interface UpdateInformationState {
 
 const UpdateInformation = (props: UpdateInformationProps) => {
   const {t} = useTranslation();
-
+  const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
   const dispatch = useDispatch();
 
   const handleSubcribePlan = async (metadata: UpdateInformationState) => {
@@ -85,15 +87,35 @@ const UpdateInformation = (props: UpdateInformationProps) => {
 
   const navigation = useNavigation<any>();
   const onNext = () => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_USER_INFO_NEXT,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     formik.handleSubmit();
   };
   const onPolicy = async () => {
-    let url = 'https://docs.matida.app/privacy-policy/en';
+    let url =
+      lang == 1
+        ? 'https://docs.matida.app/privacy-policy/en'
+        : 'https://docs.matida.app/privacy-policy/vi';
     let isOpen = await Linking.canOpenURL(url);
     if (isOpen) {
       Linking.openURL(url);
     }
   };
+
+  const onTerm = async () => {
+    let url =
+      lang == 1
+        ? 'https://admin.matida.app/privacy-policy'
+        : 'https://admin.matida.app/privacy-policy-vi';
+    let isOpen = await Linking.canOpenURL(url);
+    if (isOpen) {
+      Linking.openURL(url);
+    }
+  };
+
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <FormikProvider value={formik}>
@@ -157,7 +179,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
               }}>
               {t('pregnancyProgram.byContinue')}{' '}
               <Text
-                onPress={onPolicy}
+                onPress={onTerm}
                 style={{
                   color: colors.pink300,
                   ...stylesCommon.fontSarabun500,

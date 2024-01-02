@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Linking,
 } from 'react-native';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {
@@ -35,14 +36,15 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
   const userInfo = useSelector((state: any) => state?.auth?.userInfo);
   const paymentProcessing = useMemo(() => userInfo?.payments);
   const dispatch = useDispatch();
+
   const getDataUser = async () => {
     try {
       const res = await getUserInfoApi();
-      console.log('=>(VerifyPayment.tsx:39) res', res);
       dispatch(saveDataUser(res?.data?.data));
       return res?.data?.data;
     } catch (error) {}
   };
+
   const onPaymentFinish = async () => {
     GlobalService.showLoading();
     let data = await getDataUser();
@@ -56,6 +58,11 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
     }
     GlobalService.hideLoading();
   };
+
+  const onPressOpenSetting = async () => {
+    await Linking.openSettings();
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -91,13 +98,15 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
                 {t('pregnancyProgram.thankYouForSignUp')}
               </Text>
               <Image source={teaser2} />
-              <Text style={styles.textContent2}>
-                {t('pregnancyProgram.dontForget')}{' '}
-                <Text style={[styles.textContent2, {color: colors.pink300}]}>
-                  {t('pregnancyProgram.turnOnNoti')}
-                </Text>{' '}
-                {`\n${t('pregnancyProgram.reminder')}`}
-              </Text>
+              <TouchableOpacity onPress={onPressOpenSetting}>
+                <Text style={styles.textContent2}>
+                  {t('pregnancyProgram.dontForget')}{' '}
+                  <Text style={[styles.textContent2, {color: colors.pink300}]}>
+                    {t('pregnancyProgram.turnOnNoti')}
+                  </Text>{' '}
+                  {`\n${t('pregnancyProgram.reminder')}`}
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={{bottom: -8.6}}>
               <Image

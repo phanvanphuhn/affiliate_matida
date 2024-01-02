@@ -17,7 +17,7 @@ const ProcessBar = (props: TProps) => {
       <View style={styles.processBar}>
         <View
           style={{
-            backgroundColor: colors.primary,
+            backgroundColor: colors.pink4,
             height: scaler(4),
             width: (page / 8) * (screenWidth - 32),
             borderRadius: scaler(4),

@@ -161,7 +161,7 @@ const OnboardingV2 = () => {
   };
 
   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  console.log('state: ', state);
+
   const onValidate = () => {
     if (state.name.length && specialChars.test(state.name)) {
       return true;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -31,13 +31,14 @@ import {
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {setActive} from 'react-native-sound';
 import {goBack} from '@navigation';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import Swiper from '../DetailFeed/SwiperFlatlist/Swiper';
 import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
+import {event, eventType, trackingAppEvent} from '@util';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -48,6 +49,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const data = [
     {
@@ -87,6 +89,11 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   ];
 
   const onSignUpNow = () => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_TEASER_SIGNUP_BUTTON,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
   };
   const _renderItem = ({item, index}) => {
@@ -139,6 +146,14 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       />
     );
   };
+
+  useEffect(() => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_TEASER_SCROLL,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
+  }, [activeSlide]);
 
   const insets = useSafeAreaInsets();
   return (
