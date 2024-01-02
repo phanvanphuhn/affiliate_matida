@@ -12,16 +12,23 @@ import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ic_wave_line_bottom, ic_wave_line_top, SvgLineWave} from '@images';
+import {
+  ic_wave_line_bottom,
+  ic_wave_line_top,
+  iconClose,
+  SvgLineWave,
+} from '@images';
 import BarchartOnboarding from './components/BarchartOnboarding';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
+import {goBack, NavigationUtils} from '@navigation';
+import {NavigationProp} from '@react-navigation/core/src/types';
 
 interface OnboardingFinishedProps {}
 
 const OnboardingFinished = (props: OnboardingFinishedProps) => {
   const [state, setState] = useState();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NavigationProp<any>>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state.auth.lang);
 
@@ -34,6 +41,11 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
         <SafeAreaView edges={['top']} style={styles.container2}>
+          <TouchableOpacity
+            onPress={() => NavigationUtils.pop(2)}
+            style={styles.buttonBack}>
+            <Image source={iconClose} />
+          </TouchableOpacity>
           <Text style={styles.textTitle}>
             {t('pregnancyProgram.masterClassResult')}
           </Text>
@@ -89,13 +101,17 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
 export default OnboardingFinished;
 
 const styles = StyleSheet.create({
+  buttonBack: {
+    alignItems: 'flex-end',
+    paddingHorizontal: scaler(15),
+    paddingVertical: scaler(10),
+  },
   container: {
     flex: 1,
     backgroundColor: colors.yellow200,
   },
   container2: {
     paddingHorizontal: scaler(10),
-    paddingTop: scaler(33),
   },
   textTitle: {
     fontSize: scaler(20),

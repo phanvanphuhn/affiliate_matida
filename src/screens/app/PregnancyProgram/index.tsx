@@ -87,13 +87,13 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         <View style={styles.container2}>
           <View style={styles.center}>
             <Text style={styles.textTitle}>
-              {t('pregnancyProgram.youAreNow')} {week}
+              {t('pregnancyProgram.youAreNow')} {currentWeek || week}
             </Text>
-            {week == 40 ? (
+            {(currentWeek || week) == 40 ? (
               <View style={{height: 25}} />
             ) : (
               <Text style={styles.textTitle2}>
-                {lang == 2 && 'Mẹ còn'} {40 - week}{' '}
+                {lang == 2 && 'Mẹ còn'} {40 - (currentWeek || week)}{' '}
                 {t('pregnancyProgram.weekToGo')}
               </Text>
             )}

@@ -914,6 +914,9 @@ export const en = {
     contentIHaveMoreQuestions:
       'Please write us an email to contact@matida.app.',
     comeBackLater: 'Come back later',
+    AreYouReadyToBeTheBestMom: 'Are you ready\nto be the best mom?',
+    LearnAboutTheBabyDevelopmentMilestones:
+      'Learn about the Baby Development Milestones',
   },
   momDiary: {
     momDiary: 'Mom Diary',

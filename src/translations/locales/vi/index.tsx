@@ -917,6 +917,9 @@ export const vi = {
     contentIHaveMoreQuestions:
       'Hãy liên hệ Matida qua email: contact@matida.app.',
     comeBackLater: 'Quay lại sau',
+    AreYouReadyToBeTheBestMom: 'Are you ready\nto be the best mom?',
+    LearnAboutTheBabyDevelopmentMilestones:
+      'Learn about the Baby Development Milestones',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

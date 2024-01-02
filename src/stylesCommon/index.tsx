@@ -70,6 +70,7 @@ const colors = {
   yellow100: '#FFF5F4',
   yellow150: '#FFF6F3',
   yellow200: '#FFF66E',
+  yellow250: '#FFEA00',
   backgroundFeed: '#FFFFFF',
   backgroundPackage: '#FBFBFF',
   neutral10: '#101012',

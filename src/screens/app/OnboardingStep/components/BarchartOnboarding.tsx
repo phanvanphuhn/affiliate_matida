@@ -67,8 +67,21 @@ const BarchartOnboarding = (props: BarchartProps) => {
         return lang == 1 ? 'Fitness &\nNutrition' : 'Thể chất & Dinh dưỡng';
     }
   };
+  const getOrder = (type: string) => {
+    switch (type) {
+      case 'love_and_money':
+        return 1;
+      case 'newborn_care':
+        return 2;
+      case 'core':
+        return 3;
+      case 'nutrition_and_fitness':
+        return 4;
+    }
+  };
   useEffect(() => {
     let obj = route?.params?.metadata;
+    console.log('=>(BarchartOnboarding.tsx:72) obj', obj);
     if (obj) {
       let dataUrgent = [...state.dataSos];
       let pinkStyle = {
@@ -119,6 +132,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
           dataUrgent = [true, ...markedResult?.map(e => e.value)];
           return {
             label: getLabel(key),
+            order: getOrder(key),
             ...pinkStyle,
             borderRadius: 8,
             stacks: [
@@ -149,11 +163,12 @@ const BarchartOnboarding = (props: BarchartProps) => {
         }
         return {
           label: getLabel(key),
+          order: getOrder(key),
           stacks: [{value, ...grayStyle}],
         };
       });
       setState({
-        dataSos: dataUrgent,
+        dataSos: dataUrgent.reverse(),
         data: [
           ...[
             {
@@ -191,7 +206,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
             },
           ],
           ...data,
-        ],
+        ].reverse(),
       });
     }
   }, []);

@@ -70,6 +70,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
       case ROUTE_NAME.TAB_LIVETALK:
         return t('bottomTab.liveTalks');
       case ROUTE_NAME.PREGNANCY_PROGRAM:
+      case ROUTE_NAME.NEW_USER_PROGRAM:
         return t('bottomTab.program');
     }
   };
@@ -88,6 +89,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
       case ROUTE_NAME.TAB_DEAL:
         return iconTabDeal;
       case ROUTE_NAME.PREGNANCY_PROGRAM:
+      case ROUTE_NAME.NEW_USER_PROGRAM:
         return ic_program;
     }
   };

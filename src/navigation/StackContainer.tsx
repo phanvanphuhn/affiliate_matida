@@ -431,6 +431,10 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             name={ROUTE_NAME.FEEDBACK_SUCCESS}
             component={screens.FeedbackSuccess}
           />
+          <Stack.Screen
+            name={ROUTE_NAME.NEW_USER_PROGRAM}
+            component={screens.NewUserProgram}
+          />
         </Stack.Navigator>
       );
     } else {
