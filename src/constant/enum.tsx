@@ -58,6 +58,7 @@ export enum EPreRoute {
   PERIODIC = 'PERIODIC',
   HISTORY = 'HISTORY',
   TEST_DETAIL = 'TEST_DETAIL',
+  PREGNANCY_PROGRAM = 'PREGNANCY_PROGRAM',
 }
 
 export enum ETypeUser {

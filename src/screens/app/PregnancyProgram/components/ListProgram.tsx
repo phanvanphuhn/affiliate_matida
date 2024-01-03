@@ -41,7 +41,7 @@ import {
   getTitlePregnancy,
   trackingAppEvent,
 } from '@util';
-import {navigate} from '@navigation';
+import {navigate, NavigationUtils} from '@navigation';
 import {EPreRoute} from '@constant';
 import {NavigationProp} from '@react-navigation/core/src/types';
 if (Platform.OS === 'android') {
@@ -53,6 +53,12 @@ interface ListProgramProps {
   tabIndex?: number; // 0 todos || 1 finished
   currentWeek: number;
 }
+const sortOrder = [
+  'core',
+  'love_and_money',
+  'fitness_and_nutrition',
+  'baby_care',
+];
 
 const ListProgram = (props: ListProgramProps) => {
   const [state, setState] = useState([]);
@@ -64,8 +70,6 @@ const ListProgram = (props: ListProgramProps) => {
       ? 4
       : state?.home?.weekUserTask,
   );
-  console.log('=>(ListProgram.tsx:61) week', week);
-  console.log('=>(ListProgram.tsx:71) props', props);
   const {t} = useTranslation();
 
   const getData = async () => {
@@ -77,7 +81,11 @@ const ListProgram = (props: ListProgramProps) => {
       );
       if (res?.success) {
         let data = res?.data
-          .sort((a: any, b: any) => a.order - b.order)
+          .sort(
+            (a: any, b: any) =>
+              sortOrder.indexOf(a?.task.module) -
+              sortOrder.indexOf(b?.task.module),
+          )
           ?.map((e: any) => e.task?.module)
           .filter((e: any, i: number, arr: any) => arr.indexOf(e) == i)
           .map(e => {
@@ -149,8 +157,7 @@ const ListProgram = (props: ListProgramProps) => {
               RegExp('matida://mom-prep-test/'),
               '',
             ),
-            redoTest: () => {},
-            preRoute: EPreRoute.TEST_DETAIL,
+            preRoute: EPreRoute.PREGNANCY_PROGRAM,
           });
         } else {
           navigate(ROUTE_NAME.TEST_DETAIL, {
@@ -171,8 +178,10 @@ const ListProgram = (props: ListProgramProps) => {
     }
   };
 
-  const onGift = () => {
-    // navigation.navigate(ROUTE_NAME.MOM_DIARY);
+  const onFeedBack = () => {
+    // navigation.navigate(ROUTE_NAME.FEEDBACK_TASK, {
+    //   currentWeek: props.currentWeek,
+    // });
   };
   return (
     <View style={styles.container}>
@@ -248,7 +257,7 @@ const ListProgram = (props: ListProgramProps) => {
                 {item.type == 'reward' ? (
                   <View>
                     <TouchableOpacity
-                      onPress={onGift}
+                      onPress={onFeedBack}
                       disabled={true}
                       style={{
                         backgroundColor: colors.blue,
@@ -274,10 +283,8 @@ const ListProgram = (props: ListProgramProps) => {
                 ) : (
                   item.data.map((e, i) => {
                     return (
-                      <TouchableOpacity
-                        disabled={week < props?.currentWeek}
+                      <View
                         key={i}
-                        onPress={() => onDetail(e)}
                         style={[
                           styles.containerChild,
                           i == item.data.length - 1
@@ -336,7 +343,7 @@ const ListProgram = (props: ListProgramProps) => {
                           }
                           style={styles.img}
                         />
-                      </TouchableOpacity>
+                      </View>
                     );
                   })
                 )}

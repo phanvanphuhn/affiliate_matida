@@ -56,7 +56,7 @@ export const TestResult = () => {
       <>
         <HeaderComponent />
         <YourResult total={data?.totalQuestions} userScore={data?.userScore} />
-        {!!data?.isPassed ? <YourReward badge={data?.badge} /> : null}
+        {data?.isPassed ? <YourReward badge={data?.badge} /> : null}
       </>
     );
   };
@@ -91,6 +91,7 @@ export const TestResult = () => {
         isPassed={!!data?.isPassed}
         redoTest={redoTest}
         preRoute={preRoute}
+        id={id}
       />
     </View>
   );

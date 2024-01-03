@@ -5,19 +5,24 @@ import {colors, scaler} from '@stylesCommon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {View} from 'react-native';
+import {ROUTE_NAME} from '@routeName';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {
   isPassed: boolean;
   redoTest: () => void;
   preRoute: string;
+  id: string;
 };
 
 export const ButtonComponent = ({
   isPassed,
   redoTest = () => {},
   preRoute = EPreRoute.TEST_DETAIL,
+  id,
 }: Props) => {
   const {t} = useTranslation();
+  const navigation = useNavigation();
   const listButton = [
     {
       id: 1,
@@ -51,6 +56,8 @@ export const ButtonComponent = ({
         redoTest();
         NavigationUtils.goBack();
       }
+    } else if (preRoute == EPreRoute.PREGNANCY_PROGRAM) {
+      navigation.replace(ROUTE_NAME.TEST_DETAIL, {quiz: {id}});
     } else {
       NavigationUtils.goBack();
     }
