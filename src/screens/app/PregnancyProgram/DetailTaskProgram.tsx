@@ -37,18 +37,27 @@ import {GlobalService} from '@services';
 import {useSelector} from 'react-redux';
 import {getSubTitlePregnancy} from '@util';
 import {useTranslation} from 'react-i18next';
+import {RouteProp} from '@react-navigation/core/src/types';
 
 interface DetailTaskProgramProps {}
 
 const DetailTaskProgram = (props: DetailTaskProgramProps) => {
   const [content, setContent] = useState<string>('');
   const navigation = useNavigation<any>();
-  const route = useRoute<any>();
+  const route = useRoute<RouteProp<any>>();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const {t} = useTranslation();
 
   const getData = async () => {
     try {
+      if (!route.params?.item?.task?.link) {
+        setContent(
+          lang == 1
+            ? route.params?.item?.task?.content_en
+            : route.params?.item?.task?.content_vi,
+        );
+        return;
+      }
       GlobalService.showLoading();
       let result = await getContentUserTask(route?.params?.item?.id);
       if (result?.success) {
