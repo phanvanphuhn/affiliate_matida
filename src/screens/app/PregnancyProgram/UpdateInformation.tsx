@@ -97,8 +97,8 @@ const UpdateInformation = (props: UpdateInformationProps) => {
   const onPolicy = async () => {
     let url =
       lang == 1
-        ? 'https://docs.matida.app/privacy-policy/en'
-        : 'https://docs.matida.app/privacy-policy/vi';
+        ? 'https://admin.matida.app/privacy-policy'
+        : 'https://admin.matida.app/privacy-policy-vi';
     let isOpen = await Linking.canOpenURL(url);
     if (isOpen) {
       Linking.openURL(url);
@@ -108,8 +108,8 @@ const UpdateInformation = (props: UpdateInformationProps) => {
   const onTerm = async () => {
     let url =
       lang == 1
-        ? 'https://admin.matida.app/privacy-policy'
-        : 'https://admin.matida.app/privacy-policy-vi';
+        ? 'https://docs.matida.app/privacy-policy/en'
+        : 'https://docs.matida.app/privacy-policy/vi';
     let isOpen = await Linking.canOpenURL(url);
     if (isOpen) {
       Linking.openURL(url);
