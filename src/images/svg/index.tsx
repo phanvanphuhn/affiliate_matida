@@ -193,6 +193,7 @@ function SvgMessage(props: any) {
 }
 
 function SvgArrowCircleRight(props: any) {
+  const {color} = props;
   return (
     <Svg
       width={32}
@@ -203,7 +204,7 @@ function SvgArrowCircleRight(props: any) {
       {...props}>
       <Path
         d="M12 24l8-8-8-8"
-        stroke="#FFFFFF"
+        stroke={color ? color : '#FFFFFF'}
         strokeWidth={1.5}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -267,6 +268,21 @@ function SvgArrowRightContained(props: any) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </Svg>
+  );
+}
+
+function SvgArrowRightWithTail(props: any) {
+  return (
+    <Svg
+      width={20}
+      height={20}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}>
+      <Path d="M18 10a8 8 0 10-16 0 8 8 0 0016 0z" fill="#fff" />
+      <Path d="M12 10l-3-3V8H5v4h4v1l3-3zm-2 0v2H5v-2h5z" fill="#fff" />
     </Svg>
   );
 }
@@ -2933,4 +2949,5 @@ export {
   SvgUnLikeTask,
   SvgLikeTask,
   SvgCrownProgram,
+  SvgArrowRightWithTail,
 };

@@ -7,7 +7,6 @@ import {useSelector} from 'react-redux';
 
 const ItemDeal = (props: any) => {
   const {index, item, onDetailClick} = props;
-  console.log('item: ', item);
 
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);

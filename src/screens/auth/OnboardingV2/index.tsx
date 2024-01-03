@@ -24,7 +24,13 @@ import {
 } from '@services';
 import {ROUTE_NAME} from '@routeName';
 import Toast from 'react-native-toast-message';
-import {iconCloudSuggestion, iconNewBornTida} from '@images';
+import {
+  SvgArrowCircleRight,
+  SvgArrowRightContained,
+  SvgArrowRightWithTail,
+  iconCloudSuggestion,
+  iconNewBornTida,
+} from '@images';
 import {getMethod} from '../DueDate/Calculate/handle';
 import {saveDataUser} from '@redux';
 
