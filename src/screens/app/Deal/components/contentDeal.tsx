@@ -22,6 +22,7 @@ import CustomImageRenderer from '../../DetailFeed/components/CustomImageRenderer
 import {event, eventType, trackingAppEvent} from '@util';
 import useDetailPost from '../../Forum/components/useDetailPost';
 import {submitDeal} from '@services';
+import {LogoApp} from '@images';
 
 const ContentDeal = (props: any) => {
   const {data} = props;
@@ -109,7 +110,7 @@ const ContentDeal = (props: any) => {
           userId: user.id,
           dealName: data.name_vi,
           dealCode: data.code,
-          providerName: data.provider.name,
+          // providerName: data.provider.name,
         },
       },
       eventType.MIX_PANEL,
@@ -125,7 +126,7 @@ const ContentDeal = (props: any) => {
           userId: user.id,
           dealName: data.name_vi,
           dealCode: data.code,
-          providerName: data.provider.name,
+          // providerName: data.provider.name,
         },
       },
       eventType.MIX_PANEL,
@@ -172,9 +173,13 @@ const ContentDeal = (props: any) => {
       </Text>
       <View style={styles.wrapSubTitle}>
         <Image
-          source={{
-            uri: data?.provider.avatar,
-          }}
+          source={
+            data?.provider
+              ? {
+                  uri: data?.provider.avatar,
+                }
+              : LogoApp
+          }
           style={{
             width: scaler(16),
             height: scaler(16),
@@ -185,7 +190,7 @@ const ContentDeal = (props: any) => {
         <Text style={{color: colors.textSmallColor}}>
           {t('deal.by')}{' '}
           <Text style={{color: colors.success_message}}>
-            {data?.provider.name}
+            {data?.provider ? data?.provider.name : 'Matida'}
           </Text>
         </Text>
       </View>

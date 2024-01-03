@@ -17,6 +17,7 @@ import {produce} from 'immer';
 import {IAnswer} from '../../MomTest/TestDetail/components';
 import {ListPackage} from '../../DetailFeed/components/Container';
 import {FLoatingAIButton} from '@component';
+import ItemDeal from '../../DetailFeed/components/ItemDeal';
 
 const ListFeed = (props: any) => {
   const {t} = useTranslation();
@@ -35,7 +36,7 @@ const ListFeed = (props: any) => {
   //   }, []),
   // );
   const onDetailClick = (index: number, item: IDataListFeed) => {
-    console.log('=>(ListFeed.tsx:47) item', item);
+    console.log('onDetailClick: ', item);
     if (item?.content_type == 'package_quizz') {
       if (+item?.maxScore === +item?.total_questions) {
         trackingAppEvent(
@@ -70,6 +71,20 @@ const ListFeed = (props: any) => {
           },
         });
       }
+    } else if (item?.content_type == 'deal') {
+      trackingAppEvent(
+        event.DEAL.CLICK_DEAL,
+        {
+          params: {
+            userId: user.id,
+            dealName: item.name_vi,
+            dealCode: item.code,
+            // providerName: item.provider.name,
+          },
+        },
+        eventType.MIX_PANEL,
+      );
+      navigation.navigate(ROUTE_NAME.DETAIL_DEAL, {data: item});
     } else {
       navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
         id: item.contentid,
@@ -106,6 +121,10 @@ const ListFeed = (props: any) => {
       return <DailyQuiz item={item} index={index} onPress={onDetailClick} />;
     } else if (item.content_type == 'package_quizz') {
       return <MomPrepTest item={item} index={index} onPress={onDetailClick} />;
+    } else if (item.content_type == 'deal') {
+      return (
+        <ItemDeal item={item} onDetailClick={onDetailClick} index={index} />
+      );
     }
     return <ItemFeed item={item} onDetailClick={onDetailClick} index={index} />;
   };

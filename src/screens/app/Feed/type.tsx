@@ -3,7 +3,8 @@ export type ContentTypeFeed =
   | 'article'
   | 'video'
   | 'daily_quizz'
-  | 'package_quizz';
+  | 'package_quizz'
+  | 'deal';
 
 export interface IDataListFeed
   extends IPackageQuizz,
