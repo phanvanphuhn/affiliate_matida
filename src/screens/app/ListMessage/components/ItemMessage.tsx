@@ -23,13 +23,18 @@ export const ItemMessage = ({item}: Props) => {
 
   const renderIDuser = () => {
     const arrayUser = item?.topic?.topicMembers;
-    const index = arrayUser.findIndex(
+    let shadowArrayUser = [...arrayUser];
+    if (!shadowArrayUser) {
+      return null; // or any other appropriate value
+    }
+    let index = shadowArrayUser.findIndex(
       (element: any) => element?.user_id == user.id,
     );
     if (index > -1) {
-      arrayUser.splice(index, 1);
+      // Use [0] to get the removed element
+      return shadowArrayUser.splice(index, 1)[0]?.user_id;
     }
-    return arrayUser[0]?.user_id;
+    return null; // or any other appropriate value
   };
 
   const handlePress = async () => {
