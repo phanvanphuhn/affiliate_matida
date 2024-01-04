@@ -266,9 +266,8 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
                         <View>
                           {item.data.map((e, i) => {
                             return (
-                              <TouchableOpacity
+                              <View
                                 key={i}
-                                onPress={() => onDetail(e)}
                                 style={[
                                   styles.containerChild,
                                   i == item.data.length - 1
@@ -318,7 +317,7 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
                                     <SvgUnLikeTask color={colors.gray550} />
                                   </TouchableOpacity>
                                 </View>
-                              </TouchableOpacity>
+                              </View>
                             );
                           })}
                         </View>
