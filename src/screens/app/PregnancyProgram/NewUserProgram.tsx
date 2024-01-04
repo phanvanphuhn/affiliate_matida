@@ -244,7 +244,7 @@ const NewUserProgram = (props: NewUserProgramProps) => {
                 marginLeft: 10,
                 ...stylesCommon.fontSarabun600,
               }}>
-              Sign up now to unlock
+              {t('pregnancyProgram.signUpNowToUnlock')}
             </Text>
           </TouchableOpacity>
         </View>

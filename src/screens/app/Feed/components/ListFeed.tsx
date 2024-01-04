@@ -125,8 +125,11 @@ const ListFeed = (props: any) => {
       return (
         <ItemDeal item={item} onDetailClick={onDetailClick} index={index} />
       );
+    } else {
+      return (
+        <ItemFeed item={item} onDetailClick={onDetailClick} index={index} />
+      );
     }
-    return <ItemFeed item={item} onDetailClick={onDetailClick} index={index} />;
   };
 
   return (

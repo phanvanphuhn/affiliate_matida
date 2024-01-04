@@ -1,4 +1,5 @@
 import {
+  SvgArrowLeft,
   iconArrowLeft,
   iconArrowRight,
   iconGoBackNewBorn,
@@ -39,11 +40,15 @@ const Button = (props: TProps) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.nextButton} onPress={onPreviousPage}>
-        <Image
-          source={iconGoBackNewBorn}
-          style={{height: scaler(48), width: scaler(48)}}
-        />
+      <TouchableOpacity
+        style={[
+          styles.nextButton,
+          {
+            backgroundColor: colors.gray350,
+          },
+        ]}
+        onPress={onPreviousPage}>
+        <SvgArrowLeft stroke={colors.textColor} size={24} />
       </TouchableOpacity>
       {state.page == 12 && (
         <TouchableOpacity
@@ -58,13 +63,16 @@ const Button = (props: TProps) => {
       )}
       {!disableNextBtn() && (
         <TouchableOpacity
-          style={styles.nextButton}
+          style={[
+            styles.nextButton,
+            {
+              backgroundColor: colors.pink200,
+              transform: [{rotate: '180deg'}],
+            },
+          ]}
           onPress={state.page == 12 || state.page == 8 ? onDone : onNextPage}
           disabled={disableNextBtn()}>
-          <Image
-            source={iconNextNewBorn}
-            style={{height: scaler(48), width: scaler(48)}}
-          />
+          <SvgArrowLeft size={24} />
         </TouchableOpacity>
       )}
     </View>

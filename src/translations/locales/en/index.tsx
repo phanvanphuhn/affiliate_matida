@@ -918,6 +918,7 @@ export const en = {
     AreYouReadyToBeTheBestMom: 'Are you ready\nto be the best mom?',
     LearnAboutTheBabyDevelopmentMilestones:
       'Learn about the Baby Development Milestones',
+    signUpNowToUnlock: 'Sign up now to unlock',
   },
   momDiary: {
     momDiary: 'Mom Diary',

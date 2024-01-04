@@ -496,8 +496,8 @@ const Home = () => {
       user?.payments?.length > 0 &&
       user?.payments[0]?.status == 'completed'
     ) {
-      trackCustomEvent(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
-      trackEventBranch(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
+      trackCustomEvent(event.MASTER_CLASS.USER_PURCHASED_MASTERCLASS, {});
+      trackEventBranch(event.MASTER_CLASS.USER_PURCHASED_MASTERCLASS, {});
     }
   }, []);
 

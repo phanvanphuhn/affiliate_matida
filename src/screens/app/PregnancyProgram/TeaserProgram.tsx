@@ -63,7 +63,10 @@ const TeaserProgram = (props: TeaserProgramProps) => {
     {
       name: t('pregnancyProgram.weeklyEffort'),
       description: t('pregnancyProgram.learnAll'),
-      icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png',
+      icon:
+        lang == 1
+          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091148471268187.png'
+          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1704359894884354149.png',
     },
     {
       name: t('pregnancyProgram.supportBaby'),

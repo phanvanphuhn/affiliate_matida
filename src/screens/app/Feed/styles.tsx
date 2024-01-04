@@ -33,9 +33,7 @@ const styles = StyleSheet.create({
     zIndex: 1000,
     top: scaler(6),
     right: scaler(6),
-    backgroundColor: colors.white,
-    paddingVertical: scaler(2),
-    paddingHorizontal: scaler(4),
+
     borderRadius: scaler(12),
   },
   tagTitle: {

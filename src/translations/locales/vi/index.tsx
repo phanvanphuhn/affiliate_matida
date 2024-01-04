@@ -603,7 +603,7 @@ export const vi = {
   slideIntro: {
     title: [
       'Chào Mom, Matida đây!',
-      'Theo dõi thai kỳ và em bé',
+      'Theo dõi thai kỳ và con yêu',
       'Bổ sung kiến thức',
       'Live hàng tuần',
       'Trắc nghiệm kiến thức',
@@ -616,11 +616,11 @@ export const vi = {
       'Bổ sung kiến thức từ thư viện hàng ngàn nội dung chất lượng và thú vị',
       'Livestream chất lượng hàng tuần từ các bác sĩ và chuyên gia về mẹ và bé',
       'Bổ sung kiến thức với thư viện câu hỏi trắc nghiệm kiến thức về mẹ và bé',
-      'Có bất cứ câu hỏi nào? Hỏi Tida 24/7 ngay!',
-      'Tham gia cộng đồng hơn 50.000 mẹ bầu và chuyên gia Matida ',
+      'Trí tuệ nhân tạo Tida AI giúp mẹ hỏi đáp nhanh 24/7',
+      'Tham gia cộng đồng hơn 50.000 các mẹ và chuyên gia Matida ',
     ],
     skip: 'Bỏ qua',
-    dashboard: 'Bắt đầu ngay',
+    dashboard: 'Khám phá ngay',
   },
   feed: {
     search: 'Tìm kiếm',
@@ -692,7 +692,7 @@ export const vi = {
     howDeliver: 'Mẹ đã sinh con bằng phương pháp nào?',
     whatWeight: 'Cân nặng của con là bao nhiêu?',
     whatHeight: 'Chiều cao của con là bao nhiêu?',
-    havePicture: 'Mẹ đã chụp ảnh cho con chưa?',
+    havePicture: 'Mẹ hãy tải ảnh đại diện cho bé lên nhé',
     welcome: 'Chào mừng mẹ',
     journey: 'đã gia nhập hội Mẹ Bỉm!',
     done: 'Hoàn thành!',
@@ -802,7 +802,7 @@ export const vi = {
     personalGuidance:
       'Chuyên gia trong nhiều lĩnh vực \nđồng hành cùng mẹ phát triển',
     voucherFor: 'Phiếu giảm giá cho các dịch vụ \nvà mua sắm sản phẩm',
-    babyExpert: 'Baby Expert',
+    babyExpert: 'Chuyên gia Mẹ&Bé',
     obstetrician: 'Bác sĩ nhi',
     lactation: 'Dược sĩ Sữa mẹ',
     financial: 'HLV Tài chính',
@@ -855,13 +855,12 @@ export const vi = {
     activity: 'Hoạt động',
     meal_plan: 'Kế hoạch ăn uống',
     LetWrapUpThisWeekTogether: 'Hãy cùng nhìn lại một tuần đã qua, mẹ nhé !',
-    LetUsKnowHowThisWeekHasHelpedYou:
-      'Let us know how this week has helped you.',
-    DoYouEnjoyTheProgramSoFar: 'Do you enjoy the program so far?',
-    TellUsAnything: 'Tell us anything...',
-    PleaseRateThisWeekContent: "Please rate this week's content",
-    ThankYouForYourFeedback: 'Thank you for your feedback!',
-    YourFeedbackHelpsUsToGetBetter: 'Your feedback helps us to get better.',
+    LetUsKnowHowThisWeekHasHelpedYou: 'Tuần này của mẹ như thế nào?',
+    DoYouEnjoyTheProgramSoFar: 'Mẹ có hài lòng với bài học tuần này không?',
+    TellUsAnything: 'Chia sẻ trải nghiệm của mẹ...',
+    PleaseRateThisWeekContent: 'Mẹ hãy đánh giá bài học tuần này nhé!',
+    ThankYouForYourFeedback: 'Cảm ơn mẹ nhiều!',
+    YourFeedbackHelpsUsToGetBetter: 'Phản hồi của mẹ đã được ghi nhận.',
     AboutTheProgram: 'Về khóa học',
     MeetOurExperts: 'Chuyên gia - Cố vấn nội dung',
     FrequentlyAskedQuestions: 'Câu hỏi thường gặp',
@@ -918,9 +917,11 @@ export const vi = {
     contentIHaveMoreQuestions:
       'Hãy liên hệ Matida qua email: contact@matida.app.',
     comeBackLater: 'Quay lại sau',
-    AreYouReadyToBeTheBestMom: 'Are you ready\nto be the best mom?',
+    AreYouReadyToBeTheBestMom:
+      'Mẹ đã sẵn sàng để trở thành\nngười mẹ tuyệt vời?',
     LearnAboutTheBabyDevelopmentMilestones:
-      'Learn about the Baby Development Milestones',
+      'Tìm hiểu về các mốc phát triển của bé',
+    signUpNowToUnlock: 'Đăng ký để mở khoá ngay',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

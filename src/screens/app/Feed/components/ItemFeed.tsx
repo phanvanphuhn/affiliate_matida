@@ -1,6 +1,13 @@
 import {LazyImage} from '@component';
-import {LogoApp, SvgEye, iconClock} from '@images';
-import {colors, scaler} from '@stylesCommon';
+import {
+  LogoApp,
+  SvgEye,
+  iconClock,
+  iconCrown,
+  iconCrownWhite,
+  iconFlowerWhite,
+} from '@images';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
@@ -8,6 +15,8 @@ import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {styles} from '../styles';
 import {IDataListFeed} from '../type';
+import useCheckPregnancy from '@util/hooks/useCheckPregnancy';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface ItemFeedProps {
   item: IDataListFeed;
@@ -19,7 +28,9 @@ const ItemFeed = (props: ItemFeedProps) => {
   const [state, setState] = useState();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state.auth.lang);
+  const checkPlan = useCheckPregnancy();
 
+  console.log('props: ', props);
   const renderTag = (item: IDataListFeed) => {
     switch (item.content_type) {
       case 'daily_quizz':
@@ -64,12 +75,34 @@ const ItemFeed = (props: ItemFeedProps) => {
   };
   return (
     <TouchableOpacity
-      onPress={() =>
-        props.onDetailClick && props.onDetailClick(props.index, props.item)
-      }
+      onPress={() => {
+        if (Number(props.item.is_payment) == 1) {
+          checkPlan();
+        } else {
+          props.onDetailClick && props.onDetailClick(props.index, props.item);
+        }
+      }}
       style={styles.itemContainer}>
       <View>
-        <View style={styles.tag}>
+        <View style={[styles.tag, {left: scaler(6)}]}>
+          <Image
+            source={iconFlowerWhite}
+            style={{
+              height: scaler(20),
+              width: scaler(20),
+              // marginRight: scaler(8),
+            }}
+          />
+        </View>
+        <View
+          style={[
+            styles.tag,
+            {
+              backgroundColor: colors.white,
+              paddingVertical: scaler(2),
+              paddingHorizontal: scaler(4),
+            },
+          ]}>
           <Text style={styles.tagTitle}>{renderTag(props.item)}</Text>
         </View>
         <LazyImage
@@ -106,6 +139,46 @@ const ItemFeed = (props: ItemFeedProps) => {
             {getTotalView(props.item)} {t('feed.views')}
           </Text>
         </View>
+        {Number(props.item.is_payment) == 1 && (
+          <LinearGradient
+            colors={['#0006', '#00000090']}
+            style={{
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderTopLeftRadius: scaler(8),
+              borderTopRightRadius: scaler(8),
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: scaler(8),
+                paddingHorizontal: scaler(12),
+                backgroundColor: colors.pink4,
+                borderRadius: scaler(24),
+              }}>
+              <Image
+                source={iconCrownWhite}
+                style={{
+                  height: scaler(24),
+                  width: scaler(24),
+                  marginRight: scaler(8),
+                }}
+              />
+              <Text
+                style={{
+                  ...stylesCommon.fontWeight600,
+                  fontSize: scaler(13),
+                  color: colors.white,
+                }}>
+                {t('myPurchases.signUpNow')}
+              </Text>
+            </View>
+          </LinearGradient>
+        )}
       </View>
       <View style={{height: scaler(48)}}>
         <Text style={styles.title} numberOfLines={2}>

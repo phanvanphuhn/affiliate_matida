@@ -42,6 +42,8 @@ const iconEditWhite = require('./iconEditWhite.png');
 const iconPlusCircleWhite = require('./iconPlusCircleWhite.png');
 const iconFlower = require('./iconFlower.png');
 const iconCrown = require('./iconCrown.png');
+const iconCrownWhite = require('./iconCrownWhite.png');
+const iconFlowerWhite = require('./iconFlowerWhite.png');
 
 export {
   iconFlagVn,
@@ -88,4 +90,6 @@ export {
   iconPlusCircleWhite,
   iconFlower,
   iconCrown,
+  iconCrownWhite,
+  iconFlowerWhite,
 };
