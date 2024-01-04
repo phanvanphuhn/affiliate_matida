@@ -29,6 +29,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
 import {ROUTE_NAME} from '@routeName';
 import useStateCustom from '../../../../util/hooks/useStateCustom';
+import useDidUpdate from '../../../../util/hooks/useDidUpdate';
 interface ListWeekProps {
   onSelectedWeek: (week: number) => void;
 }
@@ -39,11 +40,14 @@ const ListWeek = (props: ListWeekProps) => {
     completed: 0,
     total: 0,
   });
-  const week = useSelector((state: any) =>
-    !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
+  const week = useSelector((state: any) => {
+    console.log('=>(ListWeek.tsx:49) state', state);
+    return !state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks ||
+      state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks <= 4
       ? 4
-      : state?.home?.weekUserTask,
-  );
+      : state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks;
+  });
+  console.log('=>(ListWeek.tsx:48) week', week);
   const navigation = useNavigation<NavigationProp<any>>();
 
   const flatlistRef = useRef<FlatList>();
@@ -68,7 +72,6 @@ const ListWeek = (props: ListWeekProps) => {
     useCallback(() => {
       const getData = async () => {
         let result = await getProgressWeek();
-        console.log('=>(ListWeek.tsx:69) result', result);
         let data = Array.from({length: 40}, (x, i) => ({
           name: `${t('momDiary.week')} ${i + 1}`,
           week: i + 1,
@@ -83,12 +86,11 @@ const ListWeek = (props: ListWeekProps) => {
         });
       };
       getData();
-    }, []),
+    }, [week]),
   );
 
   const scrollToIndex = (index: number) => {
     if (flatlistRef.current && state?.data?.length) {
-      console.log('=>(ListWeek.tsx:88) index - 4', index - 4);
       setTimeout(() => {
         flatlistRef.current?.scrollToIndex({
           index: index - 4,
@@ -97,6 +99,10 @@ const ListWeek = (props: ListWeekProps) => {
       }, 500);
     }
   };
+
+  useDidUpdate(() => {
+    scrollToIndex(week);
+  }, [week]);
   const getColor = useCallback(item => {
     switch (item.status) {
       case 'Completed':
@@ -179,9 +185,6 @@ const ListWeek = (props: ListWeekProps) => {
       switch (item.status) {
         case 'Completed':
         case 'Uncompleted':
-          if (index + 1 == week) {
-            return renderProgress();
-          }
           return (
             <View
               style={{

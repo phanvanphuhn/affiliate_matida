@@ -70,16 +70,16 @@ const NewUserProgram = (props: NewUserProgramProps) => {
         title={'Matida Masterclass'}
         ComponentRight={
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity onPress={onGift} disabled={true}>
-              <Image
-                source={ic_gift}
-                style={{
-                  height: 30,
-                  width: 30,
-                  tintColor: colors.black10,
-                }}
-              />
-            </TouchableOpacity>
+            {/*<TouchableOpacity onPress={onGift} disabled={true}>*/}
+            {/*  <Image*/}
+            {/*    source={ic_gift}*/}
+            {/*    style={{*/}
+            {/*      height: 30,*/}
+            {/*      width: 30,*/}
+            {/*      tintColor: colors.black10,*/}
+            {/*    }}*/}
+            {/*  />*/}
+            {/*</TouchableOpacity>*/}
             <TouchableOpacity style={{paddingLeft: 10}} onPress={onAbout}>
               <Image
                 source={ic_info}
@@ -244,7 +244,7 @@ const NewUserProgram = (props: NewUserProgramProps) => {
                 marginLeft: 10,
                 ...stylesCommon.fontSarabun600,
               }}>
-              {t('pregnancyProgram.signUpNowToUnlock')}
+              {t('pregnancyProgram.SignUpNowToUnlock')}
             </Text>
           </TouchableOpacity>
         </View>

@@ -216,7 +216,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               lockScrollTimeoutDuration={250}
               nestedScrollEnabled={true}
               bounces={true}
-              height={410}
+              height={widthScreen / (3 / 2) + 136}
               onIndexChanged={setActiveSlide}>
               {data?.map((item, index) => _renderItem({item, index}))}
             </Swiper>
@@ -412,12 +412,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
     marginTop: 10,
+    lineHeight: scaler(24),
     ...stylesCommon.fontWeight600,
   },
   textItemDesc: {
     fontSize: scaler(15),
     color: colors.labelColor,
     textAlign: 'center',
+    lineHeight: scaler(20),
     ...stylesCommon.fontWeight400,
   },
   textItemDescBold: {

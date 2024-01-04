@@ -5,6 +5,8 @@ const QUESTION_ONBOARDING = 'package-quizz/pregnancy-program';
 const ANSWER_ONBOARDING = 'user-answer/pregnancy-program';
 const PACKAGE_QUIZZ = 'package-quizz';
 const USER_TASK = 'user-tasks';
+const USER_CONFIRM = 'subscription-plans/request/confirm';
+const USER_FEEDBACK = 'user-feedback';
 
 export const getPlanByCode: any = async () => {
   const response = await api.get(`${SUBSCRIPTION_PLANS}code/PP`);
@@ -53,5 +55,13 @@ export const markAsCompleted: any = async (data: any) => {
 };
 export const getProgressWeek: any = async () => {
   const response = await api.get(`${USER_TASK}/progress`);
+  return response;
+};
+export const userConfirm: any = async (data: any) => {
+  const response = await api.post(`${USER_CONFIRM}`, data);
+  return response;
+};
+export const userCreateFeedBack: any = async (data: any) => {
+  const response = await api.post(`${USER_FEEDBACK}`, data);
   return response;
 };

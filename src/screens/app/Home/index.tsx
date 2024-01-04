@@ -61,7 +61,7 @@ import {
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {event, trackingAppEvent} from '@util';
 //@ts-ignore
-import {EVideoType} from '@constant';
+import {EVideoType, TRouteDeepLink} from '@constant';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn';
 import RNUxcam from 'react-native-ux-cam';
 import {RootState} from 'src/redux/rootReducer';
@@ -252,17 +252,32 @@ const Home = () => {
   const handleDynamicLink = useCallback(
     async (link: any) => {
       if (link?.url) {
-        handleDeepLink(link?.url);
+        let type = handleDeepLink(link?.url);
+        handleLinkScreen(type);
       }
     },
     [navigation],
   );
 
+  const handleLinkScreen = (type: string) => {
+    switch (type) {
+      case TRouteDeepLink.TAB_MASTERCLASS:
+        if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
+          navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+        } else {
+          navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+        }
+        break;
+      default:
+        break;
+    }
+  };
   const fetchScreen = async () => {
     const getInitialLink = await dynamicLinks().getInitialLink();
     if (getInitialLink !== null && getInitialLink?.url && deepLink) {
       //handle navigation
-      handleDeepLink(getInitialLink?.url);
+      let type = handleDeepLink(getInitialLink?.url);
+      handleLinkScreen(type);
       dispatch(updateStatusDeepLink());
     }
   };

@@ -382,58 +382,67 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
           <Stack.Screen
             name={ROUTE_NAME.UPDATE_INFORMATION}
             component={screens.UpdateInformation}
-            options={{animation: 'slide_from_bottom'}}
+            options={{animation: 'slide_from_bottom', gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.COMPLETE_PAYMENT}
             component={screens.CompletePayment}
-            options={{animation: 'slide_from_bottom'}}
+            options={{animation: 'slide_from_bottom', gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.ONBOARDING_STEP}
             component={screens.OnboardingStep}
+            options={{animation: 'slide_from_bottom', gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.ONBOARDING_FINISHED}
             component={screens.OnboardingFinished}
+            options={{animation: 'slide_from_bottom', gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.DETAIL_TASK_PROGRAM}
             component={screens.DetailTaskProgram}
+            options={{gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.TEASER_PROGRAM}
             component={screens.TeaserProgram}
-            options={{animation: 'slide_from_bottom'}}
+            options={{animation: 'slide_from_bottom', gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.VERIFY_PAYMENT}
             component={screens.VerifyPayment}
-            options={{animation: 'slide_from_bottom'}}
+            options={{animation: 'slide_from_bottom', gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.ABOUT_PROGRAM}
             component={screens.AboutProgram}
+            options={{gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.MOM_DIARY}
             component={screens.MomDiary}
+            options={{gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.MY_PURCHASES}
             component={screens.MyPurchases}
+            options={{gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.FEEDBACK_TASK}
             component={screens.FeedbackTask}
+            options={{gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.FEEDBACK_SUCCESS}
             component={screens.FeedbackSuccess}
+            options={{gestureEnabled: false}}
           />
           <Stack.Screen
             name={ROUTE_NAME.NEW_USER_PROGRAM}
             component={screens.NewUserProgram}
+            options={{gestureEnabled: false}}
           />
         </Stack.Navigator>
       );

@@ -34,6 +34,7 @@ import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {changeWeekUserTask} from '@redux';
 import {event, eventType, trackingAppEvent} from '@util';
+import useBackHandler from '../../../util/hooks/useBackHandler';
 
 interface UpdateInformationProps {}
 export interface UpdateInformationState {
@@ -48,6 +49,9 @@ const UpdateInformation = (props: UpdateInformationProps) => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const dispatch = useDispatch();
 
+  useBackHandler(() => {
+    return true;
+  });
   const handleSubcribePlan = async (metadata: UpdateInformationState) => {
     try {
       let data = {

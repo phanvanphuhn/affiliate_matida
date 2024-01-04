@@ -145,7 +145,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
+    // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     if (state.currentQuestion == (state.dataQuestion || [])?.length - 1) {
       onSubmit();
     } else {
@@ -209,6 +209,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
               ]?.answers.map((answer, i) => {
                 return (
                   <ItemAnswer
+                    key={i}
                     onSelected={() => onSelectAnswer(answer, i)}
                     title={lang == 1 ? answer.answer_en : answer.answer_vi}
                     answerKey={answerKeys[i]}

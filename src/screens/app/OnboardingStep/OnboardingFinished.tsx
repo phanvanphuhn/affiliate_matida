@@ -25,6 +25,7 @@ import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
 import {trackCustomEvent} from '@services/webengageManager';
 import {goBack, NavigationUtils} from '@navigation';
 import {NavigationProp} from '@react-navigation/core/src/types';
+import useBackHandler from '../../../util/hooks/useBackHandler';
 
 interface OnboardingFinishedProps {}
 

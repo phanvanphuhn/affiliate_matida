@@ -66,9 +66,10 @@ const ListProgram = (props: ListProgramProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const isFeedback = useRef(false);
   const week = useSelector((state: any) =>
-    !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
+    !state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks ||
+    state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks <= 4
       ? 4
-      : state?.home?.weekUserTask,
+      : state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
   );
   const {t} = useTranslation();
 

@@ -89,8 +89,7 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
         navigate(ROUTE_NAME.TAB_LIVETALK);
         break;
       case TRouteDeepLink.TAB_MASTERCLASS:
-        navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
-        break;
+        return arrayParamsLink[0];
       default:
         break;
     }

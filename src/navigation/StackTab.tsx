@@ -47,6 +47,9 @@ const StackTab = () => {
             ? screens.PregnancyProgram
             : screens.NewUserProgram
         }
+        options={{
+          unmountOnBlur: true,
+        }}
       />
       <Tab.Screen name={ROUTE_NAME.TAB_COMMUNITY} component={screens.Forum} />
       <Tab.Screen name={ROUTE_NAME.TAB_DEAL} component={screens.Deal} />

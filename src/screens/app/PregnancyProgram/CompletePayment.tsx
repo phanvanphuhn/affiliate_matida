@@ -37,6 +37,7 @@ import {ROUTE_NAME} from '@routeName';
 import {
   getPlanByCode,
   requestSubcribePlan,
+  userConfirm,
 } from '../../../services/pregnancyProgram';
 import {GlobalService, PRODUCT_ID_PAY} from '@services';
 import {showMessage} from 'react-native-flash-message';
@@ -61,6 +62,7 @@ import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
 import {useSelector} from 'react-redux';
+import useBackHandler from '../../../util/hooks/useBackHandler';
 interface CompletePaymentProps {}
 interface BankState {
   bank_account_name: string;
@@ -177,14 +179,28 @@ const CompletePayment = (props: CompletePaymentProps) => {
     // ... listen to currentPurchase, to check if the purchase went through
     console.log('=>(CompletePayment.tsx:124) currentPurchase', currentPurchase);
   }, [currentPurchase]);
-
+  useBackHandler(() => {
+    return true;
+  });
   const onPaymentFinish = async () => {
-    trackingAppEvent(
-      event.MASTER_CLASS.PP_PAYMENT_INFO_I_HAVE_TRANSFERED_MY_PAYMENT,
-      {id: user?.id},
-      eventType.MIX_PANEL,
-    );
-    navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
+    try {
+      GlobalService.showLoading();
+      trackingAppEvent(
+        event.MASTER_CLASS.PP_PAYMENT_INFO_I_HAVE_TRANSFERED_MY_PAYMENT,
+        {id: user?.id},
+        eventType.MIX_PANEL,
+      );
+      console.log('=>(CompletePayment.tsx:193) route?.params', route?.params);
+      let result = await userConfirm({
+        verify_code: route?.params?.values?.verify_code,
+        user_id: user?.id,
+      });
+      navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
+    } catch (error) {
+      console.log('=>(CompletePayment.tsx:309) error', error);
+    } finally {
+      GlobalService.hideLoading();
+    }
   };
   const onCopy = (value: string, type: string) => () => {
     switch (type) {
@@ -298,6 +314,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
       type: 'success',
     });
   };
+
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
       <View style={[styles.container]}>

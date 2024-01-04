@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -22,12 +22,16 @@ interface PregnancyProgramProps {}
 const PregnancyProgram = (props: PregnancyProgramProps) => {
   const navigation = useNavigation<any>();
   const week = useSelector((state: any) =>
-    !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
+    !state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks ||
+    state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks <= 4
       ? 4
-      : state?.home?.weekUserTask,
+      : state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
   );
   const [currentWeek, setCurrentWeek] = useState(week);
   const lang = useSelector((state: any) => state?.auth?.lang);
+  useEffect(() => {
+    setCurrentWeek(week);
+  }, [week]);
 
   const {t} = useTranslation();
   const goBack = () => {
@@ -87,9 +91,16 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
         <View style={styles.container2}>
           <View style={styles.center}>
             <Text style={styles.textTitle}>
-              {t('pregnancyProgram.youAreNow')} {currentWeek || week}
+              {t('pregnancyProgram.youAreNow')}{' '}
+              {currentWeek > week ? week : currentWeek || week}
             </Text>
-            {(currentWeek || week) == 40 ? (
+            {currentWeek > week ? (
+              <Text style={styles.textTitle2}>
+                {t('pregnancyProgram.contentForWeekComeBackLater', {
+                  week: currentWeek,
+                })}
+              </Text>
+            ) : (currentWeek || week) == 40 ? (
               <View style={{height: 25}} />
             ) : (
               <Text style={styles.textTitle2}>
@@ -123,6 +134,7 @@ const styles = StyleSheet.create({
     color: colors.labelColor,
     marginTop: 5,
     marginBottom: scaler(10),
+    textAlign: 'center',
     ...stylesCommon.fontSarabun400,
   },
 });
