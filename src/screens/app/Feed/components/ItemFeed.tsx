@@ -84,16 +84,18 @@ const ItemFeed = (props: ItemFeedProps) => {
       }}
       style={styles.itemContainer}>
       <View>
-        <View style={[styles.tag, {left: scaler(6)}]}>
-          <Image
-            source={iconFlowerWhite}
-            style={{
-              height: scaler(20),
-              width: scaler(20),
-              // marginRight: scaler(8),
-            }}
-          />
-        </View>
+        {Number(props.item.is_payment) == 1 && (
+          <View style={[styles.tag, {left: scaler(6)}]}>
+            <Image
+              source={iconFlowerWhite}
+              style={{
+                height: scaler(20),
+                width: scaler(20),
+                // marginRight: scaler(8),
+              }}
+            />
+          </View>
+        )}
         <View
           style={[
             styles.tag,
