@@ -35,7 +35,7 @@ import {
   Option,
   Page,
 } from '@redux';
-import {event, eventType, trackingAppEvent} from '@util';
+import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
 import {useTranslation} from 'react-i18next';
 import {GlobalService} from '@services';
 import {getQuestionOnboarding} from '../services/pregnancyProgram';
@@ -103,14 +103,17 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
       case ROUTE_NAME.TAB_EXPLORE:
         trackScreenViewedEvent('Explore');
         trackingAppEvent(event.TAB.CLICK_TAB_EXPLORE, {}, eventType.MIX_PANEL);
+        trackEventBranch(event.TAB.CLICK_TAB_EXPLORE, {});
         break;
       case ROUTE_NAME.TAB_FEED:
         trackScreenViewedEvent('Feed');
         trackingAppEvent(event.TAB.CLICK_TAB_FEED, {}, eventType.MIX_PANEL);
+        trackEventBranch(event.TAB.CLICK_TAB_FEED, {});
         break;
       case ROUTE_NAME.TAB_HOME:
         trackScreenViewedEvent('Home');
         trackingAppEvent(event.TAB.CLICK_TAB_HOME, {}, eventType.MIX_PANEL);
+        trackEventBranch(event.TAB.CLICK_TAB_HOME, {});
         break;
       case ROUTE_NAME.TAB_COMMUNITY:
         trackScreenViewedEvent('Community');
@@ -119,6 +122,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
           {},
           eventType.MIX_PANEL,
         );
+        trackEventBranch(event.TAB.CLICK_TAB_COMMUNITY, {});
         break;
       case ROUTE_NAME.TAB_LIVETALK:
         trackScreenViewedEvent('Livetalk');
@@ -127,10 +131,12 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
           {},
           eventType.MIX_PANEL,
         );
+        trackEventBranch(event.TAB.CLICK_TAB_LIVE_TALKS, {});
         break;
       case ROUTE_NAME.TAB_DEAL:
         trackScreenViewedEvent('Deal');
         trackingAppEvent(event.TAB.CLICK_TAB_DEAL, {}, eventType.MIX_PANEL);
+        trackEventBranch(event.TAB.CLICK_TAB_DEAL, {});
         break;
     }
   };
@@ -169,6 +175,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
                 },
                 eventType.MIX_PANEL,
               );
+              trackEventBranch(event.TAB.CLICK_TAB_MASTERCLASS, {});
               checkPlan();
             } else {
               navigation.navigate(route.name);

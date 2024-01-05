@@ -28,7 +28,8 @@ import {GlobalService} from '@services';
 import {showMessage} from 'react-native-flash-message';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {event, eventType, trackingAppEvent} from '@util';
+import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
+import {trackCustomEvent} from '@services/webengageManager';
 
 interface OnboardingStepProps {}
 interface OnboardingStepAnswer {
@@ -147,6 +148,8 @@ const OnboardingStep = (props: OnboardingStepProps) => {
     );
     // LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     if (state.currentQuestion == (state.dataQuestion || [])?.length - 1) {
+      trackCustomEvent(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
+      trackEventBranch(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
       onSubmit();
     } else {
       setState({

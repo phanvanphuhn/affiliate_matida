@@ -236,16 +236,13 @@ export const trackEventBranch = async (
   ignoreBranchState?: boolean,
 ) => {
   try {
-    const branchState = store.getState().auth.isFromBranch;
-    if (branchState || ignoreBranchState) {
-      const eventLog = new BranchEvent(eventName, null, {
-        customData: params,
-      });
-      eventLog.logEvent();
-      reactotron.log?.('LOG EVENT', eventName);
-    }
+    const eventLog = new BranchEvent(eventName, null, {
+      customData: params,
+    });
+    eventLog.logEvent();
+    reactotron.log?.('LOG EVENT BRANCH', eventName);
   } catch (error) {
-    reactotron.log?.('ERROR LOG EVENT', eventName);
+    reactotron.log?.('ERROR LOG EVENT BRANCH', eventName);
   }
 };
 
