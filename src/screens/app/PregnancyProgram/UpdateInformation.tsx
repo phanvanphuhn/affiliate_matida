@@ -139,7 +139,12 @@ const UpdateInformation = (props: UpdateInformationProps) => {
             </Text>
 
             <ImageBackground source={ic_background}>
-              <SvgPathBottom />
+              <View
+                style={{
+                  marginTop: -0.3,
+                }}>
+                <SvgPathBottom />
+              </View>
               <View style={styles.containerInput}>
                 <FormInput
                   name={'name'}

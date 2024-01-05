@@ -221,7 +221,7 @@ const OnboardingStep = (props: OnboardingStepProps) => {
                 );
               })}
             </View>
-            <View style={{marginTop: 1}}>
+            <View style={{marginTop: 0.9}}>
               <Image source={ic_wave_bottom} style={{width: '100%'}} />
             </View>
           </View>

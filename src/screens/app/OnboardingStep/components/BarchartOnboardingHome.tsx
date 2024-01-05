@@ -58,6 +58,7 @@ const BarchartOnboardingHome = (props: BarchartProps) => {
   });
   const lang = useSelector((state: any) => state?.auth?.lang);
   const getLabel = (type: string) => {
+    console.log('=>(BarchartOnboardingHome.tsx:60) lang', lang);
     switch (type) {
       case 'love_and_money':
         return lang == 1 ? 'Love &\nMoney' : 'Tài chính & Gia đình';
@@ -206,7 +207,7 @@ const BarchartOnboardingHome = (props: BarchartProps) => {
         ],
       });
     }
-  }, []);
+  }, [lang]);
   return (
     <View style={styles.container}>
       <View>

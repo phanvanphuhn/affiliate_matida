@@ -20,6 +20,7 @@ const screenOptions = {
 const StackTab = () => {
   //Render ra bottomTab
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  console.log('=>(StackTab.tsx:23) user', user);
 
   return (
     <Tab.Navigator
@@ -39,6 +40,8 @@ const StackTab = () => {
       <Tab.Screen
         name={
           user?.user_subscriptions?.some(e => e.code == 'PP')
+            ? ROUTE_NAME.PREGNANCY_PROGRAM
+            : user.payments.some(e => e.status == 'processing')
             ? ROUTE_NAME.PREGNANCY_PROGRAM
             : ROUTE_NAME.NEW_USER_PROGRAM
         }

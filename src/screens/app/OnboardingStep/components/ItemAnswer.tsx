@@ -59,7 +59,7 @@ const ItemAnswer = (props: ItemAnswerProps) => {
           <View style={{width: 10}} />
         </View>
       </Pressable>
-      <View style={{marginBottom: 2}}>
+      <View style={{marginBottom: 1}}>
         <Image
           source={ic_wave_bottom}
           style={{

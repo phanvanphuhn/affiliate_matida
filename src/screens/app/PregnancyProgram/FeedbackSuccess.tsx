@@ -35,7 +35,7 @@ const FeedbackSuccess = (props: FeedbackSuccessProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
   const insets = useSafeAreaInsets();
   const onFinish = () => {
-    navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+    navigation.navigate(ROUTE_NAME.TAB_FEED);
   };
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
