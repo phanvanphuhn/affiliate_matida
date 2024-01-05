@@ -65,7 +65,7 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
       let result = await getContentUserTask(route?.params?.item?.id);
       if (result?.success) {
         setContent(result?.data?.content?.content);
-        setVideo(result?.data?.content?.videoUrl);
+        setVideo(result?.data?.content?.url);
       }
     } catch (e) {
     } finally {

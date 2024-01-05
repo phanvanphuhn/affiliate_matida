@@ -100,9 +100,6 @@ const ListWeek = (props: ListWeekProps) => {
     }
   };
 
-  useDidUpdate(() => {
-    scrollToIndex(week);
-  }, [week]);
   const getColor = useCallback(item => {
     switch (item.status) {
       case 'Completed':
