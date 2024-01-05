@@ -278,7 +278,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
 
   const saveToGallery = async () => {
     trackingAppEvent(
-      event.MASTER_CLASS.PP_USER_INFO_NEXT,
+      event.MASTER_CLASS.PP_PAYMENT_INFO_DOWNLOAD_QR,
       {id: user?.id},
       eventType.MIX_PANEL,
     );
