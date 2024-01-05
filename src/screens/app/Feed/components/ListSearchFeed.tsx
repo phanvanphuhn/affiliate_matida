@@ -49,14 +49,22 @@ const ListSearchFeed = (props: ListSearchFeedProps) => {
         return;
       }
       if (+item?.maxScore === +item?.total_questions) {
-        trackingAppEvent(event.MOM_TEST.START, {content: item?.id}, eventType.MIX_PANEL);
+        trackingAppEvent(
+          event.MOM_TEST.START,
+          {content: item?.id},
+          eventType.MIX_PANEL,
+        );
         navigate(ROUTE_NAME.TEST_RESULT, {
           id: item?.id,
           redoTest: () => {},
           preRoute: EPreRoute.PERIODIC,
         });
       } else {
-        trackingAppEvent(event.MOM_TEST.START, {content: item}, eventType.MIX_PANEL);
+        trackingAppEvent(
+          event.MOM_TEST.START,
+          {content: item},
+          eventType.MIX_PANEL,
+        );
         navigate(ROUTE_NAME.TEST_DETAIL, {quiz: item});
       }
     } else {

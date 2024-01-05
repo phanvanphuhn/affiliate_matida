@@ -100,7 +100,10 @@ const Intro = () => {
           dispatch(saveDataLoginFacebook(res?.data));
           loginWebEngage(`${res?.data?.data?.id}Facebook`);
           trackUser(res?.data?.data);
-          if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
+          if (
+            res?.data?.data?.due_date ||
+            res?.data?.data?.babies[0]?.date_of_birth
+          ) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
             trackEventBranch(event.BRANCH.LOGIN, {}, true);
@@ -134,7 +137,10 @@ const Intro = () => {
           dispatch(saveDataLoginFacebook(res?.data));
           loginWebEngage(`${res?.data?.data?.id}ZALO-android`);
           trackUser(res?.data?.data);
-          if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
+          if (
+            res?.data?.data?.due_date ||
+            res?.data?.data?.babies[0]?.date_of_birth
+          ) {
             dispatch(changeStatusLogin(true));
             trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
             trackEventBranch(event.BRANCH.LOGIN, {}, true);
@@ -159,7 +165,10 @@ const Intro = () => {
         dispatch(saveDataLoginFacebook(res?.data));
         loginWebEngage(`${res?.data?.data?.id}Zalo-ios`);
         trackUser(res?.data?.data);
-        if (res?.data?.data?.due_date || res?.data?.data?.is_skip) {
+        if (
+          res?.data?.data?.due_date ||
+          res?.data?.data?.babies[0]?.date_of_birth
+        ) {
           dispatch(changeStatusLogin(true));
           trackingAppEvent(event.AUTH.CLICK_LOGIN, {}, eventType.AFF_FLYER);
           trackEventBranch(event.BRANCH.LOGIN, {}, true);

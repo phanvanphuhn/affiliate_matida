@@ -241,8 +241,13 @@ const OnboardingV2 = () => {
       };
     }
 
+    const paramsData = {
+      id: user?.babies[0]?.id,
+      body: params,
+    };
+
     try {
-      const response = await createBaby(params);
+      const response = await updateBaby(paramsData);
       const res = await selectBabyDate({
         id: response?.data?.id,
         date: moment

@@ -1,8 +1,11 @@
 import {
   ic_program,
   iconCommunity,
+  iconCommunity2,
+  iconCommunity3,
   iconTabDeal,
   iconTabExplore,
+  iconTabExplore2,
   iconTabFeed,
   iconTabHome,
   iconTabLiveTalk,
@@ -41,7 +44,7 @@ import useCheckPregnancy from '../util/hooks/useCheckPregnancy';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const active_color = colors.pink200;
-const inActive_color = colors.textSmallColor;
+const inActive_color = colors.gray550;
 
 type Props = {
   navigation: any;
@@ -78,7 +81,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const renderIcon = (value: string) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
-        return iconTabExplore;
+        return iconTabExplore2;
       case ROUTE_NAME.TAB_FEED:
         return iconTabFeed;
       case ROUTE_NAME.TAB_HOME:

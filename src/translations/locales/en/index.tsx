@@ -775,6 +775,7 @@ export const en = {
     tryAgain: 'Try Again',
     done: 'Done',
     savedFileSuccess: 'Saved file success!',
+    copySuccessfully: 'Copy successfully',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
@@ -948,5 +949,8 @@ export const en = {
     Successful: 'Successful',
     Pending: 'Pending',
     Failed: 'Failed',
+  },
+  forum: {
+    upcoming: 'Upcoming',
   },
 };

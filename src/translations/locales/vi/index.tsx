@@ -188,7 +188,7 @@ export const vi = {
     bodyBannerQuiz:
       'Bạn đã chuẩn bị như thế nào để trở thành một người mẹ? Hãy kiểm tra kiến ​​thức của bạn',
     buttonBannerQuiz: 'Kiểm tra ngay bây giờ',
-    signUpNow: 'Khám phá ngay',
+    signUpNow: 'Kiểm tra kiến thức',
   },
   sizeComparison: {
     week: 'Tuần',
@@ -777,6 +777,7 @@ export const vi = {
     tryAgain: 'Thử lại',
     done: 'Hoàn thành',
     savedFileSuccess: 'Đã lưu QR code vào máy!',
+    copySuccessfully: 'Sao chép thành công',
   },
   pregnancyProgram: {
     masterClassResult: 'Kết quả bài test đầu vào Masterclass',
@@ -787,7 +788,7 @@ export const vi = {
     haveQuestion: 'Mẹ có thắc mắc về khoá học?',
     checkThisOut: 'Tìm hiểu thêm',
     liftTime: 'trọn đời',
-    signUpEarly: 'Đăng ký ngay để giữ giá tốt nhất',
+    signUpEarly: 'Mẹ vui con khoẻ. Đăng ký ngay!',
     directAccess: 'Kết nối trực tiếp cùng chuyên gia',
     weeklyEffort: 'Chỉ tốn 15 phút mỗi tuần',
     supportBaby: 'Theo dõi quá trình của bé',
@@ -847,7 +848,7 @@ export const vi = {
     turnOnNoti: 'bật thông báo',
     reminder: 'để nhận cập nhật mới nhất từ Matida nhé!',
     thankYouForSignUp:
-      'Cảm ơn mẹ đã đăng ký khoá học!\nQuá trình này sẽ diễn ra tối đa trong 24 giờ.\nMatida sẽ gửi thông báo đến mẹ khi chương\ntrình sẵn sàng nhé!',
+      'Cảm ơn mẹ đã đăng ký khoá học!\nMatida sẽ mở khoá chương trình cho mẹ trong vòng 24h.\nMẹ chú ý theo dõi thông báo từ Matida nhé!',
     exploreMatida: 'Khám phá Matida ngay',
     learn: 'Bài học',
     quiz: 'Trắc nghiệm',
@@ -950,5 +951,8 @@ export const vi = {
     Successful: 'Thành công',
     Pending: 'Đang xử lý',
     Failed: 'Thất bại',
+  },
+  forum: {
+    upcoming: 'Sắp diễn ra',
   },
 };

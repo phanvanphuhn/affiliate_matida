@@ -8,16 +8,30 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import {ic_purchase} from '@images';
+import {ic_program, ic_purchase, iconCrownWhite} from '@images';
 import {IDataListFeed} from '../../Feed/type';
-import {colors, heightScreen, widthScreen} from '@stylesCommon';
+import {
+  colors,
+  heightScreen,
+  scaler,
+  stylesCommon,
+  widthScreen,
+} from '@stylesCommon';
 import {useVideo} from './Container';
+import LinearGradient from 'react-native-linear-gradient';
+import {useTranslation} from 'react-i18next';
+import useCheckPregnancy from '@util/hooks/useCheckPregnancy';
+import {LazyImage} from '@component';
+import {heightFullScreen, widthFullScreen} from '../useDetailFeed';
 
 interface ItemPurchaseProps {
   item: IDataListFeed;
 }
 
 const ItemPurchase = (props: ItemPurchaseProps) => {
+  const {t} = useTranslation();
+  const checkPlan = useCheckPregnancy();
+
   const formatPrice = (str: string | number) => {
     if (!str) {
       return '';
@@ -29,25 +43,80 @@ const ItemPurchase = (props: ItemPurchaseProps) => {
       .replace('.00', '')
       .replace(/,/g, '.');
   };
+
   return (
-    <View style={{flex: 1}}>
-      <ImageBackground
-        resizeMode={'contain'}
-        source={{uri: props.item.thumbnail}}
-        style={styles.container}>
-        <View style={styles.containerBg}>
-          <Image source={ic_purchase} />
-          <Text style={styles.textPurchase}>
-            This video has been locked. Please purchase to continue.
+    <>
+      <LazyImage
+        source={{
+          uri: props.item.image,
+        }}
+        resizeMode={'cover'}
+        fastImage={true}
+        style={styles.fullScreen}
+      />
+      <LinearGradient
+        colors={['#0009', '#00000090']}
+        style={{
+          height: '100%',
+          width: '100%',
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderTopLeftRadius: scaler(8),
+          borderTopRightRadius: scaler(8),
+        }}>
+        <Image
+          source={ic_program}
+          style={[
+            {
+              tintColor: colors.white,
+              marginBottom: scaler(24),
+              height: scaler(56),
+              width: scaler(56),
+            },
+          ]}
+        />
+        <Text
+          style={{
+            ...stylesCommon.fontWeight400,
+            fontSize: scaler(15),
+            color: colors.white,
+            marginBottom: scaler(24),
+            textAlign: 'center',
+          }}>
+          {
+            ' Nội dung này chỉ dành cho người dùng\nMatida Masterclass. Đăng ký ngay.'
+          }
+        </Text>
+        <TouchableOpacity
+          onPress={checkPlan}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingVertical: scaler(8),
+            paddingHorizontal: scaler(12),
+            backgroundColor: colors.pink4,
+            borderRadius: scaler(24),
+          }}>
+          <Image
+            source={iconCrownWhite}
+            style={{
+              height: scaler(24),
+              width: scaler(24),
+              marginRight: scaler(8),
+            }}
+          />
+          <Text
+            style={{
+              ...stylesCommon.fontWeight600,
+              fontSize: scaler(13),
+              color: colors.white,
+            }}>
+            {t('myPurchases.signUpNow')}
           </Text>
-          <TouchableOpacity style={styles.buttonPurchase}>
-            <Text style={styles.textButtonPurchase}>
-              {formatPrice(props?.item?.price_vn || '')} VND
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </View>
+        </TouchableOpacity>
+      </LinearGradient>
+    </>
   );
 };
 
@@ -84,5 +153,9 @@ const styles = StyleSheet.create({
       android: widthScreen / (heightScreen - 27),
       ios: widthScreen / (heightScreen - 65),
     }),
+  },
+  fullScreen: {
+    width: widthFullScreen,
+    height: heightFullScreen,
   },
 });

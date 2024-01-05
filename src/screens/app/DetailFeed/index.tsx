@@ -1,7 +1,7 @@
-import {ic_back, ic_search} from '@images';
+import {ic_back, ic_search, iconCrownWhite} from '@images';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {heightScreen} from '@stylesCommon';
+import {colors, heightScreen, scaler, stylesCommon} from '@stylesCommon';
 import React, {useEffect, useRef} from 'react';
 import {
   Image,
@@ -9,6 +9,8 @@ import {
   Platform,
   RefreshControl,
   StyleSheet,
+  Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {Drawer} from 'react-native-drawer-layout';
@@ -27,10 +29,21 @@ import useDetailFeed from './useDetailFeed';
 import Swiper from './SwiperFlatlist/Swiper';
 import ListFeedDetail from './components/ListFeedDetail';
 import {goBack} from '@navigation';
+import LinearGradient from 'react-native-linear-gradient';
+import {useTranslation} from 'react-i18next';
+import useCheckPregnancy from '@util/hooks/useCheckPregnancy';
 
-interface DetailFeedProps {}
+interface DetailFeedProps {
+  route: any;
+}
 
 const DetailFeed = (props: DetailFeedProps) => {
+  const {route} = props;
+  const {params} = route;
+
+  const {t} = useTranslation();
+  const checkPlan = useCheckPregnancy();
+
   const [open, setOpen] = React.useState(false);
   const navigation = useNavigation<any>();
 

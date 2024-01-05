@@ -36,7 +36,6 @@ const ListFeed = (props: any) => {
   //   }, []),
   // );
   const onDetailClick = (index: number, item: IDataListFeed) => {
-    console.log('onDetailClick: ', item);
     if (item?.content_type == 'package_quizz') {
       if (+item?.maxScore === +item?.total_questions) {
         trackingAppEvent(
@@ -89,6 +88,7 @@ const ListFeed = (props: any) => {
       navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
         id: item.contentid,
         content_type: item.content_type,
+        is_payment: item.is_payment,
         onComplete: (results: ListPackage[]) => {
           if (results?.length) {
             let newItem = [...state?.data];

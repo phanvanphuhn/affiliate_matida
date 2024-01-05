@@ -27,6 +27,9 @@ const ListFeedDetail = (props: ListFeedProps) => {
   const pagerViewRef = useRef<Swiper>();
   const {state, setState, onPageSelected, onRefresh} = useDetailFeed();
   const renderItem = (item: IDataListFeed, index: number) => {
+    if (item.is_payment == 1) {
+      return <ItemPurchase item={item} />;
+    }
     switch (item.content_type) {
       case 'video':
       case 'podcast':

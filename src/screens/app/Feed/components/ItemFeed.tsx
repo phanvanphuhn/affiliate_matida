@@ -30,7 +30,6 @@ const ItemFeed = (props: ItemFeedProps) => {
   const lang = useSelector((state: any) => state.auth.lang);
   const checkPlan = useCheckPregnancy();
 
-  console.log('props: ', props);
   const renderTag = (item: IDataListFeed) => {
     switch (item.content_type) {
       case 'daily_quizz':

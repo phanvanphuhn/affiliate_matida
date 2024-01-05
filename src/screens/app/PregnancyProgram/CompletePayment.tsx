@@ -227,7 +227,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
         break;
     }
     Clipboard.setString(value);
-    showMessage({message: 'Copy success', type: 'success'});
+    showMessage({message: t('common.copySuccessfully'), type: 'success'});
   };
   async function hasAndroidPermission() {
     const getCheckPermissionPromise = () => {

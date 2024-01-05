@@ -20,6 +20,7 @@ import {StatusRoom} from '../StatusRoom';
 import {StackRouter} from '@react-navigation/native';
 import {styles} from '../AppModal/styles';
 import moment from 'moment';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   recorded?: boolean;
@@ -28,6 +29,7 @@ type Props = {
 
 export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
   const lang = useSelector((state: any) => state.auth.lang);
+  const {t} = useTranslation();
   const isPayment = item?.is_payment && !item?.is_paid;
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -128,7 +130,7 @@ export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
                   borderRadius: scaler(16),
                   backgroundColor: colors.purple4,
                 }}>
-                <Text style={[s.status]}>Upcoming</Text>
+                <Text style={[s.status]}>{t('forum.upcoming')}</Text>
               </View>
             ) : (
               <View
