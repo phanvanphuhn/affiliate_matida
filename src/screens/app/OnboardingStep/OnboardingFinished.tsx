@@ -24,7 +24,7 @@ import {useSelector} from 'react-redux';
 import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
 import {trackCustomEvent} from '@services/webengageManager';
 import {goBack, NavigationUtils} from '@navigation';
-import {NavigationProp} from '@react-navigation/core/src/types';
+import {NavigationProp, RouteProp} from '@react-navigation/core/src/types';
 import useBackHandler from '../../../util/hooks/useBackHandler';
 
 interface OnboardingFinishedProps {}
@@ -35,6 +35,7 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state.auth.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const route = useRoute<RouteProp<any>>();
 
   const onNext = () => {
     trackingAppEvent(
@@ -83,7 +84,7 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
             </Text>
           )}
           <View style={styles.containerChart}>
-            <BarchartOnboarding />
+            <BarchartOnboarding {...route?.params} />
           </View>
 
           <View style={styles.container4}>

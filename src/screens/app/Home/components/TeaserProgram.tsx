@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {
@@ -20,18 +20,36 @@ import {getQuestionOnboarding} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
 import {useTranslation} from 'react-i18next';
+import BarchartOnboardingHome from '../../OnboardingStep/components/BarchartOnboardingHome';
 
 interface TeaserProgramProps {
   isHome?: boolean;
 }
 const TeaserProgram = (props: TeaserProgramProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [userScore, setUserScore] = useState();
   const navigation = useNavigation<any>();
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const checkPlan = useCheckPregnancy();
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   const {t} = useTranslation();
+  const checkQuiz = async () => {
+    if (!user.user_subscriptions.some(e => e.code == 'PP')) {
+      if (!user.payments.some(e => e.status == 'processing')) {
+        let result = await getQuestionOnboarding();
+        if (result?.data?.user_score?.score) {
+          setUserScore(result?.data?.user_score);
+        }
+      }
+    } else {
+      setUserScore(false);
+    }
+  };
+
+  useEffect(() => {
+    checkQuiz();
+  }, [user]);
 
   return (
     <View style={[styles.container, {}]}>
@@ -40,19 +58,12 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           height: widthScreen / 1.5,
           width: widthScreen / 1.5,
           borderRadius: 500,
-          backgroundColor: colors.pink350,
+          backgroundColor: colors.yellow200,
           position: 'absolute',
-          right: -30,
-          top: 10,
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          right: 0,
-          top: -4,
+          left: -90,
+          top: -10,
         }}>
-        <Image source={ic_line_wave} />
+        <Image source={ic_line_wave} style={{left: 90, top: 10}} />
       </View>
       <View style={styles.container3}>
         <View style={{flex: 1}}>
@@ -68,18 +79,22 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         </TouchableOpacity>
       </View>
 
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <Image
-          source={chuyengia2}
+      {userScore ? (
+        <BarchartOnboardingHome {...userScore} />
+      ) : (
+        <View
           style={{
-            width: scaler(168),
-            height: scaler(168),
-          }}
-        />
-      </View>
+            flex: 1,
+          }}>
+          <Image
+            source={chuyengia2}
+            style={{
+              width: scaler(168),
+              height: scaler(168),
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -89,7 +104,7 @@ export default TeaserProgram;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.yellow200,
+    backgroundColor: colors.white,
     borderRadius: scaler(16),
     flexDirection: 'row',
     overflow: 'hidden',

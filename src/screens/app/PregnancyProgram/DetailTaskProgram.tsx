@@ -38,13 +38,16 @@ import {useSelector} from 'react-redux';
 import {getSubTitlePregnancy} from '@util';
 import {useTranslation} from 'react-i18next';
 import {RouteProp} from '@react-navigation/core/src/types';
+import ItemVideo from './components/ItemVideo';
 
 interface DetailTaskProgramProps {}
 
 const DetailTaskProgram = (props: DetailTaskProgramProps) => {
   const [content, setContent] = useState<string>('');
+  const [video, setVideo] = useState<string>('');
   const navigation = useNavigation<any>();
   const route = useRoute<RouteProp<any>>();
+  console.log('=>(DetailTaskProgram.tsx:48) route', route);
   const lang = useSelector((state: any) => state?.auth?.lang);
   const {t} = useTranslation();
 
@@ -62,6 +65,7 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
       let result = await getContentUserTask(route?.params?.item?.id);
       if (result?.success) {
         setContent(result?.data?.content?.content);
+        setVideo(result?.data?.content?.videoUrl);
       }
     } catch (e) {
     } finally {
@@ -108,14 +112,20 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
       style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <ImageBackground
-            source={
-              route?.params?.item?.task?.thumbnail
-                ? {uri: route?.params?.item?.task?.thumbnail}
-                : bg1
-            }
-            style={styles.imgBg}>
-            <View style={{top: 8.49}}>
+          <View>
+            {video ? (
+              <ItemVideo url={video} />
+            ) : (
+              <Image
+                source={
+                  route?.params?.item?.task?.thumbnail
+                    ? {uri: route?.params?.item?.task?.thumbnail}
+                    : bg1
+                }
+                style={styles.imgBg}
+              />
+            )}
+            <View style={{bottom: 8.49}}>
               <Image
                 source={ic_wave_line_top}
                 style={{width: '100%', height: 17, tintColor: colors.pink350}}
@@ -136,7 +146,7 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                 }}
               />
             </TouchableOpacity>
-          </ImageBackground>
+          </View>
           <View style={{flex: 1}}>
             <Image source={ic_flower} style={styles.flower} />
             <View style={styles.container2}>

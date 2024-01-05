@@ -49,7 +49,10 @@ import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useTranslation} from 'react-i18next';
 import {GlobalService} from '@services';
-import {getUserTask} from '../../../services/pregnancyProgram';
+import {
+  getUserTask,
+  userCreateFeedBack,
+} from '../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import {
   getColorPregnancy,
@@ -61,13 +64,12 @@ import Svg, {Line, Path} from 'react-native-svg';
 import {EPreRoute} from '@constant';
 import {RouteProp} from '@react-navigation/core/src/types';
 
-interface FeedbackTaskProps {
-  isHome?: boolean;
-}
+interface FeedbackTaskProps {}
 
 const FeedbackTask = (props: FeedbackTaskProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [state, setState] = useState([]);
+  const [keyword, setKeyword] = useState('');
   const lang = useSelector((state: any) => state?.auth?.lang);
   const route = useRoute<RouteProp<any>>();
   const navigation = useNavigation<any>();
@@ -110,52 +112,39 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
     getData();
   }, []);
 
-  const onSignUpNow = () => {
-    navigation.navigate(ROUTE_NAME.FEEDBACK_SUCCESS, {});
-  };
+  const onSignUpNow = async () => {
+    try {
+      GlobalService.showLoading();
+      let data = state
+        .map(e => e.data)
+        .flat()
+        ?.map(e => ({
+          module: 'masterclass', // module name
+          model: 'tasks', // model name on db
+          model_id: e.id, // task id
+          is_like: e.is_like || false, // like = true | dislike = false
+          comment: keyword, // user comment
+          metadata: {
+            week: route?.params?.currentWeek || week, // task week
+          },
+        }));
+      const res = await userCreateFeedBack(data);
 
-  const onDetail = (item: any) => {
-    switch (item?.task?.type) {
-      case 'input_data':
-        navigation.navigate(ROUTE_NAME.MOM_DIARY, {
-          item,
-          type: props?.tabIndex == 1 ? 'review' : 'todo',
-        });
-        break;
-      case 'self_check':
-        navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
-          item,
-        });
-        break;
-      case 'auto':
-        if (props.tabIndex == 1) {
-          navigate(ROUTE_NAME.TEST_RESULT, {
-            id: item?.task?.link?.replace(
-              RegExp('matida://mom-prep-test/'),
-              '',
-            ),
-            redoTest: () => {},
-            preRoute: EPreRoute.TEST_DETAIL,
-          });
-        } else {
-          navigate(ROUTE_NAME.TEST_DETAIL, {
-            quiz: {
-              id: item?.task?.link?.replace(
-                RegExp('matida://mom-prep-test/'),
-                '',
-              ),
-            },
-          });
-        }
-        break;
-      default:
-        navigation.navigate(ROUTE_NAME.DETAIL_TASK_PROGRAM, {
-          item,
-        });
-        break;
+      console.log('=>(FeedbackTask.tsx:130) res', res);
+      navigation.navigate(ROUTE_NAME.FEEDBACK_SUCCESS, {});
+    } catch (e) {
+    } finally {
+      GlobalService.hideLoading();
     }
   };
+
   const insets = useSafeAreaInsets();
+
+  const onRating = (index: number, i: number, isLiked: boolean) => {
+    let data = [...state];
+    data[index].data[i].is_like = isLiked;
+    setState(data);
+  };
   return (
     <View style={[styles.container, {}]}>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -222,6 +211,8 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
                   marginTop: scaler(8),
                   ...stylesCommon.fontSarabun400,
                 }}
+                value={keyword}
+                onChangeText={setKeyword}
                 placeholder={t('pregnancyProgram.TellUsAnything') as string}
               />
               <Text
@@ -306,15 +297,30 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                   }}>
-                                  <TouchableOpacity style={styles.buttonLike}>
-                                    <SvgLikeTask color={colors.pink200} />
+                                  <TouchableOpacity
+                                    onPress={() => onRating(index, i, true)}
+                                    style={styles.buttonLike}>
+                                    <SvgLikeTask
+                                      color={
+                                        e.is_like
+                                          ? colors.pink200
+                                          : colors.gray550
+                                      }
+                                    />
                                   </TouchableOpacity>
                                   <TouchableOpacity
+                                    onPress={() => onRating(index, i, false)}
                                     style={[
                                       styles.buttonLike,
                                       {marginLeft: 10},
                                     ]}>
-                                    <SvgUnLikeTask color={colors.gray550} />
+                                    <SvgUnLikeTask
+                                      color={
+                                        !e.is_like
+                                          ? colors.pink200
+                                          : colors.gray550
+                                      }
+                                    />
                                   </TouchableOpacity>
                                 </View>
                               </View>

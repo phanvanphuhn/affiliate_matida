@@ -51,7 +51,7 @@ const data: itemType = [
     },
   },
 ];
-const BarchartOnboarding = (props: BarchartProps) => {
+const BarchartOnboardingHome = (props: BarchartProps) => {
   const [state, setState] = useStateCustom({
     data: [],
     dataSos: [true, false, false, true],
@@ -83,22 +83,17 @@ const BarchartOnboarding = (props: BarchartProps) => {
   };
   useEffect(() => {
     let obj = props?.metadata;
-    console.log('=>(BarchartOnboarding.tsx:72) obj', obj);
+    console.log('=>(BarchartOnboardingHome.tsx:72) obj', obj);
     if (obj) {
       let dataUrgent = [...state.dataSos];
       let pinkStyle = {
-        color: colors.red,
-        topLabelComponent: () => (
-          <View style={styles.containerUrgent}>
-            <Text style={styles.textUrgent}>Urgent</Text>
-          </View>
-        ),
         labelTextStyle: {
           color: colors.labelColor,
-          fontSize: scaler(14),
+          fontSize: scaler(7),
           textAlign: 'center',
-          width: '130%',
-          left: -18,
+          width: '140%',
+          left: -8,
+          top: -10,
           ...stylesCommon.fontWeight600,
         },
       };
@@ -107,10 +102,11 @@ const BarchartOnboarding = (props: BarchartProps) => {
 
         labelTextStyle: {
           color: colors.gray550,
-          fontSize: scaler(14),
-          width: '130%',
+          fontSize: scaler(7),
+          width: '140%',
           textAlign: 'center',
-          left: -18,
+          left: -8,
+          top: -10,
           ...stylesCommon.fontWeight500,
         },
       };
@@ -138,7 +134,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
             label: getLabel(key),
             order: getOrder(key),
             ...pinkStyle,
-            borderRadius: 8,
+            borderRadius: 4,
             stacks: [
               {
                 value: value,
@@ -153,7 +149,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
                       backgroundColor: colors.transparent,
                       borderColor: colors.pink200,
                       borderWidth: 1,
-                      borderRadius: 8,
+                      borderRadius: 4,
                       borderStyle: 'dashed',
                       zIndex: 0,
                       width: '100%',
@@ -179,7 +175,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
             {
               label: getLabel('core'),
               ...pinkStyle,
-              borderRadius: 8,
+              borderRadius: 4,
               stacks: [
                 {
                   value: props?.score / 2,
@@ -194,7 +190,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
                         backgroundColor: colors.transparent,
                         borderColor: colors.pink200,
                         borderWidth: 1,
-                        borderRadius: 8,
+                        borderRadius: 4,
                         borderStyle: 'dashed',
                         zIndex: 0,
                         width: '100%',
@@ -216,12 +212,13 @@ const BarchartOnboarding = (props: BarchartProps) => {
       <View>
         <BarChart
           stackData={state.data}
-          barBorderRadius={8}
-          barWidth={40}
+          barBorderRadius={4}
+          barWidth={16}
           maxValue={props?.score}
-          initialSpacing={31}
-          endSpacing={31}
-          spacing={40}
+          initialSpacing={16}
+          endSpacing={16}
+          spacing={20}
+          height={100}
           hideRules={true}
           isAnimated
           autoShiftLabels={true}
@@ -255,8 +252,8 @@ const BarchartOnboarding = (props: BarchartProps) => {
                   key={i}
                   style={[
                     {
-                      width: 55,
-                      marginLeft: i == 0 ? 34 : 25,
+                      width: 30,
+                      marginLeft: i == 0 ? 20 : 6,
                     },
                   ]}
                 />
@@ -268,8 +265,8 @@ const BarchartOnboarding = (props: BarchartProps) => {
                 style={[
                   styles.containerUrgent,
                   {
-                    width: 55,
-                    marginLeft: i == 0 ? 34 : 25,
+                    width: 30,
+                    marginLeft: i == 0 ? 20 : 6,
                   },
                 ]}>
                 <Text style={styles.textUrgent}>
@@ -284,14 +281,15 @@ const BarchartOnboarding = (props: BarchartProps) => {
   );
 };
 
-export default BarchartOnboarding;
+export default BarchartOnboardingHome;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 15,
+    paddingHorizontal: 15,
+    paddingTop: 30,
   },
   containerUrgent: {
     backgroundColor: colors.yellow200,
@@ -304,7 +302,7 @@ const styles = StyleSheet.create({
   },
   textUrgent: {
     textAlign: 'center',
-    fontSize: scaler(11),
+    fontSize: scaler(7),
     ...stylesCommon.fontWeight600,
   },
 });
