@@ -21,6 +21,7 @@ import {useSelector} from 'react-redux';
 import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
 import {useTranslation} from 'react-i18next';
 import BarchartOnboardingHome from '../../OnboardingStep/components/BarchartOnboardingHome';
+import {event, eventType, trackingAppEvent} from '@util';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -74,7 +75,20 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           </Text>
           <Text style={styles.textPrice1}>Matida Masterclass</Text>
         </View>
-        <TouchableOpacity onPress={checkPlan} style={styles.buttonSignUp}>
+        <TouchableOpacity
+          onPress={() => {
+            trackingAppEvent(
+              event.MASTER_CLASS.PP_HOMEPAGE_TEASER_SIGN_UP_NOW,
+              {
+                params: {
+                  userId: user.id,
+                },
+              },
+              eventType.MIX_PANEL,
+            );
+            checkPlan();
+          }}
+          style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>{t('home.signUpNow')}</Text>
         </TouchableOpacity>
       </View>

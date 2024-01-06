@@ -17,6 +17,7 @@ import {styles} from '../styles';
 import {IDataListFeed} from '../type';
 import useCheckPregnancy from '@util/hooks/useCheckPregnancy';
 import LinearGradient from 'react-native-linear-gradient';
+import {event, eventType, trackingAppEvent} from '@util';
 
 interface ItemFeedProps {
   item: IDataListFeed;
@@ -80,6 +81,15 @@ const ItemFeed = (props: ItemFeedProps) => {
           if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
             props.onDetailClick && props.onDetailClick(props.index, props.item);
           } else {
+            trackingAppEvent(
+              event.MASTER_CLASS.PP_FEED_SIGN_UP_NOW,
+              {
+                params: {
+                  userId: user.id,
+                },
+              },
+              eventType.MIX_PANEL,
+            );
             checkPlan();
           }
         } else {
