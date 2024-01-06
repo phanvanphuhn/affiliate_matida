@@ -79,7 +79,7 @@ const MyPurchases = () => {
                       styles.title,
                       {fontSize: scaler(16), marginBottom: scaler(4)},
                     ]}>
-                    ID: {item?.transaction_id}
+                    ID: {item?.verify_code}
                   </Text>
                   <View style={styles.row}>
                     <Text

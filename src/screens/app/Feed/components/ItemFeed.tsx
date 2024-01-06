@@ -29,6 +29,7 @@ const ItemFeed = (props: ItemFeedProps) => {
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state.auth.lang);
   const checkPlan = useCheckPregnancy();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const renderTag = (item: IDataListFeed) => {
     switch (item.content_type) {
@@ -76,25 +77,31 @@ const ItemFeed = (props: ItemFeedProps) => {
     <TouchableOpacity
       onPress={() => {
         if (Number(props.item.is_payment) == 1) {
-          checkPlan();
+          if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
+            props.onDetailClick && props.onDetailClick(props.index, props.item);
+          } else {
+            checkPlan();
+          }
         } else {
           props.onDetailClick && props.onDetailClick(props.index, props.item);
         }
       }}
       style={styles.itemContainer}>
       <View>
-        {Number(props.item.is_payment) == 1 && (
-          <View style={[styles.tag, {left: scaler(6)}]}>
-            <Image
-              source={iconFlowerWhite}
-              style={{
-                height: scaler(20),
-                width: scaler(20),
-                // marginRight: scaler(8),
-              }}
-            />
-          </View>
-        )}
+        {user?.user_subscriptions?.some(e => e.code == 'PP')
+          ? null
+          : Number(props.item.is_payment) == 1 && (
+              <View style={[styles.tag, {left: scaler(6)}]}>
+                <Image
+                  source={iconFlowerWhite}
+                  style={{
+                    height: scaler(20),
+                    width: scaler(20),
+                    // marginRight: scaler(8),
+                  }}
+                />
+              </View>
+            )}
         <View
           style={[
             styles.tag,
@@ -140,46 +147,48 @@ const ItemFeed = (props: ItemFeedProps) => {
             {getTotalView(props.item)} {t('feed.views')}
           </Text>
         </View>
-        {Number(props.item.is_payment) == 1 && (
-          <LinearGradient
-            colors={['#0006', '#00000090']}
-            style={{
-              height: '100%',
-              width: '100%',
-              position: 'absolute',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderTopLeftRadius: scaler(8),
-              borderTopRightRadius: scaler(8),
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: scaler(8),
-                paddingHorizontal: scaler(12),
-                backgroundColor: colors.pink4,
-                borderRadius: scaler(24),
-              }}>
-              <Image
-                source={iconCrownWhite}
+        {user?.user_subscriptions?.some(e => e.code == 'PP')
+          ? null
+          : Number(props.item.is_payment) == 1 && (
+              <LinearGradient
+                colors={['#0006', '#00000090']}
                 style={{
-                  height: scaler(24),
-                  width: scaler(24),
-                  marginRight: scaler(8),
-                }}
-              />
-              <Text
-                style={{
-                  ...stylesCommon.fontWeight600,
-                  fontSize: scaler(13),
-                  color: colors.white,
+                  height: '100%',
+                  width: '100%',
+                  position: 'absolute',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderTopLeftRadius: scaler(8),
+                  borderTopRightRadius: scaler(8),
                 }}>
-                {t('myPurchases.signUpNow')}
-              </Text>
-            </View>
-          </LinearGradient>
-        )}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingVertical: scaler(8),
+                    paddingHorizontal: scaler(12),
+                    backgroundColor: colors.pink4,
+                    borderRadius: scaler(24),
+                  }}>
+                  <Image
+                    source={iconCrownWhite}
+                    style={{
+                      height: scaler(24),
+                      width: scaler(24),
+                      marginRight: scaler(8),
+                    }}
+                  />
+                  <Text
+                    style={{
+                      ...stylesCommon.fontWeight600,
+                      fontSize: scaler(13),
+                      color: colors.white,
+                    }}>
+                    {t('myPurchases.signUpNow')}
+                  </Text>
+                </View>
+              </LinearGradient>
+            )}
       </View>
       <View style={{height: scaler(48)}}>
         <Text style={styles.title} numberOfLines={2}>

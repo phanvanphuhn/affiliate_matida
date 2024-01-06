@@ -17,6 +17,7 @@ import ItemPurchase from './ItemPurchase';
 import useDetailFeed, {heightFullScreen} from '../useDetailFeed';
 import {useVideo} from './Container';
 import {heightScreen} from '@stylesCommon';
+import {useSelector} from 'react-redux';
 
 interface ListFeedProps {
   open: boolean;
@@ -25,11 +26,11 @@ interface ListFeedProps {
 const ListFeedDetail = (props: ListFeedProps) => {
   const isFocused = useIsFocused();
   const pagerViewRef = useRef<Swiper>();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   const {state, setState, onPageSelected, onRefresh} = useDetailFeed();
-  const renderItem = (item: IDataListFeed, index: number) => {
-    if (item.is_payment == 1) {
-      return <ItemPurchase item={item} />;
-    }
+
+  const renderFeed = (item: IDataListFeed, index: number) => {
     switch (item.content_type) {
       case 'video':
       case 'podcast':
@@ -58,6 +59,18 @@ const ListFeedDetail = (props: ListFeedProps) => {
         );
       default:
         return null;
+    }
+  };
+
+  const renderItem = (item: IDataListFeed, index: number) => {
+    if (Number(item.is_payment) == 1) {
+      if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
+        return renderFeed(item, index);
+      } else {
+        return <ItemPurchase item={item} />;
+      }
+    } else {
+      return renderFeed(item, index);
     }
   };
 
