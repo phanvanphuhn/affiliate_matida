@@ -52,7 +52,7 @@ const data: itemType = [
   },
 ];
 const BarchartOnboarding = (props: BarchartProps) => {
-  const [state, setState] = useStateCustom({
+  const [state, setState] = useStateCustom<any>({
     data: [],
     dataSos: [true, false, false, true],
   });

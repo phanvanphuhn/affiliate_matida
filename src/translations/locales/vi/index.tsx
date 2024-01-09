@@ -188,7 +188,13 @@ export const vi = {
     bodyBannerQuiz:
       'Bạn đã chuẩn bị như thế nào để trở thành một người mẹ? Hãy kiểm tra kiến ​​thức của bạn',
     buttonBannerQuiz: 'Kiểm tra ngay bây giờ',
-    signUpNow: 'Kiểm tra kiến thức',
+    signUpNow: 'Khám phá ngay',
+    getStarted: 'Kiểm tra kiến thức',
+    wantToBeTheSmartest:
+      'Matida cung cấp kiến thức và\nchỉ dẫn mẹ qua từng tuần thai',
+    getAheadWithMatidaMasterclass: 'Mẹ muốn con thông\nminh vượt trội?',
+    takeTheMatidaMasterclass: 'Tham gia Matida Masterclass',
+    wellWorkYourChallenges: 'Trở thành mẹ bầu thông thái cùng Matida',
   },
   sizeComparison: {
     week: 'Tuần',

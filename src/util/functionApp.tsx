@@ -240,9 +240,9 @@ export const trackEventBranch = async (
       customData: params,
     });
     eventLog.logEvent();
-    reactotron.log?.('LOG EVENT BRANCH', eventName);
+    // reactotron.log?.('LOG EVENT BRANCH', eventName);
   } catch (error) {
-    reactotron.log?.('ERROR LOG EVENT BRANCH', eventName);
+    // reactotron.log?.('ERROR LOG EVENT', eventName);
   }
 };
 

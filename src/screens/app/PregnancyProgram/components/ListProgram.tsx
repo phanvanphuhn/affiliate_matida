@@ -53,7 +53,7 @@ interface ListProgramProps {
   tabIndex?: number; // 0 todos || 1 finished
   currentWeek: number;
 }
-const sortOrder = [
+export const sortOrder = [
   'core',
   'love_and_money',
   'fitness_and_nutrition',

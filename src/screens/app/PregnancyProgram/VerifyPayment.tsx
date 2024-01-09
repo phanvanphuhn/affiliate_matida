@@ -30,11 +30,8 @@ import {saveDataUser} from '@redux';
 interface VerifyPaymentProps {}
 
 const VerifyPayment = (props: VerifyPaymentProps) => {
-  const [state, setState] = useState();
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
-  const userInfo = useSelector((state: any) => state?.auth?.userInfo);
-  const paymentProcessing = useMemo(() => userInfo?.payments);
   const dispatch = useDispatch();
 
   const getDataUser = async () => {

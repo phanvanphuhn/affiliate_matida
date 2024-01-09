@@ -1,10 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {
+  background_home,
+  background_home2,
   chuyengia1,
   chuyengia2,
   ic_line_wave,
+  ic_line_wave2,
   SvgClose,
   SvgLineWave,
   teaser1,
@@ -53,27 +63,21 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   }, [user]);
 
   return (
-    <View style={[styles.container, {}]}>
-      <View
-        style={{
-          height: widthScreen / 1.5,
-          width: widthScreen / 1.5,
-          borderRadius: 500,
-          backgroundColor: colors.yellow200,
-          position: 'absolute',
-          left: -90,
-          top: -10,
-        }}>
-        <Image source={ic_line_wave} style={{left: 90, top: 10}} />
-      </View>
+    <ImageBackground
+      source={userScore ? background_home2 : background_home}
+      style={[styles.container]}>
       <View style={styles.container3}>
         <View style={{flex: 1}}>
           <Text style={styles.textOff}>
-            {lang == 1
-              ? 'Hi new mommy,\nare you ready for the journey?'
-              : 'Mẹ ơi, trọn bộ kiến thức thai kỳ\nđang đợi mẹ khám phá!'}
+            {userScore
+              ? t('home.takeTheMatidaMasterclass')
+              : t('home.wantToBeTheSmartest')}
           </Text>
-          <Text style={styles.textPrice1}>Matida Masterclass</Text>
+          <Text style={styles.textPrice1}>
+            {userScore
+              ? t('home.wellWorkYourChallenges')
+              : t('home.getAheadWithMatidaMasterclass')}
+          </Text>
         </View>
         <TouchableOpacity
           onPress={() => {
@@ -89,27 +93,26 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             checkPlan();
           }}
           style={styles.buttonSignUp}>
-          <Text style={styles.textButtonSignUp}>{t('home.signUpNow')}</Text>
+          <Text style={styles.textButtonSignUp}>
+            {userScore ? t('myPurchases.signUpNow') : t('home.getStarted')}
+          </Text>
         </TouchableOpacity>
       </View>
 
       {userScore ? (
         <BarchartOnboardingHome {...userScore} />
       ) : (
-        <View
-          style={{
-            flex: 1,
-          }}>
+        <View style={{}}>
           <Image
             source={chuyengia2}
             style={{
-              width: scaler(168),
-              height: scaler(168),
+              width: scaler(150),
+              height: scaler(150),
             }}
           />
         </View>
       )}
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -118,7 +121,6 @@ export default TeaserProgram;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
     borderRadius: scaler(16),
     flexDirection: 'row',
     overflow: 'hidden',
@@ -184,6 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-start',
     paddingHorizontal: 15,
+    marginTop: 10,
   },
   textButtonSignUp: {
     fontSize: scaler(13),
@@ -208,10 +211,10 @@ const styles = StyleSheet.create({
   textOff: {
     color: colors.labelColor,
     fontSize: scaler(11),
-    ...stylesCommon.fontWeight600,
+    ...stylesCommon.fontSarabun500,
   },
   textPrice1: {
-    color: colors.labelColor,
+    color: colors.neutral10,
     fontSize: scaler(20),
     ...stylesCommon.fontWeight600,
     marginTop: scaler(8),

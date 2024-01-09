@@ -187,6 +187,11 @@ export const en = {
       'How prepared are you for becoming a mother? Let’s check your knowledge',
     buttonBannerQuiz: 'Take test now',
     signUpNow: 'Sign up now',
+    getStarted: 'Get started',
+    wantToBeTheSmartest: 'Want to be the\nsmartest mom in Vietnam?',
+    getAheadWithMatidaMasterclass: 'Get ahead with the\nMatida Masterclass',
+    takeTheMatidaMasterclass: 'Take the Matida Masterclass',
+    wellWorkYourChallenges: "We'll work on\nyour challenges\ntogether",
   },
   sizeComparison: {
     week: 'Week',

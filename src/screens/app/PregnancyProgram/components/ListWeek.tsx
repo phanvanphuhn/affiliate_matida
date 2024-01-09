@@ -99,6 +99,9 @@ const ListWeek = (props: ListWeekProps) => {
       }, 500);
     }
   };
+  useEffect(() => {
+    scrollToIndex(week);
+  }, []);
 
   const getColor = useCallback(item => {
     switch (item.status) {
@@ -314,9 +317,10 @@ const ListWeek = (props: ListWeekProps) => {
         renderItem={renderItem}
         horizontal={true}
         ref={flatlistRef}
-        onLayout={() => {
-          scrollToIndex(week);
-        }}
+        // onLayout={() => {
+        //   scrollToIndex(week);
+        //   console.log('=>(ListWeek.tsx:319) week11111', week);
+        // }}
         onContentSizeChange={() => {}}
         getItemLayout={getItemLayout}
         onScrollToIndexFailed={info => {
