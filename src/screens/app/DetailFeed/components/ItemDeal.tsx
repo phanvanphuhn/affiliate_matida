@@ -65,9 +65,8 @@ const ItemDeal = (props: any) => {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    width: '47%',
-    marginBottom: scaler(16),
-    marginRight: scaler(16),
+    flex: 0.48,
+    marginBottom: scaler(12),
     height: scaler(290),
     borderRadius: scaler(16),
     backgroundColor: colors.white,

@@ -79,6 +79,7 @@ export const event = {
     POST_IN_FORUM: 'post_in_forum',
     POST_ANONYMOUSLY: 'post_click_post_anonymously',
     CLICK_SEE_MORE: 'forum_click_see_more_',
+    FORUM_CLICK_LINK_RECOMMENDATION: 'FORUM_CLICK_LINK_RECOMMENDATION',
   },
   TIDA: {
     TIDA_OPEN: 'tida_open',

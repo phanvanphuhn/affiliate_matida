@@ -111,11 +111,6 @@ export const Forum = () => {
     getData();
   }, []);
 
-  console.log(
-    'data?.expertLiveTalk: ',
-    data?.expertLiveTalk?.filter(item => item?.room?.status !== 3),
-  );
-
   return (
     <View style={{flex: 1}}>
       <AppHeader

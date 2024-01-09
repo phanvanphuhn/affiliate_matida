@@ -9,12 +9,14 @@ import {
 import ParsedText from 'react-native-parsed-text';
 //@ts-ignore
 import {DEEP_LINK, OLD_DEEP_LINK} from '@services';
-import {handleDeepLink} from '@util';
+import {event, eventType, handleDeepLink, trackingAppEvent} from '@util';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
+import {useSelector} from 'react-redux';
 interface Props extends TextProps {
   children: string;
   style?: StyleProp<TextStyle>;
   color?: ColorValue;
+  isForum?: boolean;
   onCallback?: () => void;
 }
 
@@ -23,9 +25,20 @@ export const AppTextUrl = ({
   style,
   color,
   onCallback,
+  isForum,
   ...props
 }: Props) => {
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   const handleUrlPress = async (url: string) => {
+    if (isForum) {
+      trackingAppEvent(
+        event.MASTER_CLASS.PP_USER_INFO_NEXT,
+        {id: user?.id},
+        eventType.MIX_PANEL,
+      );
+    }
+
     let afterLink = url;
     if (url.startsWith(DEEP_LINK)) {
       afterLink = url.replace(new RegExp(`^${DEEP_LINK}/`), '');
