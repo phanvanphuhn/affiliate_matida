@@ -239,5 +239,5 @@ export const trackUser = user => {
 };
 
 export const trackCustomEvent = (eventName: string, eventDetails: any) => {
-  webengage.track(eventName, eventDetails);
+  // webengage.track(eventName, eventDetails);
 };

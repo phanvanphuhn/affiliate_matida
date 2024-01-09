@@ -236,10 +236,10 @@ export const trackEventBranch = async (
   ignoreBranchState?: boolean,
 ) => {
   try {
-    const eventLog = new BranchEvent(eventName, null, {
-      customData: params,
-    });
-    eventLog.logEvent();
+    // const eventLog = new BranchEvent(eventName, null, {
+    //   customData: params,
+    // });
+    // eventLog.logEvent();
     // reactotron.log?.('LOG EVENT BRANCH', eventName);
   } catch (error) {
     // reactotron.log?.('ERROR LOG EVENT', eventName);
