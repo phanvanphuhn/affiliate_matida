@@ -11,7 +11,7 @@ export const en = {
   intro: {
     introTitle: 'Welcome to \nMatida',
     introContent:
-      "Track your baby's growth throughout your pregnancy. Join the community to learn, connect & engage.",
+      'Welcome to Matida! We are here to support your journey to becoming a new mother. Join our community to learn, connect and grow.',
   },
   login: {
     signIn: 'Sign In',
@@ -672,7 +672,7 @@ export const en = {
     address: 'Address',
     email: 'Email',
     phoneNumber: 'Phone Number',
-    getOffer: 'Contact form',
+    getOffer: 'Get deal',
     submit: 'Submit',
     contactForm: 'Get deal',
     getCodeSuccess: 'Get code success',
@@ -872,7 +872,7 @@ export const en = {
     aHolisticProgram:
       'A holistic program designed for the maternal health journey',
     contentAboutTheProgram:
-      'Matida\'s "Cool Mom, Happy Baby Program" revolutionizes prenatal care by blending convenience, personalization, and expert advice in a comprehensive app. Tailored for moms-to-be, it ensures thorough preparation for motherhood while addressing women\'s unique needs and challenges. \n\nThis holistic program contains four key modules: pregnancy fundamentals, baby care, fitness & nutrition, and love & money. With a minimal weekly investment of just 15 minutes, you gain essential knowledge for a healthy pregnancy, a happy motherhood journey, and a balanced family life.',
+      "Matida Masterclass revolutionizes prenatal care by blending convenience, personalization, and expert advice in a comprehensive app. Tailored for moms-to-be, it ensures thorough preparation for motherhood while addressing women's unique needs and challenges.  \n\nThis holistic program contains four key modules: pregnancy fundamentals, baby care, fitness & nutrition, and love & money. With a minimal weekly investment of just 15 minutes, you gain essential knowledge for a healthy pregnancy, a happy motherhood journey, and a balanced family life.",
     AnEntireCareTeamAtYourFingertips: 'An entire care team at your fingertips',
     contentExperts:
       'The Matida pregnancy program was crafted by our expert medical team, offering the most valuable and supportive content for your journey.',
@@ -924,7 +924,7 @@ export const en = {
     AreYouReadyToBeTheBestMom: 'Are you ready\nto be the best mom?',
     LearnAboutTheBabyDevelopmentMilestones:
       'Learn about the Baby Development Milestones',
-    SignUpNowToUnlock: 'Sign up now to unlock',
+    SignUpNowToUnlock: 'Analyze your knowledge',
     contentForWeekComeBackLater:
       'These contents are for week {{week}}. Come back later!',
   },

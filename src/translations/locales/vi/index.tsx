@@ -9,7 +9,7 @@ export const vi = {
   intro: {
     introTitle: 'Chào mẹ, Matida đây',
     introContent:
-      'Ứng dụng đồng hành từ lúc mẹ mang thai đến khi con chào đời. Cùng theo dõi sự phát triển của con, nghe chia sẻ từ các chuyên gia và mẹ bầu khác nào.',
+      'Chào đón mẹ đến Matida - ứng dụng đồng hành từ lúc mẹ mang thai đến khi con chào đời. Cùng theo dõi sự phát triển của con, nghe chia sẻ từ các chuyên gia và mẹ bầu khác.',
   },
   login: {
     signIn: 'Đăng nhập',

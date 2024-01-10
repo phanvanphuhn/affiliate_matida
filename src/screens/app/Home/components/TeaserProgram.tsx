@@ -85,6 +85,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {/*{userScore ? (*/}
       {/*  <BarchartOnboardingHome {...userScore} />*/}
       {/*) : (*/}
+
       <View style={{}}>
         <Image
           source={chuyengia2}
@@ -94,7 +95,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           }}
         />
       </View>
-      {/*)}*/}
+      {/* )} */}
     </ImageBackground>
   );
 };

@@ -223,11 +223,7 @@ export const Forum = () => {
             paddingHorizontal: scaler(16),
           }}>
           <FloatingCreateNewPost />
-          {user?.role !== 1 && (
-            <View style={{marginLeft: scaler(16)}}>
-              <FloatingCreateNewRoom />
-            </View>
-          )}
+          {user?.role !== 1 && <FloatingCreateNewRoom />}
         </View>
       )}
       {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}

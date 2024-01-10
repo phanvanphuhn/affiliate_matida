@@ -28,33 +28,34 @@ export const FloatingCreateNewRoom = ({
         <Image
           source={iconPlusCircleWhite}
           style={{
-            height: scaler(20),
-            width: scaler(20),
+            height: scaler(24),
+            width: scaler(24),
           }}
         />
-        <Text style={s.text}>{t('talk.titleCreate')}</Text>
+        <Text style={s.text}>{t('Create a room')}</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const s = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    marginLeft: scaler(16),
+  },
   button: {
     backgroundColor: colors.purple4,
     flexDirection: 'row',
     borderRadius: scaler(24),
-    paddingHorizontal: scaler(12),
     paddingVertical: scaler(12),
-    width: scaler(171),
     alignContent: 'center',
+    flex: 1,
     justifyContent: 'center',
   },
   text: {
     color: colors.white,
-    ...stylesCommon.fontWeight600,
-    fontSize: scaler(12),
+    fontSize: scaler(15),
+    ...stylesCommon.fontSarabun600,
     marginLeft: scaler(8),
-    alignSelf: 'center',
   },
 });
