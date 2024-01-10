@@ -64,7 +64,9 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
       GlobalService.showLoading();
       let result = await getContentUserTask(route?.params?.item?.id);
       if (result?.success) {
-        setContent(result?.data?.content?.content);
+        setContent(
+          result?.data?.content?.content || result?.data?.content?.description,
+        );
         setVideo(result?.data?.content?.url);
       }
     } catch (e) {

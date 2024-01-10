@@ -94,7 +94,7 @@ const ListWeek = (props: ListWeekProps) => {
           index: index - 4,
           animated: true,
         });
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -312,6 +312,8 @@ const ListWeek = (props: ListWeekProps) => {
         renderItem={renderItem}
         horizontal={true}
         ref={flatlistRef}
+        windowSize={40}
+        maxToRenderPerBatch={40}
         onLayout={() => {
           scrollToIndex(week);
           console.log('=>(ListWeek.tsx:319) week11111', week);
