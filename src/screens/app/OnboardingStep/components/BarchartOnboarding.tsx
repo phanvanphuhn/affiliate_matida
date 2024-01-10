@@ -12,44 +12,11 @@ interface BarchartProps {
   score: any;
   metadata: any;
 }
-const data: itemType = [
-  {
-    value: 50,
-    frontColor: colors.pink300,
-    labelTextStyle: {
-      color: colors.labelColor,
-      fontSize: scaler(14),
-      ...stylesCommon.fontWeight600,
-    },
-  },
-  {
-    value: 80,
-    frontColor: colors.blue100,
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
-  {
-    value: 90,
-    frontColor: colors.blue100,
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
-  {
-    value: 150,
-    frontColor: colors.blue100,
-    label: 'aaa',
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
+
+export let keyItem = [
+  'love_and_money',
+  'newborn_care',
+  'nutrition_and_fitness',
 ];
 const BarchartOnboarding = (props: BarchartProps) => {
   const [state, setState] = useStateCustom<any>({
@@ -88,11 +55,6 @@ const BarchartOnboarding = (props: BarchartProps) => {
       let dataUrgent = [...state.dataSos];
       let pinkStyle = {
         color: colors.red,
-        topLabelComponent: () => (
-          <View style={styles.containerUrgent}>
-            <Text style={styles.textUrgent}>Urgent</Text>
-          </View>
-        ),
         labelTextStyle: {
           color: colors.labelColor,
           fontSize: scaler(14),
@@ -114,15 +76,14 @@ const BarchartOnboarding = (props: BarchartProps) => {
           ...stylesCommon.fontWeight500,
         },
       };
-      let data: any[] = Object.keys(obj).map((key, i) => {
+      let arrayKey = Object.keys(obj).filter(key => keyItem?.includes(key));
+      console.log('=>(BarchartOnboarding.tsx:76) arrayKey', arrayKey);
+      let data: any[] = arrayKey.map((key, i) => {
         let value = obj[key];
-        let data2 = Object.keys(obj).map(k => obj[k]);
+        let data2 = arrayKey.map(k => obj[k]);
 
         function markMinValues(arr) {
-          // Bước 1: Xác định giá trị nhỏ nhất
           let minValue = Math.min(...arr);
-
-          // Bước 2: Tạo mảng các đối tượng mới với các giá trị đã được đánh dấu
           let markedArray = arr.map((num, index) => ({
             index: index,
             value: num === minValue ? true : false,
@@ -228,6 +189,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
           noOfSections={4}
           disableScroll={true}
           hideYAxisText={true}
+          scrollToEnd={true}
           xAxisColor={colors.blue}
           yAxisColor={colors.blue}
           xAxisTextNumberOfLines={2}

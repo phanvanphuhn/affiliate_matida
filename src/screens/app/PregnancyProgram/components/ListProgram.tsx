@@ -28,7 +28,7 @@ import {
 } from '@images';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {getUserTask} from '../../../../services/pregnancyProgram';
+import {getFeedBacks, getUserTask} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import {GlobalService} from '@services';
 import {useTranslation} from 'react-i18next';
@@ -73,6 +73,12 @@ const ListProgram = (props: ListProgramProps) => {
   );
   const {t} = useTranslation();
 
+  const getListFeedBack = async () => {
+    let result = await getFeedBacks({week: props.currentWeek});
+    console.log('=>(ListProgram.tsx:78) result', result);
+    return !!result?.data?.length;
+  };
+
   const getData = async () => {
     try {
       GlobalService.showLoading();
@@ -114,7 +120,9 @@ const ListProgram = (props: ListProgramProps) => {
             },
           ]);
         } else {
-          if (!isFeedback.current && props?.tabIndex == 0) {
+          let isCheck = await getListFeedBack();
+          console.log('=>(ListProgram.tsx:124) isFeedback', isFeedback);
+          if (!isFeedback.current && props?.tabIndex == 0 && !isCheck) {
             isFeedback.current = true;
 
             navigation.navigate(ROUTE_NAME.FEEDBACK_TASK, {

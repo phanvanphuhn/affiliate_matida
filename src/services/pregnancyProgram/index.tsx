@@ -65,3 +65,7 @@ export const userCreateFeedBack: any = async (data: any) => {
   const response = await api.post(`${USER_FEEDBACK}`, data);
   return response;
 };
+export const getFeedBacks: any = async (data: any) => {
+  const response = await api.get(`${USER_FEEDBACK}`, {params: data});
+  return response;
+};

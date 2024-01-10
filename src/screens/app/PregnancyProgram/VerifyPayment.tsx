@@ -49,7 +49,7 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
       !data?.payments?.length ||
       data?.payments?.some(e => e.status == 'processing')
     ) {
-      navigation.navigate(ROUTE_NAME.TAB_HOME);
+      navigation.navigate(ROUTE_NAME.TAB_FEED);
     } else {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
     }

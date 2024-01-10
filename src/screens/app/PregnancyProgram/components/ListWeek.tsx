@@ -41,13 +41,11 @@ const ListWeek = (props: ListWeekProps) => {
     total: 0,
   });
   const week = useSelector((state: any) => {
-    console.log('=>(ListWeek.tsx:49) state', state);
     return !state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks ||
       state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks <= 4
       ? 4
       : state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks;
   });
-  console.log('=>(ListWeek.tsx:48) week', week);
   const navigation = useNavigation<NavigationProp<any>>();
 
   const flatlistRef = useRef<FlatList>();
@@ -96,12 +94,9 @@ const ListWeek = (props: ListWeekProps) => {
           index: index - 4,
           animated: true,
         });
-      }, 500);
+      }, 1000);
     }
   };
-  useEffect(() => {
-    scrollToIndex(week);
-  }, []);
 
   const getColor = useCallback(item => {
     switch (item.status) {
@@ -317,10 +312,10 @@ const ListWeek = (props: ListWeekProps) => {
         renderItem={renderItem}
         horizontal={true}
         ref={flatlistRef}
-        // onLayout={() => {
-        //   scrollToIndex(week);
-        //   console.log('=>(ListWeek.tsx:319) week11111', week);
-        // }}
+        onLayout={() => {
+          scrollToIndex(week);
+          console.log('=>(ListWeek.tsx:319) week11111', week);
+        }}
         onContentSizeChange={() => {}}
         getItemLayout={getItemLayout}
         onScrollToIndexFailed={info => {

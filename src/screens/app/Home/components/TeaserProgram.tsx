@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -7,30 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {
-  background_home,
-  background_home2,
-  chuyengia1,
-  chuyengia2,
-  ic_line_wave,
-  ic_line_wave2,
-  SvgClose,
-  SvgLineWave,
-  teaser1,
-  teaser2,
-  teaser3,
-  teaser4,
-} from '@images';
-import {Pagination} from 'react-native-snap-carousel';
-import {goBack} from '@navigation';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {background_home, background_home2, chuyengia2} from '@images';
 import {useNavigation} from '@react-navigation/native';
-import {ROUTE_NAME} from '@routeName';
 import {getQuestionOnboarding} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
 import {useTranslation} from 'react-i18next';
-import BarchartOnboardingHome from '../../OnboardingStep/components/BarchartOnboardingHome';
 import {event, eventType, trackingAppEvent} from '@util';
 
 interface TeaserProgramProps {
@@ -58,9 +41,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
     }
   };
 
-  useEffect(() => {
-    checkQuiz();
-  }, [user]);
+  // useEffect(() => {
+  //   checkQuiz();
+  // }, [user]);
 
   return (
     <ImageBackground
@@ -99,19 +82,19 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         </TouchableOpacity>
       </View>
 
-      {userScore ? (
-        <BarchartOnboardingHome {...userScore} />
-      ) : (
-        <View style={{}}>
-          <Image
-            source={chuyengia2}
-            style={{
-              width: scaler(150),
-              height: scaler(150),
-            }}
-          />
-        </View>
-      )}
+      {/*{userScore ? (*/}
+      {/*  <BarchartOnboardingHome {...userScore} />*/}
+      {/*) : (*/}
+      <View style={{}}>
+        <Image
+          source={chuyengia2}
+          style={{
+            width: scaler(150),
+            height: scaler(150),
+          }}
+        />
+      </View>
+      {/*)}*/}
     </ImageBackground>
   );
 };

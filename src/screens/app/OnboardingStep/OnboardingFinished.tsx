@@ -56,7 +56,7 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
-        <SafeAreaView edges={['top']} style={styles.container2}>
+        <View style={styles.container2}>
           <TouchableOpacity
             onPress={() => NavigationUtils.pop(2)}
             style={styles.buttonBack}>
@@ -68,7 +68,7 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
           <Text style={styles.textTitle2}>
             {t('pregnancyProgram.dontWorry')}
           </Text>
-        </SafeAreaView>
+        </View>
 
         <View style={styles.container3}>
           <View style={{top: -8, paddingBottom: 2}}>
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     paddingHorizontal: scaler(10),
+    marginTop: 30,
   },
   textTitle: {
     fontSize: scaler(20),
