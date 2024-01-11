@@ -184,7 +184,7 @@ const ItemFeed = (props: ItemFeedProps) => {
                   />
                   <Text
                     style={{
-                      ...stylesCommon.fontWeight600,
+                      ...stylesCommon.fontSarabun600,
                       fontSize: scaler(13),
                       color: colors.white,
                     }}>

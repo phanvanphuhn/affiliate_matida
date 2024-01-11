@@ -239,7 +239,7 @@ const ListWeek = (props: ListWeekProps) => {
           flexDirection: 'row',
           width: 150,
           alignItems: 'center',
-          paddingBottom: scaler(35),
+          paddingBottom: scaler(40),
         }}>
         <TouchableOpacity
           // disabled={item.status == 'Upcoming'}
@@ -247,15 +247,20 @@ const ListWeek = (props: ListWeekProps) => {
             scrollToIndex(index + 1);
             props?.onSelectedWeek && props?.onSelectedWeek(index + 1);
           }}
-          style={[{alignItems: 'center', flexDirection: 'row'}]}>
-          <View>
+          style={[
+            {
+              alignItems: 'center',
+              flexDirection: 'row',
+            },
+          ]}>
+          <View style={{}}>
             {renderDot(item, index)}
             <View
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -35,
+                top: 60,
                 width: 100,
                 alignSelf: 'center',
               }}>

@@ -247,6 +247,7 @@ const ListProgram = (props: ListProgramProps) => {
                   <Text
                     style={{
                       fontSize: scaler(19),
+                      marginLeft: item.type == 'reward' ? 10 : 0,
                       ...stylesCommon.fontSarabun600,
                     }}>
                     {item.title}

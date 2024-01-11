@@ -375,11 +375,6 @@ const NavigationApp = React.forwardRef((props: any, ref: any) => {
             options={{gestureEnabled: false}}
           />
           <Stack.Screen
-            name={ROUTE_NAME.NEW_USER_PROGRAM}
-            component={screens.NewUserProgram}
-            options={{gestureEnabled: false}}
-          />
-          <Stack.Screen
             options={{
               presentation: 'modal',
               gestureDirection: 'vertical',

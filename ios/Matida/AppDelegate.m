@@ -83,7 +83,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
   [[ZaloSDK sharedInstance] initializeWithAppId:@"2775448152357876593"];
 
-    [[WebEngage sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+//    [[WebEngage sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
   return YES;

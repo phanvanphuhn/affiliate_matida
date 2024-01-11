@@ -38,10 +38,10 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
     navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
   };
 
-  // useEffect(() => {
-  //   trackCustomEvent(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
-  //   trackEventBranch(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
-  // }, []);
+  useEffect(() => {
+    trackCustomEvent(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
+    trackEventBranch(event.MASTER_CLASS.USER_FINISH_ONBOARDING_QUESTIONS, {});
+  }, []);
 
   return (
     <View style={styles.container}>
