@@ -879,7 +879,7 @@ export const vi = {
     AnEntireCareTeamAtYourFingertips: 'Đội ngũ chuyên gia kinh nghiệm',
     contentExperts:
       'Chương trình được xây dựng bởi đội ngũ chuyên gia nhiều kinh nghiệm, cung cấp nội dung toàn diện, hữu ích cho hành trình mang thai của mẹ.',
-    ThereAreNoStupidQuestions: 'Câu hỏi thường gặp',
+    ThereAreNoStupidQuestions: 'Thắc mắc nào của mẹ cũng đáng giá :-)',
     HowDoesTheProgramWork: 'Khóa học Matida Masterclass hoạt động như thế nào?',
     contentHowDoesTheProgramWork:
       'Matida Masterclass với 4 mô-đun được thiết kế khoa học - linh hoạt, bao gồm các bài học và hoạt động hàng tuần được thiết kế để dễ dàng lồng ghép vào thói quen hàng ngày, cung cấp kiến thức chăm sóc thai kỳ để sẵn sàng làm mẹ. Mẹ có thể truy cập khóa học bất cứ lúc nào trên ứng dụng Matida.',
