@@ -3,6 +3,7 @@ import {
   iconCommunity,
   iconCommunity2,
   iconCommunity3,
+  iconCommunity4,
   iconTabDeal,
   iconTabExplore,
   iconTabExplore2,
@@ -89,7 +90,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
       case ROUTE_NAME.TAB_HOME:
         return iconTabHome2;
       case ROUTE_NAME.TAB_COMMUNITY:
-        return iconCommunity2;
+        return iconCommunity4;
       case ROUTE_NAME.TAB_LIVETALK:
         return iconTabLiveTalk;
       case ROUTE_NAME.TAB_DEAL:

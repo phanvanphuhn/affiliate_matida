@@ -31,7 +31,9 @@ export const FloatingCreateNewPost = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
   button: {
     flexDirection: 'row',
     alignItems: 'center',

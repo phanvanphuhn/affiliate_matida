@@ -314,7 +314,7 @@ export const vi = {
     shareUserSuccess: 'Chia sẻ thành công',
   },
   post: {
-    create_new: 'Đặt một câu hỏi mới',
+    create_new: 'Đặt câu hỏi',
     post: 'Đăng',
     placeHolderPost: 'Gõ nội dung cần chia sẻ để nhận phản hồi từ cộng đồng',
     title: 'Tiêu đề',
