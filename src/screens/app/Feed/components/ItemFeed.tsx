@@ -20,6 +20,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {event, eventType, trackingAppEvent} from '@util';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
+import {navigate} from '@navigation';
 
 interface ItemFeedProps {
   item: IDataListFeed;
@@ -84,7 +85,9 @@ const ItemFeed = (props: ItemFeedProps) => {
           if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
             props.onDetailClick && props.onDetailClick(props.index, props.item);
           } else {
-            navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+            user.payments.some(e => e.status == 'processing')
+              ? navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM)
+              : navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
           }
         } else {
           props.onDetailClick && props.onDetailClick(props.index, props.item);

@@ -141,6 +141,9 @@ const ItemVideo = (props: ItemVideoProps) => {
           onPaused={onPaused}
           onReplay={onReplay}
           onSeek={onSeek}
+          onFullScreen={() => {
+            videoPlayer.current.presentFullscreenPlayer();
+          }}
           onSeeking={onSeeking}
           playerState={playerState}
           progress={currentTime}
@@ -175,7 +178,7 @@ const styles = StyleSheet.create({
   },
   video: {
     flex: 1,
-    height: 219,
+    height: heightScreen / 2,
   },
   viewTxt: {
     flex: 1,
