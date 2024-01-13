@@ -693,7 +693,7 @@ export const vi = {
     congratulation: 'Chúc mừng mẹ!',
     whichDate: 'Con đã ra đời vào ngày nào?',
     whatTime: 'Con đã ra đời lúc mấy giờ?',
-    whatName: 'Mẹ đặt tên còn là gì?',
+    whatName: 'Mẹ đặt tên con là gì?',
     whatGender: 'Giới tính của con là gì?',
     howDeliver: 'Mẹ đã sinh con bằng phương pháp nào?',
     whatWeight: 'Cân nặng của con là bao nhiêu?',
@@ -931,6 +931,8 @@ export const vi = {
     SignUpNowToUnlock: 'Đăng ký để mở khoá ngay',
     contentForWeekComeBackLater:
       'Nội dung này dành cho tuần thai thứ {{week}}.\nMẹ hãy quay lại sau nhé!',
+    exploreAndLearn: 'Xem ngay',
+    takeTheQuiz: 'Kiểm tra kiến thức',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

@@ -363,6 +363,18 @@ export const getSubTitlePregnancy = (type: string) => {
       return '';
   }
 };
+
+export const getTitleButton = (type: string) => {
+  switch (type) {
+    case 'learn':
+      return t('pregnancyProgram.exploreAndLearn');
+    case 'quiz':
+      return t('pregnancyProgram.takeTheQuiz');
+    default:
+      return t('pregnancyProgram.finishTheTask');
+  }
+};
+
 export const getTitlePregnancy = (type: string) => {
   switch (type) {
     case 'reward':

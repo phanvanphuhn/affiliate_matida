@@ -7,6 +7,7 @@ import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {trackingAppEvent, event, eventType} from '@util';
+import {useSelector} from 'react-redux';
 type Props = {
   onPress?: () => void;
   bottom?: number;
@@ -22,6 +23,7 @@ export const FloatingCreateNewRoom = ({
   },
 }: Props) => {
   const {t} = useTranslation();
+
   return (
     <View style={[s.container]}>
       <TouchableOpacity activeOpacity={1} style={s.button} onPress={onPress}>
@@ -32,7 +34,7 @@ export const FloatingCreateNewRoom = ({
             width: scaler(24),
           }}
         />
-        <Text style={s.text}>{t('Create a room')}</Text>
+        <Text style={s.text}>{t('talk.titleCreate')}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -40,7 +42,7 @@ export const FloatingCreateNewRoom = ({
 
 const s = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.5,
     marginLeft: scaler(16),
   },
   button: {

@@ -1,9 +1,11 @@
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {ViewLockPaymentProps} from './type';
 import {ViewLock} from './ViewLock';
 import {ViewPrice} from './ViewPrice';
+import {iconCrownWhite, iconFlowerWhite} from '@images';
+import {useTranslation} from 'react-i18next';
 
 export const ViewLockPayment = ({
   borderRadius = scaler(8),
@@ -14,6 +16,8 @@ export const ViewLockPayment = ({
   styleLock,
   stylePrice,
 }: ViewLockPaymentProps) => {
+  const {t} = useTranslation();
+
   return (
     <>
       <View
@@ -30,8 +34,43 @@ export const ViewLockPayment = ({
           },
           style,
         ]}>
-        <ViewPrice price={price} style={stylePrice} />
-        <ViewLock icon={icon} opacity={undefined} style={styleLock} />
+        <Image
+          source={iconFlowerWhite}
+          style={{
+            height: scaler(20),
+            width: scaler(20),
+            // marginRight: scaler(8),
+          }}
+        />
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingVertical: scaler(8),
+          paddingHorizontal: scaler(12),
+          backgroundColor: colors.pink4,
+          borderRadius: scaler(24),
+          position: 'absolute',
+          top: '40%',
+          left: '27%',
+        }}>
+        <Image
+          source={iconCrownWhite}
+          style={{
+            height: scaler(16),
+            width: scaler(16),
+            marginRight: scaler(8),
+          }}
+        />
+        <Text
+          style={{
+            ...stylesCommon.fontSarabun600,
+            fontSize: scaler(13),
+            color: colors.white,
+          }}>
+          {t('myPurchases.signUpNow')}
+        </Text>
       </View>
     </>
   );

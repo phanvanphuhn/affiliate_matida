@@ -6,11 +6,14 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {trackCommunityTab} from '@services/webengageManager.tsx';
+import {useSelector} from 'react-redux';
 
 export const FloatingCreateNewPost = () => {
+  const user = useSelector((state: any) => state?.auth?.userInfo);
   const {t} = useTranslation();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, user?.role == 1 ? {flex: 0.5} : {}]}>
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.9}

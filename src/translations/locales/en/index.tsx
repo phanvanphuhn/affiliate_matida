@@ -927,6 +927,8 @@ export const en = {
     SignUpNowToUnlock: 'Analyze your knowledge',
     contentForWeekComeBackLater:
       'These contents are for week {{week}}. Come back later!',
+    exploreAndLearn: 'Explore and learn',
+    takeTheQuiz: 'Take the quiz',
   },
   momDiary: {
     momDiary: 'Mom Diary',

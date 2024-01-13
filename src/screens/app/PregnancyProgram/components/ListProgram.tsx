@@ -38,6 +38,7 @@ import {
   getColorPregnancy,
   getLabelPregnancy,
   getSubTitlePregnancy,
+  getTitleButton,
   getTitlePregnancy,
   trackingAppEvent,
 } from '@util';
@@ -192,6 +193,7 @@ const ListProgram = (props: ListProgramProps) => {
     //   currentWeek: props.currentWeek,
     // });
   };
+
   return (
     <View style={styles.container}>
       {state?.map((item, index) => {
@@ -333,7 +335,7 @@ const ListProgram = (props: ListProgramProps) => {
                               style={styles.rowCenter}>
                               <Text style={styles.textSmash}>
                                 {props?.tabIndex == 0
-                                  ? t('pregnancyProgram.finishTheTask')
+                                  ? getTitleButton(e.task?.categories?.[0])
                                   : t('pregnancyProgram.reviewIt')}
                               </Text>
                               <SvgArrowLeft
