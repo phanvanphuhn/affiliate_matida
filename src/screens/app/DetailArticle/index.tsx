@@ -9,7 +9,7 @@ import {
   useContentView,
   useUXCam,
 } from '@util';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Animated, ScrollView, StyleSheet, Text, View} from 'react-native';
 import RenderHtml from 'react-native-render-html';
 
@@ -37,7 +37,7 @@ import {
 } from '@services';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {t} from 'i18next';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import reactotron from 'reactotron-react-native';
 import {IArticles} from '../Home/types';
 import {
@@ -68,7 +68,13 @@ export const DetailArticle = () => {
   const source = {
     html: articleDetail?.content,
   };
-
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  const isCheckPayment = useMemo(
+    () =>
+      !user?.user_subscriptions?.some(e => e.code == 'PP') ||
+      user.payments.some(e => e.status == 'processing'),
+    [user],
+  );
   const isPayment = articleDetail?.is_payment && !articleDetail?.is_paid;
 
   const firstRef = useRef<boolean>(false);
@@ -280,7 +286,7 @@ export const DetailArticle = () => {
             )}
           </View>
         </ScrollView>
-        {isPayment ? (
+        {isPayment && isCheckPayment ? (
           <ViewPayment
             isPay={isPayment}
             type={EPaymentType.ARTICLE}

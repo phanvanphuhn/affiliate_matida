@@ -50,6 +50,7 @@ const getContentTypeVideo = (type: EVideoType) => {
 };
 interface ItemVideoProps {
   url: string;
+  mode: boolean;
 }
 const ItemVideo = (props: ItemVideoProps) => {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const ItemVideo = (props: ItemVideoProps) => {
   const [duration, setDuration] = useState(0);
   const [loading, setLoading] = useState(true);
   const [paused, setPaused] = useState(true);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const [playerState, setPlayerState] = useState(PLAYER_STATES.PAUSED);
   const [data, setData] = useState<any>({});
 
@@ -98,6 +100,7 @@ const ItemVideo = (props: ItemVideoProps) => {
   };
 
   const onLoad = (data: any) => {
+    console.log('=>(ItemVideo.tsx:104) data', data);
     setDuration(data?.duration);
     setLoading(false);
   };
@@ -115,15 +118,17 @@ const ItemVideo = (props: ItemVideoProps) => {
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         {props?.url ? (
           <Video
             source={{uri: props?.url}}
-            style={styles.video}
+            style={[styles.video, {aspectRatio: props?.mode ? 2 / 3 : 4 / 3}]}
             resizeMode="contain"
             ref={videoPlayer}
             onEnd={onEnd}
             onLoad={onLoad}
+            // fullscreen={isFullScreen}
+            // onFullscreenPlayerDidDismiss={() => setIsFullScreen(false)}
             //@ts-ignore
             onLoadStart={onLoadStart}
             onProgress={onProgress}
@@ -141,9 +146,9 @@ const ItemVideo = (props: ItemVideoProps) => {
           onPaused={onPaused}
           onReplay={onReplay}
           onSeek={onSeek}
-          onFullScreen={() => {
-            videoPlayer.current.presentFullscreenPlayer();
-          }}
+          // onFullScreen={() => {
+          //   setIsFullScreen(!isFullScreen);
+          // }}
           onSeeking={onSeeking}
           playerState={playerState}
           progress={currentTime}
@@ -177,8 +182,8 @@ const styles = StyleSheet.create({
     tintColor: '#FFFFFF',
   },
   video: {
-    flex: 1,
-    height: heightScreen / 2,
+    aspectRatio: 2 / 3,
+    width: widthScreen,
   },
   viewTxt: {
     flex: 1,
