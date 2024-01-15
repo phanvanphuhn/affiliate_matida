@@ -239,7 +239,8 @@ const ListWeek = (props: ListWeekProps) => {
           flexDirection: 'row',
           width: 150,
           alignItems: 'center',
-          paddingBottom: scaler(50),
+          paddingBottom: scaler(53),
+          paddingTop: scaler(10),
         }}>
         <TouchableOpacity
           // disabled={item.status == 'Upcoming'}
@@ -260,8 +261,8 @@ const ListWeek = (props: ListWeekProps) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                top: 60,
                 width: 100,
+                bottom: -34,
                 alignSelf: 'center',
               }}>
               <Text
@@ -356,7 +357,7 @@ const styles = StyleSheet.create({
     color: colors.labelColor,
     ...stylesCommon.fontWeight600,
   },
-  container: {backgroundColor: colors.gray450, paddingVertical: scaler(20)},
+  container: {backgroundColor: colors.gray450},
   center: {
     alignItems: 'center',
     justifyContent: 'center',
