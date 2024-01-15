@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {BarChart} from 'react-native-gifted-charts';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {itemType} from 'react-native-gifted-charts/src/BarChart/types';
-import {useRoute} from '@react-navigation/native';
 import useStateCustom from '../../../../util/hooks/useStateCustom';
 import {ic_back_arrow} from '@images';
 import {useSelector} from 'react-redux';
@@ -130,46 +128,49 @@ const BarchartOnboarding = (props: BarchartProps) => {
           label: getLabel(key),
           order: getOrder(key),
           ...grayStyle,
-          stacks: [{value}],
+          stacks: [{value, color: colors.blue100}],
         };
       });
-      setState({
-        dataSos: dataUrgent,
-        data: [
-          ...[
-            {
-              label: getLabel('core'),
-              ...pinkStyle,
-              borderRadius: 8,
-              stacks: [
-                {
-                  value: props?.score / 2,
-                  color: colors.pink200,
-                },
-                {
-                  value: props?.score / 2,
-                  color: colors.transparent,
-                  innerBarComponent: () => (
-                    <View
-                      style={{
-                        backgroundColor: colors.transparent,
-                        borderColor: colors.pink200,
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        borderStyle: 'dashed',
-                        zIndex: 0,
-                        width: '100%',
-                        height: '200%',
-                      }}
-                    />
-                  ),
-                },
-              ],
-            },
+      setTimeout(() => {
+        setState({
+          dataSos: dataUrgent,
+          data: [
+            ...[
+              {
+                label: getLabel('core'),
+                ...pinkStyle,
+                borderRadius: 8,
+
+                stacks: [
+                  {
+                    value: props?.score / 2,
+                    color: colors.pink200,
+                  },
+                  {
+                    value: props?.score / 2,
+                    color: colors.transparent,
+                    innerBarComponent: () => (
+                      <View
+                        style={{
+                          backgroundColor: colors.transparent,
+                          borderColor: colors.pink200,
+                          borderWidth: 1,
+                          borderRadius: 8,
+                          borderStyle: 'dashed',
+                          zIndex: 0,
+                          width: '100%',
+                          height: '200%',
+                        }}
+                      />
+                    ),
+                  },
+                ],
+              },
+            ],
+            ...data,
           ],
-          ...data,
-        ],
-      });
+        });
+      }, 500);
     }
   }, []);
   return (

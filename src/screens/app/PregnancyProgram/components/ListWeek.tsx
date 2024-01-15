@@ -239,7 +239,7 @@ const ListWeek = (props: ListWeekProps) => {
           flexDirection: 'row',
           width: 150,
           alignItems: 'center',
-          paddingBottom: scaler(40),
+          paddingBottom: scaler(50),
         }}>
         <TouchableOpacity
           // disabled={item.status == 'Upcoming'}
