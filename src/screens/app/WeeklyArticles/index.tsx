@@ -10,7 +10,7 @@ import {
 } from '@services';
 import {colors, scaler} from '@stylesCommon';
 import {t} from 'i18next';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {RefreshControl, ScrollView, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {styles} from './styles';
@@ -83,7 +83,13 @@ export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
     getDataArticles();
     getListPopular();
   };
-
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  const isCheckPayment = useMemo(
+    () =>
+      !user?.user_subscriptions?.some(e => e.code == 'PP') ||
+      user.payments.some(e => e.status == 'processing'),
+    [user],
+  );
   return (
     <View style={styles.container}>
       <Header
@@ -113,9 +119,15 @@ export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
           <AppGallery
             weeks={weeks}
             file={listArticles}
-            onPress={(item: any) =>
-              navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: item})
-            }
+            onPress={(item: any) => {
+              if (!isCheckPayment) {
+                navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: item});
+              } else {
+                user.payments.some(e => e.status == 'processing')
+                  ? navigate(ROUTE_NAME.PREGNANCY_PROGRAM)
+                  : navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+              }
+            }}
           />
           {listPopular.length !== 0 && (
             <View>

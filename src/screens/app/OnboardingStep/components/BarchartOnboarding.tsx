@@ -2,8 +2,6 @@ import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {BarChart} from 'react-native-gifted-charts';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {itemType} from 'react-native-gifted-charts/src/BarChart/types';
-import {useRoute} from '@react-navigation/native';
 import useStateCustom from '../../../../util/hooks/useStateCustom';
 import {ic_back_arrow} from '@images';
 import {useSelector} from 'react-redux';
@@ -12,47 +10,14 @@ interface BarchartProps {
   score: any;
   metadata: any;
 }
-const data: itemType = [
-  {
-    value: 50,
-    frontColor: colors.pink300,
-    labelTextStyle: {
-      color: colors.labelColor,
-      fontSize: scaler(14),
-      ...stylesCommon.fontWeight600,
-    },
-  },
-  {
-    value: 80,
-    frontColor: colors.blue100,
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
-  {
-    value: 90,
-    frontColor: colors.blue100,
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
-  {
-    value: 150,
-    frontColor: colors.blue100,
-    label: 'aaa',
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
+
+export let keyItem = [
+  'love_and_money',
+  'newborn_care',
+  'nutrition_and_fitness',
 ];
 const BarchartOnboarding = (props: BarchartProps) => {
-  const [state, setState] = useStateCustom({
+  const [state, setState] = useStateCustom<any>({
     data: [],
     dataSos: [true, false, false, true],
   });
@@ -88,11 +53,6 @@ const BarchartOnboarding = (props: BarchartProps) => {
       let dataUrgent = [...state.dataSos];
       let pinkStyle = {
         color: colors.red,
-        topLabelComponent: () => (
-          <View style={styles.containerUrgent}>
-            <Text style={styles.textUrgent}>Urgent</Text>
-          </View>
-        ),
         labelTextStyle: {
           color: colors.labelColor,
           fontSize: scaler(14),
@@ -114,15 +74,14 @@ const BarchartOnboarding = (props: BarchartProps) => {
           ...stylesCommon.fontWeight500,
         },
       };
-      let data: any[] = Object.keys(obj).map((key, i) => {
+      let arrayKey = Object.keys(obj).filter(key => keyItem?.includes(key));
+      console.log('=>(BarchartOnboarding.tsx:76) arrayKey', arrayKey);
+      let data: any[] = arrayKey.map((key, i) => {
         let value = obj[key];
-        let data2 = Object.keys(obj).map(k => obj[k]);
+        let data2 = arrayKey.map(k => obj[k]);
 
         function markMinValues(arr) {
-          // Bước 1: Xác định giá trị nhỏ nhất
           let minValue = Math.min(...arr);
-
-          // Bước 2: Tạo mảng các đối tượng mới với các giá trị đã được đánh dấu
           let markedArray = arr.map((num, index) => ({
             index: index,
             value: num === minValue ? true : false,
@@ -169,46 +128,49 @@ const BarchartOnboarding = (props: BarchartProps) => {
           label: getLabel(key),
           order: getOrder(key),
           ...grayStyle,
-          stacks: [{value}],
+          stacks: [{value, color: colors.blue100}],
         };
       });
-      setState({
-        dataSos: dataUrgent,
-        data: [
-          ...[
-            {
-              label: getLabel('core'),
-              ...pinkStyle,
-              borderRadius: 8,
-              stacks: [
-                {
-                  value: props?.score / 2,
-                  color: colors.pink200,
-                },
-                {
-                  value: props?.score / 2,
-                  color: colors.transparent,
-                  innerBarComponent: () => (
-                    <View
-                      style={{
-                        backgroundColor: colors.transparent,
-                        borderColor: colors.pink200,
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        borderStyle: 'dashed',
-                        zIndex: 0,
-                        width: '100%',
-                        height: '200%',
-                      }}
-                    />
-                  ),
-                },
-              ],
-            },
+      setTimeout(() => {
+        setState({
+          dataSos: dataUrgent,
+          data: [
+            ...[
+              {
+                label: getLabel('core'),
+                ...pinkStyle,
+                borderRadius: 8,
+
+                stacks: [
+                  {
+                    value: props?.score / 2,
+                    color: colors.pink200,
+                  },
+                  {
+                    value: props?.score / 2,
+                    color: colors.transparent,
+                    innerBarComponent: () => (
+                      <View
+                        style={{
+                          backgroundColor: colors.transparent,
+                          borderColor: colors.pink200,
+                          borderWidth: 1,
+                          borderRadius: 8,
+                          borderStyle: 'dashed',
+                          zIndex: 0,
+                          width: '100%',
+                          height: '200%',
+                        }}
+                      />
+                    ),
+                  },
+                ],
+              },
+            ],
+            ...data,
           ],
-          ...data,
-        ],
-      });
+        });
+      }, 500);
     }
   }, []);
   return (
@@ -228,6 +190,7 @@ const BarchartOnboarding = (props: BarchartProps) => {
           noOfSections={4}
           disableScroll={true}
           hideYAxisText={true}
+          scrollToEnd={true}
           xAxisColor={colors.blue}
           yAxisColor={colors.blue}
           xAxisTextNumberOfLines={2}

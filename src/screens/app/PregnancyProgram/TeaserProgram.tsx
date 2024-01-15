@@ -81,8 +81,8 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       description: t('pregnancyProgram.personalGuidance'),
       icon:
         lang == 1
-          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091058887382131.png'
-          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1703835275868370189.png',
+          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1704906054274481756.png'
+          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1704906210671252712.png',
     },
     {
       name: t('pregnancyProgram.getDiscount'),

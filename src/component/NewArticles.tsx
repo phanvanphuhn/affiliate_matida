@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 
@@ -16,7 +16,13 @@ interface IProps {
 export const NewArticles = ({article, onPress = () => {}}: IProps) => {
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
-
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  const isCheckPayment = useMemo(
+    () =>
+      !user?.user_subscriptions?.some(e => e.code == 'PP') ||
+      user.payments.some(e => e.status == 'processing'),
+    [user],
+  );
   const {content, image, title = '', created_at, views} = article;
 
   const isPayment = article?.is_payment && !article?.is_paid;
@@ -27,7 +33,7 @@ export const NewArticles = ({article, onPress = () => {}}: IProps) => {
       activeOpacity={1}>
       <View>
         <AppImage style={styles.banner} uri={image} />
-        {isPayment ? (
+        {isPayment && isCheckPayment ? (
           <ViewLockPayment
             price={article?.price_vn}
             style={{flexDirection: 'row', justifyContent: 'space-between'}}

@@ -111,11 +111,6 @@ export const Forum = () => {
     getData();
   }, []);
 
-  console.log(
-    'data?.expertLiveTalk: ',
-    data?.expertLiveTalk?.filter(item => item?.room?.status !== 3),
-  );
-
   return (
     <View style={{flex: 1}}>
       <AppHeader
@@ -228,11 +223,7 @@ export const Forum = () => {
             paddingHorizontal: scaler(16),
           }}>
           <FloatingCreateNewPost />
-          {user?.role !== 1 && (
-            <View style={{marginLeft: scaler(16)}}>
-              <FloatingCreateNewRoom />
-            </View>
-          )}
+          {user?.role !== 1 && <FloatingCreateNewRoom />}
         </View>
       )}
       {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}

@@ -110,7 +110,7 @@ const ProfileSettingsScreen = () => {
     baby_name: validateFormVN().babyName,
     username: validateFormVN().username,
   });
-  console.log('validationSchemaVN: ', validationSchemaVN);
+
   const initialValuesProfileSettings: any = {
     name: user?.name ? user?.name : '',
     email: user?.email ? user?.email : '',

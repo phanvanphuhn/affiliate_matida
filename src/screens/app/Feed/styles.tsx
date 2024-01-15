@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 0.48,
     marginBottom: scaler(12),
-    borderRadius: scaler(8),
+    borderRadius: scaler(16),
     backgroundColor: colors.backgroundFeed,
     shadowColor: '#000',
     shadowOffset: {

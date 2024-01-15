@@ -71,7 +71,7 @@ const MomDiary = (props: MomDiaryProps) => {
       }
     } catch (err) {
       showMessage({
-        message: err?.response?.data?.message,
+        message: t('momDiary.errorMsg'),
         type: 'danger',
         backgroundColor: colors.primaryBackground,
       });
@@ -148,7 +148,7 @@ const MomDiary = (props: MomDiaryProps) => {
         onPressLeft={goBack}
       />
 
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView extraScrollHeight={32} enableOnAndroid={true}>
         <View style={styles.container2}>
           <Text style={styles.textTitle}>{t('momDiary.momDesc')}</Text>
           <View style={{bottom: -8}}>

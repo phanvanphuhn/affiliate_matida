@@ -3,11 +3,14 @@ import {
   iconCommunity,
   iconCommunity2,
   iconCommunity3,
+  iconCommunity4,
   iconTabDeal,
   iconTabExplore,
   iconTabExplore2,
+  iconTabExplore3,
   iconTabFeed,
   iconTabHome,
+  iconTabHome2,
   iconTabLiveTalk,
 } from '@images';
 import {trackScreenViewedEvent} from '@services/webengageManager.tsx';
@@ -81,13 +84,13 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const renderIcon = (value: string) => {
     switch (value) {
       case ROUTE_NAME.TAB_EXPLORE:
-        return iconTabExplore2;
+        return iconTabExplore3;
       case ROUTE_NAME.TAB_FEED:
-        return iconTabFeed;
+        return iconTabExplore3;
       case ROUTE_NAME.TAB_HOME:
-        return iconTabHome;
+        return iconTabHome2;
       case ROUTE_NAME.TAB_COMMUNITY:
-        return iconCommunity;
+        return iconCommunity4;
       case ROUTE_NAME.TAB_LIVETALK:
         return iconTabLiveTalk;
       case ROUTE_NAME.TAB_DEAL:

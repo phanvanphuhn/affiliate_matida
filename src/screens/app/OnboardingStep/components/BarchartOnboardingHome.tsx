@@ -1,56 +1,16 @@
 import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {BarChart} from 'react-native-gifted-charts';
-import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {itemType} from 'react-native-gifted-charts/src/BarChart/types';
-import {useRoute} from '@react-navigation/native';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import useStateCustom from '../../../../util/hooks/useStateCustom';
 import {ic_back_arrow} from '@images';
 import {useSelector} from 'react-redux';
+import {keyItem} from './BarchartOnboarding';
 
 interface BarchartProps {
   score: any;
   metadata: any;
 }
-const data: itemType = [
-  {
-    value: 50,
-    frontColor: colors.pink300,
-    labelTextStyle: {
-      color: colors.labelColor,
-      fontSize: scaler(14),
-      ...stylesCommon.fontWeight600,
-    },
-  },
-  {
-    value: 80,
-    frontColor: colors.blue100,
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
-  {
-    value: 90,
-    frontColor: colors.blue100,
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
-  {
-    value: 150,
-    frontColor: colors.blue100,
-    label: 'aaa',
-    labelTextStyle: {
-      color: colors.gray550,
-      fontSize: scaler(12),
-      ...stylesCommon.fontWeight500,
-    },
-  },
-];
 const BarchartOnboardingHome = (props: BarchartProps) => {
   const [state, setState] = useStateCustom({
     data: [],
@@ -111,9 +71,10 @@ const BarchartOnboardingHome = (props: BarchartProps) => {
           ...stylesCommon.fontWeight500,
         },
       };
-      let data: any[] = Object.keys(obj).map((key, i) => {
+      let arrayKey = Object.keys(obj).filter(key => keyItem?.includes(key));
+      let data: any[] = arrayKey.map((key, i) => {
         let value = obj[key];
-        let data2 = Object.keys(obj).map(k => obj[k]);
+        let data2 = arrayKey.map(k => obj[k]);
 
         function markMinValues(arr) {
           // Bước 1: Xác định giá trị nhỏ nhất

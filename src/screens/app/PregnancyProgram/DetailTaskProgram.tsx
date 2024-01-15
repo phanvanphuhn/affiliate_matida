@@ -45,6 +45,7 @@ interface DetailTaskProgramProps {}
 const DetailTaskProgram = (props: DetailTaskProgramProps) => {
   const [content, setContent] = useState<string>('');
   const [video, setVideo] = useState<string>('');
+  const [mode, setMode] = useState<string>();
   const navigation = useNavigation<any>();
   const route = useRoute<RouteProp<any>>();
   console.log('=>(DetailTaskProgram.tsx:48) route', route);
@@ -64,8 +65,11 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
       GlobalService.showLoading();
       let result = await getContentUserTask(route?.params?.item?.id);
       if (result?.success) {
-        setContent(result?.data?.content?.content);
+        setContent(
+          result?.data?.content?.content || result?.data?.content?.description,
+        );
         setVideo(result?.data?.content?.url);
+        setMode(result?.data?.content?.mode);
       }
     } catch (e) {
     } finally {
@@ -114,7 +118,7 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             {video ? (
-              <ItemVideo url={video} />
+              <ItemVideo url={video} mode={!!mode} />
             ) : (
               <Image
                 source={

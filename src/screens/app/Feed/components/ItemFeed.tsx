@@ -18,6 +18,9 @@ import {IDataListFeed} from '../type';
 import useCheckPregnancy from '@util/hooks/useCheckPregnancy';
 import LinearGradient from 'react-native-linear-gradient';
 import {event, eventType, trackingAppEvent} from '@util';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTE_NAME} from '@routeName';
+import {navigate} from '@navigation';
 
 interface ItemFeedProps {
   item: IDataListFeed;
@@ -31,6 +34,7 @@ const ItemFeed = (props: ItemFeedProps) => {
   const lang = useSelector((state: any) => state.auth.lang);
   const checkPlan = useCheckPregnancy();
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const navigation = useNavigation<any>();
 
   const renderTag = (item: IDataListFeed) => {
     switch (item.content_type) {
@@ -81,16 +85,9 @@ const ItemFeed = (props: ItemFeedProps) => {
           if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
             props.onDetailClick && props.onDetailClick(props.index, props.item);
           } else {
-            trackingAppEvent(
-              event.MASTER_CLASS.PP_FEED_SIGN_UP_NOW,
-              {
-                params: {
-                  userId: user.id,
-                },
-              },
-              eventType.MIX_PANEL,
-            );
-            checkPlan();
+            user.payments.some(e => e.status == 'processing')
+              ? navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM)
+              : navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
           }
         } else {
           props.onDetailClick && props.onDetailClick(props.index, props.item);
@@ -190,7 +187,7 @@ const ItemFeed = (props: ItemFeedProps) => {
                   />
                   <Text
                     style={{
-                      ...stylesCommon.fontWeight600,
+                      ...stylesCommon.fontSarabun600,
                       fontSize: scaler(13),
                       color: colors.white,
                     }}>

@@ -66,7 +66,8 @@ const ItemListComment = React.memo((props: any) => {
               </Text>
               <AppTextUrl
                 color={colors.brandMainPinkRed}
-                style={styles.txtContent}>
+                style={styles.txtContent}
+                isForum={true}>
                 {item?.content}
               </AppTextUrl>
             </View>

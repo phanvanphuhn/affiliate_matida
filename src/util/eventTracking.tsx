@@ -79,6 +79,7 @@ export const event = {
     POST_IN_FORUM: 'post_in_forum',
     POST_ANONYMOUSLY: 'post_click_post_anonymously',
     CLICK_SEE_MORE: 'forum_click_see_more_',
+    FORUM_CLICK_LINK_RECOMMENDATION: 'FORUM_CLICK_LINK_RECOMMENDATION',
   },
   TIDA: {
     TIDA_OPEN: 'tida_open',
@@ -185,5 +186,6 @@ export const event = {
     PP_HOMEPAGE_TEASER_GET_STARTED: 'PP_HOMEPAGE_TEASER_GET_STARTED',
     PP_HOMEPAGE_TEASER_SIGN_UP_NOW: 'PP_HOMEPAGE_TEASER_SIGN_UP_NOW',
     PP_FEED_SIGN_UP_NOW: 'PP_FEED_SIGN_UP_NOW',
+    PP_TAB_MASTERCLASS_BUTTON_SIGNUP: 'PP_TAB_MASTERCLASS_BUTTON_SIGNUP',
   },
 };

@@ -110,6 +110,9 @@ const ic_wave_top = require('./ic_wave_top.png');
 const ic_wave_bottom = require('./ic_wave_bottom.png');
 const ic_wave_line_bottom = require('./ic_wave_line_bottom.png');
 const ic_wave_line_top = require('./ic_wave_line_top.png');
+const ic_line_wave2 = require('./ic_line_wave2.png');
+const background_home = require('./background_home.png');
+const background_home2 = require('./background_home2.png');
 
 export {
   DailyQuiz,
@@ -222,4 +225,7 @@ export {
   ic_wave_bottom,
   ic_wave_line_bottom,
   ic_wave_line_top,
+  ic_line_wave2,
+  background_home,
+  background_home2,
 };

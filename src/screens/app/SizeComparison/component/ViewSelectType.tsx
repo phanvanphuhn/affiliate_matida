@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {iconCalendarCheckup, SvgIconBaby} from '@images';
-import {scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {t} from 'i18next';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -22,16 +22,24 @@ export const ViewSelectType = (props: Props) => {
             onChaneStatus(1);
           }
         }}
-        style={[
-          styles.viewItem,
-          {
-            opacity: status === 1 ? 1 : 0.5,
-          },
-        ]}>
-        <View style={styles.icon}>
-          <SvgIconBaby size={72} />
-        </View>
-        <Text style={styles.txtAT}>{t('home.sizeComparison.embryo')}</Text>
+        style={
+          status === 1
+            ? [
+                styles.chooseBtnContainer,
+                {
+                  opacity: status === 1 ? 1 : 0.5,
+                },
+              ]
+            : [
+                styles.btnContainer,
+                {
+                  opacity: status === 1 ? 1 : 0.5,
+                },
+              ]
+        }>
+        <Text style={status === 1 ? styles.chooseTxtAT : styles.txtAT}>
+          {t('home.sizeComparison.embryo')}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
@@ -39,24 +47,24 @@ export const ViewSelectType = (props: Props) => {
             onChaneStatus(2);
           }
         }}
-        style={[
-          styles.viewItem,
-          {
-            opacity: status === 2 ? 1 : 0.5,
-          },
-        ]}>
-        <View style={styles.icon}>
-          <FastImage
-            source={iconCalendarCheckup}
-            style={[
-              {
-                width: 72,
-                height: 72,
-              },
-            ]}
-          />
-        </View>
-        <Text style={styles.txtAT}>{t('home.sizeComparison.sympton')}</Text>
+        style={
+          status === 2
+            ? [
+                styles.chooseBtnContainer,
+                {
+                  opacity: status === 2 ? 1 : 0.5,
+                },
+              ]
+            : [
+                styles.btnContainer,
+                {
+                  opacity: status === 2 ? 1 : 0.5,
+                },
+              ]
+        }>
+        <Text style={status !== 1 ? styles.chooseTxtAT : styles.txtAT}>
+          {t('home.sizeComparison.sympton')}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -65,15 +73,35 @@ export const ViewSelectType = (props: Props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginTop: scaler(24),
-    marginBottom: scaler(32),
+    marginTop: scaler(12),
+    marginBottom: scaler(24),
+    paddingHorizontal: scaler(16),
+  },
+  chooseTxtAT: {
+    ...stylesCommon.fontSarabun600,
+    color: colors.white,
+    fontSize: scaler(13),
+    textAlign: 'center',
   },
   txtAT: {
-    ...stylesCommon.fontWeight600,
-    color: '#252525',
-    fontSize: scaler(14),
-    marginTop: 8,
+    ...stylesCommon.fontSarabun600,
+    color: colors.gray550,
+    fontSize: scaler(13),
     textAlign: 'center',
+  },
+  chooseBtnContainer: {
+    width: '50%',
+    alignItems: 'center',
+    backgroundColor: colors.pink4,
+    borderRadius: scaler(40),
+    paddingVertical: scaler(8),
+  },
+  btnContainer: {
+    width: '50%',
+    alignItems: 'center',
+    backgroundColor: colors.gray350,
+    borderRadius: scaler(40),
+    paddingVertical: scaler(8),
   },
   viewItem: {
     width: '50%',

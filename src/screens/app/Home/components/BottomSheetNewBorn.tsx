@@ -40,9 +40,9 @@ const BottomSheetNewBorn = (props: TProps) => {
   const {t} = useTranslation();
   return (
     <>
-      {newBorn?.map((item: TBaby) => {
+      {newBorn?.map((item: TBaby, i: number) => {
         return (
-          <View style={styles.container}>
+          <View key={i} style={styles.container}>
             <TouchableOpacity
               onPress={() => onSwitchBaby(item)}
               style={[

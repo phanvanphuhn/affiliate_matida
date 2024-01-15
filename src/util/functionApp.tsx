@@ -240,9 +240,9 @@ export const trackEventBranch = async (
       customData: params,
     });
     eventLog.logEvent();
-    reactotron.log?.('LOG EVENT BRANCH', eventName);
+    // reactotron.log?.('LOG EVENT BRANCH', eventName);
   } catch (error) {
-    reactotron.log?.('ERROR LOG EVENT BRANCH', eventName);
+    // reactotron.log?.('ERROR LOG EVENT', eventName);
   }
 };
 
@@ -363,6 +363,18 @@ export const getSubTitlePregnancy = (type: string) => {
       return '';
   }
 };
+
+export const getTitleButton = (type: string) => {
+  switch (type) {
+    case 'learn':
+      return t('pregnancyProgram.exploreAndLearn');
+    case 'quiz':
+      return t('pregnancyProgram.takeTheQuiz');
+    default:
+      return t('pregnancyProgram.finishTheTask');
+  }
+};
+
 export const getTitlePregnancy = (type: string) => {
   switch (type) {
     case 'reward':
@@ -388,12 +400,12 @@ export const getLabelPregnancy = (type: string) => {
       return t('pregnancyProgram.core');
     case 'love_and_money':
       return t('pregnancyProgram.personalChallenge');
-    case 'fitness_and_nutrition':
-      return t('pregnancyProgram.fitnessNutrition');
-    case 'baby_care':
-      return t('pregnancyProgram.babyCare');
+    // case 'fitness_and_nutrition':
+    //   return t('pregnancyProgram.fitnessNutrition');
+    // case 'baby_care':
+    //   return t('pregnancyProgram.babyCare');
     default:
-      return '';
+      return t('pregnancyProgram.personalChallenge');
   }
 };
 export const getColorPregnancy = (type: string) => {
@@ -405,6 +417,6 @@ export const getColorPregnancy = (type: string) => {
     case 'love_and_money':
       return colors.green250;
     default:
-      return colors.primaryBackground;
+      return colors.green250;
   }
 };

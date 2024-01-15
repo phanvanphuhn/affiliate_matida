@@ -21,6 +21,8 @@ import {
   ic_default1,
   ic_default2,
   ic_gift,
+  ic_wave_line_bottom,
+  ic_wave_line_top,
   SvgArrowLeft,
   SvgClose,
   SvgLike,
@@ -63,6 +65,7 @@ import {
 import Svg, {Line, Path} from 'react-native-svg';
 import {EPreRoute} from '@constant';
 import {RouteProp} from '@react-navigation/core/src/types';
+import {sortOrder} from './components/ListProgram';
 
 interface FeedbackTaskProps {}
 
@@ -88,7 +91,11 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
       );
       if (res?.success) {
         let data = res?.data
-          .sort((a: any, b: any) => a.order - b.order)
+          .sort(
+            (a: any, b: any) =>
+              sortOrder.indexOf(a?.task.module) -
+              sortOrder.indexOf(b?.task.module),
+          )
           ?.map((e: any) => e.task?.module)
           .filter((e: any, i: number, arr: any) => arr.indexOf(e) == i)
           .map(e => {
@@ -176,12 +183,11 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
             ]}>
             {t('pregnancyProgram.LetUsKnowHowThisWeekHasHelpedYou')}
           </Text>
-          <View
-            style={{
-              bottom: -8,
-              zIndex: 10,
-            }}>
-            <SvgLineWave color={colors.pink350} />
+          <View style={{bottom: -8.6, zIndex: 100}}>
+            <Image
+              source={ic_wave_line_top}
+              style={{width: '100%', height: 17, tintColor: colors.pink350}}
+            />
           </View>
           <View
             style={{
@@ -337,11 +343,11 @@ const FeedbackTask = (props: FeedbackTaskProps) => {
         </View>
       </ScrollView>
       <View style={styles.container3}>
-        <View
-          style={{
-            top: -8,
-          }}>
-          <SvgLineWave color={colors.blue50} />
+        <View style={{top: -8.6}}>
+          <Image
+            source={ic_wave_line_bottom}
+            style={{width: '100%', height: 17, tintColor: colors.blue50}}
+          />
         </View>
         <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>{t('test.submit')}</Text>

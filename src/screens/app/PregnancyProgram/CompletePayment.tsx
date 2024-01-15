@@ -1,8 +1,7 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   ImageBackground,
-  PermissionsAndroid,
   Platform,
   ScrollView,
   StyleSheet,
@@ -19,50 +18,26 @@ import {
   ic_copy,
   ic_download,
   ic_google,
-  ic_logo_round,
   ic_transfer,
   iconClose,
   SvgPathBottom,
   SvgPathTop,
 } from '@images';
-import QRCode from 'react-native-qrcode-svg';
 import {ModalConfirmPayment} from '@component';
 import {useTranslation} from 'react-i18next';
-import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {
-  getPlanByCode,
-  requestSubcribePlan,
-  userConfirm,
-} from '../../../services/pregnancyProgram';
-import {GlobalService, PRODUCT_ID_PAY} from '@services';
+import {getPlanByCode, userConfirm} from '../../../services/pregnancyProgram';
+import {GlobalService} from '@services';
 import {showMessage} from 'react-native-flash-message';
-import {
-  endConnection,
-  flushFailedPurchasesCachedAsPendingAndroid,
-  initConnection,
-  ProductPurchase,
-  PurchaseError,
-  purchaseErrorListener,
-  purchaseUpdatedListener,
-  requestPurchase,
-  requestSubscription,
-  SubscriptionPurchase,
-  useIAP,
-} from 'react-native-iap';
-import {UpdateInformationState} from './UpdateInformation';
 import {RouteProp} from '@react-navigation/core/src/types';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {event, eventType, formatPrice, trackingAppEvent} from '@util';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
-import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
 import {useSelector} from 'react-redux';
 import useBackHandler from '../../../util/hooks/useBackHandler';
+
 interface CompletePaymentProps {}
 interface BankState {
   bank_account_name: string;
@@ -97,23 +72,23 @@ const CompletePayment = (props: CompletePaymentProps) => {
   const route = useRoute<RouteProp<any>>();
   const QrRef = useRef<any>();
   const navigation = useNavigation<any>();
-  const {
-    connected,
-    products,
-    promotedProductsIOS,
-    subscriptions,
-    purchaseHistories,
-    availablePurchases,
-    currentPurchase,
-    currentPurchaseError,
-    initConnectionError,
-    finishTransaction,
-    getProducts,
-    getSubscriptions,
-    getAvailablePurchases,
-    getPurchaseHistories,
-    requestSubscription,
-  } = useIAP();
+  // const {
+  //   connected,
+  //   products,
+  //   promotedProductsIOS,
+  //   subscriptions,
+  //   purchaseHistories,
+  //   availablePurchases,
+  //   currentPurchase,
+  //   currentPurchaseError,
+  //   initConnectionError,
+  //   finishTransaction,
+  //   getProducts,
+  //   getSubscriptions,
+  //   getAvailablePurchases,
+  //   getPurchaseHistories,
+  //   requestSubscription,
+  // } = useIAP();
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const copyType = {
@@ -128,57 +103,57 @@ const CompletePayment = (props: CompletePaymentProps) => {
       setPlan(res?.data);
     }
   };
-  const listenPurchases = (
-    purchase: SubscriptionPurchase | ProductPurchase,
-  ) => {
-    const receipt = purchase.transactionReceipt;
-    if (receipt) {
-    }
-  };
-  const initialize = async () => {
-    let init = await initConnection();
-    if (Platform.OS == 'android') {
-      await flushFailedPurchasesCachedAsPendingAndroid();
-    }
-  };
+  // const listenPurchases = (
+  //   purchase: SubscriptionPurchase | ProductPurchase,
+  // ) => {
+  //   const receipt = purchase.transactionReceipt;
+  //   if (receipt) {
+  //   }
+  // };
+  // const initialize = async () => {
+  //   let init = await initConnection();
+  //   if (Platform.OS == 'android') {
+  //     await flushFailedPurchasesCachedAsPendingAndroid();
+  //   }
+  // };
 
   useEffect(() => {
     getData();
-    initialize();
-    return () => {
-      endConnection();
-    };
+    // initialize();
+    // return () => {
+    //   endConnection();
+    // };
   }, []);
 
-  const handlePurchase = async (sku: string) => {
-    try {
-      let available = await getProducts({skus: [PRODUCT_ID_PAY]});
-      let purchase = await requestPurchase({
-        sku,
-        skus: [PRODUCT_ID_PAY],
-        andDangerouslyFinishTransactionAutomaticallyIOS: false,
-      });
-      finishTransaction({
-        purchase: purchase,
-      });
-      console.log('=>(CompletePayment.tsx:100) res', purchase);
-    } catch (err) {
-      console.log('=>(CompletePayment.tsx:107) err', err);
-    }
-  };
-
-  useEffect(() => {
-    // ... listen to currentPurchaseError, to check if any error happened
-    console.log(
-      '=>(CompletePayment.tsx:116) currentPurchaseError',
-      currentPurchaseError,
-    );
-  }, [currentPurchaseError]);
-
-  useEffect(() => {
-    // ... listen to currentPurchase, to check if the purchase went through
-    console.log('=>(CompletePayment.tsx:124) currentPurchase', currentPurchase);
-  }, [currentPurchase]);
+  // const handlePurchase = async (sku: string) => {
+  //   try {
+  //     let available = await getProducts({skus: [PRODUCT_ID_PAY]});
+  //     let purchase = await requestPurchase({
+  //       sku,
+  //       skus: [PRODUCT_ID_PAY],
+  //       andDangerouslyFinishTransactionAutomaticallyIOS: false,
+  //     });
+  //     finishTransaction({
+  //       purchase: purchase,
+  //     });
+  //     console.log('=>(CompletePayment.tsx:100) res', purchase);
+  //   } catch (err) {
+  //     console.log('=>(CompletePayment.tsx:107) err', err);
+  //   }
+  // };
+  //
+  // useEffect(() => {
+  //   // ... listen to currentPurchaseError, to check if any error happened
+  //   console.log(
+  //     '=>(CompletePayment.tsx:116) currentPurchaseError',
+  //     currentPurchaseError,
+  //   );
+  // }, [currentPurchaseError]);
+  //
+  // useEffect(() => {
+  //   // ... listen to currentPurchase, to check if the purchase went through
+  //   console.log('=>(CompletePayment.tsx:124) currentPurchase', currentPurchase);
+  // }, [currentPurchase]);
   useBackHandler(() => {
     return true;
   });
@@ -229,52 +204,6 @@ const CompletePayment = (props: CompletePaymentProps) => {
     Clipboard.setString(value);
     showMessage({message: t('common.copySuccessfully'), type: 'success'});
   };
-  async function hasAndroidPermission() {
-    const getCheckPermissionPromise = () => {
-      if (Platform.Version >= 33) {
-        return Promise.all([
-          PermissionsAndroid.check(
-            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-          ),
-          PermissionsAndroid.check(
-            PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-          ),
-        ]).then(
-          ([hasReadMediaImagesPermission, hasReadMediaVideoPermission]) =>
-            hasReadMediaImagesPermission && hasReadMediaVideoPermission,
-        );
-      } else {
-        return PermissionsAndroid.check(
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-        );
-      }
-    };
-
-    const hasPermission = await getCheckPermissionPromise();
-    if (hasPermission) {
-      return true;
-    }
-    const getRequestPermissionPromise = () => {
-      if (Platform.Version >= 33) {
-        return PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-          PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-        ]).then(
-          statuses =>
-            statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
-              PermissionsAndroid.RESULTS.GRANTED &&
-            statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
-              PermissionsAndroid.RESULTS.GRANTED,
-        );
-      } else {
-        return PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-        ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
-      }
-    };
-
-    return await getRequestPermissionPromise();
-  }
 
   const saveToGallery = async () => {
     trackingAppEvent(
@@ -346,7 +275,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
             <TouchableOpacity
               disabled={true}
               onPress={() => {
-                handlePurchase(PRODUCT_ID_PAY);
+                // handlePurchase(PRODUCT_ID_PAY);
               }}
               style={[styles.buttonTransfer, {opacity: 0.5}]}>
               <Image source={Platform.OS == 'ios' ? ic_apple : ic_google} />

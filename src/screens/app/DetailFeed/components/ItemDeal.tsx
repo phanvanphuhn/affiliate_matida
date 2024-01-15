@@ -1,5 +1,5 @@
 import {LogoApp} from '@images';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
@@ -29,7 +29,16 @@ const ItemDeal = (props: any) => {
         }}
       />
       <View style={styles.bottomItemContainer}>
-        <Text numberOfLines={2} style={{fontSize: 12}}>
+        <Text
+          numberOfLines={2}
+          style={{
+            color: colors.black,
+            fontSize: scaler(12),
+            ...stylesCommon.fontWeight500,
+            marginTop: scaler(8),
+            paddingLeft: scaler(8),
+            paddingRight: scaler(8),
+          }}>
           {lang == 2 ? item.name_vi : item.name_en}
         </Text>
 
@@ -65,10 +74,8 @@ const ItemDeal = (props: any) => {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    width: '47%',
-    marginBottom: scaler(16),
-    marginRight: scaler(16),
-    height: scaler(290),
+    flex: 0.48,
+    marginBottom: scaler(12),
     borderRadius: scaler(16),
     backgroundColor: colors.white,
     shadowColor: '#000',
@@ -83,12 +90,12 @@ const styles = StyleSheet.create({
   },
   bottomItemContainer: {
     flex: 1,
-    padding: 8,
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   wrapBottomItemContainer: {
     flexDirection: 'row',
+    padding: scaler(8),
   },
 });
 

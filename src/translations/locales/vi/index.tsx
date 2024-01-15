@@ -9,7 +9,7 @@ export const vi = {
   intro: {
     introTitle: 'Chào mẹ, Matida đây',
     introContent:
-      'Ứng dụng đồng hành từ lúc mẹ mang thai đến khi con chào đời. Cùng theo dõi sự phát triển của con, nghe chia sẻ từ các chuyên gia và mẹ bầu khác nào.',
+      'Chào đón mẹ đến Matida - ứng dụng đồng hành từ lúc mẹ mang thai đến khi con chào đời. Cùng theo dõi sự phát triển của con, nghe chia sẻ từ các chuyên gia và mẹ bầu khác.',
   },
   login: {
     signIn: 'Đăng nhập',
@@ -188,7 +188,13 @@ export const vi = {
     bodyBannerQuiz:
       'Bạn đã chuẩn bị như thế nào để trở thành một người mẹ? Hãy kiểm tra kiến ​​thức của bạn',
     buttonBannerQuiz: 'Kiểm tra ngay bây giờ',
-    signUpNow: 'Kiểm tra kiến thức',
+    signUpNow: 'Khám phá ngay',
+    getStarted: 'Kiểm tra kiến thức',
+    wantToBeTheSmartest:
+      'Matida cung cấp kiến thức và\nchỉ dẫn mẹ qua từng tuần thai',
+    getAheadWithMatidaMasterclass: 'Mẹ muốn con thông\nminh vượt trội?',
+    takeTheMatidaMasterclass: 'Tham gia Matida Masterclass',
+    wellWorkYourChallenges: 'Trở thành mẹ bầu thông thái cùng Matida',
   },
   sizeComparison: {
     week: 'Tuần',
@@ -308,7 +314,7 @@ export const vi = {
     shareUserSuccess: 'Chia sẻ thành công',
   },
   post: {
-    create_new: 'Đặt một câu hỏi mới',
+    create_new: 'Đặt câu hỏi',
     post: 'Đăng',
     placeHolderPost: 'Gõ nội dung cần chia sẻ để nhận phản hồi từ cộng đồng',
     title: 'Tiêu đề',
@@ -687,7 +693,7 @@ export const vi = {
     congratulation: 'Chúc mừng mẹ!',
     whichDate: 'Con đã ra đời vào ngày nào?',
     whatTime: 'Con đã ra đời lúc mấy giờ?',
-    whatName: 'Mẹ đặt tên còn là gì?',
+    whatName: 'Mẹ đặt tên con là gì?',
     whatGender: 'Giới tính của con là gì?',
     howDeliver: 'Mẹ đã sinh con bằng phương pháp nào?',
     whatWeight: 'Cân nặng của con là bao nhiêu?',
@@ -873,7 +879,7 @@ export const vi = {
     AnEntireCareTeamAtYourFingertips: 'Đội ngũ chuyên gia kinh nghiệm',
     contentExperts:
       'Chương trình được xây dựng bởi đội ngũ chuyên gia nhiều kinh nghiệm, cung cấp nội dung toàn diện, hữu ích cho hành trình mang thai của mẹ.',
-    ThereAreNoStupidQuestions: 'Câu hỏi thường gặp',
+    ThereAreNoStupidQuestions: 'Thắc mắc nào của mẹ cũng đáng giá :-)',
     HowDoesTheProgramWork: 'Khóa học Matida Masterclass hoạt động như thế nào?',
     contentHowDoesTheProgramWork:
       'Matida Masterclass với 4 mô-đun được thiết kế khoa học - linh hoạt, bao gồm các bài học và hoạt động hàng tuần được thiết kế để dễ dàng lồng ghép vào thói quen hàng ngày, cung cấp kiến thức chăm sóc thai kỳ để sẵn sàng làm mẹ. Mẹ có thể truy cập khóa học bất cứ lúc nào trên ứng dụng Matida.',
@@ -925,6 +931,8 @@ export const vi = {
     SignUpNowToUnlock: 'Đăng ký để mở khoá ngay',
     contentForWeekComeBackLater:
       'Nội dung này dành cho tuần thai thứ {{week}}.\nMẹ hãy quay lại sau nhé!',
+    exploreAndLearn: 'Xem ngay',
+    takeTheQuiz: 'Kiểm tra kiến thức',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',
@@ -936,6 +944,7 @@ export const vi = {
     uploadPicture: 'Hãy tải lên ảnh của mẹ tuần thai này nhé',
     messageBaby: 'gửi lời nhắn đến em bé của bạn',
     writeSomething: 'Hãy viết gì đó nhé ',
+    errorMsg: 'Mẹ điền đẩy đủ hình ảnh và lời nhắn nhé',
   },
   myPurchases: {
     noPurchaseFound: 'Không có lịch sử thanh toán',

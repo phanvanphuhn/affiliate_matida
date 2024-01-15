@@ -12,10 +12,10 @@ const Experts = (props: ExpertsProps) => {
 
   const data = [
     {
-      name: 'Thuý',
+      name: 'Phạm Huyền',
       description: t('pregnancyProgram.babyExpert'),
       image:
-        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520456296115766.jpg',
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1705151389758484967.png',
     },
     {
       name: 'Phương Anh',
@@ -39,7 +39,7 @@ const Experts = (props: ExpertsProps) => {
       name: 'Trâm',
       description: t('pregnancyProgram.yoga'),
       image:
-        'https://s3.ap-southeast-1.amazonaws.com/matida/1703520720586395151.jpg',
+        'https://s3.ap-southeast-1.amazonaws.com/matida/1705151430631254507.png',
     },
     {
       name: 'Stephanie',
