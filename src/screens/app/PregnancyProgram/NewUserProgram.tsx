@@ -28,7 +28,13 @@ import ListWeek from './components/ListWeek';
 import {ROUTE_NAME} from '@routeName';
 import {useSelector} from 'react-redux';
 import ListProgram from './components/ListProgram';
-import {getColorPregnancy, getSubTitlePregnancy} from '@util';
+import {
+  event,
+  eventType,
+  getColorPregnancy,
+  getSubTitlePregnancy,
+  trackingAppEvent,
+} from '@util';
 import Svg, {
   Defs,
   Line,
@@ -44,6 +50,7 @@ interface NewUserProgramProps {}
 const NewUserProgram = (props: NewUserProgramProps) => {
   const navigation = useNavigation<any>();
   const checkPlan = useCheckPregnancy();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const week = useSelector((state: any) =>
     !state?.home?.weekUserTask || state?.home?.weekUserTask <= 4
@@ -227,7 +234,18 @@ const NewUserProgram = (props: NewUserProgramProps) => {
             backgroundColor: '',
           }}>
           <TouchableOpacity
-            onPress={checkPlan}
+            onPress={() => {
+              trackingAppEvent(
+                event.MASTER_CLASS.PP_FEED_SIGN_UP_NOW,
+                {
+                  params: {
+                    userId: user.id,
+                  },
+                },
+                eventType.MIX_PANEL,
+              );
+              checkPlan();
+            }}
             style={{
               backgroundColor: colors.pink4,
               flexDirection: 'row',

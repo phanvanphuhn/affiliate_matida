@@ -41,13 +41,11 @@ const ListWeek = (props: ListWeekProps) => {
     total: 0,
   });
   const week = useSelector((state: any) => {
-    console.log('=>(ListWeek.tsx:49) state', state);
     return !state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks ||
       state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks <= 4
       ? 4
       : state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks;
   });
-  console.log('=>(ListWeek.tsx:48) week', week);
   const navigation = useNavigation<NavigationProp<any>>();
 
   const flatlistRef = useRef<FlatList>();
@@ -99,9 +97,6 @@ const ListWeek = (props: ListWeekProps) => {
       }, 500);
     }
   };
-  useEffect(() => {
-    scrollToIndex(week);
-  }, []);
 
   const getColor = useCallback(item => {
     switch (item.status) {
@@ -244,7 +239,7 @@ const ListWeek = (props: ListWeekProps) => {
           flexDirection: 'row',
           width: 150,
           alignItems: 'center',
-          paddingBottom: scaler(35),
+          paddingBottom: scaler(40),
         }}>
         <TouchableOpacity
           // disabled={item.status == 'Upcoming'}
@@ -252,15 +247,20 @@ const ListWeek = (props: ListWeekProps) => {
             scrollToIndex(index + 1);
             props?.onSelectedWeek && props?.onSelectedWeek(index + 1);
           }}
-          style={[{alignItems: 'center', flexDirection: 'row'}]}>
-          <View>
+          style={[
+            {
+              alignItems: 'center',
+              flexDirection: 'row',
+            },
+          ]}>
+          <View style={{}}>
             {renderDot(item, index)}
             <View
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'absolute',
-                bottom: -35,
+                top: 60,
                 width: 100,
                 alignSelf: 'center',
               }}>
@@ -317,10 +317,12 @@ const ListWeek = (props: ListWeekProps) => {
         renderItem={renderItem}
         horizontal={true}
         ref={flatlistRef}
-        // onLayout={() => {
-        //   scrollToIndex(week);
-        //   console.log('=>(ListWeek.tsx:319) week11111', week);
-        // }}
+        windowSize={40}
+        maxToRenderPerBatch={40}
+        onLayout={() => {
+          scrollToIndex(week);
+          console.log('=>(ListWeek.tsx:319) week11111', week);
+        }}
         onContentSizeChange={() => {}}
         getItemLayout={getItemLayout}
         onScrollToIndexFailed={info => {

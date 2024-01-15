@@ -286,8 +286,8 @@ const styles = StyleSheet.create({
     paddingVertical: scaler(10),
   },
   imageNameApp: {
-    width: scaler(93),
-    height: scaler(24),
+    width: scaler(81),
+    height: scaler(20),
   },
   dotMessage: {
     width: scaler(8),

@@ -26,6 +26,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {getUserInfoApi, GlobalService} from '@services';
 import {saveDataUser} from '@redux';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 interface VerifyPaymentProps {}
 
@@ -49,7 +50,7 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
       !data?.payments?.length ||
       data?.payments?.some(e => e.status == 'processing')
     ) {
-      navigation.navigate(ROUTE_NAME.TAB_HOME);
+      navigation.navigate(ROUTE_NAME.TAB_FEED);
     } else {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
     }
@@ -70,7 +71,14 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
           style={{
             flex: 1,
           }}>
-          <View style={styles.container2}>
+          <View style={styles.container2} />
+          <SafeAreaView
+            edges={['top']}
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 10,
+            }}>
             <TouchableOpacity
               onPress={goBack}
               hitSlop={{top: 20, right: 20, bottom: 20, left: 20}}
@@ -79,7 +87,7 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
             </TouchableOpacity>
             <Text style={styles.text1}>{t('pregnancyProgram.aioCourse')}</Text>
             <Text style={styles.text2}>Matida Masterclass</Text>
-          </View>
+          </SafeAreaView>
           <View style={styles.containerContent}>
             <View style={{top: -8.6}}>
               <Image
@@ -147,6 +155,7 @@ const styles = StyleSheet.create({
   buttonClose: {
     alignSelf: 'flex-end',
     paddingRight: scaler(16),
+    paddingBottom: 10,
   },
   iconClose: {
     height: 25,
@@ -165,7 +174,7 @@ const styles = StyleSheet.create({
   containerContent: {
     backgroundColor: colors.white,
     flex: 1,
-    marginTop: widthScreen / 2 + (isIphoneX() ? 20 : 0),
+    marginTop: 50,
   },
   containerContent2: {
     flex: 1,

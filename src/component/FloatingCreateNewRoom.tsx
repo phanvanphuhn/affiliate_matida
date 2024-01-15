@@ -7,6 +7,7 @@ import {useTranslation} from 'react-i18next';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {trackingAppEvent, event, eventType} from '@util';
+import {useSelector} from 'react-redux';
 type Props = {
   onPress?: () => void;
   bottom?: number;
@@ -22,14 +23,15 @@ export const FloatingCreateNewRoom = ({
   },
 }: Props) => {
   const {t} = useTranslation();
+
   return (
     <View style={[s.container]}>
       <TouchableOpacity activeOpacity={1} style={s.button} onPress={onPress}>
         <Image
           source={iconPlusCircleWhite}
           style={{
-            height: scaler(20),
-            width: scaler(20),
+            height: scaler(24),
+            width: scaler(24),
           }}
         />
         <Text style={s.text}>{t('talk.titleCreate')}</Text>
@@ -39,22 +41,23 @@ export const FloatingCreateNewRoom = ({
 };
 
 const s = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 0.5,
+    marginLeft: scaler(16),
+  },
   button: {
     backgroundColor: colors.purple4,
     flexDirection: 'row',
     borderRadius: scaler(24),
-    paddingHorizontal: scaler(12),
     paddingVertical: scaler(12),
-    width: scaler(171),
     alignContent: 'center',
+    flex: 1,
     justifyContent: 'center',
   },
   text: {
     color: colors.white,
-    ...stylesCommon.fontWeight600,
-    fontSize: scaler(12),
+    fontSize: scaler(15),
+    ...stylesCommon.fontSarabun600,
     marginLeft: scaler(8),
-    alignSelf: 'center',
   },
 });

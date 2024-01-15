@@ -12,6 +12,9 @@ import {DEEP_LINK, OLD_DEEP_LINK} from '@services';
 import {event, eventType, handleDeepLink, trackingAppEvent} from '@util';
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {useSelector} from 'react-redux';
+import {navigate} from '@navigation';
+import {ROUTE_NAME} from '@routeName';
+import {TRouteDeepLink} from '@constant';
 interface Props extends TextProps {
   children: string;
   style?: StyleProp<TextStyle>;
@@ -52,6 +55,14 @@ export const AppTextUrl = ({
 
     if (arrayParamsLink?.length > 2) {
       handleDeepLink(url, true);
+    } else if (arrayParamsLink[0] == TRouteDeepLink.TAB_MASTERCLASS) {
+      if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
+        navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
+      } else {
+        user.payments.some(e => e.status == 'processing')
+          ? navigate(ROUTE_NAME.PREGNANCY_PROGRAM)
+          : navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+      }
     } else if (url.indexOf(DEEP_LINK) >= 0 || url.indexOf(OLD_DEEP_LINK) >= 0) {
       const link = await dynamicLinks().resolveLink(url);
       if (link?.url) {

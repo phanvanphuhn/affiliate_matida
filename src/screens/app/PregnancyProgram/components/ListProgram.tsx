@@ -28,7 +28,7 @@ import {
 } from '@images';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {getUserTask} from '../../../../services/pregnancyProgram';
+import {getFeedBacks, getUserTask} from '../../../../services/pregnancyProgram';
 import {useSelector} from 'react-redux';
 import {GlobalService} from '@services';
 import {useTranslation} from 'react-i18next';
@@ -38,6 +38,7 @@ import {
   getColorPregnancy,
   getLabelPregnancy,
   getSubTitlePregnancy,
+  getTitleButton,
   getTitlePregnancy,
   trackingAppEvent,
 } from '@util';
@@ -72,6 +73,12 @@ const ListProgram = (props: ListProgramProps) => {
       : state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
   );
   const {t} = useTranslation();
+
+  const getListFeedBack = async () => {
+    let result = await getFeedBacks({week: props.currentWeek});
+    console.log('=>(ListProgram.tsx:78) result', result);
+    return !!result?.data?.length;
+  };
 
   const getData = async () => {
     try {
@@ -114,7 +121,9 @@ const ListProgram = (props: ListProgramProps) => {
             },
           ]);
         } else {
-          if (!isFeedback.current && props?.tabIndex == 0) {
+          let isCheck = await getListFeedBack();
+          console.log('=>(ListProgram.tsx:124) isFeedback', isFeedback);
+          if (!isFeedback.current && props?.tabIndex == 0 && !isCheck) {
             isFeedback.current = true;
 
             navigation.navigate(ROUTE_NAME.FEEDBACK_TASK, {
@@ -184,6 +193,7 @@ const ListProgram = (props: ListProgramProps) => {
     //   currentWeek: props.currentWeek,
     // });
   };
+
   return (
     <View style={styles.container}>
       {state?.map((item, index) => {
@@ -239,6 +249,7 @@ const ListProgram = (props: ListProgramProps) => {
                   <Text
                     style={{
                       fontSize: scaler(19),
+                      marginLeft: item.type == 'reward' ? 10 : 0,
                       ...stylesCommon.fontSarabun600,
                     }}>
                     {item.title}
@@ -324,7 +335,7 @@ const ListProgram = (props: ListProgramProps) => {
                               style={styles.rowCenter}>
                               <Text style={styles.textSmash}>
                                 {props?.tabIndex == 0
-                                  ? t('pregnancyProgram.finishTheTask')
+                                  ? getTitleButton(e.task?.categories?.[0])
                                   : t('pregnancyProgram.reviewIt')}
                               </Text>
                               <SvgArrowLeft

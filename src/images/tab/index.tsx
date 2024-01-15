@@ -6,8 +6,11 @@ const iconCommunity = require('./TabCommunity.png');
 const iconTabFeed = require('./TabFeed.png');
 const iconTabDeal = require('./discount.png');
 const ic_program = require('./ic_program.png');
-const iconCommunity2 = require('./iconCommunity2.png');
 const iconCommunity3 = require('./iconCommunity3.png');
+const iconTabExplore3 = require('./iconTabExplore3.png');
+const iconTabHome2 = require('./iconTabHome2.png');
+const iconCommunity2 = require('./iconCommunity2.png');
+const iconCommunity4 = require('./iconCommunity4.png');
 
 export {
   iconTabExplore,
@@ -20,4 +23,7 @@ export {
   iconTabExplore2,
   iconCommunity2,
   iconCommunity3,
+  iconTabExplore3,
+  iconTabHome2,
+  iconCommunity4,
 };

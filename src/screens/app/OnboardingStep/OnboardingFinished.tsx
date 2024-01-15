@@ -1,36 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  LayoutAnimation,
-  TouchableOpacity,
-  ScrollView,
   Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {
-  ic_wave_line_bottom,
-  ic_wave_line_top,
-  iconClose,
-  SvgLineWave,
-} from '@images';
+import {ic_wave_line_bottom, ic_wave_line_top, iconClose} from '@images';
 import BarchartOnboarding from './components/BarchartOnboarding';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {event, eventType, trackEventBranch, trackingAppEvent} from '@util';
-import {trackCustomEvent} from '@services/webengageManager';
-import {goBack, NavigationUtils} from '@navigation';
+import {trackCustomEvent} from '../../../services/webengageManager';
+
+import {NavigationUtils} from '@navigation';
 import {NavigationProp, RouteProp} from '@react-navigation/core/src/types';
-import useBackHandler from '../../../util/hooks/useBackHandler';
 
 interface OnboardingFinishedProps {}
 
 const OnboardingFinished = (props: OnboardingFinishedProps) => {
-  const [state, setState] = useState();
   const navigation = useNavigation<NavigationProp<any>>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state.auth.lang);
@@ -56,7 +48,7 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
       <ScrollView
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
-        <SafeAreaView edges={['top']} style={styles.container2}>
+        <View style={styles.container2}>
           <TouchableOpacity
             onPress={() => NavigationUtils.pop(2)}
             style={styles.buttonBack}>
@@ -68,7 +60,7 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
           <Text style={styles.textTitle2}>
             {t('pregnancyProgram.dontWorry')}
           </Text>
-        </SafeAreaView>
+        </View>
 
         <View style={styles.container3}>
           <View style={{top: -8, paddingBottom: 2}}>
@@ -128,6 +120,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     paddingHorizontal: scaler(10),
+    marginTop: 30,
   },
   textTitle: {
     fontSize: scaler(20),

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -41,9 +42,25 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
   const onGift = () => {
     navigation.navigate(ROUTE_NAME.MOM_DIARY);
   };
+
   const onAbout = () => {
     navigation.navigate(ROUTE_NAME.ABOUT_PROGRAM);
   };
+
+  const onOpenZalo = () => {
+    const zaloScheme = 'https://zalo.me/g/luwxmk435';
+
+    Linking.canOpenURL(zaloScheme)
+      .then(supported => {
+        if (supported) {
+          return Linking.openURL(zaloScheme);
+        } else {
+          console.warn('Zalo app is not installed on the device.');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  };
+
   return (
     <View style={styles.container}>
       <Header
@@ -76,18 +93,21 @@ const PregnancyProgram = (props: PregnancyProgramProps) => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ListWeek onSelectedWeek={setCurrentWeek} />
-        <Image
-          style={{
-            width: '100%',
-            aspectRatio: 3 / 2,
-          }}
-          source={{
-            uri:
-              lang == 1
-                ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png'
-                : 'https://s3.ap-southeast-1.amazonaws.com/matida/1703834983521123611.png',
-          }}
-        />
+        <TouchableOpacity onPress={onOpenZalo}>
+          <Image
+            style={{
+              width: '100%',
+              aspectRatio: 3 / 2,
+            }}
+            source={{
+              uri:
+                lang == 1
+                  ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png'
+                  : 'https://s3.ap-southeast-1.amazonaws.com/matida/1703834983521123611.png',
+            }}
+          />
+        </TouchableOpacity>
+
         <View style={styles.container2}>
           <View style={styles.center}>
             <Text style={styles.textTitle}>
