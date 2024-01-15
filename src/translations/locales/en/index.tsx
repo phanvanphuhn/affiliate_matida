@@ -940,6 +940,7 @@ export const en = {
     uploadPicture: 'Upload a picture of your bump this week',
     messageBaby: 'message to your baby',
     writeSomething: 'Write something about this ',
+    errorMsg: 'Images and note are required',
   },
   myPurchases: {
     noPurchaseFound: 'No purchase found',

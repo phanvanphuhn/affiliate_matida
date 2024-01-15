@@ -944,6 +944,7 @@ export const vi = {
     uploadPicture: 'Hãy tải lên ảnh của mẹ tuần thai này nhé',
     messageBaby: 'gửi lời nhắn đến em bé của bạn',
     writeSomething: 'Hãy viết gì đó nhé ',
+    errorMsg: 'Mẹ điền đẩy đủ hình ảnh và lời nhắn nhé',
   },
   myPurchases: {
     noPurchaseFound: 'Không có lịch sử thanh toán',

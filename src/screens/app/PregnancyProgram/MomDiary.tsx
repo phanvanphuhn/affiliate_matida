@@ -71,7 +71,7 @@ const MomDiary = (props: MomDiaryProps) => {
       }
     } catch (err) {
       showMessage({
-        message: err?.response?.data?.message,
+        message: t('momDiary.errorMsg'),
         type: 'danger',
         backgroundColor: colors.primaryBackground,
       });
