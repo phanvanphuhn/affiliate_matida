@@ -1,10 +1,11 @@
-import {imageIntro} from '@images';
+import {iconCrownWhite, imageIntro} from '@images';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
 import {getFirstTextElementHTML} from '@util';
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {
   Animated,
   FlatList,
+  Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Text,
@@ -16,6 +17,8 @@ import {ViewLock, ViewPrice} from '../Payment';
 import {Pagination} from './Pagination';
 import {styles} from './styles';
 import {useSelector} from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
+import {useTranslation} from 'react-i18next';
 interface HeaderPropsType {
   onPress: (item: any) => void;
   file: any[];
@@ -116,6 +119,7 @@ export const AppGallery = (props: HeaderPropsType) => {
 
 const NewsWeek = ({news}: {news: any}) => {
   const {content = '', image, title = ''} = news;
+  const {t} = useTranslation();
   const isPayment = news?.is_payment && !news?.is_paid;
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const isCheckPayment = useMemo(
@@ -136,7 +140,44 @@ const NewsWeek = ({news}: {news: any}) => {
           }}
         />
         {isPayment && isCheckPayment ? (
-          <ViewLock absolute borderRadius={scaler(16)} showText opacity="ba" />
+          <LinearGradient
+            colors={['#0006', '#00000090']}
+            style={{
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderTopLeftRadius: scaler(8),
+              borderTopRightRadius: scaler(8),
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: scaler(8),
+                paddingHorizontal: scaler(12),
+                backgroundColor: colors.pink4,
+                borderRadius: scaler(24),
+              }}>
+              <Image
+                source={iconCrownWhite}
+                style={{
+                  height: scaler(24),
+                  width: scaler(24),
+                  marginRight: scaler(8),
+                }}
+              />
+              <Text
+                style={{
+                  ...stylesCommon.fontSarabun600,
+                  fontSize: scaler(13),
+                  color: colors.white,
+                }}>
+                {t('myPurchases.signUpNow')}
+              </Text>
+            </View>
+          </LinearGradient>
         ) : null}
       </View>
       <Text
@@ -161,11 +202,6 @@ const NewsWeek = ({news}: {news: any}) => {
         }}>
         {getFirstTextElementHTML(content)}
       </Text>
-      {isPayment ? (
-        <View style={{marginTop: scaler(8)}}>
-          <ViewPrice price={news?.price_vn} />
-        </View>
-      ) : null}
     </View>
   );
 };

@@ -5,11 +5,13 @@ import {getConvertViewer} from '@util';
 import moment from 'moment';
 import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {AppImage} from './AppImage';
 import {MoodComponent} from './MoodComponent';
 import {ViewLock} from './Payment';
 import {useSelector} from 'react-redux';
+import {iconCrownWhite} from '@images';
+import LinearGradient from 'react-native-linear-gradient';
 interface IProps {
   item?: any;
 }
@@ -43,7 +45,45 @@ export const ItemArticles = ({item}: IProps) => {
       <View style={{marginRight: scaler(16)}}>
         <AppImage uri={image} style={styles.image} />
         {isPayment && isCheckPayment ? (
-          <ViewLock absolute opacity="ba" style={{height: scaler(98)}} />
+          <LinearGradient
+            colors={['#0006', '#00000090']}
+            style={{
+              height: '100%',
+              width: '100%',
+              position: 'absolute',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderTopLeftRadius: scaler(8),
+              borderTopRightRadius: scaler(8),
+              paddingHorizontal: 5,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingVertical: scaler(8),
+                paddingHorizontal: scaler(5),
+                backgroundColor: colors.pink4,
+                borderRadius: scaler(24),
+              }}>
+              <Image
+                source={iconCrownWhite}
+                style={{
+                  height: scaler(18),
+                  width: scaler(18),
+                  marginRight: scaler(8),
+                }}
+              />
+              <Text
+                style={{
+                  ...stylesCommon.fontSarabun600,
+                  fontSize: scaler(12),
+                  color: colors.white,
+                }}>
+                {t('myPurchases.signUpNow')}
+              </Text>
+            </View>
+          </LinearGradient>
         ) : null}
       </View>
       <View
