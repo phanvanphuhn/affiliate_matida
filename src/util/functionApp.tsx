@@ -400,12 +400,12 @@ export const getLabelPregnancy = (type: string) => {
       return t('pregnancyProgram.core');
     case 'love_and_money':
       return t('pregnancyProgram.personalChallenge');
-    case 'fitness_and_nutrition':
-      return t('pregnancyProgram.fitnessNutrition');
-    case 'baby_care':
-      return t('pregnancyProgram.babyCare');
+    // case 'fitness_and_nutrition':
+    //   return t('pregnancyProgram.fitnessNutrition');
+    // case 'baby_care':
+    //   return t('pregnancyProgram.babyCare');
     default:
-      return '';
+      return t('pregnancyProgram.personalChallenge');
   }
 };
 export const getColorPregnancy = (type: string) => {
@@ -417,6 +417,6 @@ export const getColorPregnancy = (type: string) => {
     case 'love_and_money':
       return colors.green250;
     default:
-      return colors.primaryBackground;
+      return colors.green250;
   }
 };

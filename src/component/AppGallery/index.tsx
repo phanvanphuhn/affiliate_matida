@@ -15,6 +15,7 @@ import FastImage from 'react-native-fast-image';
 import {ViewLock, ViewPrice} from '../Payment';
 import {Pagination} from './Pagination';
 import {styles} from './styles';
+import {useSelector} from 'react-redux';
 interface HeaderPropsType {
   onPress: (item: any) => void;
   file: any[];
@@ -116,7 +117,13 @@ export const AppGallery = (props: HeaderPropsType) => {
 const NewsWeek = ({news}: {news: any}) => {
   const {content = '', image, title = ''} = news;
   const isPayment = news?.is_payment && !news?.is_paid;
-
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+  const isCheckPayment = useMemo(
+    () =>
+      !user?.user_subscriptions?.some(e => e.code == 'PP') ||
+      user.payments.some(e => e.status == 'processing'),
+    [user],
+  );
   return (
     <View>
       <View>
@@ -128,7 +135,7 @@ const NewsWeek = ({news}: {news: any}) => {
             borderRadius: scaler(16),
           }}
         />
-        {isPayment ? (
+        {isPayment && isCheckPayment ? (
           <ViewLock absolute borderRadius={scaler(16)} showText opacity="ba" />
         ) : null}
       </View>
