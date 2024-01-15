@@ -311,7 +311,7 @@ export const en = {
     shareUserSuccess: 'Sharing the success',
   },
   post: {
-    create_new: 'Ask a new question',
+    create_new: 'Ask a question',
     post: 'Post',
     placeHolderPost:
       'Just ask your question here. We are a community of moms and here to support you.',
