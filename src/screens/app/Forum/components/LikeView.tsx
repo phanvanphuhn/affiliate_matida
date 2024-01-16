@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 
 export const LikeView = (props: any) => {
   const {data, id, onNavigate, color} = props;
+  console.log('data: ', data, id);
   const dispatch = useDispatch();
 
   const [isLike, setIsLike] = useState<boolean>(!!data?.is_liked);
@@ -40,7 +41,7 @@ export const LikeView = (props: any) => {
         post_id: data.id,
       };
       try {
-        isLike ? await addLikePost(body) : await addUnLikePost(id);
+        isLike ? await addLikePost(body) : await addUnLikePost(data.id);
         dispatch(
           changeLikeForum({
             isLike: isLike,

@@ -38,6 +38,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {getLiveTalk} from '@services';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 type IData = {
   momLiveTalks: any[];
@@ -56,6 +57,7 @@ export const Forum = () => {
   const navigation = useNavigation<any>();
   const scrollRef = useRef<ScrollView>(null);
   const {t} = useTranslation();
+  const isFocused = useIsFocused();
 
   const [data, setData] = useState<IData>(initData);
   const [loading, setLoading] = useState<boolean>(true);
@@ -108,8 +110,8 @@ export const Forum = () => {
   useUXCam(ROUTE_NAME.TAB_COMMUNITY);
 
   useEffect(() => {
-    getData();
-  }, []);
+    isFocused && onRefresh();
+  }, [isFocused]);
 
   return (
     <View style={{flex: 1}}>
