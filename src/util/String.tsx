@@ -16,7 +16,7 @@ export const MERCHANT_IDENTIFIER = 'merchant.com.growth.levers.matida';
 // const environment: EEnvironment = EEnvironment.DEVERLOPMENT;
 const environment: EEnvironment = EEnvironment.PRODUCT;
 
-export const VERSION_APP = '1.10.1';
+export const VERSION_APP = '1.13.1';
 export const VERSION_CODE_PUSH = `v6.5${
   environment === EEnvironment.PRODUCT ? '' : '(staging)'
 }`;
