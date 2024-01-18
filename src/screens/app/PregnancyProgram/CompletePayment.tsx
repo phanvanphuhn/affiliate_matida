@@ -265,14 +265,17 @@ const CompletePayment = (props: CompletePaymentProps) => {
             <TouchableOpacity
               style={[
                 styles.buttonTransfer,
-                {borderColor: colors.pink200, marginRight: scaler(15)},
+                {
+                  borderColor: colors.pink200,
+                  // , marginRight: scaler(15)
+                },
               ]}>
               <Image source={ic_transfer} />
               <Text style={styles.textTransfer}>
                 {t('pregnancyProgram.bankTransfer')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               disabled={true}
               onPress={() => {
                 // handlePurchase(PRODUCT_ID_PAY);
@@ -282,7 +285,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
               <Text style={styles.textTransfer}>
                 {Platform.OS == 'ios' ? 'Apple Pay' : 'Google Pay'}
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <ImageBackground source={ic_background}>
@@ -404,8 +407,8 @@ const styles = StyleSheet.create({
   container: {backgroundColor: colors.white, flex: 1},
   buttonBack: {
     alignItems: 'flex-end',
-    paddingHorizontal: scaler(15),
-    paddingVertical: scaler(10),
+    paddingHorizontal: scaler(16),
+    paddingVertical: scaler(12),
   },
   textTitle: {
     fontSize: scaler(24),
@@ -416,7 +419,7 @@ const styles = StyleSheet.create({
   textSubTitle: {
     fontSize: scaler(15),
     textAlign: 'center',
-    padding: scaler(15),
+    padding: scaler(16),
     color: colors.textColor,
     ...stylesCommon.fontSarabun400,
   },
