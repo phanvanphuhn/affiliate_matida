@@ -1,5 +1,11 @@
-import React, {ReactNode} from 'react';
-import {ActivityIndicator, Image, StyleSheet, View} from 'react-native';
+import React, {ReactNode, useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {
   IMGElementContainer,
   IMGElementContentError,
@@ -9,6 +15,7 @@ import {
 import {InternalRendererProps} from 'react-native-render-html/src/shared-types';
 import {TBlock} from '@native-html/transient-render-engine';
 import {IMGElementState} from 'react-native-render-html/src/elements/img-types';
+import {widthScreen} from '@stylesCommon';
 
 interface CustomImageRendererProps extends InternalRendererProps<TBlock> {}
 
@@ -21,13 +28,20 @@ function IMGElementContentLoading({dimensions, altColor}: IMGElementState) {
 }
 function IMGElementContentSuccess({source}: IMGElementState) {
   const {uri} = source;
+  const [height, setHeight] = useState(0);
+  useEffect(() => {
+    Image.getSize(uri, (width, height) => {
+      const aspectRatio = width / height;
+      const newHeight = widthScreen / aspectRatio;
+      setHeight(newHeight);
+    });
+  }, [uri]);
   return (
-    <Image
+    <ImageBackground
       source={{uri}}
       style={{
         width: '100%',
-        aspectRatio: 1,
-        resizeMode: 'contain',
+        height,
       }}
     />
   );
