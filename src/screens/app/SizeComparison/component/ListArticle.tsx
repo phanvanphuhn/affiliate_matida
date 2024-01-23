@@ -33,9 +33,7 @@ export const ListArticle = ({week}: Props) => {
     if (isCheckPayment) {
       navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
     } else {
-      user.payments.some(e => e.status == 'processing')
-        ? navigate(ROUTE_NAME.PREGNANCY_PROGRAM)
-        : navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+      navigate(ROUTE_NAME.NEW_USER_PROGRAM);
     }
   };
 

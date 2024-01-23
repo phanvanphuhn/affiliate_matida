@@ -29,7 +29,7 @@ const useCheckPregnancy = () => {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
     } else {
       if (user.payments.some(e => e.status == 'processing')) {
-        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+        navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM, {
           values: user.payments.find(e => e.status == 'processing'),
           isBack: true,
         });

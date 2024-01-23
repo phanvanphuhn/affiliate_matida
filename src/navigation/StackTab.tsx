@@ -41,8 +41,6 @@ const StackTab = () => {
         name={
           user?.user_subscriptions?.some(e => e.code == 'PP')
             ? ROUTE_NAME.PREGNANCY_PROGRAM
-            : user.payments.some(e => e.status == 'processing')
-            ? ROUTE_NAME.PREGNANCY_PROGRAM
             : ROUTE_NAME.NEW_USER_PROGRAM
         }
         component={

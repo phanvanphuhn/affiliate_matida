@@ -265,9 +265,7 @@ const Home = () => {
         if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
           navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
         } else {
-          user.payments.some(e => e.status == 'processing')
-            ? navigate(ROUTE_NAME.PREGNANCY_PROGRAM)
-            : navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+          navigate(ROUTE_NAME.NEW_USER_PROGRAM);
         }
         break;
       default:
