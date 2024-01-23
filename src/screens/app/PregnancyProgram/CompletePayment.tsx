@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {goBack} from '@navigation';
+import {goBack, navigate} from '@navigation';
 import {
   ic_apple,
   ic_background,
@@ -28,7 +28,7 @@ import {useTranslation} from 'react-i18next';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {getPlanByCode, userConfirm} from '../../../services/pregnancyProgram';
-import {GlobalService} from '@services';
+import {GlobalService, PRODUCT_ID_PAY} from '@services';
 import {showMessage} from 'react-native-flash-message';
 import {RouteProp} from '@react-navigation/core/src/types';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -37,6 +37,16 @@ import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import RNFetchBlob from 'rn-fetch-blob';
 import {useSelector} from 'react-redux';
 import useBackHandler from '../../../util/hooks/useBackHandler';
+import {
+  initConnection,
+  endConnection,
+  finishTransaction,
+  flushFailedPurchasesCachedAsPendingAndroid,
+  purchaseUpdatedListener,
+  purchaseErrorListener,
+  getProducts,
+  requestPurchase,
+} from 'react-native-iap';
 
 interface CompletePaymentProps {}
 interface BankState {
@@ -67,28 +77,18 @@ interface PlanState {
 
 const CompletePayment = (props: CompletePaymentProps) => {
   const refPay = useRef<ModalConfirmPayment>(null);
-  const [plan, setPlan] = useState<PlanState>({});
+  const QrRef = useRef<any>();
+
   const {t} = useTranslation();
   const route = useRoute<RouteProp<any>>();
-  const QrRef = useRef<any>();
   const navigation = useNavigation<any>();
-  // const {
-  //   connected,
-  //   products,
-  //   promotedProductsIOS,
-  //   subscriptions,
-  //   purchaseHistories,
-  //   availablePurchases,
-  //   currentPurchase,
-  //   currentPurchaseError,
-  //   initConnectionError,
-  //   finishTransaction,
-  //   getProducts,
-  //   getSubscriptions,
-  //   getAvailablePurchases,
-  //   getPurchaseHistories,
-  //   requestSubscription,
-  // } = useIAP();
+
+  const [plan, setPlan] = useState<PlanState>({});
+  const [products, setProducts] = useState<string[]>([]);
+
+  const uuidv4 = require('uuid').v4;
+  const appAccountToken = uuidv4();
+
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const copyType = {
@@ -125,38 +125,6 @@ const CompletePayment = (props: CompletePaymentProps) => {
     // };
   }, []);
 
-  // const handlePurchase = async (sku: string) => {
-  //   try {
-  //     let available = await getProducts({skus: [PRODUCT_ID_PAY]});
-  //     let purchase = await requestPurchase({
-  //       sku,
-  //       skus: [PRODUCT_ID_PAY],
-  //       andDangerouslyFinishTransactionAutomaticallyIOS: false,
-  //     });
-  //     finishTransaction({
-  //       purchase: purchase,
-  //     });
-  //     console.log('=>(CompletePayment.tsx:100) res', purchase);
-  //   } catch (err) {
-  //     console.log('=>(CompletePayment.tsx:107) err', err);
-  //   }
-  // };
-  //
-  // useEffect(() => {
-  //   // ... listen to currentPurchaseError, to check if any error happened
-  //   console.log(
-  //     '=>(CompletePayment.tsx:116) currentPurchaseError',
-  //     currentPurchaseError,
-  //   );
-  // }, [currentPurchaseError]);
-  //
-  // useEffect(() => {
-  //   // ... listen to currentPurchase, to check if the purchase went through
-  //   console.log('=>(CompletePayment.tsx:124) currentPurchase', currentPurchase);
-  // }, [currentPurchase]);
-  useBackHandler(() => {
-    return true;
-  });
   const onPaymentFinish = async () => {
     try {
       GlobalService.showLoading();
@@ -169,6 +137,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
       let result = await userConfirm({
         verify_code: route?.params?.values?.verify_code,
         user_id: user?.id,
+        payment_method: 'bank_transfer',
       });
       navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
     } catch (error) {
@@ -177,6 +146,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
       GlobalService.hideLoading();
     }
   };
+
   const onCopy = (value: string, type: string) => () => {
     switch (type) {
       case copyType.TRANSACTION:
@@ -244,14 +214,90 @@ const CompletePayment = (props: CompletePaymentProps) => {
     });
   };
 
+  const makePurchase = async (sku: any) => {
+    GlobalService.showLoading();
+    try {
+      const res = await requestPurchase({
+        sku,
+        appAccountToken,
+        andDangerouslyFinishTransactionAutomaticallyIOS: false,
+      });
+      const result = await userConfirm({
+        verify_code: route?.params?.values?.verify_code,
+        user_id: user?.id,
+        payment_method: 'apple_pay',
+        transaction_id: res?.transactionId,
+      });
+      if (result?.success) {
+        navigate(ROUTE_NAME.TAB_HOME);
+      }
+      GlobalService.hideLoading();
+    } catch (error) {
+      GlobalService.hideLoading();
+      console.error('Error making purchase', error.message);
+    }
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const products = await getProducts({
+        skus: Platform.select({
+          ios: [PRODUCT_ID_PAY],
+          android: [PRODUCT_ID_PAY],
+        }),
+      });
+      setProducts(products);
+    } catch (error) {
+      console.error('Error occurred while fetching products', error.message);
+    }
+  };
+
+  useEffect(() => {
+    const initializeConnection = async () => {
+      try {
+        await initConnection();
+        if (Platform.OS === 'android') {
+          await flushFailedPurchasesCachedAsPendingAndroid();
+        }
+      } catch (error) {
+        console.error('An error occurred', error.message);
+      }
+    };
+
+    const purchaseUpdate = purchaseUpdatedListener(async purchase => {
+      const receipt = purchase.transactionReceipt;
+
+      if (receipt) {
+        try {
+          await finishTransaction({purchase, isConsumable: true});
+        } catch (error) {
+          console.error('An error occurred', error.message);
+        }
+      }
+    });
+
+    const purchaseError = purchaseErrorListener(error =>
+      console.error('Purchase error', error.message),
+    );
+
+    initializeConnection();
+    fetchProducts();
+
+    return () => {
+      endConnection();
+      purchaseUpdate.remove();
+      purchaseError.remove();
+    };
+  }, []);
+
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
       <View style={[styles.container]}>
-        {!!route?.params?.isBack && (
-          <TouchableOpacity onPress={goBack} style={styles.buttonBack}>
-            <Image source={iconClose} />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          onPress={() => navigate(ROUTE_NAME.TAB_HOME)}
+          style={styles.buttonBack}>
+          <Image source={iconClose} />
+        </TouchableOpacity>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: scaler(30)}}>
@@ -267,7 +313,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 styles.buttonTransfer,
                 {
                   borderColor: colors.pink200,
-                  // , marginRight: scaler(15)
+                  marginRight: scaler(15),
                 },
               ]}>
               <Image source={ic_transfer} />
@@ -275,17 +321,17 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 {t('pregnancyProgram.bankTransfer')}
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              disabled={true}
+            <TouchableOpacity
               onPress={() => {
-                // handlePurchase(PRODUCT_ID_PAY);
+                makePurchase(products[0]?.productId);
               }}
+              disabled={Platform.OS == 'android' ? true : false}
               style={[styles.buttonTransfer, {opacity: 0.5}]}>
               <Image source={Platform.OS == 'ios' ? ic_apple : ic_google} />
               <Text style={styles.textTransfer}>
                 {Platform.OS == 'ios' ? 'Apple Pay' : 'Google Pay'}
               </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
 
           <ImageBackground source={ic_background}>

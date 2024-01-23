@@ -960,6 +960,8 @@ export const vi = {
     Successful: 'Thành công',
     Pending: 'Đang xử lý',
     Failed: 'Thất bại',
+    onlyAvailable:
+      'Nội dung này chỉ dành cho người dùng\nMatida Masterclass. Đăng ký ngay.',
   },
   forum: {
     upcoming: 'Sắp diễn ra',

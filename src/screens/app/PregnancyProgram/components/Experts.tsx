@@ -65,14 +65,14 @@ const Experts = (props: ExpertsProps) => {
       <View
         style={{
           position: 'absolute',
-          bottom: '25%',
+          bottom: '32.5%',
         }}>
         {renderLine()}
       </View>
       <View
         style={{
           position: 'absolute',
-          bottom: '55%',
+          bottom: '57.5%',
         }}>
         {renderLine()}
       </View>

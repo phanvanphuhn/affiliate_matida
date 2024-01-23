@@ -781,6 +781,7 @@ export const en = {
     done: 'Done',
     savedFileSuccess: 'Saved file success!',
     copySuccessfully: 'Copy successfully',
+    nailedIt: 'Nailed it',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
@@ -957,6 +958,8 @@ export const en = {
     Successful: 'Successful',
     Pending: 'Pending',
     Failed: 'Failed',
+    onlyAvailable:
+      'This content is only available for users of\nMatida Masterclass. Sign up now to view it.',
   },
   forum: {
     upcoming: 'Upcoming',

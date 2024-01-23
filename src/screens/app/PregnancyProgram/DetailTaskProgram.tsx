@@ -213,7 +213,7 @@ const DetailTaskProgram = (props: DetailTaskProgramProps) => {
                 fontSize: scaler(15),
                 ...stylesCommon.fontWeight600,
               }}>
-              {t('common.done')}
+              {t('common.nailedIt')}
             </Text>
           </TouchableOpacity>
         </View>
