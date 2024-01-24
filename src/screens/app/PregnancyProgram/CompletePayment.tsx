@@ -27,7 +27,11 @@ import {ModalConfirmPayment} from '@component';
 import {useTranslation} from 'react-i18next';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {getPlanByCode, userConfirm} from '../../../services/pregnancyProgram';
+import {
+  getPlanByCode,
+  userConfirm,
+  changePaymentMethod,
+} from '../../../services/pregnancyProgram';
 import {GlobalService, PRODUCT_ID_PAY} from '@services';
 import {showMessage} from 'react-native-flash-message';
 import {RouteProp} from '@react-navigation/core/src/types';
@@ -85,9 +89,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
 
   const [plan, setPlan] = useState<PlanState>({});
   const [products, setProducts] = useState<string[]>([]);
-
-  const uuidv4 = require('uuid').v4;
-  const appAccountToken = uuidv4();
+  const [verifyCode, setVerifyCode] = useState<string>(
+    route?.params?.values?.verify_code,
+  );
 
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
@@ -103,27 +107,6 @@ const CompletePayment = (props: CompletePaymentProps) => {
       setPlan(res?.data);
     }
   };
-  // const listenPurchases = (
-  //   purchase: SubscriptionPurchase | ProductPurchase,
-  // ) => {
-  //   const receipt = purchase.transactionReceipt;
-  //   if (receipt) {
-  //   }
-  // };
-  // const initialize = async () => {
-  //   let init = await initConnection();
-  //   if (Platform.OS == 'android') {
-  //     await flushFailedPurchasesCachedAsPendingAndroid();
-  //   }
-  // };
-
-  useEffect(() => {
-    getData();
-    // initialize();
-    // return () => {
-    //   endConnection();
-    // };
-  }, []);
 
   const onPaymentFinish = async () => {
     try {
@@ -135,7 +118,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
       );
       console.log('=>(CompletePayment.tsx:193) route?.params', route?.params);
       let result = await userConfirm({
-        verify_code: route?.params?.values?.verify_code,
+        verify_code: verifyCode,
         user_id: user?.id,
         payment_method: 'bank_transfer',
       });
@@ -214,25 +197,57 @@ const CompletePayment = (props: CompletePaymentProps) => {
     });
   };
 
-  const makePurchase = async (sku: any) => {
+  const switchPaymentMethod = async (type: string) => {
+    GlobalService.showLoading();
+    try {
+      const res = await changePaymentMethod({
+        payment_id: route?.params?.values.id,
+        payment_method: type,
+      });
+      setVerifyCode(res?.data?.verify_code);
+      GlobalService.hideLoading();
+      return res;
+    } catch (error) {
+      GlobalService.hideLoading();
+    }
+  };
+
+  const makePurchase = async (sku: any, code: string) => {
     GlobalService.showLoading();
     try {
       const res = await requestPurchase({
         sku,
-        appAccountToken,
+        appAccountToken: code,
         andDangerouslyFinishTransactionAutomaticallyIOS: false,
       });
-      const result = await userConfirm({
-        verify_code: route?.params?.values?.verify_code,
-        user_id: user?.id,
-        payment_method: 'apple_pay',
-        transaction_id: res?.transactionId,
-      });
-      if (result?.success) {
-        navigate(ROUTE_NAME.TAB_HOME);
+      if (res?.transactionReceipt) {
+        const result = await userConfirm({
+          verify_code: code,
+          user_id: user?.id,
+          payment_method: 'apple_pay',
+          transaction_id: res?.transactionId,
+        });
+        if (result?.success) {
+          navigate(ROUTE_NAME.TAB_HOME);
+        } else {
+          showMessage({
+            message: t('common.paymentFailed'),
+            type: 'danger',
+            backgroundColor: colors.primaryBackground,
+          });
+          switchPaymentMethod('bank_transfer');
+        }
+      } else {
+        showMessage({
+          message: t('common.paymentFailed'),
+          type: 'danger',
+          backgroundColor: colors.primaryBackground,
+        });
+        switchPaymentMethod('bank_transfer');
       }
       GlobalService.hideLoading();
     } catch (error) {
+      switchPaymentMethod('bank_transfer');
       GlobalService.hideLoading();
       console.error('Error making purchase', error.message);
     }
@@ -290,6 +305,10 @@ const CompletePayment = (props: CompletePaymentProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <SafeAreaView edges={['top']} style={[styles.container]}>
       <View style={[styles.container]}>
@@ -315,18 +334,24 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   borderColor: colors.pink200,
                   marginRight: scaler(15),
                 },
-              ]}>
+              ]}
+              onPress={() => {
+                switchPaymentMethod('bank_transfer');
+              }}>
               <Image source={ic_transfer} />
               <Text style={styles.textTransfer}>
                 {t('pregnancyProgram.bankTransfer')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {
-                makePurchase(products[0]?.productId);
+              onPress={async () => {
+                const res = await switchPaymentMethod('apple_pay');
+                if (res?.success) {
+                  makePurchase(products[0]?.productId, res?.data?.verify_code);
+                }
               }}
               disabled={Platform.OS == 'android' ? true : false}
-              style={[styles.buttonTransfer, {opacity: 0.5}]}>
+              style={[styles.buttonTransfer]}>
               <Image source={Platform.OS == 'ios' ? ic_apple : ic_google} />
               <Text style={styles.textTransfer}>
                 {Platform.OS == 'ios' ? 'Apple Pay' : 'Google Pay'}
@@ -363,14 +388,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 <Text style={styles.textLabel}>
                   {t('pregnancyProgram.transactionContent')}
                 </Text>
-                <Text style={styles.input}>
-                  {route?.params?.values?.verify_code}
-                </Text>
+                <Text style={styles.input}>{verifyCode}</Text>
                 <TouchableOpacity
-                  onPress={onCopy(
-                    route?.params?.values?.verify_code,
-                    copyType.TRANSACTION,
-                  )}
+                  onPress={onCopy(verifyCode, copyType.TRANSACTION)}
                   style={styles.buttonCopy}>
                   <Image source={ic_copy} />
                 </TouchableOpacity>

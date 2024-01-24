@@ -782,6 +782,7 @@ export const en = {
     savedFileSuccess: 'Saved file success!',
     copySuccessfully: 'Copy successfully',
     nailedIt: 'Nailed it',
+    paymentFailed: 'Payment failed!',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',

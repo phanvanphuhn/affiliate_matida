@@ -784,6 +784,7 @@ export const vi = {
     done: 'Hoàn thành',
     savedFileSuccess: 'Đã lưu QR code vào máy!',
     copySuccessfully: 'Sao chép thành công',
+    paymentFailed: 'Thanh toán không thành công!',
   },
   pregnancyProgram: {
     masterClassResult: 'Kết quả bài test đầu vào Masterclass',
