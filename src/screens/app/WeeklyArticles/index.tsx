@@ -85,9 +85,7 @@ export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
   };
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const isCheckPayment = useMemo(
-    () =>
-      !user?.user_subscriptions?.some(e => e.code == 'PP') ||
-      user.payments.some(e => e.status == 'processing'),
+    () => user?.user_subscriptions?.some(e => e.code == 'PP'),
     [user],
   );
   return (
@@ -120,10 +118,10 @@ export const WeeklyArticles = ({route}: {route: {params: {week: number}}}) => {
             weeks={weeks}
             file={listArticles}
             onPress={(item: any) => {
-              if (!isCheckPayment) {
-                navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: item});
-              } else {
+              if (!isCheckPayment && item?.is_payment && !item?.is_paid) {
                 navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+              } else {
+                navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: item});
               }
             }}
           />

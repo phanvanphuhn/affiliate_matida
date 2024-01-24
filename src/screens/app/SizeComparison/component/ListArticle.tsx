@@ -30,10 +30,10 @@ export const ListArticle = ({week}: Props) => {
   }, [week]);
 
   const handlePressItemArticle = (article: IArticles) => {
-    if (isCheckPayment) {
-      navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
-    } else {
+    if (!isCheckPayment && article?.is_payment && !article?.is_paid) {
       navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+    } else {
+      navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
     }
   };
 

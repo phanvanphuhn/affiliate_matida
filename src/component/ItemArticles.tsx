@@ -21,18 +21,16 @@ export const ItemArticles = ({item}: IProps) => {
   const {created_at, image, title = '', mood, views} = item;
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const isCheckPayment = useMemo(
-    () =>
-      !user?.user_subscriptions?.some(e => e.code == 'PP') ||
-      user.payments.some(e => e.status == 'processing'),
+    () => user?.user_subscriptions?.some(e => e.code == 'PP'),
     [user],
   );
   const isPayment = item?.is_payment && !item?.is_paid;
 
   const handlePress = () => {
-    if (!isCheckPayment) {
-      navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: item});
-    } else {
+    if (!isCheckPayment && item?.is_payment && !item?.is_paid) {
       navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+    } else {
+      navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: item});
     }
   };
   return (
@@ -42,7 +40,7 @@ export const ItemArticles = ({item}: IProps) => {
       onPress={handlePress}>
       <View style={{marginRight: scaler(16)}}>
         <AppImage uri={image} style={styles.image} />
-        {isPayment && isCheckPayment ? (
+        {isPayment ? (
           <LinearGradient
             colors={['#0006', '#00000090']}
             style={{

@@ -179,7 +179,8 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
                 eventType.MIX_PANEL,
               );
               trackEventBranch(event.TAB.CLICK_TAB_MASTERCLASS, {});
-              checkPlan();
+              // checkPlan();
+              navigation.navigate(route.name);
             } else {
               navigation.navigate(route.name);
               onRefreshExplore();

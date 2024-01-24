@@ -20,7 +20,6 @@ const screenOptions = {
 const StackTab = () => {
   //Render ra bottomTab
   const user = useSelector((state: any) => state?.auth?.userInfo);
-  console.log('=>(StackTab.tsx:23) user', user);
 
   return (
     <Tab.Navigator

@@ -23,6 +23,8 @@ export interface IArticles {
   created_at: string;
   image: string | null;
   is_popular: boolean;
+  is_payment: boolean;
+  is_paid: boolean;
   mood: string | null;
   title_en: string | null;
   title_vi: string | null;
