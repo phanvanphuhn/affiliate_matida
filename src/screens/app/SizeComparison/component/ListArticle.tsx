@@ -57,7 +57,7 @@ export const ListArticle = ({week}: Props) => {
       length={data?.length}
       styleHeader={{paddingHorizontal: scaler(20)}}
       contentContainerStyle={{marginBottom: 0}}
-      onPressSeeMore={() => navigate(ROUTE_NAME.WEEKLY_ARTICLES)}>
+      onPressSeeMore={() => navigate(ROUTE_NAME.TAB_FEED)}>
       {data?.map((article: IArticles) => (
         <NewArticles
           article={article}

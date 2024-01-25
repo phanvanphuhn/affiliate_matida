@@ -75,7 +75,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: scaler(12),
     marginBottom: scaler(24),
-    paddingHorizontal: scaler(16),
+    backgroundColor: colors.gray350,
+    marginHorizontal: scaler(16),
+    borderRadius: scaler(40),
   },
   chooseTxtAT: {
     ...stylesCommon.fontSarabun600,

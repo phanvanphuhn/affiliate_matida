@@ -236,7 +236,9 @@ const Intro = () => {
         />
         <View style={styles.viewBottomText}>
           <SvgLogo />
-          <Text style={styles.txtBottom}>{t('intro.introTitle')}</Text>
+          <Text style={[styles.txtBottom, {marginBottom: scaler(12)}]}>
+            {t('intro.introTitle')}
+          </Text>
           <Text style={styles.txtBottomContent}>{t('intro.introContent')}</Text>
         </View>
         <View style={styles.viewBottom}>

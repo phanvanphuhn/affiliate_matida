@@ -31,7 +31,7 @@ export const VERSION_CODE_PUSH = `v6.5${
 //DOMAIN PRODUCT
 export const BASEURL =
   environment === EEnvironment.PRODUCT
-    ? 'https://api.matida.app/api/' //Domain product
+    ? 'https://api.matida.dev/api/' //Domain product
     : 'https://api.matida.dev/api/'; //DOMAIN DEV
 export const socketURL =
   environment === EEnvironment.PRODUCT
