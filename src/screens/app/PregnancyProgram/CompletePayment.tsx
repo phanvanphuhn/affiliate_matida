@@ -92,6 +92,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
   const [verifyCode, setVerifyCode] = useState<string>(
     route?.params?.values?.verify_code,
   );
+  const [paymentType, setPaymentType] = useState<string>('bank_transfer');
 
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
@@ -198,6 +199,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
   };
 
   const switchPaymentMethod = async (type: string) => {
+    setPaymentType(type);
     GlobalService.showLoading();
     try {
       const res = await changePaymentMethod({
@@ -331,7 +333,10 @@ const CompletePayment = (props: CompletePaymentProps) => {
               style={[
                 styles.buttonTransfer,
                 {
-                  borderColor: colors.pink200,
+                  borderColor:
+                    paymentType == 'bank_transfer'
+                      ? colors.pink200
+                      : colors.gray,
                   marginRight: scaler(15),
                 },
               ]}
@@ -351,7 +356,15 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 }
               }}
               disabled={Platform.OS == 'android' ? true : false}
-              style={[styles.buttonTransfer]}>
+              style={[
+                styles.buttonTransfer,
+                {
+                  borderColor:
+                    paymentType !== 'bank_transfer'
+                      ? colors.pink200
+                      : colors.gray,
+                },
+              ]}>
               <Image source={Platform.OS == 'ios' ? ic_apple : ic_google} />
               <Text style={styles.textTransfer}>
                 {Platform.OS == 'ios' ? 'Apple Pay' : 'Google Pay'}
