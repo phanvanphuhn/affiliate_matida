@@ -199,14 +199,16 @@ const CompletePayment = (props: CompletePaymentProps) => {
   };
 
   const switchPaymentMethod = async (type: string) => {
-    setPaymentType(type);
     GlobalService.showLoading();
     try {
       const res = await changePaymentMethod({
         payment_id: route?.params?.values.id,
         payment_method: type,
       });
-      setVerifyCode(res?.data?.verify_code);
+      if (res?.success) {
+        setPaymentType(type);
+        setVerifyCode(res?.data?.verify_code);
+      }
       GlobalService.hideLoading();
       return res;
     } catch (error) {
@@ -230,6 +232,11 @@ const CompletePayment = (props: CompletePaymentProps) => {
           transaction_id: res?.transactionId,
         });
         if (result?.success) {
+          showMessage({
+            message: t('common.paymentSuccess'),
+            type: 'success',
+            backgroundColor: colors.primaryBackground,
+          });
           navigate(ROUTE_NAME.TAB_HOME);
         } else {
           showMessage({
@@ -249,6 +256,11 @@ const CompletePayment = (props: CompletePaymentProps) => {
       }
       GlobalService.hideLoading();
     } catch (error) {
+      showMessage({
+        message: t('common.paymentFailed'),
+        type: 'danger',
+        backgroundColor: colors.primaryBackground,
+      });
       switchPaymentMethod('bank_transfer');
       GlobalService.hideLoading();
       console.error('Error making purchase', error.message);

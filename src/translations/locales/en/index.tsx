@@ -783,6 +783,7 @@ export const en = {
     copySuccessfully: 'Copy successfully',
     nailedIt: 'Nailed it',
     paymentFailed: 'Payment failed!',
+    paymentSuccess: 'Payment success!',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
