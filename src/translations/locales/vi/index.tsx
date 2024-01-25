@@ -792,7 +792,7 @@ export const vi = {
     letWork: 'Khám phá Matida Masterclass ngay!',
     aioCourse: 'Trọn bộ kiến thức thai kỳ',
     haveQuestion: 'Mẹ có thắc mắc về khoá học?',
-    checkThisOut: 'Tìm hiểu thêm',
+    checkThisOut: 'Tìm hiểu ngay',
     liftTime: 'trọn đời',
     signUpEarly: 'Mẹ vui con khoẻ. Đăng ký ngay!',
     directAccess: 'Kết nối trực tiếp cùng chuyên gia',

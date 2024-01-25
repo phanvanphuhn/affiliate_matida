@@ -788,7 +788,7 @@ export const en = {
     here: "Here’s what we'll focus on",
     adjust: 'You can always adjust it later',
     letWork: "Let's work on it together",
-    aioCourse: 'The All-in-one Course',
+    aioCourse: 'Your Pregnancy Companion',
     haveQuestion: 'Have questions about this course?',
     checkThisOut: 'Check this out',
     liftTime: 'lifetime',
