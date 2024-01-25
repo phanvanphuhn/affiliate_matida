@@ -11,7 +11,7 @@ const PickerWeek = React.memo((props: any) => {
   const flatList: any = useRef(null);
   const {customStyleContainer, onSelect, weekNotifi} = props;
   const data = convertArrayScroll();
-  const colorSelect = '#E66D6E';
+  const colorSelect = '#8FA0FF';
   const weekPregnant =
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
@@ -77,7 +77,7 @@ const PickerWeek = React.memo((props: any) => {
               <Text
                 style={[
                   styles.value,
-                  {color: select === item?.value ? '#FFFFFF' : colorSelect},
+                  {color: select === item?.value ? '#FFFFFF' : '#A1A2AB'},
                 ]}>
                 {item?.label} {item?.value}
               </Text>
@@ -116,13 +116,11 @@ const styles = StyleSheet.create({
   item: {
     width: ITEM_WIDTH,
     height: scaler(40),
-    borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: MARGIN_HORIZONTAL,
     borderRadius: scaler(40),
-    borderColor: '#E66D6E',
   },
   value: {
     ...stylesCommon.fontWeight400,

@@ -121,11 +121,11 @@ const styles = StyleSheet.create({
     maxWidth: scaler(widthScreen - 150),
   },
   textSeeMore: {
-    ...stylesCommon.fontWeight600,
-    fontSize: scaler(14),
+    ...stylesCommon.fontSarabun500,
+    fontSize: scaler(15),
     lineHeight: scaler(21),
     textAlign: 'right',
-    color: '#E66D6E',
+    color: colors.pink300,
   },
   textNoData: {
     textAlign: 'center',
