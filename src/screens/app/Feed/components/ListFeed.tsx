@@ -85,6 +85,16 @@ const ListFeed = (props: any) => {
       );
       navigation.navigate(ROUTE_NAME.DETAIL_DEAL, {data: item});
     } else {
+      trackingAppEvent(
+        event.FEED.FEED_OPEN_CONTENT,
+        {
+          params: {
+            id: item.contentid,
+            content_type: item.content_type,
+          },
+        },
+        eventType.MIX_PANEL,
+      );
       navigation.navigate(ROUTE_NAME.DETAIL_FEED, {
         id: item.contentid,
         content_type: item.content_type,

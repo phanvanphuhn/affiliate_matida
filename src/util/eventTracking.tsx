@@ -139,6 +139,7 @@ export const event = {
     FEED_MOM_TEST: 'feed_mom_test',
     FEED_FINISH_QUIZ: 'feed_finish_quiz',
     FEED_DO_MOMTEST: 'feed_do_momtest',
+    FEED_OPEN_CONTENT: 'FEED_OPEN_CONTENT',
   },
   DEAL: {
     CLICK_DEAL: 'click_deal',
@@ -188,5 +189,9 @@ export const event = {
     PP_FEED_SIGN_UP_NOW: 'PP_FEED_SIGN_UP_NOW',
     PP_TAB_MASTERCLASS_BUTTON_SIGNUP: 'PP_TAB_MASTERCLASS_BUTTON_SIGNUP',
     PP_SIGNUP_CHECK_THIS_OUT: 'PP_SIGNUP_CHECK_THIS_OUT',
+    pp_pregnancy_tracker_teaser_take_the_test:
+      'pp_pregnancy_tracker_teaser_take_the_test',
+    pp_pregnancy_tracker_teaser_sign_up_now:
+      'pp_pregnancy_tracker_teaser_sign_up_now',
   },
 };
