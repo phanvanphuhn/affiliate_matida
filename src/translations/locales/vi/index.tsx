@@ -190,9 +190,9 @@ export const vi = {
     buttonBannerQuiz: 'Kiểm tra ngay bây giờ',
     signUpNow: 'Khám phá ngay',
     getStarted: 'Kiểm tra kiến thức',
-    wantToBeTheSmartest:
-      'Matida cung cấp kiến thức và\nchỉ dẫn mẹ qua từng tuần thai',
-    getAheadWithMatidaMasterclass: 'Mẹ muốn con thông\nminh vượt trội?',
+    wantToBeTheSmartest: 'Mẹ bầu cần tư vấn suốt thai kỳ?',
+    getAheadWithMatidaMasterclass:
+      'Đăng ký Masterclass\nđể nhận tư vấn\ntrực tiếp từ bác sĩ',
     takeTheMatidaMasterclass: 'Tham gia Matida Masterclass',
     wellWorkYourChallenges: 'Trở thành mẹ bầu thông thái cùng Matida',
   },

@@ -64,7 +64,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
 
   return (
     <ImageBackground
-      source={userScore ? background_home2 : background_home}
+      source={userScore ? background_home2 : undefined}
       style={[styles.container]}>
       <View style={styles.container3}>
         <View style={{flex: 1}}>
@@ -102,14 +102,15 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {userScore ? (
         <BarchartOnboardingHome {...userScore} />
       ) : (
-        <View style={{}}>
-          <Image
-            source={chuyengia2}
-            style={{
-              width: scaler(150),
-              height: scaler(150),
-            }}
-          />
+        <View
+          style={{
+            position: 'absolute',
+            right: -12,
+            bottom: -10,
+            zIndex: -100,
+            transform: [{scale: 0.9}],
+          }}>
+          <Image source={chuyengia2} style={{}} />
         </View>
       )}
     </ImageBackground>
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'flex-end',
     marginBottom: 18,
+    backgroundColor: colors.pink350,
   },
   buttonClose: {
     alignSelf: 'flex-end',
@@ -196,7 +198,6 @@ const styles = StyleSheet.create({
   container3: {
     marginBottom: scaler(16),
     marginTop: scaler(16),
-    flex: 1,
     paddingLeft: scaler(15),
   },
   container4: {
@@ -210,12 +211,12 @@ const styles = StyleSheet.create({
   container5: {},
   textOff: {
     color: colors.labelColor,
-    fontSize: scaler(11),
+    fontSize: scaler(12),
     ...stylesCommon.fontSarabun500,
   },
   textPrice1: {
     color: colors.neutral10,
-    fontSize: scaler(20),
+    fontSize: scaler(16),
     ...stylesCommon.fontWeight600,
     marginTop: scaler(8),
   },

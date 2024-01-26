@@ -188,8 +188,9 @@ export const en = {
     buttonBannerQuiz: 'Take test now',
     signUpNow: 'Sign up now',
     getStarted: 'Get started',
-    wantToBeTheSmartest: 'Want to be the\nsmartest mom in Vietnam?',
-    getAheadWithMatidaMasterclass: 'Get ahead with the\nMatida Masterclass',
+    wantToBeTheSmartest: 'Seeking pregnancy support?',
+    getAheadWithMatidaMasterclass:
+      'Get guidance from\nmedical experts in\nour Masterclass Zalo',
     takeTheMatidaMasterclass: 'Take the Matida Masterclass',
     wellWorkYourChallenges: "We'll work on\nyour challenges\ntogether",
   },
