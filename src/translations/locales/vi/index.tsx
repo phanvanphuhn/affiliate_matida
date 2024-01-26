@@ -784,6 +784,8 @@ export const vi = {
     done: 'Hoàn thành',
     savedFileSuccess: 'Đã lưu QR code vào máy!',
     copySuccessfully: 'Sao chép thành công',
+    paymentFailed: 'Thanh toán không thành công!',
+    paymentSuccess: 'Thanh toán thành công!',
   },
   pregnancyProgram: {
     masterClassResult: 'Kết quả bài test đầu vào Masterclass',
@@ -960,6 +962,8 @@ export const vi = {
     Successful: 'Thành công',
     Pending: 'Đang xử lý',
     Failed: 'Thất bại',
+    onlyAvailable:
+      'Nội dung này chỉ dành cho người dùng\nMatida Masterclass. Đăng ký ngay.',
   },
   forum: {
     upcoming: 'Sắp diễn ra',
