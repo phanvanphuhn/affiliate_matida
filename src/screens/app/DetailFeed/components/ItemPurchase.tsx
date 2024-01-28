@@ -84,9 +84,7 @@ const ItemPurchase = (props: ItemPurchaseProps) => {
             marginBottom: scaler(24),
             textAlign: 'center',
           }}>
-          {
-            ' Nội dung này chỉ dành cho người dùng\nMatida Masterclass. Đăng ký ngay.'
-          }
+          {t('myPurchases.onlyAvailable')}
         </Text>
         <TouchableOpacity
           onPress={checkPlan}

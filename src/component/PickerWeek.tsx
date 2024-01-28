@@ -1,17 +1,17 @@
-import {scaler, stylesCommon} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {convertArrayScroll} from '@util';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 
-const ITEM_WIDTH = scaler(84);
+const ITEM_WIDTH = scaler(73);
 const MARGIN_HORIZONTAL = scaler(6);
 
 const PickerWeek = React.memo((props: any) => {
   const flatList: any = useRef(null);
   const {customStyleContainer, onSelect, weekNotifi} = props;
   const data = convertArrayScroll();
-  const colorSelect = '#E66D6E';
+  const colorSelect = colors.purple4;
   const weekPregnant =
     useSelector(
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
@@ -77,7 +77,7 @@ const PickerWeek = React.memo((props: any) => {
               <Text
                 style={[
                   styles.value,
-                  {color: select === item?.value ? '#FFFFFF' : colorSelect},
+                  {color: select === item?.value ? '#FFFFFF' : colors.gray550},
                 ]}>
                 {item?.label} {item?.value}
               </Text>
@@ -115,19 +115,18 @@ const styles = StyleSheet.create({
   },
   item: {
     width: ITEM_WIDTH,
-    height: scaler(40),
-    borderWidth: 1,
+    height: scaler(32),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: MARGIN_HORIZONTAL,
     borderRadius: scaler(40),
-    borderColor: '#E66D6E',
+    borderColor: colors.white,
   },
   value: {
-    ...stylesCommon.fontWeight400,
-    fontSize: scaler(14),
-    lineHeight: scaler(21),
+    ...stylesCommon.fontSarabun500,
+    fontSize: scaler(13),
+    lineHeight: scaler(18),
   },
 });
 

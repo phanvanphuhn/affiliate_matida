@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // marginLeft: scaler(12),
-    backgroundColor: '#FDF1F1',
+    backgroundColor: '#8FA0FF',
     marginTop: scaler(6),
     alignSelf: 'flex-start',
   },
   txtTitle: {
     fontSize: scaler(12),
     ...stylesCommon.fontWeight600,
-    color: colors.primary,
+    color: colors.white,
   },
 });
 

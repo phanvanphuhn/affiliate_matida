@@ -35,6 +35,7 @@ import {Size} from './component/Size';
 import {ViewSelectType} from './component/ViewSelectType';
 import {styles} from './styles';
 import {trackClickedOnPregnancyTracker} from '@services/webengageManager.tsx';
+import TeaserProgram from '../Home/components/TeaserProgram';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -179,6 +180,7 @@ const SizeComparison = () => {
     return (
       <View>
         {renderBodyByStatus()}
+        <ListArticle week={weekSelected} />
 
         {status === 1 && (
           <>
@@ -199,9 +201,24 @@ const SizeComparison = () => {
                 );
                 navigation.navigate(ROUTE_NAME.CREATE_NEWPOST);
               }}>
-              <SvgMessages3 />
+              <SvgMessages3 color={colors.white} />
               <Text style={styles.titleButton}>{t('home.createPost')}</Text>
             </TouchableOpacity>
+
+            {isShowForReviewer(user) &&
+              (user?.baby_type == 'pregnant' ||
+                user?.baby_type == 'pregnant-overdue' ||
+                user?.baby_type == 'unknown') &&
+              (!user?.payments?.length ||
+                user?.payments?.some(e => e.status == 'processing')) && (
+                <View>
+                  <Text style={styles.textTitle}>Matida Masterclass</Text>
+                  <View style={{marginHorizontal: 16}}>
+                    <TeaserProgram isHome={true} />
+                  </View>
+                </View>
+              )}
+            {/* <BannerTestQuiz /> */}
             {homeData?.data?.dailyQuizz ? (
               <>
                 <Text style={styles.textTitle}>
@@ -210,8 +227,6 @@ const SizeComparison = () => {
                 <ViewQuiz onAnswer={onAnswerQuiz} />
               </>
             ) : null}
-            {/* <BannerTestQuiz /> */}
-            <ListArticle week={weekSelected} />
           </>
         )}
       </View>

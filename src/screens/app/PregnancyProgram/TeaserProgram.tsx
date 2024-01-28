@@ -112,6 +112,11 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   };
 
   const onCheckOut = () => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_SIGNUP_CHECK_THIS_OUT,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.ABOUT_PROGRAM);
   };
   const pagination = () => {

@@ -45,6 +45,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   const {t} = useTranslation();
+
   const checkQuiz = async () => {
     if (!user.user_subscriptions.some(e => e.code == 'PP')) {
       if (!user.payments.some(e => e.status == 'processing')) {
@@ -56,6 +57,40 @@ const TeaserProgram = (props: TeaserProgramProps) => {
     } else {
       setUserScore(false);
     }
+  };
+
+  const onTest = () => {
+    trackingAppEvent(
+      event.MASTER_CLASS.PP_HOMEPAGE_TEASER_SIGN_UP_NOW,
+      {
+        params: {
+          userId: user.id,
+        },
+      },
+      eventType.MIX_PANEL,
+    );
+    if (userScore) {
+      trackingAppEvent(
+        event.MASTER_CLASS.pp_pregnancy_tracker_teaser_sign_up_now,
+        {
+          params: {
+            userId: user.id,
+          },
+        },
+        eventType.MIX_PANEL,
+      );
+    } else {
+      trackingAppEvent(
+        event.MASTER_CLASS.pp_pregnancy_tracker_teaser_take_the_test,
+        {
+          params: {
+            userId: user.id,
+          },
+        },
+        eventType.MIX_PANEL,
+      );
+    }
+    checkPlan();
   };
 
   useEffect(() => {
@@ -79,20 +114,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               : t('home.getAheadWithMatidaMasterclass')}
           </Text>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            trackingAppEvent(
-              event.MASTER_CLASS.PP_HOMEPAGE_TEASER_SIGN_UP_NOW,
-              {
-                params: {
-                  userId: user.id,
-                },
-              },
-              eventType.MIX_PANEL,
-            );
-            checkPlan();
-          }}
-          style={styles.buttonSignUp}>
+        <TouchableOpacity onPress={onTest} style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>
             {userScore ? t('myPurchases.signUpNow') : t('home.getStarted')}
           </Text>

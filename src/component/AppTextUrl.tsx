@@ -36,7 +36,7 @@ export const AppTextUrl = ({
   const handleUrlPress = async (url: string) => {
     if (isForum) {
       trackingAppEvent(
-        event.MASTER_CLASS.PP_USER_INFO_NEXT,
+        event.FORUM.FORUM_CLICK_LINK_RECOMMENDATION,
         {id: user?.id},
         eventType.MIX_PANEL,
       );

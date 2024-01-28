@@ -101,8 +101,11 @@ export const LikeView = (props: any) => {
                 color: colors.black,
               },
             ]}>
-            {parseInt(data?.total_comment ?? '0', 10) +
-              parseInt(data?.total_reply_comment ?? '0', 10)}
+            {
+              parseInt(data?.total_comment ?? '0', 10)
+              // +
+              //   parseInt(data?.total_reply_comment ?? '0', 10)
+            }
           </Text>
         </TouchableOpacity>
       </View>
