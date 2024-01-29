@@ -784,6 +784,7 @@ export const en = {
     nailedIt: 'Nailed it',
     paymentFailed: 'Payment failed!',
     paymentSuccess: 'Payment success!',
+    buyNow: 'Click to pay',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
