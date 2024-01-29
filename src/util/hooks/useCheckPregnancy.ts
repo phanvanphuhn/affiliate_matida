@@ -7,7 +7,7 @@ import FeedbackTask from '../../screens/app/PregnancyProgram/FeedbackTask';
 
 interface Props {}
 
-const useCheckPregnancy = () => {
+const useCheckPregnancy = (isHome: boolean) => {
   const [state, setState] = useState();
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const navigation = useNavigation<any>();
@@ -29,10 +29,13 @@ const useCheckPregnancy = () => {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
     } else {
       if (user.payments.some(e => e.status == 'processing')) {
-        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
-          values: user.payments.find(e => e.status == 'processing'),
-          isBack: true,
-        });
+        navigation.navigate(
+          isHome ? ROUTE_NAME.NEW_USER_PROGRAM : ROUTE_NAME.TEASER_PROGRAM,
+          {
+            values: user.payments.find(e => e.status == 'processing'),
+            isBack: true,
+          },
+        );
       } else {
         getDataQuestion();
       }

@@ -82,7 +82,14 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-    navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
+    if (user.payments.some(e => e.status == 'processing')) {
+      navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+        values: user.payments.find(e => e.status == 'processing'),
+        isBack: true,
+      });
+    } else {
+      navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
+    }
   };
   const _renderItem = ({item, index}) => {
     return (

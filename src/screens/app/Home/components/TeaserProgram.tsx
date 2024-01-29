@@ -41,7 +41,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   const [userScore, setUserScore] = useState();
   const navigation = useNavigation<any>();
   const user = useSelector((state: any) => state?.auth?.userInfo);
-  const checkPlan = useCheckPregnancy();
+  const checkPlan = useCheckPregnancy(true);
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   const {t} = useTranslation();
@@ -90,7 +90,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         eventType.MIX_PANEL,
       );
     }
-    checkPlan();
+    navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
   };
 
   useEffect(() => {
