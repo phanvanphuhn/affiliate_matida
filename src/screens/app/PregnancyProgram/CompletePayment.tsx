@@ -379,7 +379,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
               ]}>
               <Image source={Platform.OS == 'ios' ? ic_apple : ic_google} />
               <Text style={styles.textTransfer}>
-                {Platform.OS == 'ios' ? 'Apple Pay' : 'Google Pay'}
+                {Platform.OS == 'ios' ? t('common.buyNow') : 'Google Pay'}
               </Text>
             </TouchableOpacity>
           </View>

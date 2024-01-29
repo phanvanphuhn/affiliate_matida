@@ -786,6 +786,7 @@ export const vi = {
     copySuccessfully: 'Sao chép thành công',
     paymentFailed: 'Thanh toán không thành công!',
     paymentSuccess: 'Thanh toán thành công!',
+    buyNow: 'Mua ngay',
   },
   pregnancyProgram: {
     masterClassResult: 'Kết quả bài test đầu vào Masterclass',
