@@ -85,7 +85,7 @@ const ItemFeed = (props: ItemFeedProps) => {
           if (user?.user_subscriptions?.some(e => e.code == 'PP')) {
             props.onDetailClick && props.onDetailClick(props.index, props.item);
           } else {
-            navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+            checkPlan();
           }
         } else {
           props.onDetailClick && props.onDetailClick(props.index, props.item);

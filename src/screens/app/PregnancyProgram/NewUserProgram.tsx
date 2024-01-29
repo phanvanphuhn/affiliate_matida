@@ -49,7 +49,7 @@ interface NewUserProgramProps {}
 
 const NewUserProgram = (props: NewUserProgramProps) => {
   const navigation = useNavigation<any>();
-  const checkPlan = useCheckPregnancy(false);
+  const checkPlan = useCheckPregnancy(true);
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const week = useSelector((state: any) =>

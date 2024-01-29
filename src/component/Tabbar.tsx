@@ -57,7 +57,7 @@ type Props = {
 const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const checkPlan = useCheckPregnancy(false);
+  const checkPlan = useCheckPregnancy();
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const isCallExplore = useRef<boolean>(true);
@@ -178,11 +178,7 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
                 },
                 eventType.MIX_PANEL,
               );
-              if (user.payments.some(e => e.status == 'processing')) {
-                checkPlan();
-              } else {
-                navigation.navigate(route.name);
-              }
+              checkPlan();
             } else if (route.name == ROUTE_NAME.PREGNANCY_PROGRAM) {
               trackingAppEvent(
                 event.TAB.CLICK_TAB_MASTERCLASS,

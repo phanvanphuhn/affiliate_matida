@@ -7,21 +7,22 @@ import FeedbackTask from '../../screens/app/PregnancyProgram/FeedbackTask';
 
 interface Props {}
 
-const useCheckPregnancy = (isHome: boolean) => {
+const useCheckPregnancy = (isTab?: boolean) => {
   const [state, setState] = useState();
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const navigation = useNavigation<any>();
   const getDataQuestion = async () => {
     let result = await getQuestionOnboarding();
     if (result?.data?.user_score?.score) {
-      navigation.navigate(ROUTE_NAME.ONBOARDING_FINISHED, {
-        metadata: result?.data?.user_score?.metadata,
-        score: result?.data?.user_score?.score,
-      });
+      navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
     } else {
-      navigation.navigate(ROUTE_NAME.ONBOARDING_STEP, {
-        packageQuizz: result?.data?.package_quizz,
-      });
+      if (isTab) {
+        navigation.navigate(ROUTE_NAME.ONBOARDING_STEP, {
+          packageQuizz: result?.data?.package_quizz,
+        });
+      } else {
+        navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+      }
     }
   };
   const checkPlan = () => {
@@ -29,13 +30,7 @@ const useCheckPregnancy = (isHome: boolean) => {
       navigation.navigate(ROUTE_NAME.PREGNANCY_PROGRAM);
     } else {
       if (user.payments.some(e => e.status == 'processing')) {
-        navigation.navigate(
-          isHome ? ROUTE_NAME.NEW_USER_PROGRAM : ROUTE_NAME.TEASER_PROGRAM,
-          {
-            values: user.payments.find(e => e.status == 'processing'),
-            isBack: true,
-          },
-        );
+        navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
       } else {
         getDataQuestion();
       }

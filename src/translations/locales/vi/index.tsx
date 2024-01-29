@@ -194,7 +194,7 @@ export const vi = {
     getAheadWithMatidaMasterclass:
       'Đăng ký Masterclass\nđể nhận tư vấn\ntrực tiếp từ bác sĩ',
     takeTheMatidaMasterclass: 'Tham gia Matida Masterclass',
-    wellWorkYourChallenges: 'Trở thành mẹ bầu thông thái cùng Matida',
+    wellWorkYourChallenges: 'Trở thành mẹ\nbầu thông thái\ncùng Matida',
   },
   sizeComparison: {
     week: 'Tuần',

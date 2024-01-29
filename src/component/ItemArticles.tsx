@@ -12,6 +12,7 @@ import {ViewLock} from './Payment';
 import {useSelector} from 'react-redux';
 import {iconCrownWhite} from '@images';
 import LinearGradient from 'react-native-linear-gradient';
+import useCheckPregnancy from '../util/hooks/useCheckPregnancy';
 interface IProps {
   item?: any;
 }
@@ -20,6 +21,7 @@ export const ItemArticles = ({item}: IProps) => {
   const {t} = useTranslation();
   const {created_at, image, title = '', mood, views} = item;
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const checkPlan = useCheckPregnancy();
   const isCheckPayment = useMemo(
     () => user?.user_subscriptions?.some(e => e.code == 'PP'),
     [user],
@@ -28,7 +30,7 @@ export const ItemArticles = ({item}: IProps) => {
 
   const handlePress = () => {
     if (!isCheckPayment && item?.is_payment && !item?.is_paid) {
-      navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+      checkPlan();
     } else {
       navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: item});
     }
