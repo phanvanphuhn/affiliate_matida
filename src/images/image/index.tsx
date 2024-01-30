@@ -115,8 +115,12 @@ const background_home = require('./background_home.png');
 const background_home2 = require('./background_home2.png');
 const ic_teaser_en = require('./ic_teaser_en.png');
 const ic_teaser_vi = require('./ic_teaser_vi.png');
+const ic_warning = require('./ic_warning.png');
+const ic_like = require('./ic_like.png');
 
 export {
+  ic_like,
+  ic_warning,
   DailyQuiz,
   DailyQuizBackground,
   IconBackgroundImageHome,
