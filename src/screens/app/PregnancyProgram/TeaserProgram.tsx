@@ -24,6 +24,8 @@ import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {event, eventType, trackingAppEvent} from '@util';
+import useCheckPregnancy from '../../../util/hooks/useCheckPregnancy';
+import {getQuestionOnboarding} from '../../../services/pregnancyProgram';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -31,10 +33,13 @@ interface TeaserProgramProps {
 
 const TeaserProgram = (props: TeaserProgramProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [userScore, setUserScore] = useState();
+  const [packageQuizz, setPackageQuizz] = useState();
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const checkPlan = useCheckPregnancy();
 
   const data = [
     {
@@ -75,20 +80,37 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
     },
   ];
-
+  useEffect(() => {
+    const getScore = async () => {
+      let result = await getQuestionOnboarding();
+      if (result?.data?.user_score?.score) {
+        setUserScore(result?.data?.user_score?.score);
+      }
+      setPackageQuizz(result?.data?.package_quizz);
+    };
+    getScore();
+  }, []);
   const onSignUpNow = () => {
     trackingAppEvent(
       event.MASTER_CLASS.PP_TEASER_SIGNUP_BUTTON,
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-    if (user.payments.some(e => e.status == 'processing')) {
-      navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
-        values: user.payments.find(e => e.status == 'processing'),
-        isBack: true,
-      });
+
+    if (userScore) {
+      if (user.payments.some(e => e.status == 'processing')) {
+        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+          values: user.payments.find(e => e.status == 'processing'),
+          isBack: true,
+        });
+      } else {
+        navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
+      }
     } else {
-      navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
+      console.log('=>(TeaserProgram.tsx:113) packageQuizz', packageQuizz);
+      navigation.navigate(ROUTE_NAME.ONBOARDING_STEP, {
+        packageQuizz: packageQuizz,
+      });
     }
   };
   const _renderItem = ({item, index}) => {
@@ -155,6 +177,14 @@ const TeaserProgram = (props: TeaserProgramProps) => {
     );
   }, [activeSlide]);
 
+  const onBack = () => {
+    if (userScore) {
+      navigation.navigate(ROUTE_NAME.TAB_HOME);
+    } else {
+      navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+    }
+  };
+
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.container, {}]}>
@@ -166,7 +196,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           }}>
           {!props?.isHome && (
             <TouchableOpacity
-              onPress={goBack}
+              onPress={onBack}
               hitSlop={{top: 20, right: 20, bottom: 20, left: 20}}
               style={styles.buttonClose}>
               <SvgClose color={colors.labelColor} />
