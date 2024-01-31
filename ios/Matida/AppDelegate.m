@@ -53,7 +53,9 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
     // [RNBranch useTestInstance];
     [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
     NSURL *jsCodeLocation;
-  
+  if (@available(iOS 10.0, *)) {
+    [UNUserNotificationCenter currentNotificationCenter].delegate = (id<UNUserNotificationCenterDelegate>) self;
+  }
   RCTAppSetupPrepareApp(application);
   
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
@@ -83,7 +85,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
   [[ZaloSDK sharedInstance] initializeWithAppId:@"2775448152357876593"];
 
-  //  [[WebEngage sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+  [[WebEngage sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
   return YES;
@@ -134,11 +136,16 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 didReceiveNotificationResponse:(UNNotificationResponse *)response
          withCompletionHandler:(void (^)(void))completionHandler
 {
+  [WEGManualIntegration userNotificationCenter:center didReceiveNotificationResponse:response];
   [RNCPushNotificationIOS didReceiveNotificationResponse:response];
+  
+  completionHandler();
 }
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {
+  [WEGManualIntegration userNotificationCenter:center willPresentNotification:notification];
+      
   completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge);
 }
 
