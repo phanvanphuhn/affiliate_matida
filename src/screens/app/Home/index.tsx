@@ -9,6 +9,11 @@ import {
   StatusBar,
   Text,
   View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Linking,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -42,6 +47,7 @@ import {
   SizeComparisonComponent,
   ViewQuiz,
   WeeksPregnant,
+  getTrimester,
 } from './components';
 import {styles} from './styles';
 import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
@@ -88,7 +94,9 @@ import ContentUpdate from './components/ContentUpdate';
 import {trackCustomEvent} from '@services/webengageManager';
 import moment from 'moment';
 import TeaserProgram from './components/TeaserProgram';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
 
+const screenWidth = Dimensions.get('screen').width;
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
@@ -108,6 +116,58 @@ export type TState = {
   data: any;
   isShowNewBorn: boolean;
 };
+
+const productList = [
+  {
+    index: 1,
+    trimester: 1,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1706718622209122726.png',
+    productLink: 'https://shope.ee/5pjWDmJEMk',
+  },
+  {
+    index: 2,
+    trimester: 1,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720137078661856.png',
+    productLink: 'https://shope.ee/5V6hZoVjaE',
+  },
+  {
+    index: 3,
+    trimester: 1,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720187351737354.png',
+    productLink: 'https://shope.ee/3pyLS03YWV',
+  },
+  {
+    index: 4,
+    trimester: 2,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720216110933262.png',
+    productLink: 'https://shope.ee/9ewEsk5qFS',
+  },
+  {
+    index: 5,
+    trimester: 2,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720242457352242.png',
+    productLink: 'https://shope.ee/9pFf9eQTPo',
+  },
+  {
+    index: 6,
+    trimester: 3,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720266280160666.png',
+    productLink: 'https://shope.ee/8UkB2oie0W',
+  },
+  {
+    index: 7,
+    trimester: 3,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720291261198074.png',
+    productLink: 'https://shope.ee/6Kfmw6ydF8',
+  },
+];
 
 const Home = () => {
   let {initFB} = AppNotification;
@@ -134,10 +194,12 @@ const Home = () => {
     isSignUp: '',
     refreshing: true,
   });
+  const [activeSlide, setActiveSlide] = useState();
 
   const scrollRef = useRef<ScrollView>(null);
   const firstRef = useRef(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const carouselRef = useRef(null);
 
   const snapPoints = useMemo(() => ['30%', '50%'], []);
 
@@ -151,6 +213,10 @@ const Home = () => {
   const deepLink = useSelector((state: any) => state?.check?.deepLink);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
+  const trimester = getTrimester(weekPregnant?.weeks ?? week);
+  const productListByTrimester = productList?.filter(
+    item => item.trimester == trimester,
+  );
 
   const isSelectProfileNewBorn = newBorn.filter(
     item =>
@@ -272,6 +338,7 @@ const Home = () => {
         break;
     }
   };
+
   const fetchScreen = async () => {
     const getInitialLink = await dynamicLinks().getInitialLink();
     if (getInitialLink !== null && getInitialLink?.url && deepLink) {
@@ -505,6 +572,50 @@ const Home = () => {
     }
   };
 
+  const renderItemCarousel = ({item, index}: any) => {
+    return (
+      <TouchableOpacity
+        style={{paddingHorizontal: scaler(16), borderRadius: scaler(16)}}
+        onPress={() => {
+          Linking.canOpenURL(item?.productLink).then(supported => {
+            if (supported) {
+              Linking.openURL(item?.productLink);
+            } else {
+              return;
+            }
+          });
+        }}>
+        <Image
+          source={{uri: item?.productImage}}
+          style={{height: scaler(240), width: '100%', borderRadius: scaler(16)}}
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const pagination = () => {
+    return (
+      <Pagination
+        dotsLength={productListByTrimester?.length}
+        activeDotIndex={activeSlide}
+        dotStyle={{
+          width: 8,
+          height: 8,
+          borderRadius: 5,
+          marginHorizontal: 2,
+          backgroundColor: colors.pink4,
+        }}
+        inactiveDotStyle={{
+          width: 8,
+          height: 8,
+          borderRadius: 5,
+          marginHorizontal: 2,
+          backgroundColor: colors.gray550,
+        }}
+      />
+    );
+  };
+
   useEffect(() => {
     trackUser(user);
     if (
@@ -662,6 +773,26 @@ const Home = () => {
           ) : null}
 
           {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
+
+          {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+            <View>
+              <Carousel
+                // ref={c => {
+                //   carouselRef?.current = c;
+                // }}
+                data={productListByTrimester}
+                renderItem={renderItemCarousel}
+                sliderWidth={screenWidth}
+                itemWidth={screenWidth}
+                layout={'default'}
+                autoplay={true}
+                autoplayInterval={2000}
+                onSnapToItem={index => setActiveSlide(index)}
+                loop={true}
+              />
+              {pagination()}
+            </View>
+          )}
 
           {/* {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||
