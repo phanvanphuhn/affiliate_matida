@@ -225,7 +225,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               source={lang == 1 ? ic_teaser_en : ic_teaser_vi}
               style={{
                 width: widthScreen,
-                aspectRatio: 2 / 3,
+                resizeMode: 'contain',
               }}
             />
           </View>

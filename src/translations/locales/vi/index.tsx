@@ -937,7 +937,7 @@ export const vi = {
     AreYouReadyToBeTheBestMom:
       'Mẹ đã sẵn sàng để trở thành\nngười mẹ tuyệt vời?',
     LearnAboutTheBabyDevelopmentMilestones:
-      'Tìm hiểu về các mốc phát triển của bé',
+      'Cách ăn uống trong thai kỳ để sinh con thông minh',
     SignUpNowToUnlock: 'Đăng ký để mở khoá ngay',
     contentForWeekComeBackLater:
       'Nội dung này dành cho tuần thai thứ {{week}}.\nMẹ hãy quay lại sau nhé!',

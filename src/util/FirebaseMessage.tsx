@@ -65,7 +65,7 @@ function createAppNotification() {
     messaging().onMessage(async notification => {
       if (notification.messageId !== lastMessageId) {
         lastMessageId = notification.messageId || '';
-        handleNotiOnForeground(notification);
+        // handleNotiOnForeground(notification);
       }
     });
 

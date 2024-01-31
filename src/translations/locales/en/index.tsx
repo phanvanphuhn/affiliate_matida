@@ -935,7 +935,7 @@ export const en = {
     comeBackLater: 'Come back later',
     AreYouReadyToBeTheBestMom: 'Are you ready\nto be the best mom?',
     LearnAboutTheBabyDevelopmentMilestones:
-      'Learn about the Baby Development Milestones',
+      'Haptonomy and Nutritional Strategies for a Brilliant Baby',
     SignUpNowToUnlock: 'Analyze your knowledge',
     contentForWeekComeBackLater:
       'These contents are for week {{week}}. Come back later!',
