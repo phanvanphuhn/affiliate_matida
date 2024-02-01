@@ -789,11 +789,17 @@ export const vi = {
     buyNow: 'Mua ngay',
   },
   pregnancyProgram: {
-    masterClassResult: 'Kết quả bài test đầu vào Masterclass',
-    dontWorry: 'Mẹ đừng lo! Matida Masterclass cùng mẹ cải thiện toàn diện',
+    masterClassResult: 'Matida hiểu trăn trở của mẹ',
+    dontWorry: 'Mẹ yên tâm! Chuyên gia Matida\nđồng hành cùng mẹ cải thiện',
     here: 'Đây là những phương diện \nmẹ nên tập trung',
-    letWork: 'Khám phá Matida Masterclass ngay!',
+    letWork: 'Tìm hiểu ngay',
     aioCourse: 'Trọn bộ kiến thức thai kỳ',
+    yourResults: 'Kết quả của mẹ',
+    newbie: 'Người mới',
+    expert: 'Chuyên gia',
+    attention: 'Chú ý 🔥',
+    importantAttention:
+      'Mẹ có thể đã bỏ lỡ một vài thông tin quan trọng về thai kỳ và em bé của mình.',
     haveQuestion: 'Mẹ có thắc mắc về khoá học?',
     checkThisOut: 'Tìm hiểu ngay',
     liftTime: 'trọn đời',
@@ -846,6 +852,7 @@ export const vi = {
     finishTheTask: 'Hoàn thành ngay',
     reviewIt: 'Xem lại',
     pregnancyKnowledge: 'Kiến thức thai kỳ',
+    pregnancyBasics: 'Kiến thức thai kỳ',
     loveMoney: 'Tình yêu & Tài chính',
     fitnessNutrition: 'Sức khoẻ & Dinh dưỡng',
     personalChallenge: 'Thử thách',
@@ -930,7 +937,7 @@ export const vi = {
     AreYouReadyToBeTheBestMom:
       'Mẹ đã sẵn sàng để trở thành\nngười mẹ tuyệt vời?',
     LearnAboutTheBabyDevelopmentMilestones:
-      'Tìm hiểu về các mốc phát triển của bé',
+      'Cách ăn uống trong thai kỳ để sinh con thông minh',
     SignUpNowToUnlock: 'Đăng ký để mở khoá ngay',
     contentForWeekComeBackLater:
       'Nội dung này dành cho tuần thai thứ {{week}}.\nMẹ hãy quay lại sau nhé!',

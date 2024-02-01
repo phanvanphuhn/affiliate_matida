@@ -17,11 +17,11 @@ const useCheckPregnancy = (isTab?: boolean) => {
       navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
     } else {
       if (isTab) {
+        navigation.navigate(ROUTE_NAME.TEASER_PROGRAM);
+      } else {
         navigation.navigate(ROUTE_NAME.ONBOARDING_STEP, {
           packageQuizz: result?.data?.package_quizz,
         });
-      } else {
-        navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
       }
     }
   };

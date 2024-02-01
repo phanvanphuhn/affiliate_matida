@@ -12,7 +12,7 @@ import {
   getSizeComparison,
   GlobalService,
 } from '@services';
-import {colors} from '@stylesCommon';
+import {colors, scaler} from '@stylesCommon';
 import {
   event,
   eventType,
@@ -36,6 +36,7 @@ import {ViewSelectType} from './component/ViewSelectType';
 import {styles} from './styles';
 import {trackClickedOnPregnancyTracker} from '@services/webengageManager.tsx';
 import TeaserProgram from '../Home/components/TeaserProgram';
+import ProductCarousel from '../Home/components/ProductCarousel';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -180,6 +181,10 @@ const SizeComparison = () => {
     return (
       <View>
         {renderBodyByStatus()}
+        <View style={{marginBottom: scaler(16)}}>
+          <ProductCarousel />
+        </View>
+
         <ListArticle week={weekSelected} />
 
         {status === 1 && (

@@ -119,7 +119,7 @@ const ProgressBar = ({
   );
 };
 
-const getTrimester = (weeks: number) => {
+export const getTrimester = (weeks: number) => {
   const trimester = WEEK_MAX / weeks;
   if (trimester >= 3) {
     return 1;

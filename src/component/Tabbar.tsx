@@ -57,7 +57,7 @@ type Props = {
 const Tabbar: React.FC<Props> = ({state, navigation}) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
-  const checkPlan = useCheckPregnancy();
+  const checkPlan = useCheckPregnancy(true);
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const isCallExplore = useRef<boolean>(true);

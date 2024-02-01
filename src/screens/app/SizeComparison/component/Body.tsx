@@ -66,13 +66,13 @@ const Body = React.memo((props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: scaler(20),
-    paddingBottom: scaler(30),
+    paddingHorizontal: scaler(16),
+    paddingBottom: scaler(8),
   },
   containerSwipe: {
     width: '100%',
     height: widthScreen - scaler(20),
-    paddingHorizontal: scaler(20),
+    paddingHorizontal: scaler(16),
     alignItems: 'center',
     justifyContent: 'center',
   },

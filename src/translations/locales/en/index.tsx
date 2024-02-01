@@ -789,11 +789,17 @@ export const en = {
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
-    dontWorry: "But don't worry. You still have time to improve.",
+    dontWorry: "But don't worry, our experts\ncan help you improve",
     here: "Here’s what we'll focus on",
     adjust: 'You can always adjust it later',
-    letWork: "Let's work on it together",
+    letWork: 'Learn how to improve',
     aioCourse: 'Your Pregnancy Companion',
+    yourResults: 'Your results',
+    newbie: 'Newbie',
+    expert: 'Expert',
+    attention: 'Attention 🔥',
+    importantAttention:
+      'You might be missing important information related to your baby and/or your body when navigating pregnancy.',
     haveQuestion: 'Have questions about this course?',
     checkThisOut: 'Check this out',
     liftTime: 'lifetime',
@@ -845,6 +851,7 @@ export const en = {
     finishTheTask: 'Finish the task',
     reviewIt: 'Review it',
     pregnancyKnowledge: 'Pregnancy Knowledge',
+    pregnancyBasics: 'Pregnancy Basics',
     loveMoney: 'Love & Money',
     fitnessNutrition: 'Fitness & Nutrition',
     personalChallenge: 'Personal challenge',
@@ -928,7 +935,7 @@ export const en = {
     comeBackLater: 'Come back later',
     AreYouReadyToBeTheBestMom: 'Are you ready\nto be the best mom?',
     LearnAboutTheBabyDevelopmentMilestones:
-      'Learn about the Baby Development Milestones',
+      'Haptonomy and Nutritional Strategies for a Brilliant Baby',
     SignUpNowToUnlock: 'Analyze your knowledge',
     contentForWeekComeBackLater:
       'These contents are for week {{week}}. Come back later!',
