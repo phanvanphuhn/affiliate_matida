@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -17,7 +17,7 @@ import {
 } from '@images';
 import {Pagination} from 'react-native-snap-carousel';
 import {goBack} from '@navigation';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
@@ -80,16 +80,18 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
     },
   ];
-  useEffect(() => {
-    const getScore = async () => {
-      let result = await getQuestionOnboarding();
-      if (result?.data?.user_score?.score) {
-        setUserScore(result?.data?.user_score?.score);
-      }
-      setPackageQuizz(result?.data?.package_quizz);
-    };
-    getScore();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      const getScore = async () => {
+        let result = await getQuestionOnboarding();
+        if (result?.data?.user_score?.score) {
+          setUserScore(result?.data?.user_score?.score);
+        }
+        setPackageQuizz(result?.data?.package_quizz);
+      };
+      getScore();
+    }, []),
+  );
   const onSignUpNow = () => {
     trackingAppEvent(
       event.MASTER_CLASS.PP_TEASER_SIGNUP_BUTTON,
