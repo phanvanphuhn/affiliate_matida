@@ -117,6 +117,7 @@ const ic_teaser_en = require('./ic_teaser_en.png');
 const ic_teaser_vi = require('./ic_teaser_vi.png');
 const ic_warning = require('./ic_warning.png');
 const ic_like = require('./ic_like.png');
+const ic_click2pay = require('./ic_click2pay.png');
 
 export {
   ic_like,
@@ -236,4 +237,5 @@ export {
   background_home2,
   ic_teaser_en,
   ic_teaser_vi,
+  ic_click2pay,
 };
