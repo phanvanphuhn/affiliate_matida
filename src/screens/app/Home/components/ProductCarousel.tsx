@@ -4,6 +4,7 @@ import {Dimensions, Image, Linking, TouchableOpacity, View} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {getTrimester} from './PregnancyProgress';
 import {useSelector} from 'react-redux';
+import {event, eventType, trackingAppEvent} from '@util';
 
 const screenWidth = Dimensions.get('screen').width;
 
@@ -60,6 +61,7 @@ const productList = [
 ];
 
 const ProductCarousel = () => {
+  const user = useSelector((state: any) => state?.auth?.userInfo);
   const week = useSelector((state: any) => state?.home?.week);
   const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
   const trimester = getTrimester(weekPregnant?.weeks ?? week);
@@ -77,6 +79,15 @@ const ProductCarousel = () => {
           borderRadius: scaler(16),
         }}
         onPress={() => {
+          trackingAppEvent(
+            event.BANNER.ecom_banner_1,
+            {
+              userId: user?.id,
+              productLink: item?.productLink,
+              productName: item?.productImage,
+            },
+            eventType.MIX_PANEL,
+          );
           Linking.canOpenURL(item?.productLink).then(supported => {
             if (supported) {
               Linking.openURL(item?.productLink);

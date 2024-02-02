@@ -194,4 +194,7 @@ export const event = {
     pp_pregnancy_tracker_teaser_sign_up_now:
       'pp_pregnancy_tracker_teaser_sign_up_now',
   },
+  BANNER: {
+    ecom_banner_1: 'ecom_banner_1',
+  },
 };
