@@ -1,44 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
   Image,
-  RefreshControl,
   ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
-  colors,
-  heightScreen,
-  scaler,
-  stylesCommon,
-  widthScreen,
-} from '@stylesCommon';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {
+  ic_teaser_en,
+  ic_teaser_vi,
   ic_wave_line_bottom,
-  ic_wave_line_top,
   SvgClose,
-  SvgLineWave,
-  SvgPathBottom,
-  SvgPathTop,
-  teaser1,
-  teaser2,
-  teaser3,
-  teaser4,
 } from '@images';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {setActive} from 'react-native-sound';
+import {Pagination} from 'react-native-snap-carousel';
 import {goBack} from '@navigation';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import Swiper from '../DetailFeed/SwiperFlatlist/Swiper';
 import ParsedText from 'react-native-parsed-text';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {event, eventType, trackingAppEvent} from '@util';
+import useCheckPregnancy from '../../../util/hooks/useCheckPregnancy';
+import {getQuestionOnboarding} from '../../../services/pregnancyProgram';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -46,10 +33,13 @@ interface TeaserProgramProps {
 
 const TeaserProgram = (props: TeaserProgramProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [userScore, setUserScore] = useState();
+  const [packageQuizz, setPackageQuizz] = useState();
   const navigation = useNavigation<any>();
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const checkPlan = useCheckPregnancy();
 
   const data = [
     {
@@ -90,14 +80,40 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       icon: 'https://s3.ap-southeast-1.amazonaws.com/matida/1703091086979230619.png',
     },
   ];
-
+  useFocusEffect(
+    useCallback(() => {
+      const getScore = async () => {
+        let result = await getQuestionOnboarding();
+        if (result?.data?.user_score?.score) {
+          setUserScore(result?.data?.user_score?.score);
+        }
+        setPackageQuizz(result?.data?.package_quizz);
+      };
+      getScore();
+    }, []),
+  );
   const onSignUpNow = () => {
     trackingAppEvent(
       event.MASTER_CLASS.PP_TEASER_SIGNUP_BUTTON,
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-    navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
+
+    if (userScore) {
+      if (user.payments.some(e => e.status == 'processing')) {
+        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+          values: user.payments.find(e => e.status == 'processing'),
+          isBack: true,
+        });
+      } else {
+        navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {});
+      }
+    } else {
+      console.log('=>(TeaserProgram.tsx:113) packageQuizz', packageQuizz);
+      navigation.navigate(ROUTE_NAME.ONBOARDING_STEP, {
+        packageQuizz: packageQuizz,
+      });
+    }
   };
   const _renderItem = ({item, index}) => {
     return (
@@ -163,6 +179,14 @@ const TeaserProgram = (props: TeaserProgramProps) => {
     );
   }, [activeSlide]);
 
+  const onBack = () => {
+    if (userScore) {
+      navigation.navigate(ROUTE_NAME.TAB_HOME);
+    } else {
+      navigation.navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+    }
+  };
+
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.container, {}]}>
@@ -170,12 +194,11 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         <View style={styles.containerHeader} />
         <View
           style={{
-            flex: 1,
             marginTop: insets.top + 10,
           }}>
           {!props?.isHome && (
             <TouchableOpacity
-              onPress={goBack}
+              onPress={onBack}
               hitSlop={{top: 20, right: 20, bottom: 20, left: 20}}
               style={styles.buttonClose}>
               <SvgClose color={colors.labelColor} />
@@ -190,101 +213,81 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               styles.textTitle2,
               {
                 marginTop: 10,
-                marginBottom: 20,
+                marginBottom: 10,
               },
             ]}>
             Matida Masterclass
           </Text>
+
           <View
             style={{
-              bottom: -8,
-              zIndex: 10,
-            }}>
-            <Image
-              source={ic_wave_line_top}
-              style={{width: '100%', height: 17, tintColor: colors.pink350}}
-            />
-          </View>
-          <View
-            style={{
-              backgroundColor: colors.white,
-              flex: 1,
               paddingTop: 8,
             }}>
-            <Swiper
-              index={activeSlide}
-              horizontal={true}
-              loop={false}
-              removeClippedSubviews={true}
-              loadMinimal={true}
-              loadMinimalSize={10}
-              lockScrollTimeoutDuration={250}
-              nestedScrollEnabled={true}
-              bounces={true}
-              height={widthScreen / (3 / 2) + 136}
-              onIndexChanged={setActiveSlide}>
-              {data?.map((item, index) => _renderItem({item, index}))}
-            </Swiper>
-            {pagination()}
-
-            <View
+            <Image
+              source={lang == 1 ? ic_teaser_en : ic_teaser_vi}
               style={{
-                bottom: -8.6,
-              }}>
-              <Image
-                source={ic_wave_line_bottom}
-                style={{width: '100%', height: 17, tintColor: colors.blue50}}
-              />
-            </View>
-          </View>
-          <View style={styles.container3}>
-            <Text
-              style={{
-                fontSize: scaler(15),
-                ...stylesCommon.fontWeight400,
-                marginBottom: scaler(15),
-                textAlign: 'center',
-              }}>
-              {t('pregnancyProgram.haveQuestion')}{' '}
-              <Text
-                onPress={onCheckOut}
-                style={{textDecorationLine: 'underline', fontWeight: '500'}}>
-                {t('pregnancyProgram.checkThisOut')}
-              </Text>
-            </Text>
-            <View style={styles.container4}>
-              <View style={styles.container5}>
-                <Text style={styles.textOff}>28% off</Text>
-              </View>
-              <Text style={styles.textPrice1}>
-                499,000đ{' '}
-                <Text
-                  style={{
-                    fontSize: scaler(13),
-                    ...stylesCommon.fontSarabun600,
-                  }}>
-                  /{t('pregnancyProgram.liftTime')}
-                </Text>
-              </Text>
-              <Text style={styles.textPriceOld}>
-                <Text
-                  style={{
-                    textDecorationLine: 'line-through',
-                    ...stylesCommon.fontSarabun400,
-                  }}>
-                  669,000đ
-                </Text>
-                /{t('pregnancyProgram.liftTime')}
-              </Text>
-            </View>
-            <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
-              <Text style={styles.textButtonSignUp}>
-                {t('pregnancyProgram.signUpEarly')}
-              </Text>
-            </TouchableOpacity>
+                width: widthScreen,
+                resizeMode: 'contain',
+              }}
+            />
           </View>
         </View>
       </ScrollView>
+      <View
+        style={{
+          top: -8.6,
+        }}>
+        <Image
+          source={ic_wave_line_bottom}
+          style={{width: '100%', height: 17, tintColor: colors.pink350}}
+        />
+      </View>
+      <View style={styles.container3}>
+        <Text
+          style={{
+            fontSize: scaler(15),
+            ...stylesCommon.fontSarabun400,
+            marginBottom: scaler(15),
+            textAlign: 'center',
+          }}>
+          {t('pregnancyProgram.haveQuestion')}{' '}
+          <Text
+            onPress={onCheckOut}
+            style={{textDecorationLine: 'underline', fontWeight: '500'}}>
+            {t('pregnancyProgram.checkThisOut')}
+          </Text>
+        </Text>
+        <View style={styles.container4}>
+          <View style={styles.container5}>
+            <Text style={styles.textOff}>28% off</Text>
+          </View>
+          <Text style={styles.textPrice1}>
+            499,000đ{' '}
+            <Text
+              style={{
+                fontSize: scaler(13),
+                ...stylesCommon.fontSarabun600,
+              }}>
+              /{t('pregnancyProgram.liftTime')}
+            </Text>
+          </Text>
+          <Text style={styles.textPriceOld}>
+            <Text
+              style={{
+                textDecorationLine: 'line-through',
+                ...stylesCommon.fontSarabun400,
+              }}>
+              669,000đ
+            </Text>
+            /{t('pregnancyProgram.liftTime')}
+          </Text>
+        </View>
+        <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
+          <Text style={styles.textButtonSignUp}>
+            {t('pregnancyProgram.signUpEarly')}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -375,7 +378,6 @@ const styles = StyleSheet.create({
   },
   container3: {
     marginBottom: scaler(35),
-    marginTop: scaler(28),
     marginHorizontal: 25,
   },
   container4: {

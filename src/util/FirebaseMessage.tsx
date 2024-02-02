@@ -65,7 +65,7 @@ function createAppNotification() {
     messaging().onMessage(async notification => {
       if (notification.messageId !== lastMessageId) {
         lastMessageId = notification.messageId || '';
-        handleNotiOnForeground(notification);
+        // handleNotiOnForeground(notification);
       }
     });
 
@@ -372,7 +372,9 @@ function createAppNotification() {
     store.dispatch(changeWeekUser(+data?.week));
     setTimeout(() => {
       // navigate(ROUTE_NAME.TIME_LINE);
-      navigate(ROUTE_NAME.WEEKLY_ARTICLES);
+      navigate(ROUTE_NAME.SIZE_COMPARISON, {
+        option: 1,
+      });
     }, 100);
   };
 
@@ -417,5 +419,4 @@ function createAppNotification() {
     initFB,
   };
 }
-
 export const AppNotification = createAppNotification();

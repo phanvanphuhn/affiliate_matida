@@ -109,8 +109,8 @@ const NewUserProgram = (props: NewUserProgramProps) => {
         source={{
           uri:
             lang == 1
-              ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1703522103400421184.png'
-              : 'https://s3.ap-southeast-1.amazonaws.com/matida/1703834983521123611.png',
+              ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1706710172185840787.png'
+              : 'https://s3.ap-southeast-1.amazonaws.com/matida/1706710200149286817.png',
         }}
       />
       <LinearGradient
@@ -119,9 +119,9 @@ const NewUserProgram = (props: NewUserProgramProps) => {
           'rgba(242, 242, 242, 0.42)',
           'rgba(242, 242, 242, 1)',
         ]}
-        start={{x: 0.0, y: 0.55}}
-        end={{x: 0.7, y: 1}}
-        locations={[0, 0.5, 1]}
+        start={{x: 1.0, y: 0}}
+        end={{x: 1, y: 1}}
+        locations={[0.4, 0.7, 1]}
         style={{flex: 1}}>
         <View style={styles.container2}>
           <View style={styles.center}>

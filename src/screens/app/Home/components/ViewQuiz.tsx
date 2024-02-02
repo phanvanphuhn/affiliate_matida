@@ -225,7 +225,7 @@ export const ViewQuiz = React.memo((props: any) => {
                 height: '190%',
                 aspectRatio: 1,
                 borderRadius: widthScreen / 1.5,
-                backgroundColor: colors.pink250,
+                backgroundColor: colors.yellow200,
                 position: 'absolute',
                 bottom: 0,
                 left: '-50%',

@@ -9,6 +9,11 @@ import {
   StatusBar,
   Text,
   View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Linking,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -42,6 +47,7 @@ import {
   SizeComparisonComponent,
   ViewQuiz,
   WeeksPregnant,
+  getTrimester,
 } from './components';
 import {styles} from './styles';
 import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
@@ -88,7 +94,10 @@ import ContentUpdate from './components/ContentUpdate';
 import {trackCustomEvent} from '@services/webengageManager';
 import moment from 'moment';
 import TeaserProgram from './components/TeaserProgram';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import ProductCarousel from './components/ProductCarousel';
 
+const screenWidth = Dimensions.get('screen').width;
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
 type IData = {
   articles: IArticles[];
@@ -134,10 +143,12 @@ const Home = () => {
     isSignUp: '',
     refreshing: true,
   });
+  const [activeSlide, setActiveSlide] = useState();
 
   const scrollRef = useRef<ScrollView>(null);
   const firstRef = useRef(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const carouselRef = useRef(null);
 
   const snapPoints = useMemo(() => ['30%', '50%'], []);
 
@@ -272,6 +283,7 @@ const Home = () => {
         break;
     }
   };
+
   const fetchScreen = async () => {
     const getInitialLink = await dynamicLinks().getInitialLink();
     if (getInitialLink !== null && getInitialLink?.url && deepLink) {
@@ -505,6 +517,52 @@ const Home = () => {
     }
   };
 
+  const renderItemCarousel = ({item, index}: any) => {
+    return (
+      <TouchableOpacity
+        style={{
+          paddingHorizontal: scaler(16),
+          borderRadius: scaler(16),
+        }}
+        onPress={() => {
+          Linking.canOpenURL(item?.productLink).then(supported => {
+            if (supported) {
+              Linking.openURL(item?.productLink);
+            } else {
+              return;
+            }
+          });
+        }}>
+        <Image
+          source={{uri: item?.productImage}}
+          style={{height: scaler(264), width: '100%', borderRadius: scaler(16)}}
+          resizeMode="center"
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  const pagination = () => {
+    return (
+      <Pagination
+        dotsLength={productListByTrimester?.length}
+        activeDotIndex={activeSlide}
+        dotStyle={{
+          width: 8,
+          height: 8,
+          borderRadius: 5,
+          marginHorizontal: -4,
+          backgroundColor: colors.pink4,
+        }}
+        inactiveDotStyle={{
+          backgroundColor: '#D0D1D9',
+        }}
+        inactiveDotScale={1}
+        containerStyle={{paddingVertical: scaler(12)}}
+      />
+    );
+  };
+
   useEffect(() => {
     trackUser(user);
     if (
@@ -662,6 +720,10 @@ const Home = () => {
           ) : null}
 
           {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
+
+          {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+            <ProductCarousel />
+          )}
 
           {/* {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||

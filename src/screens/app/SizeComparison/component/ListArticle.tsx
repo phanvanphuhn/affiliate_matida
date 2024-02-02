@@ -10,6 +10,7 @@ import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {getArticleByWeek, GlobalService} from '@services';
 import {useSelector} from 'react-redux';
+import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
 
 type Props = {
   // callBackData: () => void;
@@ -21,6 +22,8 @@ export const ListArticle = ({week}: Props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const checkPlan = useCheckPregnancy();
+
   const isCheckPayment = useMemo(
     () => user?.user_subscriptions?.some(e => e.code == 'PP'),
     [user],
@@ -31,7 +34,7 @@ export const ListArticle = ({week}: Props) => {
 
   const handlePressItemArticle = (article: IArticles) => {
     if (!isCheckPayment && article?.is_payment && !article?.is_paid) {
-      navigate(ROUTE_NAME.NEW_USER_PROGRAM);
+      checkPlan();
     } else {
       navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
     }
