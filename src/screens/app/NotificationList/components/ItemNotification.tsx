@@ -182,8 +182,8 @@ export const ItemNotification = ({item, onCallBack}: Props) => {
     // navigate(ROUTE_NAME.TIME_LINE);
     const dataJson = JSON.parse(item.data_json) as {week: string};
     const week = parseInt(dataJson.week, 10);
-    navigate(ROUTE_NAME.WEEKLY_ARTICLES, {
-      week: week,
+    navigate(ROUTE_NAME.SIZE_COMPARISON, {
+      option: 1,
     });
   };
 
