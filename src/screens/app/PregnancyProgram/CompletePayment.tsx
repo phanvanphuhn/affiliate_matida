@@ -342,7 +342,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
             {t('pregnancyProgram.selectMethod')}
           </Text>
           <View style={styles.containerButtonRow}>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               style={[
                 styles.buttonTransfer,
                 {
@@ -360,7 +360,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
               <Text style={styles.textTransfer}>
                 {t('pregnancyProgram.bankTransfer')}
               </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={async () => {
                 const res = await switchPaymentMethod('apple_pay');
@@ -392,7 +392,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
             <View style={{marginTop: -0.1}}>
               <SvgPathBottom />
             </View>
-            {/* <View style={styles.containerInput}>
+            <View style={styles.containerInput}>
               <View style={{width: '100%'}}>
                 <View style={{alignItems: 'center'}}>
                   <Image
@@ -470,7 +470,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
                   {plan?.bank_account?.bank_account_name}
                 </Text>
               </View>
-            </View> */}
+            </View>
             <View
               style={{
                 marginBottom: -0.2,
@@ -479,7 +479,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
             </View>
           </ImageBackground>
         </ScrollView>
-        {/* <View
+        <View
           style={{
             paddingHorizontal: scaler(24),
             paddingBottom: scaler(30),
@@ -489,7 +489,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
               {t('pregnancyProgram.transferredMoney')}
             </Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
       </View>
     </SafeAreaView>
   );
