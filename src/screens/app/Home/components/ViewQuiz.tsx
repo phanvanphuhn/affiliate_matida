@@ -150,9 +150,10 @@ export const ViewQuiz = React.memo((props: any) => {
             {t('home.theCorrectAnswer')}
           </Text>
           <FlatList
-            data={data?.question.answers?.filter(
-              item => item.is_correct == true,
-            )}
+            data={
+              data?.question.answers?.filter(item => item.is_correct == true) ||
+              data?.answers?.filter(item => item.is_correct == true)
+            }
             bounces={false}
             scrollEnabled={false}
             keyExtractor={(item: any) => item.id}
@@ -259,7 +260,27 @@ export const ViewQuiz = React.memo((props: any) => {
     <>
       {data ? (
         <View style={styles.container}>
-          <View style={styles.viewContent}>
+          <View
+            style={[
+              data?.question
+                ? {
+                    // height: scaler(319),
+                    backgroundColor: colors.blue50,
+                    paddingVertical: scaler(24),
+                    overflow: 'hidden',
+                    borderTopRightRadius: scaler(16),
+                    borderTopLeftRadius: scaler(16),
+                  }
+                : {
+                    width: '100%',
+                    // height: scaler(319),
+                    backgroundColor: colors.blue50,
+                    paddingVertical: scaler(24),
+                    overflow: 'hidden',
+                    borderRadius: scaler(16),
+                    // borderTopLeftRadius: scaler(16),
+                  },
+            ]}>
             <View
               style={{
                 height: '190%',
@@ -287,141 +308,143 @@ export const ViewQuiz = React.memo((props: any) => {
             />
             {renderViewResult()}
           </View>
-          <View
-            style={{
-              backgroundColor: colors.white,
-              paddingVertical: scaler(16),
-              borderBottomRightRadius: scaler(16),
-              borderBottomLeftRadius: scaler(16),
-            }}>
+          {data?.question && (
             <View
               style={{
-                borderBottomWidth: scaler(1),
-                borderBottomColor: '#F0F1F5',
+                backgroundColor: colors.white,
+                paddingVertical: scaler(16),
+                borderBottomRightRadius: scaler(16),
+                borderBottomLeftRadius: scaler(16),
               }}>
-              {lang == 1
-                ? data?.question?.explain_en && (
-                    <View style={{paddingHorizontal: scaler(16)}}>
-                      <RenderHtml
-                        baseStyle={{
-                          ...stylesCommon.fontWeight400,
-                          fontSize: scaler(14),
-                        }}
-                        contentWidth={widthScreen}
-                        systemFonts={systemFonts}
-                        tagsStyles={{...tagsStyles}}
-                        source={{
-                          html: `<div>${getDescription(
-                            data?.question?.explain_en,
-                            90,
-                          )}</div>`,
-                        }}
-                        enableExperimentalMarginCollapsing={true}
-                        enableExperimentalBRCollapsing={true}
-                        enableExperimentalGhostLinesPrevention={true}
-                      />
-                    </View>
-                  )
-                : data?.question?.explain_vi && (
-                    <View
-                      style={{
-                        paddingHorizontal: scaler(16),
-                      }}>
-                      <RenderHtml
-                        baseStyle={{
-                          ...stylesCommon.fontSarabun500,
-                          fontSize: scaler(14),
-                          color: 'black',
-                        }}
-                        contentWidth={widthScreen}
-                        systemFonts={systemFonts}
-                        tagsStyles={{...tagsStyles}}
-                        source={{
-                          html: `<div>${getDescription(
-                            data?.question?.explain_vi,
-                            90,
-                          )}</div>`,
-                        }}
-                        enableExperimentalMarginCollapsing={true}
-                        enableExperimentalBRCollapsing={true}
-                        enableExperimentalGhostLinesPrevention={true}
-                      />
-                    </View>
-
-                    // <Text
-                    //   numberOfLines={2}
-                    //   style={{
-                    //     paddingHorizontal: scaler(16),
-                    //     fontSize: scaler(15),
-                    //     ...stylesCommon.fontSarabun500,
-                    //   }}>
-                    //   {data?.question?.explain_vi}
-                    // </Text>
-                  )}
-              {(data?.question?.link_en || data?.question?.link_vi) && (
-                <TouchableOpacity
-                  style={{
-                    paddingHorizontal: scaler(16),
-                    paddingBottom: scaler(12),
-                  }}
-                  onPress={() =>
-                    handleDeepLink(
-                      lang == 1
-                        ? data?.question?.link_en
-                        : data?.question?.link_vi,
-                    )
-                  }>
-                  <Text
-                    style={{
-                      fontSize: scaler(15),
-                      ...stylesCommon.fontSarabun500,
-                      color: colors.pink300,
-                    }}>
-                    {t('common.readMore')}
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </View>
-            <View
-              style={{paddingHorizontal: scaler(16), paddingTop: scaler(16)}}>
-              <Text
+              <View
                 style={{
-                  fontSize: scaler(15),
-                  ...stylesCommon.fontSarabun500,
-                  color: '#38393D',
+                  borderBottomWidth: scaler(1),
+                  borderBottomColor: '#F0F1F5',
                 }}>
-                {t('home.wantToBe')}
-              </Text>
-              <TouchableOpacity
-                style={{
-                  marginTop: scaler(12),
-                  flex: 1,
-                  backgroundColor: colors.pink4,
-                  paddingVertical: scaler(8),
-                  borderRadius: scaler(16),
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                }}
-                onPress={checkPlan}>
-                <Image
-                  source={iconCrownWhite}
-                  style={{
-                    height: scaler(16),
-                    width: scaler(16),
-                    marginRight: scaler(8),
-                  }}
-                />
+                {lang == 1
+                  ? data?.question?.explain_en && (
+                      <View style={{paddingHorizontal: scaler(16)}}>
+                        <RenderHtml
+                          baseStyle={{
+                            ...stylesCommon.fontWeight400,
+                            fontSize: scaler(14),
+                          }}
+                          contentWidth={widthScreen}
+                          systemFonts={systemFonts}
+                          tagsStyles={{...tagsStyles}}
+                          source={{
+                            html: `<div>${getDescription(
+                              data?.question?.explain_en,
+                              90,
+                            )}</div>`,
+                          }}
+                          enableExperimentalMarginCollapsing={true}
+                          enableExperimentalBRCollapsing={true}
+                          enableExperimentalGhostLinesPrevention={true}
+                        />
+                      </View>
+                    )
+                  : data?.question?.explain_vi && (
+                      <View
+                        style={{
+                          paddingHorizontal: scaler(16),
+                        }}>
+                        <RenderHtml
+                          baseStyle={{
+                            ...stylesCommon.fontSarabun500,
+                            fontSize: scaler(14),
+                            color: 'black',
+                          }}
+                          contentWidth={widthScreen}
+                          systemFonts={systemFonts}
+                          tagsStyles={{...tagsStyles}}
+                          source={{
+                            html: `<div>${getDescription(
+                              data?.question?.explain_vi,
+                              90,
+                            )}</div>`,
+                          }}
+                          enableExperimentalMarginCollapsing={true}
+                          enableExperimentalBRCollapsing={true}
+                          enableExperimentalGhostLinesPrevention={true}
+                        />
+                      </View>
+
+                      // <Text
+                      //   numberOfLines={2}
+                      //   style={{
+                      //     paddingHorizontal: scaler(16),
+                      //     fontSize: scaler(15),
+                      //     ...stylesCommon.fontSarabun500,
+                      //   }}>
+                      //   {data?.question?.explain_vi}
+                      // </Text>
+                    )}
+                {(data?.question?.link_en || data?.question?.link_vi) && (
+                  <TouchableOpacity
+                    style={{
+                      paddingHorizontal: scaler(16),
+                      paddingBottom: scaler(12),
+                    }}
+                    onPress={() =>
+                      handleDeepLink(
+                        lang == 1
+                          ? data?.question?.link_en
+                          : data?.question?.link_vi,
+                      )
+                    }>
+                    <Text
+                      style={{
+                        fontSize: scaler(15),
+                        ...stylesCommon.fontSarabun500,
+                        color: colors.pink300,
+                      }}>
+                      {t('common.readMore')}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              <View
+                style={{paddingHorizontal: scaler(16), paddingTop: scaler(16)}}>
                 <Text
                   style={{
-                    fontSize: scaler(13),
-                    ...stylesCommon.fontSarabun600,
-                    color: colors.white,
+                    fontSize: scaler(15),
+                    ...stylesCommon.fontSarabun500,
+                    color: '#38393D',
                   }}>
-                  {t('home.checkMasterclass')}
+                  {t('home.wantToBe')}
                 </Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    marginTop: scaler(12),
+                    flex: 1,
+                    backgroundColor: colors.pink4,
+                    paddingVertical: scaler(8),
+                    borderRadius: scaler(16),
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                  }}
+                  onPress={checkPlan}>
+                  <Image
+                    source={iconCrownWhite}
+                    style={{
+                      height: scaler(16),
+                      width: scaler(16),
+                      marginRight: scaler(8),
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: scaler(13),
+                      ...stylesCommon.fontSarabun600,
+                      color: colors.white,
+                    }}>
+                    {t('home.checkMasterclass')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          )}
         </View>
       ) : null}
     </>
@@ -440,8 +463,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue50,
     paddingVertical: scaler(24),
     overflow: 'hidden',
-    borderTopRightRadius: scaler(16),
-    borderTopLeftRadius: scaler(16),
+    borderRadius: scaler(16),
+    // borderTopLeftRadius: scaler(16),
   },
   imageBackground: {
     width: scaler(134),
