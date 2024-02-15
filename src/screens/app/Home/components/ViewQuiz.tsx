@@ -33,6 +33,7 @@ import clip from '../../DetailFeed/components/clip';
 export const ViewQuiz = React.memo((props: any) => {
   const {onAnswer} = props;
   const data = useSelector((state: any) => state?.home?.data?.dailyQuizz);
+  console.log('data: ', data);
   const lang = useSelector((state: any) => state.auth.lang);
   const {t} = useTranslation();
   const checkPlan = useCheckPregnancy();
@@ -136,8 +137,8 @@ export const ViewQuiz = React.memo((props: any) => {
               heightMax={110}
               text={
                 lang === 1
-                  ? data?.question?.question_en
-                  : data?.question?.question_vi
+                  ? data?.question?.question_en || data?.question_en
+                  : data?.question?.question_vi || data?.question_vi
               }
               style={{
                 ...stylesCommon.fontSarabun500,
@@ -151,8 +152,11 @@ export const ViewQuiz = React.memo((props: any) => {
           </Text>
           <FlatList
             data={
-              data?.question.answers?.filter(item => item.is_correct == true) ||
-              data?.answers?.filter(item => item.is_correct == true)
+              data?.question?.answers
+                ? data?.question?.answers?.filter(
+                    item => item.is_correct == true,
+                  )
+                : data?.answers?.filter(item => item.is_correct == true)
             }
             bounces={false}
             scrollEnabled={false}
@@ -308,7 +312,7 @@ export const ViewQuiz = React.memo((props: any) => {
             />
             {renderViewResult()}
           </View>
-          {data?.question && (
+          {(data?.percent_diff_answer || data?.percent_same_answer) && (
             <View
               style={{
                 backgroundColor: colors.white,
@@ -322,7 +326,7 @@ export const ViewQuiz = React.memo((props: any) => {
                   borderBottomColor: '#F0F1F5',
                 }}>
                 {lang == 1
-                  ? data?.question?.explain_en && (
+                  ? (data?.explain_en || data?.question?.explain_en) && (
                       <View style={{paddingHorizontal: scaler(16)}}>
                         <RenderHtml
                           baseStyle={{
@@ -334,7 +338,7 @@ export const ViewQuiz = React.memo((props: any) => {
                           tagsStyles={{...tagsStyles}}
                           source={{
                             html: `<div>${getDescription(
-                              data?.question?.explain_en,
+                              data?.explain_en || data?.question?.explain_en,
                               90,
                             )}</div>`,
                           }}
@@ -344,7 +348,7 @@ export const ViewQuiz = React.memo((props: any) => {
                         />
                       </View>
                     )
-                  : data?.question?.explain_vi && (
+                  : (data?.explain_vi || data?.question?.explain_vi) && (
                       <View
                         style={{
                           paddingHorizontal: scaler(16),
@@ -360,7 +364,7 @@ export const ViewQuiz = React.memo((props: any) => {
                           tagsStyles={{...tagsStyles}}
                           source={{
                             html: `<div>${getDescription(
-                              data?.question?.explain_vi,
+                              data?.explain_vi || data?.question?.explain_vi,
                               90,
                             )}</div>`,
                           }}
@@ -380,7 +384,10 @@ export const ViewQuiz = React.memo((props: any) => {
                       //   {data?.question?.explain_vi}
                       // </Text>
                     )}
-                {(data?.question?.link_en || data?.question?.link_vi) && (
+                {(data?.question?.link_en ||
+                  data?.question?.link_vi ||
+                  data?.link_en ||
+                  data?.link_vi) && (
                   <TouchableOpacity
                     style={{
                       paddingHorizontal: scaler(16),
@@ -389,8 +396,8 @@ export const ViewQuiz = React.memo((props: any) => {
                     onPress={() =>
                       handleDeepLink(
                         lang == 1
-                          ? data?.question?.link_en
-                          : data?.question?.link_vi,
+                          ? data?.question?.link_en || data?.link_en
+                          : data?.question?.link_vi || data?.link_vi,
                       )
                     }>
                     <Text
