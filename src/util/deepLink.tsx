@@ -94,7 +94,7 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
         break;
     }
   } else if (arrayParamsLink[0] == 'matida:') {
-    switch (arrayParamsLink[2]) {
+    switch (arrayParamsLink[1]) {
       case TypeDeepLink.ARTICLE:
         navigate(ROUTE_NAME.DETAIL_ARTICLE, {
           article: {id: arrayParamsLink[3], topic: [], mood: []},

@@ -316,7 +316,7 @@ export const ViewQuiz = React.memo((props: any) => {
             <View
               style={{
                 backgroundColor: colors.white,
-                paddingVertical: scaler(16),
+                paddingVertical: scaler(4),
                 borderBottomRightRadius: scaler(16),
                 borderBottomLeftRadius: scaler(16),
               }}>
@@ -332,6 +332,13 @@ export const ViewQuiz = React.memo((props: any) => {
                           baseStyle={{
                             ...stylesCommon.fontWeight400,
                             fontSize: scaler(14),
+                          }}
+                          defaultTextProps={{
+                            style: {
+                              ...stylesCommon.fontSarabun500,
+                              fontSize: scaler(14),
+                              color: 'black',
+                            },
                           }}
                           contentWidth={widthScreen}
                           systemFonts={systemFonts}
@@ -358,6 +365,13 @@ export const ViewQuiz = React.memo((props: any) => {
                             ...stylesCommon.fontSarabun500,
                             fontSize: scaler(14),
                             color: 'black',
+                          }}
+                          defaultTextProps={{
+                            style: {
+                              ...stylesCommon.fontSarabun500,
+                              fontSize: scaler(14),
+                              color: 'black',
+                            },
                           }}
                           contentWidth={widthScreen}
                           systemFonts={systemFonts}
