@@ -13,7 +13,6 @@ const Embryo = React.memo((props: {data: any; week: any; listImage: any[]}) => {
   const {data, week, listImage} = props;
   const lang = useSelector((state: any) => state?.auth?.lang);
   const {t} = useTranslation();
-  console.log('data?.content: ', data?.content);
   return (
     <FlatList
       data={[1]}
@@ -103,9 +102,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   txtHeader: {
-    fontSize: scaler(24),
-    ...stylesCommon.fontWeight500,
-    color: '#AE5151',
+    fontSize: scaler(22),
+    ...stylesCommon.fontWeight600,
   },
   txtContent: {
     ...stylesCommon.fontWeight400,
@@ -115,9 +113,8 @@ const styles = StyleSheet.create({
     marginTop: scaler(12),
   },
   txtHeader2: {
-    fontSize: scaler(24),
-    ...stylesCommon.fontWeight500,
-    color: '#AE5151',
+    fontSize: scaler(22),
+    ...stylesCommon.fontWeight600,
   },
   viewRow: {
     flexDirection: 'row',
