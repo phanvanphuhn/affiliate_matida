@@ -195,6 +195,9 @@ export const vi = {
       'Đăng ký Masterclass\nđể nhận tư vấn\ntrực tiếp từ bác sĩ',
     takeTheMatidaMasterclass: 'Tham gia Matida Masterclass',
     wellWorkYourChallenges: 'Trở thành mẹ\nbầu thông thái\ncùng Matida',
+    wantToBe: 'Mẹ muốn trở thành người mẹ thông thái nhất?',
+    checkMasterclass: 'Khám phá Masterclass ngay',
+    theCorrectAnswer: 'Câu trả lời đúng là',
   },
   sizeComparison: {
     week: 'Tuần',
@@ -787,6 +790,7 @@ export const vi = {
     paymentFailed: 'Thanh toán không thành công!',
     paymentSuccess: 'Thanh toán thành công!',
     buyNow: 'Mua ngay',
+    readMore: 'Đọc thêm',
   },
   pregnancyProgram: {
     masterClassResult: 'Matida hiểu trăn trở của mẹ',

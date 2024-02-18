@@ -193,6 +193,9 @@ export const en = {
       'Get guidance from\nmedical experts in\nour Masterclass Zalo',
     takeTheMatidaMasterclass: 'Take the Matida Masterclass',
     wellWorkYourChallenges: "We'll work on\nyour challenges\ntogether",
+    wantToBe: 'Want to be the smartest mom in Vietnam?',
+    checkMasterclass: 'Check Masterclass',
+    theCorrectAnswer: 'The correct answer is',
   },
   sizeComparison: {
     week: 'Week',
@@ -786,6 +789,7 @@ export const en = {
     paymentFailed: 'Payment failed!',
     paymentSuccess: 'Payment success!',
     buyNow: 'Click to pay',
+    readMore: 'Read more',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',

@@ -6,11 +6,12 @@ import {
   SvgLikeQuiz,
   SvgUnLikeQuiz,
   SvgVerify,
+  iconCrownWhite,
 } from '@images';
 import {navigate} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon, widthScreen} from '@stylesCommon';
-import {event, eventType, trackingAppEvent} from '@util';
+import {event, eventType, handleDeepLink, trackingAppEvent} from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -24,12 +25,18 @@ import {
 import {useSelector} from 'react-redux';
 import {trackTestYourKnowledgeClicked} from '@services/webengageManager.tsx';
 import LinearGradient from 'react-native-linear-gradient';
+import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
+import {systemFonts, tagsStyles} from '../../DetailArticle/settingHTML';
+import RenderHtml from 'react-native-render-html';
+import clip from '../../DetailFeed/components/clip';
 
 export const ViewQuiz = React.memo((props: any) => {
   const {onAnswer} = props;
   const data = useSelector((state: any) => state?.home?.data?.dailyQuizz);
+  console.log('data: ', data);
   const lang = useSelector((state: any) => state.auth.lang);
   const {t} = useTranslation();
+  const checkPlan = useCheckPregnancy();
 
   const getTextPercent = (type: EDailyQuiz) => {
     const percentAnswer =
@@ -62,15 +69,21 @@ export const ViewQuiz = React.memo((props: any) => {
     );
   };
 
+  const getDescription = (data: string, length: number) => {
+    return clip(data, length, {
+      html: true,
+    });
+  };
+
   const renderViewResult = () => {
     if (data?.percent_diff_answer || data?.percent_same_answer) {
       return (
-        <View style={[styles.viewResult, {alignItems: 'center'}]}>
+        <View style={[styles.viewResult]}>
           {/* <Image
             source={data?.is_correct === true ? iconSuccessQuiz : iconFalseQuiz}
             style={[styles.iconIconResult, {}]}
           /> */}
-          <View style={{marginBottom: scaler(20)}}>
+          {/* <View style={{marginBottom: scaler(20)}}>
             {data?.is_correct === true ? <SvgVerify /> : <SvgFailed />}
           </View>
           <Text style={styles.txtTitleContent}>
@@ -118,7 +131,39 @@ export const ViewQuiz = React.memo((props: any) => {
             activeOpacity={0.9}
             onPress={() => navigate(ROUTE_NAME.MOM_PREP_TEST)}>
             <Text style={styles.txtBottom}>{t('test.tryMoreTest')}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <View style={styles.viewTitle}>
+            <ViewTextSeeMore
+              heightMax={110}
+              text={
+                lang === 1
+                  ? data?.question?.question_en || data?.question_en
+                  : data?.question?.question_vi || data?.question_vi
+              }
+              style={{
+                ...stylesCommon.fontSarabun500,
+                fontSize: scaler(15),
+              }}
+              numberOfLines={10}
+            />
+          </View>
+          <Text style={[styles.txtTitleContent, {marginBottom: scaler(8)}]}>
+            {t('home.theCorrectAnswer')}
+          </Text>
+          <FlatList
+            data={
+              data?.question?.answers
+                ? data?.question?.answers?.filter(
+                    item => item.is_correct == true,
+                  )
+                : data?.answers?.filter(item => item.is_correct == true)
+            }
+            bounces={false}
+            scrollEnabled={false}
+            keyExtractor={(item: any) => item.id}
+            renderItem={renderItemAnswer}
+          />
+          {/* <View style={{height: 200, backgroundColor: colors.white}}></View> */}
         </View>
       );
     } else {
@@ -219,7 +264,27 @@ export const ViewQuiz = React.memo((props: any) => {
     <>
       {data ? (
         <View style={styles.container}>
-          <View style={styles.viewContent}>
+          <View
+            style={[
+              data?.question
+                ? {
+                    // height: scaler(319),
+                    backgroundColor: colors.blue50,
+                    paddingVertical: scaler(24),
+                    overflow: 'hidden',
+                    borderTopRightRadius: scaler(16),
+                    borderTopLeftRadius: scaler(16),
+                  }
+                : {
+                    width: '100%',
+                    // height: scaler(319),
+                    backgroundColor: colors.blue50,
+                    paddingVertical: scaler(24),
+                    overflow: 'hidden',
+                    borderRadius: scaler(16),
+                    // borderTopLeftRadius: scaler(16),
+                  },
+            ]}>
             <View
               style={{
                 height: '190%',
@@ -247,6 +312,160 @@ export const ViewQuiz = React.memo((props: any) => {
             />
             {renderViewResult()}
           </View>
+          {(data?.percent_diff_answer || data?.percent_same_answer) && (
+            <View
+              style={{
+                backgroundColor: colors.white,
+                paddingVertical: scaler(4),
+                borderBottomRightRadius: scaler(16),
+                borderBottomLeftRadius: scaler(16),
+              }}>
+              <View
+                style={{
+                  borderBottomWidth: scaler(1),
+                  borderBottomColor: '#F0F1F5',
+                }}>
+                {lang == 1
+                  ? (data?.explain_en || data?.question?.explain_en) && (
+                      <View style={{paddingHorizontal: scaler(16)}}>
+                        <RenderHtml
+                          baseStyle={{
+                            ...stylesCommon.fontWeight400,
+                            fontSize: scaler(14),
+                          }}
+                          defaultTextProps={{
+                            style: {
+                              ...stylesCommon.fontSarabun500,
+                              fontSize: scaler(14),
+                              color: 'black',
+                            },
+                          }}
+                          contentWidth={widthScreen}
+                          systemFonts={systemFonts}
+                          tagsStyles={{...tagsStyles}}
+                          source={{
+                            html: `<div>${getDescription(
+                              data?.explain_en || data?.question?.explain_en,
+                              90,
+                            )}</div>`,
+                          }}
+                          enableExperimentalMarginCollapsing={true}
+                          enableExperimentalBRCollapsing={true}
+                          enableExperimentalGhostLinesPrevention={true}
+                        />
+                      </View>
+                    )
+                  : (data?.explain_vi || data?.question?.explain_vi) && (
+                      <View
+                        style={{
+                          paddingHorizontal: scaler(16),
+                        }}>
+                        <RenderHtml
+                          baseStyle={{
+                            ...stylesCommon.fontSarabun500,
+                            fontSize: scaler(14),
+                            color: 'black',
+                          }}
+                          defaultTextProps={{
+                            style: {
+                              ...stylesCommon.fontSarabun500,
+                              fontSize: scaler(14),
+                              color: 'black',
+                            },
+                          }}
+                          contentWidth={widthScreen}
+                          systemFonts={systemFonts}
+                          tagsStyles={{...tagsStyles}}
+                          source={{
+                            html: `<div>${getDescription(
+                              data?.explain_vi || data?.question?.explain_vi,
+                              90,
+                            )}</div>`,
+                          }}
+                          enableExperimentalMarginCollapsing={true}
+                          enableExperimentalBRCollapsing={true}
+                          enableExperimentalGhostLinesPrevention={true}
+                        />
+                      </View>
+
+                      // <Text
+                      //   numberOfLines={2}
+                      //   style={{
+                      //     paddingHorizontal: scaler(16),
+                      //     fontSize: scaler(15),
+                      //     ...stylesCommon.fontSarabun500,
+                      //   }}>
+                      //   {data?.question?.explain_vi}
+                      // </Text>
+                    )}
+                {(data?.question?.link_en ||
+                  data?.question?.link_vi ||
+                  data?.link_en ||
+                  data?.link_vi) && (
+                  <TouchableOpacity
+                    style={{
+                      paddingHorizontal: scaler(16),
+                      paddingBottom: scaler(12),
+                    }}
+                    onPress={() =>
+                      handleDeepLink(
+                        lang == 1
+                          ? data?.question?.link_en || data?.link_en
+                          : data?.question?.link_vi || data?.link_vi,
+                      )
+                    }>
+                    <Text
+                      style={{
+                        fontSize: scaler(15),
+                        ...stylesCommon.fontSarabun500,
+                        color: colors.pink300,
+                      }}>
+                      {t('common.readMore')}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+              <View
+                style={{paddingHorizontal: scaler(16), paddingTop: scaler(16)}}>
+                <Text
+                  style={{
+                    fontSize: scaler(15),
+                    ...stylesCommon.fontSarabun500,
+                    color: '#38393D',
+                  }}>
+                  {t('home.wantToBe')}
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    marginTop: scaler(12),
+                    flex: 1,
+                    backgroundColor: colors.pink4,
+                    paddingVertical: scaler(8),
+                    borderRadius: scaler(16),
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                  }}
+                  onPress={checkPlan}>
+                  <Image
+                    source={iconCrownWhite}
+                    style={{
+                      height: scaler(16),
+                      width: scaler(16),
+                      marginRight: scaler(8),
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: scaler(13),
+                      ...stylesCommon.fontSarabun600,
+                      color: colors.white,
+                    }}>
+                    {t('home.checkMasterclass')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
         </View>
       ) : null}
     </>
@@ -263,9 +482,10 @@ const styles = StyleSheet.create({
     width: '100%',
     // height: scaler(319),
     backgroundColor: colors.blue50,
-    borderRadius: scaler(16),
     paddingVertical: scaler(24),
     overflow: 'hidden',
+    borderRadius: scaler(16),
+    // borderTopLeftRadius: scaler(16),
   },
   imageBackground: {
     width: scaler(134),

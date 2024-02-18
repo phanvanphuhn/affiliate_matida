@@ -93,30 +93,57 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
       default:
         break;
     }
-  }
-  switch (arrayParamsLink[0]) {
-    case TypeDeepLink.ARTICLE:
-      navigate(ROUTE_NAME.DETAIL_ARTICLE, {
-        article: {id: arrayParamsLink[1], topic: [], mood: []},
-      });
-      break;
-    case TypeDeepLink.FEED:
-      navigate(ROUTE_NAME.DETAIL_FEED, {
-        id: arrayParamsLink[2],
-        content_type: arrayParamsLink[1],
-      });
-      break;
-    case TypeDeepLink.ROOM:
-      navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {
-        id: arrayParamsLink[1],
-      });
-      break;
-    case TypeDeepLink.DEAL:
-      navigate(ROUTE_NAME.TAB_DEAL, {
-        id: arrayParamsLink[1],
-      });
-      break;
-    default:
-      break;
+  } else if (arrayParamsLink[0] == 'matida:') {
+    switch (arrayParamsLink[1]) {
+      case TypeDeepLink.ARTICLE:
+        navigate(ROUTE_NAME.DETAIL_ARTICLE, {
+          article: {id: arrayParamsLink[3], topic: [], mood: []},
+        });
+        break;
+      case TypeDeepLink.FEED:
+        navigate(ROUTE_NAME.DETAIL_FEED, {
+          id: arrayParamsLink[3],
+          content_type: arrayParamsLink[2],
+        });
+        break;
+      case TypeDeepLink.ROOM:
+        navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {
+          id: arrayParamsLink[3],
+        });
+        break;
+      case TypeDeepLink.DEAL:
+        navigate(ROUTE_NAME.TAB_DEAL, {
+          id: arrayParamsLink[3],
+        });
+        break;
+      default:
+        break;
+    }
+  } else {
+    switch (arrayParamsLink[0]) {
+      case TypeDeepLink.ARTICLE:
+        navigate(ROUTE_NAME.DETAIL_ARTICLE, {
+          article: {id: arrayParamsLink[1], topic: [], mood: []},
+        });
+        break;
+      case TypeDeepLink.FEED:
+        navigate(ROUTE_NAME.DETAIL_FEED, {
+          id: arrayParamsLink[2],
+          content_type: arrayParamsLink[1],
+        });
+        break;
+      case TypeDeepLink.ROOM:
+        navigate(ROUTE_NAME.DETAIL_MEETING_ROOM, {
+          id: arrayParamsLink[1],
+        });
+        break;
+      case TypeDeepLink.DEAL:
+        navigate(ROUTE_NAME.TAB_DEAL, {
+          id: arrayParamsLink[1],
+        });
+        break;
+      default:
+        break;
+    }
   }
 };

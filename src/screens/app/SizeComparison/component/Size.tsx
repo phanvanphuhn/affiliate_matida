@@ -94,9 +94,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   txtHeader: {
-    fontSize: scaler(24),
-    ...stylesCommon.fontWeight500,
-    color: '#AE5151',
+    fontSize: scaler(22),
+    ...stylesCommon.fontWeight600,
   },
   txtContent: {
     ...stylesCommon.fontWeight400,
@@ -106,9 +105,8 @@ const styles = StyleSheet.create({
     marginTop: scaler(12),
   },
   txtHeader2: {
-    fontSize: scaler(24),
-    ...stylesCommon.fontWeight500,
-    color: '#AE5151',
+    fontSize: scaler(22),
+    ...stylesCommon.fontWeight600,
   },
   viewRow: {
     flexDirection: 'row',

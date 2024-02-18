@@ -132,7 +132,13 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             zIndex: -100,
             transform: [{scale: 0.9}],
           }}>
-          <Image source={chuyengia2} style={{}} />
+          <Image
+            source={{
+              uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1708089084364683064.png',
+            }}
+            style={{height: scaler(175), width: scaler(235)}}
+            resizeMode="center"
+          />
         </View>
       )}
     </ImageBackground>
