@@ -196,5 +196,11 @@ export const event = {
   },
   BANNER: {
     ecom_banner_1: 'ecom_banner_1',
+    ecom_banner_home: 'ecom_banner_home',
+    ecom_banner_tracker: 'ecom_banner_tracker',
+  },
+  QUIZ: {
+    quiz_result_click_read_more: 'quiz_result_click_read_more',
+    quiz_explore_master_class: 'quiz_explore_master_class',
   },
 };

@@ -33,7 +33,6 @@ import clip from '../../DetailFeed/components/clip';
 export const ViewQuiz = React.memo((props: any) => {
   const {onAnswer} = props;
   const data = useSelector((state: any) => state?.home?.data?.dailyQuizz);
-  console.log('data: ', data);
   const lang = useSelector((state: any) => state.auth.lang);
   const {t} = useTranslation();
   const checkPlan = useCheckPregnancy();
@@ -407,13 +406,24 @@ export const ViewQuiz = React.memo((props: any) => {
                       paddingHorizontal: scaler(16),
                       paddingBottom: scaler(12),
                     }}
-                    onPress={() =>
+                    onPress={() => {
+                      trackingAppEvent(
+                        event.QUIZ.quiz_result_click_read_more,
+                        {
+                          content:
+                            lang == 1
+                              ? data?.question?.link_en || data?.link_en
+                              : data?.question?.link_vi || data?.link_vi,
+                        },
+                        eventType.MIX_PANEL,
+                      );
+
                       handleDeepLink(
                         lang == 1
                           ? data?.question?.link_en || data?.link_en
                           : data?.question?.link_vi || data?.link_vi,
-                      )
-                    }>
+                      );
+                    }}>
                     <Text
                       style={{
                         fontSize: scaler(15),
@@ -445,7 +455,15 @@ export const ViewQuiz = React.memo((props: any) => {
                     flexDirection: 'row',
                     justifyContent: 'center',
                   }}
-                  onPress={checkPlan}>
+                  onPress={() => {
+                    trackingAppEvent(
+                      event.QUIZ.quiz_explore_master_class,
+                      {},
+                      eventType.MIX_PANEL,
+                    );
+
+                    checkPlan();
+                  }}>
                   <Image
                     source={iconCrownWhite}
                     style={{

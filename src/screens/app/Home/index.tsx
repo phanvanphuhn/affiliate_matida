@@ -722,7 +722,7 @@ const Home = () => {
           {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
 
           {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
-            <ProductCarousel />
+            <ProductCarousel isHome={true} />
           )}
 
           {/* {isShowForReviewer(user) &&
