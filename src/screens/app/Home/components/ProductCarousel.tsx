@@ -60,7 +60,7 @@ const productList = [
   },
 ];
 
-const ProductCarousel = () => {
+const ProductCarousel = (props: any) => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const week = useSelector((state: any) => state?.home?.week);
   const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
@@ -79,15 +79,28 @@ const ProductCarousel = () => {
           borderRadius: scaler(16),
         }}
         onPress={() => {
-          trackingAppEvent(
-            event.BANNER.ecom_banner_1,
-            {
-              userId: user?.id,
-              productLink: item?.productLink,
-              productName: item?.productImage,
-            },
-            eventType.MIX_PANEL,
-          );
+          if (props?.isHome) {
+            trackingAppEvent(
+              event.BANNER.ecom_banner_home,
+              {
+                userId: user?.id,
+                productLink: item?.productLink,
+                productName: item?.productImage,
+              },
+              eventType.MIX_PANEL,
+            );
+          } else {
+            trackingAppEvent(
+              event.BANNER.ecom_banner_tracker,
+              {
+                userId: user?.id,
+                productLink: item?.productLink,
+                productName: item?.productImage,
+              },
+              eventType.MIX_PANEL,
+            );
+          }
+
           Linking.canOpenURL(item?.productLink).then(supported => {
             if (supported) {
               Linking.openURL(item?.productLink);

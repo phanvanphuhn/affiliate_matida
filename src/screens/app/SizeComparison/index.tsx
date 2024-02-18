@@ -69,6 +69,10 @@ const SizeComparison = () => {
   const statusView = useRef(option);
   const [isRendered, setRendered] = useState(false);
 
+  const dataDailyQuiz = useSelector(
+    (state: any) => state?.home?.data?.dailyQuizz,
+  );
+
   useUXCam(ROUTE_NAME.SIZE_COMPARISON);
   const getData = async (value: any) => {
     setSelectedWeek(value);
@@ -100,7 +104,7 @@ const SizeComparison = () => {
         updateDataHome({
           ...data,
           dailyQuizz: {
-            ...data?.dailyQuizz,
+            ...dataDailyQuiz,
             ...res?.data,
           },
         }),
