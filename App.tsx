@@ -59,7 +59,7 @@ import {withIAPContext} from 'react-native-iap';
 const options = {
   // updateDialog: true,
   installMode: CodePush.InstallMode.IMMEDIATE,
-  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+  checkFrequency: CodePush.CheckFrequency.ON_APP_START,
 };
 
 const setupPlayer = async (
