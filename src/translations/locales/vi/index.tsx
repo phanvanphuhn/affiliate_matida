@@ -805,7 +805,7 @@ export const vi = {
       'Mẹ có thể đã bỏ lỡ một vài thông tin quan trọng về thai kỳ và em bé của mình.',
     haveQuestion: 'Mẹ có thắc mắc về khoá học?',
     checkThisOut: 'Tìm hiểu ngay',
-    liftTime: 'trọn đời',
+    liftTime: 'trọn thai kỳ',
     signUpEarly: 'Mẹ vui con khoẻ. Đăng ký ngay!',
     directAccess: 'Kết nối trực tiếp cùng chuyên gia',
     weeklyEffort: 'Chỉ tốn 15 phút mỗi tuần',

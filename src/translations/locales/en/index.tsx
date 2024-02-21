@@ -805,7 +805,7 @@ export const en = {
       'You might be missing important information related to your baby and/or your body when navigating pregnancy.',
     haveQuestion: 'Have questions about this course?',
     checkThisOut: 'Check this out',
-    liftTime: 'lifetime',
+    liftTime: 'full pregnancy',
     signUpEarly: 'Sign up for early bird discount',
     directAccess: 'Direct access to doctors & experts',
     weeklyEffort: 'Weekly effort of 15 minutes',
