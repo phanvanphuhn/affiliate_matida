@@ -806,7 +806,7 @@ export const en = {
     haveQuestion: 'Have questions about this course?',
     checkThisOut: 'Check this out',
     liftTime: 'full pregnancy',
-    signUpEarly: 'Sign up for early bird discount',
+    signUpEarly: 'Sign up for dragon baby discount',
     directAccess: 'Direct access to doctors & experts',
     weeklyEffort: 'Weekly effort of 15 minutes',
     supportBaby: "Support your baby's growth",
@@ -944,6 +944,7 @@ export const en = {
       'These contents are for week {{week}}. Come back later!',
     exploreAndLearn: 'Explore and learn',
     takeTheQuiz: 'Take the quiz',
+    month2Promo: 'Limited offer until 29/02',
   },
   momDiary: {
     momDiary: 'Mom Diary',

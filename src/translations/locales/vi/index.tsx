@@ -806,7 +806,7 @@ export const vi = {
     haveQuestion: 'Mẹ có thắc mắc về khoá học?',
     checkThisOut: 'Tìm hiểu ngay',
     liftTime: 'trọn thai kỳ',
-    signUpEarly: 'Mẹ vui con khoẻ. Đăng ký ngay!',
+    signUpEarly: 'Nhận ưu đãi đặc biệt cho mẹ Rồng Vàng',
     directAccess: 'Kết nối trực tiếp cùng chuyên gia',
     weeklyEffort: 'Chỉ tốn 15 phút mỗi tuần',
     supportBaby: 'Theo dõi quá trình của bé',
@@ -946,6 +946,7 @@ export const vi = {
       'Nội dung này dành cho tuần thai thứ {{week}}.\nMẹ hãy quay lại sau nhé!',
     exploreAndLearn: 'Xem ngay',
     takeTheQuiz: 'Kiểm tra kiến thức',
+    month2Promo: 'Ưu đãi giới hạn đến 29/2',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

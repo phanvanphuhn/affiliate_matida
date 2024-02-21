@@ -261,6 +261,15 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           <View style={styles.container5}>
             <Text style={styles.textOff}>50% off</Text>
           </View>
+          <Text
+            style={{
+              fontSize: scaler(15),
+              ...stylesCommon.fontSarabun400,
+              marginBottom: scaler(16),
+              textAlign: 'center',
+            }}>
+            {t('pregnancyProgram.month2Promo')}
+          </Text>
           <Text style={styles.textPrice1}>
             249,000đ{' '}
             <Text
