@@ -13,50 +13,64 @@ const productList = [
     index: 1,
     trimester: 1,
     productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1706718622209122726.png',
-    productLink: 'https://shope.ee/5pjWDmJEMk',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962155659047038.png',
+    productLink: 'https://shope.ee/6KfdQmNsn2',
   },
   {
     index: 2,
     trimester: 1,
     productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720137078661856.png',
-    productLink: 'https://shope.ee/5V6hZoVjaE',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962208607632187.png',
+    productLink: 'https://shope.ee/4AbJxAGx4S',
   },
   {
     index: 3,
     trimester: 1,
     productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720187351737354.png',
-    productLink: 'https://shope.ee/3pyLS03YWV',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962294346604004.png',
+    productLink: 'https://shope.ee/mLQtj0rY',
   },
   {
     index: 4,
     trimester: 2,
     productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720216110933262.png',
-    productLink: 'https://shope.ee/9ewEsk5qFS',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962395056228879.png',
+    productLink: 'https://shope.ee/5pk8NzV78e',
   },
   {
     index: 5,
     trimester: 2,
     productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720242457352242.png',
-    productLink: 'https://shope.ee/9pFf9eQTPo',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962432286157306.png',
+    productLink: 'https://shope.ee/Vhzv7QlCf',
   },
   {
     index: 6,
-    trimester: 3,
+    trimester: 2,
     productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720266280160666.png',
-    productLink: 'https://shope.ee/8UkB2oie0W',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962466375072409.png',
+    productLink: 'https://shope.ee/3VLV8HEQ7A',
   },
   {
     index: 7,
     trimester: 3,
     productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1706720291261198074.png',
-    productLink: 'https://shope.ee/6Kfmw6ydF8',
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962534775391636.png',
+    productLink: 'https://shope.ee/9A0Tzm8VXj',
+  },
+  {
+    index: 8,
+    trimester: 3,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962578027081380.png',
+    productLink: 'https://shope.ee/LP5UZksIM',
+  },
+  {
+    index: 9,
+    trimester: 3,
+    productImage:
+      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962614350501892.png',
+    productLink: 'https://shope.ee/6AMsSn9Izh',
   },
 ];
 
