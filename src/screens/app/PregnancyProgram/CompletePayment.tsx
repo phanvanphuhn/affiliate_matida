@@ -52,6 +52,7 @@ import {
   getProducts,
   requestPurchase,
 } from 'react-native-iap';
+import {trackCustomEvent} from '@services/webengageManager';
 
 interface CompletePaymentProps {}
 interface BankState {
@@ -111,6 +112,16 @@ const CompletePayment = (props: CompletePaymentProps) => {
   };
 
   const onPaymentFinish = async () => {
+    trackCustomEvent('Checkout Initiated', {
+      user_id: user?.id,
+      order_id: verifyCode,
+      amount: formatPrice(plan?.price),
+    });
+    trackCustomEvent('Checkout Complete', {
+      user_id: user?.id,
+      order_id: verifyCode,
+      amount: formatPrice(plan?.price),
+    });
     try {
       GlobalService.showLoading();
       trackingAppEvent(

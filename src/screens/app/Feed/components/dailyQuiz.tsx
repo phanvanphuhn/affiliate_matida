@@ -29,15 +29,6 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: scaler(4),
     flex: 0.48,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
     backgroundColor: '#654AC9',
     borderRadius: scaler(8),
     height: scaler(292),

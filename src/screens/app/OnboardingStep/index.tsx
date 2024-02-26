@@ -141,6 +141,12 @@ const OnboardingStep = (props: OnboardingStepProps) => {
     }
   };
   const onNextQuestion = () => {
+    trackCustomEvent('Quiz Challange Clicked', {
+      user_id: user?.id,
+      baby_weeks: user?.pregnantWeek?.weekPregnant?.weeks,
+      baby_months: user?.pregnantWeek?.weekPregnant?.months,
+      question_number: `${(state.currentQuestion ?? 0) + 1}`,
+    });
     trackingAppEvent(
       `${event.MASTER_CLASS.PP_QUESTION}${(state.currentQuestion ?? 0) + 1}`,
       {id: user?.id},

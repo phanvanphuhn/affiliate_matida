@@ -59,17 +59,8 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: scaler(12),
     flex: 0.48,
-    backgroundColor: colors.backgroundFeed,
+    backgroundColor: colors.white,
     borderRadius: scaler(8),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
   },
   tag: {
     position: 'absolute',

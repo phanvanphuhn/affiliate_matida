@@ -44,6 +44,7 @@ import Svg, {
 } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 import useCheckPregnancy from '../../../util/hooks/useCheckPregnancy';
+import {trackCustomEvent} from '../../../services/webengageManager';
 
 interface NewUserProgramProps {}
 
@@ -235,6 +236,11 @@ const NewUserProgram = (props: NewUserProgramProps) => {
           }}>
           <TouchableOpacity
             onPress={() => {
+              trackCustomEvent('Quiz Started', {
+                user_id: user?.id,
+                baby_weeks: user?.pregnantWeek?.weekPregnant?.weeks,
+                baby_months: user?.pregnantWeek?.weekPregnant?.months,
+              });
               trackingAppEvent(
                 event.MASTER_CLASS.PP_FEED_SIGN_UP_NOW,
                 {

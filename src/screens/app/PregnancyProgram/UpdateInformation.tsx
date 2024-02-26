@@ -35,6 +35,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {changeWeekUserTask} from '@redux';
 import {event, eventType, trackingAppEvent} from '@util';
 import useBackHandler from '../../../util/hooks/useBackHandler';
+import {trackCustomEvent} from '@services/webengageManager';
 
 interface UpdateInformationProps {}
 export interface UpdateInformationState {
@@ -53,6 +54,13 @@ const UpdateInformation = (props: UpdateInformationProps) => {
     return true;
   });
   const handleSubcribePlan = async (metadata: UpdateInformationState) => {
+    trackCustomEvent('Checkout Initiated', {
+      user_id: user?.id,
+      baby_weeks: user?.pregnantWeek?.weekPregnant?.weeks,
+      baby_months: user?.pregnantWeek?.weekPregnant?.months,
+      name: metadata.name,
+      phone: metadata.phone,
+    });
     try {
       let data = {
         plan_code: 'PP',

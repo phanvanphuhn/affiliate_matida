@@ -26,6 +26,7 @@ import {useSelector} from 'react-redux';
 import {event, eventType, trackingAppEvent} from '@util';
 import useCheckPregnancy from '../../../util/hooks/useCheckPregnancy';
 import {getQuestionOnboarding} from '../../../services/pregnancyProgram';
+import {trackCustomEvent} from '@services/webengageManager';
 
 interface TeaserProgramProps {
   isHome?: boolean;
@@ -93,6 +94,11 @@ const TeaserProgram = (props: TeaserProgramProps) => {
     }, []),
   );
   const onSignUpNow = () => {
+    trackCustomEvent('Masterclass Signed Up Initiated', {
+      user_id: user?.id,
+      baby_weeks: user?.pregnantWeek?.weekPregnant?.weeks,
+      baby_months: user?.pregnantWeek?.weekPregnant?.months,
+    });
     trackingAppEvent(
       event.MASTER_CLASS.PP_TEASER_SIGNUP_BUTTON,
       {id: user?.id},

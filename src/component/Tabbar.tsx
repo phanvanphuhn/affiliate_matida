@@ -43,6 +43,7 @@ import {useTranslation} from 'react-i18next';
 import {GlobalService} from '@services';
 import {getQuestionOnboarding} from '../services/pregnancyProgram';
 import useCheckPregnancy from '../util/hooks/useCheckPregnancy';
+import {trackCustomEvent} from '../services/webengageManager';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -180,6 +181,11 @@ const Tabbar: React.FC<Props> = ({state, navigation}) => {
               );
               checkPlan();
             } else if (route.name == ROUTE_NAME.PREGNANCY_PROGRAM) {
+              trackCustomEvent('Masterclass Button Clicked', {
+                user_id: user?.id,
+                baby_weeks: user?.pregnantWeek?.weekPregnant?.weeks,
+                baby_months: user?.pregnantWeek?.weekPregnant?.months,
+              });
               trackingAppEvent(
                 event.TAB.CLICK_TAB_MASTERCLASS,
                 {

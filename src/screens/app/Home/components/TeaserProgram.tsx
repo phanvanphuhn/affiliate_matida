@@ -98,50 +98,72 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   }, [user]);
 
   return (
-    <ImageBackground
-      source={userScore ? background_home2 : undefined}
-      style={[styles.container]}>
-      <View style={styles.container3}>
-        <View style={{flex: 1}}>
-          <Text style={styles.textOff}>
-            {userScore
-              ? t('home.takeTheMatidaMasterclass')
-              : t('home.wantToBeTheSmartest')}
-          </Text>
-          <Text style={styles.textPrice1}>
-            {userScore
-              ? t('home.wellWorkYourChallenges')
-              : t('home.getAheadWithMatidaMasterclass')}
-          </Text>
-        </View>
-        <TouchableOpacity onPress={onTest} style={styles.buttonSignUp}>
-          <Text style={styles.textButtonSignUp}>
-            {userScore ? t('myPurchases.signUpNow') : t('home.getStarted')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
+    <>
       {userScore ? (
-        <BarchartOnboardingHome {...userScore} />
-      ) : (
-        <View
-          style={{
-            position: 'absolute',
-            right: -12,
-            bottom: -10,
-            zIndex: -100,
-            transform: [{scale: 0.9}],
-          }}>
+        <ImageBackground
+          source={userScore ? background_home2 : undefined}
+          style={[styles.container]}>
+          <View style={styles.container3}>
+            <View style={{flex: 1}}>
+              <Text style={styles.textOff}>
+                {userScore
+                  ? t('home.takeTheMatidaMasterclass')
+                  : t('home.wantToBeTheSmartest')}
+              </Text>
+              <Text style={styles.textPrice1}>
+                {userScore
+                  ? t('home.wellWorkYourChallenges')
+                  : t('home.getAheadWithMatidaMasterclass')}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={onTest} style={styles.buttonSignUp}>
+              <Text style={styles.textButtonSignUp}>
+                {userScore ? t('myPurchases.signUpNow') : t('home.getStarted')}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {userScore ? (
+            <BarchartOnboardingHome {...userScore} />
+          ) : (
+            <View
+              style={{
+                position: 'absolute',
+                right: -12,
+                bottom: -10,
+                zIndex: -100,
+                transform: [{scale: 0.9}],
+              }}>
+              <Image
+                source={{
+                  uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1708089084364683064.png',
+                }}
+                style={{height: scaler(175), width: scaler(235)}}
+                resizeMode="center"
+              />
+            </View>
+          )}
+        </ImageBackground>
+      ) : lang == 1 ? (
+        <TouchableOpacity onPress={onTest}>
           <Image
             source={{
-              uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1708089084364683064.png',
+              uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1708824893511954201.png',
             }}
-            style={{height: scaler(175), width: scaler(235)}}
-            resizeMode="center"
+            style={styles.imageContainer}
           />
-        </View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={onTest}>
+          <Image
+            source={{
+              uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1708824924456913188.png',
+            }}
+            style={styles.imageContainer}
+          />
+        </TouchableOpacity>
       )}
-    </ImageBackground>
+    </>
   );
 };
 
@@ -247,5 +269,11 @@ const styles = StyleSheet.create({
     fontSize: scaler(16),
     ...stylesCommon.fontWeight600,
     marginTop: scaler(8),
+  },
+  imageContainer: {
+    height: scaler(156),
+    width: '100%',
+    marginBottom: scaler(16),
+    borderRadius: scaler(16),
   },
 });

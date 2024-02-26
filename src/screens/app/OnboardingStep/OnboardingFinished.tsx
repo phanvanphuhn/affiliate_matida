@@ -42,9 +42,22 @@ const OnboardingFinished = (props: OnboardingFinishedProps) => {
   const lang = useSelector((state: any) => state.auth.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const route = useRoute<RouteProp<any>>();
-  console.log('=>(OnboardingFinished.tsx:31) route', route);
 
   const onNext = () => {
+    trackCustomEvent('Masterclass Perks Page View', {
+      user_id: user?.id,
+      baby_weeks: user?.pregnantWeek?.weekPregnant?.weeks,
+      baby_months: user?.pregnantWeek?.weekPregnant?.months,
+    });
+    trackCustomEvent('Quiz Challange Completed', {
+      user_id: user?.id,
+      baby_weeks: user?.pregnantWeek?.weekPregnant?.weeks,
+      baby_months: user?.pregnantWeek?.weekPregnant?.months,
+      pregnancy_basic: route.params?.score / 2,
+      baby_car: route.params?.metadata?.newborn_care,
+      fitness_nutrition: route.params?.metadata?.nutrition_and_fitness,
+      money_love: route.params?.metadata?.love_and_money,
+    });
     trackingAppEvent(
       event.MASTER_CLASS.PP_LET_WORK_ON_IT_TOGETHER,
       {id: user?.id},
