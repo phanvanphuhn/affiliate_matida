@@ -14,10 +14,12 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  StyleSheet,
+  FlatList,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AppHeader, FLoatingAIButton} from '@component';
+import {AppHeader, ExpertWorkshopsItemV2, FLoatingAIButton} from '@component';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {
   clearDataChat,
@@ -29,18 +31,20 @@ import {
   updateStatusDeepLink,
   getListBaby,
   getDataHomeByWeek,
+  getListTabForum,
 } from '@redux';
 import {ROUTE_NAME} from '@routeName';
 import {
   answerDailyQuiz,
   calendarCheckups,
+  getLiveTalk,
   getProgramCheck,
   getUserInfoApi,
   GlobalService,
   updateBaby,
   updateUserInfo,
 } from '@services';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {
   ChatGPTComponent,
   PregnancyProgress,
@@ -52,7 +56,7 @@ import {
 import {styles} from './styles';
 import {IArticles, IBabyProgress, IPosts, IQuote, IVideo} from './types';
 
-import {imageBackgroundOpacity} from '@images';
+import {SvgMessages3, imageBackgroundOpacity} from '@images';
 import {
   APPID_ZEGO_KEY,
   AppNotification,
@@ -96,6 +100,12 @@ import moment from 'moment';
 import TeaserProgram from './components/TeaserProgram';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import ProductCarousel from './components/ProductCarousel';
+import YourTaskThisWeek from './components/YourTaskThisWeek';
+import {ListArticle} from '../SizeComparison/component/ListArticle';
+import {ListPost} from '../Forum/components';
+import {useTranslation} from 'react-i18next';
+import {ListPostByWeek} from '../SizeComparison/component/ListPostByWeek';
+import PregnancyTracker from './components/PregnancyTracker';
 
 const screenWidth = Dimensions.get('screen').width;
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
@@ -124,6 +134,7 @@ const Home = () => {
   const route = useRoute();
   const dispatch = useDispatch();
   const navigation = useNavigation<any>();
+  const {t} = useTranslation();
 
   if (route?.name === ROUTE_NAME.TAB_HOME) {
     if (Platform.OS === 'android') {
@@ -134,16 +145,6 @@ const Home = () => {
 
   // const [refreshing, setRefreshing] = useState(false);
   // const [isSignUp, setIsSignUp] = useState();
-
-  const [state, setState] = useDetailPost({
-    filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
-    isShowNewBorn: false,
-    data: [],
-    isShowContent: [],
-    isSignUp: '',
-    refreshing: true,
-  });
-  const [activeSlide, setActiveSlide] = useState();
 
   const scrollRef = useRef<ScrollView>(null);
   const firstRef = useRef(false);
@@ -162,6 +163,18 @@ const Home = () => {
   const deepLink = useSelector((state: any) => state?.check?.deepLink);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
   const newBorn = useSelector((state: RootState) => state.newBorn.list);
+
+  const [weekSelected, setWeek] = useState(week);
+  const [state, setState] = useDetailPost({
+    filter: {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
+    isShowNewBorn: false,
+    data: [],
+    isShowContent: [],
+    isSignUp: '',
+    refreshing: true,
+    dataLiveTalk: [],
+  });
+  const [activeSlide, setActiveSlide] = useState();
 
   const isSelectProfileNewBorn = newBorn.filter(
     item =>
@@ -363,6 +376,8 @@ const Home = () => {
       checkProgram();
       // dispatch(getDataHome());
       dispatch(getListBaby());
+      dispatch(getListTabForum());
+      const resLiveTalk = await getLiveTalk();
       const res = await calendarCheckups();
       setState({
         data: res?.data,
@@ -372,6 +387,7 @@ const Home = () => {
             : {id: 1, value: 'week_1', label: 'Week 1', intVal: 1},
         isShowContent: [],
         refreshing: false,
+        dataLiveTalk: resLiveTalk?.data,
       });
       GlobalService.hideLoading();
     } catch (error) {
@@ -563,6 +579,8 @@ const Home = () => {
     );
   };
 
+  const showBottomSheetConsultant = () => {};
+
   useEffect(() => {
     trackUser(user);
     if (
@@ -694,9 +712,143 @@ const Home = () => {
           // }
           contentContainerStyle={{
             paddingBottom: scaler(30),
-            paddingTop: scaler(18),
+            // paddingTop: scaler(18),
           }}>
-          {isShowForReviewer(user) &&
+          <View style={styles.ph}>
+            <Text style={styles.title}>Pregnancy Tracker</Text>
+            <PregnancyTracker />
+          </View>
+
+          <View style={styles.ph}>
+            <Text style={styles.title}>Your tasks this week</Text>
+            <YourTaskThisWeek />
+          </View>
+
+          <View>
+            <ListArticle
+              week={weekSelected}
+              title={'Explore & Learn'}
+              styleTextTitle={[styles.title, {marginBottom: 0}]}
+              mb={0}
+            />
+          </View>
+
+          <View>
+            <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
+              Recommended by our experts
+            </Text>
+            {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+              <ProductCarousel isHome={true} />
+            )}
+          </View>
+
+          <View>
+            <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
+              Test your knowledge
+            </Text>
+            {data?.dailyQuizz && isShowForReviewer(user) ? (
+              <ViewQuiz onAnswer={onAnswerQuiz} />
+            ) : null}
+            {isShowForReviewer(user) &&
+              (user?.baby_type == 'pregnant' ||
+                user?.baby_type == 'pregnant-overdue' ||
+                user?.baby_type == 'unknown') &&
+              (!user?.payments?.length ||
+                user?.payments?.some(e => e.status == 'processing')) && (
+                <View style={{marginHorizontal: 16}}>
+                  <TeaserProgram data={state?.isSignUp} isHome={true} />
+                </View>
+              )}
+          </View>
+
+          <View style={styles.ph}>
+            <Text style={styles.title}>Get support</Text>
+            <TouchableOpacity
+              style={{flex: 1}}
+              onPress={showBottomSheetConsultant}>
+              <Image
+                source={{
+                  uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png',
+                }}
+                style={{width: '100%', height: scaler(126)}}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            {state?.dataLiveTalk?.expertLiveTalk?.filter(
+              item => item?.room?.status !== 3,
+            )?.length > 0 && (
+              <View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginBottom: scaler(12),
+                    marginTop: scaler(16),
+                    paddingHorizontal: scaler(16),
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: scaler(18),
+                      ...stylesCommon.fontWeight600,
+                    }}>
+                    Upcoming live talks
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate(ROUTE_NAME.ALL_MEETING_ROOM)
+                    }>
+                    <Text
+                      style={{
+                        ...stylesCommon.fontWeight500,
+                        fontSize: scaler(14),
+                        color: colors.pink4,
+                      }}>
+                      {t('talk.seeAll')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{paddingLeft: scaler(16)}}>
+                  <FlatList
+                    data={state?.dataLiveTalk?.expertLiveTalk?.slice(0, 3)}
+                    renderItem={({item, index}) => {
+                      return (
+                        <ExpertWorkshopsItemV2 item={item} key={index} mb={0} />
+                      );
+                    }}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                  />
+                </View>
+              </View>
+            )}
+          </View>
+
+          <View style={{marginTop: scaler(12)}}>
+            <ListPostByWeek
+              week={weekSelected}
+              cardBorderStyle={{
+                borderWidth: 1,
+                borderColor: '#F5F5F5',
+              }}
+            />
+            <TouchableOpacity
+              style={styles.createPostButton}
+              onPress={() => {
+                trackingAppEvent(
+                  event.BABY_TRACKER.CLICK_POST_FORUM,
+                  {},
+                  eventType.MIX_PANEL,
+                );
+                navigation.navigate(ROUTE_NAME.CREATE_NEWPOST);
+              }}>
+              <SvgMessages3 color={colors.white} />
+              <Text style={styles.titleButton2}>{t('home.createPost')}</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||
               user?.baby_type == 'pregnant-overdue' ||
               user?.baby_type == 'unknown') &&
@@ -705,25 +857,25 @@ const Home = () => {
               <View style={{marginHorizontal: 16}}>
                 <TeaserProgram data={state?.isSignUp} isHome={true} />
               </View>
-            )}
+            )} */}
 
-          {state?.refreshing ? (
+          {/* {state?.refreshing ? (
             <View style={styles.wrapLoadingContainer}>
               <ActivityIndicator size={'small'} color={'red'} />
             </View>
           ) : (
             isShowForReviewer(user) && renderNewBornContent()
-          )}
+          )} */}
 
-          {data?.dailyQuizz && isShowForReviewer(user) ? (
+          {/* {data?.dailyQuizz && isShowForReviewer(user) ? (
             <ViewQuiz onAnswer={onAnswerQuiz} />
-          ) : null}
+          ) : null} */}
 
-          {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
+          {/* {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />} */}
 
-          {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+          {/* {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
             <ProductCarousel isHome={true} />
-          )}
+          )} */}
 
           {/* {isShowForReviewer(user) &&
             (user?.baby_type == 'pregnant' ||

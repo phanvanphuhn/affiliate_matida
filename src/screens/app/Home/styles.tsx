@@ -15,17 +15,6 @@ const styles = StyleSheet.create({
     width: widthScreen,
     position: 'absolute',
   },
-  createPostButton: {
-    marginHorizontal: scaler(20),
-    width: undefined,
-    backgroundColor: colors.white,
-    marginBottom: scaler(40),
-    flexDirection: 'row',
-    height: scaler(48),
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: scaler(8),
-  },
   titleButton: {
     fontSize: scaler(14),
     ...stylesCommon.fontWeight600,
@@ -42,6 +31,33 @@ const styles = StyleSheet.create({
     marginBottom: scaler(16),
     height: scaler(280),
     justifyContent: 'center',
+  },
+  title: {
+    ...stylesCommon.fontWeight600,
+    fontSize: scaler(18),
+    marginBottom: scaler(12),
+    marginTop: scaler(16),
+  },
+  ph: {
+    paddingHorizontal: scaler(16),
+  },
+  createPostButton: {
+    marginHorizontal: scaler(20),
+    width: undefined,
+    backgroundColor: colors.pink4,
+    marginBottom: scaler(40),
+    flexDirection: 'row',
+    height: scaler(48),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: scaler(80),
+  },
+  titleButton2: {
+    fontSize: scaler(14),
+    ...stylesCommon.fontWeight600,
+    lineHeight: scaler(21),
+    color: colors.white,
+    marginLeft: scaler(11),
   },
 });
 

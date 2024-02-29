@@ -25,9 +25,10 @@ import {useTranslation} from 'react-i18next';
 type Props = {
   recorded?: boolean;
   item: any;
+  mb?: number;
 };
 
-export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
+export const ExpertWorkshopsItemV2 = ({recorded = false, item, mb}: Props) => {
   const lang = useSelector((state: any) => state.auth.lang);
   const {t} = useTranslation();
   const isPayment = item?.is_payment && !item?.is_paid;
@@ -66,7 +67,7 @@ export const ExpertWorkshopsItemV2 = ({recorded = false, item}: Props) => {
 
   return (
     <TouchableOpacity
-      style={s.container}
+      style={[s.container, mb != null ? {marginBottom: scaler(mb)} : {}]}
       activeOpacity={1}
       onPress={handlePress}>
       <View

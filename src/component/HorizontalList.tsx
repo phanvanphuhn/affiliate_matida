@@ -30,6 +30,8 @@ interface IProps {
   length?: number;
   styleScroll?: StyleProp<ViewStyle>;
   loading?: boolean;
+  styleTextTitle?: StyleProp<TextStyle>;
+  mb?: number;
 }
 export const HorizontalList = ({
   icon,
@@ -46,6 +48,8 @@ export const HorizontalList = ({
   length = 2,
   styleScroll,
   loading = false,
+  styleTextTitle,
+  mb,
 }: IProps) => {
   return (
     <View style={style}>
@@ -60,7 +64,7 @@ export const HorizontalList = ({
           }}>
           {icon && <Image source={icon} />}
           <View style={{alignSelf: 'flex-start'}}>{!!IconSvg && IconSvg}</View>
-          <Text style={styles.textTitle}>{title}</Text>
+          <Text style={[styles.textTitle, styleTextTitle]}>{title}</Text>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={[styles.textSeeMore, styleTextSee]}>{textSee}</Text>
@@ -84,7 +88,7 @@ export const HorizontalList = ({
               bounces={false}
               style={[
                 {
-                  marginBottom: scaler(30),
+                  marginBottom: scaler(mb != null ? mb : 30),
                 },
                 styleScroll,
               ]}

@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: scaler(156),
     width: '100%',
-    marginBottom: scaler(16),
+    // marginBottom: scaler(16),
     borderRadius: scaler(16),
   },
 });

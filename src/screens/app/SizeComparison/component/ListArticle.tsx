@@ -11,14 +11,18 @@ import {ROUTE_NAME} from '@routeName';
 import {getArticleByWeek, GlobalService} from '@services';
 import {useSelector} from 'react-redux';
 import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
+import {StyleProp, TextStyle} from 'react-native';
 
 type Props = {
   // callBackData: () => void;
   week: number;
   cardBorderStyle?: any;
+  title?: string;
+  styleTextTitle?: StyleProp<TextStyle>;
+  mb?: number;
 };
 
-export const ListArticle = ({week}: Props) => {
+export const ListArticle = ({week, title, styleTextTitle, mb}: Props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -56,10 +60,12 @@ export const ListArticle = ({week}: Props) => {
   return (
     <HorizontalList
       loading={loading}
-      title={t('home.weeklyArticles')}
+      title={title ? title : t('home.weeklyArticles')}
       length={data?.length}
       styleHeader={{paddingHorizontal: scaler(20)}}
       contentContainerStyle={{marginBottom: 0}}
+      styleTextTitle={styleTextTitle}
+      mb={mb}
       onPressSeeMore={() => navigate(ROUTE_NAME.TAB_FEED)}>
       {data?.map((article: IArticles) => (
         <NewArticles
