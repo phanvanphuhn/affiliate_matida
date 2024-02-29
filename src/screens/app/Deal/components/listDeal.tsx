@@ -113,15 +113,6 @@ const styles = StyleSheet.create({
     height: scaler(290),
     borderRadius: scaler(16),
     backgroundColor: colors.white,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
   },
   bottomItemContainer: {
     flex: 1,

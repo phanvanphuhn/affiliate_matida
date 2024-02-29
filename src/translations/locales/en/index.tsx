@@ -806,7 +806,7 @@ export const en = {
     haveQuestion: 'Have questions about this course?',
     checkThisOut: 'Check this out',
     liftTime: 'full pregnancy',
-    signUpEarly: 'Sign up for dragon baby discount',
+    signUpEarly: 'Sign up for early bird discount',
     directAccess: 'Direct access to doctors & experts',
     weeklyEffort: 'Weekly effort of 15 minutes',
     supportBaby: "Support your baby's growth",

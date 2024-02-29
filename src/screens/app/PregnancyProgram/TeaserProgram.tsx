@@ -265,9 +265,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         </Text>
         <View style={styles.container4}>
           <View style={styles.container5}>
-            <Text style={styles.textOff}>50% off</Text>
+            <Text style={styles.textOff}>33% off</Text>
           </View>
-          <Text
+          {/* <Text
             style={{
               fontSize: scaler(15),
               ...stylesCommon.fontSarabun400,
@@ -275,9 +275,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               textAlign: 'center',
             }}>
             {t('pregnancyProgram.month2Promo')}
-          </Text>
+          </Text> */}
           <Text style={styles.textPrice1}>
-            249,000đ{' '}
+            499,000đ
             <Text
               style={{
                 fontSize: scaler(13),
@@ -292,7 +292,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                 textDecorationLine: 'line-through',
                 ...stylesCommon.fontSarabun400,
               }}>
-              499,000đ
+              649,000đ
             </Text>
             /{t('pregnancyProgram.liftTime')}
           </Text>

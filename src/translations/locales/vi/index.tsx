@@ -806,7 +806,7 @@ export const vi = {
     haveQuestion: 'Mẹ có thắc mắc về khoá học?',
     checkThisOut: 'Tìm hiểu ngay',
     liftTime: 'trọn thai kỳ',
-    signUpEarly: 'Nhận ưu đãi đặc biệt cho mẹ Rồng Vàng',
+    signUpEarly: 'Mẹ vui con khoẻ. Đăng ký ngay!',
     directAccess: 'Kết nối trực tiếp cùng chuyên gia',
     weeklyEffort: 'Chỉ tốn 15 phút mỗi tuần',
     supportBaby: 'Theo dõi quá trình của bé',
