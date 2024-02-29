@@ -715,19 +715,19 @@ const Home = () => {
             // paddingTop: scaler(18),
           }}>
           <View style={styles.ph}>
-            <Text style={styles.title}>Pregnancy Tracker</Text>
+            <Text style={styles.title}>{t('home.pregnancyTracker')}</Text>
             <PregnancyTracker />
           </View>
 
           <View style={styles.ph}>
-            <Text style={styles.title}>Your tasks this week</Text>
+            <Text style={styles.title}>{t('home.yourtaskThisWeek')}</Text>
             <YourTaskThisWeek />
           </View>
 
           <View>
             <ListArticle
               week={weekSelected}
-              title={'Explore & Learn'}
+              title={t('home.exploreAndLearn') as string}
               styleTextTitle={[styles.title, {marginBottom: 0}]}
               mb={0}
             />
@@ -735,7 +735,7 @@ const Home = () => {
 
           <View>
             <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
-              Recommended by our experts
+              {t('home.recommendByOurEx')}
             </Text>
             {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
               <ProductCarousel isHome={true} />
@@ -744,7 +744,7 @@ const Home = () => {
 
           <View>
             <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
-              Test your knowledge
+              {t('home.testYourKnowledge')}
             </Text>
             {data?.dailyQuizz && isShowForReviewer(user) ? (
               <ViewQuiz onAnswer={onAnswerQuiz} />
@@ -762,13 +762,16 @@ const Home = () => {
           </View>
 
           <View style={styles.ph}>
-            <Text style={styles.title}>Get support</Text>
+            <Text style={styles.title}>{t('home.getSupport')}</Text>
             <TouchableOpacity
               style={{flex: 1}}
               onPress={showBottomSheetConsultant}>
               <Image
                 source={{
-                  uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png',
+                  uri:
+                    lang == 1
+                      ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
+                      : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
                 }}
                 style={{width: '100%', height: scaler(126)}}
               />
@@ -793,7 +796,7 @@ const Home = () => {
                       fontSize: scaler(18),
                       ...stylesCommon.fontWeight600,
                     }}>
-                    Upcoming live talks
+                    {t('home.upcomingLiveTalks')}
                   </Text>
                   <TouchableOpacity
                     onPress={() =>
@@ -832,6 +835,7 @@ const Home = () => {
                 borderWidth: 1,
                 borderColor: '#F5F5F5',
               }}
+              title={t('home.whatMomsTalkAbout')}
             />
             <TouchableOpacity
               style={styles.createPostButton}

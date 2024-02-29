@@ -23,6 +23,7 @@ type Props = {
   // callBackData: () => void;
   week: number;
   cardBorderStyle?: any;
+  title?: string;
 };
 export enum Option {
   REPORT,
@@ -35,7 +36,7 @@ export type IOption = {
   value: Option;
   icon: React.ReactNode;
 };
-export const ListPostByWeek = ({week, cardBorderStyle}: Props) => {
+export const ListPostByWeek = ({week, cardBorderStyle, title}: Props) => {
   const dispatch = useDispatch();
   // const week = useSelector((state: any) => state?.home?.week);
   const {t} = useTranslation();
@@ -131,7 +132,7 @@ export const ListPostByWeek = ({week, cardBorderStyle}: Props) => {
       <HorizontalList
         loading={loading}
         // IconSvg={<SvgMessages3 />}
-        title={t('home.talkAbout')}
+        title={title ? title : t('home.talkAbout')}
         length={data?.length}
         textSee={t('home.viewAll')}
         styleHeader={{paddingHorizontal: scaler(20)}}
