@@ -45,6 +45,8 @@ export interface UpdateInformationState {
 }
 
 const UpdateInformation = (props: UpdateInformationProps) => {
+  const {route} = props;
+  const {params} = route;
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -72,6 +74,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
       if (res?.success) {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
           values: res?.data,
+          isConsultant: params?.isConsultant,
         });
         dispatch(changeWeekUserTask(parseInt(metadata.pregnant_week)));
       }

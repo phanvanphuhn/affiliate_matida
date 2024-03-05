@@ -11,7 +11,7 @@ const CHANGE_PAYMENT_METHOD =
   'subscription-plans/request/change-payment-method';
 
 export const getPlanByCode: any = async () => {
-  const response = await api.get(`${SUBSCRIPTION_PLANS}code/PP`);
+  const response = await api.get(`${SUBSCRIPTION_PLANS}code/PD`);
   return response;
 };
 

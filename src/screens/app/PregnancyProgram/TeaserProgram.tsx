@@ -30,9 +30,12 @@ import {trackCustomEvent} from '@services/webengageManager';
 
 interface TeaserProgramProps {
   isHome?: boolean;
+  route: any;
 }
 
 const TeaserProgram = (props: TeaserProgramProps) => {
+  const {route} = props;
+  const {params} = route;
   const [activeSlide, setActiveSlide] = useState(0);
   const [userScore, setUserScore] = useState();
   const [packageQuizz, setPackageQuizz] = useState();
@@ -104,7 +107,12 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-
+    if (params?.isConsultant) {
+      navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {
+        isConsultant: true,
+      });
+      return;
+    }
     if (userScore) {
       if (user.payments.some(e => e.status == 'processing')) {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
@@ -212,7 +220,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           )}
 
           <Text style={styles.textTitle}>
-            {t('pregnancyProgram.aioCourse')}
+            {params?.isConsultant
+              ? 'On Demand Consultations'
+              : t('pregnancyProgram.aioCourse')}
           </Text>
           <Text
             style={[
@@ -222,20 +232,33 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                 marginBottom: 10,
               },
             ]}>
-            Matida Masterclass
+            {params?.isConsultant ? 'Matida Experts' : 'Matida Masterclass'}
           </Text>
 
           <View
             style={{
               paddingTop: 8,
             }}>
-            <Image
-              source={lang == 1 ? ic_teaser_en : ic_teaser_vi}
-              style={{
-                width: widthScreen,
-                resizeMode: 'contain',
-              }}
-            />
+            {params?.isConsultant ? (
+              <Image
+                source={{
+                  uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709606692229359958.png',
+                }}
+                style={{
+                  width: widthScreen,
+                  resizeMode: 'center',
+                  height: scaler(470),
+                }}
+              />
+            ) : (
+              <Image
+                source={lang == 1 ? ic_teaser_en : ic_teaser_vi}
+                style={{
+                  width: widthScreen,
+                  resizeMode: 'contain',
+                }}
+              />
+            )}
           </View>
         </View>
       </ScrollView>
@@ -264,10 +287,12 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           </Text>
         </Text>
         <View style={styles.container4}>
-          <View style={styles.container5}>
-            <Text style={styles.textOff}>50% off</Text>
-          </View>
-          <Text
+          {!params?.isConsultant && (
+            <View style={styles.container5}>
+              <Text style={styles.textOff}>33% off</Text>
+            </View>
+          )}
+          {/* <Text
             style={{
               fontSize: scaler(15),
               ...stylesCommon.fontSarabun400,
@@ -275,31 +300,44 @@ const TeaserProgram = (props: TeaserProgramProps) => {
               textAlign: 'center',
             }}>
             {t('pregnancyProgram.month2Promo')}
-          </Text>
-          <Text style={styles.textPrice1}>
-            249,000đ{' '}
-            <Text
-              style={{
-                fontSize: scaler(13),
-                ...stylesCommon.fontSarabun600,
-              }}>
-              /{t('pregnancyProgram.liftTime')}
-            </Text>
-          </Text>
-          <Text style={styles.textPriceOld}>
-            <Text
-              style={{
-                textDecorationLine: 'line-through',
-                ...stylesCommon.fontSarabun400,
-              }}>
-              499,000đ
-            </Text>
-            /{t('pregnancyProgram.liftTime')}
-          </Text>
+          </Text> */}
+          {params?.isConsultant ? (
+            <>
+              <Text style={styles.textPrice1}>249,000đ</Text>
+              <Text style={styles.textPriceOld}>
+                Full pregnancy with unlimited questions
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text style={styles.textPrice1}>
+                499,000đ
+                <Text
+                  style={{
+                    fontSize: scaler(13),
+                    ...stylesCommon.fontSarabun600,
+                  }}>
+                  /{t('pregnancyProgram.liftTime')}
+                </Text>
+              </Text>
+              <Text style={styles.textPriceOld}>
+                <Text
+                  style={{
+                    textDecorationLine: 'line-through',
+                    ...stylesCommon.fontSarabun400,
+                  }}>
+                  649,000đ
+                </Text>
+                /{t('pregnancyProgram.liftTime')}
+              </Text>
+            </>
+          )}
         </View>
         <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>
-            {t('pregnancyProgram.signUpEarly')}
+            {params?.isConsultant
+              ? 'Sign up and ask now'
+              : t('pregnancyProgram.signUpEarly')}
           </Text>
         </TouchableOpacity>
       </View>

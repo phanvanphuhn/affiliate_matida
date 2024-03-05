@@ -16,6 +16,7 @@ import {getTrimester} from './PregnancyProgress';
 import {getTimePregnancy} from '@util';
 import {WEEK_MAX} from '@constant';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
+import {AppImage} from '@component';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -30,6 +31,11 @@ const PregnancyTracker = () => {
   const duaDate = useSelector((state: any) => state?.auth?.userInfo?.due_date);
   const trimester = getTrimester(weekPregnant?.weeks ?? week);
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const data = useSelector((state: any) => state?.home?.data);
+  const babyProgress = data?.babyProgress;
+  const imageBaby = babyProgress?.baby?.image
+    ? babyProgress?.baby?.image[0]
+    : '';
 
   const cardWidth = () => {
     return ((screenWidth - 48) / 100) * 63;
@@ -49,6 +55,13 @@ const PregnancyTracker = () => {
     });
   };
 
+  const handleBodyMom = () => {
+    navigation.navigate(ROUTE_NAME.SIZE_COMPARISON, {
+      // option: OptionComparison.EMBRYO,
+      option: 1,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -57,10 +70,29 @@ const PregnancyTracker = () => {
           width: cardWidth(),
           marginRight: scaler(16),
         }}>
-        <Image
-          source={{
-            uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709232707355819897.png',
-          }}
+        <View
+          style={{
+            backgroundColor: colors.white,
+            borderRadius: scaler(20),
+            paddingVertical: scaler(8),
+            paddingHorizontal: scaler(4),
+            position: 'absolute',
+            zIndex: 999,
+            bottom: scaler(96),
+            left: scaler(8),
+          }}>
+          <Text
+            style={{
+              color: colors.pink300,
+              ...stylesCommon.fontWeight600,
+              fontSize: scaler(11),
+              textAlign: 'center',
+            }}>
+            {t(`home.trimester.${trimester - 1}`)}
+          </Text>
+        </View>
+        <AppImage
+          uri={imageBaby}
           style={{
             height: scaler(224),
             width: '100%',
@@ -134,6 +166,7 @@ const PregnancyTracker = () => {
           onPress={handleDatesTracker}
           style={{
             marginBottom: scaler(8),
+            borderRadius: scaler(16),
           }}>
           <Image
             source={{
@@ -170,7 +203,9 @@ const PregnancyTracker = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={handleDatesTracker}>
+        <TouchableOpacity
+          onPress={handleBodyMom}
+          style={{borderRadius: scaler(16)}}>
           <Image
             source={{
               uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709234015192564618.png',

@@ -106,6 +106,7 @@ import {ListPost} from '../Forum/components';
 import {useTranslation} from 'react-i18next';
 import {ListPostByWeek} from '../SizeComparison/component/ListPostByWeek';
 import PregnancyTracker from './components/PregnancyTracker';
+import ModalConsultant from './components/ModalConsultant';
 
 const screenWidth = Dimensions.get('screen').width;
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
@@ -175,6 +176,7 @@ const Home = () => {
     dataLiveTalk: [],
   });
   const [activeSlide, setActiveSlide] = useState();
+  const [isShowConsultant, setIsShowConsultant] = useState(false);
 
   const isSelectProfileNewBorn = newBorn.filter(
     item =>
@@ -579,7 +581,13 @@ const Home = () => {
     );
   };
 
-  const showBottomSheetConsultant = () => {};
+  const showBottomSheetConsultant = () => {
+    setIsShowConsultant(true);
+  };
+
+  const hideBottomSheetConsultant = () => {
+    setIsShowConsultant(false);
+  };
 
   useEffect(() => {
     trackUser(user);
@@ -910,6 +918,10 @@ const Home = () => {
             />
           </BottomSheetModal>
         )}
+        <ModalConsultant
+          visible={isShowConsultant}
+          closeModal={hideBottomSheetConsultant}
+        />
       </GestureHandlerRootView>
     </ContainerProvider>
   );

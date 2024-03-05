@@ -372,31 +372,36 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 {t('pregnancyProgram.bankTransfer')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={async () => {
-                const res = await switchPaymentMethod('apple_pay');
-                if (res?.success) {
-                  makePurchase(products[0]?.productId, res?.data?.verify_code);
-                }
-              }}
-              disabled={Platform.OS == 'android' ? true : false}
-              style={[
-                styles.buttonTransfer,
-                {
-                  borderColor:
-                    paymentType !== 'bank_transfer'
-                      ? colors.pink200
-                      : colors.gray,
-                },
-              ]}>
-              <Image
-                source={Platform.OS == 'ios' ? ic_click2pay : ic_google}
-                style={{height: scaler(24), width: scaler(24)}}
-              />
-              <Text style={styles.textTransfer}>
-                {Platform.OS == 'ios' ? t('common.buyNow') : 'Google Pay'}
-              </Text>
-            </TouchableOpacity>
+            {!route?.params?.isConsultant && (
+              <TouchableOpacity
+                onPress={async () => {
+                  const res = await switchPaymentMethod('apple_pay');
+                  if (res?.success) {
+                    makePurchase(
+                      products[0]?.productId,
+                      res?.data?.verify_code,
+                    );
+                  }
+                }}
+                disabled={Platform.OS == 'android' ? true : false}
+                style={[
+                  styles.buttonTransfer,
+                  {
+                    borderColor:
+                      paymentType !== 'bank_transfer'
+                        ? colors.pink200
+                        : colors.gray,
+                  },
+                ]}>
+                <Image
+                  source={Platform.OS == 'ios' ? ic_click2pay : ic_google}
+                  style={{height: scaler(24), width: scaler(24)}}
+                />
+                <Text style={styles.textTransfer}>
+                  {Platform.OS == 'ios' ? t('common.buyNow') : 'Google Pay'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           <ImageBackground source={ic_background}>

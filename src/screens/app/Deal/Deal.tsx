@@ -134,6 +134,7 @@ const Deal = (props: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F9F9FB',
   },
   wrapContainer: {
     flex: 1,
