@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const ModalConsultant = (props: any) => {
   const {visible, closeModal} = props;
@@ -62,7 +63,7 @@ const ModalConsultant = (props: any) => {
           <TouchableOpacity
             style={{width: '100%'}}
             onPress={onNavigateConsultant}>
-            <Image
+            <FastImage
               source={{
                 uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709604755240778567.png',
               }}
@@ -72,12 +73,12 @@ const ModalConsultant = (props: any) => {
                 marginTop: scaler(24),
                 marginBottom: scaler(8),
               }}
-              resizeMode="center"
+              resizeMode="contain"
             />
           </TouchableOpacity>
 
           <TouchableOpacity style={{width: '100%'}} onPress={onNavigateChatGPT}>
-            <Image
+            <FastImage
               source={{
                 uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709604882962130896.png',
               }}
@@ -85,7 +86,7 @@ const ModalConsultant = (props: any) => {
                 width: '100%',
                 height: scaler(64),
               }}
-              resizeMode="center"
+              resizeMode="contain"
             />
           </TouchableOpacity>
         </View>

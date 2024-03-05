@@ -42,7 +42,7 @@ const SizeComparison = () => {
   const dispatch = useDispatch();
 
   const route = useRoute<any>();
-  const {option = 1} = route?.params;
+  const {option = 1, isBody} = route?.params;
   const weekNotifi = route?.params?.week;
   const homeData = useSelector((state: any) => state?.home);
   const isDoneDaily = useSelector((state: RootState) => state.auth.isDoneDaily);
@@ -138,6 +138,13 @@ const SizeComparison = () => {
           });
         }, 400);
       }
+      if (isBody) {
+        setTimeout(() => {
+          flatListRef.current?.scrollToOffset({
+            offset: 900,
+          });
+        }, 400);
+      }
     } catch (error) {
     } finally {
     }
@@ -230,7 +237,7 @@ const SizeComparison = () => {
             {/* <BannerTestQuiz /> */}
             {homeData?.data?.dailyQuizz ? (
               <>
-                <Text style={styles.textTitle}>
+                <Text style={[styles.textTitle, {marginTop: scaler(16)}]}>
                   {t('sizeComparison.titleQuiz')}
                 </Text>
                 <ViewQuiz onAnswer={onAnswerQuiz} />

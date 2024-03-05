@@ -59,6 +59,7 @@ const PregnancyTracker = () => {
     navigation.navigate(ROUTE_NAME.SIZE_COMPARISON, {
       // option: OptionComparison.EMBRYO,
       option: 1,
+      isBody: true,
     });
   };
 
@@ -73,13 +74,15 @@ const PregnancyTracker = () => {
         <View
           style={{
             backgroundColor: colors.white,
-            borderRadius: scaler(20),
-            paddingVertical: scaler(8),
-            paddingHorizontal: scaler(4),
+            borderRadius: scaler(40),
+            paddingVertical: scaler(4),
             position: 'absolute',
             zIndex: 999,
             bottom: scaler(96),
             left: scaler(8),
+            paddingLeft: scaler(2),
+            paddingRight: scaler(4),
+            width: scaler(73),
           }}>
           <Text
             style={{
@@ -213,6 +216,8 @@ const PregnancyTracker = () => {
             style={{
               height: scaler(118),
               width: '100%',
+              borderTopLeftRadius: scaler(16),
+              borderTopRightRadius: scaler(16),
             }}
             resizeMode="cover"
           />

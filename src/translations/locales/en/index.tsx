@@ -171,7 +171,7 @@ export const en = {
     seeMore: 'See more',
     viewAll: 'View all',
     past_your_due_date: 'You are now past your due date',
-    trimester: ['FIRST TRIMESTER', 'SECOND TRIMESTER', 'THIRD TRIMESTER'],
+    trimester: ['Trimester 1', 'Trimester 2', 'Trimester 3'],
     dueDate: 'DUE DATE: ',
     createPost: 'Ask a question',
     askTida: 'Ask Tida AI',
