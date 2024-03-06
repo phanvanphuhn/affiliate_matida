@@ -242,7 +242,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             {params?.isConsultant ? (
               <Image
                 source={{
-                  uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709606692229359958.png',
+                  uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709738142787760082.png',
                 }}
                 style={{
                   width: widthScreen,
@@ -279,11 +279,15 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             marginBottom: scaler(15),
             textAlign: 'center',
           }}>
-          {t('pregnancyProgram.haveQuestion')}{' '}
+          {params?.isConsultant
+            ? 'Have questions about this plan?'
+            : t('pregnancyProgram.haveQuestion')}{' '}
           <Text
             onPress={onCheckOut}
             style={{textDecorationLine: 'underline', fontWeight: '500'}}>
-            {t('pregnancyProgram.checkThisOut')}
+            {params?.isConsultant
+              ? 'Text us'
+              : t('pregnancyProgram.checkThisOut')}
           </Text>
         </Text>
         <View style={styles.container4}>

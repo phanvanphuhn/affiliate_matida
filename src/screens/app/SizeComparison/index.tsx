@@ -22,7 +22,14 @@ import {
 } from '@util';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'src/redux/rootReducer';
 import {ViewQuiz} from '../Home/components';
@@ -37,6 +44,7 @@ import {styles} from './styles';
 import {trackClickedOnPregnancyTracker} from '@services/webengageManager.tsx';
 import TeaserProgram from '../Home/components/TeaserProgram';
 import ProductCarousel from '../Home/components/ProductCarousel';
+import ModalConsultant from '../Home/components/ModalConsultant';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -51,9 +59,11 @@ const SizeComparison = () => {
       (state: any) => state?.auth?.userInfo?.pregnantWeek?.weekPregnant?.weeks,
     ) ?? 40;
   const user = useSelector((state: any) => state?.auth?.userInfo);
+  const lang = useSelector((state: any) => state?.auth?.lang);
 
   const week = weekNotifi ? weekNotifi : weekPregnant;
   const listPosition = useRef([0, 0, 0, 0, 0, 0, 0]);
+  const scrollViewRef = useRef(null);
 
   const {t} = useTranslation();
   const [status, setStatus] = useState(option);
@@ -62,12 +72,16 @@ const SizeComparison = () => {
   const [listImage, setListImage] = useState<any[]>([]);
   const [weekSelected, setWeek] = useState(week);
   const [calendarCheckupData, setCalendarCheckupData] = useState();
+  const [bodyOffset, setBodyOffset] = useState(0);
+  const [layoutEmbryo, setLayoutEmbryo] = useState(250);
+  const [layoutSize, setLayoutSize] = useState(1000);
 
   const [selectedWeek, setSelectedWeek] = useState(null);
   const flatListRef = useRef<FlatList>(null);
   const navigation = useNavigation<any>();
   const statusView = useRef(option);
   const [isRendered, setRendered] = useState(false);
+  const [isShowConsultant, setIsShowConsultant] = useState(false);
 
   const dataDailyQuiz = useSelector(
     (state: any) => state?.home?.data?.dailyQuizz,
@@ -114,6 +128,17 @@ const SizeComparison = () => {
       GlobalService.hideLoading();
     }
   };
+
+  const onLayoutEmbryo = event => {
+    const {height} = event.nativeEvent.layout;
+    return height;
+  };
+
+  const onLayoutSize = event => {
+    const {height} = event.nativeEvent.layout;
+    return height;
+  };
+
   useEffect(() => {
     trackingAppEvent(event.SCREEN.SIZE_COMPARISON, {}, eventType.AFF_FLYER);
     if (week && status === 1) {
@@ -138,17 +163,27 @@ const SizeComparison = () => {
           });
         }, 400);
       }
-      if (isBody) {
+      if (isBody && calendarCheckup) {
         setTimeout(() => {
-          flatListRef.current?.scrollToOffset({
-            offset: 900,
-          });
-        }, 400);
+          if (isBody) {
+            flatListRef.current?.scrollToOffset({
+              offset: layoutEmbryo + layoutSize + 60,
+            });
+          }
+        }, 1000);
       }
     } catch (error) {
     } finally {
     }
-  }, []);
+  }, [layoutEmbryo]);
+
+  const showBottomSheetConsultant = () => {
+    setIsShowConsultant(true);
+  };
+
+  const hideBottomSheetConsultant = () => {
+    setIsShowConsultant(false);
+  };
 
   useEffect(() => {
     getDataCalendarCheckup();
@@ -168,17 +203,22 @@ const SizeComparison = () => {
     ),
     [calendarCheckupData, status],
   );
+
   const renderBodyByStatus = () => {
     switch (status) {
       case 1:
         return (
           <>
-            <Embryo
-              data={data?.baby}
-              week={selectedWeek}
-              listImage={listImage ?? []}
-            />
-            <Size data={data?.baby_size} week={selectedWeek} />
+            <View onLayout={onLayoutEmbryo}>
+              <Embryo
+                data={data?.baby}
+                week={selectedWeek}
+                listImage={listImage ?? []}
+              />
+            </View>
+            <View onLayout={onLayoutSize}>
+              <Size data={data?.baby_size} week={selectedWeek} />
+            </View>
             <Body data={data?.mom} week={selectedWeek} />
           </>
         );
@@ -234,6 +274,22 @@ const SizeComparison = () => {
                   </View>
                 </View>
               )}
+            <View style={styles.ph}>
+              <Text style={styles.title}>{t('home.getSupport')}</Text>
+              <TouchableOpacity
+                style={{flex: 1}}
+                onPress={showBottomSheetConsultant}>
+                <Image
+                  source={{
+                    uri:
+                      lang == 1
+                        ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
+                        : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
+                  }}
+                  style={{width: '100%', height: scaler(126)}}
+                />
+              </TouchableOpacity>
+            </View>
             {/* <BannerTestQuiz /> */}
             {homeData?.data?.dailyQuizz ? (
               <>
@@ -296,8 +352,13 @@ const SizeComparison = () => {
         }}
         bounces={false}
         ListFooterComponent={renderView}
+        keyExtractor={(item, index) => index.toString()}
       />
       {isShowForReviewer(user) && <FLoatingAIButton />}
+      <ModalConsultant
+        visible={isShowConsultant}
+        closeModal={hideBottomSheetConsultant}
+      />
     </View>
   );
 };

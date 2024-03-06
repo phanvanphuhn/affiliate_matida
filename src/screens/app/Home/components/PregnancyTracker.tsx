@@ -82,7 +82,7 @@ const PregnancyTracker = () => {
             left: scaler(8),
             paddingLeft: scaler(2),
             paddingRight: scaler(4),
-            width: scaler(73),
+            width: scaler(85),
           }}>
           <Text
             style={{
