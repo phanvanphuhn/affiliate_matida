@@ -22,12 +22,16 @@ import {useVideo} from './Container';
 import CustomImageRenderer from './CustomImageRenderer';
 import clip from './clip';
 import {tagsStyles} from './settingsHtml';
+import {eventType, trackingAppEvent} from '@util';
+import {useSelector} from 'react-redux';
 
 interface TitleFeedProps {
   item: IDataListFeed;
 }
 const TitleFeed = (props: TitleFeedProps) => {
   const {t} = useTranslation();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   const navigation = useNavigation<any>();
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
@@ -70,6 +74,17 @@ const TitleFeed = (props: TitleFeedProps) => {
   const renderersProps = {
     a: {
       onPress(event, url, htmlAttribs, target) {
+        trackingAppEvent(
+          event.FEED.FEED_CLICK_LINK_IN_CONTENT,
+          {
+            params: {
+              userId: user.id,
+              contentId: props.item.id,
+              url: url,
+            },
+          },
+          eventType.MIX_PANEL,
+        );
         Linking.openURL(url);
       },
     },

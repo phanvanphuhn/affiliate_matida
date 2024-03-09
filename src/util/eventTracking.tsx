@@ -140,6 +140,7 @@ export const event = {
     FEED_FINISH_QUIZ: 'feed_finish_quiz',
     FEED_DO_MOMTEST: 'feed_do_momtest',
     FEED_OPEN_CONTENT: 'FEED_OPEN_CONTENT',
+    FEED_CLICK_LINK_IN_CONTENT: 'feed_click_link_in_content',
   },
   DEAL: {
     CLICK_DEAL: 'click_deal',

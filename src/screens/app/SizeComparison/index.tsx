@@ -167,7 +167,7 @@ const SizeComparison = () => {
         setTimeout(() => {
           if (isBody) {
             flatListRef.current?.scrollToOffset({
-              offset: layoutEmbryo + layoutSize + 60,
+              offset: 900,
             });
           }
         }, 1000);

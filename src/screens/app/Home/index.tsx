@@ -728,8 +728,20 @@ const Home = () => {
           </View>
 
           <View style={styles.ph}>
-            <Text style={styles.title}>{t('home.yourtaskThisWeek')}</Text>
-            <YourTaskThisWeek />
+            <Text style={styles.title}>{t('home.getSupport')}</Text>
+            <TouchableOpacity
+              style={{flex: 1}}
+              onPress={showBottomSheetConsultant}>
+              <Image
+                source={{
+                  uri:
+                    lang == 1
+                      ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
+                      : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
+                }}
+                style={{width: '100%', height: scaler(126)}}
+              />
+            </TouchableOpacity>
           </View>
 
           <View>
@@ -739,6 +751,11 @@ const Home = () => {
               styleTextTitle={[styles.title, {marginBottom: 0}]}
               mb={0}
             />
+          </View>
+
+          <View style={styles.ph}>
+            <Text style={styles.title}>{t('home.yourtaskThisWeek')}</Text>
+            <YourTaskThisWeek />
           </View>
 
           <View>
@@ -767,23 +784,6 @@ const Home = () => {
                   <TeaserProgram data={state?.isSignUp} isHome={true} />
                 </View>
               )}
-          </View>
-
-          <View style={styles.ph}>
-            <Text style={styles.title}>{t('home.getSupport')}</Text>
-            <TouchableOpacity
-              style={{flex: 1}}
-              onPress={showBottomSheetConsultant}>
-              <Image
-                source={{
-                  uri:
-                    lang == 1
-                      ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
-                      : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
-                }}
-                style={{width: '100%', height: scaler(126)}}
-              />
-            </TouchableOpacity>
           </View>
 
           <View>
