@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -107,10 +108,19 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
+    console.log('params: ', params);
     if (params?.isConsultant) {
-      navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {
-        isConsultant: true,
-      });
+      if (user.payments.some(e => e.status == 'processing')) {
+        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+          values: user.payments.find(e => e.status == 'processing'),
+          isBack: true,
+          isConsultant: true,
+        });
+      } else {
+        navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {
+          isConsultant: true,
+        });
+      }
       return;
     }
     if (userScore) {
@@ -157,11 +167,25 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   };
 
   const onCheckOut = () => {
+    const zaloScheme = 'https://zalo.me/3349239872295713460';
+
     trackingAppEvent(
       event.MASTER_CLASS.PP_SIGNUP_CHECK_THIS_OUT,
       {id: user?.id},
       eventType.MIX_PANEL,
     );
+    if (params?.isConsultant) {
+      Linking.canOpenURL(zaloScheme)
+        .then(supported => {
+          if (supported) {
+            return Linking.openURL(zaloScheme);
+          } else {
+            console.warn('Zalo app is not installed on the device.');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      return;
+    }
     navigation.navigate(ROUTE_NAME.ABOUT_PROGRAM);
   };
   const pagination = () => {
@@ -221,7 +245,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
 
           <Text style={styles.textTitle}>
             {params?.isConsultant
-              ? 'On Demand Consultations'
+              ? t('pregnancyProgram.onDemand')
               : t('pregnancyProgram.aioCourse')}
           </Text>
           <Text
@@ -232,7 +256,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                 marginBottom: 10,
               },
             ]}>
-            {params?.isConsultant ? 'Matida Experts' : 'Matida Masterclass'}
+            {params?.isConsultant
+              ? t('pregnancyProgram.matidaExpert')
+              : 'Matida Masterclass'}
           </Text>
 
           <View
@@ -280,13 +306,13 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             textAlign: 'center',
           }}>
           {params?.isConsultant
-            ? 'Have questions about this plan?'
+            ? t('pregnancyProgram.haveAQuestionPlan')
             : t('pregnancyProgram.haveQuestion')}{' '}
           <Text
             onPress={onCheckOut}
             style={{textDecorationLine: 'underline', fontWeight: '500'}}>
             {params?.isConsultant
-              ? 'Text us'
+              ? t('pregnancyProgram.textMatida')
               : t('pregnancyProgram.checkThisOut')}
           </Text>
         </Text>
@@ -307,9 +333,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           </Text> */}
           {params?.isConsultant ? (
             <>
-              <Text style={styles.textPrice1}>249,000đ</Text>
+              <Text style={styles.textPrice1}>199,000đ</Text>
               <Text style={styles.textPriceOld}>
-                Full pregnancy with unlimited questions
+                {t('pregnancyProgram.unlimited')}
               </Text>
             </>
           ) : (
@@ -340,7 +366,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
         <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>
             {params?.isConsultant
-              ? 'Sign up and ask now'
+              ? t('pregnancyProgram.signUpAndAsk')
               : t('pregnancyProgram.signUpEarly')}
           </Text>
         </TouchableOpacity>

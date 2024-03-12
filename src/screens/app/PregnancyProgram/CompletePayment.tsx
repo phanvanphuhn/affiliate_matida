@@ -87,6 +87,7 @@ const CompletePayment = (props: CompletePaymentProps) => {
 
   const {t} = useTranslation();
   const route = useRoute<RouteProp<any>>();
+  console.log('route: ', route);
   const navigation = useNavigation<any>();
 
   const [plan, setPlan] = useState<PlanState>({});

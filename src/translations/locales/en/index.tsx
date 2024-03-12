@@ -957,6 +957,12 @@ export const en = {
     exploreAndLearn: 'Explore and learn',
     takeTheQuiz: 'Take the quiz',
     month2Promo: 'Limited offer until 29/02',
+    onDemand: 'On Demand Consultations',
+    matidaExpert: 'Matida Experts',
+    haveAQuestionPlan: 'Have questions about this plan?',
+    textMatida: 'Text us',
+    unlimited: 'Full pregnancy with unlimited questions',
+    signUpAndAsk: 'Sign up and ask now',
   },
   momDiary: {
     momDiary: 'Mom Diary',

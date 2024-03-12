@@ -20,9 +20,16 @@ type Props = {
   title?: string;
   styleTextTitle?: StyleProp<TextStyle>;
   mb?: number;
+  styleTextSee?: StyleProp<TextStyle>;
 };
 
-export const ListArticle = ({week, title, styleTextTitle, mb}: Props) => {
+export const ListArticle = ({
+  week,
+  title,
+  styleTextTitle,
+  mb,
+  styleTextSee,
+}: Props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -65,6 +72,7 @@ export const ListArticle = ({week, title, styleTextTitle, mb}: Props) => {
       styleHeader={{paddingHorizontal: scaler(20)}}
       contentContainerStyle={{marginBottom: 0}}
       styleTextTitle={styleTextTitle}
+      styleTextSee={styleTextSee}
       mb={mb}
       onPressSeeMore={() => navigate(ROUTE_NAME.TAB_FEED)}>
       {data?.map((article: IArticles) => (

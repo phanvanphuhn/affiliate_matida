@@ -955,6 +955,12 @@ export const vi = {
     exploreAndLearn: 'Xem ngay',
     takeTheQuiz: 'Kiểm tra kiến thức',
     month2Promo: 'Ưu đãi giới hạn đến 29/2',
+    onDemand: 'Tư vấn theo yêu cầu cùng',
+    matidaExpert: 'Chuyên gia Matida',
+    haveAQuestionPlan: 'Mẹ có câu hỏi về gói tư vấn?',
+    textMatida: 'Nhắn Matida',
+    unlimited: 'Hỏi không giới hạn trong suốt thai kỳ',
+    signUpAndAsk: 'Đăng ký và hỏi ngay',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

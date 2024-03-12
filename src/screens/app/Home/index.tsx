@@ -750,6 +750,7 @@ const Home = () => {
               title={t('home.exploreAndLearn') as string}
               styleTextTitle={[styles.title, {marginBottom: 0}]}
               mb={0}
+              styleTextSee={{marginTop: scaler(16)}}
             />
           </View>
 

@@ -66,7 +66,11 @@ export const HorizontalList = ({
           <View style={{alignSelf: 'flex-start'}}>{!!IconSvg && IconSvg}</View>
           <Text style={[styles.textTitle, styleTextTitle]}>{title}</Text>
         </View>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
           <Text style={[styles.textSeeMore, styleTextSee]}>{textSee}</Text>
           {!!showIconArrow && (
             <SvgArrowRightContained style={{marginLeft: scaler(4)}} />

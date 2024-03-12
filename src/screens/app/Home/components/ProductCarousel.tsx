@@ -28,6 +28,7 @@ const ProductCarousel = (props: any) => {
   }, []);
 
   const renderItemCarousel = ({item, index}: any) => {
+    console.log('item: ', item);
     return (
       <TouchableOpacity
         style={{
@@ -40,7 +41,7 @@ const ProductCarousel = (props: any) => {
               event.BANNER.ecom_banner_home,
               {
                 userId: user?.id,
-                productLink: item?.link,
+                productLink: item?.outer_link,
                 productName: item?.images[0]?.url,
               },
               eventType.MIX_PANEL,
@@ -50,17 +51,16 @@ const ProductCarousel = (props: any) => {
               event.BANNER.ecom_banner_tracker,
               {
                 userId: user?.id,
-                productLink: item?.link,
+                productLink: item?.outer_link,
                 productName: item?.images[0]?.url,
               },
               eventType.MIX_PANEL,
             );
           }
-          if (item?.link) {
-            Linking.canOpenURL(item?.link).then(supported => {
-              console.log('supported: ', supported);
+          if (item?.outer_link) {
+            Linking.canOpenURL(item?.outer_link).then(supported => {
               if (supported) {
-                Linking.openURL(item?.link);
+                Linking.openURL(item?.outer_link);
               } else {
                 return;
               }
