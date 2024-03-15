@@ -722,181 +722,193 @@ const Home = () => {
             paddingBottom: scaler(30),
             // paddingTop: scaler(18),
           }}>
-          <View style={styles.ph}>
-            <Text style={styles.title}>{t('home.pregnancyTracker')}</Text>
-            <PregnancyTracker />
-          </View>
+          {user?.baby_type !== 'newborn' ? (
+            <>
+              <View style={styles.ph}>
+                <Text style={styles.title}>{t('home.pregnancyTracker')}</Text>
+                <PregnancyTracker />
+              </View>
 
-          <View style={styles.ph}>
-            <Text style={styles.title}>{t('home.getSupport')}</Text>
-            <TouchableOpacity
-              style={{flex: 1}}
-              onPress={showBottomSheetConsultant}>
-              <Image
-                source={{
-                  uri:
-                    lang == 1
-                      ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
-                      : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
-                }}
-                style={{width: '100%', height: scaler(126)}}
-              />
-            </TouchableOpacity>
-          </View>
+              <View style={styles.ph}>
+                <Text style={styles.title}>{t('home.getSupport')}</Text>
+                <TouchableOpacity
+                  style={{flex: 1}}
+                  onPress={showBottomSheetConsultant}>
+                  <Image
+                    source={{
+                      uri:
+                        lang == 1
+                          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
+                          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
+                    }}
+                    style={{width: '100%', height: scaler(126)}}
+                  />
+                </TouchableOpacity>
+              </View>
 
-          <View>
-            <ListArticle
-              week={weekSelected}
-              title={t('home.exploreAndLearn') as string}
-              styleTextTitle={[styles.title, {marginBottom: 0}]}
-              mb={0}
-              styleTextSee={{marginTop: scaler(16)}}
-            />
-          </View>
+              <View>
+                <ListArticle
+                  week={weekSelected}
+                  title={t('home.exploreAndLearn') as string}
+                  styleTextTitle={[styles.title, {marginBottom: 0}]}
+                  mb={0}
+                  styleTextSee={{marginTop: scaler(16)}}
+                />
+              </View>
 
-          <View style={styles.ph}>
-            <Text style={styles.title}>{t('home.yourtaskThisWeek')}</Text>
-            <YourTaskThisWeek />
-          </View>
+              <View style={styles.ph}>
+                <Text style={styles.title}>{t('home.yourtaskThisWeek')}</Text>
+                <YourTaskThisWeek />
+              </View>
 
-          {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
-            <View>
-              <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
-                {t('home.recommendByOurEx')}
-              </Text>
+              {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+                <View>
+                  <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
+                    {t('home.recommendByOurEx')}
+                  </Text>
 
-              <ProductCarousel isHome={true} />
-            </View>
-          )}
-
-          <View>
-            <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
-              {t('home.testYourKnowledge')}
-            </Text>
-            {data?.dailyQuizz && isShowForReviewer(user) ? (
-              <ViewQuiz onAnswer={onAnswerQuiz} />
-            ) : null}
-            {isShowForReviewer(user) &&
-              (user?.baby_type == 'pregnant' ||
-                user?.baby_type == 'pregnant-overdue' ||
-                user?.baby_type == 'unknown') &&
-              (!user?.payments?.length ||
-                user?.payments?.some(e => e.status == 'processing')) && (
-                <View style={{marginHorizontal: 16}}>
-                  <TeaserProgram data={state?.isSignUp} isHome={true} />
+                  <ProductCarousel isHome={true} />
                 </View>
               )}
-          </View>
 
-          <View>
-            {state?.dataLiveTalk?.expertLiveTalk?.filter(
-              item => item?.room?.status !== 3,
-            )?.length > 0 && (
               <View>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginBottom: scaler(12),
-                    marginTop: scaler(16),
-                    paddingHorizontal: scaler(16),
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: scaler(18),
-                      ...stylesCommon.fontWeight600,
-                    }}>
-                    {t('home.upcomingLiveTalks')}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate(ROUTE_NAME.ALL_MEETING_ROOM)
-                    }>
-                    <Text
+                <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
+                  {t('home.testYourKnowledge')}
+                </Text>
+                {data?.dailyQuizz && isShowForReviewer(user) ? (
+                  <ViewQuiz onAnswer={onAnswerQuiz} />
+                ) : null}
+                {isShowForReviewer(user) &&
+                  (user?.baby_type == 'pregnant' ||
+                    user?.baby_type == 'pregnant-overdue' ||
+                    user?.baby_type == 'unknown') &&
+                  (!user?.payments?.length ||
+                    user?.payments?.some(e => e.status == 'processing')) && (
+                    <View style={{marginHorizontal: 16}}>
+                      <TeaserProgram data={state?.isSignUp} isHome={true} />
+                    </View>
+                  )}
+              </View>
+
+              <View>
+                {state?.dataLiveTalk?.expertLiveTalk?.filter(
+                  item => item?.room?.status !== 3,
+                )?.length > 0 && (
+                  <View>
+                    <View
                       style={{
-                        ...stylesCommon.fontWeight500,
-                        fontSize: scaler(14),
-                        color: colors.pink4,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginBottom: scaler(12),
+                        marginTop: scaler(16),
+                        paddingHorizontal: scaler(16),
                       }}>
-                      {t('talk.seeAll')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={{paddingLeft: scaler(16)}}>
-                  <FlatList
-                    data={state?.dataLiveTalk?.expertLiveTalk?.slice(0, 3)}
-                    renderItem={({item, index}) => {
-                      return (
-                        <ExpertWorkshopsItemV2 item={item} key={index} mb={0} />
-                      );
-                    }}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                  />
-                </View>
+                      <Text
+                        style={{
+                          fontSize: scaler(18),
+                          ...stylesCommon.fontWeight600,
+                        }}>
+                        {t('home.upcomingLiveTalks')}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate(ROUTE_NAME.ALL_MEETING_ROOM)
+                        }>
+                        <Text
+                          style={{
+                            ...stylesCommon.fontWeight500,
+                            fontSize: scaler(14),
+                            color: colors.pink4,
+                          }}>
+                          {t('talk.seeAll')}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={{paddingLeft: scaler(16)}}>
+                      <FlatList
+                        data={state?.dataLiveTalk?.expertLiveTalk?.slice(0, 3)}
+                        renderItem={({item, index}) => {
+                          return (
+                            <ExpertWorkshopsItemV2
+                              item={item}
+                              key={index}
+                              mb={0}
+                            />
+                          );
+                        }}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                      />
+                    </View>
+                  </View>
+                )}
               </View>
-            )}
-          </View>
 
-          <View style={{marginTop: scaler(12)}}>
-            <ListPostByWeek
-              week={weekSelected}
-              cardBorderStyle={{
-                borderWidth: 1,
-                borderColor: '#F5F5F5',
-              }}
-              title={t('home.whatMomsTalkAbout')}
-            />
-            <TouchableOpacity
-              style={styles.createPostButton}
-              onPress={() => {
-                trackingAppEvent(
-                  event.BABY_TRACKER.CLICK_POST_FORUM,
-                  {},
-                  eventType.MIX_PANEL,
-                );
-                navigation.navigate(ROUTE_NAME.CREATE_NEWPOST);
-              }}>
-              <SvgMessages3 color={colors.white} />
-              <Text style={styles.titleButton2}>{t('home.createPost')}</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* {isShowForReviewer(user) &&
-            (user?.baby_type == 'pregnant' ||
-              user?.baby_type == 'pregnant-overdue' ||
-              user?.baby_type == 'unknown') &&
-            (!user?.payments?.length ||
-              user?.payments?.some(e => e.status == 'processing')) && (
-              <View style={{marginHorizontal: 16}}>
-                <TeaserProgram data={state?.isSignUp} isHome={true} />
+              <View style={{marginTop: scaler(12)}}>
+                <ListPostByWeek
+                  week={weekSelected}
+                  cardBorderStyle={{
+                    borderWidth: 1,
+                    borderColor: '#F5F5F5',
+                  }}
+                  title={t('home.whatMomsTalkAbout')}
+                />
+                <TouchableOpacity
+                  style={styles.createPostButton}
+                  onPress={() => {
+                    trackingAppEvent(
+                      event.BABY_TRACKER.CLICK_POST_FORUM,
+                      {},
+                      eventType.MIX_PANEL,
+                    );
+                    navigation.navigate(ROUTE_NAME.CREATE_NEWPOST);
+                  }}>
+                  <SvgMessages3 color={colors.white} />
+                  <Text style={styles.titleButton2}>
+                    {t('home.createPost')}
+                  </Text>
+                </TouchableOpacity>
               </View>
-            )} */}
-
-          {/* {state?.refreshing ? (
-            <View style={styles.wrapLoadingContainer}>
-              <ActivityIndicator size={'small'} color={'red'} />
-            </View>
+            </>
           ) : (
-            isShowForReviewer(user) && renderNewBornContent()
-          )} */}
+            <>
+              {isShowForReviewer(user) &&
+                (user?.baby_type == 'pregnant' ||
+                  user?.baby_type == 'pregnant-overdue' ||
+                  user?.baby_type == 'unknown') &&
+                (!user?.payments?.length ||
+                  user?.payments?.some(e => e.status == 'processing')) && (
+                  <View style={{marginHorizontal: 16}}>
+                    <TeaserProgram data={state?.isSignUp} isHome={true} />
+                  </View>
+                )}
 
-          {/* {data?.dailyQuizz && isShowForReviewer(user) ? (
-            <ViewQuiz onAnswer={onAnswerQuiz} />
-          ) : null} */}
+              {state?.refreshing ? (
+                <View style={styles.wrapLoadingContainer}>
+                  <ActivityIndicator size={'small'} color={'red'} />
+                </View>
+              ) : (
+                isShowForReviewer(user) && renderNewBornContent()
+              )}
 
-          {/* {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />} */}
+              {data?.dailyQuizz && isShowForReviewer(user) ? (
+                <ViewQuiz onAnswer={onAnswerQuiz} />
+              ) : null}
 
-          {/* {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
-            <ProductCarousel isHome={true} />
-          )} */}
+              {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
 
-          {/* {isShowForReviewer(user) &&
-            (user?.baby_type == 'pregnant' ||
-              user?.baby_type == 'pregnant-overdue' ||
-              user?.baby_type == 'unknown') && (
-              <MomProgram data={state?.isSignUp} />
-            )} */}
+              {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+                <ProductCarousel isHome={true} />
+              )}
+
+              {isShowForReviewer(user) &&
+                (user?.baby_type == 'pregnant' ||
+                  user?.baby_type == 'pregnant-overdue' ||
+                  user?.baby_type == 'unknown') && (
+                  <MomProgram data={state?.isSignUp} />
+                )}
+            </>
+          )}
         </ScrollView>
         {/* {isShowForReviewer(user) && <FLoatingAIButton />} */}
         {isShowForReviewer(user) &&
