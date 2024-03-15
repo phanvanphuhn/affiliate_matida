@@ -634,7 +634,7 @@
 				CODE_SIGN_ENTITLEMENTS = Matida/MatidaDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = GBB9254WZA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Matida/Info.plist;
@@ -673,7 +673,7 @@
 				CODE_SIGN_ENTITLEMENTS = Matida/Matida.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = GBB9254WZA;
 				INFOPLIST_FILE = Matida/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Matida;
