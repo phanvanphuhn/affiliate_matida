@@ -759,14 +759,15 @@ const Home = () => {
             <YourTaskThisWeek />
           </View>
 
-          <View>
-            <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
-              {t('home.recommendByOurEx')}
-            </Text>
-            {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+          {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
+            <View>
+              <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
+                {t('home.recommendByOurEx')}
+              </Text>
+
               <ProductCarousel isHome={true} />
-            )}
-          </View>
+            </View>
+          )}
 
           <View>
             <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
