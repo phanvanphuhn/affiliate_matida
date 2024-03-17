@@ -3,9 +3,11 @@ import React from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
 import useCheckPregnancy from '@util/hooks/useCheckPregnancy';
 import {useSelector} from 'react-redux';
+import {event, eventType, trackingAppEvent} from '@util';
 
 const YourTaskThisWeek = () => {
   const lang = useSelector((state: any) => state?.auth?.lang);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const data =
     lang == 1
@@ -27,7 +29,14 @@ const YourTaskThisWeek = () => {
       {data.map(item => {
         return (
           <TouchableOpacity
-            onPress={checkPlan}
+            onPress={() => {
+              trackingAppEvent(
+                event.NEW_HOMEPAGE.content_widget_view_more,
+                {id: user?.id},
+                eventType.MIX_PANEL,
+              );
+              checkPlan();
+            }}
             style={{width: '30%', marginRight: scaler(16)}}>
             <Image
               source={{uri: item}}

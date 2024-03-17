@@ -582,6 +582,11 @@ const Home = () => {
   };
 
   const showBottomSheetConsultant = () => {
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.banner_get_support,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     setIsShowConsultant(true);
   };
 

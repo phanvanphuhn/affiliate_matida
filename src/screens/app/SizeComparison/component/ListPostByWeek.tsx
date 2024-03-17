@@ -17,8 +17,9 @@ import {colors, scaler, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {showMessage} from 'react-native-flash-message';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {DiscussionPost} from './ItemPost';
+import {event, eventType, trackingAppEvent} from '@util';
 type Props = {
   // callBackData: () => void;
   week: number;
@@ -38,6 +39,8 @@ export type IOption = {
 };
 export const ListPostByWeek = ({week, cardBorderStyle, title}: Props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   // const week = useSelector((state: any) => state?.home?.week);
   const {t} = useTranslation();
   const [idDelete, setIdDelete] = useState(null);
@@ -137,6 +140,11 @@ export const ListPostByWeek = ({week, cardBorderStyle, title}: Props) => {
         textSee={t('home.viewAll')}
         styleHeader={{paddingHorizontal: scaler(20)}}
         onPressSeeMore={() => {
+          trackingAppEvent(
+            event.NEW_HOMEPAGE.banner_get_support,
+            {id: user?.id},
+            eventType.MIX_PANEL,
+          );
           navigate(ROUTE_NAME.TAB_COMMUNITY);
         }}
         styleScroll={{marginBottom: 12}}>

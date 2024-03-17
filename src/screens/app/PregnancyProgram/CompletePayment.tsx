@@ -132,6 +132,11 @@ const CompletePayment = (props: CompletePaymentProps) => {
         {id: user?.id},
         eventType.MIX_PANEL,
       );
+      trackingAppEvent(
+        event.NEW_HOMEPAGE.doctor_packag_I_have_transfered,
+        {id: user?.id},
+        eventType.MIX_PANEL,
+      );
       console.log('=>(CompletePayment.tsx:193) route?.params', route?.params);
       let result = await userConfirm({
         verify_code: verifyCode,

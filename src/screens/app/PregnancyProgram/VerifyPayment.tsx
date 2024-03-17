@@ -27,12 +27,14 @@ import {useTranslation} from 'react-i18next';
 import {getUserInfoApi, GlobalService} from '@services';
 import {saveDataUser} from '@redux';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {event, eventType, trackingAppEvent} from '@util';
 
 interface VerifyPaymentProps {}
 
 const VerifyPayment = (props: VerifyPaymentProps) => {
   const navigation = useNavigation<any>();
   const route = useRoute<RouteProp<any>>();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
 
   const {t} = useTranslation();
   const dispatch = useDispatch();
@@ -47,6 +49,11 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
 
   const onPaymentFinish = async () => {
     GlobalService.showLoading();
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.doctor_package_explore_matida,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     let data = await getDataUser();
     if (
       !data?.payments?.length ||

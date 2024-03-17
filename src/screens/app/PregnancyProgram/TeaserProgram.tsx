@@ -108,6 +108,11 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.doctor_package_register_button,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     if (params?.isConsultant) {
       if (user.payments.some(e => e.status == 'processing')) {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {

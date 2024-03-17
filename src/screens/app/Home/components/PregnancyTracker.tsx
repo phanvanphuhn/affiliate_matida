@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {getTrimester} from './PregnancyProgress';
-import {getTimePregnancy} from '@util';
+import {event, eventType, getTimePregnancy, trackingAppEvent} from '@util';
 import {WEEK_MAX} from '@constant';
 import {SCREEN_WIDTH} from '@gorhom/bottom-sheet';
 import {AppImage} from '@component';
@@ -32,6 +32,7 @@ const PregnancyTracker = () => {
   const trimester = getTrimester(weekPregnant?.weeks ?? week);
   const lang = useSelector((state: any) => state?.auth?.lang);
   const data = useSelector((state: any) => state?.home?.data);
+  const user = useSelector((state: any) => state?.auth?.userInfo);
   const babyProgress = data?.babyProgress;
   const imageBaby = babyProgress?.baby?.image
     ? babyProgress?.baby?.image[0]
@@ -42,6 +43,11 @@ const PregnancyTracker = () => {
   };
 
   const handleWeeklyTracker = () => {
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.homepage_click_baby,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.SIZE_COMPARISON, {
       // option: OptionComparison.EMBRYO,
       option: 1,
@@ -49,6 +55,11 @@ const PregnancyTracker = () => {
   };
 
   const handleDatesTracker = () => {
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.homepage_click_calendar,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.SIZE_COMPARISON, {
       // option: OptionComparison.EMBRYO,
       option: 2,
@@ -56,6 +67,11 @@ const PregnancyTracker = () => {
   };
 
   const handleBodyMom = () => {
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.homepage_click_mombody,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.SIZE_COMPARISON, {
       // option: OptionComparison.EMBRYO,
       option: 1,

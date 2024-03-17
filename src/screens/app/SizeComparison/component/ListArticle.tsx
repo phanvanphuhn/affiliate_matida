@@ -12,6 +12,7 @@ import {getArticleByWeek, GlobalService} from '@services';
 import {useSelector} from 'react-redux';
 import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
 import {StyleProp, TextStyle} from 'react-native';
+import {event, eventType, trackingAppEvent} from '@util';
 
 type Props = {
   // callBackData: () => void;
@@ -74,7 +75,14 @@ export const ListArticle = ({
       styleTextTitle={styleTextTitle}
       styleTextSee={styleTextSee}
       mb={mb}
-      onPressSeeMore={() => navigate(ROUTE_NAME.TAB_FEED)}>
+      onPressSeeMore={() => {
+        trackingAppEvent(
+          event.NEW_HOMEPAGE.content_widget_view_more,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        navigate(ROUTE_NAME.TAB_FEED);
+      }}>
       {data?.map((article: IArticles) => (
         <NewArticles
           article={article}

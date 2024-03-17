@@ -2,6 +2,7 @@ import {ic_consultant, iconClose} from '@images';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {colors, scaler, stylesCommon} from '@stylesCommon';
+import {event, eventType, trackingAppEvent} from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {
@@ -20,18 +21,8 @@ const ModalConsultant = (props: any) => {
   const {visible, closeModal} = props;
 
   const user = useSelector((state: any) => state?.auth?.userInfo);
-  console.log('user: ', user);
   const navigation = useNavigation<any>();
   const lang = useSelector((state: any) => state?.auth?.lang);
-
-  console.log(
-    'trure: ',
-    user?.payments?.filter(
-      item =>
-        item?.verify_code?.substring(0, 2) === 'PD' &&
-        item?.status === 'completed',
-    ),
-  );
 
   const {t} = useTranslation();
 
@@ -39,6 +30,11 @@ const ModalConsultant = (props: any) => {
     closeModal();
     const zaloScheme = 'https://zalo.me/g/amswyp826';
 
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.consultant_select_doctor,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     if (
       user?.payments?.filter(
         item =>
@@ -46,7 +42,6 @@ const ModalConsultant = (props: any) => {
           item?.status === 'completed',
       )?.length > 0
     ) {
-      console.log('user?.payments: ', user?.payments);
       Linking.canOpenURL(zaloScheme)
         .then(supported => {
           if (supported) {
@@ -65,6 +60,11 @@ const ModalConsultant = (props: any) => {
 
   const onNavigateChatGPT = () => {
     closeModal();
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.consultant_select_tida,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     navigation.navigate(ROUTE_NAME.CHAT_GPT);
   };
 

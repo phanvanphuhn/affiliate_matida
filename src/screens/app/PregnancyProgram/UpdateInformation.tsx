@@ -107,6 +107,11 @@ const UpdateInformation = (props: UpdateInformationProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.doctor_package_user_info,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
     formik.handleSubmit();
   };
   const onPolicy = async () => {
