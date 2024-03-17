@@ -12,6 +12,11 @@ const CHANGE_PAYMENT_METHOD =
 const GET_BANNER_PRODUCT = 'banner?type=product&trimester=';
 
 export const getPlanByCode: any = async () => {
+  const response = await api.get(`${SUBSCRIPTION_PLANS}code/PP`);
+  return response;
+};
+
+export const getPlanByCodePD: any = async () => {
   const response = await api.get(`${SUBSCRIPTION_PLANS}code/PD`);
   return response;
 };

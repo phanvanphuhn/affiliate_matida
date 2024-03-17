@@ -108,7 +108,6 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-    console.log('params: ', params);
     if (params?.isConsultant) {
       if (user.payments.some(e => e.status == 'processing')) {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
@@ -333,7 +332,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           </Text> */}
           {params?.isConsultant ? (
             <>
-              <Text style={styles.textPrice1}>199,000đ</Text>
+              <Text style={styles.textPrice1}>249,000đ</Text>
               <Text style={styles.textPriceOld}>
                 {t('pregnancyProgram.unlimited')}
               </Text>

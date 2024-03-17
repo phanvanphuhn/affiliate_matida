@@ -798,6 +798,7 @@ export const vi = {
     paymentSuccess: 'Thanh toán thành công!',
     buyNow: 'Mua ngay',
     readMore: 'Đọc thêm',
+    selectYourConsultant: 'Chọn tư vấn viên',
   },
   pregnancyProgram: {
     masterClassResult: 'Matida hiểu trăn trở của mẹ',
@@ -961,6 +962,11 @@ export const vi = {
     textMatida: 'Nhắn Matida',
     unlimited: 'Hỏi không giới hạn trong suốt thai kỳ',
     signUpAndAsk: 'Đăng ký và hỏi ngay',
+    onDemandConsultations: 'Tư vấn theo yêu cầu cùng',
+    matidaExperts: 'Chuyên gia Matida',
+    thankForSigningUp: 'Cảm ơn mẹ đã đăng ký\nMẹ làm các bước sau nhé',
+    step1to3:
+      '1. Kết nối cùng Matida trên Zalo\n2. Gửi xác nhận thanh toán thành công\n3. Đặt câu hỏi ngay cùng Bác sĩ / Chuyên gia',
   },
   momDiary: {
     momDiary: 'Nhật ký của mẹ',

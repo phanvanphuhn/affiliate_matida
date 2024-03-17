@@ -20,7 +20,7 @@ import {
 } from '@images';
 import {goBack} from '@navigation';
 import {ROUTE_NAME} from '@routeName';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {isIphoneX} from 'react-native-iphone-x-helper';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
@@ -32,6 +32,8 @@ interface VerifyPaymentProps {}
 
 const VerifyPayment = (props: VerifyPaymentProps) => {
   const navigation = useNavigation<any>();
+  const route = useRoute<RouteProp<any>>();
+
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
@@ -85,8 +87,16 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
               style={styles.buttonClose}>
               <Image source={iconClose} style={styles.iconClose} />
             </TouchableOpacity>
-            <Text style={styles.text1}>{t('pregnancyProgram.aioCourse')}</Text>
-            <Text style={styles.text2}>Matida Masterclass</Text>
+            <Text style={styles.text1}>
+              {route?.params?.isConsultant
+                ? t('pregnancyProgram.onDemandConsultations')
+                : t('pregnancyProgram.aioCourse')}
+            </Text>
+            <Text style={styles.text2}>
+              {route?.params?.isConsultant
+                ? t('pregnancyProgram.matidaExperts')
+                : 'Matida Masterclass'}
+            </Text>
           </SafeAreaView>
           <View style={styles.containerContent}>
             <View style={{top: -8.6}}>
@@ -97,11 +107,19 @@ const VerifyPayment = (props: VerifyPaymentProps) => {
             </View>
             <View style={styles.containerContent2}>
               <Text style={styles.textContent}>
-                {t('pregnancyProgram.programCreated')}
+                {route?.params?.isConsultant
+                  ? t('pregnancyProgram.thankForSigningUp')
+                  : t('pregnancyProgram.programCreated')}
               </Text>
-              <Text style={styles.textContent2}>
-                {t('pregnancyProgram.thankYouForSignUp')}
-              </Text>
+              {route?.params?.isConsultant ? (
+                <Text style={[styles.textContent2, {textAlign: 'left'}]}>
+                  {t('pregnancyProgram.step1to3')}
+                </Text>
+              ) : (
+                <Text style={styles.textContent2}>
+                  {t('pregnancyProgram.thankYouForSignUp')}
+                </Text>
+              )}
               <Image source={teaser2} />
               <TouchableOpacity onPress={onPressOpenSetting}>
                 <Text style={styles.textContent2}>
@@ -185,6 +203,7 @@ const styles = StyleSheet.create({
     fontSize: scaler(22),
     ...stylesCommon.fontWeight600,
     marginTop: scaler(40),
+    textAlign: 'center',
   },
   textContent2: {
     fontSize: scaler(15),

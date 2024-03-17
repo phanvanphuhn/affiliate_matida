@@ -32,6 +32,7 @@ import {
   getPlanByCode,
   userConfirm,
   changePaymentMethod,
+  getPlanByCodePD,
 } from '../../../services/pregnancyProgram';
 import {GlobalService, PRODUCT_ID_PAY} from '@services';
 import {showMessage} from 'react-native-flash-message';
@@ -87,7 +88,6 @@ const CompletePayment = (props: CompletePaymentProps) => {
 
   const {t} = useTranslation();
   const route = useRoute<RouteProp<any>>();
-  console.log('route: ', route);
   const navigation = useNavigation<any>();
 
   const [plan, setPlan] = useState<PlanState>({});
@@ -106,7 +106,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
   };
 
   const getData = async () => {
-    let res = await getPlanByCode();
+    let res = route?.params?.isConsultant
+      ? await getPlanByCodePD()
+      : await getPlanByCode();
     if (res?.success) {
       setPlan(res?.data);
     }
@@ -136,7 +138,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
         user_id: user?.id,
         payment_method: 'bank_transfer',
       });
-      navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
+      navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT, {
+        isConsultant: route?.params?.isConsultant,
+      });
     } catch (error) {
       console.log('=>(CompletePayment.tsx:309) error', error);
     } finally {

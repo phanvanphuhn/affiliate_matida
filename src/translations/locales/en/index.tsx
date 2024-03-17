@@ -801,6 +801,7 @@ export const en = {
     paymentSuccess: 'Payment success!',
     buyNow: 'Click to pay',
     readMore: 'Read more',
+    selectYourConsultant: 'Select your consultant',
   },
   pregnancyProgram: {
     masterClassResult: 'We have identified your challenges.',
@@ -963,6 +964,12 @@ export const en = {
     textMatida: 'Text us',
     unlimited: 'Full pregnancy with unlimited questions',
     signUpAndAsk: 'Sign up and ask now',
+    onDemandConsultations: 'On Demand Consultations',
+    matidaExperts: 'Matida Experts',
+    thankForSigningUp:
+      'Thanks for signing up!\nPlease following the next steps:',
+    step1to3:
+      '1. Add us on Zalo\n2. Share your payment confirmation\n3. Ask your question directly to Dr Phuong Anh',
   },
   momDiary: {
     momDiary: 'Mom Diary',

@@ -65,7 +65,7 @@ const UpdateInformation = (props: UpdateInformationProps) => {
     });
     try {
       let data = {
-        plan_code: 'PP',
+        plan_code: params?.isConsultant ? 'PD' : 'PP',
         payment_method: 'bank_transfer',
         metadata: metadata,
       };

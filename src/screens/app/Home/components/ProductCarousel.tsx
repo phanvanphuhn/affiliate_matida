@@ -25,10 +25,9 @@ const ProductCarousel = (props: any) => {
 
   useEffect(() => {
     getListBannerProduct();
-  }, []);
+  }, [user]);
 
   const renderItemCarousel = ({item, index}: any) => {
-    console.log('item: ', item);
     return (
       <TouchableOpacity
         style={{
