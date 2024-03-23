@@ -17,12 +17,16 @@ import {colors, scaler, widthScreen} from '@stylesCommon';
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {showMessage} from 'react-native-flash-message';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {DiscussionPost} from './ItemPost';
+import {event, eventType, trackingAppEvent} from '@util';
+import {TextStyle} from 'react-native';
 type Props = {
   // callBackData: () => void;
   week: number;
   cardBorderStyle?: any;
+  title?: string;
+  styleTextTitle?: TextStyle;
 };
 export enum Option {
   REPORT,
@@ -35,8 +39,15 @@ export type IOption = {
   value: Option;
   icon: React.ReactNode;
 };
-export const ListPostByWeek = ({week, cardBorderStyle}: Props) => {
+export const ListPostByWeek = ({
+  week,
+  cardBorderStyle,
+  title,
+  styleTextTitle,
+}: Props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state: any) => state?.auth?.userInfo);
+
   // const week = useSelector((state: any) => state?.home?.week);
   const {t} = useTranslation();
   const [idDelete, setIdDelete] = useState(null);
@@ -131,11 +142,17 @@ export const ListPostByWeek = ({week, cardBorderStyle}: Props) => {
       <HorizontalList
         loading={loading}
         // IconSvg={<SvgMessages3 />}
-        title={t('home.talkAbout')}
+        title={title ? title : t('home.talkAbout')}
+        styleTextTitle={styleTextTitle}
         length={data?.length}
         textSee={t('home.viewAll')}
         styleHeader={{paddingHorizontal: scaler(20)}}
         onPressSeeMore={() => {
+          trackingAppEvent(
+            event.NEW_HOMEPAGE.banner_get_support,
+            {id: user?.id},
+            eventType.MIX_PANEL,
+          );
           navigate(ROUTE_NAME.TAB_COMMUNITY);
         }}
         styleScroll={{marginBottom: 12}}>

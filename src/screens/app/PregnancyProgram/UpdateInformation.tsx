@@ -22,12 +22,12 @@ import {
 } from '@stylesCommon';
 import {goBack} from '@navigation';
 import useStateCustom from '../../../util/hooks/useStateCustom';
-import {useNavigation} from '@react-navigation/native';
+import {Route, useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
 import {useTranslation} from 'react-i18next';
 import {FormikProvider, useFormik} from 'formik';
 import FormInput from './components/FormInput';
-import validation from './validation';
+import {validation, validationNewborn} from './validation';
 import {GlobalService} from '@services';
 import {requestSubcribePlan} from '../../../services/pregnancyProgram';
 import {showMessage} from 'react-native-flash-message';
@@ -37,14 +37,19 @@ import {event, eventType, trackingAppEvent} from '@util';
 import useBackHandler from '../../../util/hooks/useBackHandler';
 import {trackCustomEvent} from '@services/webengageManager';
 
-interface UpdateInformationProps {}
+interface UpdateInformationProps {
+  route: any;
+}
 export interface UpdateInformationState {
   name: string;
-  pregnant_week: string;
+  pregnant_week?: string;
   phone: string;
+  pregnant_month?: string;
 }
 
 const UpdateInformation = (props: UpdateInformationProps) => {
+  const {route} = props;
+  const {params} = route;
   const {t} = useTranslation();
   const lang = useSelector((state: any) => state?.auth?.lang);
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -63,17 +68,29 @@ const UpdateInformation = (props: UpdateInformationProps) => {
     });
     try {
       let data = {
-        plan_code: 'PP',
+        plan_code: params?.isConsultant
+          ? user?.baby_type === 'newborn'
+            ? 'PD1'
+            : 'PD'
+          : 'PP',
         payment_method: 'bank_transfer',
         metadata: metadata,
       };
       GlobalService.showLoading();
       let res = await requestSubcribePlan(data);
       if (res?.success) {
-        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
-          values: res?.data,
-        });
-        dispatch(changeWeekUserTask(parseInt(metadata.pregnant_week)));
+        if (params?.isConsultant) {
+          navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+            values: res?.data,
+            isConsultant: params?.isConsultant,
+          });
+        } else {
+          navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+            values: res?.data,
+            isConsultant: params?.isConsultant,
+          });
+          dispatch(changeWeekUserTask(parseInt(metadata.pregnant_week)));
+        }
       }
     } catch (err) {
       showMessage({
@@ -81,17 +98,26 @@ const UpdateInformation = (props: UpdateInformationProps) => {
         type: 'danger',
         backgroundColor: colors.primaryBackground,
       });
+      console.log('err: ', err);
     } finally {
       GlobalService.hideLoading();
     }
   };
   const formik = useFormik<UpdateInformationState>({
-    initialValues: {
-      name: '',
-      pregnant_week: '',
-      phone: '',
-    },
-    validationSchema: validation,
+    initialValues:
+      user?.baby_type === 'newborn'
+        ? {
+            name: '',
+            pregnant_month: '',
+            phone: '',
+          }
+        : {
+            name: '',
+            pregnant_week: '',
+            phone: '',
+          },
+    validationSchema:
+      user?.baby_type === 'newborn' ? validationNewborn : validation,
     onSubmit: async values => {
       handleSubcribePlan(values);
     },
@@ -101,6 +127,11 @@ const UpdateInformation = (props: UpdateInformationProps) => {
   const onNext = () => {
     trackingAppEvent(
       event.MASTER_CLASS.PP_USER_INFO_NEXT,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.doctor_package_user_info,
       {id: user?.id},
       eventType.MIX_PANEL,
     );
@@ -168,8 +199,16 @@ const UpdateInformation = (props: UpdateInformationProps) => {
                   placeholder={'0123 456 789' as string}
                 />
                 <FormInput
-                  name={'pregnant_week'}
-                  title={t('pregnancyProgram.yourPregnancyWeek')}
+                  name={
+                    user?.baby_type === 'newborn'
+                      ? 'pregnant_month'
+                      : 'pregnant_week'
+                  }
+                  title={
+                    user?.baby_type === 'newborn'
+                      ? t('pregnancyProgram.yourBabyMonth')
+                      : t('pregnancyProgram.yourPregnancyWeek')
+                  }
                   placeholder={'8' as string}
                   maxLength={2}
                   keyboardType={'number-pad'}

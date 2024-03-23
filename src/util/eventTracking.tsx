@@ -140,6 +140,7 @@ export const event = {
     FEED_FINISH_QUIZ: 'feed_finish_quiz',
     FEED_DO_MOMTEST: 'feed_do_momtest',
     FEED_OPEN_CONTENT: 'FEED_OPEN_CONTENT',
+    FEED_CLICK_LINK_IN_CONTENT: 'feed_click_link_in_content',
   },
   DEAL: {
     CLICK_DEAL: 'click_deal',
@@ -202,5 +203,21 @@ export const event = {
   QUIZ: {
     quiz_result_click_read_more: 'quiz_result_click_read_more',
     quiz_explore_master_class: 'quiz_explore_master_class',
+  },
+  NEW_HOMEPAGE: {
+    consultant_select_doctor: 'consultant_select_doctor',
+    consultant_select_tida: 'consultant_select_tida',
+    doctor_package_register_button: 'doctor_package_register_button',
+    doctor_package_user_info: 'doctor_package_user_info',
+    doctor_packag_I_have_transfered: 'doctor_packag_I_have_transfered',
+    doctor_package_explore_matida: 'doctor_package_explore_matida',
+    homepage_click_baby: 'homepage_click_baby',
+    homepage_click_mombody: 'homepage_click_mombody',
+    homepage_click_calendar: 'homepage_click_calendar',
+    banner_get_support: 'banner_get_support',
+    banner_doctor: 'banner_doctor',
+    content_widget_view_more: 'content_widget_view_more',
+    weekly_task_widget_click: 'weekly_task_widget_click',
+    forum_widget_view_more: 'forum_widget_view_more',
   },
 };

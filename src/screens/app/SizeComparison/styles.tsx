@@ -40,5 +40,14 @@ const styles = StyleSheet.create({
     marginBottom: scaler(16),
     marginLeft: scaler(16),
   },
+  title: {
+    ...stylesCommon.fontWeight600,
+    fontSize: scaler(18),
+    marginBottom: scaler(12),
+    marginTop: scaler(16),
+  },
+  ph: {
+    paddingHorizontal: scaler(16),
+  },
 });
 export {styles};

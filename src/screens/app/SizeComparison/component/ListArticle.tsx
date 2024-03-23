@@ -11,14 +11,26 @@ import {ROUTE_NAME} from '@routeName';
 import {getArticleByWeek, GlobalService} from '@services';
 import {useSelector} from 'react-redux';
 import useCheckPregnancy from '../../../../util/hooks/useCheckPregnancy';
+import {StyleProp, TextStyle} from 'react-native';
+import {event, eventType, trackingAppEvent} from '@util';
 
 type Props = {
   // callBackData: () => void;
   week: number;
   cardBorderStyle?: any;
+  title?: string;
+  styleTextTitle?: StyleProp<TextStyle>;
+  mb?: number;
+  styleTextSee?: StyleProp<TextStyle>;
 };
 
-export const ListArticle = ({week}: Props) => {
+export const ListArticle = ({
+  week,
+  title,
+  styleTextTitle,
+  mb,
+  styleTextSee,
+}: Props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: any) => state?.auth?.userInfo);
@@ -56,11 +68,21 @@ export const ListArticle = ({week}: Props) => {
   return (
     <HorizontalList
       loading={loading}
-      title={t('home.weeklyArticles')}
+      title={title ? title : t('home.weeklyArticles')}
       length={data?.length}
       styleHeader={{paddingHorizontal: scaler(20)}}
       contentContainerStyle={{marginBottom: 0}}
-      onPressSeeMore={() => navigate(ROUTE_NAME.TAB_FEED)}>
+      styleTextTitle={styleTextTitle}
+      styleTextSee={styleTextSee}
+      mb={mb}
+      onPressSeeMore={() => {
+        trackingAppEvent(
+          event.NEW_HOMEPAGE.content_widget_view_more,
+          {id: user?.id},
+          eventType.MIX_PANEL,
+        );
+        navigate(ROUTE_NAME.TAB_FEED);
+      }}>
       {data?.map((article: IArticles) => (
         <NewArticles
           article={article}

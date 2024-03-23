@@ -345,7 +345,7 @@ export const ViewQuiz = React.memo((props: any) => {
                           source={{
                             html: `<div>${getDescription(
                               data?.explain_en || data?.question?.explain_en,
-                              90,
+                              999,
                             )}</div>`,
                           }}
                           enableExperimentalMarginCollapsing={true}

@@ -9,9 +9,15 @@ const USER_CONFIRM = 'subscription-plans/request/confirm';
 const USER_FEEDBACK = 'user-feedback';
 const CHANGE_PAYMENT_METHOD =
   'subscription-plans/request/change-payment-method';
+const GET_BANNER_PRODUCT = 'banner?type=product&trimester=';
 
 export const getPlanByCode: any = async () => {
   const response = await api.get(`${SUBSCRIPTION_PLANS}code/PP`);
+  return response;
+};
+
+export const getPlanByCodePD: any = async () => {
+  const response = await api.get(`${SUBSCRIPTION_PLANS}code/PD`);
   return response;
 };
 
@@ -74,5 +80,10 @@ export const getFeedBacks: any = async (data: any) => {
 
 export const changePaymentMethod: any = async (data: any) => {
   const response = await api.post(CHANGE_PAYMENT_METHOD, data);
+  return response;
+};
+
+export const getBannerProduct: any = async (data: any) => {
+  const response = await api.get(`${GET_BANNER_PRODUCT}${data}`);
   return response;
 };

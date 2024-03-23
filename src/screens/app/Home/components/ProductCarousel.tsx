@@ -1,89 +1,31 @@
 import {colors, scaler} from '@stylesCommon';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Dimensions, Image, Linking, TouchableOpacity, View} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {getTrimester} from './PregnancyProgress';
 import {useSelector} from 'react-redux';
 import {event, eventType, trackingAppEvent} from '@util';
+import FastImage from 'react-native-fast-image';
+import {getBannerProduct} from '../../../../services/pregnancyProgram';
 
 const screenWidth = Dimensions.get('screen').width;
-
-const productList = [
-  {
-    index: 1,
-    trimester: 1,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962155659047038.png',
-    productLink: 'https://shope.ee/6KfdQmNsn2',
-  },
-  {
-    index: 2,
-    trimester: 1,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962208607632187.png',
-    productLink: 'https://shope.ee/4AbJxAGx4S',
-  },
-  {
-    index: 3,
-    trimester: 1,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962294346604004.png',
-    productLink: 'https://shope.ee/mLQtj0rY',
-  },
-  {
-    index: 4,
-    trimester: 2,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962395056228879.png',
-    productLink: 'https://shope.ee/5pk8NzV78e',
-  },
-  {
-    index: 5,
-    trimester: 2,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962432286157306.png',
-    productLink: 'https://shope.ee/Vhzv7QlCf',
-  },
-  {
-    index: 6,
-    trimester: 2,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962466375072409.png',
-    productLink: 'https://shope.ee/3VLV8HEQ7A',
-  },
-  {
-    index: 7,
-    trimester: 3,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962534775391636.png',
-    productLink: 'https://shope.ee/9A0Tzm8VXj',
-  },
-  {
-    index: 8,
-    trimester: 3,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962578027081380.png',
-    productLink: 'https://shope.ee/LP5UZksIM',
-  },
-  {
-    index: 9,
-    trimester: 3,
-    productImage:
-      'https://s3.ap-southeast-1.amazonaws.com/matida/1708962614350501892.png',
-    productLink: 'https://shope.ee/6AMsSn9Izh',
-  },
-];
 
 const ProductCarousel = (props: any) => {
   const user = useSelector((state: any) => state?.auth?.userInfo);
   const week = useSelector((state: any) => state?.home?.week);
   const weekPregnant = useSelector((state: any) => state?.home?.weekPregnant);
-  const trimester = getTrimester(weekPregnant?.weeks ?? week);
-  const productListByTrimester = productList?.filter(
-    item => item.trimester == trimester,
-  );
+  const trimester = getTrimester(weekPregnant?.weeks ?? week) || 1;
 
   const [activeSlide, setActiveSlide] = useState();
+  const [listBannerProduct, setListBannerProduct] = useState();
+  const getListBannerProduct = async () => {
+    const data = await getBannerProduct(trimester);
+    setListBannerProduct(data?.data);
+  };
+
+  useEffect(() => {
+    getListBannerProduct();
+  }, [user]);
 
   const renderItemCarousel = ({item, index}: any) => {
     return (
@@ -98,8 +40,8 @@ const ProductCarousel = (props: any) => {
               event.BANNER.ecom_banner_home,
               {
                 userId: user?.id,
-                productLink: item?.productLink,
-                productName: item?.productImage,
+                productLink: item?.outer_link,
+                productName: item?.images[0]?.url,
               },
               eventType.MIX_PANEL,
             );
@@ -108,23 +50,26 @@ const ProductCarousel = (props: any) => {
               event.BANNER.ecom_banner_tracker,
               {
                 userId: user?.id,
-                productLink: item?.productLink,
-                productName: item?.productImage,
+                productLink: item?.outer_link,
+                productName: item?.images[0]?.url,
               },
               eventType.MIX_PANEL,
             );
           }
-
-          Linking.canOpenURL(item?.productLink).then(supported => {
-            if (supported) {
-              Linking.openURL(item?.productLink);
-            } else {
-              return;
-            }
-          });
+          if (item?.outer_link) {
+            Linking.canOpenURL(item?.outer_link).then(supported => {
+              if (supported) {
+                Linking.openURL(item?.outer_link);
+              } else {
+                return;
+              }
+            });
+          } else {
+            return;
+          }
         }}>
         <Image
-          source={{uri: item?.productImage}}
+          source={{uri: item?.images[0]?.url}}
           style={{height: scaler(264), width: '100%', borderRadius: scaler(16)}}
           resizeMode="center"
         />
@@ -135,7 +80,7 @@ const ProductCarousel = (props: any) => {
   const pagination = () => {
     return (
       <Pagination
-        dotsLength={productListByTrimester?.length}
+        dotsLength={listBannerProduct?.data?.length}
         activeDotIndex={activeSlide}
         dotStyle={{
           width: 8,
@@ -159,7 +104,7 @@ const ProductCarousel = (props: any) => {
         // ref={c => {
         //   carouselRef?.current = c;
         // }}
-        data={productListByTrimester}
+        data={listBannerProduct?.data}
         renderItem={renderItemCarousel}
         sliderWidth={screenWidth}
         itemWidth={screenWidth}

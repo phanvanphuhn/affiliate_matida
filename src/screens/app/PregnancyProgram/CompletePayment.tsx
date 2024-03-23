@@ -32,6 +32,7 @@ import {
   getPlanByCode,
   userConfirm,
   changePaymentMethod,
+  getPlanByCodePD,
 } from '../../../services/pregnancyProgram';
 import {GlobalService, PRODUCT_ID_PAY} from '@services';
 import {showMessage} from 'react-native-flash-message';
@@ -105,7 +106,9 @@ const CompletePayment = (props: CompletePaymentProps) => {
   };
 
   const getData = async () => {
-    let res = await getPlanByCode();
+    let res = route?.params?.isConsultant
+      ? await getPlanByCodePD()
+      : await getPlanByCode();
     if (res?.success) {
       setPlan(res?.data);
     }
@@ -129,13 +132,20 @@ const CompletePayment = (props: CompletePaymentProps) => {
         {id: user?.id},
         eventType.MIX_PANEL,
       );
+      trackingAppEvent(
+        event.NEW_HOMEPAGE.doctor_packag_I_have_transfered,
+        {id: user?.id},
+        eventType.MIX_PANEL,
+      );
       console.log('=>(CompletePayment.tsx:193) route?.params', route?.params);
       let result = await userConfirm({
         verify_code: verifyCode,
         user_id: user?.id,
         payment_method: 'bank_transfer',
       });
-      navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT);
+      navigation.navigate(ROUTE_NAME.VERIFY_PAYMENT, {
+        isConsultant: route?.params?.isConsultant,
+      });
     } catch (error) {
       console.log('=>(CompletePayment.tsx:309) error', error);
     } finally {
@@ -372,31 +382,36 @@ const CompletePayment = (props: CompletePaymentProps) => {
                 {t('pregnancyProgram.bankTransfer')}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={async () => {
-                const res = await switchPaymentMethod('apple_pay');
-                if (res?.success) {
-                  makePurchase(products[0]?.productId, res?.data?.verify_code);
-                }
-              }}
-              disabled={Platform.OS == 'android' ? true : false}
-              style={[
-                styles.buttonTransfer,
-                {
-                  borderColor:
-                    paymentType !== 'bank_transfer'
-                      ? colors.pink200
-                      : colors.gray,
-                },
-              ]}>
-              <Image
-                source={Platform.OS == 'ios' ? ic_click2pay : ic_google}
-                style={{height: scaler(24), width: scaler(24)}}
-              />
-              <Text style={styles.textTransfer}>
-                {Platform.OS == 'ios' ? t('common.buyNow') : 'Google Pay'}
-              </Text>
-            </TouchableOpacity>
+            {!route?.params?.isConsultant && (
+              <TouchableOpacity
+                onPress={async () => {
+                  const res = await switchPaymentMethod('apple_pay');
+                  if (res?.success) {
+                    makePurchase(
+                      products[0]?.productId,
+                      res?.data?.verify_code,
+                    );
+                  }
+                }}
+                disabled={Platform.OS == 'android' ? true : false}
+                style={[
+                  styles.buttonTransfer,
+                  {
+                    borderColor:
+                      paymentType !== 'bank_transfer'
+                        ? colors.pink200
+                        : colors.gray,
+                  },
+                ]}>
+                <Image
+                  source={Platform.OS == 'ios' ? ic_click2pay : ic_google}
+                  style={{height: scaler(24), width: scaler(24)}}
+                />
+                <Text style={styles.textTransfer}>
+                  {Platform.OS == 'ios' ? t('common.buyNow') : 'Google Pay'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           <ImageBackground source={ic_background}>

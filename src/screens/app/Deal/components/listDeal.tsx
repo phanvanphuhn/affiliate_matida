@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {ROUTE_NAME} from '@routeName';
-import {colors, scaler} from '@stylesCommon';
+import {colors, scaler, stylesCommon} from '@stylesCommon';
 import {event, eventType, trackingAppEvent} from '@util';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
@@ -63,7 +63,13 @@ const ListDeal = (props: any) => {
           }}
         />
         <View style={styles.bottomItemContainer}>
-          <Text numberOfLines={2} style={{fontSize: 12}}>
+          <Text
+            numberOfLines={2}
+            style={{
+              fontSize: 12,
+              ...stylesCommon.fontWeight500,
+              color: colors.black,
+            }}>
             {lang == 2 ? item.name_vi : item.name_en}
           </Text>
 

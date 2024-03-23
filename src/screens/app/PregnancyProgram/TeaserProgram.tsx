@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   Image,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -30,9 +31,12 @@ import {trackCustomEvent} from '@services/webengageManager';
 
 interface TeaserProgramProps {
   isHome?: boolean;
+  route: any;
 }
 
 const TeaserProgram = (props: TeaserProgramProps) => {
+  const {route} = props;
+  const {params} = route;
   const [activeSlide, setActiveSlide] = useState(0);
   const [userScore, setUserScore] = useState();
   const [packageQuizz, setPackageQuizz] = useState();
@@ -104,9 +108,39 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       {id: user?.id},
       eventType.MIX_PANEL,
     );
-
+    trackingAppEvent(
+      event.NEW_HOMEPAGE.doctor_package_register_button,
+      {id: user?.id},
+      eventType.MIX_PANEL,
+    );
+    if (params?.isConsultant) {
+      if (
+        user.payments.some(
+          e =>
+            e.status == 'processing' &&
+            e?.verify_code?.substring(0, 2) === 'PD',
+        )
+      ) {
+        navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
+          values: user.payments.find(e => e.status == 'processing'),
+          isBack: true,
+          isConsultant: true,
+        });
+      } else {
+        navigation.navigate(ROUTE_NAME.UPDATE_INFORMATION, {
+          isConsultant: true,
+        });
+      }
+      return;
+    }
     if (userScore) {
-      if (user.payments.some(e => e.status == 'processing')) {
+      if (
+        user.payments.some(
+          e =>
+            e.status == 'processing' &&
+            e?.verify_code?.substring(0, 2) === 'PP',
+        )
+      ) {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
           values: user.payments.find(e => e.status == 'processing'),
           isBack: true,
@@ -149,11 +183,25 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   };
 
   const onCheckOut = () => {
+    const zaloScheme = 'https://zalo.me/3349239872295713460';
+
     trackingAppEvent(
       event.MASTER_CLASS.PP_SIGNUP_CHECK_THIS_OUT,
       {id: user?.id},
       eventType.MIX_PANEL,
     );
+    if (params?.isConsultant) {
+      Linking.canOpenURL(zaloScheme)
+        .then(supported => {
+          if (supported) {
+            return Linking.openURL(zaloScheme);
+          } else {
+            console.warn('Zalo app is not installed on the device.');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      return;
+    }
     navigation.navigate(ROUTE_NAME.ABOUT_PROGRAM);
   };
   const pagination = () => {
@@ -212,7 +260,9 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           )}
 
           <Text style={styles.textTitle}>
-            {t('pregnancyProgram.aioCourse')}
+            {params?.isConsultant
+              ? t('pregnancyProgram.onDemand')
+              : t('pregnancyProgram.aioCourse')}
           </Text>
           <Text
             style={[
@@ -222,20 +272,35 @@ const TeaserProgram = (props: TeaserProgramProps) => {
                 marginBottom: 10,
               },
             ]}>
-            Matida Masterclass
+            {params?.isConsultant
+              ? t('pregnancyProgram.matidaExpert')
+              : 'Matida Masterclass'}
           </Text>
 
           <View
             style={{
               paddingTop: 8,
             }}>
-            <Image
-              source={lang == 1 ? ic_teaser_en : ic_teaser_vi}
-              style={{
-                width: widthScreen,
-                resizeMode: 'contain',
-              }}
-            />
+            {params?.isConsultant ? (
+              <Image
+                source={{
+                  uri: 'https://s3.ap-southeast-1.amazonaws.com/matida/1709738142787760082.png',
+                }}
+                style={{
+                  width: widthScreen,
+                  resizeMode: 'center',
+                  height: scaler(470),
+                }}
+              />
+            ) : (
+              <Image
+                source={lang == 1 ? ic_teaser_en : ic_teaser_vi}
+                style={{
+                  width: widthScreen,
+                  resizeMode: 'contain',
+                }}
+              />
+            )}
           </View>
         </View>
       </ScrollView>
@@ -256,17 +321,23 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             marginBottom: scaler(15),
             textAlign: 'center',
           }}>
-          {t('pregnancyProgram.haveQuestion')}{' '}
+          {params?.isConsultant
+            ? t('pregnancyProgram.haveAQuestionPlan')
+            : t('pregnancyProgram.haveQuestion')}{' '}
           <Text
             onPress={onCheckOut}
             style={{textDecorationLine: 'underline', fontWeight: '500'}}>
-            {t('pregnancyProgram.checkThisOut')}
+            {params?.isConsultant
+              ? t('pregnancyProgram.textMatida')
+              : t('pregnancyProgram.checkThisOut')}
           </Text>
         </Text>
         <View style={styles.container4}>
-          <View style={styles.container5}>
-            <Text style={styles.textOff}>33% off</Text>
-          </View>
+          {!params?.isConsultant && (
+            <View style={styles.container5}>
+              <Text style={styles.textOff}>33% off</Text>
+            </View>
+          )}
           {/* <Text
             style={{
               fontSize: scaler(15),
@@ -276,30 +347,45 @@ const TeaserProgram = (props: TeaserProgramProps) => {
             }}>
             {t('pregnancyProgram.month2Promo')}
           </Text> */}
-          <Text style={styles.textPrice1}>
-            499,000đ
-            <Text
-              style={{
-                fontSize: scaler(13),
-                ...stylesCommon.fontSarabun600,
-              }}>
-              /{t('pregnancyProgram.liftTime')}
-            </Text>
-          </Text>
-          <Text style={styles.textPriceOld}>
-            <Text
-              style={{
-                textDecorationLine: 'line-through',
-                ...stylesCommon.fontSarabun400,
-              }}>
-              649,000đ
-            </Text>
-            /{t('pregnancyProgram.liftTime')}
-          </Text>
+          {params?.isConsultant ? (
+            <>
+              <Text style={styles.textPrice1}>249,000đ</Text>
+              {user?.baby_type !== 'newborn' && (
+                <Text style={styles.textPriceOld}>
+                  {t('pregnancyProgram.unlimited')}
+                </Text>
+              )}
+            </>
+          ) : (
+            <>
+              <Text style={styles.textPrice1}>
+                499,000đ
+                <Text
+                  style={{
+                    fontSize: scaler(13),
+                    ...stylesCommon.fontSarabun600,
+                  }}>
+                  /{t('pregnancyProgram.liftTime')}
+                </Text>
+              </Text>
+              <Text style={styles.textPriceOld}>
+                <Text
+                  style={{
+                    textDecorationLine: 'line-through',
+                    ...stylesCommon.fontSarabun400,
+                  }}>
+                  649,000đ
+                </Text>
+                /{t('pregnancyProgram.liftTime')}
+              </Text>
+            </>
+          )}
         </View>
         <TouchableOpacity onPress={onSignUpNow} style={styles.buttonSignUp}>
           <Text style={styles.textButtonSignUp}>
-            {t('pregnancyProgram.signUpEarly')}
+            {params?.isConsultant
+              ? t('pregnancyProgram.signUpAndAsk')
+              : t('pregnancyProgram.signUpEarly')}
           </Text>
         </TouchableOpacity>
       </View>
