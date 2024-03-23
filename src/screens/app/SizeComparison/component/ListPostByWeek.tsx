@@ -20,11 +20,13 @@ import {showMessage} from 'react-native-flash-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {DiscussionPost} from './ItemPost';
 import {event, eventType, trackingAppEvent} from '@util';
+import {TextStyle} from 'react-native';
 type Props = {
   // callBackData: () => void;
   week: number;
   cardBorderStyle?: any;
   title?: string;
+  styleTextTitle?: TextStyle;
 };
 export enum Option {
   REPORT,
@@ -37,7 +39,12 @@ export type IOption = {
   value: Option;
   icon: React.ReactNode;
 };
-export const ListPostByWeek = ({week, cardBorderStyle, title}: Props) => {
+export const ListPostByWeek = ({
+  week,
+  cardBorderStyle,
+  title,
+  styleTextTitle,
+}: Props) => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state?.auth?.userInfo);
 
@@ -136,6 +143,7 @@ export const ListPostByWeek = ({week, cardBorderStyle, title}: Props) => {
         loading={loading}
         // IconSvg={<SvgMessages3 />}
         title={title ? title : t('home.talkAbout')}
+        styleTextTitle={styleTextTitle}
         length={data?.length}
         textSee={t('home.viewAll')}
         styleHeader={{paddingHorizontal: scaler(20)}}

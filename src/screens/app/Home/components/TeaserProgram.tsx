@@ -45,7 +45,7 @@ const TeaserProgram = (props: TeaserProgramProps) => {
   const lang = useSelector((state: any) => state?.auth?.lang);
 
   const {t} = useTranslation();
-
+  console.log('user: ', user);
   const checkQuiz = async () => {
     if (!user.user_subscriptions.some(e => e.code == 'PP')) {
       if (!user.payments.some(e => e.status == 'processing')) {

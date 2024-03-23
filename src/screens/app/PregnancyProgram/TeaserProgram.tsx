@@ -114,7 +114,13 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       eventType.MIX_PANEL,
     );
     if (params?.isConsultant) {
-      if (user.payments.some(e => e.status == 'processing')) {
+      if (
+        user.payments.some(
+          e =>
+            e.status == 'processing' &&
+            e?.verify_code?.substring(0, 2) === 'PD',
+        )
+      ) {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
           values: user.payments.find(e => e.status == 'processing'),
           isBack: true,
@@ -128,7 +134,13 @@ const TeaserProgram = (props: TeaserProgramProps) => {
       return;
     }
     if (userScore) {
-      if (user.payments.some(e => e.status == 'processing')) {
+      if (
+        user.payments.some(
+          e =>
+            e.status == 'processing' &&
+            e?.verify_code?.substring(0, 2) === 'PP',
+        )
+      ) {
         navigation.navigate(ROUTE_NAME.COMPLETE_PAYMENT, {
           values: user.payments.find(e => e.status == 'processing'),
           isBack: true,
@@ -338,9 +350,11 @@ const TeaserProgram = (props: TeaserProgramProps) => {
           {params?.isConsultant ? (
             <>
               <Text style={styles.textPrice1}>249,000đ</Text>
-              <Text style={styles.textPriceOld}>
-                {t('pregnancyProgram.unlimited')}
-              </Text>
+              {user?.baby_type !== 'newborn' && (
+                <Text style={styles.textPriceOld}>
+                  {t('pregnancyProgram.unlimited')}
+                </Text>
+              )}
             </>
           ) : (
             <>

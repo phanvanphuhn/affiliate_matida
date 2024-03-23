@@ -107,6 +107,7 @@ import {useTranslation} from 'react-i18next';
 import {ListPostByWeek} from '../SizeComparison/component/ListPostByWeek';
 import PregnancyTracker from './components/PregnancyTracker';
 import ModalConsultant from './components/ModalConsultant';
+import GetSupport from './components/GetSupport';
 
 const screenWidth = Dimensions.get('screen').width;
 // import {APPID_ZEGO_KEY, APP_SIGN_ZEGO_KEY} from '@env';
@@ -735,7 +736,10 @@ const Home = () => {
               </View>
 
               <View style={styles.ph}>
-                <Text style={styles.title}>{t('home.getSupport')}</Text>
+                <GetSupport
+                  showBottomSheetConsultant={showBottomSheetConsultant}
+                />
+                {/* <Text style={styles.title}>{t('home.getSupport')}</Text>
                 <TouchableOpacity
                   style={{flex: 1}}
                   onPress={showBottomSheetConsultant}>
@@ -743,17 +747,40 @@ const Home = () => {
                     source={{
                       uri:
                         lang == 1
-                          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
-                          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
+                          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1710860879329404805.png'
+                          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1710860749497044032.png',
                     }}
-                    style={{width: '100%', height: scaler(126)}}
+                    style={{
+                      width: '100%',
+                      height: scaler(126),
+                      borderRadius: scaler(16),
+                    }}
+                    resizeMode="center"
                   />
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={{flex: 1, marginTop: scaler(16)}}
+                  onPress={showBottomSheetConsultant}>
+                  <Image
+                    source={{
+                      uri:
+                        lang == 1
+                          ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1710859552934329521.png'
+                          : 'https://s3.ap-southeast-1.amazonaws.com/matida/1710859420184627150.png',
+                    }}
+                    style={{
+                      width: '100%',
+                      height: scaler(126),
+                      borderRadius: scaler(16),
+                    }}
+                    resizeMode="center"
+                  />
+                </TouchableOpacity> */}
               </View>
 
               <View>
                 <ListArticle
-                  week={weekSelected}
+                  week={week}
                   title={t('home.exploreAndLearn') as string}
                   styleTextTitle={[styles.title, {marginBottom: 0}]}
                   mb={0}
@@ -788,7 +815,11 @@ const Home = () => {
                     user?.baby_type == 'pregnant-overdue' ||
                     user?.baby_type == 'unknown') &&
                   (!user?.payments?.length ||
-                    user?.payments?.some(e => e.status == 'processing')) && (
+                    user?.payments?.some(
+                      e =>
+                        e.status == 'processing' &&
+                        e.verify_code?.substring(0, 2) == 'PP',
+                    )) && (
                     <View style={{marginHorizontal: 16}}>
                       <TeaserProgram data={state?.isSignUp} isHome={true} />
                     </View>
@@ -810,8 +841,10 @@ const Home = () => {
                       }}>
                       <Text
                         style={{
-                          fontSize: scaler(18),
                           ...stylesCommon.fontWeight600,
+                          fontSize: scaler(18),
+                          marginBottom: scaler(12),
+                          marginTop: scaler(16),
                         }}>
                         {t('home.upcomingLiveTalks')}
                       </Text>
@@ -851,12 +884,13 @@ const Home = () => {
 
               <View style={{marginTop: scaler(12)}}>
                 <ListPostByWeek
-                  week={weekSelected}
+                  week={week}
                   cardBorderStyle={{
                     borderWidth: 1,
                     borderColor: '#F5F5F5',
                   }}
-                  title={t('home.whatMomsTalkAbout')}
+                  title={t('home.whatMomsTalkAbout') as string}
+                  styleTextTitle={styles.title}
                 />
                 <TouchableOpacity
                   style={styles.createPostButton}
@@ -893,14 +927,30 @@ const Home = () => {
                   <ActivityIndicator size={'small'} color={'red'} />
                 </View>
               ) : (
-                isShowForReviewer(user) && renderNewBornContent()
+                <>
+                  <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
+                    {t('home.newbornTracker')}
+                  </Text>
+                  {isShowForReviewer(user) && renderNewBornContent()}
+                </>
               )}
 
+              <View style={styles.ph}>
+                <GetSupport
+                  showBottomSheetConsultant={showBottomSheetConsultant}
+                />
+              </View>
+
               {data?.dailyQuizz && isShowForReviewer(user) ? (
-                <ViewQuiz onAnswer={onAnswerQuiz} />
+                <>
+                  <Text style={[styles.title, {paddingHorizontal: scaler(16)}]}>
+                    {t('home.testYourKnowledge')}
+                  </Text>
+                  <ViewQuiz onAnswer={onAnswerQuiz} />
+                </>
               ) : null}
 
-              {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />}
+              {/* {isShowForReviewer(user) && <ChatGPTComponent value={scrollY} />} */}
 
               {isShowForReviewer(user) && user?.baby_type !== 'newborn' && (
                 <ProductCarousel isHome={true} />

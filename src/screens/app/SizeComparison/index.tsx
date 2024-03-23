@@ -45,6 +45,7 @@ import {trackClickedOnPregnancyTracker} from '@services/webengageManager.tsx';
 import TeaserProgram from '../Home/components/TeaserProgram';
 import ProductCarousel from '../Home/components/ProductCarousel';
 import ModalConsultant from '../Home/components/ModalConsultant';
+import GetSupport from '../Home/components/GetSupport';
 
 const SizeComparison = () => {
   const dispatch = useDispatch();
@@ -275,7 +276,10 @@ const SizeComparison = () => {
                 </View>
               )}
             <View style={styles.ph}>
-              <Text style={styles.title}>{t('home.getSupport')}</Text>
+              <GetSupport
+                showBottomSheetConsultant={showBottomSheetConsultant}
+              />
+              {/* <Text style={styles.title}>{t('home.getSupport')}</Text>
               <TouchableOpacity
                 style={{flex: 1}}
                 onPress={showBottomSheetConsultant}>
@@ -283,12 +287,35 @@ const SizeComparison = () => {
                   source={{
                     uri:
                       lang == 1
-                        ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1709139277387404056.png'
-                        : 'https://s3.ap-southeast-1.amazonaws.com/matida/1709230681748027084.png',
+                        ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1710860879329404805.png'
+                        : 'https://s3.ap-southeast-1.amazonaws.com/matida/1710860749497044032.png',
                   }}
-                  style={{width: '100%', height: scaler(126)}}
+                  style={{
+                    width: '100%',
+                    height: scaler(126),
+                    borderRadius: scaler(16),
+                  }}
+                  resizeMode="center"
                 />
               </TouchableOpacity>
+              <TouchableOpacity
+                style={{flex: 1, marginTop: scaler(16)}}
+                onPress={showBottomSheetConsultant}>
+                <Image
+                  source={{
+                    uri:
+                      lang == 1
+                        ? 'https://s3.ap-southeast-1.amazonaws.com/matida/1710859552934329521.png'
+                        : 'https://s3.ap-southeast-1.amazonaws.com/matida/1710859420184627150.png',
+                  }}
+                  style={{
+                    width: '100%',
+                    height: scaler(126),
+                    borderRadius: scaler(16),
+                  }}
+                  resizeMode="center"
+                />
+              </TouchableOpacity> */}
             </View>
             {/* <BannerTestQuiz /> */}
             {homeData?.data?.dailyQuizz ? (
