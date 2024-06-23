@@ -48,7 +48,11 @@ export const ListArticle = ({
     if (!isCheckPayment && article?.is_payment && !article?.is_paid) {
       checkPlan();
     } else {
-      navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
+      // navigate(ROUTE_NAME.DETAIL_ARTICLE, {article: article});
+      navigate(ROUTE_NAME.DETAIL_FEED, {
+        id: article.id,
+        content_type: 'article',
+      });
     }
   };
 

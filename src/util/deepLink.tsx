@@ -88,10 +88,14 @@ export const handleDeepLink = (link: string, inApp?: boolean) => {
       case TRouteDeepLink.TAB_LIVE_TALK:
         navigate(ROUTE_NAME.TAB_LIVETALK);
         break;
+      case TRouteDeepLink.TAB_TEASER_PROGRAM_NEW_BORN:
+        navigate(ROUTE_NAME.TEASER_PROGRAM, {
+          isConsultant: true,
+        });
+        break;
       case TRouteDeepLink.TAB_MASTERCLASS:
         return arrayParamsLink[0];
       default:
-        break;
     }
   } else if (arrayParamsLink[0] == 'matida:') {
     switch (arrayParamsLink[1]) {

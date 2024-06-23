@@ -381,7 +381,11 @@ const SizeComparison = () => {
         ListFooterComponent={renderView}
         keyExtractor={(item, index) => index.toString()}
       />
-      {isShowForReviewer(user) && <FLoatingAIButton />}
+      {isShowForReviewer(user) && (
+        <View style={{marginLeft: scaler(16)}}>
+          <FLoatingAIButton />
+        </View>
+      )}
       <ModalConsultant
         visible={isShowConsultant}
         closeModal={hideBottomSheetConsultant}

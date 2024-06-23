@@ -144,4 +144,5 @@ export enum TRouteDeepLink {
   TAB_DEAL = 'tab-deal',
   TAB_LIVE_TALK = 'tab-live-talk',
   TAB_MASTERCLASS = 'tab-masterclass',
+  TAB_TEASER_PROGRAM_NEW_BORN = 'tab-teaser-program-new-born',
 }
